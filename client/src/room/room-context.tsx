@@ -38,6 +38,8 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   sit: () => void;
   /** A move between the table and the spectator seats is on its way. */
   moving: boolean;
+  /** Why the last start or move did not happen, worded; null once it is moot. */
+  refusal: string | null;
   /** The Leave room button: goes at once between games, asks mid-game. */
   leave: () => void;
 }

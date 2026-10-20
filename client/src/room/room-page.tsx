@@ -8,10 +8,10 @@ import {
   useState,
 } from 'react';
 import { Navigate, useBlocker, useNavigate, type Location } from 'react-router';
-import type { GameType } from '../../../shared/wire-types';
+import type { ErrorType, GameType } from '../../../shared/wire-types';
 import { Button, ButtonLink, Card, TextField } from '../ui';
 import { gameInfo, gamePath, roomPath, scoreOf } from '../games/catalog';
-import { useMessages } from '../i18n';
+import { useMessages, type Messages } from '../i18n';
 import { DrawAndGuessRoom } from '../draw-and-guess/room';
 import { MinesweeperRoom } from '../minesweeper/room';
 import { Make24Room } from '../make-24/room';
@@ -276,6 +276,7 @@ function SeatedRoom({
   const [inviting, setInviting] = useState(false);
   const [starting, setStarting] = useState(false);
   const [moving, setMoving] = useState(false);
+  const [refusal, setRefusal] = useState<string | null>(null);
 
   // A game that ends while the room is open is celebrated; a finished game
   // found on arrival or after a refresh is not. Each one gets its own burst.
@@ -284,6 +285,8 @@ function SeatedRoom({
   const [celebrations, setCelebrations] = useState(0);
   if (state.isGameStarted !== wasPlaying) {
     setWasPlaying(state.isGameStarted);
+    // A game starting or ending moves on from whatever was refused before.
+    setRefusal(null);
     if (
       !state.isGameStarted &&
       state.lastGame &&
@@ -315,33 +318,39 @@ function SeatedRoom({
     }
   }, [sure, leave, blocker]);
 
+  // The button comes back either way, and a refusal or no answer says why
+  // nothing happened rather than leaving the host to wonder.
   const startGame = useCallback(async () => {
     setStarting(true);
+    setRefusal(null);
     try {
-      await socket
+      const answer = await socket
         .timeout(REQUEST_TIMEOUT_MS)
         .emitWithAck('game:start', state.roomId);
+      if (!answer.ok) setRefusal(refusalOf(m, 'start', answer.error.type));
     } catch {
-      // No answer; the button comes back so the host can try again.
+      setRefusal(m.room.refused.noAnswer);
     }
     setStarting(false);
-  }, [socket, state.roomId]);
+  }, [socket, state.roomId, m]);
 
   // Moves between the table and the spectator seats; the snapshot that
-  // follows shows where the viewer sits now, and a refusal changes nothing.
+  // follows shows where the viewer sits now, and a refusal says why not.
   const move = useCallback(
     async (event: 'room:watch' | 'room:sit') => {
       setMoving(true);
+      setRefusal(null);
       try {
-        await socket
+        const answer = await socket
           .timeout(REQUEST_TIMEOUT_MS)
           .emitWithAck(event, state.roomId);
+        if (!answer.ok) setRefusal(refusalOf(m, event, answer.error.type));
       } catch {
-        // No answer; the button comes back so the viewer can try again.
+        setRefusal(m.room.refused.noAnswer);
       }
       setMoving(false);
     },
-    [socket, state.roomId],
+    [socket, state.roomId, m],
   );
 
   const seat = state.playerList[playerId];
@@ -380,6 +389,7 @@ function SeatedRoom({
             watch: () => void move('room:watch'),
             sit: () => void move('room:sit'),
             moving,
+            refusal,
           }
         : null,
     [
@@ -398,6 +408,7 @@ function SeatedRoom({
       starting,
       move,
       moving,
+      refusal,
     ],
   );
 
@@ -446,4 +457,27 @@ function SeatedRoom({
       />
     </RoomContext.Provider>
   );
+}
+
+/** Why a start or a move between seats was refused, in the viewer's words. */
+function refusalOf(
+  m: Messages,
+  request: 'start' | 'room:watch' | 'room:sit',
+  type: ErrorType,
+): string {
+  const refused = m.room.refused;
+  switch (type) {
+    case 'notEnoughPlayers':
+    case 'notRoomOwner':
+    case 'gameAlreadyStarted':
+      return refused[type];
+    // The one way a move is refused for a room that is still open: the
+    // seats it asked for are taken.
+    case 'roomNotOpen':
+      if (request === 'room:sit') return refused.seatsTaken;
+      if (request === 'room:watch') return refused.spectatorSeatsTaken;
+      return refused.failed;
+    default:
+      return refused.failed;
+  }
 }

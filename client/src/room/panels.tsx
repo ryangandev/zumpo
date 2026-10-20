@@ -25,12 +25,18 @@ export function RoomPanel({
   notice?: ReactNode;
   actions?: ReactNode;
 }) {
+  const { refusal } = useRoomContext();
   return (
     <section className={styles.panel} aria-labelledby="room-panel-title">
       <h2 id="room-panel-title" className={styles.title}>
         {title}
       </h2>
       <p className={styles.body}>{children}</p>
+      {refusal && (
+        <Notice tone="error" className={styles.notice}>
+          {refusal}
+        </Notice>
+      )}
       {notice && <Notice className={styles.notice}>{notice}</Notice>}
       {actions && <div className={styles.actions}>{actions}</div>}
     </section>
