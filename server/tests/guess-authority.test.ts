@@ -1,5 +1,5 @@
 import { textOf } from './helpers/test-server.js';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   collectChat,
   collectStates,
@@ -257,6 +257,16 @@ describe('guess authority', () => {
       playerId: speaker.playerId,
       text: 'my turn to guess',
     });
+  });
+
+  it('never writes the word in the server log', async () => {
+    const logged = vi.spyOn(console, 'log');
+    const { word } = await playToDrawingPhase(harness);
+
+    const lines = logged.mock.calls.map((args) => args.join(' '));
+    logged.mockRestore();
+    expect(lines.some((line) => line.includes('is drawing'))).toBe(true);
+    expect(lines.filter((line) => line.includes(word))).toEqual([]);
   });
 
   it('refuses a message from somebody who is not in the room', async () => {
