@@ -54,6 +54,30 @@ describe('the HTTP side', () => {
     expect(stale.status).toBe(404);
     expect(current.status).toBe(200);
     expect(await page.text()).toBe('<!doctype html>');
+
+    // A built file is kept for good; the page is asked about every time, so
+    // the next visit after a deploy gets the new build.
+    expect(current.headers.get('cache-control')).toBe(
+      'public, max-age=31536000, immutable',
+    );
+    expect(page.headers.get('cache-control')).toBe('no-cache');
+    const root = await fetch(`${harness.url}/`);
+    expect(root.headers.get('cache-control')).toBe('no-cache');
+  });
+
+  it('says what a page may load and who may frame it, and not what it runs on', async () => {
+    harness = await startTestServer();
+
+    const response = await fetch(`${harness.url}/healthz`);
+
+    expect(response.headers.get('x-powered-by')).toBeNull();
+    expect(response.headers.get('x-content-type-options')).toBe('nosniff');
+    expect(response.headers.get('referrer-policy')).toBe(
+      'strict-origin-when-cross-origin',
+    );
+    expect(response.headers.get('content-security-policy')).toContain(
+      "frame-ancestors 'none'",
+    );
   });
 
   it('sends no CORS headers with what it serves', async () => {

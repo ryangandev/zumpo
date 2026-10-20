@@ -65,6 +65,42 @@ const DEFAULT_MAX_ROOMS = 500;
  */
 const MAX_PACKET_BYTES = 16 * 1024;
 
+/**
+ * What a page from here may load and who may frame it. Everything comes from
+ * this origin: the bundle, its fonts, the socket. Styles allow inline ones,
+ * because React writes `style` attributes for a few computed sizes and
+ * positions.
+ */
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+
+const SECURITY_HEADERS = {
+  'Content-Security-Policy': CONTENT_SECURITY_POLICY,
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  // For browsers that predate `frame-ancestors`.
+  'X-Frame-Options': 'DENY',
+};
+
+/**
+ * A built file's name carries a hash of its contents, so it never changes and
+ * may be kept for a year; anything else, the page above all, is asked about
+ * each time, so a deploy reaches the next visit.
+ */
+const IMMUTABLE = 'public, max-age=31536000, immutable';
+const REVALIDATE = 'no-cache';
+
 /** How long closing waits for connections to take their last packet. */
 const CLOSE_FLUSH_MS = 1000;
 
@@ -166,7 +202,22 @@ const createZumpoServer = (
     options.clientFolder ??
     path.join(path.dirname(url.fileURLToPath(import.meta.url)), '..', 'public');
 
-  app.use(express.static(publicStaticFolder));
+  app.disable('x-powered-by');
+  app.use((_req: Request, res: Response, next: () => void) => {
+    res.set(SECURITY_HEADERS);
+    next();
+  });
+
+  app.use(
+    express.static(publicStaticFolder, {
+      setHeaders: (res, filePath) => {
+        const built = path
+          .relative(publicStaticFolder, filePath)
+          .startsWith(`assets${path.sep}`);
+        res.set('Cache-Control', built ? IMMUTABLE : REVALIDATE);
+      },
+    }),
+  );
 
   const httpServer = createServer(app);
   const io: IoServer = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -342,6 +393,7 @@ const createZumpoServer = (
       res.sendStatus(404);
     });
     app.get('/{*splat}', (_req: Request, res: Response) => {
+      res.set('Cache-Control', REVALIDATE);
       res.sendFile('index.html', { root: publicStaticFolder });
     });
   } else {

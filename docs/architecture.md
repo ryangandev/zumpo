@@ -138,6 +138,8 @@ The server decides everything a player could gain by lying about.
 - **One address cannot hold the server.** Before a connection is let in, [`connection-gate.ts`](../server/libs/connection-gate.ts) holds each address to 30 open connections, 60 new ones a minute and 10 rooms it made, and everybody together to 2,000 connections and 10,000 identities; a returning player is always let back.
   Behind a proxy every connection comes from the proxy, so the client's address is read from the header `CLIENT_IP_HEADER` names.
   When that header is missing, only the totals apply: one bucket shared by everybody would shut the site.
+- **Every response says what a page may load.** A Content Security Policy allows only this origin (inline styles aside, for React's `style` attributes) and no framing, with `nosniff` and a strict referrer, and Express no longer names itself.
+  A built file under `/assets` carries a hash in its name and is cached for a year as immutable; the page is `no-cache`, so the visit after a deploy loads the new build.
 - **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
 - **The drawing is server state too.** The stroke list every client builds is built once more on the server, so a player arriving mid-turn gets the board, and undo is "drop the last stroke" rather than a full-canvas image.
 
