@@ -13,6 +13,7 @@ import {
   settle,
   SLOW_DRAWING,
   startGame,
+  FAST_PHASES,
   startTestServer,
   syncRoom,
   waitFor,
@@ -550,5 +551,54 @@ describe('reconnecting to a room', () => {
     expect(
       harness.server.rooms.get(roomId)?.playerList[alice.playerId]?.isConnected,
     ).toBe(true);
+  });
+});
+
+describe('a Draw & Guess player away for a whole round', () => {
+  let harness: TestServer;
+
+  beforeEach(async () => {
+    // A grace far longer than the game, so the absent player stays seated.
+    harness = await startTestServer(FAST_PHASES, 30);
+  });
+
+  afterEach(async () => {
+    await harness.teardown();
+  });
+
+  it('skips the turns of players away at the end of a round, and plays on', async () => {
+    const alice = await harness.connect();
+    const bob = await harness.connect();
+    const carol = await harness.connect();
+    const roomId = await createRoom(alice, { username: 'Alice', rounds: 2 });
+    await joinRoom(bob, roomId, 'Bob');
+    await joinRoom(carol, roomId, 'Carol');
+
+    // Carol is away the whole time, inside her grace: every round reaches
+    // a point where only she is owed a turn.
+    carol.close();
+    await settle(100);
+
+    const roundTwo = waitForDrawState(
+      alice,
+      (s) => s.currentRound === 2 && s.phase === 'choosing',
+      9000,
+    );
+    await startGame(alice, roomId);
+    const state = await roundTwo;
+
+    expect(state.isGameStarted).toBe(true);
+    expect(state.currentDrawer).not.toBe(carol.playerId);
+    expect(
+      harness.server.rooms.get(roomId)?.playerList[carol.playerId],
+    ).toBeDefined();
+
+    const ended = await waitForDrawState(
+      alice,
+      (s) => s.lastGame !== null,
+      9000,
+    );
+    expect(ended.lastGame?.endedEarly).toBe(false);
+    expect(ended.lastGame?.rounds).toBe(2);
   });
 });
