@@ -12,6 +12,13 @@ services:
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /healthz
+    # Every connection arrives through Render's proxy, which is behind
+    # Cloudflare; the client's own address, for the per-address limits, is in
+    # the header Cloudflare sets. If it is ever missing, the server logs it
+    # once and holds connections to the totals only.
+    envVars:
+      - key: CLIENT_IP_HEADER
+        value: cf-connecting-ip
     # Deploy a commit on main only once CI has passed on it.
     autoDeployTrigger: checksPass
     domains:

@@ -135,6 +135,9 @@ The server decides everything a player could gain by lying about.
   Its rules are still one copy: anything a room plays too, such as board sizes or a deal, comes from `shared/*.ts`.
 - **Every inbound event is validated** with zod ([`validation.ts`](../server/libs/validation.ts)) before it reaches game state, and **rate-limited** before that ([`rate-limit.ts`](../server/libs/rate-limit.ts)): one token bucket per kind of event, per socket, because a drawing phase is a stream of coordinates and joining a room is a click.
 - **What a client can make the server hold is bounded, not only how fast.** A packet may be at most 16 KB (socket.io's default is 1 MB, parsed in full before zod sees it), one player holds one seat, and the server holds at most 500 rooms; past that, `room:create` is refused with `tooManyRooms` ([`app.ts`](../server/app.ts)).
+- **One address cannot hold the server.** Before a connection is let in, [`connection-gate.ts`](../server/libs/connection-gate.ts) holds each address to 30 open connections, 60 new ones a minute and 10 rooms it made, and everybody together to 2,000 connections and 10,000 identities; a returning player is always let back.
+  Behind a proxy every connection comes from the proxy, so the client's address is read from the header `CLIENT_IP_HEADER` names.
+  When that header is missing, only the totals apply: one bucket shared by everybody would shut the site.
 - **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
 - **The drawing is server state too.** The stroke list every client builds is built once more on the server, so a player arriving mid-turn gets the board, and undo is "drop the last stroke" rather than a full-canvas image.
 

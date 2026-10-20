@@ -26,6 +26,7 @@ const lobbyEventsHandler = (
   registry: RoomRegistry,
   membership: RoomMembership,
   maxRooms: number,
+  roomsPerAddress: number,
 ) => {
   onClientEvent(socket, 'lobby:subscribe', (...rawArgs: unknown[]) => {
     const validated = parseArgs(gameTypeOnly, rawArgs, 'lobby:subscribe');
@@ -98,8 +99,23 @@ const lobbyEventsHandler = (
       return;
     }
 
-    // Identity comes from the connection, never from the payload.
+    // Nor one machine all of them. A room it made in place of the one it is
+    // in does not count against it: that one is about to go.
+    const address = socket.data.address;
     const playerId = socket.data.playerId;
+    if (address !== undefined) {
+      const made = [...registry.rooms.values()].filter(
+        (room) => room.createdFrom === address && !room.playerList[playerId],
+      ).length;
+      if (made >= roomsPerAddress) {
+        reply(
+          failure('tooManyRooms', 'This address has as many rooms as it may.'),
+        );
+        return;
+      }
+    }
+
+    // Identity comes from the connection, never from the payload.
     membership.leaveAllBut(playerId);
 
     const roomId = generateRoomId();
@@ -118,6 +134,7 @@ const lobbyEventsHandler = (
       phaseEndsAt: 0,
       chat: { nextId: 1, messages: [] },
       game: module.createState(gameSettings),
+      ...(address !== undefined && { createdFrom: address }),
     };
 
     registry.add(room);

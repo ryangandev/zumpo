@@ -26,6 +26,8 @@ interface SocketData {
    * any of its events are read. Identity comes from here, never a payload.
    */
   playerId: string;
+  /** Where it connects from, for the per-address limits; unknown if absent. */
+  address?: string;
 }
 
 /** The socket.io server, typed on the shared contract. */

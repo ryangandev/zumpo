@@ -34,6 +34,13 @@ import {
   type PlayerSessionRegistry,
 } from './libs/player-session.js';
 import { createRateLimiter } from './libs/rate-limit.js';
+import {
+  addressOf,
+  createConnectionGate,
+  DEFAULT_CONNECTION_LIMITS,
+  type ConnectionLimits,
+} from './libs/connection-gate.js';
+import { handshakeAuth } from './libs/validation.js';
 import { splitAck, type IoServer } from './libs/rooms/emit.js';
 import { invalidRequest } from './models/error.js';
 import type {
@@ -91,6 +98,13 @@ interface CreateZumpoServerOptions {
   graceInSeconds?: number;
   /** The most rooms open at once. Lowered by tests. */
   maxRooms?: number;
+  /** What one address, and everybody, may hold. Lowered by tests. */
+  connectionLimits?: Partial<ConnectionLimits>;
+  /**
+   * The header a proxy in front puts the client's address in. Defaults to
+   * `process.env.CLIENT_IP_HEADER`; unset, it is the socket's own address.
+   */
+  clientIpHeader?: string;
 }
 
 interface ZumpoServer {
@@ -132,6 +146,8 @@ const createZumpoServer = (
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
     graceInSeconds,
     maxRooms = DEFAULT_MAX_ROOMS,
+    connectionLimits,
+    clientIpHeader = process.env.CLIENT_IP_HEADER || undefined,
   } = options;
 
   const app = express();
@@ -186,6 +202,42 @@ const createZumpoServer = (
     graceInSeconds,
   );
 
+  const gate = createConnectionGate({
+    ...DEFAULT_CONNECTION_LIMITS,
+    ...connectionLimits,
+  });
+  let warnedNoAddress = false;
+
+  // Before a connection is let in at all: how much does its address hold
+  // already? A refused one never mints an identity.
+  io.use((socket, next) => {
+    const address = addressOf(socket.handshake, clientIpHeader);
+    if (address === undefined && !warnedNoAddress) {
+      warnedNoAddress = true;
+      console.warn(
+        `No client address in "${clientIpHeader}": only the totals apply.`,
+      );
+    }
+
+    // A returning player already holds their identity; a new one needs room.
+    const auth = handshakeAuth.safeParse(socket.handshake.auth);
+    const claim = auth.success ? auth.data.identity : null;
+    const returning =
+      claim !== null && sessions.resume(claim.playerId, claim.token) !== null;
+    if (!returning && sessions.size() >= gate.limits.sessions) {
+      next(new Error('Zumpo is full right now.'));
+      return;
+    }
+
+    if (!gate.admit(address)) {
+      next(new Error('Too many connections. Try again in a moment.'));
+      return;
+    }
+    socket.data.address = address;
+    socket.once('disconnect', () => gate.release(address));
+    next();
+  });
+
   io.on('connection', (socket) => {
     console.log('a user is connected: ' + socket.id);
 
@@ -231,7 +283,13 @@ const createZumpoServer = (
 
     // The room layer: lobbies, seats, ownership, chat. None of it knows which
     // game it is running.
-    lobbyEventsHandler(socket, registry, membership, maxRooms);
+    lobbyEventsHandler(
+      socket,
+      registry,
+      membership,
+      maxRooms,
+      gate.limits.roomsPerAddress,
+    );
     roomEventsHandler(socket, registry, membership);
     chatEventsHandler(socket, registry);
 
