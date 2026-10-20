@@ -16,7 +16,6 @@ const clientDepartureOnDisconnectHandler = (
   membership: RoomMembership,
 ) => {
   socket.on('disconnect', () => {
-    console.log('client: ' + socket.id + ' disconnected');
     guard(`Player ${socket.data.playerId} disconnecting`, () =>
       membership.handleDisconnect(socket.data.playerId, socket.id),
     );

@@ -303,8 +303,6 @@ const createZumpoServer = (
   });
 
   io.on('connection', (socket) => {
-    console.log('a user is connected: ' + socket.id);
-
     // Before anything else looks at a packet: how often may this socket speak?
     // Every handler below checks the *shape* of what it is sent; this is what
     // bounds how much of it arrives. A dropped packet is never handed on. A
