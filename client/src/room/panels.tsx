@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import { Button, ButtonLink, Notice, PlayerRow } from '../ui';
-import { gamePath, scoreOf } from '../games/catalog';
+import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
@@ -147,6 +147,7 @@ export function WaitingPanel({
   const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
+  const { minPlayers } = gameInfo(state.gameType);
   const count = Object.keys(state.playerList).length;
   const picked = usePickedName();
 
@@ -168,7 +169,7 @@ export function WaitingPanel({
       </RoomPanel>
     );
   }
-  if (count < 2) {
+  if (count < minPlayers) {
     return (
       <RoomPanel
         title={aloneTitle}
@@ -181,7 +182,7 @@ export function WaitingPanel({
           </>
         }
       >
-        {m.room.needsPlayers(gameName)}
+        {m.room.needsPlayers(gameName, minPlayers)}
       </RoomPanel>
     );
   }
@@ -263,7 +264,7 @@ export function ResultsFrame({
     </>
   ) : starting ? (
     <StatusLine>{m.room.starting}</StatusLine>
-  ) : count >= 2 ? (
+  ) : count >= gameInfo(state.gameType).minPlayers ? (
     <>
       <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
       <InviteButton />

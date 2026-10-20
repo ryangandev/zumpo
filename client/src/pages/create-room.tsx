@@ -181,7 +181,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
               )
             : m.createRoom.seatsHelper(game.maxPlayers)
         }
-        options={seatCounts(game.maxPlayers).map((count) => ({
+        options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
           value: count,
           label: m.createRoom.players(count),
         }))}
@@ -293,5 +293,5 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
 }
 
 /** 2, 3, … up to `max`: every room needs two to start. */
-const seatCounts = (max: number) =>
-  Array.from({ length: max - 1 }, (_, index) => index + 2);
+const seatCounts = (min: number, max: number) =>
+  Array.from({ length: max - min + 1 }, (_, index) => index + min);

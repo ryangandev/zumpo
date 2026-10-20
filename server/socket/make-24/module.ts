@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { Make24Settings, Make24Step } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
@@ -21,8 +22,8 @@ const createMake24Module = (
 
   return {
     gameType: 'make-24',
-    minPlayers: 2,
-    maxPlayers: 8,
+    minPlayers: SEATS['make-24'].min,
+    maxPlayers: SEATS['make-24'].max,
 
     parseSettings: (raw) =>
       parseArgs(handsSetting, raw, 'room:create (make-24)'),
@@ -37,7 +38,7 @@ const createMake24Module = (
     handleChat: (room, playerId) =>
       engine.mayChat(room, playerId) ? 'chat' : 'blocked',
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     onDisconnect: (room) => engine.handleDisconnect(room),

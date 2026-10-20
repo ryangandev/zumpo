@@ -69,8 +69,8 @@ export const room: typeof en = {
   pickedName: (name) => `你现在叫 ${name}。起一个朋友们认得出的名字吧。`,
   waitingForHost: (name) => `等待 ${name} 开始游戏。`,
   guestSetup: (setup) => `${setup}只有房主可以开始游戏。`,
-  needsPlayers: (game) =>
-    `${game}至少需要 2 人。分享房间，邀请朋友加入就能开始。`,
+  needsPlayers: (game, fewest) =>
+    `${game}至少需要 ${fewest} 人。分享房间，邀请朋友加入就能开始。`,
   everyoneHere: '大家到齐了吗？',
   starting: '正在开始游戏…',
   start: '开始游戏',

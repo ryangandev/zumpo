@@ -1,8 +1,8 @@
+import { SEATS } from '../../../shared/seats.js';
 import type {
   MinesweeperPickResult,
   MinesweeperSettings,
 } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
@@ -23,8 +23,6 @@ import { mineProbabilities } from './probability.js';
 import { pointsForPick } from './scoring.js';
 import type { MinesweeperState } from './state.js';
 import { itemAt } from '../../../shared/list.js';
-
-const MIN_PLAYERS_TO_START = 2;
 
 type MinesweeperRoom = Room<MinesweeperState>;
 
@@ -68,26 +66,7 @@ const createMinesweeperGameEngine = (
   const roomOf = (roomId: string): MinesweeperRoom | undefined =>
     ctx.rooms.ofType<MinesweeperState>(roomId, 'minesweeper');
 
-  const startGame = (room: MinesweeperRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: MinesweeperRoom) => {
     // A fresh minefield every game, so a room that plays twice is not playing
     // the same board with the answers already known.
     room.game.board = createBoard(room.game.difficulty);
@@ -298,7 +277,7 @@ const createMinesweeperGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['minesweeper'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -330,5 +309,5 @@ const createMinesweeperGameEngine = (
 
 type MinesweeperGameEngine = ReturnType<typeof createMinesweeperGameEngine>;
 
-export { createMinesweeperGameEngine, MIN_PLAYERS_TO_START };
+export { createMinesweeperGameEngine };
 export type { MinesweeperGameEngine, MinesweeperRoom, MinesweeperSettings };

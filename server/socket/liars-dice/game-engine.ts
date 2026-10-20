@@ -1,9 +1,9 @@
+import { SEATS } from '../../../shared/seats.js';
 import { randomInt } from 'node:crypto';
 import type {
   LiarsDiceSettings,
   LiarsDiceStanding,
 } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount, seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext } from '../../libs/rooms/types.js';
 import {
@@ -28,7 +28,6 @@ import {
 } from './state.js';
 import { itemAt } from '../../../shared/list.js';
 
-const MIN_PLAYERS_TO_START = 2;
 /** Sorts a player who kept dice after everybody who went out. */
 const STILL_IN = Number.MAX_SAFE_INTEGER;
 
@@ -82,26 +81,7 @@ const createLiarsDiceGameEngine = (
   const roomOf = (roomId: string): LiarsDiceRoom | undefined =>
     ctx.rooms.ofType(roomId, 'liars-dice');
 
-  const startGame = (room: LiarsDiceRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: LiarsDiceRoom) => {
     const game = room.game;
     game.order = shuffle(Object.keys(room.playerList), random);
     game.round = 0;
@@ -315,7 +295,7 @@ const createLiarsDiceGameEngine = (
     if (!room.isGameStarted) return;
     const game = room.game;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['liars-dice'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -356,5 +336,5 @@ const createLiarsDiceGameEngine = (
 
 type LiarsDiceGameEngine = ReturnType<typeof createLiarsDiceGameEngine>;
 
-export { createLiarsDiceGameEngine, MIN_PLAYERS_TO_START };
+export { createLiarsDiceGameEngine };
 export type { LiarsDiceGameEngine, LiarsDiceRoom, LiarsDiceSettings };

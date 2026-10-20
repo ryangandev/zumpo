@@ -1,9 +1,9 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { HushSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
 import { parseArgs } from '../../libs/validation.js';
 import type { HushDurationsInSeconds } from '../../libs/game-clock.js';
-import { MAX_PLAYERS, MIN_PLAYERS } from '../../../shared/hush.js';
 import { createHushGameEngine } from './game-engine.js';
 import { createState, toLobbyInfo, toRoomState } from './state.js';
 import type { HushState } from './state.js';
@@ -22,8 +22,8 @@ const createHushModule = (
 
   return {
     gameType: 'hush',
-    minPlayers: MIN_PLAYERS,
-    maxPlayers: MAX_PLAYERS,
+    minPlayers: SEATS['hush'].min,
+    maxPlayers: SEATS['hush'].max,
 
     parseSettings: (raw) =>
       parseArgs(noSettings, raw, 'room:create (hush)') as HushSettings | null,
@@ -37,7 +37,7 @@ const createHushModule = (
     // Saying a number would give the level away, so a level is played hushed.
     handleChat: (room) => (engine.mayChat(room) ? 'chat' : 'blocked'),
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     onDisconnect: (room, playerId) => engine.handleDisconnect(room, playerId),

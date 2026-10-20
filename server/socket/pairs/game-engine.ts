@@ -1,5 +1,5 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { PairsSettings } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount, seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
@@ -10,8 +10,6 @@ import {
 import { dealDeck, PAIRS_BOARDS, shuffle } from '../../../shared/pairs.js';
 import { pairsFound, playerAfter, type PairsState } from './state.js';
 import { itemAt } from '../../../shared/list.js';
-
-const MIN_PLAYERS_TO_START = 2;
 
 type PairsRoom = Room<PairsState>;
 
@@ -27,26 +25,7 @@ const createPairsGameEngine = (
   const roomOf = (roomId: string): PairsRoom | undefined =>
     ctx.rooms.ofType<PairsState>(roomId, 'pairs');
 
-  const startGame = (room: PairsRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: PairsRoom) => {
     const game = room.game;
     game.deck = dealDeck(game.board, Math.random);
     game.matched = game.deck.map(() => false);
@@ -183,7 +162,7 @@ const createPairsGameEngine = (
   const handlePlayerDeparture = (room: PairsRoom, playerId: string) => {
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['pairs'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -205,5 +184,5 @@ const createPairsGameEngine = (
 
 type PairsGameEngine = ReturnType<typeof createPairsGameEngine>;
 
-export { createPairsGameEngine, MIN_PLAYERS_TO_START };
+export { createPairsGameEngine };
 export type { PairsGameEngine, PairsRoom, PairsSettings };

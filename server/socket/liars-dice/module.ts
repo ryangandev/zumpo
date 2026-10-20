@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { LiarsDiceSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
@@ -22,8 +23,8 @@ const createLiarsDiceModule = (
 
   return {
     gameType: 'liars-dice',
-    minPlayers: 2,
-    maxPlayers: 6,
+    minPlayers: SEATS['liars-dice'].min,
+    maxPlayers: SEATS['liars-dice'].max,
 
     parseSettings: (raw) =>
       parseArgs(diceSetting, raw, 'room:create (liars-dice)'),
@@ -34,7 +35,7 @@ const createLiarsDiceModule = (
     // The cups, the bids and the reveal all travel in the snapshot.
     syncTo: () => {},
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     // A turn does not wait for a dropped player, and is not skipped: its clock
