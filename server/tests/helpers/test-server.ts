@@ -192,6 +192,9 @@ const startTestServer = async (
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
     graceInSeconds,
+    // Every test client comes from this machine; the limits' own tests turn
+    // them back on.
+    perAddressLimits: false,
     ...overrides,
   });
 

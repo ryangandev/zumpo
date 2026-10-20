@@ -25,6 +25,8 @@ export async function startServer(
       ...env,
       NODE_ENV: 'production',
       PORT: String(port),
+      // Every player in a run is this one machine.
+      PER_ADDRESS_LIMITS: 'off',
     },
     stdio: ['ignore', 'pipe', 'inherit'],
   });

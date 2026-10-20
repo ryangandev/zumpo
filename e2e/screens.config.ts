@@ -29,6 +29,8 @@ export default defineConfig({
     env: {
       NODE_ENV: 'production',
       PORT: String(PORT),
+      // Every player in a run is this one machine.
+      PER_ADDRESS_LIMITS: 'off',
       DAILY_WORD_SEED: process.env.DAILY_WORD_SEED,
     },
   },

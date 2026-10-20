@@ -103,14 +103,10 @@ describe('what one player and one server may hold', () => {
 });
 
 const withLimits = (overrides: CreateZumpoServerOptions) =>
-  startTestServer(
-    FAST_PHASES,
-    0.6,
-    FAST_MINESWEEPER,
-    FAST_MAKE24,
-    FAST_PAIRS,
-    overrides,
-  );
+  startTestServer(FAST_PHASES, 0.6, FAST_MINESWEEPER, FAST_MAKE24, FAST_PAIRS, {
+    perAddressLimits: true,
+    ...overrides,
+  });
 
 const createFrom = (client: TestClient, roomName: string) =>
   client.timeout(3000).emitWithAck('room:create', {

@@ -107,6 +107,12 @@ interface CreateZumpoServerOptions {
    * `process.env.CLIENT_IP_HEADER`; unset, it is the socket's own address.
    */
   clientIpHeader?: string;
+  /**
+   * Whether each address is held to its own limits, beside the totals.
+   * Defaults to on unless `process.env.PER_ADDRESS_LIMITS` is `off`, as for a
+   * test run, whose players all come from one machine.
+   */
+  perAddressLimits?: boolean;
 }
 
 interface ZumpoServer {
@@ -150,6 +156,7 @@ const createZumpoServer = (
     maxRooms = DEFAULT_MAX_ROOMS,
     connectionLimits,
     clientIpHeader = process.env.CLIENT_IP_HEADER || undefined,
+    perAddressLimits = process.env.PER_ADDRESS_LIMITS !== 'off',
   } = options;
 
   const app = express();
@@ -214,8 +221,10 @@ const createZumpoServer = (
   // Before a connection is let in at all: how much does its address hold
   // already? A refused one never mints an identity.
   io.use((socket, next) => {
-    const address = addressOf(socket.handshake, clientIpHeader);
-    if (address === undefined && !warnedNoAddress) {
+    const address = perAddressLimits
+      ? addressOf(socket.handshake, clientIpHeader)
+      : undefined;
+    if (perAddressLimits && address === undefined && !warnedNoAddress) {
       warnedNoAddress = true;
       console.warn(
         `No client address in "${clientIpHeader}": only the totals apply.`,
