@@ -2,7 +2,7 @@ import type { OwnerInfo } from '../../../shared/wire-types.js';
 import { reconnectGraceInSeconds } from '../game-clock.js';
 import type { PlayerSessionRegistry } from '../player-session.js';
 import type { RoomRegistry } from './registry.js';
-import { seatCount } from './seats.js';
+import { isSpectator, memberCount, memberOf } from './seats.js';
 import type { Room } from './types.js';
 import { playerChannel, type IoServer } from './emit.js';
 
@@ -67,27 +67,34 @@ const createRoomMembership = (
   };
 
   /**
-   * Removes the seat for good and lets the game deal with a stranded turn.
-   * Shared by an explicit leave and by a grace period running out.
+   * Removes the seat, or the spectator seat, for good and lets the game deal
+   * with a stranded turn. Shared by an explicit leave and by a grace period
+   * running out.
    */
   const releaseSeat = (room: Room, playerId: string) => {
     const roomId = room.roomId;
     const gameType = room.gameType;
     const module = registry.moduleOf(room);
     const wasOwner = room.owner.playerId === playerId;
-    const username = room.playerList[playerId]?.username ?? '';
+    const spectating = isSpectator(room, playerId);
+    const username = memberOf(room, playerId)?.username ?? '';
 
-    delete room.playerList[playerId];
+    if (spectating) delete room.spectators[playerId];
+    else delete room.playerList[playerId];
 
-    if (seatCount(room) === 0) {
+    // A room lasts while anybody is in it: spectators left on their own can
+    // still take the seats and play.
+    if (memberCount(room) === 0) {
       registry.remove(room);
       return;
     }
 
     if (wasOwner) {
-      const nextOwnerId = Object.keys(room.playerList)[0];
+      // The crown goes to somebody at the table, if anybody is.
+      const nextOwnerId =
+        Object.keys(room.playerList)[0] ?? Object.keys(room.spectators)[0];
       const nextOwner: OwnerInfo = {
-        username: room.playerList[nextOwnerId].username,
+        username: memberOf(room, nextOwnerId)?.username ?? '',
         playerId: nextOwnerId,
       };
       room.owner = nextOwner;
@@ -105,8 +112,8 @@ const createRoomMembership = (
 
     // A departure can strand a turn: the player may have been the one whose
     // move the room was waiting on, or the room may have dropped below the
-    // game's minimum.
-    module?.onDeparture(room, playerId);
+    // game's minimum. A spectator was never part of the game.
+    if (!spectating) module?.onDeparture(room, playerId);
     registry.lookup.emitState(room);
 
     // Built after the departure is handled, so an ended game shows as 'Open'
@@ -119,7 +126,7 @@ const createRoomMembership = (
     const room = registry.lookup.get(roomId);
     if (!room) return;
     // Leaving a room you were never in used to run the whole departure anyway.
-    if (!room.playerList[playerId]) return;
+    if (!memberOf(room, playerId)) return;
 
     cancelGrace(roomId, playerId);
 
@@ -130,7 +137,8 @@ const createRoomMembership = (
   };
 
   /**
-   * A player sits at one table at a time, so taking a seat gives up any other.
+   * A player is in one room at a time, at its table or watching, so taking a
+   * place gives up any other.
    * The client leaves a room on its way out, but only while connected: a
    * player who navigated away offline still holds that seat, and would hold it
    * through the grace period while already playing somewhere else.
@@ -144,7 +152,8 @@ const createRoomMembership = (
   /**
    * A connection dropped. The player keeps their seat, marked away, until
    * either they come back or the grace period expires. A connection that
-   * another had already taken over leaves nobody away.
+   * another had already taken over leaves nobody away. A spectator's place is
+   * held the same way, but quietly: nothing in the game waited on them.
    */
   const handleDisconnect = (playerId: string, socketId: string) => {
     if (!sessions.detach(playerId, socketId)) return;
@@ -162,19 +171,22 @@ const createRoomMembership = (
     const touchedGames = new Set(held.map((room) => room.gameType));
 
     for (const room of held) {
-      const player = room.playerList[playerId];
-      player.isConnected = false;
-
+      const member = memberOf(room, playerId);
+      if (!member) continue;
+      member.isConnected = false;
       registry.lookup.emitState(room);
-      registry.lookup.announce(room.roomId, 'alert', {
-        type: 'room:disconnected',
-        name: player.username,
-      });
 
-      // The seat waits for them. So, briefly, may their turn - that decision
-      // belongs to the game, which is the only thing that knows whether there
-      // is anything worth coming back to.
-      registry.moduleOf(room)?.onDisconnect(room, playerId);
+      if (!isSpectator(room, playerId)) {
+        registry.lookup.announce(room.roomId, 'alert', {
+          type: 'room:disconnected',
+          name: member.username,
+        });
+
+        // The seat waits for them. So, briefly, may their turn - that decision
+        // belongs to the game, which is the only thing that knows whether
+        // there is anything worth coming back to.
+        registry.moduleOf(room)?.onDisconnect(room, playerId);
+      }
 
       const key = graceKey(room.roomId, playerId);
       graceTimers.set(
@@ -185,7 +197,7 @@ const createRoomMembership = (
           // The room may be gone, and the player may have come back or left
           // properly, in the time we spent waiting.
           const current = registry.lookup.get(room.roomId);
-          const seat = current?.playerList[playerId];
+          const seat = current ? memberOf(current, playerId) : undefined;
           if (!current || !seat || seat.isConnected) return;
 
           releaseSeat(current, playerId);
@@ -214,20 +226,22 @@ const createRoomMembership = (
     }
 
     const returning = held.filter(
-      (room) => !room.playerList[playerId].isConnected,
+      (room) => memberOf(room, playerId)?.isConnected === false,
     );
     const touchedGames = new Set(returning.map((room) => room.gameType));
 
     for (const room of returning) {
       cancelGrace(room.roomId, playerId);
 
-      const player = room.playerList[playerId];
-      player.isConnected = true;
-
+      const member = memberOf(room, playerId);
+      if (!member) continue;
+      member.isConnected = true;
       registry.lookup.emitState(room);
+      if (isSpectator(room, playerId)) continue;
+
       registry.lookup.announce(room.roomId, 'system', {
         type: 'room:reconnected',
-        name: player.username,
+        name: member.username,
       });
 
       // If the room was holding a turn open for them, it can stop.

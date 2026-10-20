@@ -58,6 +58,23 @@ interface PlayerInfo {
   isConnected: boolean;
 }
 
+/**
+ * Somebody watching a room from its spectator seats: they see what any player
+ * may see of the game, and can talk, but play no part in it. Watching is not
+ * a seat: it holds no score, and a game never waits for a spectator.
+ */
+interface SpectatorInfo {
+  username: string;
+  /** False while their connection is down; their place is held meanwhile. */
+  isConnected: boolean;
+}
+
+/**
+ * Where somebody sits in a room: at the table, or in the spectator seats,
+ * which are bounded by `MAX_SPECTATORS` in `shared/room.ts`.
+ */
+type RoomSeat = 'player' | 'spectator';
+
 interface OwnerInfo {
   username: string;
   playerId: string;
@@ -198,6 +215,8 @@ interface LobbyRoomInfo {
   currentPlayerCount: number;
   maxPlayers: number;
   hasPassword: boolean;
+  /** How many are watching, out of `MAX_SPECTATORS`. */
+  spectatorCount: number;
 }
 
 interface DrawAndGuessLobbyRoomInfo extends LobbyRoomInfo {
@@ -258,6 +277,11 @@ type AnyLobbyRoomInfo =
  */
 interface RoomState extends LobbyRoomInfo {
   playerList: Record<string, PlayerInfo>;
+  /**
+   * Who is watching, keyed by player id like `playerList`. A viewer in here
+   * rather than there is a spectator, and is sent what any player may see.
+   */
+  spectators: Record<string, SpectatorInfo>;
   isGameStarted: boolean;
   /**
    * Time left in the current phase, relative rather than absolute so that a
@@ -810,6 +834,10 @@ type ChatMessageKind = 'player' | 'system' | 'alert' | 'success';
 type RoomNotice =
   | { type: 'room:created'; name: string }
   | { type: 'room:joined'; name: string }
+  /** Came in to watch, or gave up a seat to watch. */
+  | { type: 'room:watching'; name: string }
+  /** A spectator took a seat at the table. */
+  | { type: 'room:seated'; name: string }
   | { type: 'room:renamed'; before: string; name: string }
   | { type: 'room:owner-left'; name: string; owner: string }
   | { type: 'room:left'; name: string }
@@ -913,13 +941,26 @@ interface ClientToServerEvents {
     request: RoomCreateRequest,
     ack: Ack<Result<{ roomId: string }>>,
   ) => void;
-  /** Taking a seat, or taking back one this player still holds. */
+  /**
+   * Taking a seat, or taking back one this player still holds. `seat` asks
+   * for the table or the spectator seats; without it a player sits at the
+   * table when it is open and watches when it is not (a game under way, or
+   * every seat taken). `roomNotOpen` when there is no place of that kind.
+   */
   'room:join': (
     roomId: string,
     username: string,
     password: string,
+    seat: RoomSeat | null,
     ack: Ack<Result>,
   ) => void;
+  /**
+   * Between games: a player gives up their seat to watch, or a spectator
+   * takes a free seat. `roomNotOpen` when there is no place to move to, and
+   * `gameAlreadyStarted` while a game is under way.
+   */
+  'room:watch': (roomId: string, ack: Ack<Result>) => void;
+  'room:sit': (roomId: string, ack: Ack<Result>) => void;
   /**
    * Asked for by a room page once its listeners are live: answered with
    * `room:state`, the chat so far and anything else the game streams, or with
@@ -1036,6 +1077,8 @@ export type {
   RoomStatus,
   WordCategory,
   PlayerInfo,
+  SpectatorInfo,
+  RoomSeat,
   OwnerInfo,
   PlayerIdentity,
   HandshakeAuth,

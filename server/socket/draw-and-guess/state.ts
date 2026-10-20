@@ -4,9 +4,8 @@ import type {
   DrawAndGuessSettings,
   DrawAndGuessState,
 } from '../../models/types.js';
-import { roomStatus, seatCount } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { getRemainingPhaseMs } from '../../libs/utils.js';
 import { createRoomCanvas } from './canvas.js';
 
 /** A room that has been created but not yet played in. */
@@ -38,13 +37,7 @@ const toLobbyInfo = (
   room: Room<DrawAndGuessState>,
 ): DrawAndGuessLobbyRoomInfo => ({
   gameType: 'draw-and-guess',
-  roomId: room.roomId,
-  roomName: room.roomName,
-  owner: room.owner,
-  status: roomStatus(room),
-  currentPlayerCount: seatCount(room),
-  maxPlayers: room.maxPlayers,
-  hasPassword: room.password !== '',
+  ...lobbyBasics(room),
   rounds: room.game.rounds,
 });
 
@@ -71,9 +64,7 @@ const toRoomState = (
 
   const roomState: DrawAndGuessRoomState = {
     ...toLobbyInfo(room),
-    playerList: room.playerList,
-    isGameStarted: room.isGameStarted,
-    phaseEndsInMs: getRemainingPhaseMs(room),
+    ...roomBasics(room),
     phase: game.phase,
     currentRound: game.currentRound,
     turn: game.turn,

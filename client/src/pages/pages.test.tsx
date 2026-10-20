@@ -14,6 +14,7 @@ const lobbyRoom: MinesweeperLobbyRoomInfo = {
   currentPlayerCount: 1,
   maxPlayers: 8,
   hasPassword: false,
+  spectatorCount: 0,
   difficulty: 'Small',
 };
 

@@ -1,5 +1,5 @@
 import { asFailure, failure, invalidRequest } from '../../models/error.js';
-import { roomStatus } from './seats.js';
+import { canWatch, isSpectator, memberOf, roomStatus } from './seats.js';
 import {
   joinRoomRequest,
   parseArgs,
@@ -17,8 +17,8 @@ import {
 } from './emit.js';
 
 /**
- * Joining, leaving, re-syncing, starting and renaming: what every room does
- * regardless of what is played in it.
+ * Joining, watching, leaving, re-syncing, starting and renaming: what every
+ * room does regardless of what is played in it.
  *
  * Each request is answered through its acknowledgement, success or the reason
  * it was refused, and anything it changes reaches the room as a new snapshot.
@@ -31,15 +31,16 @@ const roomEventsHandler = (
   onClientRequest(socket, 'room:join', (args, reply) => {
     const validated = parseArgs(
       joinRoomRequest,
-      // Tolerate a missing password: an unlocked room has none to send.
-      [args[0], args[1], args[2] ?? ''],
+      // Tolerate a missing password, which an unlocked room has none of, and
+      // a missing seat, which leaves the choice to the room.
+      [args[0], args[1], args[2] ?? '', args[3] ?? null],
       'room:join',
     );
     if (!validated) {
       reply(invalidRequest());
       return;
     }
-    const [roomId, wanted, password] = validated;
+    const [roomId, wanted, password, asked] = validated;
 
     // Identity comes from the connection, never from the payload: the client
     // proved who it was during the handshake, and this is the result.
@@ -51,13 +52,19 @@ const roomEventsHandler = (
       return;
     }
 
-    const isAlreadySeated = Boolean(room.playerList[playerId]);
+    const isAlreadySeated = Boolean(memberOf(room, playerId));
+    // Without a preference, the table while it is open, and the spectator
+    // seats while it is not: somebody arriving at a game under way watches.
+    const seat =
+      asked ?? (roomStatus(room) === 'Open' ? 'player' : 'spectator');
 
     if (!isAlreadySeated) {
       // A player already holding a seat is returning to it, so a full room or
       // a game in progress is no reason to turn them away, and the seat they
       // hold is all the proof a locked room asks for.
-      if (roomStatus(room) !== 'Open') {
+      const hasPlace =
+        seat === 'player' ? roomStatus(room) === 'Open' : canWatch(room);
+      if (!hasPlace) {
         reply(failure('roomNotOpen', 'Room is not open.'));
         return;
       }
@@ -69,22 +76,23 @@ const roomEventsHandler = (
       }
 
       membership.leaveAllBut(playerId, roomId);
-      room.playerList[playerId] = {
-        username: nameInRoom(room, playerId, wanted),
-        points: 0,
-        isConnected: true,
-      };
+      const username = nameInRoom(room, playerId, wanted);
+      if (seat === 'player') {
+        room.playerList[playerId] = { username, points: 0, isConnected: true };
+      } else {
+        room.spectators[playerId] = { username, isConnected: true };
+      }
     }
     // A seat already held keeps its name: only `player:rename` changes it, and
     // tells the room when it does.
-    const username = room.playerList[playerId].username;
+    const username = memberOf(room, playerId)?.username ?? wanted;
 
     socket.join(roomId);
     reply({ ok: true });
 
     if (!isAlreadySeated) {
       registry.lookup.announce(roomId, 'system', {
-        type: 'room:joined',
+        type: isSpectator(room, playerId) ? 'room:watching' : 'room:joined',
         name: username,
       });
     }
@@ -98,7 +106,8 @@ const roomEventsHandler = (
    * nowhere to land, so rather than guessing how long that takes, the client
    * says when it is ready.
    *
-   * Answered only for players who hold a seat. A locked room's player list is
+   * Answered only for players in the room, playing or watching. A locked
+   * room's player list is
    * not something a stranger should be able to pull with a room id off the
    * lobby broadcast. A client that arrives without a seat (a pasted link) is
    * told so, and asks to join.
@@ -119,7 +128,7 @@ const roomEventsHandler = (
     }
 
     const playerId = socket.data.playerId;
-    if (!room.playerList[playerId]) {
+    if (!memberOf(room, playerId)) {
       reply(failure('notRoomMember', 'You are not in this room.'));
       return;
     }
@@ -136,6 +145,99 @@ const roomEventsHandler = (
     // as a drawing. A joiner, a player returning from a reload and a drawer
     // resuming their own turn all arrive through here.
     module.syncTo(socket, room, playerId);
+  });
+
+  /**
+   * Between games, a player gives up their seat to watch. Their score goes
+   * with the seat, as it would if they left, and the game is told they went.
+   */
+  onClientRequest(socket, 'room:watch', (args, reply) => {
+    const validated = parseArgs(roomIdOnly, args, 'room:watch');
+    if (!validated) {
+      reply(invalidRequest());
+      return;
+    }
+    const [roomId] = validated;
+    const playerId = socket.data.playerId;
+
+    const room = registry.lookup.get(roomId);
+    if (!room || !registry.moduleOf(room)) {
+      reply(failure('roomNotExist', 'Room does not exist.'));
+      return;
+    }
+    const seat = room.playerList[playerId];
+    if (!seat) {
+      reply(failure('notRoomMember', 'You are not at this table.'));
+      return;
+    }
+    if (room.isGameStarted) {
+      reply(failure('gameAlreadyStarted', 'The game has already started.'));
+      return;
+    }
+    if (!canWatch(room)) {
+      reply(failure('roomNotOpen', 'Every spectator seat is taken.'));
+      return;
+    }
+
+    delete room.playerList[playerId];
+    room.spectators[playerId] = {
+      username: seat.username,
+      isConnected: seat.isConnected,
+    };
+    registry.moduleOf(room)?.onDeparture(room, playerId);
+    reply({ ok: true });
+
+    registry.lookup.announce(roomId, 'system', {
+      type: 'room:watching',
+      name: seat.username,
+    });
+    registry.lookup.emitState(room);
+    registry.lookup.emitLobby(room.gameType);
+  });
+
+  /** Between games, a spectator takes a free seat at the table. */
+  onClientRequest(socket, 'room:sit', (args, reply) => {
+    const validated = parseArgs(roomIdOnly, args, 'room:sit');
+    if (!validated) {
+      reply(invalidRequest());
+      return;
+    }
+    const [roomId] = validated;
+    const playerId = socket.data.playerId;
+
+    const room = registry.lookup.get(roomId);
+    if (!room || !registry.moduleOf(room)) {
+      reply(failure('roomNotExist', 'Room does not exist.'));
+      return;
+    }
+    const spectator = room.spectators[playerId];
+    if (!spectator) {
+      reply(failure('notRoomMember', 'You are not watching this room.'));
+      return;
+    }
+    if (room.isGameStarted) {
+      reply(failure('gameAlreadyStarted', 'The game has already started.'));
+      return;
+    }
+    if (roomStatus(room) !== 'Open') {
+      reply(failure('roomNotOpen', 'Every seat is taken.'));
+      return;
+    }
+
+    delete room.spectators[playerId];
+    room.playerList[playerId] = {
+      username: spectator.username,
+      points: 0,
+      isConnected: spectator.isConnected,
+    };
+    reply({ ok: true });
+
+    registry.lookup.announce(roomId, 'system', {
+      type: 'room:seated',
+      name: spectator.username,
+    });
+    registry.lookup.emitState(room);
+    registry.lookup.emitLobby(room.gameType);
   });
 
   onClientEvent(socket, 'room:leave', (...rawArgs: unknown[]) => {
@@ -193,7 +295,7 @@ const roomEventsHandler = (
     const playerId = socket.data.playerId;
 
     for (const room of registry.roomsHeldBy(playerId)) {
-      const before = room.playerList[playerId].username;
+      const before = memberOf(room, playerId)?.username ?? '';
       const username = nameInRoom(room, playerId, wanted);
       if (username === before) continue;
       renamePlayer(room, playerId, username);

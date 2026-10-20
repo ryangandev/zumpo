@@ -83,6 +83,8 @@ export type {
   RoomStatus,
   WordCategory,
   PlayerInfo,
+  SpectatorInfo,
+  RoomSeat,
   OwnerInfo,
   PlayerIdentity,
   HandshakeAuth,

@@ -28,6 +28,7 @@ const roomOf = (names: Record<string, string>, game: unknown = {}): Room => ({
       { username, points: 0, isConnected: true },
     ]),
   ),
+  spectators: {},
   isGameStarted: false,
   phaseEndsAt: 0,
   chat: { nextId: 0, messages: [] },

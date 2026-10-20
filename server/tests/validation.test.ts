@@ -159,19 +159,35 @@ describe('roomIdOnly', () => {
 describe('joinRoomRequest', () => {
   it('accepts a join with a password', () => {
     expect(
-      joinRoomRequest.safeParse([validRoomId, 'Alice', 'secret']).success,
+      joinRoomRequest.safeParse([validRoomId, 'Alice', 'secret', null]).success,
     ).toBe(true);
+  });
+
+  it('accepts a join that asks for either kind of seat', () => {
+    for (const seat of ['player', 'spectator']) {
+      expect(
+        joinRoomRequest.safeParse([validRoomId, 'Alice', '', seat]).success,
+      ).toBe(true);
+    }
+  });
+
+  it('rejects a seat that is neither', () => {
+    expect(
+      joinRoomRequest.safeParse([validRoomId, 'Alice', '', 'referee']).success,
+    ).toBe(false);
   });
 
   it('rejects a username longer than the landing page allows', () => {
     expect(
-      joinRoomRequest.safeParse([validRoomId, 'x'.repeat(19), '']).success,
+      joinRoomRequest.safeParse([validRoomId, 'x'.repeat(19), '', null])
+        .success,
     ).toBe(false);
   });
 
   it('rejects extra positional arguments', () => {
     expect(
-      joinRoomRequest.safeParse([validRoomId, 'Alice', '', 'extra']).success,
+      joinRoomRequest.safeParse([validRoomId, 'Alice', '', null, 'extra'])
+        .success,
     ).toBe(false);
   });
 });

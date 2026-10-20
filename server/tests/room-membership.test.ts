@@ -98,7 +98,7 @@ describe('joining and leaving a room', () => {
     expect(answer.error?.type).toBe('roomNotExist');
   });
 
-  it('marks a room full at capacity and turns further joins away', async () => {
+  it('marks a room full at capacity and turns further players away', async () => {
     const owner = await harness.connect();
     const roomId = await createRoom(owner, { maxPlayers: 2 });
 
@@ -108,7 +108,14 @@ describe('joining and leaving a room', () => {
     expect((await lobbyView(owner, roomId))?.status).toBe('Full');
 
     const third = await harness.connect();
-    const answer = await request(third, 'room:join', roomId, 'Three', '');
+    const answer = await request(
+      third,
+      'room:join',
+      roomId,
+      'Three',
+      '',
+      'player',
+    );
 
     expect(answer.error?.type).toBe('roomNotOpen');
   });
