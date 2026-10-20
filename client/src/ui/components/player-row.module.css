@@ -1,7 +1,7 @@
 .row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--zumpo-space-12);
   min-height: 52px;
   padding: 6px 8px;
   border-radius: var(--zumpo-radius-12);

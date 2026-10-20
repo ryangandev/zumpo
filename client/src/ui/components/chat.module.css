@@ -1,7 +1,7 @@
 .chat {
-  gap: 12px;
+  gap: var(--zumpo-space-12);
   min-height: 0;
-  padding: 20px var(--zumpo-space-24);
+  padding: var(--zumpo-space-20) var(--zumpo-space-24);
 }
 
 /* Figma's chat hugs its messages, up to about a dozen of them; a room keeps a

@@ -1,7 +1,7 @@
 .form {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--zumpo-space-8);
   height: 44px;
   padding: 6px 8px 6px 14px;
   border: 1px solid var(--zumpo-line);

@@ -2,7 +2,7 @@
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 8px;
+  gap: var(--zumpo-space-8);
   height: 44px;
   padding: 10px 18px 10px 14px;
   border-radius: var(--zumpo-radius-999);

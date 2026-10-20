@@ -1,10 +1,10 @@
 .scoreboard {
-  gap: 4px;
-  padding: 20px 16px;
+  gap: var(--zumpo-space-4);
+  padding: var(--zumpo-space-20) var(--zumpo-space-16);
 }
 
 .heading {
-  padding-bottom: 8px;
+  padding-bottom: var(--zumpo-space-8);
 }
 
 .count {
@@ -16,7 +16,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--zumpo-space-4);
   margin: 0;
   padding: 0;
   list-style: none;
