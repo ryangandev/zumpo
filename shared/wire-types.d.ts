@@ -846,8 +846,11 @@ type ChatMessageKind = 'player' | 'system' | 'alert' | 'success';
 type RoomNotice =
   | { type: 'room:created'; name: string }
   | { type: 'room:joined'; name: string }
-  /** Came in to watch, or gave up a seat to watch. */
-  | { type: 'room:watching'; name: string }
+  /**
+   * Came in to watch, or gave up a seat to watch; `owner` is who took the
+   * crown when the host did.
+   */
+  | { type: 'room:watching'; name: string; owner?: string }
   /** A spectator took a seat at the table. */
   | { type: 'room:seated'; name: string }
   | { type: 'room:renamed'; before: string; name: string }

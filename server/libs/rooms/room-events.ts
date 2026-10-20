@@ -1,5 +1,11 @@
 import { asFailure, failure, invalidRequest } from '../../models/error.js';
-import { canWatch, isSpectator, memberOf, roomStatus } from './seats.js';
+import {
+  canWatch,
+  heirOf,
+  isSpectator,
+  memberOf,
+  roomStatus,
+} from './seats.js';
 import {
   joinRoomRequest,
   parseArgs,
@@ -184,12 +190,24 @@ const roomEventsHandler = (
       username: seat.username,
       isConnected: seat.isConnected,
     };
+    // A host who leaves the table hands the crown to somebody still at it.
+    const heir =
+      room.owner.playerId === playerId
+        ? heirOf(room, { playersOnly: true })
+        : undefined;
+    if (heir) {
+      room.owner = {
+        playerId: heir,
+        username: room.playerList[heir]!.username,
+      };
+    }
     registry.moduleOf(room)?.onDeparture(room, playerId);
     reply({ ok: true });
 
     registry.lookup.announce(roomId, 'system', {
       type: 'room:watching',
       name: seat.username,
+      ...(heir && { owner: room.owner.username }),
     });
     registry.lookup.emitState(room);
     registry.lookup.emitLobby(room.gameType);

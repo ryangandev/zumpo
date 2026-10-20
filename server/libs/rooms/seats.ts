@@ -46,6 +46,25 @@ const isSpectator = (room: Room, playerId: string): boolean =>
   Boolean(room.spectators[playerId]);
 
 /**
+ * Who the crown passes to: somebody at the table before a spectator, and in
+ * either somebody here before somebody away, who could not start a game.
+ * `undefined` when nobody is left to take it.
+ */
+const heirOf = (
+  room: Room,
+  { playersOnly = false }: { playersOnly?: boolean } = {},
+): string | undefined => {
+  const pick = (members: Record<string, { isConnected: boolean }>) => {
+    const entries = Object.entries(members);
+    return (entries.find(([, member]) => member.isConnected) ??
+      entries[0])?.[0];
+  };
+  return (
+    pick(room.playerList) ?? (playersOnly ? undefined : pick(room.spectators))
+  );
+};
+
+/**
  * What every game's lobby row says of a room, the game aside: each module
  * spreads this into its `toLobbyInfo` and adds its type and settings.
  */
@@ -84,6 +103,7 @@ export {
   canWatch,
   memberOf,
   isSpectator,
+  heirOf,
   lobbyBasics,
   roomBasics,
 };

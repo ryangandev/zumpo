@@ -171,6 +171,56 @@ describe('spectators', () => {
     });
   });
 
+  it('passes the crown on when the host moves to watch', async () => {
+    const owner = await harness.connect();
+    const roomId = await createRoom(owner, { username: 'Ada' });
+    const bob = await harness.connect();
+    await joinRoom(bob, roomId, 'Bob');
+
+    const told = waitForChat(
+      bob,
+      (m) => textOf(m) === 'Ada is watching. Bob is now the owner.',
+    );
+    expect((await request(owner, 'room:watch', roomId)).ok).toBe(true);
+    await told;
+    expect(serverRoom(harness, roomId).owner).toEqual({
+      playerId: bob.playerId,
+      username: 'Bob',
+    });
+  });
+
+  it('keeps the crown with a host who watches an empty table', async () => {
+    const owner = await harness.connect();
+    const roomId = await createRoom(owner, { username: 'Ada' });
+
+    expect((await request(owner, 'room:watch', roomId)).ok).toBe(true);
+    expect(serverRoom(harness, roomId).owner.playerId).toBe(owner.playerId);
+  });
+
+  it('crowns a player who is here before one who is away', async () => {
+    const owner = await harness.connect();
+    const roomId = await createRoom(owner, { username: 'Ada' });
+    const bob = await harness.connect();
+    await joinRoom(bob, roomId, 'Bob');
+    const carol = await harness.connect();
+    await joinRoom(carol, roomId, 'Carol');
+    // Bob, first in line, drops; Carol is here.
+    const away = waitForState(
+      owner,
+      (s) => s.playerList[bob.playerId]?.isConnected === false,
+    );
+    bob.close();
+    await away;
+
+    // The first new owner, before Bob's grace could run out and settle it.
+    const crowned = waitForState(
+      carol,
+      (s) => s.owner.playerId !== owner.playerId,
+    );
+    owner.emit('room:leave', roomId);
+    expect((await crowned).owner.playerId).toBe(carol.playerId);
+  });
+
   it('keeps everybody where they are while a game is under way', async () => {
     const { roomId, alice } = await playToDrawingPhase(harness);
     const carol = await harness.connect();

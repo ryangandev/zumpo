@@ -2,7 +2,7 @@ import type { OwnerInfo } from '../../../shared/wire-types.js';
 import { reconnectGraceInSeconds } from '../game-clock.js';
 import type { PlayerSessionRegistry } from '../player-session.js';
 import type { RoomRegistry } from './registry.js';
-import { isSpectator, memberCount, memberOf } from './seats.js';
+import { heirOf, isSpectator, memberCount, memberOf } from './seats.js';
 import type { Room } from './types.js';
 import { playerChannel, type IoServer } from './emit.js';
 
@@ -90,9 +90,8 @@ const createRoomMembership = (
     }
 
     if (wasOwner) {
-      // The crown goes to somebody at the table, if anybody is.
-      const nextOwnerId =
-        Object.keys(room.playerList)[0] ?? Object.keys(room.spectators)[0];
+      // Somebody is left, so there is an heir.
+      const nextOwnerId = heirOf(room)!;
       const nextOwner: OwnerInfo = {
         username: memberOf(room, nextOwnerId)?.username ?? '',
         playerId: nextOwnerId,

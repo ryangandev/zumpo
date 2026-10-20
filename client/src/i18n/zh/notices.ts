@@ -20,7 +20,10 @@ const category = (value: WordCategory): string =>
 export const notices: typeof en = {
   'room:created': (n) => `${who(n.name)} 创建了房间。`,
   'room:joined': (n) => `${who(n.name)} 加入了房间。`,
-  'room:watching': (n) => `${who(n.name)} 加入了观战席。`,
+  'room:watching': (n) =>
+    n.owner
+      ? `${who(n.name)} 加入了观战席，${who(n.owner)} 成为新房主。`
+      : `${who(n.name)} 加入了观战席。`,
   'room:seated': (n) => `${who(n.name)} 加入了玩家席。`,
   'room:renamed': (n) => `${who(n.before)} 改名为 ${who(n.name)}。`,
   'room:owner-left': (n) =>
