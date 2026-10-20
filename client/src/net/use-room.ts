@@ -77,6 +77,15 @@ export function useRoom(roomId: string): RoomConnection {
   const left = useRef(false);
   /** Set once the server said it is shutting down: the room is gone for good. */
   const closed = useRef(false);
+  /**
+   * The name to join with, read when joining rather than a dependency of it:
+   * a rename reaches a seat through `player:rename`, and must not run the
+   * join effect again, which would sync the room and its drawing afresh.
+   */
+  const nameRef = useRef(name);
+  useEffect(() => {
+    nameRef.current = name;
+  }, [name]);
 
   const request = useCallback(
     async (
@@ -104,9 +113,9 @@ export function useRoom(roomId: string): RoomConnection {
       request(() =>
         socket
           .timeout(REQUEST_TIMEOUT_MS)
-          .emitWithAck('room:join', roomId, name, password, null),
+          .emitWithAck('room:join', roomId, nameRef.current, password, null),
       ),
-    [request, socket, roomId, name],
+    [request, socket, roomId],
   );
 
   // A failed join or sync decides what the page says instead of the room.

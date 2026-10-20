@@ -208,6 +208,28 @@ describe('a room page', () => {
     ).toBeInTheDocument();
   });
 
+  it('keeps its seat, listeners and drawing through a rename', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+    const requestsBefore = fake.requests.length;
+    const listenersBefore = fake.listenerCount('room:state');
+
+    await user.click(screen.getByRole('button', { name: /: your name$/ }));
+    const field = screen.getByRole('textbox', { name: 'Your name' });
+    await user.clear(field);
+    await user.type(field, 'Grace');
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    // The rename goes to the seat as it is; the page asks for nothing again.
+    expect(fake.sentArgs('player:rename')).toEqual([
+      ['Grace', expect.any(Function)],
+    ]);
+    expect(fake.requests.slice(requestsBefore)).toEqual([]);
+    expect(fake.listenerCount('room:state')).toBe(listenersBefore);
+  });
+
   it('says the seat is gone when it was released while away', async () => {
     const fake = server();
     await renderApp(ROOM, { fake });
