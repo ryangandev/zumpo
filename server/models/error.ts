@@ -40,12 +40,14 @@ const invalidRequest = (message = 'That request was not valid.'): Failure =>
  * A `catch` binding is `unknown`, and it is not always one of ours: a bug in a
  * handler throws a `TypeError` down the same path. That is reported as an
  * invalid request with a message that gives nothing away, rather than with
- * whatever the error happened to say about the server's insides.
+ * whatever the error happened to say about the server's insides - and logged,
+ * since it is a bug and this is the only place that sees it.
  */
-const asFailure = (error: unknown): Failure =>
-  error instanceof RequestError
-    ? failure(error.type, error.message)
-    : invalidRequest('Something went wrong.');
+const asFailure = (error: unknown): Failure => {
+  if (error instanceof RequestError) return failure(error.type, error.message);
+  console.error('A request failed with a bug:', error);
+  return invalidRequest('Something went wrong.');
+};
 
 export { RequestError, failure, invalidRequest, asFailure };
 export type { Failure };

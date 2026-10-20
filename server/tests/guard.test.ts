@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRoomTimers } from '../libs/rooms/timers.js';
 import { onClientRequest, type IoSocket } from '../libs/rooms/emit.js';
+import { asFailure, RequestError } from '../models/error.js';
 
 /** Just enough of a socket to register a handler on and fire it. */
 const fakeSocket = () => {
@@ -57,5 +58,19 @@ describe('a bug in one event or timer', () => {
       'A timer in room room-1 failed:',
       expect.any(TypeError),
     );
+  });
+
+  it('is logged when a request turns it into a refusal, and a refusal is not', () => {
+    const logged = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    expect(asFailure(new RequestError('notRoomOwner', 'Not yours.'))).toEqual({
+      ok: false,
+      error: { type: 'notRoomOwner', message: 'Not yours.' },
+    });
+    expect(logged).not.toHaveBeenCalled();
+
+    const bug = new TypeError('a bug');
+    expect(asFailure(bug)).toMatchObject({ error: { type: 'invalidRequest' } });
+    expect(logged).toHaveBeenCalledWith('A request failed with a bug:', bug);
   });
 });
