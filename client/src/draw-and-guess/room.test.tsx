@@ -129,6 +129,50 @@ describe('a Draw & Guess room', () => {
     );
   });
 
+  it('sums up the round that just ended under the drawing', async () => {
+    await renderSeated(
+      drawAndGuessState({
+        ...turn,
+        phase: 'reveal',
+        turn: 2,
+        currentDrawer: 'p2',
+        word: 'turtle',
+        playerList: {
+          [ME]: { username: 'Ryan', points: 260, isConnected: true },
+          p2: { username: 'Maya', points: 300, isConnected: true },
+        },
+        lastRound: {
+          round: 1,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 300 },
+            { playerId: ME, username: 'Ryan', points: 260 },
+            { playerId: 'p3', username: 'Gone', points: 40 },
+          ],
+        },
+      }),
+    );
+
+    const results = screen.getByRole('region', { name: 'Round 1 results' });
+    const rows = within(results).getAllByRole('listitem');
+    expect(rows.map((row) => row.textContent)).toEqual([
+      expect.stringContaining('Maya'),
+      expect.stringContaining('Ryan'),
+    ]);
+    expect(within(rows[1]!).getByText('260 in all')).toBeInTheDocument();
+  });
+
+  it('shows no round results in the middle of a round', async () => {
+    await renderSeated(
+      drawAndGuessState({
+        ...turn,
+        phase: 'reveal',
+        currentDrawer: 'p2',
+        word: 'turtle',
+      }),
+    );
+    expect(screen.queryByRole('region', { name: /results/ })).toBeNull();
+  });
+
   it('shares first place in a tie', async () => {
     await renderSeated(
       drawAndGuessState({

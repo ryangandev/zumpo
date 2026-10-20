@@ -7,6 +7,7 @@ import type {
   GameType,
   OwnerInfo,
   PlayerInfo,
+  SpectatorInfo,
 } from '../../../shared/wire-types.js';
 import type { IoServer, IoSocket } from './emit.js';
 import type { RoomTimers } from './timers.js';
@@ -42,6 +43,12 @@ interface Room<TGameState = unknown> {
   /** Never leaves the process. The wire carries `hasPassword`. */
   password: string;
   playerList: Record<string, PlayerInfo>;
+  /**
+   * Who is watching. Kept apart from `playerList` so that a game, which reads
+   * only `playerList`, never deals a spectator in, waits for one or scores
+   * one; the room layer alone knows they are here.
+   */
+  spectators: Record<string, SpectatorInfo>;
   isGameStarted: boolean;
   /**
    * Epoch ms the current phase ends; 0 when idle. Set only by `startPhase`
@@ -153,7 +160,8 @@ interface GameModule<TGameState = unknown, TSettings = unknown> {
   toLobbyInfo(room: Room<TGameState>): AnyLobbyRoomInfo;
   /**
    * The room as one player may see it. Must not carry the password, nor
-   * anything in play that this viewer is not allowed to know.
+   * anything in play that this viewer is not allowed to know. The viewer may
+   * be a spectator, in no `playerList`, who is shown what any player may see.
    */
   toRoomState(room: Room<TGameState>, viewerId: string): AnyRoomState;
 
@@ -165,8 +173,9 @@ interface GameModule<TGameState = unknown, TSettings = unknown> {
   syncTo(socket: IoSocket, room: Room<TGameState>, playerId: string): void;
 
   /**
-   * A seated player said something. Optional: a game without an opinion has
-   * every message posted as it is.
+   * Somebody in the room said something: a player, or a spectator, whose id
+   * is in no `playerList` and must never score. Optional: a game without an
+   * opinion has every message posted as it is.
    */
   handleChat?(
     room: Room<TGameState>,

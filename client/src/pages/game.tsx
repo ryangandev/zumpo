@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import type { AnyLobbyRoomInfo, GameType } from '../../../shared/wire-types';
+import { MAX_SPECTATORS } from '../../../shared/room';
 import { ButtonLink, Card, RoomRow, type RoomRowStatus } from '../ui';
 import {
   createRoomPath,
@@ -91,6 +92,12 @@ function RoomList({ rooms }: { rooms: AnyLobbyRoomInfo[] }) {
             seats={room.maxPlayers}
             status={statusOf(room)}
             onJoin={() => navigate(roomPath(room.gameType, room.roomId))}
+            // A room under way or full takes a latecomer as a spectator.
+            onWatch={
+              room.spectatorCount < MAX_SPECTATORS
+                ? () => navigate(roomPath(room.gameType, room.roomId))
+                : undefined
+            }
           />
         ))}
       </ul>

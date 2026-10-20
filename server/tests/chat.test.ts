@@ -150,6 +150,7 @@ const makeRoom = (): Room => ({
   playerList: {
     'player-owner': { username: 'Owner', points: 0, isConnected: true },
   },
+  spectators: {},
   isGameStarted: false,
   phaseEndsAt: 0,
   chat: { nextId: 1, messages: [] },

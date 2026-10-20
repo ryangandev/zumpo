@@ -72,7 +72,8 @@ const handshakeAuth = z.object({
 });
 
 const gameTypeOnly = z.tuple([gameType]);
-const joinRoomRequest = z.tuple([roomId, username, password]);
+const roomSeat = z.enum(['player', 'spectator']).nullable();
+const joinRoomRequest = z.tuple([roomId, username, password, roomSeat]);
 const roomIdOnly = z.tuple([roomId]);
 const renameRequest = z.tuple([username]);
 /** The speaker is whoever holds the seat, so a message carries no name. */

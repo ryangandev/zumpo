@@ -10,6 +10,10 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['room:created'](notice);
     case 'room:joined':
       return m.notices['room:joined'](notice);
+    case 'room:watching':
+      return m.notices['room:watching'](notice);
+    case 'room:seated':
+      return m.notices['room:seated'](notice);
     case 'room:renamed':
       return m.notices['room:renamed'](notice);
     case 'room:owner-left':

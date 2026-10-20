@@ -26,7 +26,9 @@ const room = {
   currentPlayerCount: 2,
   maxPlayers: 8,
   hasPassword: false,
+  spectatorCount: 0,
   playerList: players,
+  spectators: {},
   isGameStarted: false,
   phaseEndsInMs: 0,
 };
@@ -70,6 +72,7 @@ export function drawAndGuessState(
     scoredThisTurn: [],
     turnPoints: {},
     drawerHoldEndsInMs: 0,
+    lastRound: null,
     lastGame: null,
     ...overrides,
   };

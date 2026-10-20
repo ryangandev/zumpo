@@ -162,7 +162,8 @@ The rules are covered by [`game.test.ts`](../../client/src/minesweeper/solo/game
 A dropped connection keeps your seat, score and the crown for 30 seconds, as in every room here.
 There is no turn to hold, because a round belongs to everybody, so the only effect is that the room stops waiting for you: rounds resolve without your pick, and you score nothing until you are back.
 
-A refresh loses nothing.
+A refresh does not hold the round either, decided by Ryan on 2026-10-20: if everyone else has locked in while you reload, the round resolves without your pick.
+Otherwise a refresh loses nothing.
 Reloading during the pick window brings back the open round and, if you had already picked, your own pick (`myPick`), so you are not asked again.
 Reloading during the reveal brings back the reveal: the uncovered board and what the round came to.
 

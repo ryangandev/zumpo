@@ -31,9 +31,16 @@ type Make24Room = Room<Make24State>;
 const pointsForSolve = (msLeft: number, handMs: number): number =>
   50 + Math.round((100 * Math.max(0, Math.min(msLeft, handMs))) / handMs);
 
-/** A player who has solved the open hand keeps quiet until it ends. */
+/**
+ * A player who has solved the open hand keeps quiet until it ends, and so
+ * does a spectator, who sees the same four cards with nothing at stake and
+ * could work the answer out for a friend.
+ */
 const mayChat = (room: Make24Room, playerId: string) =>
-  !(room.game.phase === 'solving' && room.game.solves.has(playerId));
+  !(
+    room.game.phase === 'solving' &&
+    (room.game.solves.has(playerId) || !room.playerList[playerId])
+  );
 
 /**
  * Owns the hand loop. Like a Minesweeper round, a hand belongs to everybody

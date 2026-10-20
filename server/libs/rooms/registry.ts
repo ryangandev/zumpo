@@ -1,4 +1,5 @@
 import type { ChatMessage, GameType } from '../../../shared/wire-types.js';
+import { memberOf } from './seats.js';
 import { createRoomTimers, type RoomTimerSet } from './timers.js';
 import type { GameContext, GameModule, Room, RoomLookup } from './types.js';
 import {
@@ -44,7 +45,8 @@ const createRoomRegistry = (io: IoServer) => {
   const staleRooms = new Set<string>();
 
   /**
-   * Sends every seated, connected player their own view of each stale room.
+   * Sends everybody connected in each stale room, players and spectators,
+   * their own view of it.
    *
    * Per player rather than to the room's channel, because a snapshot is not
    * the same for everybody: the drawer is sent the word nobody else may see,
@@ -61,8 +63,12 @@ const createRoomRegistry = (io: IoServer) => {
       const module = modules.get(room.gameType);
       if (!module) continue;
 
-      for (const [playerId, seat] of Object.entries(room.playerList)) {
-        if (!seat.isConnected) continue;
+      const members = [
+        ...Object.entries(room.playerList),
+        ...Object.entries(room.spectators),
+      ];
+      for (const [playerId, member] of members) {
+        if (!member.isConnected) continue;
         emitToPlayer(
           io,
           playerId,
@@ -131,13 +137,14 @@ const createRoomRegistry = (io: IoServer) => {
   };
 
   /**
-   * A seated player's message, posted as theirs. The name comes from the seat,
-   * never from the payload, so nobody can speak as somebody else.
+   * A message from somebody in the room, at the table or watching, posted as
+   * theirs. The name comes from their place, never from the payload, so
+   * nobody can speak as somebody else.
    */
   const say = (room: Room, playerId: string, text: string): void => {
-    const seat = room.playerList[playerId];
-    if (!seat) return;
-    post(room, { kind: 'player', playerId, username: seat.username, text });
+    const member = memberOf(room, playerId);
+    if (!member) return;
+    post(room, { kind: 'player', playerId, username: member.username, text });
   };
 
   const context: GameContext = { io, rooms: lookup };
@@ -173,9 +180,12 @@ const createRoomRegistry = (io: IoServer) => {
 
   const registeredTypes = (): GameType[] => [...modules.keys()];
 
-  /** Rooms this player holds a seat in, connected or not, across every game. */
+  /**
+   * Rooms this player is in, at the table or watching, connected or not,
+   * across every game. One at most: taking a place gives up any other.
+   */
   const roomsHeldBy = (playerId: string): Room[] =>
-    [...rooms.values()].filter((room) => room.playerList[playerId]);
+    [...rooms.values()].filter((room) => memberOf(room, playerId));
 
   const dispose = (): void => {
     staleRooms.clear();

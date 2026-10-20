@@ -104,7 +104,7 @@ export function useRoom(roomId: string): RoomConnection {
       request(() =>
         socket
           .timeout(REQUEST_TIMEOUT_MS)
-          .emitWithAck('room:join', roomId, name, password),
+          .emitWithAck('room:join', roomId, name, password, null),
       ),
     [request, socket, roomId, name],
   );

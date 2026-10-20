@@ -106,6 +106,7 @@ describe('a room page', () => {
       'r1',
       'Ryan',
       '',
+      null,
     ]);
     act(() => fake.serverEmits('room:state', minesweeperState()));
 
@@ -285,6 +286,105 @@ describe('a room page', () => {
         within(dialog).getByRole('button', { name: 'Copy' }),
       ).toHaveFocus(),
     );
+  });
+
+  it('watches a game under way, with nothing to play and a seat for later', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          isGameStarted: true,
+          phase: 'picking',
+          round: 1,
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+            p3: { username: 'Sam', points: 0, isConnected: true },
+          },
+          spectators: { p1: { username: 'Ryan', isConnected: true } },
+        }),
+      ),
+    );
+
+    expect(
+      screen.getByText(
+        'You’re watching this game. You can take a seat once it ends.',
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Everyone is picking')).toBeInTheDocument();
+    // The board takes no picks from a spectator.
+    expect(
+      screen.queryAllByRole('button', { name: /hidden|cell/i }),
+    ).toHaveLength(0);
+    const watching = screen.getByRole('region', { name: 'Watching' });
+    expect(within(watching).getByText('1 / 5')).toBeInTheDocument();
+    expect(within(watching).getByText(/Ryan/)).toBeInTheDocument();
+  });
+
+  it('offers a spectator a free seat between games', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    fake.answer('room:sit', () => ok);
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          owner: { username: 'Maya', playerId: 'p2' },
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+          },
+          spectators: { p1: { username: 'Ryan', isConnected: true } },
+        }),
+      ),
+    );
+
+    expect(
+      screen.getByRole('heading', { name: 'You’re watching.' }),
+    ).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Take a seat' }));
+    expect(fake.requests.at(-1)).toEqual({ event: 'room:sit', args: ['r1'] });
+  });
+
+  it('lets a player watch instead between games', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    fake.answer('room:watch', () => ok);
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    await user.click(screen.getByRole('button', { name: 'Watch instead' }));
+    expect(fake.requests.at(-1)).toEqual({
+      event: 'room:watch',
+      args: ['r1'],
+    });
+  });
+
+  it('lets a spectator leave a game under way at once', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    const { router } = await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          isGameStarted: true,
+          phase: 'picking',
+          round: 1,
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+            p3: { username: 'Sam', points: 0, isConnected: true },
+          },
+          spectators: { p1: { username: 'Ryan', isConnected: true } },
+        }),
+      ),
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Leave room' }));
+
+    expect(fake.sentArgs('room:leave')).toEqual([['r1']]);
+    expect(router.state.location.pathname).toBe('/games/minesweeper');
   });
 
   it('leaves at once between games', async () => {

@@ -42,6 +42,7 @@ import type {
   PairsBoard,
   PairsRoomState,
   PlayerIdentity,
+  RoomSeat,
   TriosRoomState,
   ServerToClientEvent,
   ServerToClientEvents,
@@ -563,16 +564,20 @@ const createHushRoom = async (
   return answer.roomId;
 };
 
-/** Takes a seat, and fails the test if the server refuses it. */
+/**
+ * Takes a seat, or a spectator seat, and fails the test if the server
+ * refuses it. Without `seat` the room decides, as a room page lets it.
+ */
 const joinRoom = async (
   client: ClientSocket,
   roomId: string,
   username: string,
   password = '',
+  seat: RoomSeat | null = null,
 ): Promise<void> => {
   const answer = await client
     .timeout(3000)
-    .emitWithAck('room:join', roomId, username, password);
+    .emitWithAck('room:join', roomId, username, password, seat);
   if (!answer.ok) throw new Error(`room:join refused: ${answer.error.type}`);
 };
 

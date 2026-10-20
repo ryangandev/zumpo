@@ -24,6 +24,8 @@ export const make24: typeof en = {
   handResults: (hand) => `第 ${hand} 手结果`,
   solved: '已解出',
   outOfTime: '时间到了',
+  handOver: '这一手结束了',
+  spectatorChatLocked: '一手进行中，观战者暂时不能发言',
   resultDetail: (expression, seconds) => `${expression} · 剩余 ${seconds} 秒`,
   noAnswer: '未解出',
   paused: '已暂停',

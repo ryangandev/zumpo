@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
+import { MAX_SPECTATORS } from '../../../shared/room';
 import { Button, ButtonLink, Notice, PlayerRow } from '../ui';
 import { gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
@@ -51,6 +52,55 @@ function InviteButton({ primary = false }: { primary?: boolean }) {
 }
 
 /**
+ * Between games, the way to the other kind of seat: Take a seat for a
+ * spectator while one is free, Watch instead for a player while a spectator
+ * seat is free, or nothing. A move under way says so instead.
+ */
+function SeatMove({ primary = false }: { primary?: boolean }) {
+  const m = useMessages();
+  const { state, spectating, watch, sit, moving } = useRoomContext();
+  if (moving) return <StatusLine>{m.room.moving}</StatusLine>;
+  if (spectating) {
+    const seatFree = Object.keys(state.playerList).length < state.maxPlayers;
+    if (!seatFree) return null;
+    return (
+      <Button variant={primary ? 'primary' : 'secondary'} onClick={sit}>
+        {m.room.sit}
+      </Button>
+    );
+  }
+  if (Object.keys(state.spectators).length >= MAX_SPECTATORS) return null;
+  return (
+    <Button variant="secondary" onClick={watch}>
+      {m.room.watch}
+    </Button>
+  );
+}
+
+/**
+ * A spectator who is not the host, between games: they are watching, and can
+ * take a seat for the next game while one is free.
+ */
+function SpectatorPanel() {
+  const m = useMessages();
+  const { state } = useRoomContext();
+  const seatFree = Object.keys(state.playerList).length < state.maxPlayers;
+  return (
+    <RoomPanel
+      title={m.room.spectatingTitle}
+      actions={
+        <>
+          <SeatMove primary />
+          <InviteButton />
+        </>
+      }
+    >
+      {seatFree ? m.room.spectatingSeatFree : m.room.spectatingSeatsFull}
+    </RoomPanel>
+  );
+}
+
+/**
  * While the viewer still has the name picked for them, which a friend who came
  * from an invite link likely does: who the room thinks they are, and the way
  * to say who they really are (P19).
@@ -87,12 +137,13 @@ export function WaitingPanel({
   onStart: () => void;
   starting: boolean;
 }) {
-  const { state, isHost } = useRoomContext();
+  const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   const count = Object.keys(state.playerList).length;
   const picked = usePickedName();
 
+  if (spectating && !isHost) return <SpectatorPanel />;
   if (!isHost) {
     return (
       <RoomPanel
@@ -101,6 +152,7 @@ export function WaitingPanel({
         actions={
           <>
             <InviteButton />
+            <SeatMove />
             {picked.change}
           </>
         }
@@ -117,6 +169,7 @@ export function WaitingPanel({
         actions={
           <>
             <InviteButton primary />
+            <SeatMove />
             {picked.change}
           </>
         }
@@ -136,6 +189,7 @@ export function WaitingPanel({
           <>
             <Button onClick={onStart}>{m.room.start}</Button>
             <InviteButton />
+            <SeatMove />
             {picked.change}
           </>
         )
@@ -148,15 +202,18 @@ export function WaitingPanel({
 
 /** D15, M16: the game ended because everyone else left. */
 export function EndedEarlyPanel() {
-  const { state } = useRoomContext();
+  const { state, spectating, isHost } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
+  // Its words are for the player left at the table.
+  if (spectating && !isHost) return <SpectatorPanel />;
   return (
     <RoomPanel
       title={m.room.everyoneLeft}
       actions={
         <>
           <InviteButton primary />
+          <SeatMove />
           <ButtonLink
             to={gamePath(state.gameType)}
             variant="secondary"
@@ -189,20 +246,27 @@ export function ResultsFrame({
   onPlayAgain: () => void;
   starting: boolean;
 }) {
-  const { state, isHost } = useRoomContext();
+  const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
   const count = Object.keys(state.playerList).length;
   const actions = !isHost ? (
-    <StatusLine>{m.room.waitingForAgain(state.owner.username)}</StatusLine>
+    <>
+      <StatusLine>{m.room.waitingForAgain(state.owner.username)}</StatusLine>
+      <SeatMove primary={spectating} />
+    </>
   ) : starting ? (
     <StatusLine>{m.room.starting}</StatusLine>
   ) : count >= 2 ? (
     <>
       <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
       <InviteButton />
+      <SeatMove />
     </>
   ) : (
-    <InviteButton primary />
+    <>
+      <InviteButton primary />
+      <SeatMove />
+    </>
   );
 
   return (

@@ -8,9 +8,8 @@ import type {
   LiarsDiceRoomState,
   LiarsDiceSettings,
 } from '../../models/types.js';
-import { roomStatus, seatCount } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { getRemainingPhaseMs } from '../../libs/utils.js';
 
 /**
  * Everything Liar's Dice knows that no other game would. A player's dice left
@@ -92,13 +91,7 @@ const playerAfter = (
 
 const toLobbyInfo = (room: LiarsDiceRoom): LiarsDiceLobbyRoomInfo => ({
   gameType: 'liars-dice',
-  roomId: room.roomId,
-  roomName: room.roomName,
-  owner: room.owner,
-  status: roomStatus(room),
-  currentPlayerCount: seatCount(room),
-  maxPlayers: room.maxPlayers,
-  hasPassword: room.password !== '',
+  ...lobbyBasics(room),
   dicePerPlayer: room.game.dicePerPlayer,
 });
 
@@ -126,9 +119,7 @@ const toRoomState = (
 
   return {
     ...toLobbyInfo(room),
-    playerList: room.playerList,
-    isGameStarted: room.isGameStarted,
-    phaseEndsInMs: getRemainingPhaseMs(room),
+    ...roomBasics(room),
     phase: game.phase,
     round: game.round,
     cups,

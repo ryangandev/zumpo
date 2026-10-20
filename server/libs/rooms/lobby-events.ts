@@ -113,6 +113,7 @@ const lobbyEventsHandler = (
       playerList: {
         [playerId]: { username, points: 0, isConnected: true },
       },
+      spectators: {},
       isGameStarted: false,
       phaseEndsAt: 0,
       chat: { nextId: 1, messages: [] },

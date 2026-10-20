@@ -138,7 +138,8 @@ function Play({ room }: { room: Room }) {
   const [picks, setPicks] = useState<readonly number[]>([]);
   const picked = picks.filter((card) => state.table.includes(card));
   const locked = state.lockedOutMs > 0;
-  const canPick = state.phase === 'finding' && !locked && !reconnecting;
+  const canPick =
+    state.phase === 'finding' && !locked && !reconnecting && !room.spectating;
 
   const pick = (place: number) => {
     const card = state.table[place];
@@ -231,9 +232,9 @@ function turnBar(
       ? { seconds: left, label: m.trios.paused, waiting: true }
       : { seconds: left, label, waiting };
   // A hint is help, not a deadline, and neither is the time since a trio:
-  // those clocks never turn urgent.
+  // those clocks never turn urgent. A spectator only waits on them.
   const helpClock = (label: string, left = seconds) => ({
-    ...clock(label, false, left),
+    ...clock(label, room.spectating, left),
     deadline: false,
   });
   if (state.phase === 'taken' && state.lastTrio) {
@@ -268,7 +269,9 @@ function turnBar(
             ? m.trios.oneMarked
             : hints === 2
               ? m.trios.twoMarked
-              : m.trios.pickThree,
+              : room.spectating
+                ? m.trios.everyoneLooking
+                : m.trios.pickThree,
     meta:
       hints === 1
         ? m.trios.findTwo

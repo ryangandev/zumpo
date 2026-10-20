@@ -108,7 +108,13 @@ Minesweeper was added without editing a line of `libs/rooms/`, though it disagre
 | Private to one viewer | The word and the choices, to the drawer | Your own pick, until the reveal  |
 
 A lobby is a Socket.IO room per game, so a client that has not subscribed to a game is never sent its rooms.
-A new player cannot join a game in progress; that is a product decision, not a limitation of the layer.
+A room has up to five spectator seats beside the table (`MAX_SPECTATORS` in [`shared/room.ts`](../shared/room.ts)), decided by Ryan on 2026-10-20.
+A spectator is a member of the room but not of the game: `Room.spectators` holds them apart from `playerList`, so no module counts, deals or scores them, and every module's `toRoomState` already gives an id it does not know the view any player may see.
+Anyone joining an open room may pick a seat or a spectator seat (`room:join`'s `seat`); somebody arriving at a game under way, or at a full table, watches it.
+Between games a player may move to watch (`room:watch`) and a spectator may take a free seat (`room:sit`); during a game everybody stays where they are, so a game never gains or loses a player except by leaving.
+A spectator can talk, through the module's `handleChat` like anybody, so a right guess from the spectator seats is swallowed and scores nobody, and Make 24 keeps spectators quiet while a hand is being solved.
+A spectator's place is held through a refresh like a seat, but quietly: nobody is told they dropped or came back, and the game is never paused for them.
+Ownership passes to a spectator only when no player is left, and a room ends with its last member.
 A player holds one seat at a time: creating or joining a room gives up any other seat, as leaving it would.
 The client leaves a room on its way out, but only while connected, so without this a player who navigated away offline would hold the old seat through its grace period while playing somewhere else.
 
@@ -129,7 +135,7 @@ The server decides everything a player could gain by lying about.
   Its rules are still one copy: anything a room plays too, such as board sizes or a deal, comes from `shared/*.ts`.
 - **Every inbound event is validated** with zod ([`validation.ts`](../server/libs/validation.ts)) before it reaches game state, and **rate-limited** before that ([`rate-limit.ts`](../server/libs/rate-limit.ts)): one token bucket per kind of event, per socket, because a drawing phase is a stream of coordinates and joining a room is a click.
 - **What a client can make the server hold is bounded, not only how fast.** A packet may be at most 16 KB (socket.io's default is 1 MB, parsed in full before zod sees it), one player holds one seat, and the server holds at most 500 rooms; past that, `room:create` is refused with `tooManyRooms` ([`app.ts`](../server/app.ts)).
-- **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a seat-holder may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
+- **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
 - **The drawing is server state too.** The stroke list every client builds is built once more on the server, so a player arriving mid-turn gets the board, and undo is "drop the last stroke" rather than a full-canvas image.
 
 ## Identity and reconnection
@@ -170,7 +176,7 @@ Nothing in `shared/` may import from `server/` or `client/`, or reach for Node o
 Inbound arguments are still handled as `unknown` and parsed with zod: a type says what a well-behaved client sends, not what arrives.
 
 The protocol is snapshot-driven.
-Whenever anything visible in a room changes, every seated, connected player is sent `room:state`: the whole room as that player may see it.
+Whenever anything visible in a room changes, every connected member, player or spectator, is sent `room:state`: the whole room as that player may see it.
 A client renders the latest snapshot and keeps no game state of its own, so a refresh, a reconnect or a missed event cannot leave it out of step.
 Changes made in one synchronous run are coalesced, so a turn that ends and the next that starts arrive as one snapshot; nothing may count snapshots.
 Only the drawing (`dg:canvas:*`) and the chat (`chat:message`, `chat:history`) travel as increments, because they are streams.

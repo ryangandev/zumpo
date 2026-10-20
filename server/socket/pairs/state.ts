@@ -7,9 +7,8 @@ import type {
   PairsRoomState,
   PairsSettings,
 } from '../../models/types.js';
-import { roomStatus, seatCount } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { getRemainingPhaseMs } from '../../libs/utils.js';
 
 /** Everything Pairs knows that no other game would. */
 interface PairsState {
@@ -73,13 +72,7 @@ const playerAfter = (
 
 const toLobbyInfo = (room: Room<PairsState>): PairsLobbyRoomInfo => ({
   gameType: 'pairs',
-  roomId: room.roomId,
-  roomName: room.roomName,
-  owner: room.owner,
-  status: roomStatus(room),
-  currentPlayerCount: seatCount(room),
-  maxPlayers: room.maxPlayers,
-  hasPassword: room.password !== '',
+  ...lobbyBasics(room),
   board: room.game.board,
 });
 
@@ -100,9 +93,7 @@ const toRoomState = (room: Room<PairsState>): PairsRoomState => {
 
   return {
     ...toLobbyInfo(room),
-    playerList: room.playerList,
-    isGameStarted: room.isGameStarted,
-    phaseEndsInMs: getRemainingPhaseMs(room),
+    ...roomBasics(room),
     phase: game.phase,
     cards,
     pairsFound: pairsFound(game),

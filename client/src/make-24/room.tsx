@@ -55,7 +55,11 @@ export function Make24Room() {
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{
         placeholder: m.make24.messagePlaceholder,
-        lockedReason: solvedOpenHand ? m.make24.solvedChat : undefined,
+        lockedReason: solvedOpenHand
+          ? m.make24.solvedChat
+          : room.spectating && state.phase === 'solving'
+            ? m.make24.spectatorChatLocked
+            : undefined,
       }}
     />
   );
@@ -121,6 +125,16 @@ function Hand({ room }: { room: Room }) {
   }
 
   const donePrompt = m.make24.donePrompt;
+  if (room.spectating) {
+    return (
+      <>
+        <TurnBar {...turnBar(room, seconds, cards, m)} />
+        <TablePanel>
+          <DealtCards deal={state.deal} />
+        </TablePanel>
+      </>
+    );
+  }
   return (
     <>
       <TurnBar {...turnBar(room, seconds, cards, m)} />
@@ -225,7 +239,7 @@ function turnBar(
     }
     return {
       ...base,
-      main: m.make24.outOfTime,
+      main: room.spectating ? m.make24.handOver : m.make24.outOfTime,
       meta: state.lastSolution
         ? m.make24.oneWay(state.lastSolution)
         : m.make24.nextHandSoon,
@@ -268,7 +282,7 @@ function turnBar(
     meta: solvers.length
       ? m.make24.solvers(listNames(solvers, m))
       : m.make24.useEachNumber,
-    countdown: clock(m.make24.toSolve),
+    countdown: clock(m.make24.toSolve, room.spectating),
   };
 }
 

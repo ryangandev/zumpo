@@ -32,6 +32,10 @@ The catalogs cover room flows, all eight games, solo records and accessible labe
 The wordmark, footer slogan and English gameplay words retain their original language.
 It was reviewed and played through in both languages, two players in one room, on 2026-10-07 (this session's branch), and Chinese terms now read the same across games (喊“吹牛”, 条命, 颗雷, 单人模式).
 
+Rooms have spectator seats, at Ryan's request on 2026-10-20: up to five people watch beside the table, a latecomer to a game under way watches it, and between games anyone may move between the table and the spectator seats ([architecture](architecture.md#the-room-layer)).
+Draw & Guess sums up each round as it ends, also at Ryan's request that day ([rules](games/draw-and-guess.md#the-game-loop)).
+The same day Ryan decided that a Minesweeper refresh does not hold the round, so the room does not wait for a player who drops ([rules](games/minesweeper.md#leaving-dropping-and-coming-back)); that hosting stays on Render's free plan while testing; and that Draw & Guess's known issue and its word bank are left as they are for now.
+
 ## Product direction
 
 Decided by Ryan, and the frame for every design and implementation choice:
@@ -44,9 +48,7 @@ Decided by Ryan, and the frame for every design and implementation choice:
 
 ## Waiting on Ryan
 
-- Whether a Minesweeper refresh should hold the round.
-  A refresh drops the connection for a moment, and the room does not wait for a disconnected player, so if everyone else has already locked in, the round resolves without the refreshing player's pick.
-  That contradicts the rule "A refresh loses nothing" in [minesweeper.md](games/minesweeper.md); the rules are kept as they are until you decide.
+Nothing.
 
 ## Next
 
@@ -70,8 +72,7 @@ Nothing is queued; the [backlog](#backlog) is what comes next unless Ryan picks 
 
 Ideas worth doing next, roughly in order:
 
-- Spectators, or letting a latecomer in for the next round; the canvas is already server state.
-- A round summary and close-guess feedback ("Sam is close!"); the server knows what it awarded and does not say.
+- Close-guess feedback in Draw & Guess ("Sam is close!").
 - A longer word bank and per-room word packs; six fixed categories today, English only.
 
 ## Deliberately not doing

@@ -86,7 +86,10 @@ function Round({ room }: { room: Room }) {
   const { state, receivedAt, reconnecting, socket } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   const canPick =
-    state.phase === 'picking' && state.myPick === null && !reconnecting;
+    state.phase === 'picking' &&
+    state.myPick === null &&
+    !reconnecting &&
+    !room.spectating;
   const phone = useMediaQuery(PHONE);
 
   return (
@@ -241,7 +244,7 @@ function turnBar(
       meta: m.minesweeper.revealingPicks,
     };
   }
-  if (state.myPick !== null) {
+  if (state.myPick !== null || room.spectating) {
     const waitingFor = connected
       .filter(([id]) => !state.lockedIn.includes(id))
       .map(([, player]) => player.username);
@@ -249,9 +252,11 @@ function turnBar(
       category,
       label,
       kind: 'status',
-      main: m.minesweeper.lockedIn,
+      main: room.spectating
+        ? m.minesweeper.everyonePicking
+        : m.minesweeper.lockedIn,
       meta: m.minesweeper.waitingFor(listNames(waitingFor, m)),
-      countdown: clock(m.minesweeper.toPick),
+      countdown: clock(m.minesweeper.toPick, room.spectating),
     };
   }
   return {

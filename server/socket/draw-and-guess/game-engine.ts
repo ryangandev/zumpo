@@ -59,7 +59,10 @@ const DRAWER_SHARE_OF_GUESS = 0.4;
 
 type DrawAndGuessRoom = Room<DrawAndGuessState>;
 
-/** Adds to a player's score and to what they have made this turn. */
+const addTo = (tally: Map<string, number>, playerId: string, points: number) =>
+  tally.set(playerId, (tally.get(playerId) ?? 0) + points);
+
+/** Adds to a player's score and to what they have made this turn and round. */
 const addTurnPoints = (
   room: DrawAndGuessRoom,
   playerId: string,
@@ -68,10 +71,25 @@ const addTurnPoints = (
   const player = room.playerList[playerId];
   if (!player) return;
   player.points += points;
-  room.game.turnPoints.set(
-    playerId,
-    (room.game.turnPoints.get(playerId) ?? 0) + points,
-  );
+  addTo(room.game.turnPoints, playerId, points);
+  addTo(room.game.roundPoints, playerId, points);
+};
+
+/**
+ * What the round came to, for everybody seated at its end, most first; a
+ * player who made nothing is in it with 0.
+ */
+const summarizeRound = (room: DrawAndGuessRoom) => {
+  room.game.lastRound = {
+    round: room.game.currentRound,
+    standings: Object.entries(room.playerList)
+      .map(([playerId, player]) => ({
+        playerId,
+        username: player.username,
+        points: room.game.roundPoints.get(playerId) ?? 0,
+      }))
+      .toSorted((a, b) => b.points - a.points),
+  };
 };
 
 /**
@@ -207,6 +225,7 @@ const createDrawAndGuessGameEngine = (
     room.game.currentRound = 0;
     room.game.turn = 0;
     room.game.lastGame = null;
+    room.game.lastRound = null;
     room.game.wordCategory = getRandomCategory(wordBank).name;
 
     // Logged without the room object, which carries the password
@@ -226,6 +245,7 @@ const createDrawAndGuessGameEngine = (
   const startNewRound = (room: DrawAndGuessRoom) => {
     room.game.currentRound += 1;
     room.game.drawerQueue = new Set(Object.keys(room.playerList));
+    room.game.roundPoints.clear();
 
     startNewDrawerTurn(room);
   };
@@ -281,6 +301,8 @@ const createDrawAndGuessGameEngine = (
 
   const beginDrawingPhase = (room: DrawAndGuessRoom, word: string) => {
     room.game.phase = 'drawing';
+    // The last round's summary has had its time: the next round is drawing.
+    room.game.lastRound = null;
     room.game.word = word;
     room.game.hint = buildWordHint(word);
     room.game.wordChoices = [];
@@ -302,6 +324,8 @@ const createDrawAndGuessGameEngine = (
     clearDrawerHold(room);
 
     room.game.phase = 'reveal';
+    // Nobody left to draw this round: no more points can come in it.
+    if (room.game.drawerQueue.size === 0) summarizeRound(room);
     ctx.rooms.startPhase(room, phaseDurationsInSeconds.reviewing, () =>
       endTurn(room),
     );
@@ -327,6 +351,10 @@ const createDrawAndGuessGameEngine = (
     if (room.game.drawerQueue.size > 0) {
       startNewDrawerTurn(room);
     } else if (room.game.currentRound < room.game.rounds) {
+      // A last turn skipped before its reveal has not summed the round yet.
+      if (room.game.lastRound?.round !== room.game.currentRound) {
+        summarizeRound(room);
+      }
       startNewRound(room);
     } else {
       endGame(room, { endedEarly: false });
@@ -370,6 +398,8 @@ const createDrawAndGuessGameEngine = (
     game.drawerQueue.clear();
     game.scoredThisTurn.clear();
     game.turnPoints.clear();
+    game.roundPoints.clear();
+    game.lastRound = null;
     game.wordCategory = '';
 
     emitState(room);
@@ -387,6 +417,7 @@ const createDrawAndGuessGameEngine = (
     room.game.drawerQueue.delete(playerId);
     room.game.scoredThisTurn.delete(playerId);
     room.game.turnPoints.delete(playerId);
+    room.game.roundPoints.delete(playerId);
 
     if (!room.isGameStarted) return;
 

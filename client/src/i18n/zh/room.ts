@@ -6,7 +6,7 @@ export const room: typeof en = {
   connecting: '连接中…',
   unavailableTitle: '这个房间暂时进不去了。',
   unavailableDescription:
-    '在你加入前，房间已满、游戏已开始，或房间已关闭。选另一个房间吧。',
+    '玩家席和观战席都满了，或房间在你加入前已关闭。选另一个房间吧。',
   notFoundTitle: '这个房间已关闭。',
   notFoundDescription: '房间已不存在。找另一个房间，或自己创建一个。',
   closedTitle: 'Zumpo 刚刚重启了。',
@@ -35,8 +35,19 @@ export const room: typeof en = {
   leaveInGame: (score) =>
     `游戏会继续，但你的座位和 ${score} 会被移除。还有空位时，你可以再次加入。`,
   leaveBetweenGames: '你的座位会被释放。还有空位时，你可以再次加入。',
+  leaveSpectating:
+    '你只是在观战，离开不会有任何损失。观战席有空位时可以再回来。',
   leave: '离开房间',
   stay: '留下',
+  watching: '观战席',
+  spectator: '观战中',
+  watch: '去观战',
+  sit: '加入玩家席',
+  moving: '正在换座…',
+  spectatingTitle: '你在观战席。',
+  spectatingSeatFree: '加入玩家席就能参加下一局，也可以继续观战。',
+  spectatingSeatsFull: '玩家席已满，有人空出座位后就能加入。',
+  spectatingNotice: '你正在观战。这一局结束后可以加入玩家席。',
   rulesTitle: (game) => `${game}玩法`,
   backToGame: '返回游戏',
   invite: '邀请朋友',

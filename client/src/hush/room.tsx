@@ -324,6 +324,11 @@ function Hand({ room }: { room: Room }) {
   const { phase, hand } = state;
   const ready = state.table[playerId]?.ready ?? false;
 
+  // A spectator holds no cards and readies for nothing.
+  if (room.spectating) {
+    return <HandRow label={m.room.watching} message={m.hush.watchingHand} />;
+  }
+
   switch (phase) {
     case 'ready':
       return (
@@ -404,7 +409,8 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
       const waitingFor = seats
         .filter(([, seat]) => !seat.ready)
         .map(([id]) => nameIn(room, id, m));
-      const meReady = state.table[playerId]?.ready ?? false;
+      const meReady =
+        room.spectating || (state.table[playerId]?.ready ?? false);
       return {
         label,
         kind: 'status',

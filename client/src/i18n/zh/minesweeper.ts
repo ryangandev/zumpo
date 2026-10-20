@@ -67,6 +67,7 @@ export const minesweeper: typeof en = {
   waitingFor: (names) => `等待 ${names}`,
   toPick: '选择时间',
   pickCell: '选一个格子',
+  everyonePicking: '大家正在选格子',
   minesFound: (total, found) => `${total} 颗雷 · 已踩中 ${found} 颗`,
   pickLocks: (total) => `${total} 颗雷 · 点击即确定选择`,
   away: '暂离',

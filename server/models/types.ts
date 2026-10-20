@@ -2,6 +2,7 @@ import type {
   CanvasStroke,
   DrawAndGuessGameSummary,
   DrawAndGuessPhase,
+  DrawAndGuessRoundSummary,
   WordCategory,
 } from '../../shared/wire-types.js';
 
@@ -63,6 +64,10 @@ interface DrawAndGuessState {
   scoredThisTurn: Set<string>;
   /** What each player gained this turn, the drawer included; absent means nothing. */
   turnPoints: Map<string, number>;
+  /** What each player has gained this round, the same way. */
+  roundPoints: Map<string, number>;
+  /** The round that just ended, from its last reveal to the next round's first word. */
+  lastRound: DrawAndGuessRoundSummary | null;
   /** Epoch ms the hold for a dropped drawer runs out; 0 when not holding. */
   drawerHoldEndsAt: number;
   /** How the last game ended, until the next one starts. */
@@ -83,6 +88,8 @@ export type {
   RoomStatus,
   WordCategory,
   PlayerInfo,
+  SpectatorInfo,
+  RoomSeat,
   OwnerInfo,
   PlayerIdentity,
   HandshakeAuth,
@@ -99,6 +106,7 @@ export type {
   Standing,
   DrawAndGuessPhase,
   DrawAndGuessGameSummary,
+  DrawAndGuessRoundSummary,
   DrawAndGuessLobbyRoomInfo,
   DrawAndGuessRoomState,
   DrawAndGuessSettings,

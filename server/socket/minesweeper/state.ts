@@ -7,9 +7,8 @@ import type {
   MinesweeperRoomState,
   MinesweeperSettings,
 } from '../../models/types.js';
-import { roomStatus, seatCount } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { getRemainingPhaseMs } from '../../libs/utils.js';
 import { BOARD_SIZES } from '../../../shared/minesweeper.js';
 import { createBoard, minesFound, publicView } from './board.js';
 import type { Board } from './board.js';
@@ -61,13 +60,7 @@ const toLobbyInfo = (
   room: Room<MinesweeperState>,
 ): MinesweeperLobbyRoomInfo => ({
   gameType: 'minesweeper',
-  roomId: room.roomId,
-  roomName: room.roomName,
-  owner: room.owner,
-  status: roomStatus(room),
-  currentPlayerCount: seatCount(room),
-  maxPlayers: room.maxPlayers,
-  hasPassword: room.password !== '',
+  ...lobbyBasics(room),
   difficulty: room.game.difficulty,
 });
 
@@ -90,9 +83,7 @@ const toRoomState = (
 
   return {
     ...toLobbyInfo(room),
-    playerList: room.playerList,
-    isGameStarted: room.isGameStarted,
-    phaseEndsInMs: getRemainingPhaseMs(room),
+    ...roomBasics(room),
     difficulty: game.difficulty,
     width,
     height,

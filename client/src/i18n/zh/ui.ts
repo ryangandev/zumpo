@@ -22,6 +22,7 @@ export const ui: typeof en = {
     full: '已满',
     playing: '游戏中',
     join: '加入',
+    watch: '观战',
   },
   drawing: {
     tools: '绘图工具',

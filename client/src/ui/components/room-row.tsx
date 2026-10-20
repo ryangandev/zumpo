@@ -20,13 +20,16 @@ export interface RoomRowProps {
   status: RoomRowStatus;
   /** Open and Private rooms only. */
   onJoin?: () => void;
+  /** Full and Playing rooms with a spectator seat free: watch instead. */
+  onWatch?: () => void;
   className?: string;
 }
 
 /**
  * Zumpo/Room row: one room in a lobby list. Full and Playing rooms show their
- * state instead of Join, because they cannot be joined. It lays itself out
- * as the Phone variant when its container is narrow.
+ * state instead of Join, because they cannot be joined, and Watch beside it
+ * while a spectator seat is free. It lays itself out as the Phone variant
+ * when its container is narrow.
  */
 export function RoomRow({
   name,
@@ -36,6 +39,7 @@ export function RoomRow({
   seats,
   status,
   onJoin,
+  onWatch,
   className,
 }: RoomRowProps) {
   const m = useMessages();
@@ -68,6 +72,15 @@ export function RoomRow({
         <div className={styles.action}>
           {status === 'full' && <Tag tone="peach">{m.ui.room.full}</Tag>}
           {status === 'playing' && <Tag tone="blue">{m.ui.room.playing}</Tag>}
+          {(status === 'full' || status === 'playing') && onWatch && (
+            <Button
+              variant="secondary"
+              onClick={onWatch}
+              aria-describedby={nameId}
+            >
+              {m.ui.room.watch}
+            </Button>
+          )}
           {(status === 'open' || status === 'private') && (
             <Button
               variant="secondary"

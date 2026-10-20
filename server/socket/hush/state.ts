@@ -10,7 +10,7 @@ import type {
   HushSeat,
   HushSettings,
 } from '../../models/types.js';
-import { roomStatus, seatCount } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics, seatCount } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
 import { getRemainingPhaseMs } from '../../libs/utils.js';
 import { levelsFor, START_LIVES } from '../../../shared/hush.js';
@@ -73,13 +73,7 @@ const createState = (_settings: HushSettings): HushState => ({
 
 const toLobbyInfo = (room: Room<HushState>): HushLobbyRoomInfo => ({
   gameType: 'hush',
-  roomId: room.roomId,
-  roomName: room.roomName,
-  owner: room.owner,
-  status: roomStatus(room),
-  currentPlayerCount: seatCount(room),
-  maxPlayers: room.maxPlayers,
-  hasPassword: room.password !== '',
+  ...lobbyBasics(room),
 });
 
 /**
@@ -103,8 +97,7 @@ const toRoomState = (
 
   return {
     ...toLobbyInfo(room),
-    playerList: room.playerList,
-    isGameStarted: room.isGameStarted,
+    ...roomBasics(room),
     phaseEndsInMs:
       game.phase === 'paused'
         ? Math.max(0, game.pausedUntil - Date.now())

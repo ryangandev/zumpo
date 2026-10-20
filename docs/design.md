@@ -172,6 +172,9 @@ Code differs from Figma on purpose in a few places:
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
 - The footer carries a language switch, English and 中文 in the footer's small text, which the Figma file does not draw: the design is English, and the switch is the one control that lets a reader choose otherwise ([languages](architecture.md#languages)).
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.
+- Spectator seats are not in Figma yet, so their pieces are made of existing families: the lobby row's Watch is a small secondary Button beside the Playing or Full tag, the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat or Watch instead is a secondary Button among a panel's actions.
+  Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
+- Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 
 ## Editing the Figma file
