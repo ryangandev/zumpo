@@ -235,7 +235,7 @@ test('a mangled room link says the room is gone', async ({ player }) => {
   ).toBeVisible();
 });
 
-test('a game in progress turns a latecomer away', async ({ player }) => {
+test('a latecomer to a game in progress watches it', async ({ player }) => {
   const maya = await player('Maya');
   const leo = await player('Leo');
   const sam = await player('Sam');
@@ -246,6 +246,11 @@ test('a game in progress turns a latecomer away', async ({ player }) => {
 
   await sam.goto(link);
   await expect(
-    sam.getByRole('heading', { name: 'That room moved on.' }),
+    sam.getByText(
+      'You’re watching this game. You can take a seat once it ends.',
+    ),
+  ).toBeVisible();
+  await expect(
+    maya.getByRole('region', { name: 'Watching' }).getByText('Sam'),
   ).toBeVisible();
 });
