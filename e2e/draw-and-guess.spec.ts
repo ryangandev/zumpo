@@ -97,6 +97,46 @@ test('two players play a whole game', async ({ player }) => {
   ).toBeVisible();
 });
 
+test('a spectator watches the drawing, cannot guess, and sees the round sum', async ({
+  player,
+}) => {
+  const maya = { name: 'Maya', page: await player('Maya') };
+  const leo = { name: 'Leo', page: await player('Leo') };
+  const sam = await player('Sam');
+  const link = await createRoom(maya.page, 'draw-and-guess', { rounds: 2 });
+  await joinRoom(leo.page, link);
+  await joinRoom(sam, link);
+  await sam.getByRole('button', { name: 'Watch instead' }).click();
+  await expect(
+    sam.getByRole('heading', { name: 'You’re watching.' }),
+  ).toBeVisible();
+  await maya.page.getByRole('button', { name: 'Start game' }).click();
+
+  for (let turn = 1; turn <= 2; turn++) {
+    const [drawer, guesser] = await whoDraws(maya, leo);
+    const word = await drawAWord(drawer.page);
+    await expect.poll(() => painted(sam)).toBe(true);
+
+    // The word from a spectator is swallowed: it neither shows nor scores.
+    // The line after it shows, so the word reached the server first.
+    await say(sam, word);
+    const after = `watching turn ${turn}`;
+    await say(sam, after);
+    const chat = drawer.page.getByRole('region', { name: 'Chat' });
+    await expect(chat.getByText(after)).toBeVisible();
+    await expect(chat.getByText(word, { exact: true })).toHaveCount(0);
+    await expect(chat.getByText(/^Sam guessed/)).toHaveCount(0);
+
+    await say(guesser.page, word);
+    await expectScored(drawer.page, guesser);
+  }
+
+  const sum = sam.getByRole('region', { name: 'Round 1 results' });
+  await expect(sum).toBeVisible();
+  await expect(sum.getByRole('listitem')).toHaveCount(2);
+  await expect(sum).not.toContainText('Sam');
+});
+
 test('a phone player draws from the words alone and guesses under the board', async ({
   player,
 }) => {
