@@ -12,7 +12,7 @@ describe('the canvas stream', () => {
     const stream = new CanvasStream();
     const changes = watch(stream);
     stream.start({ x: 0, y: 0 }, '#000', 4);
-    stream.move({ x: 1, y: 1 }, '#000', 4);
+    stream.move({ x: 1, y: 1 });
     stream.end();
     stream.start({ x: 5, y: 5 }, '#f00', 8);
 
@@ -30,10 +30,28 @@ describe('the canvas stream', () => {
     expect(changes).toEqual(['extend', 'extend', 'extend']);
   });
 
-  it('starts a stroke of its own for a move that arrives without a start', () => {
+  it('goes on with a stroke it was synced mid-way, and undoes all of it', () => {
     const stream = new CanvasStream();
-    stream.move({ x: 2, y: 2 }, '#000', 4);
-    expect(stream.snapshot()).toHaveLength(1);
+    stream.sync([{ color: '#f00', size: 8, points: [{ x: 1, y: 1 }] }]);
+    stream.move({ x: 2, y: 2 });
+    expect(stream.snapshot()).toEqual([
+      {
+        color: '#f00',
+        size: 8,
+        points: [
+          { x: 1, y: 1 },
+          { x: 2, y: 2 },
+        ],
+      },
+    ]);
+    stream.undo();
+    expect(stream.snapshot()).toEqual([]);
+  });
+
+  it('ignores a move with no stroke to go on with', () => {
+    const stream = new CanvasStream();
+    stream.move({ x: 2, y: 2 });
+    expect(stream.snapshot()).toEqual([]);
   });
 
   it('repaints on undo, clear and sync', () => {

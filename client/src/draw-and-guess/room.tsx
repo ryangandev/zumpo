@@ -232,9 +232,9 @@ function Turn({ room }: { room: Room }) {
     [canvas, socket, roomId],
   );
   const move = useCallback(
-    (point: Coordinate, { color, size: width }: Brush) => {
-      canvas.move(point, color, width);
-      socket.emit('dg:draw:move', roomId, point, color, width);
+    (point: Coordinate) => {
+      canvas.move(point);
+      socket.emit('dg:draw:move', roomId, point);
     },
     [canvas, socket, roomId],
   );

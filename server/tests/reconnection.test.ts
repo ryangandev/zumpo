@@ -318,7 +318,7 @@ describe('reconnecting to a room', () => {
 
     const { roomId, drawer, guesser, word } = await playToDrawingPhase(harness);
     drawer.emit('dg:draw:start', roomId, { x: 4, y: 4 }, '#123456', 8);
-    drawer.emit('dg:draw:move', roomId, { x: 40, y: 40 }, '#123456', 8);
+    drawer.emit('dg:draw:move', roomId, { x: 40, y: 40 });
     await settle(50);
 
     const holding = waitForDrawState(guesser, (s) => s.drawerHoldEndsInMs > 0);

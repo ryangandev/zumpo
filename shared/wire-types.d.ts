@@ -1002,12 +1002,8 @@ interface ClientToServerEvents {
     color: string,
     size: number,
   ) => void;
-  'dg:draw:move': (
-    roomId: string,
-    point: Coordinate,
-    color: string,
-    size: number,
-  ) => void;
+  /** The next point of the stroke in progress, which owns its brush. */
+  'dg:draw:move': (roomId: string, point: Coordinate) => void;
   'dg:draw:end': (roomId: string) => void;
   'dg:draw:undo': (roomId: string) => void;
   'dg:draw:clear': (roomId: string) => void;
@@ -1073,12 +1069,8 @@ interface ServerToClientEvents {
     color: string,
     size: number,
   ) => void;
-  'dg:canvas:move': (
-    roomId: string,
-    point: Coordinate,
-    color: string,
-    size: number,
-  ) => void;
+  /** The next point of the last stroke. */
+  'dg:canvas:move': (roomId: string, point: Coordinate) => void;
   'dg:canvas:end': (roomId: string) => void;
   'dg:canvas:undo': (roomId: string) => void;
   'dg:canvas:clear': (roomId: string) => void;

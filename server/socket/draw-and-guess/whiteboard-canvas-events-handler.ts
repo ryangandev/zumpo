@@ -77,21 +77,13 @@ const whiteboardCanvasEventHandler = (socket: IoSocket, ctx: GameContext) => {
       'dg:draw:move',
     );
     if (!validated) return;
-    const [roomId, coords, color, size] = validated;
+    const [roomId, coords] = validated;
 
     const room = pencilRoomOf(roomId);
     if (!room) return;
     if (!extendStroke(room.game.canvas, coords)) return;
 
-    broadcastToRoom(
-      socket,
-      roomId,
-      'dg:canvas:move',
-      roomId,
-      coords,
-      color,
-      size,
-    );
+    broadcastToRoom(socket, roomId, 'dg:canvas:move', roomId, coords);
   });
 
   onClientEvent(socket, 'dg:draw:end', (...rawArgs: unknown[]) => {
