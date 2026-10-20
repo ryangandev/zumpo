@@ -366,8 +366,9 @@ function turnBar(
               : m.drawAndGuess.guessWord,
             kind: 'hint',
             main: state.hint,
-            meta: m.drawAndGuess.letters(letters, phone),
-            countdown: clock(m.drawAndGuess.left),
+            // A spectator's guess would score nothing, so they are not asked.
+            meta: m.drawAndGuess.letters(letters, phone || room.spectating),
+            countdown: clock(m.drawAndGuess.left, room.spectating),
           };
     default:
       return {
