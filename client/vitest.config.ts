@@ -5,6 +5,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
+    // One jsdom per worker rather than per file, each file still in its own
+    // context: building a fresh jsdom for every file was a third of the run.
+    pool: 'vmThreads',
     setupFiles: ['./src/tests/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     restoreMocks: true,
