@@ -52,6 +52,7 @@ export const hush: typeof en = {
   nextLevel: (level) =>
     `第 ${level} 关每人发 ${level} 张牌。所有人都要再次准备。`,
   hand: '你的手牌',
+  watchingHand: '你正在观战，队伍会一言不发地出牌。',
   handEmpty: '没有牌可出了。安静地看着牌堆。',
   play: (card) => `出 ${card}`,
   onlyLowest: '只能打出你最小的牌。',

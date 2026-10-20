@@ -4,6 +4,7 @@ import type { Make24RoomState, Make24Step } from '../models/types.js';
 import {
   collectChat,
   createMake24Room,
+  joinRoom,
   lobbyView,
   make24Room,
   playToFirstHand,
@@ -218,6 +219,17 @@ describe('a hand', () => {
     const heard = waitForChat(alice, (m) => m.kind === 'player');
     bob.emit('chat:send', roomId, 'hmm');
     expect(textOf(await heard)).toBe('hmm');
+  });
+
+  it('keeps a spectator out of the chat while a hand is being solved', async () => {
+    const { roomId, alice } = await playToFirstHand(harness);
+    const carol = await harness.connect();
+    await joinRoom(carol, roomId, 'Carol');
+
+    const aliceHears = collectChat(alice);
+    carol.emit('chat:send', roomId, 'try 6 times 4');
+    await settle();
+    expect(aliceHears.filter((m) => m.kind === 'player')).toEqual([]);
   });
 
   it('ends early once everybody has solved it, with a way to solve it', async () => {

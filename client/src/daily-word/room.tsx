@@ -84,7 +84,11 @@ export function DailyWordRoom() {
             ? m.dailyWord.foundChat
             : undefined,
       }}
-      playersAside={phone && guessing ? <Others room={room} /> : undefined}
+      playersAside={
+        phone && guessing && !room.spectating ? (
+          <Others room={room} />
+        ) : undefined
+      }
     />
   );
 }
@@ -145,6 +149,17 @@ function Round({
   const [sending, setSending] = useState(false);
   const mine = state.boards.find((board) => board.playerId === playerId);
 
+  // A spectator has no board of their own: everybody's is theirs to watch.
+  if (state.phase === 'guessing' && room.spectating) {
+    return (
+      <>
+        <TurnBar {...turnBar(room, seconds, mine, m)} />
+        <BoardPanel>
+          <Others room={room} />
+        </BoardPanel>
+      </>
+    );
+  }
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
@@ -237,14 +252,14 @@ function Round({
 /** DW07, DW08, DW14: everybody else's board, marks only. */
 function Others({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, playerId } = room;
+  const { state, playerId, spectating } = room;
   const others = state.boards.filter((board) => board.playerId !== playerId);
   if (others.length === 0) return null;
   return (
     <section className={styles.others} aria-labelledby="the-others">
       <div className={styles.heading}>
         <h2 id="the-others" className={styles.title}>
-          {m.dailyWord.others}
+          {spectating ? m.dailyWord.everyone : m.dailyWord.others}
         </h2>
         <p className={styles.note}>{m.dailyWord.marksOnly}</p>
       </div>
@@ -336,12 +351,18 @@ function turnBar(
   if (state.phase === 'reveal') {
     const result = state.lastRound;
     const me = result?.boards.find((board) => board.playerId === playerId);
+    const finders = (result?.boards ?? [])
+      .filter((board) => board.status === 'found')
+      .map((board) => board.username);
     return {
       label: m.dailyWord.wordWasLabel,
       kind: 'status',
       main: result ? result.word.toUpperCase() : '',
-      meta:
-        me?.status === 'found'
+      meta: room.spectating
+        ? finders.length
+          ? m.dailyWord.namesFound(listNames(finders, m))
+          : m.dailyWord.nobodyFound
+        : me?.status === 'found'
           ? m.dailyWord.youFound(me.rows.length, me.points)
           : m.dailyWord.youMissed,
       countdown: clock(
@@ -390,11 +411,11 @@ function turnBar(
     label,
     kind: 'status',
     // The board counts the guesses; the bar keeps to the race (DW07, DW13).
-    main: m.dailyWord.findWord,
+    main: room.spectating ? m.dailyWord.everyoneGuessing : m.dailyWord.findWord,
     meta: finders.length
       ? m.dailyWord.namesFound(listNames(finders, m))
       : m.dailyWord.fewerScore,
-    countdown: clock(m.dailyWord.toGuess),
+    countdown: clock(m.dailyWord.toGuess, room.spectating),
   };
 }
 

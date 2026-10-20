@@ -23,6 +23,7 @@ export const ui = {
     full: 'Full',
     playing: 'Playing',
     join: 'Join',
+    watch: 'Watch',
   },
   drawing: {
     tools: 'Drawing tools',

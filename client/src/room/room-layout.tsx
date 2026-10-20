@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { MAX_SPECTATORS } from '../../../shared/room';
 import {
   ChatInput,
   MobileTabs,
@@ -61,8 +62,9 @@ type View = 'board' | 'players' | 'chat';
 /**
  * A seated room's screen: the room bar, the game, the scoreboard and the
  * chat; under 1024 px the scoreboard and the chat go under the game, and on a
- * phone the three are tabs. How to play opens over the room. While
- * reconnecting it says so and holds still.
+ * phone the three are tabs. Anybody watching is listed under the scoreboard,
+ * and a spectator is told so while a game is under way. How to play opens
+ * over the room. While reconnecting it says so and holds still.
  */
 export function RoomLayout({
   phase,
@@ -83,7 +85,7 @@ export function RoomLayout({
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
   const { viewer, viewerMenu } = useViewer({
-    seatName: state.playerList[room.playerId]?.username,
+    seatName: room.me.username,
   });
 
   const input = {
@@ -111,6 +113,32 @@ export function RoomLayout({
     </Scoreboard>
   );
 
+  const spectators = Object.entries(state.spectators);
+  const watching =
+    spectators.length > 0 ? (
+      <Scoreboard
+        title={m.room.watching}
+        players={spectators.length}
+        seats={MAX_SPECTATORS}
+      >
+        {spectators.map(([playerId, spectator]) => (
+          <PlayerRow
+            key={playerId}
+            name={spectator.username}
+            initials={initialsOf(spectator.username)}
+            tone={toneOf(spectator.username)}
+            status={
+              spectator.isConnected ? m.room.spectator : m.room.reconnecting
+            }
+            statusIcon={spectator.isConnected ? undefined : 'away'}
+            host={playerId === state.owner.playerId}
+            you={playerId === room.playerId}
+            state={spectator.isConnected ? 'default' : 'away'}
+          />
+        ))}
+      </Scoreboard>
+    ) : null;
+
   const chatPanel = <RoomChat input={input} alertIcon={chat.alertIcon} />;
 
   const seconds = Math.round(reconnectGraceMs / 1000);
@@ -135,7 +163,12 @@ export function RoomLayout({
           {m.room.reconnectingNotice(state.roomName, seconds)}
         </Notice>
       ) : (
-        notice
+        <>
+          {room.spectating && state.isGameStarted && (
+            <Notice>{m.room.spectatingNotice}</Notice>
+          )}
+          {notice}
+        </>
       )}
       {phone ? (
         <MobileTabs<View>
@@ -155,14 +188,16 @@ export function RoomLayout({
             {
               value: 'players',
               label: m.room.players(players.length),
-              panel: playersAside ? (
-                <div className={styles.side}>
-                  {scoreboard}
-                  {playersAside}
-                </div>
-              ) : (
-                scoreboard
-              ),
+              panel:
+                playersAside || watching ? (
+                  <div className={styles.side}>
+                    {scoreboard}
+                    {watching}
+                    {playersAside}
+                  </div>
+                ) : (
+                  scoreboard
+                ),
             },
             { value: 'chat', label: m.room.chat, panel: chatPanel },
           ]}
@@ -172,6 +207,7 @@ export function RoomLayout({
           <div className={styles.stage}>{stage}</div>
           <div className={styles.side}>
             {scoreboard}
+            {watching}
             {chatPanel}
           </div>
         </div>

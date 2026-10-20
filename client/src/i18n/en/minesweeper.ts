@@ -69,6 +69,7 @@ export const minesweeper = {
   waitingFor: (names: string) => `Waiting for ${names}`,
   toPick: 'to pick',
   pickCell: 'Pick a cell',
+  everyonePicking: 'Everyone is picking',
   minesFound: (total: number, found: number) =>
     `${total} mines · ${found} hit so far`,
   pickLocks: (total: number) =>

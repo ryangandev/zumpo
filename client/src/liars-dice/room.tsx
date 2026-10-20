@@ -123,7 +123,8 @@ function Turn({ room }: { room: Room }) {
     state.phase === 'bidding' &&
     state.turnPlayerId === playerId &&
     !reconnecting;
-  const out = (state.playerList[playerId]?.points ?? 0) === 0;
+  const out =
+    !room.spectating && (state.playerList[playerId]?.points ?? 0) === 0;
   return (
     <>
       <TurnBar {...turnBar(room, seconds, m)} />

@@ -25,6 +25,8 @@ export const make24 = {
   handResults: (hand: number) => `Hand ${hand} results`,
   solved: 'Solved',
   outOfTime: 'Out of time',
+  handOver: 'Hand over',
+  spectatorChatLocked: 'Spectators keep quiet while a hand is open',
   resultDetail: (expression: string, seconds: number) =>
     `${expression} · ${seconds} s left`,
   noAnswer: 'No answer',

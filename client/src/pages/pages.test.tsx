@@ -296,6 +296,32 @@ describe('a game’s page', () => {
     expect(fake.sentArgs('lobby:unsubscribe')).toEqual([['minesweeper']]);
   });
 
+  it('offers to watch a room under way while a spectator seat is free', async () => {
+    const user = userEvent.setup();
+    const { fake, router } = await renderApp('/games/minesweeper');
+    act(() =>
+      fake.serverEmits('lobby:rooms', 'minesweeper', [
+        { ...lobbyRoom, status: 'In Progress' },
+        {
+          ...lobbyRoom,
+          roomId: 'r2',
+          roomName: 'Crowded',
+          status: 'In Progress',
+          spectatorCount: 5,
+        },
+      ]),
+    );
+
+    const crowded = screen.getByRole('article', { name: 'Crowded' });
+    expect(within(crowded).getByText('Playing')).toBeInTheDocument();
+    expect(within(crowded).queryByRole('button')).toBeNull();
+
+    const row = screen.getByRole('article', { name: 'Friday table' });
+    expect(within(row).getByText('Playing')).toBeInTheDocument();
+    await user.click(within(row).getByRole('button', { name: 'Watch' }));
+    expect(router.state.location.pathname).toBe('/games/minesweeper/rooms/r1');
+  });
+
   it('ignores another game’s rooms', async () => {
     const { fake } = await renderApp('/games/minesweeper');
     act(() => fake.serverEmits('lobby:rooms', 'draw-and-guess', []));

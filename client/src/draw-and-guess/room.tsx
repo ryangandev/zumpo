@@ -60,14 +60,14 @@ export function DrawAndGuessRoom() {
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{
         placeholder:
-          drawing && !isDrawer && !scored
+          drawing && !isDrawer && !scored && !room.spectating
             ? m.drawAndGuess.guessPlaceholder
             : m.drawAndGuess.messagePlaceholder,
         lockedReason: chatLock(state, isDrawer, scored, m),
       }}
       boardInput={
         inGame && !isDrawer && state.phase !== 'choosing'
-          ? drawing && !scored
+          ? drawing && !scored && !room.spectating
             ? m.drawAndGuess.guess
             : m.drawAndGuess.message
           : undefined
@@ -332,7 +332,9 @@ function turnBar(
             label: m.drawAndGuess.nextUp,
             kind: 'status',
             main: m.drawAndGuess.choosingWord(drawerName),
-            meta: m.drawAndGuess.readyToGuess,
+            meta: room.spectating
+              ? m.room.spectatingTitle
+              : m.drawAndGuess.readyToGuess,
             countdown: clock(m.drawAndGuess.toChoose, true),
           };
     case 'drawing':
@@ -359,7 +361,9 @@ function turnBar(
           }
         : {
             category,
-            label: m.drawAndGuess.guessWord,
+            label: room.spectating
+              ? m.room.spectator
+              : m.drawAndGuess.guessWord,
             kind: 'hint',
             main: state.hint,
             meta: m.drawAndGuess.letters(letters, phone),

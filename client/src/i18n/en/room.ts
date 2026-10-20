@@ -4,7 +4,7 @@ export const room = {
   connecting: 'Connecting…',
   unavailableTitle: 'That room moved on.',
   unavailableDescription:
-    'It filled up, started playing, or closed before you joined. Choose another room.',
+    'Every seat and every spectator seat is taken, or it closed before you joined. Choose another room.',
   notFoundTitle: 'This room has packed up.',
   notFoundDescription:
     'The room no longer exists. Find another room or start your own.',
@@ -36,8 +36,21 @@ export const room = {
     `The game carries on without you, and your seat and your ${score} go with you. You can join again while a seat is open.`,
   leaveBetweenGames:
     'Your seat goes with you. You can join again while a seat is open.',
+  leaveSpectating:
+    'You’re only watching, so nothing is lost. You can come back while a spectator seat is open.',
   leave: 'Leave room',
   stay: 'Stay',
+  watching: 'Watching',
+  spectator: 'Watching',
+  watch: 'Watch instead',
+  sit: 'Take a seat',
+  moving: 'Moving…',
+  spectatingTitle: 'You’re watching.',
+  spectatingSeatFree: 'Take a seat to play in the next game, or keep watching.',
+  spectatingSeatsFull:
+    'Every seat is taken. You can take one once somebody gives theirs up.',
+  spectatingNotice:
+    'You’re watching this game. You can take a seat once it ends.',
   rulesTitle: (game: string) => `How to play ${game}`,
   backToGame: 'Back to the game',
   invite: 'Invite friends',

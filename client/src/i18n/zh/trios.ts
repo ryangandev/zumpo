@@ -53,6 +53,7 @@ export const trios: typeof en = {
   oneMarked: '一组中的 1 张牌已标记',
   twoMarked: '一组中的 2 张牌已标记',
   pickThree: '选 3 张牌',
+  everyoneLooking: '大家正在找一组',
   findTwo: '找到与它成组的另 2 张牌',
   findThird: '找到第 3 张牌',
   firstTakes: '最先选中一组的人拿走它',

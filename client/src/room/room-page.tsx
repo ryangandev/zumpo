@@ -275,6 +275,7 @@ function SeatedRoom({
   const { state, receivedAt } = snapshot;
   const [inviting, setInviting] = useState(false);
   const [starting, setStarting] = useState(false);
+  const [moving, setMoving] = useState(false);
 
   // A game that ends while the room is open is celebrated; a finished game
   // found on arrival or after a refresh is not. Each one gets its own burst.
@@ -298,9 +299,13 @@ function SeatedRoom({
       currentLocation.pathname !== nextLocation.pathname,
   );
   const blocked = blocker.state === 'blocked';
-  // Only Leave room between games is sure to mean it; anything else may be a
-  // slip, so it asks.
-  const sure = blocked && !state.isGameStarted && isLeaveRoom(blocker.location);
+  const spectator = state.spectators[playerId];
+  // Only Leave room between games, or while watching, is sure to mean it;
+  // anything else may be a slip, so it asks.
+  const sure =
+    blocked &&
+    (!state.isGameStarted || Boolean(spectator)) &&
+    isLeaveRoom(blocker.location);
   const { leave } = connection;
 
   useEffect(() => {
@@ -322,7 +327,32 @@ function SeatedRoom({
     setStarting(false);
   }, [socket, state.roomId]);
 
-  const me = state.playerList[playerId];
+  // Moves between the table and the spectator seats; the snapshot that
+  // follows shows where the viewer sits now, and a refusal changes nothing.
+  const move = useCallback(
+    async (event: 'room:watch' | 'room:sit') => {
+      setMoving(true);
+      try {
+        await socket
+          .timeout(REQUEST_TIMEOUT_MS)
+          .emitWithAck(event, state.roomId);
+      } catch {
+        // No answer; the button comes back so the viewer can try again.
+      }
+      setMoving(false);
+    },
+    [socket, state.roomId],
+  );
+
+  const seat = state.playerList[playerId];
+  const me = useMemo(
+    () =>
+      seat ??
+      (spectator
+        ? { username: spectator.username, points: 0, isConnected: true }
+        : undefined),
+    [seat, spectator],
+  );
 
   const room = useMemo<Room | null>(
     () =>
@@ -334,6 +364,7 @@ function SeatedRoom({
             reconnectGraceMs,
             playerId,
             me,
+            spectating: !seat,
             isHost: state.owner.playerId === playerId,
             chat: connection.chat,
             canvas: connection.canvas,
@@ -346,6 +377,9 @@ function SeatedRoom({
               }),
             startGame,
             starting,
+            watch: () => void move('room:watch'),
+            sit: () => void move('room:sit'),
+            moving,
           }
         : null,
     [
@@ -355,12 +389,15 @@ function SeatedRoom({
       reconnectGraceMs,
       playerId,
       me,
+      seat,
       connection.chat,
       connection.canvas,
       socket,
       navigate,
       startGame,
       starting,
+      move,
+      moving,
     ],
   );
 
@@ -399,6 +436,7 @@ function SeatedRoom({
         open={blocked && !sure}
         roomName={state.roomName}
         inGame={state.isGameStarted}
+        spectating={room.spectating}
         score={scoreOf(m, state.gameType, room.me.points)}
         onStay={() => blocker.reset?.()}
         onLeave={() => {

@@ -16,7 +16,14 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   reconnecting: boolean;
   reconnectGraceMs: number;
   playerId: string;
+  /**
+   * The viewer at the table or, while `spectating`, their name with no score:
+   * a spectator is in no `playerList`, so nothing in a game treats them as
+   * playing.
+   */
   me: PlayerInfo;
+  /** In the spectator seats: sees what any player may, and plays no part. */
+  spectating: boolean;
   isHost: boolean;
   chat: readonly ChatMessage[];
   canvas: CanvasStream;
@@ -26,6 +33,11 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   startGame: () => void;
   starting: boolean;
   openInvite: () => void;
+  /** Between games: gives up the seat to watch, or takes a free one. */
+  watch: () => void;
+  sit: () => void;
+  /** A move between the table and the spectator seats is on its way. */
+  moving: boolean;
   /** The Leave room button: goes at once between games, asks mid-game. */
   leave: () => void;
 }

@@ -14,6 +14,7 @@ export function LeaveDialog({
   open,
   roomName,
   inGame,
+  spectating,
   score,
   onStay,
   onLeave,
@@ -21,6 +22,8 @@ export function LeaveDialog({
   open: boolean;
   roomName: string;
   inGame: boolean;
+  /** Watching: nothing is lost, in a game or not. */
+  spectating: boolean;
   /** "180 points", "3 pairs". */
   score: string;
   onStay: () => void;
@@ -36,7 +39,11 @@ export function LeaveDialog({
       }}
       title={m.room.leaveTitle(roomName)}
       description={
-        inGame ? m.room.leaveInGame(score) : m.room.leaveBetweenGames
+        spectating
+          ? m.room.leaveSpectating
+          : inGame
+            ? m.room.leaveInGame(score)
+            : m.room.leaveBetweenGames
       }
       initialFocus={stay}
       actions={

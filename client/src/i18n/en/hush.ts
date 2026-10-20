@@ -59,6 +59,7 @@ export const hush = {
   nextLevel: (level: number) =>
     `Level ${level} deals ${plural(level, 'card')} each. Everyone presses Ready again.`,
   hand: 'Your hand',
+  watchingHand: 'You’re watching. The team plays without a word.',
   handEmpty: 'Nothing left to play. Watch the pile, without a word.',
   play: (card: number) => `Play ${card}`,
   onlyLowest: 'Only your lowest card can be played.',

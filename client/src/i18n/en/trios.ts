@@ -53,6 +53,7 @@ export const trios = {
   oneMarked: 'One card of a trio is marked',
   twoMarked: 'Two cards of a trio are marked',
   pickThree: 'Pick three cards',
+  everyoneLooking: 'Everyone is looking for a trio',
   findTwo: 'Find the two that go with it',
   findThird: 'Find the third card',
   firstTakes: 'The first trio claimed takes it',
