@@ -6,7 +6,9 @@ test('a spectator watches a game and takes a seat once it ends', async ({
   const maya = await player('Maya');
   const leo = await player('Leo');
   const sam = await player('Sam');
-  const link = await createRoom(maya, 'minesweeper', { name: 'Watched' });
+  // Unique, because the lobby lists every room on the shared server.
+  const name = `Watched ${test.info().repeatEachIndex}-${test.info().workerIndex}`;
+  const link = await createRoom(maya, 'minesweeper', { name });
   await joinRoom(leo, link);
   await joinRoom(sam, link);
 
@@ -33,7 +35,7 @@ test('a spectator watches a game and takes a seat once it ends', async ({
   // Somebody arriving at the game under way watches it, from the lobby.
   const ana = await player('Ana');
   await ana.goto('/games/minesweeper');
-  const row = ana.getByRole('article', { name: 'Watched' });
+  const row = ana.getByRole('article', { name });
   await expect(row.getByText('Playing')).toBeVisible();
   await row.getByRole('button', { name: 'Watch' }).click();
   await expect(
@@ -53,7 +55,7 @@ test('a spectator watches a game and takes a seat once it ends', async ({
   // Leo leaves, the game ends early, and a spectator takes the free seat.
   await leo.getByRole('button', { name: 'Leave room' }).click();
   await leo
-    .getByRole('dialog', { name: 'Leave Watched?' })
+    .getByRole('dialog', { name: `Leave ${name}?` })
     .getByRole('button', { name: 'Leave room' })
     .click();
   await sam.getByRole('button', { name: 'Take a seat' }).click();
