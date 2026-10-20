@@ -122,10 +122,12 @@ test('a spectator watches the drawing, cannot guess, and sees the round sum', as
     await say(sam, word);
     const after = `watching turn ${turn}`;
     await say(sam, after);
-    const chat = drawer.page.getByRole('region', { name: 'Chat' });
-    await expect(chat.getByText(after)).toBeVisible();
-    await expect(chat.getByText(word, { exact: true })).toHaveCount(0);
-    await expect(chat.getByText(/^Sam guessed/)).toHaveCount(0);
+    for (const seat of [drawer, guesser]) {
+      const chat = seat.page.getByRole('region', { name: 'Chat' });
+      await expect(chat.getByText(after)).toBeVisible();
+      await expect(chat.getByText(word, { exact: true })).toHaveCount(0);
+      await expect(chat.getByText(/^Sam guessed/)).toHaveCount(0);
+    }
 
     await say(guesser.page, word);
     await expectScored(drawer.page, guesser);

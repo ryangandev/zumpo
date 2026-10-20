@@ -700,9 +700,11 @@ class Exporter {
       await this.num(node, 'paddingLeft'),
     ]);
     if (pad !== undefined) l.pad = pad;
+    // Space-between ignores the gap, so a number left in it means nothing.
+    const spaced = node.primaryAxisAlignItems === 'SPACE_BETWEEN';
     this.noteUnbound(
       'unboundSpacing',
-      [l.gap, l.crossGap].concat(pad === undefined ? [] : pad),
+      [spaced ? 0 : l.gap, l.crossGap].concat(pad === undefined ? [] : pad),
     );
     if (node.primaryAxisAlignItems && node.primaryAxisAlignItems !== 'MIN') {
       l.justify = node.primaryAxisAlignItems.toLowerCase();
