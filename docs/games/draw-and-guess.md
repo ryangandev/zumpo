@@ -75,8 +75,8 @@ The client shows them, and the server checks them, so a modified client gains no
 - **Only the drawer may draw**, and only during a drawing phase.
   That covers drawing, undo and clear: a stranger with a room id off the lobby broadcast used to be able to wipe a room's canvas with one event.
 - **Only the room owner may start a game**, and only with two or more players.
-- **Only a seat-holder may read a room's state**, so a locked room's player list is not readable by anyone who has a room id.
-- **Only a seat-holder may talk** in a room.
+- **Only a member may read a room's state**, a player or a spectator, so a locked room's player list is not readable by anyone who has a room id.
+- **Only a member may talk** in a room, and a spectator's right guess is swallowed and scores nobody.
 - **Nothing a client sends advances a phase.**
   The clock lives on the server; a client is told how many milliseconds are left and renders a countdown from it.
 
