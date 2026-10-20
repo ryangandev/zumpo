@@ -317,8 +317,10 @@ const createDrawAndGuessGameEngine = (
     room.game.hint = buildWordHint(word);
     room.game.wordChoices = [];
 
+    // Not the word: the log is read by more people than the room is, and a
+    // secret written down is one that can leak.
     console.log(
-      `In room ${room.roomId}, drawer ${room.game.currentDrawer} is drawing "${word}".`,
+      `In room ${room.roomId}, drawer ${room.game.currentDrawer} is drawing.`,
     );
 
     ctx.rooms.startPhase(room, phaseDurationsInSeconds.drawing, () =>

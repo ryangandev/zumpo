@@ -7,6 +7,8 @@ import type {
   ServerToClientEvent,
   ServerToClientEvents,
 } from '../../../shared/wire-types.js';
+import { invalidRequest } from '../../models/error.js';
+import { guard } from '../guard.js';
 
 /**
  * Every emit and every listener goes through here, so that an event name and
@@ -26,6 +28,8 @@ interface SocketData {
    * any of its events are read. Identity comes from here, never a payload.
    */
   playerId: string;
+  /** Where it connects from, for the per-address limits; unknown if absent. */
+  address?: string;
 }
 
 /** The socket.io server, typed on the shared contract. */
@@ -103,13 +107,31 @@ const emitToPlayer = <E extends ServerToClientEvent>(
   io.to(playerChannel(playerId)).emit(event, ...args);
 };
 
-/** A fire-and-forget event: its arguments, unchecked, for zod to read. */
+/** Names an event for the log: who sent it, and the room it names, if any. */
+const describeEvent = (
+  socket: IoSocket,
+  event: ClientToServerEvent,
+  args: unknown[],
+): string => {
+  const room = typeof args[0] === 'string' ? ` in room ${args[0]}` : '';
+  return `"${event}" from player ${socket.data.playerId}${room}`;
+};
+
+/**
+ * A fire-and-forget event: its arguments, unchecked, for zod to read. A
+ * handler that throws is logged, and the server goes on.
+ */
 const onClientEvent = (
   socket: IoSocket,
   event: ClientToServerEvent,
   handler: (...args: unknown[]) => void,
 ): void => {
-  socket.on(event, handler);
+  socket.on(event, (...args: unknown[]) => {
+    guard(
+      () => describeEvent(socket, event, args),
+      () => handler(...args),
+    );
+  });
 };
 
 type Last<T extends unknown[]> = T extends [...unknown[], infer L] ? L : never;
@@ -157,11 +179,20 @@ const onClientRequest = <E extends RequestEvent>(
     const { args, ack } = splitAck(rawArgs);
     let answered = false;
 
-    handler(args, (answer) => {
+    const reply = (answer: AnswerOf<E>) => {
       if (answered || !ack) return;
       answered = true;
       ack(answer);
-    });
+    };
+
+    // A request that throws before it answered is still answered, so the
+    // client is not left waiting on it.
+    const finished = guard(
+      () => describeEvent(socket, event, args),
+      () => handler(args, reply),
+    );
+    if (!finished)
+      reply(invalidRequest('Something went wrong.') as AnswerOf<E>);
   });
 };
 

@@ -1,3 +1,5 @@
+import { guard } from '../guard.js';
+
 /**
  * Timers kept per room.
  *
@@ -43,7 +45,7 @@ const createRoomTimers = (exists: (roomId: string) => boolean) => {
       if (owned.size === 0 && pending.get(roomId) === owned) {
         pending.delete(roomId);
       }
-      if (exists(roomId)) onDue();
+      if (exists(roomId)) guard(`A timer in room ${roomId}`, onDue);
     }, ms);
     owned.add(timer);
   };

@@ -135,6 +135,11 @@ The server decides everything a player could gain by lying about.
   Its rules are still one copy: anything a room plays too, such as board sizes or a deal, comes from `shared/*.ts`.
 - **Every inbound event is validated** with zod ([`validation.ts`](../server/libs/validation.ts)) before it reaches game state, and **rate-limited** before that ([`rate-limit.ts`](../server/libs/rate-limit.ts)): one token bucket per kind of event, per socket, because a drawing phase is a stream of coordinates and joining a room is a click.
 - **What a client can make the server hold is bounded, not only how fast.** A packet may be at most 16 KB (socket.io's default is 1 MB, parsed in full before zod sees it), one player holds one seat, and the server holds at most 500 rooms; past that, `room:create` is refused with `tooManyRooms` ([`app.ts`](../server/app.ts)).
+- **One address cannot hold the server.** Before a connection is let in, [`connection-gate.ts`](../server/libs/connection-gate.ts) holds each address to 30 open connections, 60 new ones a minute and 10 rooms it made, and everybody together to 2,000 connections and 10,000 identities; a returning player is always let back.
+  Behind a proxy every connection comes from the proxy, so the client's address is read from the header `CLIENT_IP_HEADER` names.
+  When that header is missing, only the totals apply: one bucket shared by everybody would shut the site.
+- **Every response says what a page may load.** A Content Security Policy allows only this origin (inline styles aside, for React's `style` attributes) and no framing, with `nosniff` and a strict referrer, and Express no longer names itself.
+  A built file under `/assets` carries a hash in its name and is cached for a year as immutable; the page is `no-cache`, so the visit after a deploy loads the new build.
 - **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
 - **The drawing is server state too.** The stroke list every client builds is built once more on the server, so a player arriving mid-turn gets the board, and undo is "drop the last stroke" rather than a full-canvas image.
 
@@ -327,6 +332,7 @@ What the free plan costs in behaviour:
 - **It sleeps after 15 minutes without traffic**, and the next visitor waits about a minute while it starts.
   Socket.IO traffic counts as activity, so a room in play keeps it awake.
 - **Every deploy and restart drops every room**, as any restart does; avoid deploying while people are playing.
+  A page left open across a deploy still holds the old build: when a chunk it loads later, such as Daily Word's, is gone, it reloads once for the new one, and a missing built file is a 404 rather than the page, so a page that still fails shows the crash page with a Reload button.
 - **750 instance hours a month**, enough for one service running all month.
 
 `autoDeployTrigger: checksPass` deploys a commit on `main` only after CI has passed on it.

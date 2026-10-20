@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { createLogThrottle } from './log-throttle.js';
 
 /**
  * Every value a client sends arrives as `any` off the socket. Nothing here was
@@ -85,6 +86,9 @@ const chatRequest = z.tuple([roomId, trimmedString(MESSAGE_MAX)]);
  * request is answered `invalidRequest`, without the details: a legitimate
  * client cannot produce one, and the details only help someone probing.
  */
+/** At most one "rejected" line per event this often, however many arrive. */
+const warnRejected = createLogThrottle(5000);
+
 const parseArgs = <T>(
   schema: z.ZodType<T>,
   args: unknown,
@@ -93,10 +97,14 @@ const parseArgs = <T>(
   const result = schema.safeParse(args);
 
   if (!result.success) {
-    console.warn(
-      `Rejected "${eventName}": ${result.error.issues
-        .map((issue) => `${issue.path.join('.') || '(root)'} ${issue.message}`)
-        .join('; ')}`,
+    warnRejected(
+      eventName,
+      () =>
+        `Rejected "${eventName}": ${result.error.issues
+          .map(
+            (issue) => `${issue.path.join('.') || '(root)'} ${issue.message}`,
+          )
+          .join('; ')}`,
     );
     return null;
   }

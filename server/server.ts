@@ -25,5 +25,18 @@ const shutDown = (signal: NodeJS.Signals) => {
   void zumpo.close().then(() => process.exit(0));
 };
 
+/*
+ * A bug that escapes every guard is logged, and the process goes on. Ending it
+ * would end every room for certain, to avoid state that is only perhaps wrong
+ * in one; socket events and timers, where everything starts, are guarded
+ * already, so what reaches here is rare.
+ */
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled rejection:', reason);
+});
+
 process.once('SIGTERM', shutDown);
 process.once('SIGINT', shutDown);

@@ -57,6 +57,8 @@ interface Room<TGameState = unknown> {
   phaseEndsAt: number;
   chat: RoomChat;
   game: TGameState;
+  /** The address it was made from, which counts against that address's rooms. */
+  createdFrom?: string;
 }
 
 /**

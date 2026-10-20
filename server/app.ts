@@ -34,6 +34,14 @@ import {
   type PlayerSessionRegistry,
 } from './libs/player-session.js';
 import { createRateLimiter } from './libs/rate-limit.js';
+import {
+  addressOf,
+  createConnectionGate,
+  DEFAULT_CONNECTION_LIMITS,
+  type ConnectionLimits,
+} from './libs/connection-gate.js';
+import { handshakeAuth } from './libs/validation.js';
+import { guard } from './libs/guard.js';
 import { splitAck, type IoServer } from './libs/rooms/emit.js';
 import { invalidRequest } from './models/error.js';
 import type {
@@ -57,6 +65,42 @@ const DEFAULT_MAX_ROOMS = 500;
  */
 const MAX_PACKET_BYTES = 16 * 1024;
 
+/**
+ * What a page from here may load and who may frame it. Everything comes from
+ * this origin: the bundle, its fonts, the socket. Styles allow inline ones,
+ * because React writes `style` attributes for a few computed sizes and
+ * positions.
+ */
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+
+const SECURITY_HEADERS = {
+  'Content-Security-Policy': CONTENT_SECURITY_POLICY,
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  // For browsers that predate `frame-ancestors`.
+  'X-Frame-Options': 'DENY',
+};
+
+/**
+ * A built file's name carries a hash of its contents, so it never changes and
+ * may be kept for a year; anything else, the page above all, is asked about
+ * each time, so a deploy reaches the next visit.
+ */
+const IMMUTABLE = 'public, max-age=31536000, immutable';
+const REVALIDATE = 'no-cache';
+
 /** How long closing waits for connections to take their last packet. */
 const CLOSE_FLUSH_MS = 1000;
 
@@ -65,6 +109,8 @@ interface CreateZumpoServerOptions {
   corsOrigin?: string;
   /** Serve the built SPA and route unknown paths to it. */
   serveClient?: boolean;
+  /** Where the built SPA is; `build/public` beside the built server. */
+  clientFolder?: string;
   /** Shortened by the test suite so a full game runs in milliseconds. */
   phaseDurations?: PhaseDurationsInSeconds;
   /** Minesweeper's round window and reveal pause. Shortened by tests. */
@@ -91,6 +137,19 @@ interface CreateZumpoServerOptions {
   graceInSeconds?: number;
   /** The most rooms open at once. Lowered by tests. */
   maxRooms?: number;
+  /** What one address, and everybody, may hold. Lowered by tests. */
+  connectionLimits?: Partial<ConnectionLimits>;
+  /**
+   * The header a proxy in front puts the client's address in. Defaults to
+   * `process.env.CLIENT_IP_HEADER`; unset, it is the socket's own address.
+   */
+  clientIpHeader?: string;
+  /**
+   * Whether each address is held to its own limits, beside the totals.
+   * Defaults to on unless `process.env.PER_ADDRESS_LIMITS` is `off`, as for a
+   * test run, whose players all come from one machine.
+   */
+  perAddressLimits?: boolean;
 }
 
 interface ZumpoServer {
@@ -132,14 +191,33 @@ const createZumpoServer = (
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
     graceInSeconds,
     maxRooms = DEFAULT_MAX_ROOMS,
+    connectionLimits,
+    clientIpHeader = process.env.CLIENT_IP_HEADER || undefined,
+    perAddressLimits = process.env.PER_ADDRESS_LIMITS !== 'off',
   } = options;
 
   const app = express();
-  const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
   // build/server/app.js serves the SPA that Vite builds into build/public.
-  const publicStaticFolder = path.join(__dirname, '..', 'public');
+  const publicStaticFolder =
+    options.clientFolder ??
+    path.join(path.dirname(url.fileURLToPath(import.meta.url)), '..', 'public');
 
-  app.use(express.static(publicStaticFolder));
+  app.disable('x-powered-by');
+  app.use((_req: Request, res: Response, next: () => void) => {
+    res.set(SECURITY_HEADERS);
+    next();
+  });
+
+  app.use(
+    express.static(publicStaticFolder, {
+      setHeaders: (res, filePath) => {
+        const built = path
+          .relative(publicStaticFolder, filePath)
+          .startsWith(`assets${path.sep}`);
+        res.set('Cache-Control', built ? IMMUTABLE : REVALIDATE);
+      },
+    }),
+  );
 
   const httpServer = createServer(app);
   const io: IoServer = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -186,9 +264,45 @@ const createZumpoServer = (
     graceInSeconds,
   );
 
-  io.on('connection', (socket) => {
-    console.log('a user is connected: ' + socket.id);
+  const gate = createConnectionGate({
+    ...DEFAULT_CONNECTION_LIMITS,
+    ...connectionLimits,
+  });
+  let warnedNoAddress = false;
 
+  // Before a connection is let in at all: how much does its address hold
+  // already? A refused one never mints an identity.
+  io.use((socket, next) => {
+    const address = perAddressLimits
+      ? addressOf(socket.handshake, clientIpHeader)
+      : undefined;
+    if (perAddressLimits && address === undefined && !warnedNoAddress) {
+      warnedNoAddress = true;
+      console.warn(
+        `No client address in "${clientIpHeader}": only the totals apply.`,
+      );
+    }
+
+    // A returning player already holds their identity; a new one needs room.
+    const auth = handshakeAuth.safeParse(socket.handshake.auth);
+    const claim = auth.success ? auth.data.identity : null;
+    const returning =
+      claim !== null && sessions.resume(claim.playerId, claim.token) !== null;
+    if (!returning && sessions.size() >= gate.limits.sessions) {
+      next(new Error('Zumpo is full right now.'));
+      return;
+    }
+
+    if (!gate.admit(address)) {
+      next(new Error('Too many connections. Try again in a moment.'));
+      return;
+    }
+    socket.data.address = address;
+    socket.once('disconnect', () => gate.release(address));
+    next();
+  });
+
+  io.on('connection', (socket) => {
     // Before anything else looks at a packet: how often may this socket speak?
     // Every handler below checks the *shape* of what it is sent; this is what
     // bounds how much of it arrives. A dropped packet is never handed on. A
@@ -220,18 +334,32 @@ const createZumpoServer = (
 
     // Identity first, from the handshake: every handler below reads the player
     // id off the connection, and this runs before any event from it is read.
-    playerSessionHandler(
-      io,
-      socket,
-      sessions,
-      membership.graceMs,
-      membership.handleResume,
+    // A returning player's seats go back to them on the way, which runs each
+    // game's own code: a bug in it must not take the connection with it.
+    const identified = guard(`Connecting ${socket.id}`, () =>
+      playerSessionHandler(
+        io,
+        socket,
+        sessions,
+        membership.graceMs,
+        membership.handleResume,
+      ),
     );
+    if (!identified && !socket.data.playerId) {
+      socket.disconnect(true);
+      return;
+    }
     clientDepartureOnDisconnectHandler(socket, membership);
 
     // The room layer: lobbies, seats, ownership, chat. None of it knows which
     // game it is running.
-    lobbyEventsHandler(socket, registry, membership, maxRooms);
+    lobbyEventsHandler(
+      socket,
+      registry,
+      membership,
+      maxRooms,
+      gate.limits.roomsPerAddress,
+    );
     roomEventsHandler(socket, registry, membership);
     chatEventsHandler(socket, registry);
 
@@ -256,7 +384,14 @@ const createZumpoServer = (
     console.log('Serving the built client.');
     // Express 5 / path-to-regexp v8: a bare '*' is no longer a valid path.
     // Wildcards must be named - '/{*splat}' matches the root as well as any subpath.
+    // A built file that is not there is missing, not a page: answering with
+    // the SPA would hand a script tag HTML, which fails with a MIME error and
+    // a blank screen instead of a 404 the page can recover from.
+    app.get('/assets/{*splat}', (_req: Request, res: Response) => {
+      res.sendStatus(404);
+    });
     app.get('/{*splat}', (_req: Request, res: Response) => {
+      res.set('Cache-Control', REVALIDATE);
       res.sendFile('index.html', { root: publicStaticFolder });
     });
   } else {

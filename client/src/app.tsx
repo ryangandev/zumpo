@@ -16,6 +16,7 @@ import GamePage from './pages/game';
 import HomePage from './pages/home';
 import HowToPlayPage from './pages/how-to-play';
 import NotFoundPage from './pages/not-found';
+import CrashedPage from './pages/crashed';
 import RoomPage from './room/room-page';
 import SoloPage from './solo/solo-page';
 
@@ -54,30 +55,36 @@ export const routes: RouteObject[] = [
   {
     element: <Root />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/how-to-play', element: <HowToPlayPage /> },
-      // Every game is on the home page; old links to the games page land there.
-      { path: '/games', element: <Navigate to="/" replace /> },
-      { path: '/games/:game', element: <GameRoute page={GamePage} /> },
       {
-        path: '/games/:game/new',
-        element: <GameRoute page={CreateRoomPage} />,
+        // A page that throws shows the crash page in its place, in the frame.
+        errorElement: <CrashedPage />,
+        children: [
+          { path: '/', element: <HomePage /> },
+          { path: '/how-to-play', element: <HowToPlayPage /> },
+          // Every game is on the home page; old links to the games page land there.
+          { path: '/games', element: <Navigate to="/" replace /> },
+          { path: '/games/:game', element: <GameRoute page={GamePage} /> },
+          {
+            path: '/games/:game/new',
+            element: <GameRoute page={CreateRoomPage} />,
+          },
+          { path: '/games/:game/solo', element: <GameRoute page={SoloPage} /> },
+          { path: '/games/:game/rooms/:roomId', element: <GameRoomPage /> },
+          ...(DesignGallery
+            ? [
+                {
+                  path: '/design',
+                  element: (
+                    <Suspense>
+                      <DesignGallery />
+                    </Suspense>
+                  ),
+                },
+              ]
+            : []),
+          { path: '*', element: <NotFoundPage /> },
+        ],
       },
-      { path: '/games/:game/solo', element: <GameRoute page={SoloPage} /> },
-      { path: '/games/:game/rooms/:roomId', element: <GameRoomPage /> },
-      ...(DesignGallery
-        ? [
-            {
-              path: '/design',
-              element: (
-                <Suspense>
-                  <DesignGallery />
-                </Suspense>
-              ),
-            },
-          ]
-        : []),
-      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ];

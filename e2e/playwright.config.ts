@@ -30,6 +30,8 @@ export default defineConfig({
     env: {
       NODE_ENV: 'production',
       PORT: String(PORT),
+      // Every player in a run is this one machine.
+      PER_ADDRESS_LIMITS: 'off',
       REVIEW_SECONDS: '1',
       MINESWEEPER_REVEAL_SECONDS: '0.5',
       MAKE24_REVEAL_SECONDS: '0.5',

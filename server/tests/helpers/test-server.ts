@@ -151,8 +151,14 @@ interface TestClient extends ClientSocket {
 interface TestServer {
   url: string;
   server: ZumpoServer;
-  /** Opens a client, connects it, and completes the identity handshake. */
-  connect: (identity?: PlayerIdentity) => Promise<TestClient>;
+  /**
+   * Opens a client, connects it, and completes the identity handshake.
+   * `headers` go with the handshake, as a proxy in front would add them.
+   */
+  connect: (
+    identity?: PlayerIdentity,
+    headers?: Record<string, string>,
+  ) => Promise<TestClient>;
   /**
    * What a browser refresh does: drop the connection and open a new one
    * presenting the same identity. The returned client is a different socket
@@ -186,6 +192,9 @@ const startTestServer = async (
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
     graceInSeconds,
+    // Every test client comes from this machine; the limits' own tests turn
+    // them back on.
+    perAddressLimits: false,
     ...overrides,
   });
 
@@ -197,13 +206,17 @@ const startTestServer = async (
   const url = `http://127.0.0.1:${port}`;
   const clients: ClientSocket[] = [];
 
-  const connect = (identity?: PlayerIdentity): Promise<TestClient> =>
+  const connect = (
+    identity?: PlayerIdentity,
+    headers?: Record<string, string>,
+  ): Promise<TestClient> =>
     new Promise((resolve, reject) => {
       const auth: HandshakeAuth = { identity: identity ?? null };
       const client = createClient(url, {
         transports: ['websocket'],
         forceNew: true,
         auth,
+        ...(headers && { extraHeaders: headers }),
       }) as TestClient;
       clients.push(client);
       client.state = undefined;

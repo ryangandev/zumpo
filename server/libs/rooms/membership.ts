@@ -5,6 +5,7 @@ import type { RoomRegistry } from './registry.js';
 import { heirOf, isSpectator, memberCount, memberOf } from './seats.js';
 import type { Room } from './types.js';
 import { playerChannel, type IoServer } from './emit.js';
+import { guard } from '../guard.js';
 
 /** Pending seat expiries are keyed by the pair, not by either half. */
 const graceKey = (roomId: string, playerId: string) => `${roomId}:${playerId}`;
@@ -199,7 +200,9 @@ const createRoomMembership = (
           const seat = current ? memberOf(current, playerId) : undefined;
           if (!current || !seat || seat.isConnected) return;
 
-          releaseSeat(current, playerId);
+          guard(`Releasing ${playerId}'s seat in room ${room.roomId}`, () =>
+            releaseSeat(current, playerId),
+          );
           scheduleSessionExpiry(playerId);
         }, graceInSeconds * 1000),
       );
