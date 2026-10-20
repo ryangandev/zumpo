@@ -51,6 +51,8 @@ export const drawAndGuess = {
       ? plural(count, 'letter')
       : `${plural(count, 'letter')} · type your guess in the chat`,
   wordWas: 'The word was',
+  roundResults: (round: number) => `Round ${round} results`,
+  inAll: (points: number) => `${points} in all`,
   nextTurn: 'next turn',
   nobodyGuessed: 'Nobody got it this time',
   playerPoints: (name: string, points: number) => `${name} +${points}`,

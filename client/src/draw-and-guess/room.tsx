@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import type {
   Coordinate,
   DrawAndGuessRoomState,
@@ -8,6 +8,7 @@ import {
   DrawingToolbar,
   Icon,
   Notice,
+  PlayerRow,
   TurnBar,
   WordChoice,
   type BrushName,
@@ -15,6 +16,7 @@ import {
   type TurnBarProps,
 } from '../ui';
 import { useMessages, type Messages } from '../i18n';
+import { initialsOf, toneOf } from '../players/avatar';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
@@ -291,7 +293,45 @@ function Turn({ room }: { room: Room }) {
           }
         />
       )}
+      {state.lastRound && <RoundResults room={room} />}
     </>
+  );
+}
+
+/**
+ * What the round that just ended came to, best first, from its last reveal
+ * until the next round's first word is chosen.
+ */
+function RoundResults({ room }: { room: Room }) {
+  const m = useMessages();
+  const headingId = useId();
+  const { state, playerId } = room;
+  // Somebody who has left since is not in the room to rank.
+  const standings = (state.lastRound?.standings ?? []).filter(
+    (standing) => state.playerList[standing.playerId],
+  );
+  if (!state.lastRound || !standings.length) return null;
+  return (
+    <section className={styles.roundResults} aria-labelledby={headingId}>
+      <h2 id={headingId} className={styles.roundResultsTitle}>
+        {m.drawAndGuess.roundResults(state.lastRound.round)}
+      </h2>
+      <ul className={styles.roundResultsList}>
+        {standings.map((standing) => (
+          <PlayerRow
+            key={standing.playerId}
+            name={standing.username}
+            initials={initialsOf(standing.username)}
+            tone={toneOf(standing.username)}
+            status={m.drawAndGuess.inAll(
+              state.playerList[standing.playerId]!.points,
+            )}
+            score={standing.points}
+            you={standing.playerId === playerId}
+          />
+        ))}
+      </ul>
+    </section>
   );
 }
 

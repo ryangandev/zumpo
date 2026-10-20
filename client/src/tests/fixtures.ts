@@ -72,6 +72,7 @@ export function drawAndGuessState(
     scoredThisTurn: [],
     turnPoints: {},
     drawerHoldEndsInMs: 0,
+    lastRound: null,
     lastGame: null,
     ...overrides,
   };

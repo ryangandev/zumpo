@@ -58,6 +58,8 @@ export const drawAndGuess: typeof en = {
   letters: (count, phone) =>
     phone ? `${count} 个字母` : `${count} 个字母 · 在聊天框输入答案`,
   wordWas: '答案是',
+  roundResults: (round) => `第 ${round} 轮结果`,
+  inAll: (points) => `总分 ${points}`,
   nextTurn: '下一回合',
   nobodyGuessed: '这次没有人猜中',
   playerPoints: (name, points) => `${name} +${points}`,

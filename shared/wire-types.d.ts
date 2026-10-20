@@ -312,6 +312,16 @@ interface GameSummary {
 /** waiting: no game; choosing: the drawer picks a word; reveal: the word is shown. */
 type DrawAndGuessPhase = 'waiting' | 'choosing' | 'drawing' | 'reveal';
 
+/**
+ * What one round of Draw & Guess came to: what each player made in it, most
+ * first. Shown from the reveal of the round's last turn until the next round's
+ * first word is chosen.
+ */
+interface DrawAndGuessRoundSummary {
+  round: number;
+  standings: Standing[];
+}
+
 interface DrawAndGuessGameSummary extends GameSummary {
   wordCategory: WordCategory;
   rounds: number;
@@ -351,6 +361,8 @@ interface DrawAndGuessRoomState extends RoomState {
    * when it is not waiting.
    */
   drawerHoldEndsInMs: number;
+  /** The round that just ended, while it is on screen; otherwise null. */
+  lastRound: DrawAndGuessRoundSummary | null;
   lastGame: DrawAndGuessGameSummary | null;
 }
 
@@ -1098,6 +1110,7 @@ export type {
   Standing,
   GameSummary,
   DrawAndGuessPhase,
+  DrawAndGuessRoundSummary,
   DrawAndGuessGameSummary,
   DrawAndGuessRoomState,
   MinesweeperCellView,

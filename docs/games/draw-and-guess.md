@@ -30,6 +30,10 @@ The drawing phase ends early the moment everybody has guessed: there is nothing 
 When the last turn of the last round finishes, the game ends and the room reopens for a new one.
 Scores are shown throughout, in the player list, ranked.
 
+Each round is summed up as it ends, at Ryan's request on 2026-10-20: what every player made in it, best first, beside their total.
+The summary goes up with the reveal of the round's last turn and stays through the next round's word select, so it changes no timing; a last turn skipped before its reveal is summed as the next round starts.
+The last round's summary gives way to the results when the game ends.
+
 ## Winning and losing
 
 **There is no lose condition.**
@@ -132,6 +136,7 @@ The Draw & Guess snapshot adds:
 | `wordAutoPicked`                | True when the clock chose the word                                                       |
 | `scoredThisTurn`, `turnPoints`  | Who has scored this turn, and what each player has made this turn                        |
 | `drawerHoldEndsInMs`            | How long the turn still waits for a dropped drawer; 0 when it is not waiting             |
+| `lastRound`                     | The round that just ended, what each player made in it, while its summary is up          |
 | `lastGame`                      | The summary of the last finished game, until the next one starts                         |
 
 A field a player may not see is left out of their snapshot altogether, not blanked.

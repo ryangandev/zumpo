@@ -23,6 +23,8 @@ const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({
   wordCategory: '',
   scoredThisTurn: new Set(),
   turnPoints: new Map(),
+  roundPoints: new Map(),
+  lastRound: null,
   drawerHoldEndsAt: 0,
   lastGame: null,
   canvas: createRoomCanvas(),
@@ -75,6 +77,7 @@ const toRoomState = (
     scoredThisTurn: [...game.scoredThisTurn],
     turnPoints: Object.fromEntries(game.turnPoints),
     drawerHoldEndsInMs: Math.max(0, game.drawerHoldEndsAt - Date.now()),
+    lastRound: game.lastRound,
     lastGame: game.lastGame,
   };
 
