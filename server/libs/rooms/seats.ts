@@ -45,6 +45,14 @@ const memberOf = (
 const isSpectator = (room: Room, playerId: string): boolean =>
   Boolean(room.spectators[playerId]);
 
+/** The first of `members` who is here, else the first away; none if empty. */
+const firstHere = (
+  members: Record<string, { isConnected: boolean }>,
+): string | undefined => {
+  const entries = Object.entries(members);
+  return (entries.find(([, member]) => member.isConnected) ?? entries[0])?.[0];
+};
+
 /**
  * Who the crown passes to: somebody at the table before a spectator, and in
  * either somebody here before somebody away, who could not start a game.
@@ -53,16 +61,9 @@ const isSpectator = (room: Room, playerId: string): boolean =>
 const heirOf = (
   room: Room,
   { playersOnly = false }: { playersOnly?: boolean } = {},
-): string | undefined => {
-  const pick = (members: Record<string, { isConnected: boolean }>) => {
-    const entries = Object.entries(members);
-    return (entries.find(([, member]) => member.isConnected) ??
-      entries[0])?.[0];
-  };
-  return (
-    pick(room.playerList) ?? (playersOnly ? undefined : pick(room.spectators))
-  );
-};
+): string | undefined =>
+  firstHere(room.playerList) ??
+  (playersOnly ? undefined : firstHere(room.spectators));
 
 /**
  * What every game's lobby row says of a room, the game aside: each module
