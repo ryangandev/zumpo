@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../../shared/list';
 import {
   BID_FACES,
   counts,
@@ -116,7 +117,7 @@ function honestRaise(view: BotView): Bid | null {
 function bluffRaise(view: BotView, random: () => number): Bid | null {
   const faces = BID_FACES.filter((face) => !view.dice.includes(face));
   if (faces.length === 0) return null;
-  const face = faces[Math.floor(random() * faces.length)];
+  const face = pickFrom(faces, random);
   const count = Math.max(
     smallestCountFor(face, view.bid),
     Math.round(view.diceOnTable * MATCH_CHANCE),

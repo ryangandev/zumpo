@@ -11,6 +11,7 @@ import type {
 import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
 import { isFound, MAX_GUESSES } from '../../../shared/daily-word.js';
+import { itemAt } from '../../../shared/list.js';
 
 /** One player's guesses at the open word, marked as they came in. */
 interface PlayerBoard {
@@ -81,7 +82,7 @@ const boardView = (
   username,
   rows: board.guesses.map((word, i) => ({
     word: withLetters ? word : null,
-    marks: board.marks[i],
+    marks: itemAt(board.marks, i),
   })),
   status: boardStatus(board),
   points: board.points,

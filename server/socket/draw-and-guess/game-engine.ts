@@ -25,6 +25,7 @@ import {
 } from '../../libs/game-clock.js';
 import { wordBank } from '../../libs/word-bank.js';
 import { clearCanvas } from './canvas.js';
+import { swap } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 const WORD_CHOICE_COUNT = 3;
@@ -161,7 +162,7 @@ const createDrawAndGuessGameEngine = (
     const order = [...positions];
     for (let index = order.length - 1; index > 0; index--) {
       const swapWith = getRandomInt(0, index + 1);
-      [order[index], order[swapWith]] = [order[swapWith], order[index]];
+      swap(order, index, swapWith);
     }
 
     const word = room.game.word;

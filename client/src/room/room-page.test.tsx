@@ -340,7 +340,7 @@ describe('a room page', () => {
     act(() => fake.serverEmits('room:state', minesweeperState()));
 
     await user.click(
-      screen.getAllByRole('button', { name: 'Invite friends' })[0],
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
     );
     const dialog = await screen.findByRole('dialog', {
       name: 'Invite friends',

@@ -19,7 +19,10 @@ const roomOf = (names: Record<string, string>, game: unknown = {}): Room => ({
   gameType: 'draw-and-guess',
   roomId: 'room',
   roomName: 'Room',
-  owner: { playerId: Object.keys(names)[0], username: Object.values(names)[0] },
+  owner: {
+    playerId: Object.keys(names)[0]!,
+    username: Object.values(names)[0]!,
+  },
   maxPlayers: 8,
   password: '',
   playerList: Object.fromEntries(
@@ -79,7 +82,7 @@ describe('renaming a player in a room', () => {
 
     renamePlayer(room, 'a', 'Ava');
 
-    expect(room.playerList.a.username).toBe('Ava');
+    expect(room.playerList.a!.username).toBe('Ava');
     expect(room.owner.username).toBe('Ava');
     expect(game.lastGame.standings.map((s) => s.username)).toEqual([
       'Ava',
@@ -87,7 +90,7 @@ describe('renaming a player in a room', () => {
     ]);
     expect(game.solves.get('a')?.username).toBe('Ava');
     // What was said was said under the old name.
-    expect(room.chat.messages[0].username).toBe('Ada');
+    expect(room.chat.messages[0]!.username).toBe('Ada');
   });
 });
 
@@ -150,13 +153,13 @@ describe('player:rename', () => {
     const guest = await harness.connect();
     await joinRoom(guest, roomId, 'Sam');
     expect(
-      serverRoom(harness, roomId).playerList[guest.playerId].username,
+      serverRoom(harness, roomId).playerList[guest.playerId]!.username,
     ).toBe('Sam 2');
 
     await request(guest, 'player:rename', 'Grace');
     await request(owner, 'player:rename', 'grace');
     expect(
-      serverRoom(harness, roomId).playerList[owner.playerId].username,
+      serverRoom(harness, roomId).playerList[owner.playerId]!.username,
     ).toBe('grace 2');
   });
 

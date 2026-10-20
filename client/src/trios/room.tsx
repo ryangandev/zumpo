@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import { useState } from 'react';
 import type { TriosRoomState } from '../../../shared/wire-types';
 import type { TurnBarProps } from '../ui';
@@ -142,7 +143,7 @@ function Play({ room }: { room: Room }) {
     state.phase === 'finding' && !locked && !reconnecting && !room.spectating;
 
   const pick = (place: number) => {
-    const card = state.table[place];
+    const card = itemAt(state.table, place);
     if (picked.includes(card)) {
       setPicks(picked.filter((other) => other !== card));
       return;

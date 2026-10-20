@@ -65,6 +65,13 @@ interface Constraint {
  */
 const NODE_BUDGET = 2_000_000;
 
+/*
+ * Every array below is read at indexes its own loop bounds, or that were built
+ * from its own length; the `!` on those reads says so where the type checker
+ * cannot follow the arithmetic. This is the hot loop of every Minesweeper
+ * pick, so the checks stay out of it.
+ */
+
 const ratio = (numerator: bigint, denominator: bigint): number => {
   if (denominator === 0n) return 0;
   const scale = 1_000_000_000n;
@@ -75,18 +82,18 @@ const ratio = (numerator: bigint, denominator: bigint): number => {
 const binomialRow = (n: number): bigint[] => {
   const row: bigint[] = [1n];
   for (let k = 1; k <= n; k++) {
-    row.push((row[k - 1] * BigInt(n - k + 1)) / BigInt(k));
+    row.push((row[k - 1]! * BigInt(n - k + 1)) / BigInt(k));
   }
   return row;
 };
 
 const convolve = (left: bigint[], right: bigint[]): bigint[] => {
   const out = Array.from({ length: left.length + right.length - 1 }, () => 0n);
-  for (let i = 0; i < left.length; i++) {
-    if (left[i] === 0n) continue;
-    for (let j = 0; j < right.length; j++) {
-      if (right[j] === 0n) continue;
-      out[i + j] += left[i] * right[j];
+  for (const [i, l] of left.entries()) {
+    if (l === 0n) continue;
+    for (const [j, r] of right.entries()) {
+      if (r === 0n) continue;
+      out[i + j]! += l * r;
     }
   }
   return out;
@@ -122,7 +129,7 @@ const enumerateComponent = (
 
   const touching: number[][] = Array.from({ length: size }, () => []);
   constraints.forEach((constraint, at) => {
-    for (const local of constraint.cells) touching[local].push(at);
+    for (const local of constraint.cells) touching[local]!.push(at);
   });
 
   const minesSoFar = Array.from({ length: constraints.length }, () => 0);
@@ -138,9 +145,10 @@ const enumerateComponent = (
     }
 
     if (at === size) {
-      ways[minesUsed] += 1n;
+      ways[minesUsed]! += 1n;
+      const mineWaysHere = mineWays[minesUsed]!;
       for (let local = 0; local < size; local++) {
-        if (isMine[local]) mineWays[minesUsed][local] += 1n;
+        if (isMine[local]) mineWaysHere[local]! += 1n;
       }
       return;
     }
@@ -149,17 +157,17 @@ const enumerateComponent = (
       isMine[at] = asMine;
 
       let feasible = true;
-      for (const which of touching[at]) {
-        decidedSoFar[which] += 1;
-        if (asMine) minesSoFar[which] += 1;
+      for (const which of touching[at]!) {
+        const decided = (decidedSoFar[which]! += 1);
+        const mines = asMine ? (minesSoFar[which]! += 1) : minesSoFar[which]!;
 
-        const constraint = constraints[which];
-        const stillUndecided = constraint.cells.length - decidedSoFar[which];
+        const constraint = constraints[which]!;
+        const stillUndecided = constraint.cells.length - decided;
         // Too many mines already, or too few cells left to reach the target.
         // When nothing is left undecided this is an exact check.
         if (
-          minesSoFar[which] > constraint.target ||
-          constraint.target - minesSoFar[which] > stillUndecided
+          mines > constraint.target ||
+          constraint.target - mines > stillUndecided
         ) {
           feasible = false;
         }
@@ -167,9 +175,9 @@ const enumerateComponent = (
 
       if (feasible) walk(at + 1, minesUsed + (asMine ? 1 : 0));
 
-      for (const which of touching[at]) {
-        decidedSoFar[which] -= 1;
-        if (asMine) minesSoFar[which] -= 1;
+      for (const which of touching[at]!) {
+        decidedSoFar[which]! -= 1;
+        if (asMine) minesSoFar[which]! -= 1;
       }
     }
 
@@ -204,8 +212,7 @@ const approximateProbabilities = (board: PublicBoard): number[] => {
   const density = hidden.length > 0 ? remaining / hidden.length : 0;
   for (const index of hidden) out[index] = density;
 
-  for (let index = 0; index < cells.length; index++) {
-    const view = cells[index];
+  for (const [index, view] of cells.entries()) {
     if (view < 0 || view > 8) continue;
 
     const neighbours = neighboursOf(board, index);
@@ -214,10 +221,11 @@ const approximateProbabilities = (board: PublicBoard): number[] => {
     if (unknown.length === 0) continue;
 
     const local = Math.min(1, Math.max(0, (view - hit) / unknown.length));
-    for (const at of unknown) out[at] = Math.max(out[at], local);
+    for (const at of unknown) out[at] = Math.max(out[at]!, local);
   }
 
-  for (const index of hidden) out[index] = Math.min(1, Math.max(0, out[index]));
+  for (const index of hidden)
+    out[index] = Math.min(1, Math.max(0, out[index]!));
   for (let index = 0; index < cells.length; index++) {
     if (cells[index] === KNOWN_MINE) out[index] = 1;
   }
@@ -253,8 +261,7 @@ const mineProbabilities = (board: PublicBoard): number[] => {
 
   // Every revealed number, as a statement about its still-hidden neighbours.
   const rawConstraints: { cells: number[]; target: number }[] = [];
-  for (let index = 0; index < size; index++) {
-    const view = cells[index];
+  for (const [index, view] of cells.entries()) {
     if (view < 0 || view > 8) continue;
 
     const neighbours = neighboursOf(board, index);
@@ -307,16 +314,17 @@ const mineProbabilities = (board: PublicBoard): number[] => {
   const union = (a: number, b: number) => parent.set(find(a), find(b));
 
   for (const at of frontier) parent.set(at, at);
-  for (const constraint of rawConstraints) {
-    for (let i = 1; i < constraint.cells.length; i++) {
-      union(constraint.cells[0], constraint.cells[i]);
-    }
+  for (const [first, ...rest] of rawConstraints.map(
+    (constraint) => constraint.cells,
+  )) {
+    for (const at of rest) union(first!, at);
   }
 
   /** Constraints grouped by the component they constrain. */
   const byComponent = new Map<number, { cells: number[]; target: number }[]>();
   for (const constraint of rawConstraints) {
-    const root = find(constraint.cells[0]);
+    // A constraint is kept only with an unknown cell, so it has a first.
+    const root = find(constraint.cells[0]!);
     const list = byComponent.get(root);
     if (list) list.push(constraint);
     else byComponent.set(root, [constraint]);
@@ -359,7 +367,7 @@ const mineProbabilities = (board: PublicBoard): number[] => {
   // …and, for each component, how many ways *the others* can use `j` mines.
   const prefix: bigint[][] = [[1n]];
   for (const component of components) {
-    prefix.push(convolve(prefix[prefix.length - 1], component.ways));
+    prefix.push(convolve(prefix.at(-1)!, component.ways));
   }
   const suffix: bigint[][] = Array.from(
     { length: components.length + 1 },
@@ -367,7 +375,7 @@ const mineProbabilities = (board: PublicBoard): number[] => {
   );
   suffix[components.length] = [1n];
   for (let i = components.length - 1; i >= 0; i--) {
-    suffix[i] = convolve(components[i].ways, suffix[i + 1]);
+    suffix[i] = convolve(components[i]!.ways, suffix[i + 1]!);
   }
 
   const choose = binomialRow(seaSize);
@@ -375,22 +383,21 @@ const mineProbabilities = (board: PublicBoard): number[] => {
   const seaWays = (frontierMines: number): bigint => {
     const inSea = remaining - frontierMines;
     if (inSea < 0 || inSea > seaSize) return 0n;
-    return choose[inSea];
+    return choose[inSea]!;
   };
 
   let totalWeight = 0n;
-  for (let t = 0; t < combined.length; t++) {
-    if (combined[t] === 0n) continue;
-    totalWeight += combined[t] * seaWays(t);
+  for (const [t, ways] of combined.entries()) {
+    if (ways === 0n) continue;
+    totalWeight += ways * seaWays(t);
   }
 
   // A board with no consistent layout at all cannot be scored; this should be
   // unreachable, and falling back beats returning nonsense.
   if (totalWeight === 0n) return approximateProbabilities(board);
 
-  for (let index = 0; index < components.length; index++) {
-    const component = components[index];
-    const others = convolve(prefix[index], suffix[index + 1]);
+  for (const [index, component] of components.entries()) {
+    const others = convolve(prefix[index]!, suffix[index + 1]!);
 
     // For a cell to be a mine in a layout using `k` of this component's mines,
     // the other components and the sea must absorb the rest - so weight `k` by
@@ -398,21 +405,21 @@ const mineProbabilities = (board: PublicBoard): number[] => {
     const weightForK = Array.from({ length: component.ways.length }, () => 0n);
     for (let k = 0; k < component.ways.length; k++) {
       let weight = 0n;
-      for (let j = 0; j < others.length; j++) {
-        if (others[j] === 0n) continue;
-        weight += others[j] * seaWays(k + j);
+      for (const [j, ways] of others.entries()) {
+        if (ways === 0n) continue;
+        weight += ways * seaWays(k + j);
       }
       weightForK[k] = weight;
     }
 
-    for (let local = 0; local < component.cells.length; local++) {
+    for (const [local, cell] of component.cells.entries()) {
       let mineWeight = 0n;
-      for (let k = 0; k < component.ways.length; k++) {
-        const count = component.mineWays[k][local];
-        if (count === 0n || weightForK[k] === 0n) continue;
-        mineWeight += count * weightForK[k];
+      for (const [k, weight] of weightForK.entries()) {
+        const count = component.mineWays[k]![local]!;
+        if (count === 0n || weight === 0n) continue;
+        mineWeight += count * weight;
       }
-      out[component.cells[local]] = ratio(mineWeight, totalWeight);
+      out[cell] = ratio(mineWeight, totalWeight);
     }
   }
 
@@ -420,11 +427,11 @@ const mineProbabilities = (board: PublicBoard): number[] => {
   // frontier did not account for.
   if (seaSize > 0) {
     let expectedInSea = 0n;
-    for (let t = 0; t < combined.length; t++) {
-      if (combined[t] === 0n) continue;
+    for (const [t, ways] of combined.entries()) {
+      if (ways === 0n) continue;
       const inSea = remaining - t;
       if (inSea <= 0 || inSea > seaSize) continue;
-      expectedInSea += combined[t] * seaWays(t) * BigInt(inSea);
+      expectedInSea += ways * seaWays(t) * BigInt(inSea);
     }
 
     const perSeaCell = ratio(expectedInSea, totalWeight * BigInt(seaSize));

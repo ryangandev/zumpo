@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import type { CardFeatures, Feature } from '../../../../shared/trios';
 import { plural } from './plural';
 
@@ -11,7 +12,7 @@ const value = (feature: Feature, f: CardFeatures, many: boolean): string => {
     case 'fill':
       return f.fill === 'outline' ? 'outlined' : f.fill;
     case 'count':
-      return counts[f.count - 1];
+      return itemAt(counts, f.count - 1);
   }
 };
 

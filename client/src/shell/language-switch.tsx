@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import { useRef } from 'react';
 import { LOCALE_NAMES, LOCALES, useLocale, useMessages } from '../i18n';
 import { cx } from '../ui/cx';
@@ -41,7 +42,7 @@ export function LanguageSwitch({ className }: { className?: string }) {
             event.preventDefault();
             const next =
               (index + (forward ? 1 : -1) + LOCALES.length) % LOCALES.length;
-            setLocale(LOCALES[next]);
+            setLocale(itemAt(LOCALES, next));
             buttons.current[next]?.focus();
           }}
         >

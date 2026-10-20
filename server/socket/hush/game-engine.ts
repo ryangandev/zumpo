@@ -29,11 +29,12 @@ const cardsLeft = (room: HushRoom) =>
 
 /** Dropped players who still hold cards: the level cannot go on without them. */
 const awayHolders = (room: HushRoom) =>
-  Object.keys(room.playerList).filter(
-    (playerId) =>
-      !room.playerList[playerId].isConnected &&
-      (room.game.hands[playerId]?.length ?? 0) > 0,
-  );
+  Object.entries(room.playerList)
+    .filter(
+      ([playerId, seat]) =>
+        !seat.isConnected && (room.game.hands[playerId]?.length ?? 0) > 0,
+    )
+    .map(([playerId]) => playerId);
 
 /** Hushed while a level is played, for everybody. */
 const mayChat = (room: HushRoom) => !IN_LEVEL.has(room.game.phase);

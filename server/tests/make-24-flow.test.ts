@@ -27,7 +27,7 @@ import { pointsForSolve } from '../socket/make-24/index.js';
 
 /** Steps that make 24 from `cards`, found the long way. */
 function stepsToSolve(cards: readonly Card[]): Make24Step[] | null {
-  if (cards.length === 1) return isTarget(cards[0].value) ? [] : null;
+  if (cards.length === 1) return isTarget(cards[0]!.value) ? [] : null;
   for (let left = 0; left < cards.length; left++) {
     for (let right = 0; right < cards.length; right++) {
       for (const op of OPERATORS) {
@@ -55,7 +55,7 @@ function wrongStepsFor(deal: readonly number[]): Make24Step[] {
       ];
       let cards: Card[] | null = dealtCards(deal);
       for (const step of steps) cards = cards && combine(cards, step);
-      if (cards && !isTarget(cards[0].value)) return steps;
+      if (cards && !isTarget(cards[0]!.value)) return steps;
     }
   }
   throw new Error(`Every way makes 24 from ${deal.join(' ')}`);
@@ -189,7 +189,9 @@ describe('a hand', () => {
     expect(theirs.mySolve).toBeNull();
     expect(JSON.stringify(theirs)).not.toContain(mine.mySolve!.expression);
     expect(textOf(message)).toBe(`Alice solved it! (+${mine.mySolve!.points})`);
-    expect(theirs.playerList[alice.playerId].points).toBe(mine.mySolve!.points);
+    expect(theirs.playerList[alice.playerId]!.points).toBe(
+      mine.mySolve!.points,
+    );
   });
 
   it('takes one solve each', async () => {
@@ -201,7 +203,7 @@ describe('a hand', () => {
     solveHand(alice, roomId, first);
     await settle();
     const room = make24Room(harness, roomId);
-    expect(room.playerList[alice.playerId].points).toBe(mySolve!.points);
+    expect(room.playerList[alice.playerId]!.points).toBe(mySolve!.points);
   });
 
   it('keeps a player who has solved it out of the chat until it ends', async () => {
@@ -270,7 +272,7 @@ describe('a hand', () => {
     const bobs = results.lastHand.find((r) => r.username === 'Bob')!;
     expect(bobs).toMatchObject({ solved: false, points: 0, expression: '' });
     // Best first.
-    expect(results.lastHand[0].username).toBe('Alice');
+    expect(results.lastHand[0]!.username).toBe('Alice');
   });
 
   it('keeps a solve through a refresh', async () => {

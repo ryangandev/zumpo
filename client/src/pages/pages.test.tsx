@@ -354,10 +354,10 @@ describe('how to play', () => {
       ['Trios', 'trios'],
     ]) {
       expect(
-        rules(name).getByRole('link', { name: 'Play solo' }),
+        rules(name!).getByRole('link', { name: 'Play solo' }),
       ).toHaveAttribute('href', `/games/${type}/solo`);
       expect(
-        rules(name).getByRole('link', { name: 'Find a room' }),
+        rules(name!).getByRole('link', { name: 'Find a room' }),
       ).toHaveAttribute('href', `/games/${type}`);
     }
   });

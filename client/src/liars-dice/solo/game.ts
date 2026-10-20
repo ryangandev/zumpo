@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../../shared/list';
 import {
   bidStands,
   countFace,
@@ -133,7 +134,7 @@ export function newGame(picks: SoloPicks, random: () => number): SoloGame {
     turnId: null,
     reveal: null,
   };
-  const opener = seats[Math.floor(random() * seats.length)].id;
+  const opener = pickFrom(seats, random).id;
   return roll(game, opener, 1, random);
 }
 

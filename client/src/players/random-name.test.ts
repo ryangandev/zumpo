@@ -4,7 +4,7 @@ import { LOCALES } from '../i18n/locale';
 import { NAME_WORDS, randomName } from './random-name';
 
 const longest = (list: readonly string[]) =>
-  list.toSorted((a, b) => b.length - a.length)[0];
+  list.toSorted((a, b) => b.length - a.length)[0]!;
 
 describe('a random name', () => {
   it.each(LOCALES)(

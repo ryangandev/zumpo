@@ -1,6 +1,6 @@
 import type { PairsSettings } from '../../models/types.js';
 import { RequestError } from '../../models/error.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { seatCount, seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../libs/game-clock.js';
 import { dealDeck, PAIRS_BOARDS, shuffle } from '../../../shared/pairs.js';
 import { pairsFound, playerAfter, type PairsState } from './state.js';
+import { itemAt } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 
@@ -66,10 +67,10 @@ const createPairsGameEngine = (
     ctx.rooms.emitLobby('pairs');
 
     // The first player in the order, or the first after them who is here.
-    const [first] = game.order;
+    const first = itemAt(game.order, 0);
     beginTurn(
       room,
-      room.playerList[first].isConnected ? first : playerAfter(room, first)!,
+      seatOf(room, first).isConnected ? first : playerAfter(room, first)!,
     );
   };
 
@@ -112,7 +113,8 @@ const createPairsGameEngine = (
       return;
     }
 
-    const [first, second] = game.up;
+    const first = itemAt(game.up, 0);
+    const second = itemAt(game.up, 1);
     if (game.deck[first] !== game.deck[second]) {
       // A miss stays up for everybody to remember, then the turn passes.
       game.phase = 'showing';

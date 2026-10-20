@@ -22,6 +22,7 @@ import {
 import { mineProbabilities } from './probability.js';
 import { pointsForPick } from './scoring.js';
 import type { MinesweeperState } from './state.js';
+import { itemAt } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 
@@ -38,7 +39,7 @@ const safestHiddenCell = (room: MinesweeperRoom): number | undefined => {
   const hidden = hiddenIndexes(room.game.board);
   if (hidden.length === 0) return undefined;
 
-  let safest = hidden[0];
+  let safest = itemAt(hidden, 0);
   for (const index of hidden) {
     if ((room.game.risk[index] ?? 1) < (room.game.risk[safest] ?? 1)) {
       safest = index;
@@ -204,7 +205,7 @@ const createMinesweeperGameEngine = (
       if (!player) continue;
 
       const risk = game.risk[index] ?? 0;
-      const hitMine = game.board.mines[index];
+      const hitMine = itemAt(game.board.mines, index);
       const sharedWith = pickedBy.get(index)?.length ?? 1;
       const points = pointsForPick({
         risk,

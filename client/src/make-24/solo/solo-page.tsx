@@ -4,6 +4,7 @@ import {
   formatExpression,
   formatFraction,
   isTarget,
+  lastCard,
 } from '../../../../shared/make-24';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
@@ -42,6 +43,7 @@ import {
   TablePanel,
 } from '../table';
 import {
+  deal,
   isBetweenHands,
   isOver,
   lastResult,
@@ -291,7 +293,7 @@ function RunView({
               />
             ) : (
               <HandTable
-                deal={run.deals[run.hand]}
+                deal={deal(run)}
                 steps={run.steps}
                 onStep={(step) => play(takeStep(run, step, Date.now()))}
                 onUndo={() => play(undo(run))}
@@ -307,7 +309,7 @@ function RunView({
                 }
               />
             )}
-            <StepList deal={run.deals[run.hand]} steps={run.steps} />
+            <StepList deal={deal(run)} steps={run.steps} />
           </TablePanel>
         </>
       }
@@ -377,11 +379,11 @@ function turnBar(
       meta: m.make24.solo.solvedIn(formatDuration(last.ms)),
     };
   }
-  const cards = cardsAfter(run.deals[run.hand], run.steps);
-  if (cards.length === 1 && !isTarget(cards[0].value)) {
+  const left = lastCard(cardsAfter(deal(run), run.steps));
+  if (left && !isTarget(left.value)) {
     return {
       ...base,
-      main: m.make24.makes(formatFraction(cards[0].value)),
+      main: m.make24.makes(formatFraction(left.value)),
       meta: m.make24.undoPrompt,
     };
   }

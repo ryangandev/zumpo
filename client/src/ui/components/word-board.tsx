@@ -48,7 +48,7 @@ export function WordBoard({
               let state: LetterTileState = 'empty';
               let letter: string | undefined;
               if (guess) {
-                state = guess.marks[index];
+                state = guess.marks[index] ?? 'empty';
                 letter = guess.word?.[index];
               } else if (open && index < typed.length) {
                 state = 'typed';

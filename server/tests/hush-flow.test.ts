@@ -1,4 +1,4 @@
-import { textOf } from './helpers/test-server.js';
+import { textOf, seatTable, TWO_NAMES } from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { HushRoomState } from '../models/types.js';
 import {
@@ -21,29 +21,29 @@ import {
 const GRACE_MS = 600;
 
 /** Seats `names` in a Hush room, the first as its owner. */
-async function seat(harness: TestServer, names: readonly string[]) {
-  const players: TestClient[] = [];
-  for (const _ of names) players.push(await harness.connect());
-  const [owner] = players;
-  const roomId = await createHushRoom(owner, { username: names[0] });
-  for (const [index, player] of players.entries()) {
-    if (index > 0) await joinRoom(player, roomId, names[index]);
-  }
-  return { roomId, players, owner };
+function seat<const Names extends readonly [string, ...string[]]>(
+  harness: TestServer,
+  names: Names,
+) {
+  return seatTable(harness, names, (owner, username) =>
+    createHushRoom(owner, { username }),
+  );
 }
 
 /** Everybody presses Ready, and the level opens after its countdown. */
-async function readyAll(players: readonly TestClient[], roomId: string) {
+async function readyAll(
+  players: readonly [TestClient, ...TestClient[]],
+  roomId: string,
+) {
   const playing = waitForHushState(players[0], (s) => s.phase === 'playing');
   for (const player of players) player.emit('hush:ready', roomId);
   return playing;
 }
 
 /** Seats `names`, starts a game and plays level 1 open. */
-async function playToLevel(
-  harness: TestServer,
-  names: readonly string[] = ['Alice', 'Bob'],
-) {
+async function playToLevel<
+  const Names extends readonly [string, ...string[]] = typeof TWO_NAMES,
+>(harness: TestServer, names: Names = TWO_NAMES as unknown as Names) {
   const seated = await seat(harness, names);
   const ready = waitForHushState(seated.owner, (s) => s.phase === 'ready');
   await startGame(seated.owner, seated.roomId);
@@ -63,7 +63,7 @@ function rig(
   hands: readonly (readonly number[])[],
 ) {
   hushRoom(harness, roomId).game.hands = Object.fromEntries(
-    players.map((player, index) => [player.playerId, [...hands[index]]]),
+    players.map((player, index) => [player.playerId, [...hands[index]!]]),
   );
 }
 
@@ -82,7 +82,7 @@ async function playClean(
     .flatMap(([playerId, cards]) => cards.map((card) => ({ playerId, card })))
     .toSorted((a, b) => a.card - b.card);
   for (const { playerId, card } of plays) {
-    const landed = waitForHushState(players[0], (s) =>
+    const landed = waitForHushState(players[0]!, (s) =>
       s.pile.some((play) => play.card === card),
     );
     players
@@ -213,7 +213,7 @@ describe('a level', () => {
 
     const marked = waitForHushState(
       cat,
-      (s) => s.table[alice.playerId].ready && s.table[bob.playerId].ready,
+      (s) => s.table[alice.playerId]!.ready && s.table[bob.playerId]!.ready,
     );
     alice.emit('hush:ready', roomId);
     alice.emit('hush:ready', roomId);
@@ -252,13 +252,13 @@ describe('a level', () => {
 
     for (const [index, player] of players.entries()) {
       const view = seen[index];
-      expect(view.hand).toEqual(hands[player.playerId]);
-      expect(view.table).toEqual({
+      expect(view!.hand).toEqual(hands[player.playerId]);
+      expect(view!.table).toEqual({
         [players[0].playerId]: { held: 1, ready: true },
         [players[1].playerId]: { held: 1, ready: true },
       });
       // Nothing in the snapshot names the other hand.
-      const other = players[1 - index].playerId;
+      const other = players[1 - index]!.playerId;
       expect(JSON.stringify(view)).not.toContain(JSON.stringify(hands[other]));
     }
   });
@@ -295,7 +295,7 @@ describe('a level', () => {
     alice.emit('hush:play', roomId, 10);
     const view = await landed;
     expect(view.pile).toEqual([{ card: 10, playerId: alice.playerId }]);
-    expect(view.table[alice.playerId].held).toBe(1);
+    expect(view.table[alice.playerId]!.held).toBe(1);
     await settle();
     expect(hushRoom(harness, roomId).game.pile).toHaveLength(1);
     expect(hushRoom(harness, roomId).game.hands[alice.playerId]).toEqual([30]);
@@ -324,8 +324,8 @@ describe('a level', () => {
     expect(view.lives).toBe(3);
     expect(view.pile).toHaveLength(2);
     expect(view.phaseEndsInMs).toBeGreaterThan(0);
-    expect(view.playerList[players[0].playerId].points).toBe(1);
-    expect(view.playerList[players[1].playerId].points).toBe(1);
+    expect(view.playerList[players[0].playerId]!.points).toBe(1);
+    expect(view.playerList[players[1].playerId]!.points).toBe(1);
     expect(textOf(await chat)).toBe('Level 1 cleared without a slip!');
 
     const next = await waitForHushState(owner, (s) => s.phase === 'ready');
@@ -377,7 +377,7 @@ describe('a mistake', () => {
       hand: [],
     });
     expect(view.phaseEndsInMs).toBeGreaterThan(0);
-    expect(view.table[ryan.playerId].held).toBe(1);
+    expect(view.table[ryan.playerId]!.held).toBe(1);
     expect(textOf(await alert)).toBe(
       'Maya played 52, but Ryan held 47 and 51 and Sam held 49.',
     );
@@ -619,7 +619,7 @@ describe('a player away', () => {
     await startGame(owner, roomId);
     await ready;
 
-    const marked = waitForHushState(alice, (s) => s.table[bob.playerId].ready);
+    const marked = waitForHushState(alice, (s) => s.table[bob.playerId]!.ready);
     alice.emit('hush:ready', roomId);
     bob.emit('hush:ready', roomId);
     await marked;

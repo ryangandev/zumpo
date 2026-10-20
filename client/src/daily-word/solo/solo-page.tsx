@@ -1,3 +1,4 @@
+import { charAt } from '../../../../shared/list';
 import { useMessages, type Messages } from '../../i18n';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router';
@@ -488,12 +489,12 @@ export function known(game: SoloGame, m: Messages): string {
   const elsewhere = new Set<string>();
   for (const { word, marks } of rowsOf(game)) {
     marks.forEach((mark, index) => {
-      if (mark === 'correct') placed.add(word[index].toUpperCase());
+      if (mark === 'correct') placed.add(charAt(word, index).toUpperCase());
     });
   }
   for (const { word, marks } of rowsOf(game)) {
     marks.forEach((mark, index) => {
-      const letter = word[index].toUpperCase();
+      const letter = charAt(word, index).toUpperCase();
       if (mark === 'present' && !placed.has(letter)) elsewhere.add(letter);
     });
   }

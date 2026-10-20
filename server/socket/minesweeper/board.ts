@@ -9,6 +9,7 @@ import {
   KNOWN_MINE,
   neighboursOf,
 } from '../../../shared/minesweeper.js';
+import { itemAt } from '../../../shared/list.js';
 
 /**
  * The minefield: the hidden layout, and the public view of it.
@@ -92,7 +93,7 @@ const publicView = (board: Board): MinesweeperCellView[] => {
 
   for (let index = 0; index < size; index++) {
     if (board.hitMines[index]) view[index] = KNOWN_MINE;
-    else if (board.revealed[index]) view[index] = board.adjacent[index];
+    else if (board.revealed[index]) view[index] = itemAt(board.adjacent, index);
     else view[index] = HIDDEN;
   }
 

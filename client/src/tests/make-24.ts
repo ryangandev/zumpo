@@ -2,6 +2,7 @@ import {
   combine,
   dealtCards,
   isTarget,
+  lastCard,
   OPERATORS,
   type Card,
   type Step,
@@ -9,7 +10,8 @@ import {
 
 /** Steps that make 24 from `cards`, found the long way. */
 function stepsFrom(cards: readonly Card[]): Step[] | null {
-  if (cards.length === 1) return isTarget(cards[0].value) ? [] : null;
+  const last = lastCard(cards);
+  if (last) return isTarget(last.value) ? [] : null;
   for (let left = 0; left < cards.length; left++) {
     for (let right = 0; right < cards.length; right++) {
       for (const op of OPERATORS) {

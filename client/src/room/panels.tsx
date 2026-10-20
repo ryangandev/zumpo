@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
@@ -324,34 +325,40 @@ export function ResultsPanel<Summary extends GameSummary>({
     ? standings.map((_, index) => index + 1)
     : placesOf(standings);
   const winners = standings.filter((_, index) => places[index] === 1);
+  // A spectator has no place.
   const place = places[standings.findIndex((s) => s.playerId === playerId)];
+  const [winner] = winners;
 
   return (
     <ResultsFrame
       title={
-        winners.length === 0
+        winner === undefined
           ? m.room.gameOver
           : winners.length === 1
             ? m.room.wins(
-                winners[0].username,
-                scoreOf(m, state.gameType, winners[0].points),
+                winner.username,
+                scoreOf(m, state.gameType, winner.points),
               )
             : m.room.ties(
                 listNames(
                   winners.map((w) => w.username),
                   m,
                 ),
-                scoreOf(m, state.gameType, winners[0].points),
+                scoreOf(m, state.gameType, winner.points),
               )
       }
-      detail={place > 1 ? m.room.finished(detail, ordinal(place, m)) : detail}
+      detail={
+        place !== undefined && place > 1
+          ? m.room.finished(detail, ordinal(place, m))
+          : detail
+      }
       onPlayAgain={onPlayAgain}
       starting={starting}
     >
       <ol className={styles.ranking} aria-label={m.room.standings}>
         {standings.map((standing, index) => {
           const seat = state.playerList[standing.playerId];
-          const standingPlace = places[index];
+          const standingPlace = itemAt(places, index);
           return (
             <li key={standing.playerId} className={styles.place}>
               <span className={styles.number}>{standingPlace}</span>

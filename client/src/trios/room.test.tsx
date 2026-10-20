@@ -25,7 +25,7 @@ const finding = triosState({
 });
 
 const card = (place: number, rest = '') =>
-  screen.getByRole('button', { name: `${cardName(TABLE[place])}${rest}` });
+  screen.getByRole('button', { name: `${cardName(TABLE[place]!)}${rest}` });
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const scoreboard = () =>
   within(screen.getByRole('region', { name: /^Players/ }));
@@ -91,7 +91,7 @@ describe('a Trios room', () => {
     expect(screen.getByText('Last trio: Maya')).toBeInTheDocument();
     // Your other pick still shows while the trio is up, though nothing takes a pick.
     expect(
-      screen.getByRole('img', { name: `${cardName(TABLE[3])}, picked` }),
+      screen.getByRole('img', { name: `${cardName(TABLE[3]!)}, picked` }),
     ).toBeInTheDocument();
 
     // New cards: the taken one leaves your picks, the other stays.
@@ -100,7 +100,7 @@ describe('a Trios room', () => {
       found: 5,
       table: TABLE.map((value, place) =>
         [1, 8, 11].includes(place)
-          ? [28, 45, 36][[1, 8, 11].indexOf(place)]
+          ? [28, 45, 36][[1, 8, 11].indexOf(place)]!
           : value,
       ),
       lastTrio: {

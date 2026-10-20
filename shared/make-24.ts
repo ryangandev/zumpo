@@ -126,10 +126,14 @@ export function play(
  * True when the steps use every card and end on 24: a solved hand. A server
  * checks a claimed solution with this and nothing else.
  */
+/** The one card left once every card is combined, or null while more remain. */
+export const lastCard = (cards: readonly Card[]): Card | null =>
+  cards.length === 1 ? (cards[0] ?? null) : null;
+
 export function solves(deal: readonly number[], steps: readonly Step[]) {
   if (steps.length !== deal.length - 1) return false;
-  const cards = play(deal, steps);
-  return cards !== null && cards.length === 1 && isTarget(cards[0].value);
+  const last = lastCard(play(deal, steps) ?? []);
+  return last !== null && isTarget(last.value);
 }
 
 const PRECEDENCE: Readonly<Record<Operator, number>> = {
@@ -177,8 +181,9 @@ export function evaluate(expression: Expression): Fraction | null {
 
 /** Every way to finish from `cards`, as the expressions that make 24. */
 function* solutions(cards: readonly Card[]): Generator<Expression> {
-  if (cards.length === 1) {
-    if (isTarget(cards[0].value)) yield cards[0].expression;
+  const last = lastCard(cards);
+  if (last) {
+    if (isTarget(last.value)) yield last.expression;
     return;
   }
   for (let left = 0; left < cards.length; left++) {

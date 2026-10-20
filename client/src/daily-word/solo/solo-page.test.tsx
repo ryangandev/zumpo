@@ -47,7 +47,7 @@ describe('Daily Word on your own', () => {
     expect(screen.getByText('Word #1')).toBeInTheDocument();
 
     const [first] = misses(TODAY, 1);
-    await guess(first);
+    await guess(first!);
     expect(turn().getByText('Guess 2 of 6')).toBeInTheDocument();
     await guess(TODAY);
 

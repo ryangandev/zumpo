@@ -14,6 +14,7 @@ import {
 } from '../../../shared/trios.js';
 import { shuffle } from '../../../shared/pairs.js';
 import { lockoutOf, type TriosState } from './state.js';
+import { itemAt, pickFrom } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 
@@ -105,8 +106,7 @@ const createTriosGameEngine = (
 
     if (!game.hintPlan) {
       const trios = findTrios(game.deal.table);
-      const trio = trios[Math.floor(Math.random() * trios.length)];
-      game.hintPlan = shuffle(trio, Math.random);
+      game.hintPlan = shuffle(pickFrom(trios, Math.random), Math.random);
     }
     game.hint = game.hintPlan.slice(0, game.hint.length + 1);
 
@@ -136,18 +136,24 @@ const createTriosGameEngine = (
     const places = cards.map((card) => game.deal.table.indexOf(card));
     if (places.includes(-1)) return;
 
-    if (!isTrio(cards[0], cards[1], cards[2])) {
+    const [a, b, c] = cards;
+    if (
+      a === undefined ||
+      b === undefined ||
+      c === undefined ||
+      !isTrio(a, b, c)
+    ) {
       lockOut(room, playerId, cards);
       return;
     }
 
-    const inOrder = places.toSorted((a, b) => a - b);
+    const inOrder = places.toSorted((x, y) => x - y);
     player.points += 1;
     game.found += 1;
     game.lastTrio = {
       playerId,
       username: player.username,
-      cards: inOrder.map((place) => game.deal.table[place]),
+      cards: inOrder.map((place) => itemAt(game.deal.table, place)),
       places: inOrder,
     };
     game.hint = [];

@@ -64,7 +64,7 @@ const playerAfter = (
     (candidate) => candidate !== playerId && room.playerList[candidate],
   );
   return (
-    after.find((candidate) => room.playerList[candidate].isConnected) ??
+    after.find((candidate) => room.playerList[candidate]?.isConnected) ??
     after[0] ??
     null
   );

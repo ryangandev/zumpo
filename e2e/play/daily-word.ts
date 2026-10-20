@@ -21,16 +21,15 @@ export interface Guessed {
 /** The guesses a board's tile labels read, five tiles to a row. */
 function rowsOf(labels: readonly string[]): Guessed[] {
   const tiles = labels.flatMap((label) => {
-    const match = TILE.exec(label);
-    return match && match[2] in MARKS
-      ? [{ letter: match[1], mark: MARKS[match[2]] }]
-      : [];
+    const [, letter, said] = TILE.exec(label) ?? [];
+    const mark = said === undefined ? undefined : MARKS[said];
+    return mark ? [{ letter, mark }] : [];
   });
   const rows: Guessed[] = [];
   for (let at = 0; at + 5 <= tiles.length; at += 5) {
     const row = tiles.slice(at, at + 5);
     rows.push({
-      word: row.map((tile) => tile.letter.toLowerCase()).join(''),
+      word: row.map((tile) => tile.letter!.toLowerCase()).join(''),
       marks: row.map((tile) => tile.mark),
     });
   }
@@ -75,7 +74,7 @@ export function nextGuess(guesses: readonly Guessed[]): string {
   const left = ANSWERS.filter((answer) =>
     guesses.every(({ word, marks }) => same(markGuess(word, answer), marks)),
   );
-  let best = left[0];
+  let best = left[0]!;
   let bestSplit = 0;
   for (const word of left) {
     const split = new Set(left.map((answer) => markGuess(word, answer).join()))
@@ -94,7 +93,7 @@ export async function typeGuess(page: Page, word: string) {
 /** Whether `now` is the board `before` was, with more guesses on it. */
 const goesOn = (before: readonly Guessed[], now: readonly Guessed[]) =>
   now.length > before.length &&
-  before.every((row, index) => row.word === now[index].word);
+  before.every((row, index) => row.word === now[index]!.word);
 
 /**
  * Guesses until the word is found or the guesses run out. In a room, the last

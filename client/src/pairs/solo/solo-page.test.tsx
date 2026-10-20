@@ -66,7 +66,7 @@ describe('Pairs on your own', () => {
     expect(screen.getByRole('grid', { name: '卡牌' })).toBeInTheDocument();
     expect(screen.getByText('第 1 次翻牌')).toBeInTheDocument();
     expect(screen.getByText('翻一张牌')).toBeInTheDocument();
-    await user.click(screen.getAllByRole('button', { name: /背面朝上$/ })[0]);
+    await user.click(screen.getAllByRole('button', { name: /背面朝上$/ })[0]!);
     expect(screen.getByText('找到它的另一张')).toBeInTheDocument();
     expect(screen.getByText('你在哪里见过它？')).toBeInTheDocument();
   });
@@ -104,37 +104,37 @@ describe('Pairs on your own', () => {
     ).toBeInTheDocument();
     expect(screen.queryByRole('radio', { name: /Large/ })).toBeNull();
     await user.click(screen.getByRole('button', { name: 'Start' }));
-    await flipCard(pairs[0][0]);
-    expect(card(pairs[0][0])).toHaveAccessibleName(
+    await flipCard(pairs[0]![0]!);
+    expect(card(pairs[0]![0]!)).toHaveAccessibleName(
       /: (Circle|Ring|Half|Square|Diamond|Triangle|Star|Sparkle|Hexagon) /,
     );
   });
 
   it('shows a miss for a moment, then turns it back', async () => {
     await startChallenge();
-    await flipCard(pairs[0][0]);
+    await flipCard(pairs[0]![0]!);
     expect(turn().getByText('Find its pair')).toBeInTheDocument();
     expect(turn().getByText('Where did you see it?')).toBeInTheDocument();
 
-    await flipCard(pairs[1][0]);
+    await flipCard(pairs[1]![0]!);
     expect(turn().getByText('Not a pair')).toBeInTheDocument();
     expect(turn().getByText('Turn 1')).toBeInTheDocument();
 
     await act(() => vi.advanceTimersByTime(MISS_SHOWN_MS));
     expect(turn().getByText('Flip a card')).toBeInTheDocument();
     expect(turn().getByText('Turn 2')).toBeInTheDocument();
-    expect(card(pairs[0][0])).toHaveAccessibleName(/face down$/);
+    expect(card(pairs[0]![0]!)).toHaveAccessibleName(/face down$/);
   });
 
   it('clears the board, keeps the best and copies a challenge', async () => {
     await startChallenge();
     // One miss, then every pair.
-    await flipCard(pairs[0][0]);
-    await flipCard(pairs[1][0]);
+    await flipCard(pairs[0]![0]!);
+    await flipCard(pairs[1]![0]!);
     await act(() => vi.advanceTimersByTime(MISS_SHOWN_MS));
     for (const [a, b] of pairs) {
-      await flipCard(a);
-      await flipCard(b);
+      await flipCard(a!);
+      await flipCard(b!);
     }
 
     expect(
@@ -168,7 +168,7 @@ describe('Pairs on your own', () => {
   it('puts the pairs found on the turn bar on a phone', async () => {
     onPhone();
     await startChallenge();
-    await flipCard(pairs[0][0]);
+    await flipCard(pairs[0]![0]!);
     expect(turn().getByText('0 of 8 pairs')).toBeInTheDocument();
     expect(screen.queryByText('This game')).toBeNull();
   });

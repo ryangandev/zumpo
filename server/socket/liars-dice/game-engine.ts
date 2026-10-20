@@ -4,7 +4,7 @@ import type {
   LiarsDiceStanding,
 } from '../../models/types.js';
 import { RequestError } from '../../models/error.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { seatCount, seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext } from '../../libs/rooms/types.js';
 import {
   liarsDiceDurationsInSeconds as defaultDurations,
@@ -26,6 +26,7 @@ import {
   playersIn,
   type LiarsDiceRoom,
 } from './state.js';
+import { itemAt } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 /** Sorts a player who kept dice after everybody who went out. */
@@ -123,7 +124,7 @@ const createLiarsDiceGameEngine = (
     });
     ctx.rooms.emitLobby('liars-dice');
 
-    beginRound(room, game.order[0], { next: true });
+    beginRound(room, itemAt(game.order, 0), { next: true });
   };
 
   /**
@@ -140,7 +141,7 @@ const createLiarsDiceGameEngine = (
     game.dice = Object.fromEntries(
       playersIn(room).map((playerId) => [
         playerId,
-        rollDice(room.playerList[playerId].points, random),
+        rollDice(seatOf(room, playerId).points, random),
       ]),
     );
     game.bids = [];
@@ -224,7 +225,7 @@ const createLiarsDiceGameEngine = (
     );
     const stands = bidStands(called, count);
     const loserId = stands ? callerId : called.playerId;
-    const loser = room.playerList[loserId];
+    const loser = seatOf(room, loserId);
     loser.points -= 1;
     const out = loser.points === 0;
     if (out) game.outs.push({ playerId: loserId, round: game.round });

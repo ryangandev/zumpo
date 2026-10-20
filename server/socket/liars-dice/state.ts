@@ -8,7 +8,7 @@ import type {
   LiarsDiceRoomState,
   LiarsDiceSettings,
 } from '../../models/types.js';
-import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
+import { lobbyBasics, roomBasics, seatOf } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
 
 /**
@@ -66,7 +66,7 @@ const playersIn = (room: LiarsDiceRoom): string[] =>
 /** Every die still on the table. */
 const diceOnTable = (room: LiarsDiceRoom): number =>
   playersIn(room).reduce(
-    (total, playerId) => total + room.playerList[playerId].points,
+    (total, playerId) => total + seatOf(room, playerId).points,
     0,
   );
 
@@ -107,10 +107,13 @@ const toRoomState = (
   const game = room.game;
   const open = game.phase === 'reveal' || game.reveal !== null;
   const cups: LiarsDiceCup[] = game.order
-    .filter((playerId) => room.playerList[playerId])
-    .map((playerId) => ({
+    .flatMap((playerId) => {
+      const seat = room.playerList[playerId];
+      return seat ? [{ playerId, seat }] : [];
+    })
+    .map(({ playerId, seat }) => ({
       playerId,
-      diceLeft: room.playerList[playerId].points,
+      diceLeft: seat.points,
       dice:
         open || playerId === viewerId ? [...(game.dice[playerId] ?? [])] : null,
       outInRound:

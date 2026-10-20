@@ -27,18 +27,18 @@ test('two players play every card in order, together, without a word', async ({
     'Hush. Chat opens when the level ends.',
   );
   const [low, high] = await deal(both);
-  await play(high.page, high.card, [high.page]);
+  await play(high!.page, high!.card, [high!.page]);
   // The turn bar says so for a second here, too short to catch under load;
   // the lives, the discard and the chat say so for good.
-  await expect(low.page.getByRole('img', { name: '2 lives' })).toBeVisible();
+  await expect(low!.page.getByRole('img', { name: '2 lives' })).toBeVisible();
   await expect(
-    low.page.getByRole('img', { name: `${low.card}, discarded` }),
+    low!.page.getByRole('img', { name: `${low!.card}, discarded` }),
   ).toBeVisible();
-  const holder = low.page === maya ? 'Maya' : 'Leo';
-  const player1 = high.page === maya ? 'Maya' : 'Leo';
+  const holder = low!.page === maya ? 'Maya' : 'Leo';
+  const player1 = high!.page === maya ? 'Maya' : 'Leo';
   await expect(
     maya.getByText(
-      `${player1} played ${high.card}, but ${holder} held ${low.card}.`,
+      `${player1} played ${high!.card}, but ${holder} held ${low!.card}.`,
     ),
   ).toBeVisible();
 

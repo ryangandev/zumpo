@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import {
   brokenFeature,
   cardFeatures,
@@ -13,8 +14,11 @@ export function whyNotATrio(
   cards: readonly number[],
   m: Messages,
 ): string | null {
-  const [a, b, c] = cards;
-  const feature = brokenFeature(a, b, c);
+  const feature = brokenFeature(
+    itemAt(cards, 0),
+    itemAt(cards, 1),
+    itemAt(cards, 2),
+  );
   if (feature === null) return null;
   const features = cards.map(cardFeatures);
   const valueOf = (f: CardFeatures) => f[feature];

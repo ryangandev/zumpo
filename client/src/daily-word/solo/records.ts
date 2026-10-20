@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import {
   dailyAnswer,
   isValidGuess,
@@ -81,7 +82,8 @@ export function statsOf(records: PuzzleRecords, today: number): DailyStats {
     played += 1;
     if (outcome === 'found') {
       found += 1;
-      distribution[records.get(puzzle)!.length - 1] += 1;
+      const guesses = records.get(puzzle)!.length;
+      distribution[guesses - 1] = itemAt(distribution, guesses - 1) + 1;
     }
   }
 

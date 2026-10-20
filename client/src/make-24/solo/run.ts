@@ -1,8 +1,10 @@
+import { itemAt } from '../../../../shared/list';
 import {
   combine,
   dealHands,
   dealtCards,
   isTarget,
+  lastCard,
   play,
   solve,
   type Card,
@@ -61,7 +63,7 @@ export function newRun(seed: string, now: number): SoloRun {
   };
 }
 
-export const deal = (run: SoloRun) => run.deals[run.hand];
+export const deal = (run: SoloRun) => itemAt(run.deals, run.hand);
 
 /** The cards in front of the player after their steps. */
 export const cardsOf = (run: SoloRun): Card[] =>
@@ -96,11 +98,11 @@ export function takeStep(run: SoloRun, step: Step, now: number): SoloRun {
   if (run.handStartedAt === null) return run;
   if (!combine(cardsOf(run), step)) return run;
   const next = { ...run, steps: [...run.steps, step] };
-  const cards = cardsOf(next);
-  if (cards.length > 1 || !isTarget(cards[0].value)) return next;
+  const last = lastCard(cardsOf(next));
+  if (!last || !isTarget(last.value)) return next;
   return finishHand(next, {
     deal: deal(run),
-    expression: cards[0].expression,
+    expression: last.expression,
     skipped: false,
     ms: now - run.handStartedAt,
   });

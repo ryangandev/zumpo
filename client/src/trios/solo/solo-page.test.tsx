@@ -42,14 +42,14 @@ const pause = (ms: number) => act(() => vi.advanceTimersByTime(ms));
 /** Picks the cards at `chosen`, on the page and in the model. */
 async function pickPlaces(chosen: readonly number[]) {
   for (const place of chosen) {
-    await user.click(places()[place]);
+    await user.click(places()[place]!);
     model = pick(model, place, 0);
   }
 }
 
 /** Finds the first trio on the table, and waits for the next cards. */
 async function findTrio() {
-  await pickPlaces(findTrios(model.deal.table)[0]);
+  await pickPlaces(findTrios(model.deal.table)[0]!);
   await pause(FLASH_MS);
   model = afterFlash(model, 0);
 }
@@ -73,10 +73,10 @@ describe('Trios on your own', () => {
     expect(chineseCards()).toHaveLength(12);
     expect(chineseCards()[0]).toHaveAccessibleName(/^[123] 个/);
     const t = model.deal.table;
-    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0], t[1], t[c]));
-    await user.click(chineseCards()[0]);
-    await user.click(chineseCards()[1]);
-    await user.click(chineseCards()[third]);
+    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0]!, t[1]!, t[c]!));
+    await user.click(chineseCards()[0]!);
+    await user.click(chineseCards()[1]!);
+    await user.click(chineseCards()[third]!);
     expect(bar.getByText('不成一组，+5 秒')).toBeInTheDocument();
     expect(bar.getByText(/^其中 2 张/)).toBeInTheDocument();
     await pause(FLASH_MS);
@@ -125,7 +125,7 @@ describe('Trios on your own', () => {
   it('says why three cards are not a trio, and adds 5 seconds', async () => {
     await startRun();
     const t = model.deal.table;
-    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0], t[1], t[c]));
+    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0]!, t[1]!, t[c]!));
     await pickPlaces([0, 1]);
     expect(turn().getByText('Pick a third card')).toBeInTheDocument();
     await pickPlaces([third]);
@@ -134,7 +134,7 @@ describe('Trios on your own', () => {
     expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
     expect(turn().getByRole('timer')).toHaveTextContent(/^00:0[5-6]/);
     expect(
-      table().getByRole('img', { name: `${cardName(t[0])}, not a trio` }),
+      table().getByRole('img', { name: `${cardName(t[0]!)}, not a trio` }),
     ).toBeInTheDocument();
 
     await pause(FLASH_MS);
@@ -154,7 +154,7 @@ describe('Trios on your own', () => {
 
   it('ends after ten trios with every one, keeps the best and copies a challenge', async () => {
     await startRun();
-    await pickPlaces(findTrios(model.deal.table)[0]);
+    await pickPlaces(findTrios(model.deal.table)[0]!);
     expect(turn().getByText('A trio!')).toBeInTheDocument();
     expect(turn().getByText(/^Found in 0:0\d$/)).toBeInTheDocument();
     await pause(FLASH_MS);
@@ -175,10 +175,10 @@ describe('Trios on your own', () => {
     ).getAllByRole('listitem');
     expect(trios).toHaveLength(RUN_TRIOS);
     expect(
-      within(trios[0])
+      within(trios[0]!)
         .getAllByRole('img')
         .map((c) => c.getAttribute('aria-label')),
-    ).toEqual(model.results[0].cards.map(cardName));
+    ).toEqual(model.results[0]!.cards.map(cardName));
     expect(localStorage.getItem('zumpo:solo:best:trios:ten-trios')).toMatch(
       /^\d+$/,
     );

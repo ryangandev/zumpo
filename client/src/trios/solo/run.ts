@@ -1,3 +1,4 @@
+import { itemAt, pickFrom } from '../../../../shared/list';
 import {
   brokenFeature,
   dealTable,
@@ -124,8 +125,8 @@ export function pick(run: SoloRun, place: number, now: number): SoloRun {
   const picked = [...run.picked, place];
   if (picked.length < 3) return { ...run, picked };
 
-  const cards = picked.map((p) => run.deal.table[p]);
-  const [a, b, c] = cards;
+  const cards = picked.map((p) => itemAt(run.deal.table, p));
+  const [a, b, c] = [itemAt(cards, 0), itemAt(cards, 1), itemAt(cards, 2)];
   if (!isTrio(a, b, c)) {
     return {
       ...run,
@@ -188,9 +189,8 @@ export function hint(run: SoloRun): SoloRun {
   if (!hintTrio) {
     const random = randomFor(run.seed, `hint-${run.results.length}`);
     const trios = findTrios(run.deal.table);
-    const places = trios[Math.floor(random() * trios.length)];
     hintTrio = shuffle(
-      places.map((place) => run.deal.table[place]),
+      pickFrom(trios, random).map((place) => itemAt(run.deal.table, place)),
       random,
     );
   }

@@ -106,11 +106,11 @@ describe('a board on your own', () => {
     const hidden = screen.getAllByRole('button', { name: /: hidden$/ });
 
     // Right-click flags and lifts a flag; a plain click leaves a flag alone.
-    fireEvent.contextMenu(hidden[0]);
+    fireEvent.contextMenu(hidden[0]!);
     expect(turn().getByText('9 mines left')).toBeInTheDocument();
-    await user.click(hidden[0]);
+    await user.click(hidden[0]!);
     expect(hidden[0]).toHaveAccessibleName(/: flagged$/);
-    fireEvent.contextMenu(hidden[0]);
+    fireEvent.contextMenu(hidden[0]!);
     expect(turn().getByText('10 mines left')).toBeInTheDocument();
 
     // Flag mode makes a click flag.
@@ -120,7 +120,7 @@ describe('a board on your own', () => {
       'true',
     );
     expect(turn().getByText('Flag mode: a click flags')).toBeInTheDocument();
-    await user.click(hidden[1]);
+    await user.click(hidden[1]!);
     expect(hidden[1]).toHaveAccessibleName(/: flagged$/);
     expect(turn().getByText('9 mines left')).toBeInTheDocument();
   });

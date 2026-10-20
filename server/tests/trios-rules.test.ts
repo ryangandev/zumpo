@@ -161,7 +161,7 @@ const dealtInto = (
   cards: readonly number[],
 ) =>
   table.map((card, place) =>
-    places.includes(place) ? cards[places.indexOf(place)] : card,
+    places.includes(place) ? cards[places.indexOf(place)]! : card,
   );
 
 /**
@@ -173,7 +173,7 @@ function seedWhereNextThree(leaveATrio: boolean) {
     const random = seededRandom(seed);
     const dealt = dealTable(random);
     const [trio] = findTrios(dealt.table);
-    const naive = dealtInto(dealt.table, trio, dealt.deck.slice(0, 3));
+    const naive = dealtInto(dealt.table, trio!, dealt.deck.slice(0, 3));
     if (hasTrio(naive) === leaveATrio) return { random, dealt, trio };
   }
 }
@@ -210,27 +210,27 @@ describe('the deal', () => {
 describe('taking a trio', () => {
   it('deals the next cards of the deck into its places, the rest staying put', () => {
     const { random, dealt, trio } = seedWhereNextThree(true);
-    const next = takeTrio(dealt, trio, random)!;
+    const next = takeTrio(dealt, trio!, random)!;
 
     expect(next.table).toEqual(
-      dealtInto(dealt.table, trio, dealt.deck.slice(0, 3)),
+      dealtInto(dealt.table, trio!, dealt.deck.slice(0, 3)),
     );
     expect(next.deck).toEqual(dealt.deck.slice(3));
   });
 
   it('puts the next cards back when they would leave no trio, and deals others', () => {
     const { random, dealt, trio } = seedWhereNextThree(false);
-    const next = takeTrio(dealt, trio, random)!;
+    const next = takeTrio(dealt, trio!, random)!;
 
     expect(hasTrio(next.table)).toBe(true);
     const kept = (table: readonly number[]) =>
-      table.filter((_, place) => !trio.includes(place));
+      table.filter((_, place) => !trio!.includes(place));
     expect(kept(next.table)).toEqual(kept(dealt.table));
     expect(next.deck).toHaveLength(dealt.deck.length - 3);
     expect(
       accountedFor(
         next,
-        trio.map((place) => dealt.table[place]),
+        trio!.map((place) => dealt.table[place]!),
       ),
     ).toEqual(ALL);
   });
@@ -244,8 +244,8 @@ describe('taking a trio', () => {
       while (deal) {
         expect(hasTrio(deal.table)).toBe(true);
         const [trio] = findTrios(deal.table);
-        taken.push(...trio.map((place) => deal!.table[place]));
-        const next = takeTrio(deal, trio, random);
+        taken.push(...trio!.map((place) => deal!.table[place]!));
+        const next = takeTrio(deal, trio!, random);
         trios++;
         if (!next) break;
         expect(accountedFor(next, taken)).toEqual(ALL);
@@ -267,6 +267,6 @@ function playTen() {
   const random = seededRandom(seedNumber('k3f9x2'));
   let deal = dealTable(random);
   for (let i = 0; i < 10; i++)
-    deal = takeTrio(deal, findTrios(deal.table)[0], random)!;
+    deal = takeTrio(deal, findTrios(deal.table)[0]!, random)!;
   return deal;
 }

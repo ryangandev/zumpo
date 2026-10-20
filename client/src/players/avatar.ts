@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import { AVATAR_TONES, type AvatarTone } from '../ui';
 
 const nameGraphemes = new Intl.Segmenter(undefined, {
@@ -15,7 +16,7 @@ export function initialsOf(name: string): string {
   const words = name.trim().split(/\s+/).filter(Boolean);
   const letters =
     words.length >= 2
-      ? [graphemesOf(words[0])[0], graphemesOf(words[1])[0]]
+      ? words.slice(0, 2).flatMap((word) => graphemesOf(word).slice(0, 1))
       : graphemesOf(words[0] ?? '').slice(0, 2);
   return letters.join('').toLocaleUpperCase();
 }
@@ -29,5 +30,5 @@ export function toneOf(name: string): AvatarTone {
   for (const char of name.trim()) {
     hash = (hash * 31 + (char.codePointAt(0) ?? 0)) >>> 0;
   }
-  return AVATAR_TONES[hash % AVATAR_TONES.length];
+  return itemAt(AVATAR_TONES, hash % AVATAR_TONES.length);
 }

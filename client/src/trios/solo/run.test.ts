@@ -26,14 +26,14 @@ const pickAll = (run: SoloRun, places: readonly number[], now: number) =>
 function notATrio(run: SoloRun): number[] {
   const table = run.deal.table;
   for (let c = 2; c < table.length; c++) {
-    if (!isTrio(table[0], table[1], table[c])) return [0, 1, c];
+    if (!isTrio(table[0]!, table[1]!, table[c]!)) return [0, 1, c];
   }
   throw new Error('Every card makes a trio with the first two');
 }
 
 /** Finds the first trio on the table at `now` and deals the next. */
 function findOne(run: SoloRun, now: number): SoloRun {
-  return afterFlash(pickAll(run, findTrios(run.deal.table)[0], now), now);
+  return afterFlash(pickAll(run, findTrios(run.deal.table)[0]!, now), now);
 }
 
 /** A whole run, finding the first trio every 10 seconds. */
@@ -65,14 +65,14 @@ describe('a run on your own', () => {
   it('takes a trio on the third pick, stops its clock and deals new cards into its places', () => {
     let run = newRun('k3f9x2', 0);
     const [trio] = findTrios(run.deal.table);
-    run = pickAll(run, trio, 12_000);
+    run = pickAll(run, trio!, 12_000);
     expect(run.flash).toEqual({ found: true, places: trio, feature: null });
     expect(canPick(run)).toBe(false);
     expect(trioNumber(run)).toBe(1);
     // The clock stops while the trio is up.
     expect(runTime(run, 60_000)).toBe(12_000);
     expect(run.results[0]).toEqual({
-      cards: trio.map((place) => newRun('k3f9x2', 0).deal.table[place]),
+      cards: trio!.map((place) => newRun('k3f9x2', 0).deal.table[place]),
       ms: 12_000,
       wrongPicks: 0,
       hints: 0,
@@ -84,7 +84,7 @@ describe('a run on your own', () => {
     expect(run.deal.table).toHaveLength(12);
     expect(findTrios(run.deal.table).length).toBeGreaterThan(0);
     const kept = (table: readonly number[]) =>
-      table.filter((_, place) => !trio.includes(place));
+      table.filter((_, place) => !trio!.includes(place));
     expect(kept(run.deal.table)).toEqual(kept(before));
     expect(runTime(run, 14_000)).toBe(13_000);
   });
@@ -119,7 +119,7 @@ describe('a run on your own', () => {
     expect(places[0]).toBe(first);
     expect(places).toHaveLength(2);
     const trio = findTrios(run.deal.table).find(
-      (t) => t.includes(places[0]) && t.includes(places[1]),
+      (t) => t.includes(places[0]!) && t.includes(places[1]!),
     );
     expect(trio).toBeDefined();
     expect(canHint(run)).toBe(false);
@@ -128,7 +128,7 @@ describe('a run on your own', () => {
     // Hints are cleared when a trio is taken.
     run = findOne(run, 3000);
     expect(hintedPlaces(run)).toEqual([]);
-    expect(run.results[0].hints).toBe(2);
+    expect(run.results[0]!.hints).toBe(2);
   });
 
   it('ends after ten trios with its time, and plays the same from the same picks', () => {

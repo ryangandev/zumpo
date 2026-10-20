@@ -448,11 +448,11 @@ async function chooseAndDraw(drawer: Page): Promise<string> {
     ),
   );
   const shortest = words.reduce(
-    (best, word, i) => (word.length < words[best].length ? i : best),
+    (best, word, i) => (word.length < words[best]!.length ? i : best),
     0,
   );
-  const word = words[shortest];
-  await choices[shortest].click();
+  const word = words[shortest]!;
+  await choices[shortest]!.click();
   await draw(drawer);
   return word;
 }
@@ -498,22 +498,22 @@ test('a Draw & Guess game', async ({ player }) => {
   const seats = await fourPlayers(player);
   const [maya, ryan, sam, leo] = seats;
 
-  const link = await createRoom(maya.page, 'draw-and-guess', { rounds: 1 });
-  await shot(maya.page, 'D01');
-  for (const seat of [ryan, sam, leo]) await joinRoom(seat.page, link);
-  await expect(maya.page.getByText('4 / 8')).toBeVisible();
-  await shot(maya.page, 'D02');
-  await shot(ryan.page, 'D03');
-  await ryan.page.getByRole('link', { name: 'Zumpo home' }).click();
-  await shot(ryan.page, 'P16');
-  await ryan.page.getByRole('button', { name: 'Stay' }).click();
-  await maya.page
+  const link = await createRoom(maya!.page, 'draw-and-guess', { rounds: 1 });
+  await shot(maya!.page, 'D01');
+  for (const seat of [ryan, sam, leo]) await joinRoom(seat!.page, link);
+  await expect(maya!.page.getByText('4 / 8')).toBeVisible();
+  await shot(maya!.page, 'D02');
+  await shot(ryan!.page, 'D03');
+  await ryan!.page.getByRole('link', { name: 'Zumpo home' }).click();
+  await shot(ryan!.page, 'P16');
+  await ryan!.page.getByRole('button', { name: 'Stay' }).click();
+  await maya!.page
     .getByRole('button', { name: 'Invite friends' })
     .first()
     .click();
-  await shot(maya.page, 'P12');
-  await maya.page.getByRole('button', { name: 'Done' }).click();
-  await startGame(maya.page);
+  await shot(maya!.page, 'P12');
+  await maya!.page.getByRole('button', { name: 'Done' }).click();
+  await startGame(maya!.page);
 
   // One round: everybody draws once, Leo on his phone.
   const desktopTurns = ['plain', 'dropped', 'timed out'] as const;
@@ -537,12 +537,12 @@ test('a Draw & Guess game', async ({ player }) => {
       const word = await chooseAndDraw(drawer.page);
       await shot(drawer.page, 'D06');
       await shot(watcher.page, 'D07');
-      await shot(leo.page, 'MO09');
-      await leo.page.getByRole('tab', { name: /Players/ }).click();
-      await shot(leo.page, 'MO15');
-      await leo.page.getByRole('tab', { name: 'Chat' }).click();
-      await shot(leo.page, 'MO16');
-      await leo.page.getByRole('tab', { name: 'Board' }).click();
+      await shot(leo!.page, 'MO09');
+      await leo!.page.getByRole('tab', { name: /Players/ }).click();
+      await shot(leo!.page, 'MO15');
+      await leo!.page.getByRole('tab', { name: 'Chat' }).click();
+      await shot(leo!.page, 'MO16');
+      await leo!.page.getByRole('tab', { name: 'Board' }).click();
 
       await watcher.page.getByRole('button', { name: 'Leave room' }).click();
       await shot(watcher.page, 'P11');
@@ -559,10 +559,10 @@ test('a Draw & Guess game', async ({ player }) => {
       for (const seat of guessers)
         if (seat !== watcher) await guess(seat, word);
       await expect(
-        maya.page.getByText('The word was', { exact: true }),
+        maya!.page.getByText('The word was', { exact: true }),
       ).toBeVisible();
       await shot(drawer.page, 'D09');
-      await shot(leo.page, 'MO10');
+      await shot(leo!.page, 'MO10');
     } else if (kind === 'dropped') {
       await chooseAndDraw(drawer.page);
       const restore = await dropConnection(drawer.page);
@@ -593,11 +593,11 @@ test('a Draw & Guess game', async ({ player }) => {
     }
   }
 
-  await expect(maya.page.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(maya!.page.getByText('Game over', { exact: true })).toBeVisible({
     timeout: 30_000,
   });
-  await shot(maya.page, 'D13');
-  await shot(ryan.page, 'D14');
+  await shot(maya!.page, 'D13');
+  await shot(ryan!.page, 'D14');
 });
 
 /** A game left by all but its host: D15 and M16. */
@@ -661,65 +661,65 @@ test('a Minesweeper game', async ({ player }) => {
   const seats = await fourPlayers(player);
   const [maya, ryan, sam, leo] = seats;
 
-  const link = await createRoom(maya.page, 'minesweeper');
-  await shot(maya.page, 'M01');
-  for (const seat of [ryan, sam, leo]) await joinRoom(seat.page, link);
-  await expect(maya.page.getByText('4 / 8')).toBeVisible();
-  await shot(maya.page, 'M02');
-  await shot(ryan.page, 'M03');
-  await startGame(maya.page);
+  const link = await createRoom(maya!.page, 'minesweeper');
+  await shot(maya!.page, 'M01');
+  for (const seat of [ryan, sam, leo]) await joinRoom(seat!.page, link);
+  await expect(maya!.page.getByText('4 / 8')).toBeVisible();
+  await shot(maya!.page, 'M02');
+  await shot(ryan!.page, 'M03');
+  await startGame(maya!.page);
 
-  await expect(maya.page.getByText('Pick a cell')).toBeVisible();
-  await shot(maya.page, 'M04');
-  await cell(maya.page, 2, 2).click();
+  await expect(maya!.page.getByText('Pick a cell')).toBeVisible();
+  await shot(maya!.page, 'M04');
+  await cell(maya!.page, 2, 2).click();
   await expect(
-    maya.page.getByText('Waiting for Ryan, Sam and Leo'),
+    maya!.page.getByText('Waiting for Ryan, Sam and Leo'),
   ).toBeVisible();
-  await shot(maya.page, 'M05');
-  await cell(leo.page, 8, 2).click();
-  await expect(leo.page.getByText('Waiting for Ryan and Sam')).toBeVisible();
-  await shot(leo.page, 'MO12');
+  await shot(maya!.page, 'M05');
+  await cell(leo!.page, 8, 2).click();
+  await expect(leo!.page.getByText('Waiting for Ryan and Sam')).toBeVisible();
+  await shot(leo!.page, 'MO12');
   // Ryan and Sam share a cell; their reward splits if it is safe.
-  await cell(ryan.page, 5, 5).click();
-  await cell(sam.page, 5, 5).click();
-  await expect(maya.page.getByText(/Round 1 results/).first()).toBeVisible();
-  await shot(maya.page, 'M07');
+  await cell(ryan!.page, 5, 5).click();
+  await cell(sam!.page, 5, 5).click();
+  await expect(maya!.page.getByText(/Round 1 results/).first()).toBeVisible();
+  await shot(maya!.page, 'M07');
   for (const seat of [ryan, leo]) {
-    await expect(seat.page.getByText(/Round 1 results/).first()).toBeVisible();
+    await expect(seat!.page.getByText(/Round 1 results/).first()).toBeVisible();
   }
-  await shot(ryan.page, 'M09');
-  await shot(leo.page, 'MO13');
+  await shot(ryan!.page, 'M09');
+  await shot(leo!.page, 'MO13');
   let mine = await mineHitBy(seats);
   if (mine) await shot(mine.page, 'M08');
   // MO11 is a round after a mine was hit, which the turn bar counts.
   let hitCounted = false;
   const countHit = async () => {
     if (!mine || hitCounted) return;
-    await expect(leo.page.getByText('Pick a cell')).toBeVisible();
-    await shot(leo.page, 'MO11');
+    await expect(leo!.page.getByText('Pick a cell')).toBeVisible();
+    await shot(leo!.page, 'MO11');
     hitCounted = true;
   };
 
   // Round 2: Sam does not pick, so the clock picks the safest cell for him.
-  await expect(maya.page.getByText('Pick a cell')).toBeVisible({
+  await expect(maya!.page.getByText('Pick a cell')).toBeVisible({
     timeout: 20_000,
   });
-  await shot(maya.page, 'M11');
+  await shot(maya!.page, 'M11');
   await countHit();
   for (const seat of [maya, ryan, leo]) {
-    await seat.page.getByRole('button', { name: HIDDEN }).first().click();
+    await seat!.page.getByRole('button', { name: HIDDEN }).first().click();
   }
   await expect(
-    sam.page.getByText('The safest cell was picked for you', { exact: false }),
+    sam!.page.getByText('The safest cell was picked for you', { exact: false }),
   ).toBeVisible({ timeout: 30_000 });
-  await shot(sam.page, 'M10');
-  await shot(leo.page, 'MO19');
+  await shot(sam!.page, 'M10');
+  await shot(leo!.page, 'MO19');
 
   // Then everybody picks, riskiest first, until somebody finds a mine and
   // the board is done.
-  const over = maya.page.getByText('Game over', { exact: true });
+  const over = maya!.page.getByText('Game over', { exact: true });
   for (let round = 3; !(await over.isVisible()); round++) {
-    await expect(maya.page.getByText('Pick a cell').or(over)).toBeVisible({
+    await expect(maya!.page.getByText('Pick a cell').or(over)).toBeVisible({
       timeout: 20_000,
     });
     if (await over.isVisible()) break;
@@ -729,18 +729,18 @@ test('a Minesweeper game', async ({ player }) => {
       const count = await hidden.count();
       if (count) await hidden.nth((index * 7 + round) % count).click();
     }
-    await expect(maya.page.getByText('Pick a cell')).toBeHidden();
+    await expect(maya!.page.getByText('Pick a cell')).toBeHidden();
     if (!mine) {
       await expect(
-        maya.page.getByText(/Round \d+ results/).first(),
+        maya!.page.getByText(/Round \d+ results/).first(),
       ).toBeVisible();
       mine = await mineHitBy(seats);
       if (mine) await shot(mine.page, 'M08');
     }
   }
 
-  await shot(maya.page, 'M14');
-  await shot(ryan.page, 'M15');
+  await shot(maya!.page, 'M14');
+  await shot(ryan!.page, 'M15');
 });
 
 test('a Minesweeper game left early', async ({ player }) => {
@@ -1133,7 +1133,7 @@ test('a Trios game', async ({ player }) => {
   // Sam's picks stay through the new cards, and his third is wrong.
   await readyToFind(sam);
   const [, , third] = missWith(await tableOf(sam), picks);
-  await pickPlaces(sam, [third]);
+  await pickPlaces(sam, [third!]);
   const locked = triosTurnOf(sam).getByText('locked out');
   await expect(locked).toBeVisible();
   expect(await shotWhile(sam, 'TS07', locked)).toBe(true);
@@ -1387,8 +1387,8 @@ test('a Hush game', async ({ player }) => {
     const lowests = await Promise.all(
       seats.map(async (page) => ({ page, card: (await handOf(page))[0] })),
     );
-    const over = lowests.toSorted((a, b) => b.card - a.card)[0];
-    await play(over.page, over.card, [over.page]);
+    const over = lowests.toSorted((a, b) => b.card! - a.card!)[0];
+    await play(over!.page, over!.card!, [over!.page]);
   };
   /** Play goes on after a slip, unless it took every card still held. */
   const goOn = () =>
@@ -1456,10 +1456,10 @@ test('a Hush game', async ({ player }) => {
     )
   )
     .filter(({ card }) => card !== undefined)
-    .toSorted((a, b) => a.card - b.card);
+    .toSorted((a, b) => a.card! - b.card!);
   const over = lowests.slice(1).find(({ page }) => page !== sam);
   expect(over, 'a card over another player’s').toBeDefined();
-  await play(over!.page, over!.card, [over!.page]);
+  await play(over!.page, over!.card!, [over!.page]);
   const lost = turnOf(sam).getByText(/One life lost\.$/);
   await expect(lost).toBeVisible();
   expect(await shotWhile(sam, 'HU04', lost), 'the mistake captured').toBe(true);
@@ -1678,21 +1678,21 @@ test('a Daily Word game', async ({ player }) => {
   // Word 1: everybody finds it in three.
   await wordOn(1);
   for (const seat of seats) {
-    await findIt(seat, first, ['stare', 'cloud'], seat === seats.at(-1));
+    await findIt(seat, first!, ['stare', 'cloud'], seat === seats.at(-1));
   }
 
   // Word 2, as Figma tells it: Maya finds it while the others are guessing.
   await wordOn(2);
-  const miss = missing(second);
+  const miss = missing(second!);
   await say(ryan, 'good luck');
-  await findIt(maya, second, ['stare', 'hoist']);
+  await findIt(maya, second!, ['stare', 'hoist']);
   await say(leo, 'how?!', true);
   await guessWords(sam, ['crane', 'south', 'moist'].map(miss));
   await guessWords(ryan, ['audio', 'those', 'shoot', 'boost'].map(miss));
   await guessWords(leo, ['lemon', 'sport', 'frost'].map(miss));
-  await sam.keyboard.type(second.slice(0, 3));
+  await sam.keyboard.type(second!.slice(0, 3));
   await shot(sam, 'DW07');
-  await leo.keyboard.type(second.slice(0, 3));
+  await leo.keyboard.type(second!.slice(0, 3));
   await shot(leo, 'DW13');
   await leo.getByRole('tab', { name: /^Players/ }).click();
   await shot(leo, 'DW14');
@@ -1702,7 +1702,7 @@ test('a Daily Word game', async ({ player }) => {
 
   // Sam finds it in four; Ryan and Leo guess on.
   for (let i = 0; i < 3; i++) await sam.keyboard.press('Backspace');
-  await findIt(sam, second, []);
+  await findIt(sam, second!, []);
   await guessWords(ryan, [miss('roost')]);
   await guessWords(leo, [miss('hoist')]);
   await expect(
@@ -1711,13 +1711,13 @@ test('a Daily Word game', async ({ player }) => {
   await shot(sam, 'DW08');
 
   // Leo finds it in five and Ryan's last guess misses, which ends the word.
-  await findIt(leo, second, []);
+  await findIt(leo, second!, []);
   // Ryan's sixth guess is the last of the word, which ends at once.
   await typeGuess(ryan, miss('hoist'));
   const results = sam.getByRole('heading', { name: 'Word 2 results' });
   await expect(results).toBeVisible();
   await expect(
-    turnOf(sam).getByText(second.toUpperCase(), { exact: true }),
+    turnOf(sam).getByText(second!.toUpperCase(), { exact: true }),
   ).toBeVisible();
   await say(ryan, 'HOIST was so close');
   expect(await shotWhile(sam, 'DW09', results)).toBe(true);
@@ -1731,10 +1731,15 @@ test('a Daily Word game', async ({ player }) => {
 
   // Word 3, as Figma's boards have it, and the game is over.
   await wordOn(3);
-  await findIt(ryan, third, ['stale', 'alike']);
-  await findIt(sam, third, ['crane', 'plate', 'blame']);
-  await findIt(maya, third, ['share', 'blade', 'place', 'flake']);
-  await findIt(leo, third, ['audio', 'trend', 'slick', 'plumb', 'clamp'], true);
+  await findIt(ryan, third!, ['stale', 'alike']);
+  await findIt(sam, third!, ['crane', 'plate', 'blame']);
+  await findIt(maya, third!, ['share', 'blade', 'place', 'flake']);
+  await findIt(
+    leo,
+    third!,
+    ['audio', 'trend', 'slick', 'plumb', 'clamp'],
+    true,
+  );
   await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
     timeout: 15_000,
   });

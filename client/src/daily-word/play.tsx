@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import { useMessages, type Messages } from '../i18n';
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
 import type { DailyWordMark } from '../../../shared/wire-types';
@@ -72,7 +73,7 @@ export function describeRow(
   m: Messages,
 ) {
   const letters = [...word.toUpperCase()].map((letter, index) =>
-    m.dailyWord.rowLetter(letter, m.ui.word.marks[marks[index]]),
+    m.dailyWord.rowLetter(letter, m.ui.word.marks[itemAt(marks, index)]),
   );
   return m.dailyWord.row(word.toUpperCase(), letters);
 }

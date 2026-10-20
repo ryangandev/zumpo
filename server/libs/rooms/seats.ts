@@ -42,6 +42,17 @@ const memberOf = (
 ): PlayerInfo | SpectatorInfo | undefined =>
   room.playerList[playerId] ?? room.spectators[playerId];
 
+/**
+ * The seat of a player the caller knows is at the table: one it took from
+ * the table's own list, or the game's order of it. Missing, it is a bug, and
+ * throws for the guard around every event and timer to log.
+ */
+const seatOf = (room: Room, playerId: string): PlayerInfo => {
+  const seat = room.playerList[playerId];
+  if (!seat) throw new Error(`No seat for ${playerId} in room ${room.roomId}.`);
+  return seat;
+};
+
 const isSpectator = (room: Room, playerId: string): boolean =>
   Boolean(room.spectators[playerId]);
 
@@ -103,6 +114,7 @@ export {
   roomStatus,
   canWatch,
   memberOf,
+  seatOf,
   isSpectator,
   heirOf,
   lobbyBasics,

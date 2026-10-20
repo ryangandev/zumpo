@@ -37,7 +37,7 @@ describe('a run on your own', () => {
   it('combines cards a step at a time, and undoes them for free', () => {
     let run = newRun('k3f9x2', 0);
     const [first] = stepsToSolve(deal(run));
-    run = takeStep(run, first, 1000);
+    run = takeStep(run, first!, 1000);
     expect(cardsOf(run)).toHaveLength(3);
     expect(undo(run).steps).toEqual([]);
     expect(
@@ -52,7 +52,7 @@ describe('a run on your own', () => {
     run = solveHand(run, 21_000);
     expect(isBetweenHands(run)).toBe(true);
     expect(run.results[0]).toMatchObject({ skipped: false, ms: 21_000 });
-    expect(formatFraction(cardsOf(run)[0].value)).toBe('24');
+    expect(formatFraction(cardsOf(run)[0]!.value)).toBe('24');
     // The pause between hands is not on the clock.
     expect(runTime(run, 25_000)).toBe(21_000);
     run = nextHand(run, 25_000);
@@ -68,7 +68,7 @@ describe('a run on your own', () => {
       skipped: true,
       ms: 5000 + SKIP_PENALTY_MS,
     });
-    expect(run.results[0].expression).not.toBeTypeOf('number');
+    expect(run.results[0]!.expression).not.toBeTypeOf('number');
     // Nothing more can happen to a hand that is over.
     expect(skip(run, 6000)).toBe(run);
     expect(undo(run)).toBe(run);

@@ -1,4 +1,5 @@
 import type { PairsBoard } from './wire-types.js';
+import { swap } from './list.js';
 
 /**
  * Pairs rules that a room on the server and a game on your own in the
@@ -30,7 +31,7 @@ export function shuffle<T>(items: readonly T[], random: () => number): T[] {
   const shuffled = [...items];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    swap(shuffled, i, j);
   }
   return shuffled;
 }

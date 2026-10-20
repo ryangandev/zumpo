@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import { useState, type ReactNode } from 'react';
 import {
   formatExpression,
@@ -192,12 +193,13 @@ export function HandTable({
     onStep({ left: first, op, right: index });
   };
 
+  const firstValue = first === null ? null : itemAt(views, first).value;
   const prompt =
-    first === null
+    firstValue === null
       ? m.make24.table.pickNumber
       : op === null
-        ? m.make24.table.pickSign(views[first].value)
-        : m.make24.table.pickSecond(views[first].value, OPERATOR_SYMBOLS[op]);
+        ? m.make24.table.pickSign(firstValue)
+        : m.make24.table.pickSecond(firstValue, OPERATOR_SYMBOLS[op]);
 
   const tools = (
     <>
@@ -232,7 +234,9 @@ export function HandTable({
           disabled:
             paused ||
             // Nothing divides by zero.
-            (op === '/' && index !== first && cards[index].value.n === 0),
+            (op === '/' &&
+              index !== first &&
+              itemAt(cards, index).value.n === 0),
         }))}
       />
       {!finished && (
@@ -288,7 +292,10 @@ export function StepList({
     const cards = cardsAfter(deal, steps.slice(0, index + 1));
     // The new card took the first card's place, one along if a card before
     // it went.
-    const made = cards[step.right < step.left ? step.left - 1 : step.left];
+    const made = itemAt(
+      cards,
+      step.right < step.left ? step.left - 1 : step.left,
+    );
     return `${formatLastStep(made.expression)} = ${formatFraction(made.value)}`;
   });
   return (

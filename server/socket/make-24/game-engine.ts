@@ -19,6 +19,7 @@ import {
   solves,
 } from '../../../shared/make-24.js';
 import { currentDeal, type Make24State } from './state.js';
+import { itemAt } from '../../../shared/list.js';
 
 const MIN_PLAYERS_TO_START = 2;
 
@@ -134,7 +135,8 @@ const createMake24GameEngine = (
     game.solves.set(playerId, {
       points,
       secondsLeft: Math.ceil(msLeft / 1000),
-      expression: formatExpression(play(deal, steps)![0].expression),
+      // `solves` has just checked these steps end on one card: 24.
+      expression: formatExpression(itemAt(play(deal, steps)!, 0).expression),
     });
     player.points += points;
 

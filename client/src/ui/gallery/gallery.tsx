@@ -2,6 +2,7 @@
 // draws, beside that family's Figma preview, each measured against the
 // export. Development only, at /design.
 
+import { itemAt } from '../../../../shared/list';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import '../zumpo.css';
 import {
@@ -79,7 +80,7 @@ const TRIOS_SPECIMENS = [
   [41, 2],
 ] as const;
 
-const cap = (word: string) => `${word[0].toUpperCase()}${word.slice(1)}`;
+const cap = (word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
 
 const BID_TEXT =
   'Figma rounds each of the three text runs up to a whole pixel, 2 px in all; the stroke and spacing match.';
@@ -183,7 +184,7 @@ export default function Gallery() {
       <Family name="Button" file="button">
         {(['primary', 'secondary', 'quiet', 'danger'] as const).map(
           (variant) => {
-            const style = variant[0].toUpperCase() + variant.slice(1);
+            const style = cap(variant);
             return [
               <Specimen
                 key={variant}
@@ -235,11 +236,7 @@ export default function Gallery() {
 
       <Family name="Avatar" file="avatar">
         {AVATAR_TONES.map((tone) => (
-          <Specimen
-            key={tone}
-            family="avatar"
-            variant={`Tone=${tone[0].toUpperCase()}${tone.slice(1)}`}
-          >
+          <Specimen key={tone} family="avatar" variant={`Tone=${cap(tone)}`}>
             <Avatar initials="RG" tone={tone} />
           </Specimen>
         ))}
@@ -251,11 +248,7 @@ export default function Gallery() {
       <Family name="Tag" file="tag">
         {(['sand', 'blue', 'lime', 'peach', 'paper', 'ink'] as const).map(
           (tone) => (
-            <Specimen
-              key={tone}
-              family="tag"
-              variant={`Tone=${tone[0].toUpperCase()}${tone.slice(1)}`}
-            >
+            <Specimen key={tone} family="tag" variant={`Tone=${cap(tone)}`}>
               <Tag tone={tone}>Waiting room</Tag>
             </Specimen>
           ),
@@ -288,7 +281,7 @@ export default function Gallery() {
           <Specimen
             key={tone}
             family="notice"
-            variant={`Tone=${tone[0].toUpperCase()}${tone.slice(1)}`}
+            variant={`Tone=${cap(tone)}`}
             width={560}
           >
             <Notice tone={tone}>Connection restored. Welcome back!</Notice>
@@ -414,7 +407,7 @@ export default function Gallery() {
           <Specimen
             key={kind}
             family="chat-message"
-            variant={`Kind=${kind[0].toUpperCase()}${kind.slice(1)}`}
+            variant={`Kind=${cap(kind)}`}
             width={296}
           >
             <ul
@@ -477,7 +470,7 @@ export default function Gallery() {
           <Specimen
             key={state}
             family="player-row"
-            variant={`State=${state[0].toUpperCase()}${state.slice(1)}`}
+            variant={`State=${cap(state)}`}
             width={312}
           >
             <ul
@@ -544,7 +537,7 @@ export default function Gallery() {
           <Specimen
             key={status}
             family="room-row"
-            variant={`Status=${status[0].toUpperCase()}${status.slice(1)}, Layout=Desktop`}
+            variant={`Status=${cap(status)}, Layout=Desktop`}
             width={840}
           >
             <ul
@@ -792,7 +785,7 @@ export default function Gallery() {
             <Specimen
               key={`${cellSize}-${outcome}`}
               family="pick-marker"
-              variant={`Outcome=${outcome[0].toUpperCase()}${outcome.slice(1)}, Size=${cellSize === 'regular' ? 'Regular' : 'Compact'}`}
+              variant={`Outcome=${cap(outcome)}, Size=${cellSize === 'regular' ? 'Regular' : 'Compact'}`}
             >
               <span
                 className={
@@ -952,7 +945,7 @@ export default function Gallery() {
           <div key={cardSize} className={styles.cellRow}>
             {states.map((state, index) => {
               // Every count, colour, shape and fill appears in a row.
-              const [card, count] = TRIOS_SPECIMENS[index];
+              const [card, count] = itemAt(TRIOS_SPECIMENS, index);
               return (
                 <Specimen
                   key={state}
@@ -1148,7 +1141,7 @@ export default function Gallery() {
         note="Hush's numbered cards: in a hand, next to play, on top of the pile, played under it, or discarded by a mistake."
       >
         {(['large', 'regular', 'small'] as const).map((cardSize) => {
-          const sizeName = cardSize[0].toUpperCase() + cardSize.slice(1);
+          const sizeName = cap(cardSize);
           return (
             <div key={cardSize} className={styles.cellRow}>
               {(
@@ -1373,7 +1366,7 @@ export default function Gallery() {
           <Specimen
             key={outcome}
             family="pick-result"
-            variant={`Outcome=${outcome[0].toUpperCase()}${outcome.slice(1)}`}
+            variant={`Outcome=${cap(outcome)}`}
             width={832}
           >
             <ul

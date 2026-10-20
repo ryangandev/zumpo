@@ -1,3 +1,4 @@
+import { pickFrom } from '../../../shared/list';
 import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery } from '../shell/use-media-query';
 import styles from './confetti.module.css';
@@ -66,7 +67,7 @@ function volley(
       width: between(7, 11),
       height: between(10, 16),
       round: Math.random() < 0.25,
-      colour: colours[Math.floor(Math.random() * colours.length)],
+      colour: pickFrom(colours, Math.random),
       bornAt: now,
     };
   });

@@ -102,6 +102,6 @@ export function dayLabel(day: string, now: Date, m: Messages): string {
   const yesterday = new Date(now);
   yesterday.setDate(now.getDate() - 1);
   if (day === dayOf(yesterday)) return m.solo.yesterday;
-  const [year, month, date] = day.split('-').map(Number);
+  const [year = 0, month = 1, date = 1] = day.split('-').map(Number);
   return m.solo.date(new Date(year, month - 1, date));
 }

@@ -2,6 +2,7 @@ import type { DailyWordMark } from './wire-types.js';
 import { ANSWERS } from './daily-word-answers.js';
 import { GUESSES } from './daily-word-guesses.js';
 import { seededRandom, seedNumber } from './seed.js';
+import { charAt, itemAt, pickFrom } from './list.js';
 
 /**
  * Daily Word's rules, which a room on the server and a game on your own in the
@@ -35,15 +36,17 @@ export function markGuess(guess: string, answer: string): DailyWordMark[] {
   );
   const leftOver = new Map<string, number>();
   for (let i = 0; i < WORD_LENGTH; i++) {
-    if (guess[i] === answer[i]) marks[i] = 'correct';
-    else leftOver.set(answer[i], (leftOver.get(answer[i]) ?? 0) + 1);
+    const letter = charAt(answer, i);
+    if (charAt(guess, i) === letter) marks[i] = 'correct';
+    else leftOver.set(letter, (leftOver.get(letter) ?? 0) + 1);
   }
   for (let i = 0; i < WORD_LENGTH; i++) {
     if (marks[i] === 'correct') continue;
-    const left = leftOver.get(guess[i]) ?? 0;
+    const letter = charAt(guess, i);
+    const left = leftOver.get(letter) ?? 0;
     if (left > 0) {
       marks[i] = 'present';
-      leftOver.set(guess[i], left - 1);
+      leftOver.set(letter, left - 1);
     }
   }
   return marks;
@@ -85,8 +88,10 @@ export function keyMarks(
   const best = new Map<string, DailyWordMark>();
   for (const { word, marks } of rows) {
     for (let i = 0; i < word.length; i++) {
-      const known = best.get(word[i]);
-      if (!known || rank[marks[i]] > rank[known]) best.set(word[i], marks[i]);
+      const letter = charAt(word, i);
+      const mark = itemAt(marks, i);
+      const known = best.get(letter);
+      if (!known || rank[mark] > rank[known]) best.set(letter, mark);
     }
   }
   return best;
@@ -130,7 +135,7 @@ export function utcPuzzleNumber(now: Date): number {
 
 /** Puzzle n is entry n - 1, and the list starts again after the last. */
 export const dailyAnswer = (puzzle: number): string =>
-  ANSWERS[(puzzle - 1) % ANSWERS.length];
+  itemAt(ANSWERS, (puzzle - 1) % ANSWERS.length);
 
 /** Milliseconds until the device's next midnight, when the next word is out. */
 export function msUntilNextPuzzle(now: Date): number {
@@ -144,8 +149,7 @@ export function msUntilNextPuzzle(now: Date): number {
 
 /** A practice word, dealt from a challenge link's seed alone. */
 export function practiceAnswer(seed: string): string {
-  const random = seededRandom(seedNumber(seed));
-  return ANSWERS[Math.floor(random() * ANSWERS.length)];
+  return pickFrom(ANSWERS, seededRandom(seedNumber(seed)));
 }
 
 /**
@@ -164,7 +168,7 @@ export function roomWords(
   );
   const words: string[] = [];
   while (words.length < count) {
-    const word = ANSWERS[Math.floor(random() * ANSWERS.length)];
+    const word = pickFrom(ANSWERS, random);
     if (!avoid.has(word) && !words.includes(word)) words.push(word);
   }
   return words;
@@ -204,7 +208,8 @@ export function shareText(
   rows: readonly (readonly DailyWordMark[])[],
   link: string,
 ): string {
-  const found = rows.length > 0 && isFound(rows[rows.length - 1]);
+  const last = rows.at(-1);
+  const found = last !== undefined && isFound(last);
   const score = `${found ? rows.length : 'X'}/${MAX_GUESSES}`;
   return `${title} ${score}\n\n${markGrid(rows)}\n${link}`;
 }

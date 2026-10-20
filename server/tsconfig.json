@@ -25,7 +25,7 @@
     // type checking
     "strict": true,
     "noImplicitAny": true,
-    "noUncheckedIndexedAccess": false,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
 
