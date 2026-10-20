@@ -54,6 +54,24 @@ const resetPoints = (
   );
 };
 
+/**
+ * Every seated player, most points first, ties in seat order. `pointsOf`
+ * reads a player's points when they are not the game's running score, as a
+ * round's are.
+ */
+const standingsOf = (
+  playerList: Readonly<Record<string, PlayerInfo>>,
+  pointsOf: (playerId: string, player: PlayerInfo) => number = (_, player) =>
+    player.points,
+): Standing[] =>
+  Object.entries(playerList)
+    .map(([playerId, player]) => ({
+      playerId,
+      username: player.username,
+      points: pointsOf(playerId, player),
+    }))
+    .toSorted((a, b) => b.points - a.points);
+
 /** The public standings' result, with wording left to each viewer. */
 const gameOverNotice = (
   standings: readonly Standing[],
@@ -73,6 +91,7 @@ const gameOverNotice = (
 
 export {
   gameOverNotice,
+  standingsOf,
   generateRoomId,
   getRandomInt,
   getRemainingPhaseMs,

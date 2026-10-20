@@ -4,6 +4,7 @@ import {
   getRandomElementFromSet,
   getRemainingPhaseMs,
   resetPoints,
+  standingsOf,
 } from '../libs/utils.js';
 
 /**
@@ -102,5 +103,34 @@ describe('gameOverNotice', () => {
   });
   it('ends a game nobody is left in', () => {
     expect(gameOverNotice([])).toEqual({ type: 'game:ended' });
+  });
+});
+
+describe('standingsOf', () => {
+  const players = {
+    a: { username: 'Ada', points: 10, isConnected: true },
+    b: { username: 'Bo', points: 30, isConnected: false },
+    c: { username: 'Cy', points: 10, isConnected: true },
+  };
+
+  it('puts the most points first, and ties in seat order', () => {
+    expect(standingsOf(players)).toEqual([
+      { playerId: 'b', username: 'Bo', points: 30 },
+      { playerId: 'a', username: 'Ada', points: 10 },
+      { playerId: 'c', username: 'Cy', points: 10 },
+    ]);
+  });
+
+  it('ranks by other points when asked, as a round does', () => {
+    const round = new Map([['c', 5]]);
+    expect(
+      standingsOf(players, (playerId) => round.get(playerId) ?? 0).map(
+        (row) => [row.playerId, row.points],
+      ),
+    ).toEqual([
+      ['c', 5],
+      ['a', 0],
+      ['b', 0],
+    ]);
   });
 });
