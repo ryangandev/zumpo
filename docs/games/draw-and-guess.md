@@ -110,6 +110,7 @@ The hint is empty during word select and between games, and stays at what it rea
 If your connection drops you keep your seat, your score, the crown and your place in the round for 30 seconds.
 Others see you marked away (📴) rather than gone.
 Reload the page and you are the same player, in the same seat.
+A turn is only ever dealt to somebody present, so the players owed a turn who are away are passed over; if only they are left in the round, their turns are skipped and the game goes on to the next round, which deals them in again.
 
 **A drawer who drops keeps their turn too**, but only for 10 seconds and only once the drawing has started: long enough for a refresh, short enough that a room whose drawer has actually gone is not left watching a frozen canvas.
 While the room waits, the snapshot carries how long it will wait (`drawerHoldEndsInMs`).

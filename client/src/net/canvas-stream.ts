@@ -18,7 +18,6 @@ type Listener = (change: CanvasChange) => void;
  */
 export class CanvasStream {
   private strokes: CanvasStroke[] = [];
-  private open = false;
   private readonly listeners = new Set<Listener>();
 
   snapshot(): readonly CanvasStroke[] {
@@ -35,35 +34,32 @@ export class CanvasStream {
       ...stroke,
       points: [...stroke.points],
     }));
-    this.open = false;
     this.emit({ type: 'reset' });
   }
 
   start(point: Coordinate, color: string, size: number): void {
     const stroke = { color, size, points: [point] };
     this.strokes.push(stroke);
-    this.open = true;
     this.emit({ type: 'extend', stroke, from: 0 });
   }
 
-  move(point: Coordinate, color: string, size: number): void {
-    // A move without a start (joined mid-stroke) begins a stroke of its own.
-    if (!this.open) {
-      this.start(point, color, size);
-      return;
-    }
-    const stroke = this.strokes[this.strokes.length - 1];
+  /**
+   * The next point of the last stroke, as the server records it: a page that
+   * synced mid-stroke goes on with the stroke it was sent, so an undo takes
+   * the whole of it away here too.
+   */
+  move(point: Coordinate): void {
+    const stroke = this.strokes.at(-1);
+    if (!stroke) return;
     stroke.points.push(point);
     this.emit({ type: 'extend', stroke, from: stroke.points.length - 2 });
   }
 
-  end(): void {
-    this.open = false;
-  }
+  /** A stroke is complete with its last point; nothing to close. */
+  end(): void {}
 
   undo(): void {
     this.strokes.pop();
-    this.open = false;
     this.emit({ type: 'reset' });
   }
 

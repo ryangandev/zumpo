@@ -32,12 +32,8 @@ const startDrawingRequest = z.tuple([
   brushColor,
   brushSize,
 ]);
-const continueDrawingRequest = z.tuple([
-  roomId,
-  coordinate,
-  brushColor,
-  brushSize,
-]);
+// Every later point belongs to that stroke, brush and all.
+const continueDrawingRequest = z.tuple([roomId, coordinate]);
 
 export {
   roundsSetting,

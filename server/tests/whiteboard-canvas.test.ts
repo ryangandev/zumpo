@@ -50,8 +50,9 @@ describe('the whiteboard relay', () => {
     expect(await started).toEqual([roomId, DOT, RED, 8]);
 
     const continued = waitFor(guesser, 'dg:canvas:move');
-    drawer.emit('dg:draw:move', roomId, { x: 30, y: 40 }, RED, 8);
-    expect(await continued).toEqual([roomId, { x: 30, y: 40 }, RED, 8]);
+    drawer.emit('dg:draw:move', roomId, { x: 30, y: 40 });
+    // The stroke already owns its colour and size, so a move carries only the point.
+    expect(await continued).toEqual([roomId, { x: 30, y: 40 }]);
 
     // Carries nothing but the room: the stroke is already fully described.
     const stopped = waitFor(guesser, 'dg:canvas:end');
@@ -165,7 +166,7 @@ describe('the stored drawing', () => {
     const { drawer, guesser, roomId } = await playToDrawingPhase(harness);
 
     drawer.emit('dg:draw:start', roomId, { x: 1, y: 2 }, RED, 4);
-    drawer.emit('dg:draw:move', roomId, { x: 3, y: 4 }, RED, 4);
+    drawer.emit('dg:draw:move', roomId, { x: 3, y: 4 });
     drawer.emit('dg:draw:end', roomId);
     drawer.emit('dg:draw:start', roomId, { x: 9, y: 9 }, '#0000ff', 10);
     await settle();
@@ -230,7 +231,7 @@ describe('the stored drawing', () => {
     guesser.emit('dg:draw:start', roomId, { x: 2, y: 2 }, RED, 4);
     // A continue with no stroke of its own to extend cannot have come from a
     // canvas, and replaying it would draw from wherever the last path ended.
-    drawer.emit('dg:draw:move', roomId, { x: 3, y: 3 }, RED, 4);
+    drawer.emit('dg:draw:move', roomId, { x: 3, y: 3 });
     await settle();
 
     expect(await canvasSeenOnArrival(guesser, roomId)).toEqual([]);
@@ -274,7 +275,7 @@ describe('canvas authority', () => {
     const seen = everyCanvasEvent.map((event) => collect(witness, event));
 
     client.emit('dg:draw:start', roomId, DOT, RED, 8);
-    client.emit('dg:draw:move', roomId, { x: 11, y: 21 }, RED, 8);
+    client.emit('dg:draw:move', roomId, { x: 11, y: 21 });
     client.emit('dg:draw:end', roomId);
     client.emit('dg:draw:undo', roomId);
     client.emit('dg:draw:clear', roomId);

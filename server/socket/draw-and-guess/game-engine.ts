@@ -265,10 +265,20 @@ const createDrawAndGuessGameEngine = (
       ),
     );
 
-    const newDrawer = getRandomElementFromSet(presentInQueue);
-    if (!newDrawer || room.game.wordCategory === '') {
-      // Everybody still owed a turn is away: the game cannot go on as dealt.
+    const nobodyHere = !Object.values(room.playerList).some(
+      (player) => player.isConnected,
+    );
+    if (room.game.wordCategory === '' || nobodyHere) {
       endGame(room, { endedEarly: true });
+      return;
+    }
+    const newDrawer = getRandomElementFromSet(presentInQueue);
+    if (!newDrawer) {
+      // Everybody still owed a turn this round is away: their turns are
+      // skipped rather than the game ended, since they may be back within
+      // their grace and play on in the next round.
+      room.game.drawerQueue.clear();
+      nextTurn(room);
       return;
     }
 
@@ -348,6 +358,11 @@ const createDrawAndGuessGameEngine = (
       return;
     }
 
+    nextTurn(room);
+  };
+
+  /** The next turn, the next round, or the end of the game. */
+  const nextTurn = (room: DrawAndGuessRoom) => {
     if (room.game.drawerQueue.size > 0) {
       startNewDrawerTurn(room);
     } else if (room.game.currentRound < room.game.rounds) {

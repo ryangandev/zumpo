@@ -510,6 +510,30 @@ describe('leaving', () => {
     },
   );
 
+  it('keeps the round going when a player already out leaves', async () => {
+    const { roomId, owner, order, game } = await playToFirstTurn(harness, [
+      'Alice',
+      'Bob',
+      'Cleo',
+    ]);
+    const [a, b, c] = order();
+    // c is out: no dice left, and none rolled this round.
+    liarsDiceRoom(harness, roomId).playerList[c.playerId].points = 0;
+    delete game().dice[c.playerId];
+    const next = turnOf(owner, b);
+    bid(a, roomId, 1, 3);
+    await next;
+
+    const chat = collectChat(owner);
+    c.emit('room:leave', roomId);
+    await settle();
+
+    const state = game();
+    expect(state.bids).toHaveLength(1);
+    expect(state.turnPlayerId).toBe(b.playerId);
+    expect(chat.some((m) => m.notice?.type === 'ld:reroll')).toBe(false);
+  });
+
   it('ends the game early when fewer than two players are left', async () => {
     const { roomId, owner, players } = await playToFirstTurn(harness);
     const guest = players.find((p) => p !== owner)!;

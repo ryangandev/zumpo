@@ -25,7 +25,8 @@ export interface DrawingCanvasProps {
   /** Set for the drawer while drawing: pointer input draws with it. */
   brush?: Brush;
   onStart?: (point: Coordinate, brush: Brush) => void;
-  onMove?: (point: Coordinate, brush: Brush) => void;
+  /** The next point of the stroke just started, which keeps its brush. */
+  onMove?: (point: Coordinate) => void;
   onEnd?: () => void;
   /** Laid over the canvas: word choices, or a note while it is empty. */
   overlay?: ReactNode;
@@ -138,7 +139,7 @@ export function DrawingCanvas({
         continue;
       }
       last.current = point;
-      onMove?.(point, brush);
+      onMove?.(point);
     }
   };
 

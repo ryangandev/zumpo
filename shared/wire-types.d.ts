@@ -846,8 +846,11 @@ type ChatMessageKind = 'player' | 'system' | 'alert' | 'success';
 type RoomNotice =
   | { type: 'room:created'; name: string }
   | { type: 'room:joined'; name: string }
-  /** Came in to watch, or gave up a seat to watch. */
-  | { type: 'room:watching'; name: string }
+  /**
+   * Came in to watch, or gave up a seat to watch; `owner` is who took the
+   * crown when the host did.
+   */
+  | { type: 'room:watching'; name: string; owner?: string }
   /** A spectator took a seat at the table. */
   | { type: 'room:seated'; name: string }
   | { type: 'room:renamed'; before: string; name: string }
@@ -999,12 +1002,8 @@ interface ClientToServerEvents {
     color: string,
     size: number,
   ) => void;
-  'dg:draw:move': (
-    roomId: string,
-    point: Coordinate,
-    color: string,
-    size: number,
-  ) => void;
+  /** The next point of the stroke in progress, which owns its brush. */
+  'dg:draw:move': (roomId: string, point: Coordinate) => void;
   'dg:draw:end': (roomId: string) => void;
   'dg:draw:undo': (roomId: string) => void;
   'dg:draw:clear': (roomId: string) => void;
@@ -1070,12 +1069,8 @@ interface ServerToClientEvents {
     color: string,
     size: number,
   ) => void;
-  'dg:canvas:move': (
-    roomId: string,
-    point: Coordinate,
-    color: string,
-    size: number,
-  ) => void;
+  /** The next point of the last stroke. */
+  'dg:canvas:move': (roomId: string, point: Coordinate) => void;
   'dg:canvas:end': (roomId: string) => void;
   'dg:canvas:undo': (roomId: string) => void;
   'dg:canvas:clear': (roomId: string) => void;

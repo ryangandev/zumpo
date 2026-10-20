@@ -130,9 +130,10 @@ Skipping, as Pairs does, could hand the bid back to the player who made it, whic
 
 A player who leaves, or whose 30 seconds run out, is out of the game at once, and their dice leave the table.
 
-- **During bidding,** the round is called off: nobody loses a die, everybody still in rolls again, and the new round is opened by the player whose turn it was, or the next one still in if that was the leaver.
+- **During bidding,** a player still in calls the round off: nobody loses a die, everybody still in rolls again, and the new round is opened by the player whose turn it was, or the next one still in if that was the leaver.
   The bids were about dice that are no longer there.
 - **During a reveal,** the reveal stands, and the next round starts as usual without them.
+- **A player already out** had no dice in the round, so it goes on as it was.
 
 If one player with dice is left, they win.
 If the room falls below two players the game ends, and its summary says it ended early, placing those left by the dice they hold.

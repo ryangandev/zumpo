@@ -16,7 +16,10 @@ export const notices = {
     `${who(n.name)} has joined the room.`,
   'room:watching': (
     n: Extract<RoomNotice, { type: 'room:watching' }>,
-  ): string => `${who(n.name)} is watching.`,
+  ): string =>
+    n.owner
+      ? `${who(n.name)} is watching. ${who(n.owner)} is now the owner.`
+      : `${who(n.name)} is watching.`,
   'room:seated': (n: Extract<RoomNotice, { type: 'room:seated' }>): string =>
     `${who(n.name)} took a seat.`,
   'room:renamed': (n: Extract<RoomNotice, { type: 'room:renamed' }>): string =>

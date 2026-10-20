@@ -175,13 +175,8 @@ export function useRoom(roomId: string): RoomConnection {
     ) => {
       if (id === roomId) canvas.start(point, color, size);
     };
-    const onCanvasMove = (
-      id: string,
-      point: Coordinate,
-      color: string,
-      size: number,
-    ) => {
-      if (id === roomId) canvas.move(point, color, size);
+    const onCanvasMove = (id: string, point: Coordinate) => {
+      if (id === roomId) canvas.move(point);
     };
     const onCanvasEnd = (id: string) => {
       if (id === roomId) canvas.end();

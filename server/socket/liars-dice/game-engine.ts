@@ -320,12 +320,15 @@ const createLiarsDiceGameEngine = (
       return;
     }
 
-    // Their dice leave the table with them.
+    // Their dice leave the table with them. A player already out had none
+    // in this round, so the bids still stand.
+    const hadDice = Object.hasOwn(game.dice, playerId);
     delete game.dice[playerId];
     if (playersIn(room).length <= 1) {
       endGame(room, { endedEarly: false });
       return;
     }
+    if (!hadDice) return;
 
     // The bids were about dice that are no longer there: the round is called
     // off, everybody still in rolls again, and whoever's turn it was opens.
