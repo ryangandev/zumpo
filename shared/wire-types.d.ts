@@ -14,7 +14,8 @@
  * its shape.
  *
  * The protocol is snapshot-driven. Whenever anything in a room changes, every
- * seated player is sent `room:state`: the whole room as that player may see it.
+ * connected member, player or spectator, is sent `room:state`: the whole room
+ * as that member may see it.
  * A client renders the latest snapshot and keeps no game state of its own, so
  * a refresh, a reconnect or a missed event can never leave it out of step.
  * Only two things travel as increments, because they are streams: the drawing

@@ -50,7 +50,7 @@ const isTurnOf = (room: LiarsDiceRoom, playerId: string) =>
  * Winner first, then everybody else by how long they lasted. Ended early,
  * those left are placed by the dice they hold.
  */
-const standingsOf = (room: LiarsDiceRoom): LiarsDiceStanding[] => {
+const liarsDiceStandings = (room: LiarsDiceRoom): LiarsDiceStanding[] => {
   const outRound = new Map(
     room.game.outs.map(({ playerId, round }) => [playerId, round]),
   );
@@ -263,7 +263,7 @@ const createLiarsDiceGameEngine = (
   ) => {
     ctx.rooms.stopPhase(room);
     const game = room.game;
-    const standings = standingsOf(room);
+    const standings = liarsDiceStandings(room);
 
     game.lastGame = {
       endedEarly,

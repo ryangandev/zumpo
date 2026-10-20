@@ -10,8 +10,9 @@
     'answer answer clock';
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 8px;
-  padding: 16px 16px 16px 24px;
+  gap: var(--zumpo-space-8);
+  padding: var(--zumpo-space-16) var(--zumpo-space-16) var(--zumpo-space-16)
+    var(--zumpo-space-24);
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-24);
   background: var(--zumpo-paper);
@@ -38,7 +39,7 @@
 
 .clock {
   grid-area: clock;
-  margin-left: 16px;
+  margin-left: var(--zumpo-space-16);
 }
 
 .answer {
@@ -46,7 +47,7 @@
   flex-wrap: wrap;
   grid-area: answer;
   align-items: baseline;
-  gap: 4px var(--zumpo-space-12);
+  gap: var(--zumpo-space-4) var(--zumpo-space-12);
   min-width: 0;
 }
 
@@ -84,8 +85,8 @@
       'tag . clock'
       'label label label'
       'answer answer answer';
-    gap: 4px var(--zumpo-space-8);
-    padding: 16px;
+    gap: var(--zumpo-space-4) var(--zumpo-space-8);
+    padding: var(--zumpo-space-16);
     border-radius: 20px;
   }
 
@@ -104,12 +105,12 @@
   }
 
   .clock {
-    margin: 0 0 8px;
+    margin: 0 0 var(--zumpo-space-8);
   }
 
   /* A long category gives way to the clock beside it. */
   .tag {
     min-width: 0;
-    margin-bottom: 8px;
+    margin-bottom: var(--zumpo-space-8);
   }
 }

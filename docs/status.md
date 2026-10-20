@@ -36,6 +36,9 @@ Rooms have spectator seats, at Ryan's request on 2026-10-20: up to five people w
 Draw & Guess sums up each round as it ends, also at Ryan's request that day ([rules](games/draw-and-guess.md#the-game-loop)).
 The same day Ryan decided that a Minesweeper refresh does not hold the round, so the room does not wait for a player who drops ([rules](games/minesweeper.md#leaving-dropping-and-coming-back)); that hosting stays on Render's free plan while testing; and that Draw & Guess's known issue and its word bank are left as they are for now.
 
+A full repository audit the same day found 26 issues (A1-A26), fixed in four PRs ([#50](https://github.com/ryangandev/zumpo/pull/50)-[#53](https://github.com/ryangandev/zumpo/pull/53)) except for A11's sizes that have no token yet (below).
+They covered game flow, connection limits per address, a crash page, security headers, error logging, index safety, and shared start rules.
+
 ## Product direction
 
 Decided by Ryan, and the frame for every design and implementation choice:
@@ -48,7 +51,11 @@ Decided by Ryan, and the frame for every design and implementation choice:
 
 ## Waiting on Ryan
 
-Nothing.
+- **Spacing and radius variables in Figma** (audit A11).
+  Some component padding and radii are typed into Figma, not bound to variables: spacing of 2, 3, 6, 10, 14, 18 and 56 px, and radii of 6 and 20 px.
+  The CSS keeps them raw until Figma has variables for them, and a shorthand that mixes one of them with an on-scale size (`padding: 10px 12px`) stays raw whole, so it switches in one go.
+  The export plugin now lists them in `design/figma/audit.json` (`unboundSpacing`, `unboundRadii`), but it runs only while Ryan has the bridge open in Figma.
+  Once they are bound and exported, `npm run design:tokens` brings the tokens in and the CSS can switch.
 
 ## Next
 

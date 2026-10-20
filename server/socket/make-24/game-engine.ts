@@ -6,7 +6,7 @@ import type {
 } from '../../models/types.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
-import { gameOverNotice, resetPoints } from '../../libs/utils.js';
+import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
   make24DurationsInSeconds as defaultDurations,
   type Make24DurationsInSeconds,
@@ -185,13 +185,7 @@ const createMake24GameEngine = (
     ctx.rooms.stopPhase(room);
     const game = room.game;
 
-    const standings = Object.entries(room.playerList)
-      .map(([playerId, player]) => ({
-        playerId,
-        username: player.username,
-        points: player.points,
-      }))
-      .toSorted((a, b) => b.points - a.points);
+    const standings = standingsOf(room.playerList);
 
     game.lastGame = {
       endedEarly,

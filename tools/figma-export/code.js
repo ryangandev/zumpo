@@ -205,6 +205,8 @@ class Exporter {
     this.stats = { nodes: 0, instances: 0, grids: 0, gridCells: 0 };
     this.audit = {
       unboundColors: {},
+      unboundSpacing: {},
+      unboundRadii: {},
       unstyledText: {},
       rasterFills: {},
       foreignComponents: {},
@@ -239,6 +241,15 @@ class Exporter {
     bucket[k].count++;
     if (bucket[k].samples.length < SAMPLE_LIMIT) {
       bucket[k].samples.push(this.path.join(' > '));
+    }
+  }
+
+  // A size typed into Figma rather than bound to a variable reaches the code
+  // as a raw number, where the design system allows only tokens. Keyed by the
+  // number, so the audit says which variables are missing.
+  noteUnbound(kind, values) {
+    for (const value of values) {
+      if (typeof value === 'number' && value !== 0) this.note(kind, value);
     }
   }
 
@@ -634,6 +645,10 @@ class Exporter {
         o.radius =
           (await this.bound(node, 'topLeftRadius')) || round(node.cornerRadius);
       }
+      this.noteUnbound(
+        'unboundRadii',
+        [].concat(o.radius === undefined ? [] : o.radius),
+      );
       if (node.cornerSmoothing) o.smoothing = round(node.cornerSmoothing);
     }
     // A ring or a half circle is an ellipse with arc data; without it, either
@@ -685,6 +700,12 @@ class Exporter {
       await this.num(node, 'paddingLeft'),
     ]);
     if (pad !== undefined) l.pad = pad;
+    // Space-between ignores the gap, so a number left in it means nothing.
+    const spaced = node.primaryAxisAlignItems === 'SPACE_BETWEEN';
+    this.noteUnbound(
+      'unboundSpacing',
+      [spaced ? 0 : l.gap, l.crossGap].concat(pad === undefined ? [] : pad),
+    );
     if (node.primaryAxisAlignItems && node.primaryAxisAlignItems !== 'MIN') {
       l.justify = node.primaryAxisAlignItems.toLowerCase();
     }
@@ -697,6 +718,7 @@ class Exporter {
       if (node.gridRowGap) l.rowGap = await this.num(node, 'gridRowGap');
       if (node.gridColumnGap)
         l.columnGap = await this.num(node, 'gridColumnGap');
+      this.noteUnbound('unboundSpacing', [l.rowGap, l.columnGap]);
     }
     if (node.strokesIncludedInLayout) l.strokesIncluded = true;
     if (node.itemReverseZIndex) l.reverseZ = true;
@@ -1722,8 +1744,8 @@ design in Figma, never these files.
 - svg/: icons and illustrations, deduplicated by content; svg/index.json lists
   where each is used.
 - previews/: PNG renders (flows at 1x, components at 2x), when enabled.
-- audit.json: hardcoded colours, text without a style, raster fills, components
-  from outside Shared pieces, hidden layers.
+- audit.json: hardcoded colours, spacing and radii, text without a style,
+  raster fills, components from outside Shared pieces, hidden layers.
 
 ## Conventions
 

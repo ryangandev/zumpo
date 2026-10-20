@@ -91,9 +91,9 @@
       'host identity action'
       'host players action';
     grid-template-columns: auto 1fr minmax(72px, auto);
-    column-gap: 12px;
+    column-gap: var(--zumpo-space-12);
     row-gap: var(--zumpo-space-4);
-    padding: 16px;
+    padding: var(--zumpo-space-16);
   }
 
   .identity {

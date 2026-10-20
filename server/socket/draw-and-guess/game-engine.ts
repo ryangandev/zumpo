@@ -12,6 +12,7 @@ import {
   getRandomElementFromSet,
   getRemainingPhaseMs,
   resetPoints,
+  standingsOf,
 } from '../../libs/utils.js';
 import {
   buildWordHint,
@@ -82,13 +83,10 @@ const addTurnPoints = (
 const summarizeRound = (room: DrawAndGuessRoom) => {
   room.game.lastRound = {
     round: room.game.currentRound,
-    standings: Object.entries(room.playerList)
-      .map(([playerId, player]) => ({
-        playerId,
-        username: player.username,
-        points: room.game.roundPoints.get(playerId) ?? 0,
-      }))
-      .toSorted((a, b) => b.points - a.points),
+    standings: standingsOf(
+      room.playerList,
+      (playerId) => room.game.roundPoints.get(playerId) ?? 0,
+    ),
   };
 };
 
@@ -371,13 +369,7 @@ const createDrawAndGuessGameEngine = (
     if (game.wordCategory !== '') {
       game.lastGame = {
         endedEarly,
-        standings: Object.entries(room.playerList)
-          .map(([playerId, player]) => ({
-            playerId,
-            username: player.username,
-            points: player.points,
-          }))
-          .toSorted((a, b) => b.points - a.points),
+        standings: standingsOf(room.playerList),
         wordCategory: game.wordCategory,
         rounds: game.currentRound,
         turns: game.turn,

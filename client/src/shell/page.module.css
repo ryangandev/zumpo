@@ -6,7 +6,7 @@
   min-height: 100dvh;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px var(--zumpo-space-64) var(--zumpo-space-32);
+  padding: var(--zumpo-space-24) var(--zumpo-space-64) var(--zumpo-space-32);
 }
 
 .main {

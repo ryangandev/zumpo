@@ -1,6 +1,6 @@
 .message {
   display: flex;
-  gap: 8px;
+  gap: var(--zumpo-space-8);
   overflow-wrap: anywhere;
 }
 

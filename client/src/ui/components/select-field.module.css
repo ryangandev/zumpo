@@ -64,7 +64,7 @@
 .option {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--zumpo-space-12);
   padding: 10px 12px;
   border-radius: var(--zumpo-radius-8);
   color: var(--zumpo-ink);
@@ -75,7 +75,7 @@
 
 /* Two lines of text: Figma tightens the padding to keep the option 56 high. */
 .withDetail {
-  padding-block: 8px;
+  padding-block: var(--zumpo-space-8);
 }
 
 .option[data-highlighted] {

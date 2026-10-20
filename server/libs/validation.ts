@@ -24,7 +24,7 @@ const MESSAGE_MAX = 40;
 const trimmedString = (max: number) => z.string().trim().min(1).max(max);
 
 // Room ids are generated with randomUUID(); anything else cannot match a room.
-const roomId = z.string().uuid();
+const roomId = z.uuid();
 const username = trimmedString(USERNAME_MAX);
 // `.optional().default('')` tolerates the field being absent - an unlocked room
 // sends no password - without also swallowing an over-long one. Using `.catch()`
@@ -63,7 +63,7 @@ const roomCreateRequest = z.object({
  * an error saying which half was wrong.
  */
 const identityClaim = z.object({
-  playerId: z.string().uuid(),
+  playerId: z.uuid(),
   token: z.string().regex(/^[0-9a-f]{64}$/),
 });
 

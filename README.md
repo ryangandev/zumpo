@@ -14,10 +14,10 @@ Zumpo began as [**Icon**](https://github.com/ryangandev/zumpo/tree/old-version),
 
 ## 🧱 Stack
 
-| Layer  | Tech                                                   |
-| ------ | ------------------------------------------------------ |
-| Client | React 19 · TypeScript 7 · Vite 8 · Base UI · Socket.io |
-| Server | Node.js 22.12+ · TypeScript 7 · Express 5 · Socket.io  |
+| Layer  | Tech                                                                   |
+| ------ | ---------------------------------------------------------------------- |
+| Client | React 19 · TypeScript 7 · Vite 8 · Base UI · Socket.io                 |
+| Server | Node.js 22.22.2+, 24.15+ or 26+ · TypeScript 7 · Express 5 · Socket.io |
 
 ## 🎮 Games
 

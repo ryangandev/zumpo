@@ -7,7 +7,7 @@
   gap: var(--zumpo-space-8);
   height: 48px;
   margin: 0;
-  padding: 12px 20px;
+  padding: var(--zumpo-space-12) var(--zumpo-space-20);
   border: 0;
   border-radius: var(--zumpo-radius-16);
   background: var(--zumpo-coral);
@@ -68,7 +68,7 @@
 
 /* An icon-only button keeps its label for screen readers only. */
 .iconOnly {
-  padding: 12px;
+  padding: var(--zumpo-space-12);
 }
 
 .iconOnly .label {
@@ -82,7 +82,7 @@
 
 @container (max-width: 560px) {
   .iconOnlyWhenNarrow {
-    padding: 12px;
+    padding: var(--zumpo-space-12);
   }
 
   .iconOnlyWhenNarrow .label {
