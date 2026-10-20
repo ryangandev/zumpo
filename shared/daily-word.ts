@@ -58,13 +58,6 @@ export const isFound = (marks: readonly DailyWordMark[]): boolean =>
 /** Why a typed row cannot be used as a guess. */
 export type GuessProblem = 'tooShort' | 'notAWord' | 'alreadyGuessed';
 
-/** The note under the board for each, as the rules word it. */
-export const GUESS_PROBLEM_TEXT: Readonly<Record<GuessProblem, string>> = {
-  tooShort: 'Not enough letters',
-  notAWord: 'Not in the word list',
-  alreadyGuessed: 'Already guessed',
-};
-
 /** Whether `word` may be guessed after `earlier`, or why not. */
 export function checkGuess(
   word: string,

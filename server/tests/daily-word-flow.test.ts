@@ -144,12 +144,12 @@ describe('a round', () => {
     const notAWord = await guess(alice, roomId, 'blant');
     expect(notAWord.error).toMatchObject({
       type: 'invalidRequest',
-      message: 'Not in the word list',
+      message: expect.stringContaining('notAWord'),
     });
 
     await guess(alice, roomId, miss!);
     const repeat = await guess(alice, roomId, miss!);
-    expect(repeat.error?.message).toBe('Already guessed');
+    expect(repeat.error?.message).toContain('alreadyGuessed');
 
     expect((await guess(alice, roomId, 'abc')).error?.type).toBe(
       'invalidRequest',

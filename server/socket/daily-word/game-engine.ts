@@ -9,7 +9,6 @@ import {
 } from '../../libs/game-clock.js';
 import {
   checkGuess,
-  GUESS_PROBLEM_TEXT,
   isFound,
   markGuess,
   pointsForFind,
@@ -115,7 +114,8 @@ const createDailyWordGameEngine = (
     const board = game.boards.get(playerId) ?? emptyBoard();
     if (isDone(board)) return 'You are done with this word.';
     const problem = checkGuess(word, board.guesses);
-    if (problem) return GUESS_PROBLEM_TEXT[problem];
+    // The page checks the same rules and words the note itself.
+    if (problem) return `The guess was refused: ${problem}.`;
 
     const marks = markGuess(word, currentWord(game));
     board.guesses.push(word);
