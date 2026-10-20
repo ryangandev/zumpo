@@ -15,6 +15,7 @@ import {
 import { nameInRoom, renamePlayer } from './names.js';
 import type { RoomMembership } from './membership.js';
 import type { RoomRegistry } from './registry.js';
+import { seatCount } from './seats.js';
 import {
   emitToSocket,
   onClientEvent,
@@ -287,8 +288,27 @@ const roomEventsHandler = (
       return;
     }
 
+    // What every game asks before it starts, asked once, here.
+    if (room.owner.playerId !== playerId) {
+      reply(failure('notRoomOwner', 'Only the room owner can start the game.'));
+      return;
+    }
+    if (room.isGameStarted) {
+      reply(failure('gameAlreadyStarted', 'The game has already started.'));
+      return;
+    }
+    if (seatCount(room) < module.minPlayers) {
+      reply(
+        failure(
+          'notEnoughPlayers',
+          `At least ${module.minPlayers} players are required to start.`,
+        ),
+      );
+      return;
+    }
+
     try {
-      module.startGame(room, playerId);
+      module.startGame(room);
     } catch (error) {
       reply(asFailure(error));
       return;

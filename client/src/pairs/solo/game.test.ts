@@ -16,17 +16,18 @@ import {
 const SEED = 'k3f9x2';
 
 /** The places of each symbol's two cards. */
-function placesOf(game: SoloGame) {
+function placesOf(game: SoloGame): [number, number][] {
   const places = new Map<number, number[]>();
   game.deck.forEach((symbol, index) =>
     places.set(symbol, [...(places.get(symbol) ?? []), index]),
   );
-  return [...places.values()];
+  return [...places.values()] as [number, number][];
 }
 
 /** Two places that do not match. */
 function aMiss(game: SoloGame): [number, number] {
-  const [[a], [b]] = placesOf(game);
+  const [a] = placesOf(game)[0]!;
+  const [b] = placesOf(game)[1]!;
   return [a, b];
 }
 
@@ -47,11 +48,11 @@ describe('Pairs on your own', () => {
   });
 
   it('keeps a pair up, matched, and counts the turn', () => {
-    const [a, b] = placesOf(newGame('Small', SEED))[0];
+    const [a, b] = placesOf(newGame('Small', SEED))[0]!;
     let game = flip(newGame('Small', SEED), a, 0);
     game = flip(game, b, 100);
-    expect(cardsOf(game)[a].kind).toBe('matched');
-    expect(cardsOf(game)[b].kind).toBe('matched');
+    expect(cardsOf(game)[a]!.kind).toBe('matched');
+    expect(cardsOf(game)[b]!.kind).toBe('matched');
     expect(pairsFound(game)).toBe(1);
     expect(lastTurn(game)).toBe('pair');
     expect(game.up).toEqual([]);
@@ -72,7 +73,7 @@ describe('Pairs on your own', () => {
   });
 
   it('ignores a card already up or matched', () => {
-    const [a, b] = placesOf(newGame('Small', SEED))[0];
+    const [a, b] = placesOf(newGame('Small', SEED))[0]!;
     const up = flip(newGame('Small', SEED), a, 0);
     expect(flip(up, a, 10)).toBe(up);
     const matched = flip(up, b, 20);
@@ -85,7 +86,7 @@ describe('Pairs on your own', () => {
     game = flip(flip(game, a, 0), b, 500);
     let now = 1000;
     for (const [x, y] of placesOf(game)) {
-      game = flip(flip(game, x, now), y, now + 100);
+      game = flip(flip(game, x!, now), y!, now + 100);
       now += 1000;
     }
     expect(isOver(game)).toBe(true);

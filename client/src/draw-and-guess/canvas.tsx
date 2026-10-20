@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import {
   useEffect,
   useLayoutEffect,
@@ -178,7 +179,8 @@ function paint(
   from: number,
 ) {
   const { points } = stroke;
-  if (!points.length) return;
+  const [first] = points;
+  if (!first) return;
   context.strokeStyle = stroke.color;
   context.fillStyle = stroke.color;
   context.lineWidth = stroke.size;
@@ -187,15 +189,16 @@ function paint(
 
   if (points.length === 1) {
     context.beginPath();
-    context.arc(points[0].x, points[0].y, stroke.size / 2, 0, Math.PI * 2);
+    context.arc(first.x, first.y, stroke.size / 2, 0, Math.PI * 2);
     context.fill();
     return;
   }
   context.beginPath();
-  const start = points[Math.max(0, from)];
+  const start = itemAt(points, Math.max(0, from));
   context.moveTo(start.x, start.y);
   for (let index = Math.max(0, from) + 1; index < points.length; index += 1) {
-    context.lineTo(points[index].x, points[index].y);
+    const point = itemAt(points, index);
+    context.lineTo(point.x, point.y);
   }
   context.stroke();
 }

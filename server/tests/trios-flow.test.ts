@@ -1,11 +1,10 @@
-import { textOf } from './helpers/test-server.js';
+import { textOf, seatTable, TWO_NAMES } from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { TriosRoomState } from '../models/types.js';
 import { findTrios, isTrio } from '../../shared/trios.js';
 import {
   collectChat,
   createTriosRoom,
-  joinRoom,
   lobbyView,
   request,
   settle,
@@ -14,13 +13,16 @@ import {
   triosRoom,
   waitForChat,
   waitForTriosState,
-  type TestClient,
   type TestServer,
 } from './helpers/test-server.js';
 
 /** The cards of a trio on the table, as a player who spotted it would send. */
-const aTrio = (state: TriosRoomState): number[] =>
-  findTrios(state.table)[0].map((place) => state.table[place]);
+const aTrio = (state: TriosRoomState) =>
+  findTrios(state.table)[0]!.map((place) => state.table[place]!) as [
+    number,
+    number,
+    number,
+  ];
 
 /** Three cards on the table that are not a trio. */
 function notATrio(state: TriosRoomState): number[] {
@@ -28,8 +30,8 @@ function notATrio(state: TriosRoomState): number[] {
   for (let a = 0; a < table.length; a++) {
     for (let b = a + 1; b < table.length; b++) {
       for (let c = b + 1; c < table.length; c++) {
-        if (!isTrio(table[a], table[b], table[c])) {
-          return [table[a], table[b], table[c]];
+        if (!isTrio(table[a]!, table[b]!, table[c]!)) {
+          return [table[a]!, table[b]!, table[c]!];
         }
       }
     }
@@ -38,18 +40,18 @@ function notATrio(state: TriosRoomState): number[] {
 }
 
 /** Seats `names` in a Trios room, the first as its owner, and starts it. */
-async function playToFirstTable(
+async function playToFirstTable<
+  const Names extends readonly [string, ...string[]] = typeof TWO_NAMES,
+>(
   harness: TestServer,
-  names: readonly string[] = ['Alice', 'Bob'],
+  names: Names = TWO_NAMES as unknown as Names,
   trios = 10,
 ) {
-  const players: TestClient[] = [];
-  for (const _ of names) players.push(await harness.connect());
-  const [owner] = players;
-  const roomId = await createTriosRoom(owner, { username: names[0], trios });
-  for (const [index, player] of players.entries()) {
-    if (index > 0) await joinRoom(player, roomId, names[index]);
-  }
+  const { roomId, players, owner } = await seatTable(
+    harness,
+    names,
+    (creator, username) => createTriosRoom(creator, { username, trios }),
+  );
 
   const table = waitForTriosState(owner, (s) => s.phase === 'finding');
   await startGame(owner, roomId);
@@ -150,7 +152,7 @@ describe('a claim', () => {
     const view = await taken;
 
     expect(view.found).toBe(1);
-    expect(view.playerList[bob.playerId].points).toBe(1);
+    expect(view.playerList[bob.playerId]!.points).toBe(1);
     expect(view.lastTrio).toEqual({
       playerId: bob.playerId,
       username: 'Bob',
@@ -183,7 +185,7 @@ describe('a claim', () => {
     bob.emit('trios:claim', roomId, wrong);
     const view = await locked;
     expect(view.myMiss).toEqual(wrong);
-    expect(view.playerList[bob.playerId].points).toBe(0);
+    expect(view.playerList[bob.playerId]!.points).toBe(0);
     expect(view.phase).toBe('finding');
     await settle();
     expect(alice.state).toMatchObject({ lockedOutMs: 0, myMiss: [] });
@@ -198,7 +200,7 @@ describe('a claim', () => {
     expect(free.myMiss).toEqual([]);
     const taken = waitForTriosState(bob, (s) => s.found === 1);
     bob.emit('trios:claim', roomId, aTrio(first));
-    expect((await taken).playerList[bob.playerId].points).toBe(1);
+    expect((await taken).playerList[bob.playerId]!.points).toBe(1);
   });
 
   it('drops a claim that lost the race, with no lockout', async () => {
@@ -217,7 +219,7 @@ describe('a claim', () => {
     // After the refill, a card no longer on the table.
     const next = await waitForTriosState(bob, (s) => s.phase === 'finding');
     const [, b, c] = aTrio(next);
-    bob.emit('trios:claim', roomId, [cards[0], b, c]);
+    bob.emit('trios:claim', roomId, [cards[0]!, b, c]);
     await settle();
     const game = triosRoom(harness, roomId).game;
     expect(game.found).toBe(1);

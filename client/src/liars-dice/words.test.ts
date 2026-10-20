@@ -5,9 +5,9 @@ import type { LiarsDiceReveal } from '../../../shared/wire-types';
 import { countDetail, naming, revealBar, verdict } from './words';
 
 const NAMES: Record<string, string> = { leo: 'Leo', sam: 'Sam', maya: 'Maya' };
-const asSam = naming('sam', (id) => NAMES[id], en);
-const asMaya = naming('maya', (id) => NAMES[id], en);
-const asLeo = naming('leo', (id) => NAMES[id], en);
+const asSam = naming('sam', (id) => NAMES[id]!, en);
+const asMaya = naming('maya', (id) => NAMES[id]!, en);
+const asLeo = naming('leo', (id) => NAMES[id]!, en);
 
 // LD10: Sam called Liar on Leo's five 5s; there were five, two of them wild.
 const ld10: LiarsDiceReveal = {
@@ -21,7 +21,7 @@ const ld10: LiarsDiceReveal = {
 
 describe('the words of a reveal', () => {
   it('explains the count, the bid and your loss in Chinese', () => {
-    const asSamZh = naming('sam', (id) => NAMES[id], zh);
+    const asSamZh = naming('sam', (id) => NAMES[id]!, zh);
     expect(countDetail(ld10, zh)).toBe('含 2 颗百搭 · 叫了 5 个');
     expect(revealBar(ld10, asSamZh, zh)).toEqual({
       label: '你喊了“吹牛”',

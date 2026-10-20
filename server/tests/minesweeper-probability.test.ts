@@ -26,7 +26,7 @@ import {
 const parse = (rows: string[], totalMines: number): PublicBoard => {
   const grid = rows.map((row) => row.trim().split(/\s+/));
   const height = grid.length;
-  const width = grid[0].length;
+  const width = grid[0]!.length;
 
   const cells = grid.flat().map((token) => {
     if (token === '#') return -1;
@@ -41,7 +41,7 @@ const parse = (rows: string[], totalMines: number): PublicBoard => {
 const totalRisk = (board: PublicBoard): number => {
   const probabilities = mineProbabilities(board);
   return board.cells.reduce(
-    (sum, cell, index) => (cell === -1 ? sum + probabilities[index] : sum),
+    (sum, cell, index) => (cell === -1 ? sum + probabilities[index]! : sum),
     0,
   );
 };
@@ -258,7 +258,7 @@ describe('a Large board', () => {
     }
 
     const total = view.cells.reduce(
-      (sum, cell, index) => (cell === -1 ? sum + probabilities[index] : sum),
+      (sum, cell, index) => (cell === -1 ? sum + probabilities[index]! : sum),
       0,
     );
     expect(total).toBeCloseTo(board.totalMines, 4);

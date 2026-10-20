@@ -208,6 +208,74 @@ describe('a room page', () => {
     ).toBeInTheDocument();
   });
 
+  it('says why a start was refused, and clears it once the game starts', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    fake.answer('game:start', () => ({
+      ok: false,
+      error: { type: 'notRoomOwner' as const, message: 'notRoomOwner' },
+    }));
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    await user.click(screen.getByRole('button', { name: 'Start game' }));
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Only the host can start the game.',
+    );
+
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ isGameStarted: true, phase: 'picking' }),
+      ),
+    );
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+
+  it('says so when a start gets no answer, or the seats are taken', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    // As the socket's timeout does, when nothing answers in time.
+    fake.answer('game:start', () => {
+      throw new Error('operation has timed out');
+    });
+    fake.answer('room:watch', () => ({
+      ok: false,
+      error: { type: 'roomNotOpen' as const, message: 'roomNotOpen' },
+    }));
+    await renderApp(ROOM, { fake, locale: 'zh' });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    await user.click(screen.getByRole('button', { name: '开始游戏' }));
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Zumpo 没有回应，请再试一次。',
+    );
+    await user.click(screen.getByRole('button', { name: '去观战' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('观战席已经满了。');
+  });
+
+  it('keeps its seat, listeners and drawing through a rename', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+    const requestsBefore = fake.requests.length;
+    const listenersBefore = fake.listenerCount('room:state');
+
+    await user.click(screen.getByRole('button', { name: /: your name$/ }));
+    const field = screen.getByRole('textbox', { name: 'Your name' });
+    await user.clear(field);
+    await user.type(field, 'Grace');
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    // The rename goes to the seat as it is; the page asks for nothing again.
+    expect(fake.sentArgs('player:rename')).toEqual([
+      ['Grace', expect.any(Function)],
+    ]);
+    expect(fake.requests.slice(requestsBefore)).toEqual([]);
+    expect(fake.listenerCount('room:state')).toBe(listenersBefore);
+  });
+
   it('says the seat is gone when it was released while away', async () => {
     const fake = server();
     await renderApp(ROOM, { fake });
@@ -272,7 +340,7 @@ describe('a room page', () => {
     act(() => fake.serverEmits('room:state', minesweeperState()));
 
     await user.click(
-      screen.getAllByRole('button', { name: 'Invite friends' })[0],
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
     );
     const dialog = await screen.findByRole('dialog', {
       name: 'Invite friends',

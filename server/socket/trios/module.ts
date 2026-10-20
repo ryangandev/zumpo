@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { TriosSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
@@ -20,8 +21,8 @@ const createTriosModule = (
 
   return {
     gameType: 'trios',
-    minPlayers: 2,
-    maxPlayers: 8,
+    minPlayers: SEATS['trios'].min,
+    maxPlayers: SEATS['trios'].max,
 
     parseSettings: (raw) => parseArgs(triosSetting, raw, 'room:create (trios)'),
     createState,
@@ -31,7 +32,7 @@ const createTriosModule = (
     // The table, the last trio and a lockout all travel in the snapshot.
     syncTo: () => {},
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     // Nobody waits for a dropped player: the table stays in play for the rest,

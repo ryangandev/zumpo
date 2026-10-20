@@ -594,6 +594,38 @@ const joinRoom = async (
   if (!answer.ok) throw new Error(`room:join refused: ${answer.error.type}`);
 };
 
+/** A client for each name, as a tuple exactly as long as the names. */
+type ClientsFor<Names extends readonly string[]> = {
+  -readonly [K in keyof Names]: TestClient;
+};
+
+/** Names for a table of two, when a test does not care who sits at it. */
+const TWO_NAMES = ['Alice', 'Bob'] as const;
+
+/**
+ * Connects a client per name and seats them at a table the first makes with
+ * `create`, as its owner. The clients come back in a tuple as long as the
+ * names, so a test can take them apart by name.
+ */
+const seatTable = async <const Names extends readonly [string, ...string[]]>(
+  harness: TestServer,
+  names: Names,
+  create: (owner: TestClient, username: string) => Promise<string>,
+): Promise<{
+  roomId: string;
+  players: ClientsFor<Names>;
+  owner: TestClient;
+}> => {
+  const players: TestClient[] = [];
+  for (const _ of names) players.push(await harness.connect());
+  const [owner] = players as [TestClient];
+  const roomId = await create(owner, names[0]);
+  for (const [index, player] of players.entries()) {
+    if (index > 0) await joinRoom(player, roomId, names[index]!);
+  }
+  return { roomId, players: players as ClientsFor<Names>, owner };
+};
+
 /** Starts the game, and fails the test if the server refuses. */
 const startGame = async (client: ClientSocket, roomId: string) => {
   const answer = await client.timeout(3000).emitWithAck('game:start', roomId);
@@ -863,6 +895,8 @@ export {
   createHushRoom,
   createDailyWordRoom,
   joinRoom,
+  seatTable,
+  TWO_NAMES,
   startGame,
   syncRoom,
   seatTwoPlayers,
@@ -880,7 +914,7 @@ export {
   dailyWordRoom,
   playToFirstWord,
 };
-export type { TestServer, TestClient, ClientSocket };
+export type { TestServer, TestClient, ClientSocket, ClientsFor };
 
 /** Visible English text, without adding wording to the server's wire. */
 export const textOf = (message: ChatMessage): string =>

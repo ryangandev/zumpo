@@ -1,4 +1,4 @@
-import { RequestError } from '../../models/error.js';
+import { SEATS } from '../../../shared/seats.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
@@ -14,8 +14,7 @@ import {
 } from '../../../shared/trios.js';
 import { shuffle } from '../../../shared/pairs.js';
 import { lockoutOf, type TriosState } from './state.js';
-
-const MIN_PLAYERS_TO_START = 2;
+import { itemAt, pickFrom } from '../../../shared/list.js';
 
 type TriosRoom = Room<TriosState>;
 
@@ -45,26 +44,7 @@ const createTriosGameEngine = (
     room.game.lockouts.clear();
   };
 
-  const startGame = (room: TriosRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: TriosRoom) => {
     const game = room.game;
     clearLockouts(room);
     game.deal = dealTable(Math.random);
@@ -105,8 +85,7 @@ const createTriosGameEngine = (
 
     if (!game.hintPlan) {
       const trios = findTrios(game.deal.table);
-      const trio = trios[Math.floor(Math.random() * trios.length)];
-      game.hintPlan = shuffle(trio, Math.random);
+      game.hintPlan = shuffle(pickFrom(trios, Math.random), Math.random);
     }
     game.hint = game.hintPlan.slice(0, game.hint.length + 1);
 
@@ -136,18 +115,24 @@ const createTriosGameEngine = (
     const places = cards.map((card) => game.deal.table.indexOf(card));
     if (places.includes(-1)) return;
 
-    if (!isTrio(cards[0], cards[1], cards[2])) {
+    const [a, b, c] = cards;
+    if (
+      a === undefined ||
+      b === undefined ||
+      c === undefined ||
+      !isTrio(a, b, c)
+    ) {
       lockOut(room, playerId, cards);
       return;
     }
 
-    const inOrder = places.toSorted((a, b) => a - b);
+    const inOrder = places.toSorted((x, y) => x - y);
     player.points += 1;
     game.found += 1;
     game.lastTrio = {
       playerId,
       username: player.username,
-      cards: inOrder.map((place) => game.deal.table[place]),
+      cards: inOrder.map((place) => itemAt(game.deal.table, place)),
       places: inOrder,
     };
     game.hint = [];
@@ -239,7 +224,7 @@ const createTriosGameEngine = (
     clearLockout(room, playerId);
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['trios'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
     }
@@ -254,5 +239,5 @@ const createTriosGameEngine = (
 
 type TriosGameEngine = ReturnType<typeof createTriosGameEngine>;
 
-export { createTriosGameEngine, MIN_PLAYERS_TO_START };
+export { createTriosGameEngine };
 export type { TriosGameEngine, TriosRoom };

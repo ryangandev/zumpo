@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { MinesweeperSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
@@ -29,8 +30,8 @@ const createMinesweeperModule = (
 
   return {
     gameType: 'minesweeper',
-    minPlayers: 2,
-    maxPlayers: 8,
+    minPlayers: SEATS['minesweeper'].min,
+    maxPlayers: SEATS['minesweeper'].max,
 
     parseSettings: (raw) =>
       parseArgs(difficultySetting, raw, 'room:create (minesweeper)'),
@@ -42,7 +43,7 @@ const createMinesweeperModule = (
     // the last result all travel in the snapshot the layer has already sent.
     syncTo: () => {},
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     onDisconnect: (room) => engine.handleDisconnect(room),

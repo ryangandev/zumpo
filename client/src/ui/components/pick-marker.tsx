@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { cx } from '../cx';
 import styles from './pick-marker.module.css';
@@ -34,7 +35,8 @@ export function dashedSides(
   const period = DASH + GAP;
   return sides.map((d, index) => ({
     d,
-    offset: ((((DASH - lengths[index]) / 2) % period) + period) % period,
+    offset:
+      ((((DASH - itemAt(lengths, index)) / 2) % period) + period) % period,
   }));
 }
 

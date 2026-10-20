@@ -1,9 +1,9 @@
+import { SEATS } from '../../../shared/seats.js';
 import type {
   Make24HandResult,
   Make24Settings,
   Make24Step,
 } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
@@ -19,8 +19,7 @@ import {
   solves,
 } from '../../../shared/make-24.js';
 import { currentDeal, type Make24State } from './state.js';
-
-const MIN_PLAYERS_TO_START = 2;
+import { itemAt } from '../../../shared/list.js';
 
 type Make24Room = Room<Make24State>;
 
@@ -54,26 +53,7 @@ const createMake24GameEngine = (
   const roomOf = (roomId: string): Make24Room | undefined =>
     ctx.rooms.ofType<Make24State>(roomId, 'make-24');
 
-  const startGame = (room: Make24Room, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: Make24Room) => {
     const game = room.game;
     game.deals = dealHands(Math.random, game.hands);
     game.hand = 0;
@@ -134,7 +114,8 @@ const createMake24GameEngine = (
     game.solves.set(playerId, {
       points,
       secondsLeft: Math.ceil(msLeft / 1000),
-      expression: formatExpression(play(deal, steps)![0].expression),
+      // `solves` has just checked these steps end on one card: 24.
+      expression: formatExpression(itemAt(play(deal, steps)!, 0).expression),
     });
     player.points += points;
 
@@ -236,7 +217,7 @@ const createMake24GameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['make-24'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -263,5 +244,5 @@ const createMake24GameEngine = (
 
 type Make24GameEngine = ReturnType<typeof createMake24GameEngine>;
 
-export { createMake24GameEngine, pointsForSolve, MIN_PLAYERS_TO_START };
+export { createMake24GameEngine, pointsForSolve };
 export type { Make24GameEngine, Make24Room, Make24Settings };

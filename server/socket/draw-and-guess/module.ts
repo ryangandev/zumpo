@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type {
   DrawAndGuessSettings,
   DrawAndGuessState,
@@ -32,8 +33,8 @@ const createDrawAndGuessModule = (
 
   return {
     gameType: 'draw-and-guess',
-    minPlayers: 2,
-    maxPlayers: 8,
+    minPlayers: SEATS['draw-and-guess'].min,
+    maxPlayers: SEATS['draw-and-guess'].max,
 
     parseSettings: (raw) =>
       parseArgs(roundsSetting, raw, 'room:create (draw-and-guess)'),
@@ -57,7 +58,7 @@ const createDrawAndGuessModule = (
     handleChat: (room, playerId, text) =>
       engine.handleChat(room, playerId, text),
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     onDisconnect: (room, playerId) =>

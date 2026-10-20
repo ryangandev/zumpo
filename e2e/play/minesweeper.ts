@@ -23,7 +23,7 @@ const LABEL = /^Row (\d+), column (\d+): (.+)$/;
 /** Every cell on the board, as its label reads. */
 async function boardOf(page: Page): Promise<Board> {
   const grid = page.getByRole('grid', { name: /^Board, / });
-  const [, width, height] = /(\d+) by (\d+)/
+  const [, width = 0, height = 0] = /(\d+) by (\d+)/
     .exec((await grid.getAttribute('aria-label'))!)!
     .map(Number);
   const labels = await labelsIn(grid, '[aria-label^="Row "]');
@@ -37,9 +37,9 @@ async function boardOf(page: Page): Promise<Board> {
           ? 'flag'
           : text === 'empty'
             ? 0
-            : parseInt(text, 10);
+            : parseInt(text!, 10);
   }
-  return { width, height, mines: MINES[`${width}x${height}`], cells };
+  return { width, height, mines: MINES[`${width}x${height}`]!, cells };
 }
 
 function neighbours({ width, height }: Board, index: number): number[] {

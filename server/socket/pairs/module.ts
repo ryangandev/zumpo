@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { PairsSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientEvent, type IoSocket } from '../../libs/rooms/emit.js';
@@ -21,8 +22,8 @@ const createPairsModule = (
 
   return {
     gameType: 'pairs',
-    minPlayers: 2,
-    maxPlayers: 6,
+    minPlayers: SEATS['pairs'].min,
+    maxPlayers: SEATS['pairs'].max,
 
     parseSettings: (raw) => parseArgs(boardSetting, raw, 'room:create (pairs)'),
     createState,
@@ -32,7 +33,7 @@ const createPairsModule = (
     // The board, the turn and the last results all travel in the snapshot.
     syncTo: () => {},
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     // A turn does not wait for a dropped player: its clock keeps running, and

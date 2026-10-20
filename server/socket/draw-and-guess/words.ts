@@ -1,5 +1,6 @@
 import { getRandomInt } from '../../libs/utils.js';
 import type { WordBank, WordCategory } from '../../libs/word-bank.js';
+import { itemAt } from '../../../shared/list.js';
 
 /**
  * Picking words and hiding them.
@@ -33,7 +34,7 @@ const getRandomChoicesFromList = (
     selectedIndexes.add(getRandomInt(0, wordList.length));
   }
 
-  return [...selectedIndexes].map((index) => wordList[index]);
+  return [...selectedIndexes].map((index) => itemAt(wordList, index));
 };
 
 /**

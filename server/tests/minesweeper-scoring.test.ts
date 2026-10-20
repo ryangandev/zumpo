@@ -82,7 +82,7 @@ describe('the expected value of a pick', () => {
     const values = [0, 0.1, 0.25, 0.5, 0.75, 0.9].map(expectedValue);
 
     for (let i = 1; i < values.length; i++) {
-      expect(values[i]).toBeLessThan(values[i - 1]);
+      expect(values[i]).toBeLessThan(values[i - 1]!);
     }
   });
 

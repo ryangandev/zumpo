@@ -70,19 +70,19 @@ describe('opening cells', () => {
     let game = started();
     const [hit, flagged, ...rest] = mineIndexes(game);
     const wrong = game.layout.findIndex((mine, at) => !mine && !game.open[at]);
-    game = toggleFlag(toggleFlag(game, flagged), wrong);
-    const lost = reveal(game, hit, 4000);
+    game = toggleFlag(toggleFlag(game, flagged!), wrong);
+    const lost = reveal(game, hit!, 4000);
     expect(lost.status).toBe('lost');
     expect(lost.endedAt).toBe(4000);
-    expect(cellAt(lost, hit)).toBe('hit');
-    expect(cellAt(lost, flagged)).toBe('flag');
+    expect(cellAt(lost, hit!)).toBe('hit');
+    expect(cellAt(lost, flagged!)).toBe('flag');
     expect(cellAt(lost, wrong)).toBe('wrong-flag');
     for (const mine of rest) expect(cellAt(lost, mine)).toBe('mine');
     expect(minesStillHidden(lost)).toBe(8);
     expect(elapsed(lost, 9999)).toBe(3000);
     // The game is over: nothing more opens or flags.
-    expect(reveal(lost, rest[0], 5000)).toBe(lost);
-    expect(toggleFlag(lost, rest[0])).toBe(lost);
+    expect(reveal(lost, rest[0]!, 5000)).toBe(lost);
+    expect(toggleFlag(lost, rest[0]!)).toBe(lost);
   });
 
   it('opening every safe cell wins and flags the mines', () => {
@@ -155,11 +155,11 @@ describe('a chord', () => {
     const mines = around.filter((at) => game.layout[at]);
     const safe = around.filter((at) => !game.open[at] && !game.layout[at]);
     // Flag a safe cell in place of one mine: the chord opens that mine.
-    let wrong = toggleFlag(game, safe[0]);
+    let wrong = toggleFlag(game, safe[0]!);
     for (const mine of mines.slice(1)) wrong = toggleFlag(wrong, mine);
     const lost = chord(wrong, index, 3000);
     expect(lost.status).toBe('lost');
     expect(lost.hit).toBe(mines[0]);
-    expect(cellAt(lost, safe[0])).toBe('wrong-flag');
+    expect(cellAt(lost, safe[0]!)).toBe('wrong-flag');
   });
 });

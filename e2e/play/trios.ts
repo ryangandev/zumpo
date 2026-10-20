@@ -25,7 +25,7 @@ export async function tableOf(page: Page): Promise<number[]> {
     ':scope > [aria-label]',
   );
   return labels.map((label) => {
-    const card = CARD_BY_NAME.get(label.split(',')[0]);
+    const card = CARD_BY_NAME.get(label.split(',')[0]!);
     if (card === undefined) throw new Error(`No card is called "${label}"`);
     return card;
   });
@@ -44,7 +44,7 @@ export async function pickTrio(page: Page): Promise<number[]> {
   const table = await tableOf(page);
   const trio = trioOn(table);
   await pickPlaces(page, trio);
-  return trio.map((place) => table[place]);
+  return trio.map((place) => table[place]!);
 }
 
 /** The places of the first trio on a table. */
@@ -73,7 +73,7 @@ export function missWith(
   const third = thirds.find(
     (place) =>
       !pair.includes(place) &&
-      !isTrio(table[pair[0]], table[pair[1]], table[place]),
+      !isTrio(table[pair[0]]!, table[pair[1]]!, table[place]!),
   );
   if (third === undefined) throw new Error('Every third card makes a trio');
   return [...pair, third];
@@ -88,7 +88,7 @@ export function twoBesides(
     (place, index, all) =>
       !trio.includes(place) && all.indexOf(place) === index,
   );
-  return [a, b];
+  return [a!, b!];
 }
 
 /** The turn bar, which says what to do and what just happened. */

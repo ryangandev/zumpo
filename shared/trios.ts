@@ -1,4 +1,5 @@
 import { shuffle } from './pairs.js';
+import { itemAt } from './list.js';
 
 /**
  * Trios rules that a room on the server and a run on your own in the browser
@@ -53,10 +54,10 @@ export const isCard = (value: number): boolean =>
 
 export function cardFeatures(card: number): CardFeatures {
   return {
-    colour: COLOURS[digit(card, 'colour')],
-    shape: SHAPES[digit(card, 'shape')],
+    colour: itemAt(COLOURS, digit(card, 'colour')),
+    shape: itemAt(SHAPES, digit(card, 'shape')),
     count: (digit(card, 'count') + 1) as 1 | 2 | 3,
-    fill: FILLS[digit(card, 'fill')],
+    fill: itemAt(FILLS, digit(card, 'fill')),
   };
 }
 
@@ -119,7 +120,7 @@ export function findTrios(
   const trios: [number, number, number][] = [];
   for (let i = 0; i < cards.length; i++) {
     for (let j = i + 1; j < cards.length; j++) {
-      const k = place.get(thirdCard(cards[i], cards[j]));
+      const k = place.get(thirdCard(itemAt(cards, i), itemAt(cards, j)));
       if (k !== undefined && k > j) trios.push([i, j, k]);
     }
   }
@@ -158,7 +159,7 @@ function dealInto(
 
   const lay = (order: readonly number[]): Deal => {
     const next = [...table];
-    empty.forEach((place, i) => (next[place] = order[i]));
+    empty.forEach((place, i) => (next[place] = itemAt(order, i)));
     return { table: next as number[], deck: order.slice(empty.length) };
   };
 
@@ -177,7 +178,7 @@ function dealInto(
   for (const [i, j, k] of findTrios(pool)) {
     const needed = [i, j, k]
       .filter((index) => index >= kept.length)
-      .map((index) => pool[index]);
+      .map((index) => itemAt(pool, index));
     if (needed.length > empty.length) continue;
     return lay([...needed, ...order.filter((card) => !needed.includes(card))]);
   }

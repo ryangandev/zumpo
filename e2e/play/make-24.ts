@@ -28,7 +28,7 @@ function stepsTo(
   cards: readonly Card[],
   accept: (value: Fraction) => boolean,
 ): Step[] | null {
-  if (cards.length === 1) return accept(cards[0].value) ? [] : null;
+  if (cards.length === 1) return accept(cards[0]!.value) ? [] : null;
   for (let left = 0; left < cards.length; left++) {
     for (let right = 0; right < cards.length; right++) {
       for (const op of OPERATORS) {
@@ -99,6 +99,6 @@ export async function missHand(page: Page) {
 export async function startHand(page: Page) {
   const deal = await dealOn(page);
   const [first, second] = stepsToSolve(dealtCards(deal))!;
-  await take(page, [first]);
-  await choose(page, second);
+  await take(page, [first!]);
+  await choose(page, second!);
 }

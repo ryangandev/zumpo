@@ -6,6 +6,8 @@
  * the client reads the level count and the lives from here to describe a game.
  */
 
+import { swap } from './list.js';
+
 /** The deck is every card from 1 to 100. */
 export const LOWEST_CARD = 1;
 export const HIGHEST_CARD = 100;
@@ -50,7 +52,7 @@ export function deal(
   if (needed > deck.length) throw new Error('Not enough cards to deal.');
   for (let i = 0; i < needed; i++) {
     const j = i + Math.floor(random() * (deck.length - i));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
+    swap(deck, i, j);
   }
   return Object.fromEntries(
     playerIds.map((playerId, seat) => [

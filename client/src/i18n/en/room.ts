@@ -45,6 +45,16 @@ export const room = {
   watch: 'Watch instead',
   sit: 'Take a seat',
   moving: 'Moving…',
+  /** Why a start or a move between seats did not happen. */
+  refused: {
+    notEnoughPlayers: 'The game needs more players before it can start.',
+    notRoomOwner: 'Only the host can start the game.',
+    gameAlreadyStarted: 'The game has already started.',
+    seatsTaken: 'Every seat at the table is taken.',
+    spectatorSeatsTaken: 'Every spectator seat is taken.',
+    noAnswer: 'Zumpo didn’t answer. Try again.',
+    failed: 'That didn’t work. Try again.',
+  },
   spectatingTitle: 'You’re watching.',
   spectatingSeatFree: 'Take a seat to play in the next game, or keep watching.',
   spectatingSeatsFull:
@@ -64,8 +74,8 @@ export const room = {
     `You’re ${name} for now. Pick a name your friends will know.`,
   waitingForHost: (name: string) => `Waiting for ${name} to start.`,
   guestSetup: (setup: string) => `${setup} Only the host can start the game.`,
-  needsPlayers: (game: string) =>
-    `${game} needs at least 2 players. Share the room so a friend can join, and the game can start.`,
+  needsPlayers: (game: string, fewest: number) =>
+    `${game} needs at least ${fewest} players. Share the room so a friend can join, and the game can start.`,
   everyoneHere: 'Everyone’s here?',
   starting: 'Starting the game…',
   start: 'Start game',

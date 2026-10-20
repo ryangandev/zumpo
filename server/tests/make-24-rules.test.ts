@@ -58,7 +58,7 @@ describe('a step', () => {
       '7',
       '4',
     ]);
-    expect(formatLastStep(cards[2].expression)).toBe('8 − 4');
+    expect(formatLastStep(cards[2]!.expression)).toBe('8 − 4');
   });
 
   it('is refused for a missing card, the same card twice, or ÷ 0', () => {
@@ -81,7 +81,7 @@ describe('a solved hand', () => {
     ] as const;
     // 8 − 4 = 4, then 7 − 1 = 6, then 4 × 6 = 24.
     expect(solves([1, 4, 7, 8], steps)).toBe(true);
-    expect(formatExpression(play([1, 4, 7, 8], steps)![0].expression)).toBe(
+    expect(formatExpression(play([1, 4, 7, 8], steps)![0]!.expression)).toBe(
       '(8 − 4) × (7 − 1)',
     );
   });

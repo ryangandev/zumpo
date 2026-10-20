@@ -1,6 +1,6 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { PairsSettings } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { seatCount, seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
 import {
@@ -9,8 +9,7 @@ import {
 } from '../../libs/game-clock.js';
 import { dealDeck, PAIRS_BOARDS, shuffle } from '../../../shared/pairs.js';
 import { pairsFound, playerAfter, type PairsState } from './state.js';
-
-const MIN_PLAYERS_TO_START = 2;
+import { itemAt } from '../../../shared/list.js';
 
 type PairsRoom = Room<PairsState>;
 
@@ -26,26 +25,7 @@ const createPairsGameEngine = (
   const roomOf = (roomId: string): PairsRoom | undefined =>
     ctx.rooms.ofType<PairsState>(roomId, 'pairs');
 
-  const startGame = (room: PairsRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: PairsRoom) => {
     const game = room.game;
     game.deck = dealDeck(game.board, Math.random);
     game.matched = game.deck.map(() => false);
@@ -66,10 +46,10 @@ const createPairsGameEngine = (
     ctx.rooms.emitLobby('pairs');
 
     // The first player in the order, or the first after them who is here.
-    const [first] = game.order;
+    const first = itemAt(game.order, 0);
     beginTurn(
       room,
-      room.playerList[first].isConnected ? first : playerAfter(room, first)!,
+      seatOf(room, first).isConnected ? first : playerAfter(room, first)!,
     );
   };
 
@@ -112,7 +92,8 @@ const createPairsGameEngine = (
       return;
     }
 
-    const [first, second] = game.up;
+    const first = itemAt(game.up, 0);
+    const second = itemAt(game.up, 1);
     if (game.deck[first] !== game.deck[second]) {
       // A miss stays up for everybody to remember, then the turn passes.
       game.phase = 'showing';
@@ -181,7 +162,7 @@ const createPairsGameEngine = (
   const handlePlayerDeparture = (room: PairsRoom, playerId: string) => {
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['pairs'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -203,5 +184,5 @@ const createPairsGameEngine = (
 
 type PairsGameEngine = ReturnType<typeof createPairsGameEngine>;
 
-export { createPairsGameEngine, MIN_PLAYERS_TO_START };
+export { createPairsGameEngine };
 export type { PairsGameEngine, PairsRoom, PairsSettings };

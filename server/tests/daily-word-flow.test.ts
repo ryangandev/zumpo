@@ -112,7 +112,7 @@ describe('a round', () => {
 
   it('marks a guess, and shows the others its marks, never its letters', async () => {
     const { roomId, alice, bob } = await playToFirstWord(harness);
-    const [miss] = missesFor(wordOf(harness, roomId), 1);
+    const [miss] = missesFor(wordOf(harness, roomId)!, 1);
 
     const aliceSees = waitForDailyWordState(
       alice,
@@ -122,34 +122,34 @@ describe('a round', () => {
       bob,
       (s) => boardOf(s, alice.playerId).rows.length === 1,
     );
-    expect(await guess(alice, roomId, miss.toUpperCase())).toEqual({
+    expect(await guess(alice, roomId, miss!.toUpperCase())).toEqual({
       ok: true,
     });
 
     const [mine, theirs] = await Promise.all([aliceSees, bobSees]);
     const row = boardOf(mine, alice.playerId).rows[0];
-    expect(row.word).toBe(miss);
-    expect(row.marks).toHaveLength(5);
+    expect(row!.word).toBe(miss);
+    expect(row!.marks).toHaveLength(5);
     expect(boardOf(theirs, alice.playerId)).toMatchObject({
       status: 'guessing',
-      rows: [{ word: null, marks: row.marks }],
+      rows: [{ word: null, marks: row!.marks }],
     });
     expect(JSON.stringify(theirs)).not.toContain(`"${miss}"`);
   });
 
   it('turns back a word that is not one, a repeat, and a short row', async () => {
     const { roomId, alice } = await playToFirstWord(harness);
-    const [miss] = missesFor(wordOf(harness, roomId), 1);
+    const [miss] = missesFor(wordOf(harness, roomId)!, 1);
 
     const notAWord = await guess(alice, roomId, 'blant');
     expect(notAWord.error).toMatchObject({
       type: 'invalidRequest',
-      message: 'Not in the word list',
+      message: expect.stringContaining('notAWord'),
     });
 
-    await guess(alice, roomId, miss);
-    const repeat = await guess(alice, roomId, miss);
-    expect(repeat.error?.message).toBe('Already guessed');
+    await guess(alice, roomId, miss!);
+    const repeat = await guess(alice, roomId, miss!);
+    expect(repeat.error?.message).toContain('alreadyGuessed');
 
     expect((await guess(alice, roomId, 'abc')).error?.type).toBe(
       'invalidRequest',
@@ -161,22 +161,22 @@ describe('a round', () => {
   it('scores the word found, and announces it', async () => {
     const { roomId, alice, bob } = await playToFirstWord(harness);
     const word = wordOf(harness, roomId);
-    const [miss] = missesFor(word, 1);
+    const [miss] = missesFor(word!, 1);
 
-    await guess(alice, roomId, miss);
+    await guess(alice, roomId, miss!);
     const announced = waitForChat(bob, (m) => m.kind === 'success');
     const found = waitForDailyWordState(
       bob,
       (s) => boardOf(s, alice.playerId).status === 'found',
     );
-    await guess(alice, roomId, word);
+    await guess(alice, roomId, word!);
 
     const [state, message] = await Promise.all([found, announced]);
     const board = boardOf(state, alice.playerId);
     // Two guesses: 500, plus up to 50 for the time left.
     expect(board.points).toBeGreaterThan(500);
     expect(board.points).toBeLessThanOrEqual(550);
-    expect(state.playerList[alice.playerId].points).toBe(board.points);
+    expect(state.playerList[alice.playerId]!.points).toBe(board.points);
     expect(textOf(message)).toBe(`Alice got it in 2! (+${board.points})`);
     expect(JSON.stringify(state)).not.toContain(`"${word}"`);
   });
@@ -184,15 +184,15 @@ describe('a round', () => {
   it('takes no more guesses from a player who is done', async () => {
     const { roomId, alice } = await playToFirstWord(harness);
     const word = wordOf(harness, roomId);
-    await guess(alice, roomId, word);
+    await guess(alice, roomId, word!);
 
-    const after = await guess(alice, roomId, missesFor(word, 1)[0]);
+    const after = await guess(alice, roomId, missesFor(word!, 1)[0]!);
     expect(after.error?.message).toBe('You are done with this word.');
   });
 
   it('keeps a player who has found the word out of the chat until it ends', async () => {
     const { roomId, alice, bob } = await playToFirstWord(harness);
-    await guess(alice, roomId, wordOf(harness, roomId));
+    await guess(alice, roomId, wordOf(harness, roomId)!);
 
     const bobHears = collectChat(bob);
     alice.emit('chat:send', roomId, 'that was easy');
@@ -207,7 +207,7 @@ describe('a round', () => {
 
   it('lets a player who is out of guesses talk, and says so on their board', async () => {
     const { roomId, alice, bob } = await playToFirstWord(harness);
-    for (const miss of missesFor(wordOf(harness, roomId))) {
+    for (const miss of missesFor(wordOf(harness, roomId)!)) {
       expect((await guess(bob, roomId, miss)).ok).toBe(true);
     }
     const out = await waitForDailyWordState(
@@ -231,8 +231,8 @@ describe('a round', () => {
     const said = waitForChat(alice, (m) =>
       textOf(m).startsWith('The word was'),
     );
-    await guess(alice, roomId, word);
-    for (const miss of missesFor(word)) await guess(bob, roomId, miss);
+    await guess(alice, roomId, word!);
+    for (const miss of missesFor(word!)) await guess(bob, roomId, miss);
 
     const results = await reveal;
     expect(results.boards).toEqual([]);
@@ -246,8 +246,10 @@ describe('a round', () => {
       status: 'out',
       points: 0,
     });
-    expect(results.lastRound!.boards[1].rows[0].word).toBe(missesFor(word)[0]);
-    expect(textOf(await said)).toBe(`The word was ${word.toUpperCase()}.`);
+    expect(results.lastRound!.boards[1]!.rows[0]!.word).toBe(
+      missesFor(word!)[0],
+    );
+    expect(textOf(await said)).toBe(`The word was ${word!.toUpperCase()}.`);
 
     const next = await waitForDailyWordState(
       alice,
@@ -258,7 +260,7 @@ describe('a round', () => {
 
   it('ends on time for those still guessing, at no cost', async () => {
     const { roomId, alice } = await playToFirstWord(harness);
-    await guess(alice, roomId, wordOf(harness, roomId));
+    await guess(alice, roomId, wordOf(harness, roomId)!);
 
     const results = await waitForDailyWordState(
       alice,
@@ -275,13 +277,13 @@ describe('a round', () => {
 
   it('keeps the guesses through a refresh', async () => {
     const { roomId, alice } = await playToFirstWord(harness);
-    const [miss] = missesFor(wordOf(harness, roomId), 1);
-    await guess(alice, roomId, miss);
+    const [miss] = missesFor(wordOf(harness, roomId)!, 1);
+    await guess(alice, roomId, miss!);
 
     const again = await harness.reload(alice);
     const state = waitForDailyWordState(again);
     await request(again, 'room:sync', roomId);
-    expect(boardOf(await state, alice.playerId).rows[0].word).toBe(miss);
+    expect(boardOf(await state, alice.playerId).rows[0]!.word).toBe(miss);
   });
 });
 
@@ -300,11 +302,11 @@ describe('a Daily Word game', () => {
     const { roomId, alice, bob } = await playToFirstWord(harness);
     for (let round = 1; round <= 3; round++) {
       const word = wordOf(harness, roomId);
-      await guess(alice, roomId, word);
+      await guess(alice, roomId, word!);
       if (round === 2) {
-        for (const miss of missesFor(word)) await guess(bob, roomId, miss);
+        for (const miss of missesFor(word!)) await guess(bob, roomId, miss);
       } else {
-        await guess(bob, roomId, word);
+        await guess(bob, roomId, word!);
       }
       if (round < 3) {
         await waitForDailyWordState(
@@ -326,7 +328,7 @@ describe('a Daily Word game', () => {
       rounds: 3,
       found: { [alice.playerId]: 3, [bob.playerId]: 2 },
     });
-    expect(over.lastGame!.standings[0].username).toBe('Alice');
+    expect(over.lastGame!.standings[0]!.username).toBe('Alice');
     // The last round stays up with the summary.
     expect(over.lastRound!.boards).toHaveLength(2);
   });

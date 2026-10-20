@@ -6,6 +6,7 @@
     "lib": ["es2023", "dom"],
     "types": ["node"],
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "noEmit": true,
     "skipLibCheck": true
   },

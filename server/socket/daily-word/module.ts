@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { DailyWordSettings } from '../../models/types.js';
 import type { GameModule, GameContext } from '../../libs/rooms/types.js';
 import { onClientRequest, type IoSocket } from '../../libs/rooms/emit.js';
@@ -23,8 +24,8 @@ const createDailyWordModule = (
 
   return {
     gameType: 'daily-word',
-    minPlayers: 2,
-    maxPlayers: 8,
+    minPlayers: SEATS['daily-word'].min,
+    maxPlayers: SEATS['daily-word'].max,
 
     parseSettings: (raw) =>
       parseArgs(roundsSetting, raw, 'room:create (daily-word)'),
@@ -38,7 +39,7 @@ const createDailyWordModule = (
     handleChat: (room, playerId) =>
       engine.mayChat(room, playerId) ? 'chat' : 'blocked',
 
-    startGame: (room, playerId) => engine.startGame(room, playerId),
+    startGame: (room) => engine.startGame(room),
     onDeparture: (room, playerId) =>
       engine.handlePlayerDeparture(room, playerId),
     onDisconnect: (room) => engine.handleDisconnect(room),

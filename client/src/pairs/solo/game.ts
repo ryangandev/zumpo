@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import type { PairsBoard } from '../../../../shared/wire-types';
 import {
   dealDeck,
@@ -81,7 +82,7 @@ export function flip(game: SoloGame, index: number, now: number): SoloGame {
   if (current.up.length === 0) {
     return { ...current, up: [index], startedAt };
   }
-  const [first] = current.up;
+  const first = itemAt(current.up, 0);
   if (current.deck[first] !== current.deck[index]) {
     return {
       ...current,

@@ -31,9 +31,9 @@ afterEach(() => {
 
 async function take({ left, op, right }: Step) {
   const before = cards();
-  await user.click(before[left]);
+  await user.click(before[left]!);
   await user.click(screen.getByRole('button', { name: SIGNS[op] }));
-  await user.click(before[right]);
+  await user.click(before[right]!);
 }
 
 async function solve(deal: readonly number[]) {
@@ -80,7 +80,7 @@ describe('Make 24 on your own', () => {
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(cards().map((card) => card.textContent)).toEqual(
-      deals[0].map(String),
+      deals[0]!.map(String),
     );
   });
 
@@ -102,7 +102,7 @@ describe('Make 24 on your own', () => {
 
   it('stops the clock on a solve, then deals the next hand', async () => {
     await startRun();
-    await solve(deals[0]);
+    await solve(deals[0]!);
 
     expect(turn().getByText('24! Nice.')).toBeInTheDocument();
     expect(turn().getByText(/^Solved in 0:0\d$/)).toBeInTheDocument();
@@ -112,7 +112,7 @@ describe('Make 24 on your own', () => {
     await pause(SOLVED_PAUSE_MS);
     expect(turn().getByText('Hand 2 of 10')).toBeInTheDocument();
     expect(cards().map((card) => card.textContent)).toEqual(
-      deals[1].map(String),
+      deals[1]!.map(String),
     );
   });
 
@@ -133,7 +133,7 @@ describe('Make 24 on your own', () => {
   it('ends with every hand, keeps the best and copies a challenge', async () => {
     await startRun();
     for (let hand = 0; hand < RUN_HANDS; hand++) {
-      if (hand === 0) await solve(deals[hand]);
+      if (hand === 0) await solve(deals[hand]!);
       else {
         await user.click(screen.getByRole('button', { name: 'Skip, +30 s' }));
       }
@@ -155,7 +155,7 @@ describe('Make 24 on your own', () => {
       screen.getByRole('region', { name: 'Every hand' }),
     ).getAllByRole('listitem');
     expect(hands).toHaveLength(RUN_HANDS);
-    expect(hands[0]).toHaveTextContent(deals[0].join(' '));
+    expect(hands[0]).toHaveTextContent(deals[0]!.join(' '));
     expect(hands[1]).toHaveTextContent(/Skipped · /);
     expect(localStorage.getItem('zumpo:solo:best:make-24:ten-hands')).toMatch(
       /^\d+$/,
@@ -180,7 +180,7 @@ describe('Make 24 on your own', () => {
   it('keeps to the hand on a phone', async () => {
     onPhone();
     await startRun();
-    await take(stepsToSolve(deals[0])[0]);
+    await take(stepsToSolve(deals[0]!)[0]!);
     expect(screen.queryByText('Your steps')).toBeNull();
     expect(screen.queryByText('This run')).toBeNull();
   });

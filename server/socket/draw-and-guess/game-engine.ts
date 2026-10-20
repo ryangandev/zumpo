@@ -1,9 +1,9 @@
+import { SEATS } from '../../../shared/seats.js';
 import type {
   ChatMessageKind,
   RoomNotice,
 } from '../../../shared/wire-types.js';
 import type { DrawAndGuessState } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { ChatVerdict, GameContext, Room } from '../../libs/rooms/types.js';
 import { emitToRoom } from '../../libs/rooms/emit.js';
@@ -25,8 +25,8 @@ import {
 } from '../../libs/game-clock.js';
 import { wordBank } from '../../libs/word-bank.js';
 import { clearCanvas } from './canvas.js';
+import { swap } from '../../../shared/list.js';
 
-const MIN_PLAYERS_TO_START = 2;
 const WORD_CHOICE_COUNT = 3;
 
 /**
@@ -161,7 +161,7 @@ const createDrawAndGuessGameEngine = (
     const order = [...positions];
     for (let index = order.length - 1; index > 0; index--) {
       const swapWith = getRandomInt(0, index + 1);
-      [order[index], order[swapWith]] = [order[swapWith], order[index]];
+      swap(order, index, swapWith);
     }
 
     const word = room.game.word;
@@ -198,28 +198,9 @@ const createDrawAndGuessGameEngine = (
     }
   };
 
-  const startGame = (room: DrawAndGuessRoom, playerId: string) => {
+  const startGame = (room: DrawAndGuessRoom) => {
     // Checked before anything else about the room is reported, so a stranger
     // with a room id off the lobby broadcast learns nothing from the reply.
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
     room.playerList = resetPoints(room.playerList);
     room.isGameStarted = true;
     room.game.currentRound = 0;
@@ -438,7 +419,7 @@ const createDrawAndGuessGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['draw-and-guess'].min) {
       announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -634,5 +615,5 @@ const createDrawAndGuessGameEngine = (
 
 type DrawAndGuessGameEngine = ReturnType<typeof createDrawAndGuessGameEngine>;
 
-export { createDrawAndGuessGameEngine, MIN_PLAYERS_TO_START };
+export { createDrawAndGuessGameEngine };
 export type { DrawAndGuessGameEngine, DrawAndGuessRoom };

@@ -21,8 +21,8 @@ export async function boardOf(page: Page): Promise<CardSeen[]> {
   return labels.map((label) => {
     const [, place, symbol, matched] = LABEL.exec(label)!;
     return {
-      place,
-      symbol: symbol === 'face down' ? null : symbol,
+      place: place!,
+      symbol: symbol === 'face down' ? null : symbol!,
       matched: Boolean(matched),
     };
   });
@@ -81,7 +81,7 @@ export async function playTurn(
         other !== card && memory.get(other.place) === memory.get(card.place),
     ),
   );
-  const first = ((explore ? undefined : pair) ?? unseen[0] ?? down[0]).place;
+  const first = ((explore ? undefined : pair) ?? unseen[0] ?? down[0])!.place;
   const symbol = await flip(page, first, memory);
   await afterFirst?.();
   const partner =

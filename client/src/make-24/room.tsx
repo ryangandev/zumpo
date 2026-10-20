@@ -3,7 +3,12 @@ import type {
   Make24HandResult,
   Make24RoomState,
 } from '../../../shared/wire-types';
-import { formatFraction, isTarget, type Step } from '../../../shared/make-24';
+import {
+  formatFraction,
+  isTarget,
+  lastCard,
+  type Step,
+} from '../../../shared/make-24';
 import { PickResult, TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
@@ -103,14 +108,15 @@ function Hand({ room }: { room: Room }) {
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   const [steps, setSteps] = useState<readonly Step[]>([]);
   const cards = cardsAfter(state.deal, steps);
-  const madeIt = cards.length === 1 && isTarget(cards[0].value);
+  const last = lastCard(cards);
+  const madeIt = last !== null && isTarget(last.value);
 
   const step = (next: Step) => {
     const taken = [...steps, next];
     setSteps(taken);
-    const after = cardsAfter(state.deal, taken);
+    const after = lastCard(cardsAfter(state.deal, taken));
     // The server replays the steps and says whether they count.
-    if (after.length === 1 && isTarget(after[0].value)) {
+    if (after && isTarget(after.value)) {
       socket.emit('t24:solve', state.roomId, taken);
     }
   };
@@ -265,11 +271,12 @@ function turnBar(
       countdown: clock(m.make24.toSolve),
     };
   }
-  if (cards.length === 1 && !isTarget(cards[0].value)) {
+  const last = lastCard(cards);
+  if (last && !isTarget(last.value)) {
     return {
       label,
       kind: 'status',
-      main: m.make24.makes(formatFraction(cards[0].value)),
+      main: m.make24.makes(formatFraction(last.value)),
       meta: m.make24.undoPrompt,
       countdown: clock(m.make24.toSolve),
     };

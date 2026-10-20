@@ -1,10 +1,9 @@
-import { textOf } from './helpers/test-server.js';
+import { textOf, seatTable, TWO_NAMES } from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { PairsRoomState } from '../models/types.js';
 import {
   collectChat,
   createPairsRoom,
-  joinRoom,
   lobbyView,
   pairsRoom,
   request,
@@ -30,7 +29,7 @@ function placesOf(harness: TestServer, roomId: string): [number, number][] {
 function aMiss(harness: TestServer, roomId: string): [number, number] {
   const { matched } = pairsRoom(harness, roomId).game;
   const open = placesOf(harness, roomId).filter(([a]) => !matched[a]);
-  return [open[0][0], open[1][0]];
+  return [open[0]![0], open[1]![0]];
 }
 
 /**
@@ -38,17 +37,14 @@ function aMiss(harness: TestServer, roomId: string): [number, number] {
  * The order of play is shuffled, so no test may assume who goes first; `turn`
  * says who it is.
  */
-async function playToFirstTurn(
-  harness: TestServer,
-  names: readonly string[] = ['Alice', 'Bob'],
-) {
-  const players: TestClient[] = [];
-  for (const _ of names) players.push(await harness.connect());
-  const [owner] = players;
-  const roomId = await createPairsRoom(owner, { username: names[0] });
-  for (const [index, player] of players.entries()) {
-    if (index > 0) await joinRoom(player, roomId, names[index]);
-  }
+async function playToFirstTurn<
+  const Names extends readonly [string, ...string[]] = typeof TWO_NAMES,
+>(harness: TestServer, names: Names = TWO_NAMES as unknown as Names) {
+  const { roomId, players, owner } = await seatTable(
+    harness,
+    names,
+    (creator, username) => createPairsRoom(creator, { username }),
+  );
 
   const turn = waitForPairsState(owner, (s) => s.phase === 'flipping');
   await startGame(owner, roomId);
@@ -56,7 +52,7 @@ async function playToFirstTurn(
 
   const byId = (playerId: string | null) =>
     players.find((player) => player.playerId === playerId)!;
-  const nameOf = (player: TestClient) => names[players.indexOf(player)];
+  const nameOf = (player: TestClient) => names[players.indexOf(player)]!;
   return { roomId, players, owner, first, byId, nameOf };
 }
 
@@ -156,16 +152,16 @@ describe('a turn', () => {
     const { roomId, players, first, byId } = await playToFirstTurn(harness);
     const mover = byId(first.turnPlayerId);
     const other = players.find((player) => player !== mover)!;
-    const [[a]] = placesOf(harness, roomId);
+    const [a] = placesOf(harness, roomId)[0]!;
 
     other.emit('pairs:flip', roomId, a);
     await settle();
     expect(pairsRoom(harness, roomId).game.up).toEqual([]);
 
-    const seen = waitForPairsState(other, (s) => s.cards[a].state === 'up');
+    const seen = waitForPairsState(other, (s) => s.cards[a]!.state === 'up');
     mover.emit('pairs:flip', roomId, a);
     const view = await seen;
-    expect(view.cards[a].symbol).toBe(pairsRoom(harness, roomId).game.deck[a]);
+    expect(view.cards[a]!.symbol).toBe(pairsRoom(harness, roomId).game.deck[a]);
     expect(
       view.cards.filter((card, index) => index !== a && card.symbol !== null),
     ).toEqual([]);
@@ -181,7 +177,7 @@ describe('a turn', () => {
     const { roomId, owner, first, byId, nameOf } =
       await playToFirstTurn(harness);
     const mover = byId(first.turnPlayerId);
-    const [a, b] = placesOf(harness, roomId)[0];
+    const [a, b] = placesOf(harness, roomId)[0]!;
     const chat = waitForChat(owner, (m) => m.kind === 'success');
 
     const found = waitForPairsState(owner, (s) => s.pairsFound === 1);
@@ -193,10 +189,10 @@ describe('a turn', () => {
       state: 'matched',
       symbol: pairsRoom(harness, roomId).game.deck[a],
     });
-    expect(view.cards[b].state).toBe('matched');
+    expect(view.cards[b]!.state).toBe('matched');
     expect(view.phase).toBe('flipping');
     expect(view.turnPlayerId).toBe(mover.playerId);
-    expect(view.playerList[mover.playerId].points).toBe(1);
+    expect(view.playerList[mover.playerId]!.points).toBe(1);
     expect(textOf(await chat)).toBe(`${nameOf(mover)} found a pair! (+1)`);
 
     // A matched card cannot be turned over again.
@@ -216,8 +212,8 @@ describe('a turn', () => {
     mover.emit('pairs:flip', roomId, b);
     const view = await showing;
     expect(view.lastMiss).toEqual([a, b]);
-    expect(view.cards[a].state).toBe('up');
-    expect(view.cards[b].state).toBe('up');
+    expect(view.cards[a]!.state).toBe('up');
+    expect(view.cards[b]!.state).toBe('up');
     expect(view.turnPlayerId).toBe(mover.playerId);
     expect(view.nextPlayerId).toBe(other.playerId);
 
@@ -228,14 +224,14 @@ describe('a turn', () => {
     const passed = await turnOf(other, other);
     expect(passed.lastMiss).toEqual([]);
     expect(passed.cards.every((card) => card.state === 'down')).toBe(true);
-    expect(passed.playerList[mover.playerId].points).toBe(0);
+    expect(passed.playerList[mover.playerId]!.points).toBe(0);
   });
 
   it('turns a lone card back when the clock runs out, and passes the turn', async () => {
     const { roomId, players, first, byId } = await playToFirstTurn(harness);
     const mover = byId(first.turnPlayerId);
     const other = players.find((player) => player !== mover)!;
-    const [[a]] = placesOf(harness, roomId);
+    const [a] = placesOf(harness, roomId)[0]!;
 
     mover.emit('pairs:flip', roomId, a);
     const passed = await turnOf(other, other);
@@ -257,7 +253,7 @@ describe('a turn', () => {
       (s) => s.nextPlayerId === third.playerId,
     );
     skipped.close();
-    expect((await told).playerList[skipped.playerId].isConnected).toBe(false);
+    expect((await told).playerList[skipped.playerId]!.isConnected).toBe(false);
 
     const [a, b] = aMiss(harness, roomId);
     mover.emit('pairs:flip', roomId, a);
@@ -328,7 +324,7 @@ describe('a Pairs game', () => {
     const { roomId, players, owner, first, byId } =
       await playToFirstTurn(harness);
     const mover = byId(first.turnPlayerId);
-    const [a, b] = placesOf(harness, roomId)[0];
+    const [a, b] = placesOf(harness, roomId)[0]!;
     const found = waitForPairsState(owner, (s) => s.pairsFound === 1);
     mover.emit('pairs:flip', roomId, a);
     mover.emit('pairs:flip', roomId, b);

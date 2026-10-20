@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import type { Locale } from '../i18n/locale';
 
 /*
@@ -212,7 +213,7 @@ export const NAME_WORDS: Readonly<
 };
 
 const pick = <T>(list: readonly T[], random: () => number): T =>
-  list[Math.floor(random() * list.length) % list.length];
+  itemAt(list, Math.floor(random() * list.length) % list.length);
 
 /**
  * A random name in `locale`, never `unlike`, so rolling again always shows a

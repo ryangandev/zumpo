@@ -73,9 +73,12 @@ A module reaches the layer through the `GameContext` it is handed: the typed Soc
 | `toRoomState(room, viewerId)`             | A snapshot is sent to one player                                    |
 | `syncTo(socket, room, playerId)`          | A page syncs, after its snapshot and chat: anything streamed        |
 | `handleChat?(room, playerId, text)`       | A seated player sends chat; answers `chat`, `consumed` or `blocked` |
-| `startGame(room, playerId)`               | The owner presses start; throws a `RequestError` to refuse          |
+| `startGame(room)`                         | The owner presses start, once the layer has let them (see below)    |
 | `onDeparture`, `onDisconnect`, `onReturn` | A seat is given up, held, or taken back                             |
 | `registerHandlers(socket)`                | A connection arrives: wire up the game's own events                 |
+
+The layer decides who may start, the same way for every game: only the owner, only while no game is on, and only with `minPlayers` seated.
+Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
 
 A room's chat is a log on the room (`Room.chat`), not a stream: every message gets the next id in that room, the last 100 are kept, and a page that syncs is sent them as `chat:history`.
 A player's message is posted under the name on their seat; anything else is an announcement with a `kind` (`system`, `alert` or `success`) the client styles it by.

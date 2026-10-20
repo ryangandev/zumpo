@@ -185,8 +185,11 @@ interface GameModule<TGameState = unknown, TSettings = unknown> {
     text: string,
   ): ChatVerdict;
 
-  /** The owner pressed start. Throws a `RequestError` if they may not. */
-  startGame(room: Room<TGameState>, playerId: string): void;
+  /**
+   * The owner pressed start. The room layer has already checked that they
+   * may: they own the room, no game is on, and `minPlayers` are seated.
+   */
+  startGame(room: Room<TGameState>): void;
 
   /** The seat is already gone from `playerList` by the time this is called. */
   onDeparture(room: Room<TGameState>, playerId: string): void;

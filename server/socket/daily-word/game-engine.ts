@@ -1,5 +1,5 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { DailyWordBoard, DailyWordSettings } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints } from '../../libs/utils.js';
@@ -9,7 +9,6 @@ import {
 } from '../../libs/game-clock.js';
 import {
   checkGuess,
-  GUESS_PROBLEM_TEXT,
   isFound,
   markGuess,
   pointsForFind,
@@ -24,8 +23,6 @@ import {
   isDone,
   type DailyWordState,
 } from './state.js';
-
-const MIN_PLAYERS_TO_START = 2;
 
 type DailyWordRoom = Room<DailyWordState>;
 
@@ -61,26 +58,7 @@ const createDailyWordGameEngine = (
   const roomOf = (roomId: string): DailyWordRoom | undefined =>
     ctx.rooms.ofType<DailyWordState>(roomId, 'daily-word');
 
-  const startGame = (room: DailyWordRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS_TO_START} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: DailyWordRoom) => {
     const game = room.game;
     game.words = roomWords(random(), game.rounds, new Date());
     game.round = 0;
@@ -136,7 +114,8 @@ const createDailyWordGameEngine = (
     const board = game.boards.get(playerId) ?? emptyBoard();
     if (isDone(board)) return 'You are done with this word.';
     const problem = checkGuess(word, board.guesses);
-    if (problem) return GUESS_PROBLEM_TEXT[problem];
+    // The page checks the same rules and words the note itself.
+    if (problem) return `The guess was refused: ${problem}.`;
 
     const marks = markGuess(word, currentWord(game));
     board.guesses.push(word);
@@ -264,7 +243,7 @@ const createDailyWordGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < MIN_PLAYERS_TO_START) {
+    if (seatCount(room) < SEATS['daily-word'].min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -291,5 +270,5 @@ const createDailyWordGameEngine = (
 
 type DailyWordGameEngine = ReturnType<typeof createDailyWordGameEngine>;
 
-export { createDailyWordGameEngine, MIN_PLAYERS_TO_START };
+export { createDailyWordGameEngine };
 export type { DailyWordGameEngine, DailyWordRoom, DailyWordSettings };

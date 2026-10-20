@@ -151,7 +151,7 @@ describe('practice words and rooms', () => {
     const offered = [...neighbours, 'ghost', 'ghost', 'flame', 'brick'];
     let next = 0;
     const random = () =>
-      (ANSWERS.indexOf(offered[next++]) + 0.5) / ANSWERS.length;
+      (ANSWERS.indexOf(offered[next++]!) + 0.5) / ANSWERS.length;
 
     expect(roomWords(random, 3, now)).toEqual(['ghost', 'flame', 'brick']);
   });

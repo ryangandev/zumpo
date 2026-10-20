@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import { PAIRS_SYMBOL_SIZE, pairsSymbols } from '../generated/pairs-symbols';
 
 export interface PairsSymbolProps {
@@ -9,7 +10,7 @@ export interface PairsSymbolProps {
 }
 
 /** "Ring Sky": a symbol's name, its shape and its colour. */
-export const symbolName = (symbol: number) => pairsSymbols[symbol].name;
+export const symbolName = (symbol: number) => itemAt(pairsSymbols, symbol).name;
 
 export type SymbolName = (typeof pairsSymbols)[number]['name'];
 
@@ -23,7 +24,7 @@ export function PairsSymbol({
   size = PAIRS_SYMBOL_SIZE,
   className,
 }: PairsSymbolProps) {
-  const { d, x, y, fill } = pairsSymbols[symbol];
+  const { d, x, y, fill } = itemAt(pairsSymbols, symbol);
   return (
     <svg
       className={className}

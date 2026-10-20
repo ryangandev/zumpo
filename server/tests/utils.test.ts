@@ -51,12 +51,12 @@ describe('resetPoints', () => {
       b: { username: 'B', points: 100, isConnected: false },
     });
 
-    expect(reset.a.points).toBe(0);
-    expect(reset.b.points).toBe(0);
-    expect(reset.a.username).toBe('A');
+    expect(reset.a!.points).toBe(0);
+    expect(reset.b!.points).toBe(0);
+    expect(reset.a!.username).toBe('A');
     // A player inside their reconnect grace keeps their seat, so a new game
     // must not quietly mark them present.
-    expect(reset.b.isConnected).toBe(false);
+    expect(reset.b!.isConnected).toBe(false);
   });
 });
 

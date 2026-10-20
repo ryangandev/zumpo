@@ -1,3 +1,4 @@
+import { SEATS } from '../../../shared/seats';
 import type { GameType } from '../../../shared/wire-types';
 import type { Messages } from '../i18n';
 
@@ -24,58 +25,60 @@ export interface GameInfo {
   kind: GameKind;
   /** The game's surface colour on the home, games and rules pages. */
   tone: 'peach' | 'blue' | 'lime' | 'sand';
-  /** The most seats a room may have; every game needs two to start. */
+  /** The fewest players it starts with. */
+  minPlayers: number;
+  /** The most seats a room may have. */
   maxPlayers: number;
   /** A game that can be played on your own, without a room. */
   solo: boolean;
 }
 
-export const GAMES: readonly GameInfo[] = [
+const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
   {
     type: 'draw-and-guess',
     kind: 'party',
     tone: 'peach',
-    maxPlayers: 8,
     solo: false,
   },
   {
     type: 'minesweeper',
     kind: 'puzzles',
     tone: 'blue',
-    maxPlayers: 8,
     solo: true,
   },
-  { type: 'make-24', kind: 'puzzles', tone: 'lime', maxPlayers: 8, solo: true },
+  { type: 'make-24', kind: 'puzzles', tone: 'lime', solo: true },
   {
     type: 'pairs',
     kind: 'spot-and-remember',
     tone: 'sand',
-    maxPlayers: 6,
     solo: true,
   },
   {
     type: 'trios',
     kind: 'spot-and-remember',
     tone: 'peach',
-    maxPlayers: 8,
     solo: true,
   },
   {
     type: 'liars-dice',
     kind: 'party',
     tone: 'lime',
-    maxPlayers: 6,
     solo: true,
   },
-  { type: 'hush', kind: 'party', tone: 'sand', maxPlayers: 4, solo: false },
+  { type: 'hush', kind: 'party', tone: 'sand', solo: false },
   {
     type: 'daily-word',
     kind: 'puzzles',
     tone: 'blue',
-    maxPlayers: 8,
     solo: true,
   },
 ];
+
+export const GAMES: readonly GameInfo[] = ENTRIES.map((game) => ({
+  ...game,
+  minPlayers: SEATS[game.type].min,
+  maxPlayers: SEATS[game.type].max,
+}));
 
 /** A kind's games, alphabetically by their names in the player's language. */
 export function gamesOfKind(

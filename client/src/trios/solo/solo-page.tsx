@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
@@ -390,7 +391,7 @@ function turnBar(
       main: m.trios.solo.wrong,
       meta:
         whyNotATrio(
-          flash.places.map((place) => run.deal.table[place]),
+          flash.places.map((place) => itemAt(run.deal.table, place)),
           m,
         ) ?? undefined,
     };

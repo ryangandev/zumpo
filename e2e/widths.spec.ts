@@ -64,9 +64,9 @@ async function spillsAt(page: Page): Promise<Spill[]> {
       const children = [...el.children];
       for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        const childStyle = getComputedStyle(child);
+        const childStyle = getComputedStyle(child!);
         if (childStyle.display === 'contents') {
-          children.push(...child.children);
+          children.push(...child!.children);
           continue;
         }
         if (
@@ -75,7 +75,7 @@ async function spillsAt(page: Page): Promise<Spill[]> {
         ) {
           continue;
         }
-        const rect = child.getBoundingClientRect();
+        const rect = child!.getBoundingClientRect();
         if (rect.width === 0) continue;
         from = Math.min(
           from,

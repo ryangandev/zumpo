@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import type {
   HushGameSummary,
   HushLevelRecord,
@@ -310,12 +311,10 @@ function tableHead(state: HushRoomState, m: Messages) {
 
 /** Who is away holding cards: the level waits for them. */
 const awayHolders = (state: HushRoomState) =>
-  Object.entries(state.playerList)
-    .filter(
-      ([playerId, player]) =>
-        !player.isConnected && (state.table[playerId]?.held ?? 0) > 0,
-    )
-    .map(([playerId]) => playerId);
+  Object.entries(state.playerList).flatMap(([playerId, player]) => {
+    const held = state.table[playerId]?.held ?? 0;
+    return !player.isConnected && held > 0 ? [{ playerId, held }] : [];
+  });
 
 /** The viewer's side of the table, phase by phase. */
 function Hand({ room }: { room: Room }) {
@@ -360,7 +359,7 @@ function Hand({ room }: { room: Room }) {
     return <HandRow label={m.hush.hand} message={m.hush.handEmpty} />;
   }
   if (phase === 'playing' && !reconnecting) {
-    const next = hand[0];
+    const next = itemAt(hand, 0);
     return (
       <HandRow
         label={m.hush.hand}
@@ -374,7 +373,9 @@ function Hand({ room }: { room: Room }) {
       />
     );
   }
-  const away = awayHolders(state).map((id) => nameIn(room, id, m));
+  const away = awayHolders(state).map((holder) =>
+    nameIn(room, holder.playerId, m),
+  );
   return (
     <HandRow
       label={m.hush.hand}
@@ -459,7 +460,7 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     case 'paused': {
       const away = awayHolders(state);
       const names = listNames(
-        away.map((id) => nameIn(room, id, m)),
+        away.map((holder) => nameIn(room, holder.playerId, m)),
         m,
       );
       return {
@@ -468,7 +469,7 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
         main: m.hush.paused,
         meta:
           away.length === 1
-            ? m.hush.waitingHolder(names, state.table[away[0]].held)
+            ? m.hush.waitingHolder(names, itemAt(away, 0).held)
             : m.hush.waitingHolders(names),
         countdown: clock(m.hush.seatHeld),
       };

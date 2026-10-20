@@ -1,3 +1,4 @@
+import { itemAt } from '../../../shared/list';
 import type {
   MinesweeperPickResult,
   MinesweeperRoomState,
@@ -33,7 +34,7 @@ export function Board({ state, onPick, showPicks }: BoardProps) {
   const markers = showPicks ? markersByCell(state.lastRound) : new Map();
 
   const cellState = (index: number): MineCellState => {
-    const value = board[index];
+    const value = itemAt(board, index);
     if (value === KNOWN_MINE) return { kind: 'mine' };
     if (value === HIDDEN) {
       return index === myPick && state.phase === 'picking'
@@ -149,7 +150,7 @@ function markersByCell(picks: readonly MinesweeperPickResult[]) {
       initials:
         cellPicks.length > 1
           ? `×${cellPicks.length}`
-          : initialsOf(cellPicks[0].username),
+          : initialsOf(itemAt(cellPicks, 0).username),
     });
   }
   return markers;

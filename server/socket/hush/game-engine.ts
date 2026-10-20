@@ -1,5 +1,5 @@
+import { SEATS } from '../../../shared/seats.js';
 import type { HushDiscard } from '../../models/types.js';
-import { RequestError } from '../../models/error.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { resetPoints } from '../../libs/utils.js';
@@ -8,12 +8,7 @@ import {
   reconnectGraceInSeconds,
   type HushDurationsInSeconds,
 } from '../../libs/game-clock.js';
-import {
-  deal,
-  levelsFor,
-  MIN_PLAYERS,
-  START_LIVES,
-} from '../../../shared/hush.js';
+import { deal, levelsFor, START_LIVES } from '../../../shared/hush.js';
 import type { HushState } from './state.js';
 
 type HushRoom = Room<HushState>;
@@ -29,11 +24,12 @@ const cardsLeft = (room: HushRoom) =>
 
 /** Dropped players who still hold cards: the level cannot go on without them. */
 const awayHolders = (room: HushRoom) =>
-  Object.keys(room.playerList).filter(
-    (playerId) =>
-      !room.playerList[playerId].isConnected &&
-      (room.game.hands[playerId]?.length ?? 0) > 0,
-  );
+  Object.entries(room.playerList)
+    .filter(
+      ([playerId, seat]) =>
+        !seat.isConnected && (room.game.hands[playerId]?.length ?? 0) > 0,
+    )
+    .map(([playerId]) => playerId);
 
 /** Hushed while a level is played, for everybody. */
 const mayChat = (room: HushRoom) => !IN_LEVEL.has(room.game.phase);
@@ -64,26 +60,7 @@ const createHushGameEngine = (
     ctx.rooms.stopPhase(room);
   };
 
-  const startGame = (room: HushRoom, playerId: string) => {
-    if (room.owner.playerId !== playerId) {
-      throw new RequestError(
-        'notRoomOwner',
-        'Only the room owner can start the game.',
-      );
-    }
-    if (room.isGameStarted) {
-      throw new RequestError(
-        'gameAlreadyStarted',
-        'The game has already started.',
-      );
-    }
-    if (seatCount(room) < MIN_PLAYERS) {
-      throw new RequestError(
-        'notEnoughPlayers',
-        `At least ${MIN_PLAYERS} players are required to start.`,
-      );
-    }
-
+  const startGame = (room: HushRoom) => {
     const game = room.game;
     game.levels = levelsFor(seatCount(room));
     game.lives = START_LIVES;
@@ -417,7 +394,7 @@ const createHushGameEngine = (
       ].toSorted((a, b) => a.card - b.card);
     }
 
-    if (seatCount(room) < MIN_PLAYERS) {
+    if (seatCount(room) < SEATS.hush.min) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { won: false, endedEarly: true });
       return;

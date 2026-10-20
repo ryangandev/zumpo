@@ -1,8 +1,9 @@
+import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import { Button, ButtonLink, Notice, PlayerRow } from '../ui';
-import { gamePath, scoreOf } from '../games/catalog';
+import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
@@ -25,12 +26,18 @@ export function RoomPanel({
   notice?: ReactNode;
   actions?: ReactNode;
 }) {
+  const { refusal } = useRoomContext();
   return (
     <section className={styles.panel} aria-labelledby="room-panel-title">
       <h2 id="room-panel-title" className={styles.title}>
         {title}
       </h2>
       <p className={styles.body}>{children}</p>
+      {refusal && (
+        <Notice tone="error" className={styles.notice}>
+          {refusal}
+        </Notice>
+      )}
       {notice && <Notice className={styles.notice}>{notice}</Notice>}
       {actions && <div className={styles.actions}>{actions}</div>}
     </section>
@@ -140,6 +147,7 @@ export function WaitingPanel({
   const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
+  const { minPlayers } = gameInfo(state.gameType);
   const count = Object.keys(state.playerList).length;
   const picked = usePickedName();
 
@@ -161,7 +169,7 @@ export function WaitingPanel({
       </RoomPanel>
     );
   }
-  if (count < 2) {
+  if (count < minPlayers) {
     return (
       <RoomPanel
         title={aloneTitle}
@@ -174,7 +182,7 @@ export function WaitingPanel({
           </>
         }
       >
-        {m.room.needsPlayers(gameName)}
+        {m.room.needsPlayers(gameName, minPlayers)}
       </RoomPanel>
     );
   }
@@ -256,7 +264,7 @@ export function ResultsFrame({
     </>
   ) : starting ? (
     <StatusLine>{m.room.starting}</StatusLine>
-  ) : count >= 2 ? (
+  ) : count >= gameInfo(state.gameType).minPlayers ? (
     <>
       <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
       <InviteButton />
@@ -318,34 +326,40 @@ export function ResultsPanel<Summary extends GameSummary>({
     ? standings.map((_, index) => index + 1)
     : placesOf(standings);
   const winners = standings.filter((_, index) => places[index] === 1);
+  // A spectator has no place.
   const place = places[standings.findIndex((s) => s.playerId === playerId)];
+  const [winner] = winners;
 
   return (
     <ResultsFrame
       title={
-        winners.length === 0
+        winner === undefined
           ? m.room.gameOver
           : winners.length === 1
             ? m.room.wins(
-                winners[0].username,
-                scoreOf(m, state.gameType, winners[0].points),
+                winner.username,
+                scoreOf(m, state.gameType, winner.points),
               )
             : m.room.ties(
                 listNames(
                   winners.map((w) => w.username),
                   m,
                 ),
-                scoreOf(m, state.gameType, winners[0].points),
+                scoreOf(m, state.gameType, winner.points),
               )
       }
-      detail={place > 1 ? m.room.finished(detail, ordinal(place, m)) : detail}
+      detail={
+        place !== undefined && place > 1
+          ? m.room.finished(detail, ordinal(place, m))
+          : detail
+      }
       onPlayAgain={onPlayAgain}
       starting={starting}
     >
       <ol className={styles.ranking} aria-label={m.room.standings}>
         {standings.map((standing, index) => {
           const seat = state.playerList[standing.playerId];
-          const standingPlace = places[index];
+          const standingPlace = itemAt(places, index);
           return (
             <li key={standing.playerId} className={styles.place}>
               <span className={styles.number}>{standingPlace}</span>

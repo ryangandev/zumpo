@@ -44,6 +44,15 @@ export const room: typeof en = {
   watch: '去观战',
   sit: '加入玩家席',
   moving: '正在换座…',
+  refused: {
+    notEnoughPlayers: '还需要更多玩家才能开始。',
+    notRoomOwner: '只有房主可以开始游戏。',
+    gameAlreadyStarted: '游戏已经开始了。',
+    seatsTaken: '牌桌上的座位都满了。',
+    spectatorSeatsTaken: '观战席已经满了。',
+    noAnswer: 'Zumpo 没有回应，请再试一次。',
+    failed: '没有成功，请再试一次。',
+  },
   spectatingTitle: '你在观战席。',
   spectatingSeatFree: '加入玩家席就能参加下一局，也可以继续观战。',
   spectatingSeatsFull: '玩家席已满，有人空出座位后就能加入。',
@@ -60,8 +69,8 @@ export const room: typeof en = {
   pickedName: (name) => `你现在叫 ${name}。起一个朋友们认得出的名字吧。`,
   waitingForHost: (name) => `等待 ${name} 开始游戏。`,
   guestSetup: (setup) => `${setup}只有房主可以开始游戏。`,
-  needsPlayers: (game) =>
-    `${game}至少需要 2 人。分享房间，邀请朋友加入就能开始。`,
+  needsPlayers: (game, fewest) =>
+    `${game}至少需要 ${fewest} 人。分享房间，邀请朋友加入就能开始。`,
   everyoneHere: '大家到齐了吗？',
   starting: '正在开始游戏…',
   start: '开始游戏',

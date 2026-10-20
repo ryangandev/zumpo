@@ -1,3 +1,4 @@
+import { itemAt, swap } from '../../../../shared/list';
 import type { MinesweeperDifficulty } from '../../../../shared/wire-types';
 import { BOARD_SIZES, neighboursOf } from '../../../../shared/minesweeper';
 
@@ -78,7 +79,7 @@ function layMines(
   // A partial Fisher-Yates: the first `mines` candidates are a uniform draw.
   for (let i = 0; i < game.mines; i++) {
     const j = i + Math.floor(random() * (candidates.length - i));
-    [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    swap(candidates, i, j);
   }
   const layout = Array.from({ length: size }, () => false);
   for (const index of candidates.slice(0, game.mines)) layout[index] = true;
@@ -171,7 +172,7 @@ export function chord(game: SoloGame, index: number, now: number): SoloGame {
 }
 
 export function cellAt(game: SoloGame, index: number): SoloCell {
-  if (game.open[index]) return game.adjacent[index];
+  if (game.open[index]) return itemAt(game.adjacent, index);
   if (game.status === 'lost') {
     if (index === game.hit) return 'hit';
     if (game.flags[index]) return game.layout[index] ? 'flag' : 'wrong-flag';

@@ -1,10 +1,14 @@
-import { textOf } from './helpers/test-server.js';
+import {
+  textOf,
+  seatTable,
+  TWO_NAMES,
+  type ClientsFor,
+} from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { LiarsDiceRoomState } from '../models/types.js';
 import {
   collectChat,
   createLiarsDiceRoom,
-  joinRoom,
   liarsDiceRoom,
   lobbyView,
   request,
@@ -22,21 +26,19 @@ import {
  * game. The order of play is shuffled, so no test may assume who goes first;
  * `byId` and `first.turnPlayerId` say who it is.
  */
-async function playToFirstTurn(
+async function playToFirstTurn<
+  const Names extends readonly [string, ...string[]] = typeof TWO_NAMES,
+>(
   harness: TestServer,
-  names: readonly string[] = ['Alice', 'Bob'],
+  names: Names = TWO_NAMES as unknown as Names,
   dicePerPlayer = 3,
 ) {
-  const players: TestClient[] = [];
-  for (const _ of names) players.push(await harness.connect());
-  const [owner] = players;
-  const roomId = await createLiarsDiceRoom(owner, {
-    username: names[0],
-    dicePerPlayer,
-  });
-  for (const [index, player] of players.entries()) {
-    if (index > 0) await joinRoom(player, roomId, names[index]);
-  }
+  const { roomId, players, owner } = await seatTable(
+    harness,
+    names,
+    (creator, username) =>
+      createLiarsDiceRoom(creator, { username, dicePerPlayer }),
+  );
 
   const turn = waitForLiarsDiceState(owner, (s) => s.phase === 'bidding');
   await startGame(owner, roomId);
@@ -46,7 +48,7 @@ async function playToFirstTurn(
     players.find((player) => player.playerId === playerId)!;
   const game = () => liarsDiceRoom(harness, roomId).game;
   /** The server's turn order, as clients. */
-  const order = () => game().order.map(byId);
+  const order = () => game().order.map(byId) as ClientsFor<Names>;
   return { roomId, players, owner, first, byId, game, order };
 }
 
@@ -56,7 +58,7 @@ function rig(
   cups: number[][],
 ) {
   game.order.forEach((playerId, index) => {
-    game.dice[playerId] = cups[index];
+    game.dice[playerId] = cups[index]!;
   });
 }
 
@@ -150,11 +152,11 @@ describe('a Liar’s Dice room', () => {
       expect(own.every((die) => die >= 1 && die <= 6)).toBe(true);
       const others = view.cups.filter((cup) => cup !== cupOf(view, player));
       expect(others.map((cup) => cup.dice)).toEqual([null, null]);
-      expect(view.playerList[player.playerId].points).toBe(5);
+      expect(view.playerList[player.playerId]!.points).toBe(5);
     }
     // The table is in turn order, and the first in it opens.
-    expect(first.turnPlayerId).toBe(first.cups[0].playerId);
-    expect(first.nextPlayerId).toBe(first.cups[1].playerId);
+    expect(first.turnPlayerId).toBe(first.cups[0]!.playerId);
+    expect(first.nextPlayerId).toBe(first.cups[1]!.playerId);
     expect(byId(first.turnPlayerId)).toBeDefined();
   });
 });
@@ -379,8 +381,8 @@ describe('the end of a game', () => {
 
     // b holds one die, c one die, a three; every call below is a lie.
     const server = liarsDiceRoom(harness, roomId);
-    server.playerList[b.playerId].points = 1;
-    server.playerList[c.playerId].points = 1;
+    server.playerList[b.playerId]!.points = 1;
+    server.playerList[c.playerId]!.points = 1;
     rig(game(), [[2, 2, 2], [3], [4]]);
 
     // Five dice on the table, and not one 6 or 1: four 6s is a lie.
@@ -498,15 +500,15 @@ describe('leaving', () => {
         watcher,
         (s) => s.bids.length === 0 && s.cups.length === 2,
       );
-      seats[leaving].emit('room:leave', roomId);
+      seats[leaving]!.emit('room:leave', roomId);
       const state = await rerolled;
 
       // The bids were about dice that are gone: same round, fresh dice.
       expect(state.round).toBe(1);
       expect(state.phase).toBe('bidding');
       expect(state.reveal).toBeNull();
-      expect(game().dice[seats[leaving].playerId]).toBeUndefined();
-      expect(state.turnPlayerId).toBe(seats[opening].playerId);
+      expect(game().dice[seats[leaving]!.playerId]).toBeUndefined();
+      expect(state.turnPlayerId).toBe(seats[opening]!.playerId);
     },
   );
 
@@ -518,7 +520,7 @@ describe('leaving', () => {
     ]);
     const [a, b, c] = order();
     // c is out: no dice left, and none rolled this round.
-    liarsDiceRoom(harness, roomId).playerList[c.playerId].points = 0;
+    liarsDiceRoom(harness, roomId).playerList[c.playerId]!.points = 0;
     delete game().dice[c.playerId];
     const next = turnOf(owner, b);
     bid(a, roomId, 1, 3);

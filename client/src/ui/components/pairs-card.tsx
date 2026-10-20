@@ -1,3 +1,4 @@
+import { itemAt } from '../../../../shared/list';
 import { useMessages, type Messages } from '../../i18n';
 import { cx } from '../cx';
 import { PairsSymbol } from './pairs-symbol';
@@ -26,9 +27,9 @@ function describe(state: PairsCardState, m: Messages): string {
     case 'down':
       return m.ui.pairs.down;
     case 'up':
-      return m.ui.pairs.symbols[state.symbol];
+      return itemAt(m.ui.pairs.symbols, state.symbol);
     case 'matched':
-      return m.ui.pairs.matched(m.ui.pairs.symbols[state.symbol]);
+      return m.ui.pairs.matched(itemAt(m.ui.pairs.symbols, state.symbol));
   }
 }
 
