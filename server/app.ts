@@ -41,6 +41,7 @@ import {
   type ConnectionLimits,
 } from './libs/connection-gate.js';
 import { handshakeAuth } from './libs/validation.js';
+import { guard } from './libs/guard.js';
 import { splitAck, type IoServer } from './libs/rooms/emit.js';
 import { invalidRequest } from './models/error.js';
 import type {
@@ -284,13 +285,21 @@ const createZumpoServer = (
 
     // Identity first, from the handshake: every handler below reads the player
     // id off the connection, and this runs before any event from it is read.
-    playerSessionHandler(
-      io,
-      socket,
-      sessions,
-      membership.graceMs,
-      membership.handleResume,
+    // A returning player's seats go back to them on the way, which runs each
+    // game's own code: a bug in it must not take the connection with it.
+    const identified = guard(`Connecting ${socket.id}`, () =>
+      playerSessionHandler(
+        io,
+        socket,
+        sessions,
+        membership.graceMs,
+        membership.handleResume,
+      ),
     );
+    if (!identified && !socket.data.playerId) {
+      socket.disconnect(true);
+      return;
+    }
     clientDepartureOnDisconnectHandler(socket, membership);
 
     // The room layer: lobbies, seats, ownership, chat. None of it knows which

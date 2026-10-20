@@ -1,5 +1,6 @@
 import type { IoSocket } from '../libs/rooms/emit.js';
 import type { RoomMembership } from '../libs/rooms/membership.js';
+import { guard } from '../libs/guard.js';
 
 /**
  * A dropped connection is no longer a departure.
@@ -16,7 +17,9 @@ const clientDepartureOnDisconnectHandler = (
 ) => {
   socket.on('disconnect', () => {
     console.log('client: ' + socket.id + ' disconnected');
-    membership.handleDisconnect(socket.data.playerId, socket.id);
+    guard(`Player ${socket.data.playerId} disconnecting`, () =>
+      membership.handleDisconnect(socket.data.playerId, socket.id),
+    );
   });
 };
 
