@@ -72,6 +72,8 @@ interface CreateZumpoServerOptions {
   corsOrigin?: string;
   /** Serve the built SPA and route unknown paths to it. */
   serveClient?: boolean;
+  /** Where the built SPA is; `build/public` beside the built server. */
+  clientFolder?: string;
   /** Shortened by the test suite so a full game runs in milliseconds. */
   phaseDurations?: PhaseDurationsInSeconds;
   /** Minesweeper's round window and reveal pause. Shortened by tests. */
@@ -151,9 +153,10 @@ const createZumpoServer = (
   } = options;
 
   const app = express();
-  const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
   // build/server/app.js serves the SPA that Vite builds into build/public.
-  const publicStaticFolder = path.join(__dirname, '..', 'public');
+  const publicStaticFolder =
+    options.clientFolder ??
+    path.join(path.dirname(url.fileURLToPath(import.meta.url)), '..', 'public');
 
   app.use(express.static(publicStaticFolder));
 
@@ -314,6 +317,12 @@ const createZumpoServer = (
     console.log('Serving the built client.');
     // Express 5 / path-to-regexp v8: a bare '*' is no longer a valid path.
     // Wildcards must be named - '/{*splat}' matches the root as well as any subpath.
+    // A built file that is not there is missing, not a page: answering with
+    // the SPA would hand a script tag HTML, which fails with a MIME error and
+    // a blank screen instead of a 404 the page can recover from.
+    app.get('/assets/{*splat}', (_req: Request, res: Response) => {
+      res.sendStatus(404);
+    });
     app.get('/{*splat}', (_req: Request, res: Response) => {
       res.sendFile('index.html', { root: publicStaticFolder });
     });

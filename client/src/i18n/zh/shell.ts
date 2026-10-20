@@ -40,4 +40,9 @@ export const shell: typeof en = {
     description: '找不到这个页面。不过还有好游戏在等你。',
     backHome: '回到首页',
   },
+  crashed: {
+    title: '出了点问题',
+    description: '这个页面出错了。刷新一下通常就好，房间里的座位会给你留着。',
+    reload: '刷新',
+  },
 };

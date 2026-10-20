@@ -46,4 +46,10 @@ export const shell = {
       'We couldn’t find this page. There are still good games waiting for you.',
     backHome: 'Back home',
   },
+  crashed: {
+    title: 'Something went wrong',
+    description:
+      'This page stopped working. Reloading usually puts it right, and a room keeps your seat.',
+    reload: 'Reload',
+  },
 };

@@ -330,6 +330,7 @@ What the free plan costs in behaviour:
 - **It sleeps after 15 minutes without traffic**, and the next visitor waits about a minute while it starts.
   Socket.IO traffic counts as activity, so a room in play keeps it awake.
 - **Every deploy and restart drops every room**, as any restart does; avoid deploying while people are playing.
+  A page left open across a deploy still holds the old build: when a chunk it loads later, such as Daily Word's, is gone, it reloads once for the new one, and a missing built file is a 404 rather than the page, so a page that still fails shows the crash page with a Reload button.
 - **750 instance hours a month**, enough for one service running all month.
 
 `autoDeployTrigger: checksPass` deploys a commit on `main` only after CI has passed on it.
