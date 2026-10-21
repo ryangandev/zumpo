@@ -376,7 +376,7 @@ function turnBar(
     countdown: {
       seconds: Math.floor(elapsed(game, now) / 1000),
       label: m.pairs.solo.runTime,
-      waiting: true,
+      deadline: false,
     },
   };
   // A phone has no side cards, so the pairs found are on the turn bar.

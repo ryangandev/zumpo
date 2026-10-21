@@ -408,7 +408,7 @@ export default function Gallery() {
       <Family
         name="Countdown"
         file="countdown"
-        note="Urgent is automatic in the last 5 seconds of a phase you act in."
+        note="Urgent is automatic in the last 5 seconds of a phase you act in. Info is a clock that ends nothing: a hint, a card, a run."
       >
         <Specimen
           family="countdown"
@@ -430,6 +430,13 @@ export default function Gallery() {
           deviation={CLOCK_CELLS}
         >
           <Countdown seconds={4} label="to pick" />
+        </Specimen>
+        <Specimen
+          family="countdown"
+          variant="Tone=Info"
+          deviation={CLOCK_CELLS}
+        >
+          <Countdown seconds={28} label="to a hint" deadline={false} />
         </Specimen>
       </Family>
 

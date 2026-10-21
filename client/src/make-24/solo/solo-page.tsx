@@ -367,7 +367,7 @@ function turnBar(
     countdown: {
       seconds: Math.floor(runTime(run, now) / 1000),
       label: m.make24.solo.runTime,
-      waiting: true,
+      deadline: false,
     },
   };
   if (last?.skipped) {

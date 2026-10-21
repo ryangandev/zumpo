@@ -84,6 +84,7 @@ Decisions from the design review rounds (their reports are in git history):
   A blank name opens More options to say so, and a room being made hides the button with the other actions (DL06, ML06).
   A helper says only what the options do not ("60 seconds a hand."), never the options again; a page heading over the card would say the game's name twice, so a wide screen has none, and a phone puts the card's title and description on the page.
 - A game screen states the turn in one `Zumpo/Turn bar` above the canvas or board: what is happening, whose turn, and the server's countdown.
+  Only a deadline, a clock whose end ends what you are doing, is a filled `Zumpo/Countdown` pill that can turn urgent; a clock that ends nothing, the time to a Trios hint, the time a Snap card has been out and a run's time on your own, is its Info tone, a line with no fill, so it never reads as time running out.
 - In Draw & Guess the guess is the chat input; it is locked for the drawer and for anyone who has scored this turn, as the server already enforces.
 - Brush colours are `color/brush/*` tokens, and the drawer's controls are one `Zumpo/Drawing toolbar`.
 - Minesweeper shows each round's outcome as `Zumpo/Pick result` rows: who picked how risky a cell, and what it paid.
@@ -251,6 +252,7 @@ Code differs from Figma on purpose in a few places:
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
+- Until the bridge script `j-fig-1-countdown-info.js` runs, Figma has no Countdown Info tone: its Trios hint clocks, Snap card clocks and run times are still drawn Running or Waiting.
 
 ## Editing the Figma file
 
