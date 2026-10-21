@@ -201,7 +201,7 @@ Code differs from Figma on purpose in a few places:
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
 - Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
-- A Code Breaker or Daily Word room's phone turn bar says how to read the marks while you still guess, even after somebody else has solved it; CB18 and DW13 show Maya's name there instead.
+- A Code Breaker or Daily Word room's phone turn bar says how to read the marks while you still guess or watch as a spectator, even after somebody else has solved it; CB18 and DW13 show Maya's name there instead.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.

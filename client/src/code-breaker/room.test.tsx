@@ -150,6 +150,29 @@ describe('a Code Breaker room', () => {
     ).toBeNull();
   });
 
+  it('says how to read the pegs in a phone spectator’s turn bar too', async () => {
+    onPhone();
+    await renderSeated({
+      ...guessing([
+        board('p2', 'Maya', {
+          rows: [{ guess: null, mark: CRACKED }],
+          status: 'cracked',
+        }),
+        board('p3', 'Leo'),
+      ]),
+      playerList: {
+        p2: { username: 'Maya', points: 0, isConnected: true },
+        p3: { username: 'Leo', points: 0, isConnected: true },
+      },
+      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+    });
+    await screen.findByRole('region', { name: 'Turn' });
+    // A spectator reads boards of marks alone too, even once one is cracked.
+    expect(
+      turn().getByText('Green: in place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+  });
+
   it('quiets a cracker’s chat until the reveal', async () => {
     await renderSeated(
       guessing([
