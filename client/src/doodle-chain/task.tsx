@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from 'react';
+import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react';
 import {
   DESCRIBE_SECONDS,
   kindOf,
@@ -45,8 +39,30 @@ type Room = RoomOf<DoodleChainRoomState>;
 /** How often, at most, the words being typed reach the server. */
 const TEXT_EVERY_MS = 300;
 
-const DEFAULT_COLOUR: BrushName = 'ink';
-const DEFAULT_SIZE: BrushSize = 10;
+/**
+ * What the viewer is making that the server does not echo back, kept by the
+ * room above the stage, which a change between phone and desktop remounts.
+ */
+export interface Desk {
+  /** The words last written, and the step they were written in. */
+  words: { step: number; draft: DoodleChainDraft } | null;
+  colour: BrushName;
+  size: BrushSize;
+}
+
+/** A desk at the start of a game. */
+export const NEW_DESK: Desk = { words: null, colour: 'ink', size: 10 };
+
+interface DeskProps {
+  desk: Desk;
+  onDesk: (change: Partial<Desk>) => void;
+}
+
+/** The words `draft` holds; a suggestion in the viewer's language. */
+const wordsOf = (draft: DoodleChainDraft, m: Messages) =>
+  'text' in draft
+    ? draft.text
+    : (m.doodleChain.suggestions[draft.suggestion] ?? '');
 
 /** The name of whoever is at `place` in the order, counted round it. */
 function nameAt(state: DoodleChainRoomState, place: number): string {
@@ -80,11 +96,12 @@ function waitingFor(room: Room): string[] {
 }
 
 /** DC05-DC11, DC15-DC18: a step, from the turn bar down. */
-export function Step({ room }: { room: Room }) {
+export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const { state, receivedAt, reconnecting, canvas } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
-  // What the viewer last wrote, to show while the chains move on.
-  const [words, setWords] = useState('');
+  // What the viewer wrote this step, to show while the chains move on.
+  const written =
+    desk.words?.step === state.step ? desk.words.draft : (state.draft ?? null);
 
   // Every drawing starts on a blank sheet. A page that arrives mid-step is
   // sent its drawing so far instead, so only a step seen starting clears it.
@@ -101,13 +118,17 @@ export function Step({ room }: { room: Room }) {
     <>
       <TurnBar {...turnBar(room, task, seconds, m)} />
       {state.phase === 'draw' && task && !task.sitsOut ? (
-        <Drawing room={room} />
+        <Drawing room={room} desk={desk} onDesk={onDesk} />
       ) : (
         <section className={styles.panel}>
           {!task ? (
             <Watching room={room} />
           ) : state.phase === 'passing' ? (
-            <Passing room={room} task={task} words={words} />
+            <Passing
+              room={room}
+              task={task}
+              words={written ? wordsOf(written, m) : ''}
+            />
           ) : task.sitsOut ? (
             <SitOut room={room} task={task} />
           ) : (
@@ -115,7 +136,10 @@ export function Step({ room }: { room: Room }) {
               key={state.step}
               room={room}
               task={task}
-              onWords={setWords}
+              draft={written ?? { text: '' }}
+              onDraft={(draft) =>
+                onDesk({ words: { step: state.step, draft } })
+              }
             />
           )}
         </section>
@@ -291,29 +315,22 @@ function useTextSender(room: Room) {
 function Writing({
   room,
   task,
-  onWords,
+  draft,
+  onDraft: setDraft,
 }: {
   room: Room;
   task: DoodleChainTask;
-  onWords: (words: string) => void;
+  /** The server's draft for a page that arrives mid-step, then the viewer's. */
+  draft: DoodleChainDraft;
+  onDraft: (draft: DoodleChainDraft) => void;
 }) {
   const m = useMessages();
   const { state, playerId, socket } = room;
   const roomId = state.roomId;
-  // The server's draft is where a page that arrives mid-step starts from;
-  // after that, the field is the viewer's.
-  const [draft, setDraft] = useState<DoodleChainDraft>(
-    () => state.draft ?? { text: '' },
-  );
-  const text =
-    'text' in draft
-      ? draft.text
-      : (m.doodleChain.suggestions[draft.suggestion] ?? '');
+  const text = wordsOf(draft, m);
   const done = state.table[playerId]?.done ?? false;
   const { send, flush } = useTextSender(room);
   const prompt = task.kind === 'prompt';
-
-  useEffect(() => onWords(text), [text, onWords]);
 
   const change = (next: string) => {
     const words = Array.from(next).slice(0, TEXT_MAX).join('');
@@ -371,12 +388,11 @@ function useBlankCanvas(canvas: Room['canvas']): boolean {
 }
 
 /** DC07: drawing the words given, on Draw & Guess's canvas and toolbar. */
-function Drawing({ room }: { room: Room }) {
+function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const m = useMessages();
   const { state, playerId, socket, canvas, reconnecting } = room;
   const roomId = state.roomId;
-  const [colour, setColour] = useState<BrushName>(DEFAULT_COLOUR);
-  const [size, setSize] = useState<BrushSize>(DEFAULT_SIZE);
+  const { colour, size } = desk;
   const done = state.table[playerId]?.done ?? false;
   const canDraw = !done && !reconnecting;
   // An empty drawing is never Done; the button keeps its focus meanwhile.
@@ -418,9 +434,9 @@ function Drawing({ room }: { room: Room }) {
       {canDraw && (
         <DrawingToolbar
           colour={colour}
-          onColourChange={setColour}
+          onColourChange={(next) => onDesk({ colour: next })}
           size={size}
-          onSizeChange={setSize}
+          onSizeChange={(next) => onDesk({ size: next })}
           onUndo={() => {
             canvas.undo();
             socket.emit('dc:draw:undo', roomId);

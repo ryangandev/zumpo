@@ -12,7 +12,7 @@ import { ordinal, placesOf, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { Chain } from './chain';
-import { Step } from './task';
+import { NEW_DESK, Step, type Desk } from './task';
 import styles from './room.module.css';
 
 type Room = RoomOf<DoodleChainRoomState>;
@@ -25,6 +25,12 @@ export function DoodleChainRoom() {
   const inGame = state.isGameStarted;
   const revealing = inGame && state.phase === 'reveal';
   const album = !inGame ? state.lastGame : null;
+  // Kept here, above the layout, which remounts the stage between phone and
+  // desktop: what the viewer is making, and the album's chain they picked.
+  const [desk, setDesk] = useState<Desk>(NEW_DESK);
+  const [picked, setPicked] = useState(0);
+  if (!inGame && desk !== NEW_DESK) setDesk(NEW_DESK);
+  if (inGame && picked !== 0) setPicked(0);
   return (
     <RoomLayout
       phase={
@@ -45,9 +51,18 @@ export function DoodleChainRoom() {
         revealing ? (
           <Reveal room={room} />
         ) : inGame ? (
-          <Step room={room} />
+          <Step
+            room={room}
+            desk={desk}
+            onDesk={(change) => setDesk((now) => ({ ...now, ...change }))}
+          />
         ) : album ? (
-          <Album room={room} summary={album} />
+          <Album
+            room={room}
+            summary={album}
+            picked={picked}
+            onPick={setPicked}
+          />
         ) : (
           <Waiting room={room} />
         )
@@ -245,13 +260,16 @@ function Reveal({ room }: { room: Room }) {
 function Album({
   room,
   summary,
+  picked,
+  onPick,
 }: {
   room: Room;
   summary: DoodleChainGameSummary;
+  picked: number;
+  onPick: (chain: number) => void;
 }) {
   const m = useMessages();
   const { startGame, starting } = room;
-  const [picked, setPicked] = useState(0);
   const chain = summary.chains[picked] ?? summary.chains[0];
   const entries = summary.chains.reduce(
     (sum, { entries: list }) => sum + list.length,
@@ -300,7 +318,7 @@ function Album({
           <FilterChip
             key={owner.playerId}
             selected={chain === summary.chains[index]}
-            onSelect={() => setPicked(index)}
+            onSelect={() => onPick(index)}
           >
             {m.doodleChain.chainOf(owner.username)}
           </FilterChip>

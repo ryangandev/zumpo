@@ -6,6 +6,7 @@ import type {
   DoodleChainRoomState,
 } from '../../../shared/wire-types';
 import { doodleChainState, ME } from '../tests/fixtures';
+import { narrowable } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 const RYAN = { playerId: ME, username: 'Ryan' };
@@ -193,6 +194,28 @@ describe('a Doodle Chain room', () => {
       'true',
     );
     expect(fake.sentArgs('dc:done')).toEqual([]);
+  });
+
+  it('keeps the words written through a switch to the phone layout', async () => {
+    const user = userEvent.setup();
+    const { narrow } = narrowable();
+    const { update } = await renderSeated(writing);
+    await user.type(
+      screen.getByRole('textbox', { name: 'Your first line' }),
+      'A ghost',
+    );
+    act(narrow);
+    expect(
+      screen.getByRole('textbox', { name: 'Your first line' }),
+    ).toHaveValue('A ghost');
+    expect(screen.getByRole('button', { name: 'Done' })).not.toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+
+    // While the chains move on, the line written is still shown.
+    update({ ...writing, phase: 'passing', phaseEndsInMs: 3_000 });
+    expect(screen.getByText('A ghost')).toBeInTheDocument();
   });
 
   it('names nobody next when the next player has left', async () => {
@@ -519,6 +542,42 @@ describe('a Doodle Chain room', () => {
     expect(
       screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();
+  });
+
+  it('keeps the chain picked in the album through a switch to the phone layout', async () => {
+    const user = userEvent.setup();
+    const { narrow } = narrowable();
+    await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+          ],
+          chains: [
+            { owner: RYAN, entries: ryansChain },
+            {
+              owner: MAYA,
+              entries: [
+                {
+                  chain: 1,
+                  step: 1,
+                  kind: 'prompt',
+                  author: MAYA,
+                  content: { type: 'text', text: 'A frog in a top hat' },
+                  hearts: 0,
+                },
+              ],
+            },
+          ],
+          favourites: [],
+        },
+      }),
+    );
+    await user.click(screen.getByRole('button', { name: 'Maya’s chain' }));
+    act(narrow);
+    expect(screen.getByText('A frog in a top hat')).toBeInTheDocument();
   });
 
   it('gives nobody a place when nobody gave a heart', async () => {
