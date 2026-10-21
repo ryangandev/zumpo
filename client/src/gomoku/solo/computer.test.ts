@@ -1,8 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { CENTRE, pointAt, pointName } from '../../../../shared/gomoku';
 import type { GomokuColor, GomokuMove } from '../../../../shared/wire-types';
-import { chooseMove, LEVELS, winByFours } from './computer';
+import {
+  Budget,
+  chooseMove,
+  LEVELS,
+  winByFours,
+  type GomokuLevel,
+} from './computer';
 import { boardOf } from '../../../../shared/gomoku';
+import { newGame, play, toMove } from './game';
 
 /** Moves from point names, Black first: "H8 J9 H9…". */
 function movesOf(names: string): GomokuMove[] {
@@ -18,8 +25,37 @@ function movesOf(names: string): GomokuMove[] {
 const named = (point: number) => pointName(point);
 /** A random source that always picks the first of its choices. */
 const first = () => 0;
-/** Far in the future: the search never runs out of time. */
+/** A clock that stands still: the search runs out of work, never of time. */
 const never = () => 0;
+
+/** A random source from a seed, so a game plays the same on every run. */
+function seeded(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4_294_967_296;
+  };
+}
+
+/** The level that wins a whole game, `black` against `white`, or null. */
+function winnerOf(
+  black: GomokuLevel,
+  white: GomokuLevel,
+  seed: number,
+): GomokuLevel | null {
+  const random = seeded(seed);
+  let game = newGame({ level: 'medium', color: 'black' });
+  while (!game.over) {
+    const color = toMove(game);
+    const level = color === 'black' ? black : white;
+    game = play(game, chooseMove(game.moves, color, level, random, never));
+  }
+  if (game.winner === null) return null;
+  return game.winner === 'black' ? black : white;
+}
 
 describe('the computer', () => {
   it('opens on the centre at every level', () => {
@@ -73,7 +109,7 @@ describe('the computer', () => {
     // from scattered stones, which nothing can answer twice.
     const moves = movesOf('E8 A1 F8 A3 G8 C1 H11 A5 H10 C3 H9 O15');
     const board = boardOf(moves);
-    const win = winByFours(board, 'black', 8, Number.POSITIVE_INFINITY);
+    const win = winByFours(board, 'black', 8, new Budget(Infinity, Infinity));
     expect(win).not.toBeNull();
     expect(chooseMove(moves, 'black', 'hard', first, never)).toBe(win?.[0]);
   });
@@ -83,7 +119,23 @@ describe('the computer', () => {
     // Each look at the clock is a second later.
     const slow = () => (clock += 1_000);
     const moves = movesOf('H8 J9 H9 J10');
-    const point = chooseMove(moves, 'black', 'hard', first, slow);
-    expect(boardOf(moves)[point]).toBeNull();
+    expect(chooseMove(moves, 'black', 'hard', first, slow)).toBe(
+      chooseMove(moves, 'black', 'medium', first, never),
+    );
+  });
+});
+
+describe('the levels', () => {
+  it('Medium beats Easy, with either colour', () => {
+    for (let seed = 1; seed <= 4; seed += 1) {
+      expect(winnerOf('medium', 'easy', seed)).toBe('medium');
+      expect(winnerOf('easy', 'medium', seed)).toBe('medium');
+    }
+  });
+
+  // A whole game of Hard's searches: seconds, not milliseconds.
+  it('Hard beats Medium, with either colour', { timeout: 120_000 }, () => {
+    expect(winnerOf('hard', 'medium', 1)).toBe('hard');
+    expect(winnerOf('medium', 'hard', 2)).toBe('hard');
   });
 });

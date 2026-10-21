@@ -166,11 +166,37 @@ function lineAt(
   return line;
 }
 
-/** What a `color` stone on `point` makes along each of the four lines. */
-const shapesAt = (board: Board, point: number, color: GomokuColor) =>
-  DIRECTIONS.map((direction) =>
-    shapeOf(lineAt(board, point, color, direction)),
-  );
+/**
+ * Each line's shape by its eight points around the middle, read as a number
+ * with a digit for each (0 empty, 1 the stone's colour, 2 the other or the
+ * edge): the searches read lines far too often to spell each one out.
+ */
+const shapesByCode = new Int8Array(3 ** (WIDTH - 1)).fill(-1);
+
+/** What a `color` stone on `point` makes along one line. */
+function shapeAt(
+  board: Board,
+  point: number,
+  color: GomokuColor,
+  direction: readonly [number, number],
+): Shape {
+  const column = columnOf(point);
+  const row = rowOf(point);
+  let code = 0;
+  for (let step = -REACH; step <= REACH; step += 1) {
+    if (step === 0) continue;
+    const c = column + step * direction[0];
+    const r = row + step * direction[1];
+    const stone = isOnBoard(c, r) ? board[pointAt(c, r)] : undefined;
+    code = code * 3 + (stone === null ? 0 : stone === color ? 1 : 2);
+  }
+  let shape = shapesByCode[code]!;
+  if (shape < 0) {
+    shape = shapeOf(lineAt(board, point, color, direction));
+    shapesByCode[code] = shape;
+  }
+  return shape as Shape;
+}
 
 /** How much a `color` stone on `point` is worth to `color`. */
 export function scoreAt(
@@ -178,20 +204,31 @@ export function scoreAt(
   point: number,
   color: GomokuColor,
 ): number {
-  const made = shapesAt(board, point, color);
-  const count = (shape: Shape) => made.filter((s) => s === shape).length;
-  if (count(Shape.Five) > 0) return FIVE;
-  const fours = count(Shape.Four);
-  const openThrees = count(Shape.OpenThree);
-  if (count(Shape.OpenFour) > 0 || fours >= 2) return OPEN_FOUR;
+  let five = false;
+  let openFour = false;
+  let fours = 0;
+  let openThrees = 0;
+  let total = 0;
+  for (const direction of DIRECTIONS) {
+    const shape = shapeAt(board, point, color, direction);
+    if (shape === Shape.Five) five = true;
+    else if (shape === Shape.OpenFour) openFour = true;
+    else if (shape === Shape.Four) fours += 1;
+    else if (shape === Shape.OpenThree) openThrees += 1;
+    total += SINGLE[shape];
+  }
+  if (five) return FIVE;
+  if (openFour || fours >= 2) return OPEN_FOUR;
   if (fours > 0 && openThrees > 0) return FOUR_AND_THREE;
   if (openThrees >= 2) return TWO_OPEN_THREES;
-  return made.reduce((total, shape) => total + SINGLE[shape], 0);
+  return total;
 }
 
 /** Whether a `color` stone on `point` makes five. */
 const makesFive = (board: Board, point: number, color: GomokuColor) =>
-  shapesAt(board, point, color).includes(Shape.Five);
+  DIRECTIONS.some(
+    (direction) => shapeAt(board, point, color, direction) === Shape.Five,
+  );
 
 /** The points a `color` stone would make five on next, after one on `point`. */
 function threatsFrom(
@@ -286,28 +323,65 @@ function forcedMove(board: Board, color: GomokuColor): number | null {
 class OutOfTime extends Error {}
 
 /**
+ * The work a search may do, counted in positions looked at, so a move is the
+ * same on a fast machine and a slow one; the clock only stops a search that
+ * would still freeze a very slow page.
+ */
+export class Budget {
+  #left: number;
+  readonly #deadline: number;
+  readonly #now: () => number;
+
+  constructor(positions: number, deadline: number, now = performanceNow) {
+    this.#left = positions;
+    this.#deadline = deadline;
+    this.#now = now;
+  }
+
+  /** One more position, or OutOfTime when the budget or the clock runs out. */
+  spend(): void {
+    this.#left -= 1;
+    if (this.#left < 0 || this.#now() > this.#deadline) throw new OutOfTime();
+  }
+}
+
+/**
  * A forced win by fours for `color`, to move: a run of fours the other player
  * must answer, each on the one point that stops it, ending in five or in two
- * fives at once. It looks `depth` of `color`'s moves deep, and gives up on a
- * line where an answer makes a four of the other player's.
+ * fives at once. It looks `depth` of `color`'s moves deep, gives up on a line
+ * where an answer makes a four of the other player's, and throws OutOfTime
+ * once `budget` runs out.
  */
 export function winByFours(
   board: Board,
   color: GomokuColor,
   depth: number,
-  deadline: number,
-  now: () => number = performanceNow,
+  budget: Budget,
 ): number[] | null {
   const other = otherColor(color);
+  // The same fours in another order reach the same position: each position
+  // that leads nowhere is looked at once, at the most moves it had left.
+  const fours: number[] = [];
+  const answers: number[] = [];
+  const failed = new Map<string, number>();
+  const keyOf = () =>
+    `${fours.toSorted((a, b) => a - b).join()}/${answers.toSorted((a, b) => a - b).join()}`;
   const search = (left: number): number[] | null => {
-    if (now() > deadline) throw new OutOfTime();
+    const key = keyOf();
+    if ((failed.get(key) ?? -1) >= left) return null;
+    budget.spend();
+    const candidates = candidatesOf(board);
+    const win = candidates.find((point) => makesFive(board, point, color));
+    if (win !== undefined) return [win];
     // The other player wins first if they already have a four.
-    const theirs = candidatesOf(board).some((point) =>
-      makesFive(board, point, other),
-    );
-    for (const point of candidatesOf(board)) {
-      if (makesFive(board, point, color)) return [point];
-      if (theirs || left === 0) continue;
+    if (
+      left === 0 ||
+      candidates.some((point) => makesFive(board, point, other))
+    ) {
+      failed.set(key, left);
+      return null;
+    }
+    for (const point of candidates) {
       board[point] = color;
       const threats = threatsFrom(board, point, color);
       let found: number[] | null = null;
@@ -321,7 +395,11 @@ export function winByFours(
           threatsFrom(board, answer, other).length === 0
         ) {
           board[answer] = other;
+          fours.push(point);
+          answers.push(answer);
           const rest = search(left - 1);
+          fours.pop();
+          answers.pop();
           board[answer] = null;
           if (rest) found = [point, answer, ...rest];
         }
@@ -329,9 +407,36 @@ export function winByFours(
       board[point] = null;
       if (found) return found;
     }
+    failed.set(key, left);
     return null;
   };
-  return search(depth);
+  // The shortest win first, so a deep line cannot spend the budget on its way.
+  for (let left = 1; left <= depth; left += 1) {
+    const found = search(left);
+    if (found) return found;
+  }
+  return null;
+}
+
+/** `winByFours` within `positions`: a win, none, or undefined for not known. */
+function triedWinByFours(
+  board: Board,
+  color: GomokuColor,
+  positions: number,
+  deadline: number,
+  now: () => number,
+): number[] | null | undefined {
+  try {
+    return winByFours(
+      board,
+      color,
+      FOURS_DEPTH,
+      new Budget(positions, deadline, now),
+    );
+  } catch (error) {
+    if (error instanceof OutOfTime) return undefined;
+    throw error;
+  }
 }
 
 function performanceNow(): number {
@@ -340,15 +445,119 @@ function performanceNow(): number {
 
 /** How deep Hard looks for a win by fours, in its own moves. */
 const FOURS_DEPTH = 8;
-/** How many of its best moves Hard looks two moves ahead from. */
-const LOOK_AHEAD = 10;
-/** How many of your best replies it weighs to each. */
-const REPLIES = 3;
+/** The positions Hard may look at for a win by fours of its own, or of yours. */
+const FOURS_POSITIONS = 1_500;
+/** The same, for each move it might play to stop one of yours. */
+const STOP_POSITIONS = 300;
+/** How many moves Hard weighs at the root, and at each move after it. */
+const ROOT_WIDTH = 12;
+const WIDTH_AHEAD = 8;
+/** The deepest Hard looks, in stones: its own, yours, its own, yours. */
+const MAX_DEPTH = 6;
+/** The positions Hard may look at in that search. */
+const SEARCH_POSITIONS = 20_000;
+
+/** A won position, ahead of any score the stones could add up to. */
+const WON = 100_000_000;
+
+/** What each stone's line is worth to its colour in a position. */
+const LINE_VALUE: Readonly<Record<Shape, number>> = {
+  [Shape.None]: 0,
+  [Shape.Two]: 4,
+  [Shape.OpenTwo]: 20,
+  [Shape.Three]: 30,
+  [Shape.OpenThree]: 200,
+  [Shape.Four]: 250,
+  [Shape.OpenFour]: 5_000,
+  [Shape.Five]: WON,
+};
 
 /**
- * Hard: a forced win by fours of its own first; then a block of yours; then
- * Medium's ten best moves, each judged by your best reply and its best
- * answer to that.
+ * How good the stones are for `color`, whose move it is: every stone's
+ * shape along each line, its own against the other player's. A four of its
+ * own wins, as it plays five next; an open four of theirs, or an open three
+ * of its own against no four of theirs, settles the game a move later.
+ */
+function evaluate(board: Board, color: GomokuColor): number {
+  let mine = 0;
+  let theirs = 0;
+  let myFours = 0;
+  let myOpenThrees = 0;
+  let theirFours = 0;
+  let theirOpenFours = 0;
+  for (let point = 0; point < POINTS; point += 1) {
+    const stone = board[point];
+    if (stone === null || stone === undefined) continue;
+    for (const direction of DIRECTIONS) {
+      const shape = shapeAt(board, point, stone, direction);
+      if (stone === color) {
+        mine += LINE_VALUE[shape];
+        if (shape >= Shape.Four) myFours += 1;
+        else if (shape === Shape.OpenThree) myOpenThrees += 1;
+      } else {
+        theirs += LINE_VALUE[shape];
+        if (shape === Shape.OpenFour) theirOpenFours += 1;
+        else if (shape === Shape.Four) theirFours += 1;
+      }
+    }
+  }
+  if (myFours > 0) return WON;
+  if (theirOpenFours > 0) return -WON;
+  if (myOpenThrees > 0 && theirFours === 0) return WON / 2;
+  return mine - theirs;
+}
+
+/**
+ * The moves worth weighing for `color`: its five alone, else the blocks of
+ * a five of the other player's, else its best by Medium's scoring.
+ */
+function movesWorthWeighing(
+  board: Board,
+  color: GomokuColor,
+  width: number,
+): number[] {
+  const moves = ranked(board, color, DEFENCE);
+  const five = moves.find((move) => makesFive(board, move.point, color));
+  if (five) return [five.point];
+  const other = otherColor(color);
+  const blocks = moves.filter((move) => makesFive(board, move.point, other));
+  if (blocks.length > 0) return blocks.map((move) => move.point);
+  return moves.slice(0, width).map((move) => move.point);
+}
+
+/** How good the position is for `color`, to move, `depth` stones ahead. */
+function negamax(
+  board: Board,
+  color: GomokuColor,
+  depth: number,
+  alpha: number,
+  beta: number,
+  budget: Budget,
+): number {
+  budget.spend();
+  if (depth === 0) return evaluate(board, color);
+  const moves = movesWorthWeighing(board, color, WIDTH_AHEAD);
+  if (moves.length === 0) return 0;
+  const other = otherColor(color);
+  let best = -Infinity;
+  for (const point of moves) {
+    // A five is worth more the sooner it comes.
+    if (makesFive(board, point, color)) return WON + depth;
+    board[point] = color;
+    const value = -negamax(board, other, depth - 1, -beta, -alpha, budget);
+    board[point] = null;
+    if (value > best) best = value;
+    if (best > alpha) alpha = best;
+    if (alpha >= beta) break;
+  }
+  return best;
+}
+
+/**
+ * Hard: a forced win by fours of its own first; then a stop for one of
+ * yours; then a search of its twelve best moves, your best answers to each
+ * and its best to those, two and then four stones deep, as far as its
+ * budget goes. Out of time altogether, it plays Medium's move.
  */
 function hardMove(
   board: Board,
@@ -358,60 +567,80 @@ function hardMove(
 ): number {
   const deadline = now() + HARD_SEARCH_MS;
   const other = otherColor(color);
-  const fallback = mediumMove(board, color, random);
-  try {
-    const mine = winByFours(board, color, FOURS_DEPTH, deadline, now);
-    if (mine) return mine[0]!;
+  const mine = triedWinByFours(board, color, FOURS_POSITIONS, deadline, now);
+  if (mine) return mine[0]!;
 
-    const moves = ranked(board, color, DEFENCE).slice(0, LOOK_AHEAD);
-    const theirs = winByFours(board, other, FOURS_DEPTH, deadline, now);
-    if (theirs) {
-      // Stopping it: its first stones, or any good move that leaves it none.
-      const stops = [
-        ...new Set([...theirs.slice(0, 2), ...moves.map((m) => m.point)]),
-      ];
-      for (const point of stops) {
+  let moves = movesWorthWeighing(board, color, ROOT_WIDTH);
+  const theirs = triedWinByFours(board, other, FOURS_POSITIONS, deadline, now);
+  if (theirs) {
+    // Stopping it: its first stones, or any good move that leaves it none,
+    // else one that leaves it none that it can find in time, else its first.
+    const stops = [...new Set([...theirs.slice(0, 2), ...moves])];
+    const left = new Map(
+      stops.map((point) => {
         board[point] = color;
-        const still = winByFours(board, other, FOURS_DEPTH, deadline, now);
+        const still = triedWinByFours(
+          board,
+          other,
+          STOP_POSITIONS,
+          deadline,
+          now,
+        );
         board[point] = null;
-        if (!still) return point;
-      }
-    }
+        return [point, still] as const;
+      }),
+    );
+    const safe = stops.filter((point) => left.get(point) === null);
+    const unknown = stops.filter((point) => left.get(point) === undefined);
+    moves = safe.length > 0 ? safe : unknown.length > 0 ? unknown : stops;
+  }
+  if (moves.length === 1) return moves[0]!;
 
-    let best = -Infinity;
-    let chosen: number[] = [];
-    for (const move of moves) {
-      board[move.point] = color;
-      let worst = Infinity;
-      for (const reply of ranked(board, other, DEFENCE).slice(0, REPLIES)) {
-        if (now() > deadline) throw new OutOfTime();
-        board[reply.point] = other;
-        const answer = makesFive(board, reply.point, other)
-          ? -FIVE
-          : (ranked(board, color, DEFENCE)[0]?.score ?? 0) / 2;
-        board[reply.point] = null;
-        worst = Math.min(worst, answer - reply.score);
+  const budget = new Budget(SEARCH_POSITIONS, deadline, now);
+  let chosen = mediumMove(board, color, random);
+  try {
+    for (let depth = 2; depth <= MAX_DEPTH; depth += 2) {
+      let best = -Infinity;
+      let ties: number[] = [];
+      const values = new Map<number, number>();
+      for (const point of moves) {
+        board[point] = color;
+        const value = -negamax(
+          board,
+          other,
+          depth - 1,
+          -Infinity,
+          -best + 1,
+          budget,
+        );
+        board[point] = null;
+        values.set(point, value);
+        if (value > best) {
+          best = value;
+          ties = [point];
+        } else if (value === best) {
+          ties.push(point);
+        }
       }
-      board[move.point] = null;
-      const value = move.score + (worst === Infinity ? 0 : worst);
-      if (value > best + 1e-6) {
-        best = value;
-        chosen = [move.point];
-      } else if (Math.abs(value - best) <= 1e-6) {
-        chosen.push(move.point);
-      }
+      // Lost whatever it plays, it plays the stubbornest move it knows.
+      chosen = best <= -WON / 2 ? ties[0]! : pick(ties, random);
+      // The next depth weighs the best of this one first.
+      moves = moves.toSorted(
+        (a, b) => (values.get(b) ?? 0) - (values.get(a) ?? 0),
+      );
     }
-    return chosen.length > 0 ? pick(chosen, random) : fallback;
+    return chosen;
   } catch (error) {
-    if (error instanceof OutOfTime) return fallback;
+    if (error instanceof OutOfTime) return chosen;
     throw error;
   }
 }
 
 /**
  * The computer's move for `color` after `moves`, at `level`. At every level
- * it plays its own five and blocks yours; Easy weighs defence at half and
- * picks among its four best, Medium plays its best, and Hard looks ahead.
+ * it plays its own five and blocks a four of yours; Easy weighs defence at
+ * half and picks among its four best, Medium plays its best, and Hard
+ * searches ahead.
  */
 export function chooseMove(
   moves: readonly GomokuMove[],
