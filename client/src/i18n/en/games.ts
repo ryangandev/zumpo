@@ -419,7 +419,7 @@ Clear the last level to win together. Two players play 7 levels, three play 6 an
 
 Everyone starts a chain by writing a line: anything drawable, in any language. Stuck? Suggest fills in one. Then every chain moves one place round the table, and the next player draws the line they are given. The next one says in words what that drawing shows, the next draws those words, and so on. You only ever see the step before yours.
 
-Everyone plays each step at once. Writing and describing take 30 seconds, drawing takes the room’s drawing time. Press Done when you are finished, and the step ends early once everyone is done; when the clock runs out, whatever you have goes on as it is.
+Everyone plays each step at once. Writing takes 30 seconds, describing 45, and drawing the room’s drawing time. Press Done when you are finished, and the step ends early once everyone is done; when the clock runs out, whatever you have goes on as it is.
 
 A game has one step per player, but never more than six. If the entry before yours came back empty, you sit that step out and the chain goes on from the entry before it.
 

@@ -5,13 +5,17 @@ import {
   isSpectator,
   memberOf,
   roomStatus,
+  mayStart,
 } from './seats.js';
 import {
   joinRoomRequest,
   parseArgs,
+  readyRequest,
   renameRequest,
   roomIdOnly,
+  settingsRequest,
 } from '../validation.js';
+import { beginGame, startIfReady } from './ready.js';
 import { nameInRoom, renamePlayer } from './names.js';
 import type { RoomMembership } from './membership.js';
 import type { RoomRegistry } from './registry.js';
@@ -25,8 +29,9 @@ import {
 } from './emit.js';
 
 /**
- * Joining, watching, leaving, re-syncing, starting and renaming: what every
- * room does regardless of what is played in it.
+ * Joining, watching, leaving, re-syncing, getting ready, starting, choosing
+ * the next game's settings and renaming: what every room does regardless of
+ * what is played in it.
  *
  * Each request is answered through its acknowledgement, success or the reason
  * it was refused, and anything it changes reaches the room as a new snapshot.
@@ -199,6 +204,7 @@ const roomEventsHandler = (
     }
 
     delete room.playerList[playerId];
+    room.ready.delete(playerId);
     room.spectators[playerId] = {
       username: seat.username,
       isConnected: seat.isConnected,
@@ -222,6 +228,9 @@ const roomEventsHandler = (
       name: seat.username,
       ...(heir && { owner: room.owner.username }),
     });
+    // The one the table was waiting on may have gone to watch.
+    const module = registry.moduleOf(room);
+    if (module) startIfReady(room, module);
     registry.lookup.emitState(room);
     registry.lookup.emitLobby(room.gameType);
   });
@@ -300,9 +309,10 @@ const roomEventsHandler = (
       return;
     }
 
-    // What every game asks before it starts, asked once, here.
-    if (room.owner.playerId !== playerId) {
-      reply(failure('notRoomOwner', 'Only the room owner can start the game.'));
+    // What every game asks before it starts, asked once, here. The host
+    // starts, or while they are away whoever the crown would pass to.
+    if (!mayStart(room, playerId)) {
+      reply(failure('notRoomOwner', 'Only the host can start the game.'));
       return;
     }
     if (room.isGameStarted) {
@@ -320,12 +330,89 @@ const roomEventsHandler = (
     }
 
     try {
-      module.startGame(room);
+      beginGame(room, module);
     } catch (error) {
       reply(asFailure(error));
       return;
     }
     reply({ ok: true });
+  });
+
+  /**
+   * Between games, a player at the table says they are ready for the next
+   * one, or takes it back. Once everybody here but the starter has, it starts.
+   */
+  onClientRequest(socket, 'room:ready', (args, reply) => {
+    const validated = parseArgs(readyRequest, args, 'room:ready');
+    if (!validated) {
+      reply(invalidRequest());
+      return;
+    }
+    const [roomId, ready] = validated;
+    const playerId = socket.data.playerId;
+
+    const room = registry.lookup.get(roomId);
+    const module = room ? registry.moduleOf(room) : undefined;
+    if (!room || !module) {
+      reply(failure('roomNotExist', 'Room does not exist.'));
+      return;
+    }
+    if (!room.playerList[playerId]) {
+      reply(failure('notRoomMember', 'You are not at this table.'));
+      return;
+    }
+    if (room.isGameStarted) {
+      reply(failure('gameAlreadyStarted', 'The game has already started.'));
+      return;
+    }
+
+    if (ready) room.ready.add(playerId);
+    else room.ready.delete(playerId);
+    reply({ ok: true });
+    startIfReady(room, module);
+    registry.lookup.emitState(room);
+    registry.lookup.emitLobby(room.gameType);
+  });
+
+  /**
+   * Between games, the starter changes what the next game is played with,
+   * read by the game's module as a create request's settings are. Each
+   * setting is kept on the game's state under its own name, so it goes
+   * there, and the next game is played with it.
+   */
+  onClientRequest(socket, 'room:settings', (args, reply) => {
+    const validated = parseArgs(settingsRequest, args, 'room:settings');
+    if (!validated) {
+      reply(invalidRequest());
+      return;
+    }
+    const [roomId, raw] = validated;
+    const playerId = socket.data.playerId;
+
+    const room = registry.lookup.get(roomId);
+    const module = room ? registry.moduleOf(room) : undefined;
+    if (!room || !module) {
+      reply(failure('roomNotExist', 'Room does not exist.'));
+      return;
+    }
+    if (!mayStart(room, playerId)) {
+      reply(failure('notRoomOwner', 'Only the host can change the game.'));
+      return;
+    }
+    if (room.isGameStarted) {
+      reply(failure('gameAlreadyStarted', 'The game has already started.'));
+      return;
+    }
+    const settings = module.parseSettings(raw);
+    if (settings === null) {
+      reply(invalidRequest());
+      return;
+    }
+
+    Object.assign(room.game as object, settings);
+    reply({ ok: true });
+    registry.lookup.emitState(room);
+    registry.lookup.emitLobby(room.gameType);
   });
 
   /**

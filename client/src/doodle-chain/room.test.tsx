@@ -6,7 +6,7 @@ import type {
   DoodleChainRoomState,
 } from '../../../shared/wire-types';
 import { doodleChainState, ME } from '../tests/fixtures';
-import { narrowable } from '../tests/phone';
+import { narrowable, onPhone, onTouch } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 const RYAN = { playerId: ME, username: 'Ryan' };
@@ -133,7 +133,10 @@ describe('a Doodle Chain room', () => {
     expect(screen.getByText(/Invite one more\.$/)).toBeInTheDocument();
   });
 
-  it('starts with the focus off the line, so a phone keeps its keyboard down', async () => {
+  it('starts a touch screen with the focus off the line, so its keyboard stays down', async () => {
+    // A touch screen's line is not focused for it, as a desktop's is, and
+    // the start's own focus passes over it too.
+    onTouch();
     const { update } = await renderSeated(doodleChainState());
 
     update(writing);
@@ -153,16 +156,25 @@ describe('a Doodle Chain room', () => {
     // Nobody has a heart until the reveal.
     expect(scoreboard().queryByText(/^\d+$/)).toBeNull();
 
-    // A blank line cannot be Done, by the button or by Enter.
+    // The step's one field has the keyboard as it starts.
     const field = screen.getByRole('textbox', { name: 'Your first line' });
+    expect(field).toHaveFocus();
+
+    // A blank line cannot be Done, by the button or by Enter: Done says why.
     const done = screen.getByRole('button', { name: 'Done' });
-    expect(done).toHaveAttribute('aria-disabled', 'true');
+    expect(done).not.toHaveAttribute('aria-disabled');
     await user.click(done);
     await user.type(field, '{Enter}');
     expect(fake.sentArgs('dc:done')).toEqual([]);
+    expect(
+      screen.getByText('Write something first, then press Done.'),
+    ).toBeInTheDocument();
+    expect(field).toHaveFocus();
 
     await user.type(field, 'A');
-    expect(done).not.toHaveAttribute('aria-disabled', 'true');
+    expect(
+      screen.queryByText('Write something first, then press Done.'),
+    ).toBeNull();
     expect(fake.sentArgs('dc:text')[0]).toEqual(['r1', { text: 'A' }]);
     expect(
       screen.getByText('1 / 80 · anything drawable, in any language'),
@@ -202,10 +214,9 @@ describe('a Doodle Chain room', () => {
     const field = screen.getByRole('textbox', { name: 'Your first line' });
 
     await user.type(field, '   {Enter}');
-    expect(screen.getByRole('button', { name: 'Done' })).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(
+      screen.getByText('Write something first, then press Done.'),
+    ).toBeInTheDocument();
     expect(fake.sentArgs('dc:done')).toEqual([]);
   });
 
@@ -221,10 +232,7 @@ describe('a Doodle Chain room', () => {
     expect(
       screen.getByRole('textbox', { name: 'Your first line' }),
     ).toHaveValue('A ghost');
-    expect(screen.getByRole('button', { name: 'Done' })).not.toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: 'Done' })).toBeEnabled();
 
     // While the chains move on, the line written is still shown.
     update({ ...writing, phase: 'passing', phaseEndsInMs: 3_000 });
@@ -270,13 +278,19 @@ describe('a Doodle Chain room', () => {
     ).toBeInTheDocument();
     expect(scoreboard().getAllByText('Drawing')).toHaveLength(3);
 
-    // An empty drawing cannot be Done.
+    // An empty drawing cannot be Done: Done says why instead.
     const done = screen.getByRole('button', { name: 'Done' });
-    expect(done).toHaveAttribute('aria-disabled', 'true');
     await user.click(done);
     expect(fake.sentArgs('dc:done')).toEqual([]);
+    expect(
+      screen.getByText('Draw something first, then press Done.'),
+    ).toBeInTheDocument();
     act(() => fake.serverEmits('dc:canvas:sync', 'r1', [stroke]));
-    expect(done).not.toHaveAttribute('aria-disabled', 'true');
+    expect(
+      screen.getByText(
+        'When the clock runs out, your drawing goes on as it is.',
+      ),
+    ).toBeInTheDocument();
     await user.click(done);
     expect(fake.sentArgs('dc:done')).toEqual([['r1', true]]);
   });
@@ -408,6 +422,7 @@ describe('a Doodle Chain room', () => {
       ...writing,
       phase: 'passing',
       phaseEndsInMs: 3_000,
+      stepEnd: 'time',
     });
 
     expect(turn().getByText('Time’s up!')).toBeInTheDocument();
@@ -419,6 +434,63 @@ describe('a Doodle Chain room', () => {
       ),
     ).toBeInTheDocument();
     expect(scoreboard().getAllByText('Passing')).toHaveLength(3);
+  });
+
+  it('says everyone is done when the step ended early', async () => {
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      phaseEndsInMs: 3_000,
+      stepEnd: 'done',
+    });
+
+    expect(turn().getByText('Everyone’s done!')).toBeInTheDocument();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
+    expect(turn().getByText('Your line goes to Maya.')).toBeInTheDocument();
+  });
+
+  it('ends a step plainly when everybody playing it left', async () => {
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      phaseEndsInMs: 3_000,
+      stepEnd: 'left',
+    });
+
+    expect(turn().getByText('This step is over')).toBeInTheDocument();
+    expect(turn().queryByText('Everyone’s done!')).toBeNull();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
+  });
+
+  it('says why a step nobody could play was skipped', async () => {
+    const empty = {
+      ...leosLine,
+      step: 2,
+      kind: 'drawing' as const,
+      author: MAYA,
+      content: { type: 'empty' as const, reason: 'time' as const },
+    };
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      step: 3,
+      phaseEndsInMs: 3_000,
+      stepEnd: 'skipped',
+      table: {
+        p1: { done: false, sitsOut: true },
+        p2: { done: false, sitsOut: true },
+        p3: { done: false, sitsOut: true },
+      },
+      task: { kind: 'description', chain: 2, sitsOut: true, skipped: empty },
+    });
+
+    expect(turn().getByText('Nothing to play this step')).toBeInTheDocument();
+    expect(
+      turn().getByText(
+        'Every drawing came back empty, so nobody had a drawing to describe.',
+      ),
+    ).toBeInTheDocument();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
   });
 
   it('lets the host show the next entry, and a player give a heart', async () => {
@@ -441,6 +513,26 @@ describe('a Doodle Chain room', () => {
       screen.getByRole('button', { name: 'Give a heart, 2 hearts so far' }),
     );
     expect(fake.sentArgs('dc:heart')).toEqual([['r1', 0, 2]]);
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    expect(fake.sentArgs('dc:reveal:next')).toEqual([['r1', 2]]);
+  });
+
+  it('hands the reveal to the next player while the host is away', async () => {
+    const user = userEvent.setup();
+    const away = revealing({ owner: MAYA });
+    const { fake } = await renderSeated({
+      ...away,
+      playerList: {
+        ...away.playerList,
+        p2: { ...away.playerList.p2!, isConnected: false },
+      },
+    });
+
+    expect(
+      screen.getByText(
+        'Maya isn’t at the table, so you show the chains. Next shows the last of Ryan’s chain.',
+      ),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Next' }));
     expect(fake.sentArgs('dc:reveal:next')).toEqual([['r1', 2]]);
   });
@@ -591,6 +683,53 @@ describe('a Doodle Chain room', () => {
     await user.click(screen.getByRole('button', { name: 'Maya’s chain' }));
     act(narrow);
     expect(screen.getByText('A frog in a top hat')).toBeInTheDocument();
+  });
+
+  it('keeps Play again above the chains on a phone, not under them all', async () => {
+    onPhone();
+    await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+          ],
+          chains: [{ owner: RYAN, entries: ryansChain }],
+          favourites: [],
+        },
+      }),
+    );
+
+    const playAgain = screen.getByRole('button', { name: 'Play again' });
+    const chains = screen.getByRole('group', { name: 'Chains' });
+    expect(
+      playAgain.compareDocumentPosition(chains) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('stops what scrolls into view above the album’s held foot, and only while it is there', async () => {
+    const root = document.documentElement;
+    const { unmount } = await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+          ],
+          chains: [{ owner: RYAN, entries: ryansChain }],
+          favourites: [],
+        },
+      }),
+    );
+
+    expect(root.style.getPropertyValue('scroll-padding-bottom')).toMatch(
+      /^\d+px$/,
+    );
+    unmount();
+    expect(root.style.getPropertyValue('scroll-padding-bottom')).toBe('');
   });
 
   it('gives nobody a place when nobody gave a heart', async () => {

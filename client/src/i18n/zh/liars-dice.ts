@@ -28,8 +28,8 @@ export const liarsDice: typeof en = {
   lossLine: loss,
   verdict: (reveal, who) =>
     stands(reveal)
-      ? `${who(reveal.bid.playerId).possessive}叫点成立`
-      : `叫点不成立，${loss(reveal, who)}`,
+      ? `${who(reveal.bid.playerId).possessive}叫点成立，${loss(reveal, who)}`
+      : `${who(reveal.bid.playerId).possessive}叫点不成立，${loss(reveal, who)}`,
   revealBar: (reveal, who) => ({
     label: `${subject(who(reveal.callerId))}喊了“吹牛”`,
     main: `${who(reveal.bid.playerId).possessive}叫点${stands(reveal) ? '成立' : '不成立'}`,

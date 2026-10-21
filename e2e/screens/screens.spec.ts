@@ -15,6 +15,7 @@ import {
 import { startServer } from '../own-server';
 import { dailyAnswer, roomWords } from '../../shared/daily-word.js';
 import { seededRandom, seedNumber } from '../../shared/seed.js';
+import { MAX_SPECTATORS } from '../../shared/room.js';
 import { guessesOf, solve, typeGuess } from '../play/daily-word';
 import {
   ALL_CODES,
@@ -399,6 +400,17 @@ async function lobbyScreens(
   await sam.getByRole('button', { name: 'Join room' }).click();
   await expect(sam.getByText('That password didn’t work.')).toBeVisible();
   await shot(sam, codes.rejected);
+  // Somebody arriving at a game under way watches it, so a room has moved on
+  // only once its spectator seats are taken too.
+  for (let seat = 1; seat <= MAX_SPECTATORS; seat++) {
+    const watcher = await player(`Watcher ${seat}`, desktop);
+    await watcher.goto(playing);
+    await expect(
+      watcher.getByText(
+        'You’re watching this game. You can take a seat once it ends.',
+      ),
+    ).toBeVisible();
+  }
   await sam.goto(playing);
   await expect(
     sam.getByRole('heading', { name: 'That room moved on.' }),

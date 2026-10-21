@@ -79,14 +79,8 @@
   letter-spacing: var(--zumpo-text-body-tracking);
 }
 
-/* The arrow wraps with the verdict it points to, never alone at a line's end. */
-.outcome {
-  display: flex;
-  align-items: center;
-  gap: var(--zumpo-space-12);
-}
-
 .verdict {
+  margin: 0;
   font: var(--zumpo-text-body);
   letter-spacing: var(--zumpo-text-body-tracking);
 }

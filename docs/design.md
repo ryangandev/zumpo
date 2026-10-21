@@ -253,6 +253,14 @@ Code differs from Figma on purpose in a few places:
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
+- Between games every room's results end the same way: the starter gets a Next game select (an Input with no helper, 320 px wide), and everyone else gets a muted line saying the setting, a muted line saying how the next game starts, and Ready.
+  Figma draws this on M14 for the host and on LD12 for a guest; the other results screens still show the host with Play again alone and a guest with "Waiting for … to start another game."
+  The lines for Not ready, for a stand-in while the host is away ("Ryan isn’t at the table, so you can start the next game."), and for who is ready are muted body lines too, and Figma does not draw them.
+- The turn bar's meta names who has locked in on a Minesweeper round ("Maya locked in"), and who has solved a Make 24 hand while you undo; M04, M11 to M13 and T04 draw the lines from before anybody has.
+  A Pairs turn that ran out says so in the meta for the next turn ("Maya ran out of time · your turn"), and no Pairs screen draws it.
+- Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.
+- A Doodle Chain album's Play again, or Ready, is never below every chain: on a phone it sits under the album's title, where DC20 says how the next game starts, and on a wider screen it stays at the foot, as DC14 draws it, but held on screen on the panel's paper while the chains scroll by.
+  Each entry the reveal shows scrolls into view with Next under it, at once when the system asks for reduced motion; Figma draws still screens.
 - Until the bridge script `j-fig-1-countdown-info.js` runs, Figma has no Countdown Info tone: its Trios hint clocks, Snap card clocks and run times are still drawn Running or Waiting.
 - Until `j-fig-2-no-word-categories.js` runs, DL04 to DL06, DL10, DL11, D16 and MO05 still draw a Word categories field; the app has none, since a Draw & Guess game draws its one category at random.
 - Until `j-fig-4-standing-mark.js` runs, `Zumpo/Standing` has no Mark: code puts the Icon check (green) or close (danger red) before a finished race's guesses on a phone's strip, where it used to type ✓ and ✗.

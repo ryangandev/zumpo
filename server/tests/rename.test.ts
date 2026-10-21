@@ -34,6 +34,7 @@ const roomOf = (names: Record<string, string>, game: unknown = {}): Room => ({
   ),
   spectators: {},
   isGameStarted: false,
+  ready: new Set(),
   phaseEndsAt: 0,
   chat: { nextId: 0, messages: [] },
   game,

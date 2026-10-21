@@ -141,6 +141,10 @@ export const notices = {
     `The code was ${n.code}.`,
   'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
     `Step ${n.step} · ${{ prompt: 'Write', drawing: 'Draw', description: 'Describe' }[n.kind]}`,
+  'dc:skipped': (n: Extract<RoomNotice, { type: 'dc:skipped' }>): string =>
+    n.kind === 'drawing'
+      ? `Step ${n.step} is skipped: every description came back empty, so nobody had words to draw.`
+      : `Step ${n.step} is skipped: every drawing came back empty, so nobody had a drawing to describe.`,
   'dc:reveal': (n: Extract<RoomNotice, { type: 'dc:reveal' }>): string =>
     `Time for the reveal! ${who(n.host)} shows the chains.`,
   'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>

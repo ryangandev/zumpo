@@ -44,7 +44,7 @@ export const createRoom: typeof en = {
   codesHelper: '每局 3 分钟。',
   codeCount: (count) => `${count} 局`,
   drawingTime: '画画时间',
-  drawingTimeHelper: '写和描述各 30 秒。',
+  drawingTimeHelper: '写 30 秒，描述 45 秒。',
   secondCount: (count) => `${count} 秒`,
   password: '密码（可选）',
   creating: '正在创建房间…',

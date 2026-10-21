@@ -64,6 +64,7 @@ export const ui: typeof en = {
     suggest: '换个点子',
     done: '完成',
     keepEditing: '继续修改',
+    writeFirst: '先写点什么，再按“完成”。',
     heart: (count) => `送一颗爱心，已有 ${count} 颗`,
     hearts: (count) => `${count} 颗爱心`,
   },

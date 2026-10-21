@@ -9,7 +9,6 @@ import type {
 } from '../../models/types.js';
 import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { BOARD_SIZES } from '../../../shared/minesweeper.js';
 import { createBoard, minesFound, publicView } from './board.js';
 import type { Board } from './board.js';
 
@@ -79,7 +78,9 @@ const toRoomState = (
   viewerId: string,
 ): MinesweeperRoomState => {
   const game = room.game;
-  const { width, height } = BOARD_SIZES[game.difficulty];
+  // The board's own size, not the setting's: between games the next game's
+  // size may be chosen while the last board is still on show.
+  const { width, height } = game.board;
 
   return {
     ...toLobbyInfo(room),

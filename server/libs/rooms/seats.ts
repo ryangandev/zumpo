@@ -5,7 +5,12 @@ import type {
   RoomStatus,
   SpectatorInfo,
 } from '../../../shared/wire-types.js';
-import { heirOf, MAX_SPECTATORS } from '../../../shared/room.js';
+import {
+  heirOf,
+  MAX_SPECTATORS,
+  mayStart,
+  starterOf,
+} from '../../../shared/room.js';
 import { getRemainingPhaseMs } from '../utils.js';
 import type { Room } from './types.js';
 
@@ -73,18 +78,25 @@ const lobbyBasics = (room: Room): Omit<LobbyRoomInfo, 'gameType'> => ({
 
 /**
  * What every game's snapshot says of a room, the game aside: who is at the
- * table and who is watching, the clock, and the key for its invite link.
+ * table and who is watching, who is ready for the next game, the clock, and
+ * the key for its invite link.
  */
 const roomBasics = (
   room: Room,
 ): Pick<
   RoomState,
-  'playerList' | 'spectators' | 'isGameStarted' | 'phaseEndsInMs' | 'inviteKey'
+  | 'playerList'
+  | 'spectators'
+  | 'isGameStarted'
+  | 'ready'
+  | 'phaseEndsInMs'
+  | 'inviteKey'
 > => ({
   inviteKey: room.inviteKey,
   playerList: room.playerList,
   spectators: room.spectators,
   isGameStarted: room.isGameStarted,
+  ready: [...room.ready],
   phaseEndsInMs: getRemainingPhaseMs(room),
 });
 
@@ -98,6 +110,8 @@ export {
   seatOf,
   isSpectator,
   heirOf,
+  mayStart,
+  starterOf,
   lobbyBasics,
   roomBasics,
 };

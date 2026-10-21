@@ -17,6 +17,30 @@ describe('ChatInput', () => {
     expect(box).toHaveValue('');
   });
 
+  it('takes the focus for a new turn, but never out of a dialog', () => {
+    const { rerender } = render(
+      <>
+        <div role="dialog" aria-label="How to play">
+          <button type="button">Got it</button>
+        </div>
+        <ChatInput onSend={() => {}} focusKey="turn 1" />
+      </>,
+    );
+    const box = screen.getByRole('textbox', { name: 'Message' });
+    expect(box).toHaveFocus();
+
+    screen.getByRole('button', { name: 'Got it' }).focus();
+    rerender(
+      <>
+        <div role="dialog" aria-label="How to play">
+          <button type="button">Got it</button>
+        </div>
+        <ChatInput onSend={() => {}} focusKey="turn 2" />
+      </>,
+    );
+    expect(screen.getByRole('button', { name: 'Got it' })).toHaveFocus();
+  });
+
   it('sends with the Send button too', async () => {
     const onSend = vi.fn<(text: string) => void>();
     render(<ChatInput onSend={onSend} />);

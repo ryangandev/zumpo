@@ -145,6 +145,20 @@ describe('a Minesweeper room', () => {
     expect(turn).toHaveTextContent('10 mines · 2 hit');
   });
 
+  it('names who has locked in while the viewer is still picking', async () => {
+    const { update } = await renderSeated({ ...picking, lockedIn: ['p2'] });
+
+    expect(screen.getByText('Pick a cell')).toBeInTheDocument();
+    expect(screen.getByText('Maya locked in')).toBeInTheDocument();
+    expect(
+      screen.queryByText('10 mines · your pick locks when you click'),
+    ).toBeNull();
+    update({ ...picking, lockedIn: [] });
+    expect(
+      screen.getByText('10 mines · your pick locks when you click'),
+    ).toBeInTheDocument();
+  });
+
   it('shows what each pick was worth', async () => {
     await renderSeated({
       ...picking,

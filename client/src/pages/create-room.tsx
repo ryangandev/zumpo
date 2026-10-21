@@ -1,28 +1,12 @@
 import { useId, useRef, useState, type FormEvent } from 'react';
 import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router';
-import type {
-  GameType,
-  MinesweeperDifficulty,
-  PairsBoard,
-  RoomCreateRequest,
-} from '../../../shared/wire-types';
-import {
-  DICE_PER_PLAYER,
-  type DicePerPlayer,
-} from '../../../shared/liars-dice';
+import type { GameType, RoomCreateRequest } from '../../../shared/wire-types';
 import { Button, ButtonLink, Notice, SelectField, TextField } from '../ui';
-import { GAME_LENGTHS as TRIOS_LENGTHS } from '../../../shared/trios';
 import { gameInfo, gamePath, roomPath } from '../games/catalog';
+import { defaultSettings, SettingField } from '../games/setting-field';
 import { useMessages } from '../i18n';
-import { DIFFICULTIES } from '../../../shared/minesweeper';
 import { levelsFor } from '../../../shared/hush';
-import {
-  DEFAULT_DRAWING_SECONDS,
-  DRAWING_SECONDS,
-  type DrawingSeconds,
-} from '../../../shared/doodle-chain';
-import { BOARDS as PAIRS_BOARDS } from '../../../shared/pairs';
 import { useConnectedSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { ConnectionLost } from '../shell/connection-lost';
@@ -36,10 +20,6 @@ import styles from './create-room.module.css';
 /** The server's limits. */
 const ROOM_NAME_MAX_LENGTH = 40;
 const PASSWORD_MAX_LENGTH = 20;
-const ROUNDS = [1, 2, 3, 4] as const;
-const HANDS = [5, 10] as const;
-const WORDS = [3, 5] as const;
-const CODES = [1, 3] as const;
 
 /**
  * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, LD07, HU09,
@@ -66,17 +46,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const [more, setMore] = useState(false);
   const moreId = useId();
   const [seats, setSeats] = useState(game.maxPlayers);
-  const [rounds, setRounds] = useState(2);
-  const [difficulty, setDifficulty] = useState<MinesweeperDifficulty>('Small');
-  const [hands, setHands] = useState(5);
-  const [pairsBoard, setPairsBoard] = useState<PairsBoard>('Small');
-  const [trios, setTrios] = useState<number>(TRIOS_LENGTHS[0]);
-  const [dicePerPlayer, setDicePerPlayer] = useState<DicePerPlayer>(3);
-  const [words, setWords] = useState(3);
-  const [codes, setCodes] = useState(3);
-  const [drawingSeconds, setDrawingSeconds] = useState<DrawingSeconds>(
-    DEFAULT_DRAWING_SECONDS,
-  );
+  const [settings, setSettings] = useState(() => defaultSettings(gameType));
   const [password, setPassword] = useState('');
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState<'error' | 'full' | null>(null);
@@ -100,26 +70,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
       username: name,
       maxPlayers: seats,
       password,
-      settings:
-        gameType === 'draw-and-guess'
-          ? { rounds }
-          : gameType === 'minesweeper'
-            ? { difficulty }
-            : gameType === 'make-24'
-              ? { hands }
-              : gameType === 'pairs'
-                ? { board: pairsBoard }
-                : gameType === 'trios'
-                  ? { trios }
-                  : gameType === 'liars-dice'
-                    ? { dicePerPlayer }
-                    : gameType === 'daily-word'
-                      ? { rounds: words }
-                      : gameType === 'code-breaker'
-                        ? { rounds: codes }
-                        : gameType === 'doodle-chain'
-                          ? { drawingSeconds }
-                          : {},
+      settings,
     };
     setPending(true);
     setFailed(null);
@@ -199,116 +150,11 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
         </Notice>
       )}
       {seatsInView && seatsField}
-      {gameType === 'draw-and-guess' ? (
-        <SelectField
-          label={m.createRoom.rounds}
-          options={ROUNDS.map((count) => ({
-            value: count,
-            label: m.createRoom.roundCount(count),
-          }))}
-          value={rounds}
-          onValueChange={setRounds}
-          name="rounds"
-        />
-      ) : gameType === 'make-24' ? (
-        <SelectField
-          label={m.createRoom.hands}
-          helper={m.createRoom.handsHelper}
-          options={HANDS.map((count) => ({
-            value: count,
-            label: m.createRoom.handCount(count),
-          }))}
-          value={hands}
-          onValueChange={setHands}
-          name="hands"
-        />
-      ) : gameType === 'liars-dice' ? (
-        <SelectField
-          label={m.createRoom.diceEach}
-          helper={m.createRoom.diceDetail(dicePerPlayer)}
-          options={DICE_PER_PLAYER.map((count) => ({
-            value: count,
-            label: m.createRoom.diceCount(count),
-            detail: m.createRoom.diceDetail(count),
-          }))}
-          value={dicePerPlayer}
-          onValueChange={setDicePerPlayer}
-          name="dicePerPlayer"
-        />
-      ) : gameType === 'pairs' ? (
-        <SelectField
-          label={m.createRoom.board}
-          helper={m.createRoom.pairsDetail(pairsBoard)}
-          options={PAIRS_BOARDS.map((board) => ({
-            value: board,
-            label: m.createRoom.boardName(board),
-            detail: m.createRoom.pairsDetail(board),
-          }))}
-          value={pairsBoard}
-          onValueChange={setPairsBoard}
-          name="board"
-        />
-      ) : gameType === 'trios' ? (
-        <SelectField
-          label={m.createRoom.trios}
-          options={TRIOS_LENGTHS.map((count) => ({
-            value: count,
-            label: m.createRoom.trioCount(count),
-          }))}
-          value={trios}
-          onValueChange={setTrios}
-          name="trios"
-        />
-      ) : gameType === 'daily-word' ? (
-        <SelectField
-          label={m.createRoom.words}
-          helper={m.createRoom.wordsHelper}
-          options={WORDS.map((count) => ({
-            value: count,
-            label: m.createRoom.wordCount(count),
-          }))}
-          value={words}
-          onValueChange={setWords}
-          name="words"
-        />
-      ) : gameType === 'code-breaker' ? (
-        <SelectField
-          label={m.createRoom.codes}
-          helper={m.createRoom.codesHelper}
-          options={CODES.map((count) => ({
-            value: count,
-            label: m.createRoom.codeCount(count),
-          }))}
-          value={codes}
-          onValueChange={setCodes}
-          name="codes"
-        />
-      ) : gameType === 'doodle-chain' ? (
-        <SelectField
-          label={m.createRoom.drawingTime}
-          helper={m.createRoom.drawingTimeHelper}
-          options={DRAWING_SECONDS.map((count) => ({
-            value: count,
-            label: m.createRoom.secondCount(count),
-          }))}
-          value={drawingSeconds}
-          onValueChange={setDrawingSeconds}
-          name="drawingSeconds"
-        />
-      ) : gameType === 'minesweeper' ? (
-        <SelectField
-          label={m.createRoom.board}
-          helper={m.createRoom.minesweeperDetail(difficulty)}
-          options={DIFFICULTIES.map((board) => ({
-            value: board,
-            label: m.createRoom.boardName(board),
-            detail: m.createRoom.minesweeperDetail(board),
-          }))}
-          value={difficulty}
-          onValueChange={setDifficulty}
-          name="board"
-        />
-      ) : null}
+      <SettingField
+        gameType={gameType}
+        settings={settings}
+        onChange={setSettings}
+      />
       {/* While the room is being made, nothing more is to be chosen. */}
       {!pending && (
         <Button

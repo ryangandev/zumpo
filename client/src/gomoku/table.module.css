@@ -120,28 +120,20 @@
   gap: var(--zumpo-space-8);
 }
 
-/* One row, a button tall, in play and between games alike, so the board
-   above keeps its size and place from one game to the next: a guest's wait
-   for the host sits beside their button rather than over it. */
 .phone .actions {
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: stretch;
-  min-height: var(--zumpo-space-48);
 }
 
+/* The buttons share a row; a line of words, such as how the next game
+   starts or what it will be, takes a row of its own above them. */
 .phone .actions > * {
   flex: 1 1 0;
 }
 
-.phone .actions > p {
-  flex: 1 1 auto;
-  align-self: center;
-  margin: 0;
-}
-
-/* Beside a wait, the button hugs its label and the words take the rest. */
-.phone .actions > p ~ * {
-  flex: none;
+.phone .actions > :not(button) {
+  flex-basis: 100%;
 }
 
 /* In play a phone's board is as large as the room the actions and the seats

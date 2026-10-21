@@ -1,8 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { CanvasStroke, DoodleChainRoomState } from '../models/types.js';
 import { MAX_POINTS_PER_CANVAS } from '../libs/drawing/canvas.js';
+import { starterOf } from '../../shared/room.js';
 import {
   collect,
+  collectChat,
   createDoodleChainRoom,
   doodleChainRoom,
   joinRoom,
@@ -13,6 +15,7 @@ import {
   startTestServer,
   syncRoom,
   waitFor,
+  waitForChat,
   waitForDoodleChainState,
   type TestClient,
   type TestServer,
@@ -254,12 +257,14 @@ describe('Doodle Chain', () => {
       }
       maya.emit('dc:done', roomId, true);
       ryan.emit('dc:done', roomId, true);
+      // Two sockets, so either Done may land first: wait for both.
       const table = await waitForDoodleChainState(
         owner,
-        (s) => s.table[ryan.playerId]?.done === true,
+        (s) =>
+          s.table[ryan.playerId]?.done === true &&
+          s.table[maya.playerId]?.done === true,
       );
       expect(table.phase).toBe('write');
-      expect(table.table[maya.playerId]?.done).toBe(true);
       expect(table.table[leo.playerId]?.done).toBe(false);
 
       // Keep editing takes it back.
@@ -272,6 +277,49 @@ describe('Doodle Chain', () => {
       for (const player of [maya, leo]) player.emit('dc:done', roomId, true);
       const done = await passing;
       expect(done.phaseEndsInMs).toBeLessThanOrEqual(150);
+      // The pause says the step ended because everybody was done.
+      expect(done.stepEnd).toBe('done');
+    });
+
+    it('says when a step ended because its time ran out', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      // Two draw and press Done; the third never does, so the clock ends it.
+      drawAll(players, roomId, [true, true, false]);
+      const passing = await at(owner, 'passing', 2, 6000);
+      expect(passing.stepEnd).toBe('time');
+      // Only while the chains pass on.
+      const describing = await at(owner, 'describe', 3);
+      expect(describing.stepEnd).toBeUndefined();
+    });
+
+    it('ends a step plainly when everybody with something to do leaves it', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, [
+        'Maya',
+        'Ryan',
+        'Leo',
+        'Sam',
+        'Ada',
+      ]);
+      writeAll(players, roomId, ['one', 'two', 'three', 'four', 'five']);
+      await at(owner, 'draw', 2);
+      // Three drawings come back empty, so three sit the describing out.
+      drawAll(players, roomId, [true, true, false, false, false]);
+      const describing = await Promise.all(
+        players.map((p) => at(p, 'describe', 3, 6000)),
+      );
+      const working = players.filter(
+        (_, index) => describing[index]!.task?.sitsOut === false,
+      );
+      const staying = players.filter((p) => !working.includes(p));
+      expect(working).toHaveLength(2);
+
+      const passing = at(staying[0]!, 'passing', 3);
+      for (const player of working) player.emit('room:leave', roomId);
+      const ended = await passing;
+      expect(ended.stepEnd).toBe('left');
+      expect(ended.phaseEndsInMs).toBeGreaterThan(0);
     });
 
     it('refuses Done on an empty entry, so empty means the time ran out', async () => {
@@ -394,6 +442,33 @@ describe('Doodle Chain', () => {
   });
 
   describe('sitting a step out', () => {
+    it('skips a step nobody can play at once, and tells the room why', async () => {
+      // Every drawing comes back empty, so nobody has a drawing to describe.
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const chat = collectChat(owner);
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      const skipped = await at(owner, 'passing', 3, 6000);
+      expect(skipped.stepEnd).toBe('skipped');
+      expect(Object.values(skipped.table).every((place) => place.sitsOut)).toBe(
+        true,
+      );
+      // No clock runs for the step itself: only the pause after it.
+      expect(skipped.phaseEndsInMs).toBeLessThanOrEqual(150);
+      await at(owner, 'reveal');
+      const notices = chat.map((message) => message.notice);
+      expect(notices).toContainEqual({
+        type: 'dc:skipped',
+        step: 3,
+        kind: 'description',
+      });
+      // The step's divider comes first, then why it was skipped.
+      const types = notices.map((notice) => notice?.type);
+      expect(types.lastIndexOf('dc:step')).toBeLessThan(
+        types.indexOf('dc:skipped'),
+      );
+    });
+
     it('skips a describing step after an empty drawing, and draws the line before', async () => {
       // Ryan's chain: Ryan writes, Leo's drawing is empty, Sam sits out the
       // describing step, and Maya draws Ryan's original prompt.
@@ -656,6 +731,74 @@ describe('Doodle Chain', () => {
       const next = waitForDoodleChainState(ryan, (s) => s.reveal?.total === 2);
       host.emit('dc:reveal:next', roomId, 1);
       expect((await next).reveal).toMatchObject({ chain: 0, shown: 2 });
+    });
+
+    it('hands the reveal to the next player while the host is away, and back on return', async () => {
+      // A grace long enough that the crown itself cannot have moved.
+      await harness.teardown();
+      harness = await startTestServer(undefined, 5);
+      const { roomId, players, owner } = await playToReveal(harness);
+      const room = () => doodleChainRoom(harness, roomId);
+      const shown = () => room().game.reveal?.shown;
+
+      owner.close();
+      await settle();
+      expect(room().owner.playerId).toBe(owner.playerId);
+      const standIn = players.find((p) => p.playerId === starterOf(room()))!;
+      const other = players.find((p) => p !== owner && p !== standIn)!;
+      expect(standIn).not.toBe(owner);
+
+      // Only the player next in line steps the reveal on.
+      other.emit('dc:reveal:next', roomId, 1);
+      await settle();
+      expect(shown()).toBe(1);
+      const second = waitForDoodleChainState(
+        other,
+        (s) => s.reveal?.total === 2,
+      );
+      standIn.emit('dc:reveal:next', roomId, 1);
+      expect((await second).reveal?.shown).toBe(2);
+
+      // The host is back, and the reveal is theirs again.
+      const back = await harness.reload(owner);
+      await joinRoom(back, roomId, 'Maya');
+      await settle();
+      standIn.emit('dc:reveal:next', roomId, 2);
+      await settle();
+      expect(shown()).toBe(2);
+      const third = waitForDoodleChainState(
+        other,
+        (s) => s.reveal?.total === 3,
+      );
+      back.emit('dc:reveal:next', roomId, 2);
+      expect((await third).reveal?.shown).toBe(3);
+    });
+
+    it('names the player next in line as the one showing the chains while the host is away', async () => {
+      await harness.teardown();
+      harness = await startTestServer(undefined, 5);
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const [, ryan, leo] = players;
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      drawAll(players, roomId, [true, true, true]);
+      await at(owner, 'describe', 3);
+      // The host is away as the last step runs out, and the reveal begins.
+      owner.close();
+      await settle();
+      const said = waitForChat(
+        ryan,
+        (message) => message.notice?.type === 'dc:reveal',
+        6000,
+      );
+      writeAll([ryan, leo], roomId, ['zwei', 'drei']);
+      const notice = (await said).notice;
+      const standIn = starterOf(doodleChainRoom(harness, roomId));
+      expect(standIn).not.toBe(owner.playerId);
+      expect(notice).toEqual({
+        type: 'dc:reveal',
+        host: standIn === ryan.playerId ? 'Ryan' : 'Leo',
+      });
     });
 
     it('gives a spectator the drawings but no heart', async () => {

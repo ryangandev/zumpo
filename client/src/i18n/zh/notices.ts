@@ -113,6 +113,10 @@ export const notices: typeof en = {
   'cb:revealed': (n) => `答案是 ${n.code}。`,
   'dc:step': (n) =>
     `第 ${n.step} 步 · ${{ prompt: '写', drawing: '画', description: '描述' }[n.kind]}`,
+  'dc:skipped': (n) =>
+    n.kind === 'drawing'
+      ? `第 ${n.step} 步跳过了：上一步的描述都是空的，没人有字可画。`
+      : `第 ${n.step} 步跳过了：上一步的画都是空的，没人有画可描述。`,
   'dc:reveal': (n) => `揭晓时间！${who(n.host)} 来逐条展示每条传话。`,
   'dc:album': (_n) => '所有传话都收进画册了。',
   'gomoku:started': (n) =>

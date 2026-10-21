@@ -6,6 +6,7 @@ import { heirOf, isSpectator, memberCount, memberOf } from './seats.js';
 import type { Room } from './types.js';
 import { playerChannel, type IoServer } from './emit.js';
 import { guard } from '../guard.js';
+import { startIfReady } from './ready.js';
 
 /** Pending seat expiries are keyed by the pair, not by either half. */
 const graceKey = (roomId: string, playerId: string) => `${roomId}:${playerId}`;
@@ -82,6 +83,7 @@ const createRoomMembership = (
 
     if (spectating) delete room.spectators[playerId];
     else delete room.playerList[playerId];
+    room.ready.delete(playerId);
 
     // A room lasts while anybody is in it: spectators left on their own can
     // still take the seats and play.
@@ -114,6 +116,8 @@ const createRoomMembership = (
     // move the room was waiting on, or the room may have dropped below the
     // game's minimum. A spectator was never part of the game.
     if (!spectating) module?.onDeparture(room, playerId);
+    // Between games the one the table was waiting on may be the one who went.
+    if (module) startIfReady(room, module);
     registry.lookup.emitState(room);
 
     // Built after the departure is handled, so an ended game shows as 'Open'
@@ -174,6 +178,10 @@ const createRoomMembership = (
       const member = memberOf(room, playerId);
       if (!member) continue;
       member.isConnected = false;
+      // Between games the one the table was waiting on may be the one who
+      // went, or the host whose stand-in need not say Ready.
+      const module = registry.moduleOf(room);
+      if (module && !isSpectator(room, playerId)) startIfReady(room, module);
       registry.lookup.emitState(room);
 
       if (!isSpectator(room, playerId)) {
@@ -185,7 +193,7 @@ const createRoomMembership = (
         // The seat waits for them. So, briefly, may their turn - that decision
         // belongs to the game, which is the only thing that knows whether
         // there is anything worth coming back to.
-        registry.moduleOf(room)?.onDisconnect(room, playerId);
+        module?.onDisconnect(room, playerId);
       }
 
       const key = graceKey(room.roomId, playerId);
@@ -238,6 +246,10 @@ const createRoomMembership = (
       const member = memberOf(room, playerId);
       if (!member) continue;
       member.isConnected = true;
+      // A host coming back takes the start back, and a player who said Ready
+      // before going counts again.
+      const module = registry.moduleOf(room);
+      if (module && !isSpectator(room, playerId)) startIfReady(room, module);
       registry.lookup.emitState(room);
       if (isSpectator(room, playerId)) continue;
 
@@ -247,7 +259,7 @@ const createRoomMembership = (
       });
 
       // If the room was holding a turn open for them, it can stop.
-      registry.moduleOf(room)?.onReturn(room, playerId);
+      module?.onReturn(room, playerId);
     }
 
     for (const gameType of touchedGames) registry.lookup.emitLobby(gameType);

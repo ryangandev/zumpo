@@ -274,16 +274,23 @@ function turnBar(
       countdown: clock(m.minesweeper.toPick, room.spectating),
     };
   }
+  // Who is in already, so the race is seen while picking.
+  const lockedIn = state.lockedIn.flatMap(
+    (id) => state.playerList[id]?.username ?? [],
+  );
   return {
     category,
     label,
     kind: 'status',
     main: m.minesweeper.pickCell,
-    meta: phone
-      ? m.minesweeper.minesShort(state.totalMines, state.minesFound)
-      : state.minesFound > 0
-        ? m.minesweeper.minesFound(state.totalMines, state.minesFound)
-        : m.minesweeper.pickLocks(state.totalMines),
+    meta:
+      lockedIn.length > 0
+        ? m.minesweeper.othersLockedIn(listNames(lockedIn, m))
+        : phone
+          ? m.minesweeper.minesShort(state.totalMines, state.minesFound)
+          : state.minesFound > 0
+            ? m.minesweeper.minesFound(state.totalMines, state.minesFound)
+            : m.minesweeper.pickLocks(state.totalMines),
     countdown: clock(m.minesweeper.toPick),
   };
 }

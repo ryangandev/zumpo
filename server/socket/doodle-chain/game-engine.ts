@@ -2,8 +2,9 @@ import type {
   Coordinate,
   DoodleChainContent,
   DoodleChainDraft,
+  DoodleChainStepEnd,
 } from '../../models/types.js';
-import { departureFrom } from '../../../shared/room.js';
+import { departureFrom, mayStart, starterOf } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import {
   emitToPlayer,
@@ -156,7 +157,20 @@ const createDoodleChainGameEngine = (
     }
 
     ctx.rooms.announce(room.roomId, 'divider', { type: 'dc:step', step, kind });
-    ctx.rooms.startPhase(room, secondsFor(room), () => finishStep(room));
+    // Every chain came to this step on an entry it cannot follow, so nobody
+    // has anything to do: the step passes at once, and the room is told why.
+    if (workers(room).length === 0) {
+      ctx.rooms.announce(room.roomId, 'system', {
+        type: 'dc:skipped',
+        step,
+        kind,
+      });
+      finishStep(room, 'skipped');
+      return;
+    }
+    ctx.rooms.startPhase(room, secondsFor(room), () =>
+      finishStep(room, 'time'),
+    );
 
     // Whoever describes is sent the drawing they describe, and nobody else:
     // not a player who has left, who may be back watching, or in another room.
@@ -185,12 +199,18 @@ const createDoodleChainGameEngine = (
     else emitToPlayer(ctx.io, playerId, 'dc:drawing', room.roomId, id, strokes);
   };
 
-  /** Everybody with something to do has pressed Done: the rest is dead time. */
+  /**
+   * Everybody with something to do has pressed Done, or has left: the rest is
+   * dead time. A step whose players all left was not finished by anybody, so
+   * it is not told as "Everyone's done!".
+   */
   const endIfAllDone = (room: DoodleChainRoom) => {
     const game = room.game;
     if (!room.isGameStarted || !IN_STEP.has(game.phase)) return;
-    if (workers(room).every((playerId) => game.done.has(playerId))) {
-      finishStep(room);
+    const here = workers(room);
+    if (here.length === 0) finishStep(room, 'left');
+    else if (here.every((playerId) => game.done.has(playerId))) {
+      finishStep(room, 'done');
     }
   };
 
@@ -249,12 +269,16 @@ const createDoodleChainGameEngine = (
     game.done = new Set();
   };
 
-  /** Time is up, or everybody is done: the chains move on after a pause. */
-  const finishStep = (room: DoodleChainRoom) => {
+  /**
+   * Time is up, everybody is done, or nobody had anything to do: the chains
+   * move on after a pause, which says which.
+   */
+  const finishStep = (room: DoodleChainRoom, why: DoodleChainStepEnd) => {
     const game = room.game;
     if (!IN_STEP.has(game.phase)) return;
     keepStep(room);
     game.phase = 'passing';
+    game.stepEnd = why;
     ctx.rooms.startPhase(room, durations.passing, () => {
       if (game.step < game.steps) beginStep(room, game.step + 1);
       else beginReveal(room);
@@ -269,9 +293,12 @@ const createDoodleChainGameEngine = (
     game.phase = 'reveal';
     game.tasks = new Map();
     game.reveal = { chain: 0, shown: 1 };
+    // Whoever steps it is named: the host, or while they are away the
+    // player next in line.
+    const starter = starterOf(room);
     ctx.rooms.announce(room.roomId, 'system', {
       type: 'dc:reveal',
-      host: room.owner.username,
+      host: room.playerList[starter]?.username ?? room.owner.username,
     });
     sendShown(room);
     ctx.rooms.emitState(room);
@@ -295,12 +322,15 @@ const createDoodleChainGameEngine = (
   };
 
   /**
-   * The host shows the next entry. `total` is how many they saw shown, so a
-   * double tap, or a Next from a page a step behind, shows nothing more.
+   * The starter shows the next entry: the host, or while they are away the
+   * player the crown would pass to, as for starting a game, so the reveal
+   * never waits on a host who is not there. `total` is how many they saw
+   * shown, so a double tap, or a Next from a page a step behind, shows
+   * nothing more.
    */
   const next = (roomId: string, playerId: string, total: number) => {
     const room = roomOf(roomId);
-    if (!room?.isGameStarted || room.owner.playerId !== playerId) return;
+    if (!room?.isGameStarted || !mayStart(room, playerId)) return;
     const game = room.game;
     if (game.phase !== 'reveal' || !game.reveal) return;
     if (total !== revealTotal(game)) return;

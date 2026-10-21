@@ -24,9 +24,12 @@ export const DRAWING_SECONDS = [45, 60, 90] as const;
 export type DrawingSeconds = (typeof DRAWING_SECONDS)[number];
 export const DEFAULT_DRAWING_SECONDS: DrawingSeconds = 60;
 
-/** The steps that are not drawing, and the pause after every step. */
+/**
+ * The steps that are not drawing, and the pause after every step. Describing
+ * a drawing in words takes longer than writing a first line, so it has longer.
+ */
 export const WRITE_SECONDS = 30;
-export const DESCRIBE_SECONDS = 30;
+export const DESCRIBE_SECONDS = 45;
 export const PASSING_SECONDS = 3;
 
 /** About how long the room spends on one entry of the reveal. */
