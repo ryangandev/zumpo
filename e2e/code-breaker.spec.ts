@@ -127,9 +127,7 @@ test('a player with no name plays today’s code, with notes, then a practice co
   const today = await solve(sam);
   await expect(
     sam.getByRole('heading', {
-      name: isCracked(today)
-        ? `Cracked in ${today.length}.`
-        : 'Not this time.',
+      name: isCracked(today) ? `Cracked in ${today.length}.` : 'Not this time.',
     }),
   ).toBeVisible();
   await expect(sam.getByText('Next code in')).toBeVisible();
