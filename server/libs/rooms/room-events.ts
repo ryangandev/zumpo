@@ -16,6 +16,7 @@ import { nameInRoom, renamePlayer } from './names.js';
 import type { RoomMembership } from './membership.js';
 import type { RoomRegistry } from './registry.js';
 import { seatCount } from './seats.js';
+import { matchesSecret } from '../utils.js';
 import {
   emitToSocket,
   onClientEvent,
@@ -75,11 +76,12 @@ const roomEventsHandler = (
         reply(failure('roomNotOpen', 'Room is not open.'));
         return;
       }
-      // The invite link's key opens the room as the password does.
+      // The invite link's key opens the room as the password does. Neither
+      // comparison says how near a wrong guess came.
       if (
         room.password &&
-        password !== room.password &&
-        password !== room.inviteKey
+        !matchesSecret(password, room.password) &&
+        !(room.inviteKey !== '' && matchesSecret(password, room.inviteKey))
       ) {
         reply(
           failure('incorrectPassword', 'Incorrect password. Please try again.'),

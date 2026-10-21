@@ -1,4 +1,4 @@
-import { randomBytes, randomUUID } from 'node:crypto';
+import { randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import type {
   PlayerInfo,
   Standing,
@@ -24,6 +24,17 @@ const generateRoomId = (): string => {
  * enough to go where a password goes and too long to guess.
  */
 const generateInviteKey = (): string => randomBytes(12).toString('base64url');
+
+/**
+ * Whether `given` is `secret`, in a time that does not say how much of it
+ * matched. An empty secret is matched by nothing.
+ */
+const matchesSecret = (given: string, secret: string): boolean => {
+  if (secret === '') return false;
+  const a = Buffer.from(given, 'utf8');
+  const b = Buffer.from(secret, 'utf8');
+  return a.length === b.length && timingSafeEqual(a, b);
+};
 
 const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
@@ -100,6 +111,7 @@ export {
   standingsOf,
   generateRoomId,
   generateInviteKey,
+  matchesSecret,
   getRandomInt,
   getRemainingPhaseMs,
   getRandomElementFromSet,
