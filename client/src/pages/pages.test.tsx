@@ -210,12 +210,19 @@ describe('the home page', () => {
   it('goes straight to a game on your own from its Solo tag', async () => {
     const user = userEvent.setup();
     const { router } = await renderApp('/');
-    const solo = screen
-      .getAllByRole('link', { name: 'Solo' })
-      .find((link) => link.getAttribute('href') === '/games/trios/solo')!;
-    expect(solo).toHaveAccessibleDescription('Trios');
+    const solo = screen.getByRole('link', { name: 'Play Trios solo' });
+    expect(solo).toHaveAttribute('href', '/games/trios/solo');
+    expect(solo).toHaveAccessibleDescription('');
     await user.click(solo);
     expect(router.state.location.pathname).toBe('/games/trios/solo');
+  });
+
+  it('names the Solo tag’s link in Chinese too', async () => {
+    await renderApp('/', { locale: 'zh' });
+    expect(screen.getByRole('link', { name: '单人玩扫雷' })).toHaveAttribute(
+      'href',
+      '/games/minesweeper/solo',
+    );
   });
 
   it('gives Draw & Guess one tag for its players, as every game has', async () => {
@@ -238,10 +245,9 @@ describe('the home page', () => {
       JSON.stringify({ [today]: misses.slice(0, 2) }),
     );
     const { unmount } = await renderApp('/');
-    expect(screen.getByRole('link', { name: 'Guess 3 of 10' })).toHaveAttribute(
-      'href',
-      '/games/code-breaker/solo',
-    );
+    const code = screen.getByRole('link', { name: 'Play Code Breaker solo' });
+    expect(code).toHaveAccessibleDescription('Guess 3 of 10');
+    expect(code).toHaveAttribute('href', '/games/code-breaker/solo');
     unmount();
 
     localStorage.setItem(
@@ -271,10 +277,9 @@ describe('the home page', () => {
       ['hatch', 'match'].filter((w) => w !== dailyAnswer(today)).slice(0, 1),
     );
     const { unmount } = await renderApp('/');
-    expect(screen.getByRole('link', { name: 'Guess 2 of 6' })).toHaveAttribute(
-      'href',
-      '/games/daily-word/solo',
-    );
+    expect(
+      screen.getByRole('link', { name: 'Play Daily Word solo' }),
+    ).toHaveAccessibleDescription('Guess 2 of 6');
     unmount();
 
     recordGuesses(today, [dailyAnswer(today)]);

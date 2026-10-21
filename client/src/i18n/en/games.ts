@@ -51,6 +51,8 @@ export const games = {
   solo: 'Solo',
   /** The ways into a game. */
   playSolo: 'Play solo',
+  /** A card's Solo tag, a link straight to the game on your own. */
+  playGameSolo: (game: string) => `Play ${game} solo`,
   /** Where today's puzzle of a daily game stands, in place of Solo. */
   today: {
     guess: (guess: number, of: number) => `Guess ${guess} of ${of}`,

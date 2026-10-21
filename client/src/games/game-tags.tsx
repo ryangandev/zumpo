@@ -10,7 +10,8 @@ import styles from './game-tags.module.css';
  * then its player count. The card and the intro both carry them. A daily
  * game started today says where it stands in Solo's place: the guess it is
  * on, or done, with the streak where there is room (`streak`). On a card,
- * Solo is a link straight to the game on your own (`soloLink`). With an `id`,
+ * Solo is a link straight to the game on your own (`soloLink`), named for
+ * where it goes and described by the daily state. With an `id`,
  * the tags are `${id}-solo` and `${id}-players`, for a control that is
  * described by them.
  */
@@ -49,7 +50,8 @@ export function GameTags({
           <Link
             to={soloPath(game.type)}
             className={styles.link}
-            aria-describedby={id}
+            aria-label={m.games.playGameSolo(m.games.of[game.type].name)}
+            aria-describedby={today ? soloId : undefined}
           >
             <Tag {...solo} id={soloId} />
           </Link>

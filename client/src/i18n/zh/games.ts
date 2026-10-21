@@ -18,6 +18,7 @@ export const games: typeof en = {
   pickAGame: '选个游戏',
   solo: '单人',
   playSolo: '单人玩',
+  playGameSolo: (game) => `单人玩${game}`,
   today: {
     guess: (guess, of) => `第 ${guess} / ${of} 次`,
     done: '今日已完成',
