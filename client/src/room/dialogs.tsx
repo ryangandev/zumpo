@@ -1,6 +1,7 @@
-import { useId, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Button, Dialog, DialogClose, HowToPlay, TextField } from '../ui';
 import type { GameInfo } from '../games/catalog';
+import { FullRules } from '../games/full-rules';
 import { useMessages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
 import styles from './dialogs.module.css';
@@ -80,37 +81,16 @@ export function RulesDialog({
   const m = useMessages();
   const text = m.games.of[game.type];
   const howTo = (solo && text.solo?.howToPlay) || text.howToPlay;
-  const [full, setFull] = useState(false);
-  const rulesId = useId();
   return (
     <Dialog
       open={open}
-      onOpenChange={(next) => {
-        // Every opening starts from the short version.
-        if (!next) setFull(false);
-        onOpenChange(next);
-      }}
+      onOpenChange={onOpenChange}
       title={m.room.rulesTitle(text.name)}
       description={howTo.goal}
       actions={<DialogClose render={<Button>{m.room.backToGame}</Button>} />}
     >
       <HowToPlay steps={[...howTo.steps, howTo.score]} />
-      <div className={styles.full}>
-        <Button
-          variant="quiet"
-          icon={full ? 'chevron-up' : 'chevron-down'}
-          aria-expanded={full}
-          aria-controls={rulesId}
-          onClick={() => setFull(!full)}
-        >
-          {full ? m.room.hideFullRules : m.room.fullRules}
-        </Button>
-        <div id={rulesId} className={styles.rules} hidden={!full}>
-          {text.rules.split('\n\n').map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
-      </div>
+      <FullRules game={game.type} />
     </Dialog>
   );
 }

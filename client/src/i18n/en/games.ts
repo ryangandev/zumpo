@@ -28,10 +28,7 @@ export interface GameText {
    * game with a solo mode has a Solo tag before it.
    */
   facts: string;
-  /** The lobby's "How to play" card: a summary, then one fact per line. */
-  lobbySummary: string;
-  lobbyFacts: readonly string[];
-  /** How to play in a room. */
+  /** How to play in a room, on its waiting card, in its dialog and on the game's page. */
   howToPlay: HowToPlay;
   /**
    * Every rule, in a room and on your own, under Full rules in the How to
@@ -40,8 +37,11 @@ export interface GameText {
   rules: string;
   /** The create-room card's description. */
   createDescription: string;
-  /** The rules of the game on your own, for a game that has one. */
-  solo?: { summary: string; facts: readonly string[]; howToPlay: HowToPlay };
+  /**
+   * The game on your own, for a game that has one: the line under its title,
+   * and how to play it.
+   */
+  solo?: { summary: string; howToPlay: HowToPlay };
   /** "3 points", "1 pair": a score in the game's own unit. */
   score: (points: number) => string;
 }
@@ -98,14 +98,6 @@ export const games = {
       name: 'Draw & Guess',
       tagline: 'One draws. Everyone else tries to get there first.',
       facts: '2–8 players',
-      lobbySummary:
-        'Take turns drawing a word while everyone else races to guess it in the chat. Faster guesses score more.',
-      lobbyFacts: [
-        '2–8 players',
-        '1–4 rounds, everyone draws once a round',
-        '15s to pick a word · 90s to draw',
-        'The answer shows for 10s',
-      ],
       howToPlay: {
         goal: 'Draw a word for the others to guess, and guess theirs.',
         steps: [
@@ -131,14 +123,6 @@ Faster guesses earn more, from 50 to 150 points, and the drawer gets two fifths 
       name: 'Minesweeper',
       tagline: 'Clear a board on your own, or share one and pick in secret.',
       facts: '2–8 players',
-      lobbySummary:
-        'Everyone picks a hidden cell at the same time. Riskier safe picks score more, and a mine costs points.',
-      lobbyFacts: [
-        '2–8 players',
-        'Small, Medium or Large board',
-        '15s to pick · 4s reveal',
-        'Same safe cell? The points are split.',
-      ],
       howToPlay: {
         goal: 'Share one board, and pick safe cells in secret.',
         steps: [
@@ -164,12 +148,6 @@ On your own, it is classic Minesweeper: open every safe cell without hitting a m
         'Pick a board. Small is a quick game; Large takes a while.',
       solo: {
         summary: 'Open every safe cell. The numbers count the mines next door.',
-        facts: [
-          'Your first click is always safe',
-          'Right-click or long-press to flag; Flag mode makes a tap flag',
-          'Click a number whose flags are placed to open the rest around it',
-          'Your best time on each board is kept on this device',
-        ],
         howToPlay: {
           goal: 'Open every safe cell without hitting a mine.',
           steps: [
@@ -186,14 +164,6 @@ On your own, it is classic Minesweeper: open every safe cell without hitting a m
       name: 'Make 24',
       tagline: 'Four numbers. Plus, minus, times, divide. Make 24.',
       facts: '2–8 players',
-      lobbySummary:
-        'Everyone gets the same four numbers at once. Use each one once, with plus, minus, times and divide, to make 24. Quicker answers score more.',
-      lobbyFacts: [
-        '2–8 players',
-        '5 or 10 hands',
-        '60s to solve each hand',
-        'Others see that you solved it, never how',
-      ],
       howToPlay: {
         goal: 'Make 24 from the same four numbers before the others do.',
         steps: [
@@ -217,12 +187,6 @@ On your own, a run is ten hands against one clock. Skip a hand you are stuck on,
       solo: {
         summary:
           'Four numbers, four signs, one target. Every hand can be solved.',
-        facts: [
-          'Ten hands against one clock',
-          'Use each number once: pick a number, a sign and another number',
-          'Stuck? Skip the hand for 30 seconds on the clock',
-          'Your best time is kept on this device',
-        ],
         howToPlay: {
           goal: 'Make 24 from four numbers, ten hands in a row, against one clock.',
           steps: [
@@ -240,14 +204,6 @@ On your own, a run is ten hands against one clock. Skip a hand you are stuck on,
       tagline: 'Flip two cards. Remember where everything is. Find every pair.',
       rowTagline: 'Flip two cards. Remember where everything is.',
       facts: '2–6 players',
-      lobbySummary:
-        'Take turns flipping two cards. Find a pair and it is yours, and you go again. Whoever finds the most pairs wins.',
-      lobbyFacts: [
-        '2–6 players',
-        'Small 4 × 4 or Large 6 × 6 board',
-        '10s to flip two cards',
-        'Everyone sees every card you flip',
-      ],
       howToPlay: {
         goal: 'Find more matching pairs than anybody else.',
         steps: [
@@ -270,12 +226,6 @@ On your own, clear the board in as few turns as you can; your time breaks a tie.
         'Take turns flipping two cards. Small is a quick game; Large takes a while.',
       solo: {
         summary: 'Flip two cards at a time. Remember where everything is.',
-        facts: [
-          'A Small 4 × 4 or a Large 6 × 6 board',
-          'Two cards that do not match flip back after a second',
-          'Fewer turns is better; your time breaks a tie',
-          'Your best on each board is kept on this device',
-        ],
         howToPlay: {
           goal: 'Clear the board in as few turns as you can.',
           steps: [
@@ -293,14 +243,6 @@ On your own, clear the board in as few turns as you can; your time breaks a tie.
       name: 'Trios',
       tagline: 'Spot three that are all the same or all different.',
       facts: '2–8 players',
-      lobbySummary:
-        'Everybody looks at the same twelve cards at once. Pick three that are all the same or all different in every feature, and the trio is yours.',
-      lobbyFacts: [
-        '2–8 players',
-        '10 or 20 trios a game',
-        'A wrong trio locks you out for 3s',
-        'No trio for 30s? A card is marked',
-      ],
       howToPlay: {
         goal: 'Spot trios among the twelve cards before anybody else.',
         steps: [
@@ -326,12 +268,6 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
       solo: {
         summary:
           'Twelve cards on the table, and three of them make a trio. Find ten as fast as you can.',
-        facts: [
-          'Ten trios against one clock',
-          'Colour, shape, count and fill: each all the same or all different',
-          'A wrong pick adds 5 seconds; a hint adds 10',
-          'Your best time is kept on this device',
-        ],
         howToPlay: {
           goal: 'Find ten trios among the twelve cards, against one clock.',
           steps: [
@@ -348,14 +284,6 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
       name: 'Snap',
       tagline: 'Spot the symbol both cards share.',
       facts: '2–6 players',
-      lobbySummary:
-        'Everybody has a card, and everybody looks at the same middle card. Your card and the middle card share exactly one symbol: tap it first, and the middle card is yours.',
-      lobbyFacts: [
-        '2–6 players',
-        '31 cards, six symbols each',
-        'Any two cards share exactly one symbol',
-        'A wrong tap locks you out for 2s',
-      ],
       howToPlay: {
         goal: 'Be first to spot the symbol your card shares with the middle card.',
         steps: [
@@ -382,12 +310,6 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
       solo: {
         summary:
           'Your card and the middle card share exactly one symbol. Spot it thirty times, as fast as you can.',
-        facts: [
-          'Thirty cards against one clock',
-          'Any two cards share exactly one symbol',
-          'A wrong tap adds 3 seconds',
-          'Your best time is kept on this device',
-        ],
         howToPlay: {
           goal: 'Spot the symbol your card shares with the middle card, thirty times, against one clock.',
           steps: [
@@ -404,14 +326,6 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
       name: 'Liar’s Dice',
       tagline: 'Roll in secret. Bid on the whole table. Call the bluff.',
       facts: '2–6 players',
-      lobbySummary:
-        'Everybody rolls dice nobody else can see, then bids on what the whole table holds. Call Liar on a bid you doubt: whoever was wrong loses a die. The last player with dice wins.',
-      lobbyFacts: [
-        '2–6 players',
-        '3 or 5 dice each',
-        '20s a turn · 5s reveal',
-        'Ones are wild',
-      ],
       howToPlay: {
         goal: 'Bid on what the whole table rolled, call the bluffs, and keep your dice.',
         steps: [
@@ -435,12 +349,6 @@ On your own, play 1 to 5 bots with no clock, and go on to the next round when yo
         'Take turns bidding on everybody’s dice. 3 dice each is a quick game; 5 is the classic.',
       solo: {
         summary: 'Roll in secret. Bid on the whole table. Call the bluff.',
-        facts: [
-          '1 to 5 bots, 3 or 5 dice each',
-          'No clock: your turn waits for you',
-          'Ones are wild, so nobody bids on them',
-          'Your wins are kept on this device',
-        ],
         howToPlay: {
           goal: 'Bid on what the whole table rolled, call the bots’ bluffs, and keep your dice.',
           steps: [
@@ -458,14 +366,6 @@ On your own, play 1 to 5 bots with no clock, and go on to the next round when yo
       name: 'Hush',
       tagline: 'No turns, no talking. Play every card in order, together.',
       facts: '2–4 players',
-      lobbySummary:
-        'Everybody holds numbered cards. Without a word, the team plays them all onto one pile, lowest first. There are no turns: anybody plays at any moment.',
-      lobbyFacts: [
-        '2–4 players, playing together',
-        'Level 1 deals one card each, level 2 two, and so on',
-        'No turns, no clock and no chat while a level is played',
-        '3 lives; a level without a slip wins one back',
-      ],
       howToPlay: {
         goal: 'Play every card onto one pile, lowest first, together.',
         steps: [
@@ -493,14 +393,6 @@ Clear the last level to win together. Two players play 7 levels, three play 6 an
       name: 'Doodle Chain',
       tagline: 'Write a line, draw it, pass it on, and watch it fall apart.',
       facts: '3–8 players',
-      lobbySummary:
-        'Everyone writes a line. The next player draws it, the next says what the drawing shows, and so on round the table. Then the host shows every chain.',
-      lobbyFacts: [
-        '3–8 players',
-        'Up to 6 steps: write, then draw and describe in turn',
-        '30s to write · 60s to draw · 30s to describe',
-        'The host steps through the reveal',
-      ],
       howToPlay: {
         goal: 'Pass a line round the table as drawings and words, and watch it change.',
         steps: [
@@ -528,14 +420,6 @@ Then the host shows every chain, one entry at a time, from its first line to its
       name: 'Daily Word',
       tagline: 'Five letters, six guesses. A new word every day.',
       facts: '2–8 players',
-      lobbySummary:
-        'Everyone gets the same hidden five-letter word at once, with six guesses each. Fewer guesses score more.',
-      lobbyFacts: [
-        '2–8 players',
-        '3 or 5 words',
-        '2 minutes for each word',
-        'Others see your marks, never your letters',
-      ],
       howToPlay: {
         goal: 'Find the same hidden five-letter word as the others, in fewer guesses.',
         steps: [
@@ -559,12 +443,6 @@ On your own, there is one word a day, the same for everybody, and a new one at y
       solo: {
         summary:
           'One word a day, the same for everybody. Six guesses to find it.',
-        facts: [
-          'Every guess must be a real five-letter word',
-          'Green square: right place. Coral circle: somewhere else. Grey: not in it',
-          'A new word at your midnight; your streak is kept on this device',
-          'Practice words after it, as many as you like',
-        ],
         howToPlay: {
           goal: 'Find the hidden five-letter word in six guesses.',
           steps: [
@@ -581,14 +459,6 @@ On your own, there is one word a day, the same for everybody, and a new one at y
       name: 'Code Breaker',
       tagline: 'Four digits, ten guesses. A new code every day.',
       facts: '2–8 players',
-      lobbySummary:
-        'Everyone races to crack the same four-digit code, with ten guesses each. Fewer guesses score more.',
-      lobbyFacts: [
-        '2–8 players',
-        '1 or 3 codes',
-        '3 minutes for each code',
-        'Others see your pegs, never your digits',
-      ],
       howToPlay: {
         goal: 'Crack the same hidden four-digit code as the others, in fewer guesses.',
         steps: [
@@ -614,12 +484,6 @@ On your own, there is one code a day, the same for everybody, and a new one at y
       solo: {
         summary:
           'One code a day, the same for everybody. Ten guesses to crack it.',
-        facts: [
-          'Four different digits; a code may start with 0',
-          'Green square: right place. Coral circle: somewhere else. Grey: not in it',
-          'A new code at your midnight; your streak is kept on this device',
-          'Practice codes after it, as many as you like',
-        ],
         howToPlay: {
           goal: 'Crack the hidden four-digit code in ten guesses.',
           steps: [
@@ -637,14 +501,6 @@ On your own, there is one code a day, the same for everybody, and a new one at y
       name: 'Gomoku',
       tagline: 'Take turns placing stones. Five in a row wins.',
       facts: '2 players',
-      lobbySummary:
-        'Take turns placing a stone on any empty point. The first to make five in a row, across, down or diagonally, wins.',
-      lobbyFacts: [
-        '2 players, and up to 5 watching',
-        'Black moves first; colours swap every game',
-        '30s a move; run out twice in a row and you lose',
-        'A full board is a draw',
-      ],
       howToPlay: {
         goal: 'Be the first to make five in a row.',
         steps: [
@@ -666,12 +522,6 @@ On your own, play the computer at Easy, Medium or Hard, as Black or White. Your 
       solo: {
         summary:
           'Take turns placing stones. Five in a row, across, down or diagonally, wins.',
-        facts: [
-          'Against the computer: Easy, Medium or Hard',
-          'Make two threats at once: the computer can block only one',
-          'Take back your last move whenever it is your turn',
-          'No clock: your turn waits for you',
-        ],
         howToPlay: {
           goal: 'Make five in a row before the computer does.',
           steps: [

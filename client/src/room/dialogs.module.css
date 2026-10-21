@@ -8,24 +8,3 @@
   overflow-wrap: anywhere;
   field-sizing: content;
 }
-
-/* P15, P21: the full rules under the short version, behind a toggle. */
-.full {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--zumpo-space-16);
-}
-
-.rules {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-12);
-  font: var(--zumpo-text-body);
-  letter-spacing: var(--zumpo-text-body-tracking);
-  white-space: pre-line;
-}
-
-.rules[hidden] {
-  display: none;
-}
