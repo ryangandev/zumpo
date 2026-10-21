@@ -10,7 +10,7 @@ const problems: Readonly<Record<GuessProblem, string>> = {
 export const codeBreaker: typeof en = {
   problem: (problem) => problems[problem],
   guessFailed: '这次猜测没能送达房间，请再试一次。',
-  crackedChat: '你猜中了。揭晓答案后才能聊天。',
+  crackedChat: '你猜中了。要等答案揭晓才能聊天。',
   chatPlaceholder: '说点什么…',
   codeOf: (round, rounds) => `第 ${round} / ${rounds} 局`,
   gameOver: '游戏结束',
