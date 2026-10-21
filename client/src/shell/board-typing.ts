@@ -4,7 +4,8 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 export interface Typing {
   onKey: (key: string) => void;
   onDelete: () => void;
-  onEnter: () => void;
+  /** Enter, for a board that checks a row; without it Enter is left alone. */
+  onEnter?: () => void;
   /** Escape, for a board that has a way back to its start. */
   onEscape?: () => void;
 }
@@ -46,9 +47,10 @@ export function useTypingKeys(
       const onButton =
         target instanceof HTMLElement && target.closest('button, a') !== null;
       if (event.key === 'Enter') {
-        if (onButton && !typedSinceFocus) return;
+        const onEnter = latest.current.onEnter;
+        if (!onEnter || (onButton && !typedSinceFocus)) return;
         event.preventDefault();
-        latest.current.onEnter();
+        onEnter();
       } else if (event.key === 'Escape') {
         latest.current.onEscape?.();
       } else if (event.key === 'Backspace') {

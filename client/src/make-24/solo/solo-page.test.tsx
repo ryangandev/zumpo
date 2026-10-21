@@ -151,6 +151,14 @@ describe('Make 24 on your own', () => {
     expect(turn().getByText('24! Nice.')).toBeInTheDocument();
   });
 
+  it('leaves Enter to a focused button after keys are typed', async () => {
+    await startRun();
+    act(() => screen.getByRole('button', { name: 'Skip, +30 s' }).focus());
+    await user.keyboard('1');
+    await user.keyboard('{Enter}');
+    expect(turn().getByText('Skipped')).toBeInTheDocument();
+  });
+
   it('stops the clock while How to play is open', async () => {
     await startRun();
     await pause(1000);

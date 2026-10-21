@@ -217,7 +217,6 @@ export function HandTable({
       onDelete: () => {
         if (steps.length > 0) onUndo();
       },
-      onEnter: () => {},
       onEscape: () => {
         if (steps.length > 0) onStartOver();
       },
