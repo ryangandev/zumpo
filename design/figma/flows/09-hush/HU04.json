@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Ryan still held 47. One life lost.",
-                  "Label": "Level 3 of 5",
                   "Main": "Maya played 52",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 3 of 5"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to go on",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -539,7 +540,7 @@
             "id": "59:74159",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 608,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -564,6 +565,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "1 card",
@@ -597,6 +599,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "1 card",
@@ -630,6 +633,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Lost 47, 1 card left",
@@ -669,6 +673,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "2 cards",
@@ -703,6 +708,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -716,6 +722,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -730,6 +737,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -744,6 +752,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -762,14 +771,14 @@
                 "id": "59:74161",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 280,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 280,
                     "width": 344
                   },
                   {
@@ -778,7 +787,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 2 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

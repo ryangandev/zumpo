@@ -1,0 +1,365 @@
+{
+  "format": 1,
+  "name": "Zumpo/How to play",
+  "id": "163:65908",
+  "type": "COMPONENT",
+  "key": "a216d5a0dc13702a3e44c96f9ce40bb0761d5289",
+  "description": "A game’s rules in half a minute: an optional heading and goal, then a line per step behind a coral dot. Under a room’s waiting card (with heading and goal) and in its How to play dialog (steps only; the goal is the dialog’s description).",
+  "properties": {
+    "Heading": {
+      "type": "text",
+      "default": "How to play"
+    },
+    "Show heading": {
+      "type": "boolean",
+      "default": true
+    },
+    "Goal": {
+      "type": "text",
+      "default": "Draw a word for the others to guess, and guess theirs."
+    },
+    "Show goal": {
+      "type": "boolean",
+      "default": true
+    },
+    "Show step 4": {
+      "type": "boolean",
+      "default": false
+    },
+    "Step 1": {
+      "type": "text",
+      "default": "On your turn, pick one of three words and draw it."
+    },
+    "Step 2": {
+      "type": "text",
+      "default": "Everyone else types guesses in the chat, and letters show as the clock runs down."
+    },
+    "Step 3": {
+      "type": "text",
+      "default": "Guess it and your chat locks until the next turn, so you cannot give it away."
+    },
+    "Step 4": {
+      "type": "text",
+      "default": "Faster guesses score more, and the drawer gets a share of each."
+    }
+  },
+  "node": {
+    "type": "COMPONENT",
+    "id": "163:65908",
+    "name": "Zumpo/How to play",
+    "x": 1100,
+    "y": 10400,
+    "w": 360,
+    "h": 252,
+    "hSize": "hug",
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/8",
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "TEXT",
+        "id": "163:65909",
+        "name": "Heading",
+        "w": 360,
+        "h": 20,
+        "wSize": "fill",
+        "hSize": "hug",
+        "propRefs": {
+          "visible": "Show heading",
+          "characters": "Heading"
+        },
+        "text": "How to play",
+        "textStyle": "Zumpo/Label",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "autoResize": "height"
+      },
+      {
+        "type": "TEXT",
+        "id": "163:65910",
+        "name": "Goal",
+        "w": 360,
+        "h": 50,
+        "wSize": "fill",
+        "hSize": "hug",
+        "propRefs": {
+          "visible": "Show goal",
+          "characters": "Goal"
+        },
+        "text": "Draw a word for the others to guess, and guess theirs.",
+        "textStyle": "Zumpo/Body",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "autoResize": "height"
+      },
+      {
+        "type": "FRAME",
+        "id": "163:65911",
+        "name": "Steps",
+        "w": 360,
+        "h": 166,
+        "wSize": "fill",
+        "hSize": "hug",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "163:65912",
+            "name": "Step 1",
+            "w": 360,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:65913",
+                "name": "Dot slot",
+                "w": 6,
+                "h": 25,
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "ELLIPSE",
+                    "id": "163:65914",
+                    "name": "Dot",
+                    "w": "$Zumpo · UI:space/6",
+                    "h": "$Zumpo · UI:space/6",
+                    "fills": [
+                      "$Zumpo · UI:color/coral"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "163:65915",
+                "name": "Step",
+                "w": 342,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Step 1"
+                },
+                "text": "On your turn, pick one of three words and draw it.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "163:65916",
+            "name": "Step 2",
+            "w": 360,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:65917",
+                "name": "Dot slot",
+                "w": 6,
+                "h": 25,
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "ELLIPSE",
+                    "id": "163:65918",
+                    "name": "Dot",
+                    "w": "$Zumpo · UI:space/6",
+                    "h": "$Zumpo · UI:space/6",
+                    "fills": [
+                      "$Zumpo · UI:color/coral"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "163:65919",
+                "name": "Step",
+                "w": 342,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Step 2"
+                },
+                "text": "Everyone else types guesses in the chat, and letters show as the clock runs down.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "163:65920",
+            "name": "Step 3",
+            "w": 360,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:65921",
+                "name": "Dot slot",
+                "w": 6,
+                "h": 25,
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "ELLIPSE",
+                    "id": "163:65922",
+                    "name": "Dot",
+                    "w": "$Zumpo · UI:space/6",
+                    "h": "$Zumpo · UI:space/6",
+                    "fills": [
+                      "$Zumpo · UI:color/coral"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "163:65923",
+                "name": "Step",
+                "w": 342,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Step 3"
+                },
+                "text": "Guess it and your chat locks until the next turn, so you cannot give it away.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "163:65924",
+            "name": "Step 4",
+            "visible": false,
+            "w": 360,
+            "h": 50,
+            "hSize": "hug",
+            "propRefs": {
+              "visible": "Show step 4"
+            },
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:65925",
+                "name": "Dot slot",
+                "w": 6,
+                "h": 25,
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "ELLIPSE",
+                    "id": "163:65926",
+                    "name": "Dot",
+                    "w": "$Zumpo · UI:space/6",
+                    "h": "$Zumpo · UI:space/6",
+                    "fills": [
+                      "$Zumpo · UI:color/coral"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "163:65927",
+                "name": "Step",
+                "w": 342,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Step 4"
+                },
+                "text": "Faster guesses score more, and the drawer gets a share of each.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -142,10 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Fix the row and try again",
-                  "Top row": false,
-                  "Label": "Daily code #12",
                   "Main": "Guess 4 of 10",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Daily code #12"
                 },
                 "overrides": [
                   {
@@ -165,8 +164,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "00:39",
+                      "Time": "0:39",
                       "Tone": "Waiting"
                     }
                   }
@@ -261,7 +261,7 @@
                       {
                         "path": "Guess 2 / Digits / Digit 3",
                         "componentProperties": {
-                          "Digit": "7",
+                          "Digit": "8",
                           "State": "Guessed",
                           "Size": "Compact"
                         }
@@ -269,7 +269,7 @@
                       {
                         "path": "Guess 2 / Digits / Digit 4",
                         "componentProperties": {
-                          "Digit": "8",
+                          "Digit": "9",
                           "State": "Guessed",
                           "Size": "Compact"
                         }
@@ -394,6 +394,33 @@
                           "Letter": "4",
                           "Kind": "Letter",
                           "State": "Correct",
+                          "Size": "Regular"
+                        }
+                      },
+                      {
+                        "path": "Keys / Key 5",
+                        "componentProperties": {
+                          "Letter": "5",
+                          "Kind": "Letter",
+                          "State": "Ruled out",
+                          "Size": "Regular"
+                        }
+                      },
+                      {
+                        "path": "Keys / Key 6",
+                        "componentProperties": {
+                          "Letter": "6",
+                          "Kind": "Letter",
+                          "State": "Ruled out",
+                          "Size": "Regular"
+                        }
+                      },
+                      {
+                        "path": "Keys / Key 8",
+                        "componentProperties": {
+                          "Letter": "8",
+                          "Kind": "Letter",
+                          "State": "Ruled out",
                           "Size": "Regular"
                         }
                       },

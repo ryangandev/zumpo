@@ -105,6 +105,11 @@
   --zumpo-text-hint-tracking: 0.3em;
   --zumpo-text-hint-line: 42px;
 
+  /* The masked word in the phone turn bar: Heading size, tracked as Hint so each blank reads as one letter. */
+  --zumpo-text-hint-compact: 900 24px / 30px var(--zumpo-font-nunito-sans);
+  --zumpo-text-hint-compact-tracking: 0.3em;
+  --zumpo-text-hint-compact-line: 30px;
+
   --zumpo-shadow-paper-lift: 0px 8px 24px #282b2514;
 
   --zumpo-shadow-menu-lift: 0px 8px 24px #282b251f;

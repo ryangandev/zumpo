@@ -124,8 +124,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:55",
+                      "Time": "0:55",
                       "Tone": "Running"
                     }
                   }
@@ -196,6 +197,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5053",
                       "Status icon": true,
@@ -216,6 +218,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "292",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it",
                       "State": "Scored"
@@ -243,6 +246,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Guessing",

@@ -142,9 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "You lose a die",
-                  "Label": "You called Liar",
                   "Main": "Otto’s bid stands",
-                  "Category": false
+                  "Category": false,
+                  "Label": "You called Liar"
                 },
                 "overrides": [
                   {
@@ -164,8 +164,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "01:12",
+                      "Time": "1:12",
                       "Tone": "Waiting"
                     }
                   }

@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Your drawing goes to Leo, as it is.",
-                  "Label": "Step 2 of 4",
                   "Main": "Time’s up!",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 2 of 4"
                 },
                 "overrides": [
                   {
@@ -156,8 +156,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to step 3",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -282,6 +283,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Passing",
@@ -303,6 +305,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Passing",
@@ -324,6 +327,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Passing",
@@ -345,6 +349,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Passing",
@@ -367,6 +372,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -380,6 +386,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -394,6 +401,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -408,6 +416,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",

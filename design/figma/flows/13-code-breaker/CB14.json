@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 4350,
     "w": 1440,
-    "h": 1248,
+    "h": 1103,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -67,71 +67,6 @@
       },
       {
         "type": "FRAME",
-        "id": "162:106718",
-        "name": "Page heading",
-        "w": 1312,
-        "h": 121,
-        "hSize": "hug",
-        "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "162:106719",
-            "name": "Tag / PLAY TOGETHER",
-            "w": 117,
-            "h": 30,
-            "wSize": "hug",
-            "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
-            },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "PLAY TOGETHER"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 30,
-                "width": 117
-              }
-            ]
-          },
-          {
-            "type": "TEXT",
-            "id": "162:106720",
-            "w": 1312,
-            "h": 42,
-            "hSize": "hug",
-            "text": "Code Breaker rooms",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "162:106721",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Make a little space for your next game.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
         "id": "162:106722",
         "name": "Dialog stage",
         "w": 1312,
@@ -150,9 +85,9 @@
           {
             "type": "INSTANCE",
             "id": "162:106723",
-            "name": "A little room for you.",
+            "name": "New Code Breaker room",
             "w": 560,
-            "h": 765,
+            "h": 426,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -160,54 +95,18 @@
             },
             "componentId": "9:400",
             "props": {
-              "Description": "Every code is three minutes. Three codes is about ten minutes."
+              "Description": "Every code is three minutes. Three codes is about ten minutes.",
+              "Title": "New Code Breaker room"
             },
             "overrides": [
               {
                 "path": ".",
-                "height": 765,
+                "height": 426,
                 "width": 560
               }
             ],
             "slots": {
               "Content": [
-                {
-                  "type": "INSTANCE",
-                  "id": "I162:106723;35:13433;162:106728",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Up to 40 characters.",
-                    "Value": "Maya’s room",
-                    "Label": "Room name"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I162:106723;35:13433;162:106729",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Choose 2–8 seats.",
-                    "Value": "8 players",
-                    "Label": "Seats"
-                  }
-                },
                 {
                   "type": "INSTANCE",
                   "id": "I162:106723;35:13433;162:106730",
@@ -222,28 +121,52 @@
                   "componentId": "9:204",
                   "props": {
                     "Select": true,
-                    "Helper": "1 or 3 codes, 3 minutes each.",
+                    "Helper": "3 minutes a code.",
                     "Value": "3 codes",
                     "Label": "Codes"
                   }
                 },
                 {
-                  "type": "INSTANCE",
-                  "id": "I162:106723;35:13433;162:106731",
-                  "name": "Zumpo/Input",
+                  "type": "FRAME",
+                  "id": "163:63094",
+                  "name": "More options",
                   "w": 496,
-                  "h": 113,
+                  "h": 48,
                   "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
                   },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Leave blank for an open room. Up to 20 characters.",
-                    "Value": "••••••",
-                    "Label": "Password (optional)"
-                  }
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "163:63096",
+                      "name": "Action / More options",
+                      "w": 159,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Quiet",
+                        "State": "Default"
+                      },
+                      "componentId": "4:21",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                        "Show icon": true,
+                        "Label": "More options"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 48,
+                          "width": 159
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "FRAME",

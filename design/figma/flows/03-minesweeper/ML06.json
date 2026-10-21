@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1542,
     "w": 1440,
-    "h": 1220,
+    "h": 1075,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -67,71 +67,6 @@
       },
       {
         "type": "FRAME",
-        "id": "9:2791",
-        "name": "Page heading",
-        "w": 1312,
-        "h": 121,
-        "hSize": "hug",
-        "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "24:6840",
-            "name": "Tag / PLAY TOGETHER",
-            "w": 117,
-            "h": 30,
-            "wSize": "hug",
-            "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
-            },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "PLAY TOGETHER"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 30,
-                "width": 117
-              }
-            ]
-          },
-          {
-            "type": "TEXT",
-            "id": "9:2794",
-            "w": 1312,
-            "h": 42,
-            "hSize": "hug",
-            "text": "Minesweeper rooms",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "9:2795",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Make a little space for your next game.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
         "id": "9:2796",
         "name": "Dialog stage",
         "w": 1312,
@@ -150,9 +85,9 @@
           {
             "type": "INSTANCE",
             "id": "35:13650",
-            "name": "A little room for you.",
+            "name": "New Minesweeper room",
             "w": 560,
-            "h": 737,
+            "h": 326,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -160,54 +95,18 @@
             },
             "componentId": "9:400",
             "props": {
-              "Description": "Pick a board. Small is a quick game; Large takes a while."
+              "Description": "Pick a board. Small is a quick game; Large takes a while.",
+              "Title": "New Minesweeper room"
             },
             "overrides": [
               {
                 "path": ".",
-                "height": 737,
+                "height": 326,
                 "width": 560
               }
             ],
             "slots": {
               "Content": [
-                {
-                  "type": "INSTANCE",
-                  "id": "I35:13650;35:13433;36:14401",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Up to 40 characters.",
-                    "Value": "Maya’s room",
-                    "Label": "Room name"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I35:13650;35:13433;36:14409",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Choose 2–8 seats.",
-                    "Value": "8 players",
-                    "Label": "Seats"
-                  }
-                },
                 {
                   "type": "INSTANCE",
                   "id": "I35:13650;35:13433;36:14417",
@@ -225,24 +124,6 @@
                     "Helper": "16 × 16 · 40 mines",
                     "Value": "Medium",
                     "Label": "Board"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I35:13650;35:13433;36:14425",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Leave blank for an open room. Up to 20 characters.",
-                    "Value": "••••••",
-                    "Label": "Password (optional)"
                   }
                 },
                 {

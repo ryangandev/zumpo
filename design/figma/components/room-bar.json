@@ -4,11 +4,15 @@
   "id": "39:19319",
   "type": "COMPONENT_SET",
   "key": "2248d763590acc6af76a92430d06294fbbeeba65",
-  "description": "A seated room's one row: the game, the room and its phase, then How to play, Leave room and you. Replaces the header and the room heading in every room; nothing in it leads out of the room without asking.",
+  "description": "A seated room's one row: the game, the room and its phase, then How to play, Leave room and you. Replaces the header and the room heading in every room; nothing in it leads out of the room without asking. Phone: one row 48 px tall, the game over the phase in small text, then the icon actions; the room's name is on the Players tab.",
   "properties": {
     "Game": {
       "type": "text",
       "default": "Minesweeper"
+    },
+    "Phase": {
+      "type": "text",
+      "default": "Round 4"
     },
     "Layout": {
       "type": "variant",
@@ -250,7 +254,7 @@
         "id": "39:19277",
         "name": "Layout=Phone",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -264,12 +268,11 @@
             "id": "39:19300",
             "name": "Room identity",
             "w": 202,
-            "h": 68,
+            "h": 48,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/8",
               "strokesIncluded": true
             },
             "children": [
@@ -277,9 +280,9 @@
                 "type": "TEXT",
                 "id": "39:19301",
                 "name": "Game",
-                "w": 154,
+                "w": 202,
                 "h": 30,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Game"
@@ -288,71 +291,32 @@
                 "textStyle": "Zumpo/Heading",
                 "fills": [
                   "$Zumpo · Primitives:color/ink"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               },
               {
-                "type": "FRAME",
-                "id": "39:19302",
-                "name": "Room context",
-                "w": 174,
-                "h": 30,
-                "wSize": "hug",
+                "type": "TEXT",
+                "id": "163:62568",
+                "name": "Phase",
+                "w": 202,
+                "h": 18,
+                "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/8",
-                  "strokesIncluded": true
+                "propRefs": {
+                  "characters": "Phase"
                 },
-                "children": [
-                  {
-                    "type": "INSTANCE",
-                    "id": "39:19303",
-                    "name": "Room",
-                    "w": 95,
-                    "h": 30,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "component": "Zumpo/Tag",
-                    "variant": {
-                      "Tone": "Sand"
-                    },
-                    "componentId": "24:6511",
-                    "props": {
-                      "Label": "Maya's room"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 30,
-                        "width": 95
-                      }
-                    ]
-                  },
-                  {
-                    "type": "INSTANCE",
-                    "id": "39:19304",
-                    "name": "Phase",
-                    "w": 71,
-                    "h": 30,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "component": "Zumpo/Tag",
-                    "variant": {
-                      "Tone": "Blue"
-                    },
-                    "componentId": "24:6516",
-                    "props": {
-                      "Label": "Round 4"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 30,
-                        "width": 71
-                      }
-                    ]
-                  }
-                ]
+                "text": "Round 4",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               }
             ]
           },

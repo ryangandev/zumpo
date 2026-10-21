@@ -116,8 +116,8 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Revealing the picks…",
-                  "Label": "Round 4",
-                  "Main": "Everyone is locked in"
+                  "Main": "Everyone is locked in",
+                  "Label": "Round 4"
                 },
                 "overrides": [
                   {
@@ -1066,7 +1066,7 @@
             "id": "9:4507",
             "name": "Room sidebar",
             "w": 344,
-            "h": 608,
+            "h": 590,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1087,6 +1087,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -1120,6 +1121,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -1153,6 +1155,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -1179,6 +1182,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -1216,14 +1220,14 @@
                 "id": "9:4538",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 280,
+                "h": 262,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 280,
+                    "height": 262,
                     "width": 344
                   },
                   {
@@ -1249,8 +1253,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Maya hit a mine (11% risk): −109",
-                      "Kind": "Alert"
+                      "Message": "Round 2: Maya hit a mine (−109).",
+                      "Kind": "System"
                     }
                   },
                   {

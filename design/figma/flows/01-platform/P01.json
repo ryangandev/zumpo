@@ -5,7 +5,7 @@
   "id": "9:433",
   "section": "01 / Platform & shared flows",
   "reviewNotes": [
-    "P01 · Home / every game on one page: four tiles across, sorted by kind, with a filter per kind. A click on a game opens its page."
+    "P01 · Home / every game on one page: four tiles across, the kinds you can play on your own first, with a filter per kind. A click on a game opens its page; a click on Solo starts it on your own. Daily Word and Code Breaker show today’s state."
   ],
   "frame": {
     "type": "FRAME",
@@ -423,30 +423,6 @@
                   },
                   {
                     "type": "INSTANCE",
-                    "id": "90:109636",
-                    "name": "Filter / Party",
-                    "w": 71,
-                    "h": 38,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "component": "Zumpo/Filter chip",
-                    "variant": {
-                      "State": "Default"
-                    },
-                    "componentId": "90:107171",
-                    "props": {
-                      "Label": "Party"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 38,
-                        "width": 71
-                      }
-                    ]
-                  },
-                  {
-                    "type": "INSTANCE",
                     "id": "90:109638",
                     "name": "Filter / Puzzles",
                     "w": 85,
@@ -506,6 +482,30 @@
                         "width": 94
                       }
                     ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "90:109636",
+                    "name": "Filter / Party",
+                    "w": 71,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Party"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 71
+                      }
+                    ]
                   }
                 ]
               }
@@ -529,66 +529,6 @@
             "children": [
               {
                 "type": "INSTANCE",
-                "id": "162:112890",
-                "name": "Zumpo/Game card",
-                "w": 310,
-                "h": 294,
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Doodle Chain",
-                  "Layout": "Tile",
-                  "State": "Default"
-                },
-                "componentId": "162:111304"
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:109643",
-                "name": "Zumpo/Game card",
-                "w": 310,
-                "h": 294,
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Draw & Guess",
-                  "Layout": "Tile",
-                  "State": "Default"
-                },
-                "componentId": "90:104955"
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:109676",
-                "name": "Zumpo/Game card",
-                "w": 310,
-                "h": 294,
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Hush",
-                  "Layout": "Tile",
-                  "State": "Default"
-                },
-                "componentId": "90:105310"
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:109699",
-                "name": "Zumpo/Game card",
-                "w": 310,
-                "h": 294,
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Liar’s Dice",
-                  "Layout": "Tile",
-                  "State": "Default"
-                },
-                "componentId": "90:105242"
-              },
-              {
-                "type": "INSTANCE",
                 "id": "162:113560",
                 "name": "Zumpo/Game card",
                 "w": 310,
@@ -600,7 +540,18 @@
                   "Layout": "Tile",
                   "State": "Default"
                 },
-                "componentId": "162:113181"
+                "componentId": "162:113181",
+                "overrides": [
+                  {
+                    "path": "Footer / Tags / Solo",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Guess 2 of 10",
+                      "Tone": "Ink"
+                    }
+                  }
+                ]
               },
               {
                 "type": "INSTANCE",
@@ -615,7 +566,18 @@
                   "Layout": "Tile",
                   "State": "Default"
                 },
-                "componentId": "90:105349"
+                "componentId": "90:105349",
+                "overrides": [
+                  {
+                    "path": "Footer / Tags / Solo",
+                    "componentProperties": {
+                      "Show icon": true,
+                      "Icon": "24:4994",
+                      "Label": "Done today",
+                      "Tone": "Lime"
+                    }
+                  }
+                ]
               },
               {
                 "type": "INSTANCE",
@@ -706,6 +668,66 @@
                   "State": "Default"
                 },
                 "componentId": "162:111524"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:112890",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "162:111304"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:109643",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Draw & Guess",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "90:104955"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:109676",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Hush",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "90:105310"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:109699",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Liar’s Dice",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "90:105242"
               }
             ]
           }

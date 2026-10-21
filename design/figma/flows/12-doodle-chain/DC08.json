@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Sam draws your words next.",
-                  "Label": "Step 3 of 4",
                   "Main": "What does this drawing show?",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 3 of 4"
                 },
                 "overrides": [
                   {
@@ -156,12 +156,11 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:18",
+                      "Time": "0:18",
                       "Tone": "Running"
-                    },
-                    "height": 44,
-                    "width": 140
+                    }
                   }
                 ]
               },
@@ -296,6 +295,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Describing",
@@ -317,6 +317,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Done",
@@ -350,6 +351,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Describing",
@@ -371,6 +373,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Describing",
@@ -393,6 +396,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -406,6 +410,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -420,6 +425,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -434,6 +440,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -483,10 +490,10 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
-                      "Alert icon": "24:4999",
                       "Name": "Ryan",
-                      "Message": "Step 3: describe the drawing you were given.",
-                      "Kind": "System"
+                      "Alert icon": "24:4999",
+                      "Message": "Step 3 · Describe",
+                      "Kind": "Divider"
                     }
                   },
                   {
