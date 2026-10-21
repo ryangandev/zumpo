@@ -60,6 +60,7 @@ export const ui = {
     suggest: 'Suggest',
     done: 'Done',
     keepEditing: 'Keep editing',
+    writeFirst: 'Write something first, then press Done.',
     heart: (count: number) => `Give a heart, ${plural(count, 'heart')} so far`,
     hearts: (count: number) => plural(count, 'heart'),
   },

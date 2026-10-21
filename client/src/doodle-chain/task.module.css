@@ -68,6 +68,11 @@
   letter-spacing: var(--zumpo-text-small-tracking);
 }
 
+/* Done pressed on a blank canvas: why nothing happened. */
+.hintError {
+  color: var(--zumpo-danger);
+}
+
 .grow {
   flex: 1;
   min-width: 0;

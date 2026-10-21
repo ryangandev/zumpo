@@ -3,6 +3,7 @@ import type { CanvasStroke, DoodleChainRoomState } from '../models/types.js';
 import { MAX_POINTS_PER_CANVAS } from '../libs/drawing/canvas.js';
 import {
   collect,
+  collectChat,
   createDoodleChainRoom,
   doodleChainRoom,
   joinRoom,
@@ -272,6 +273,21 @@ describe('Doodle Chain', () => {
       for (const player of [maya, leo]) player.emit('dc:done', roomId, true);
       const done = await passing;
       expect(done.phaseEndsInMs).toBeLessThanOrEqual(150);
+      // The pause says the step ended because everybody was done.
+      expect(done.stepEnd).toBe('done');
+    });
+
+    it('says when a step ended because its time ran out', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      // Two draw and press Done; the third never does, so the clock ends it.
+      drawAll(players, roomId, [true, true, false]);
+      const passing = await at(owner, 'passing', 2, 6000);
+      expect(passing.stepEnd).toBe('time');
+      // Only while the chains pass on.
+      const describing = await at(owner, 'describe', 3);
+      expect(describing.stepEnd).toBeUndefined();
     });
 
     it('refuses Done on an empty entry, so empty means the time ran out', async () => {
@@ -394,6 +410,33 @@ describe('Doodle Chain', () => {
   });
 
   describe('sitting a step out', () => {
+    it('skips a step nobody can play at once, and tells the room why', async () => {
+      // Every drawing comes back empty, so nobody has a drawing to describe.
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const chat = collectChat(owner);
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      const skipped = await at(owner, 'passing', 3, 6000);
+      expect(skipped.stepEnd).toBe('skipped');
+      expect(Object.values(skipped.table).every((seat) => seat.sitsOut)).toBe(
+        true,
+      );
+      // No clock runs for the step itself: only the pause after it.
+      expect(skipped.phaseEndsInMs).toBeLessThanOrEqual(150);
+      await at(owner, 'reveal');
+      const notices = chat.map((message) => message.notice);
+      expect(notices).toContainEqual({
+        type: 'dc:skipped',
+        step: 3,
+        kind: 'description',
+      });
+      // The step's divider comes first, then why it was skipped.
+      const types = notices.map((notice) => notice?.type);
+      expect(types.lastIndexOf('dc:step')).toBeLessThan(
+        types.indexOf('dc:skipped'),
+      );
+    });
+
     it('skips a describing step after an empty drawing, and draws the line before', async () => {
       // Ryan's chain: Ryan writes, Leo's drawing is empty, Sam sits out the
       // describing step, and Maya draws Ryan's original prompt.

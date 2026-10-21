@@ -102,6 +102,8 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['cb:revealed'](notice);
     case 'dc:step':
       return m.notices['dc:step'](notice);
+    case 'dc:skipped':
+      return m.notices['dc:skipped'](notice);
     case 'dc:reveal':
       return m.notices['dc:reveal'](notice);
     case 'dc:album':

@@ -2,6 +2,7 @@ import type {
   Coordinate,
   DoodleChainContent,
   DoodleChainDraft,
+  DoodleChainStepEnd,
 } from '../../models/types.js';
 import { departureFrom } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
@@ -156,7 +157,20 @@ const createDoodleChainGameEngine = (
     }
 
     ctx.rooms.announce(room.roomId, 'divider', { type: 'dc:step', step, kind });
-    ctx.rooms.startPhase(room, secondsFor(room), () => finishStep(room));
+    // Every chain came to this step on an entry it cannot follow, so nobody
+    // has anything to do: the step passes at once, and the room is told why.
+    if (workers(room).length === 0) {
+      ctx.rooms.announce(room.roomId, 'system', {
+        type: 'dc:skipped',
+        step,
+        kind,
+      });
+      finishStep(room, 'skipped');
+      return;
+    }
+    ctx.rooms.startPhase(room, secondsFor(room), () =>
+      finishStep(room, 'time'),
+    );
 
     // Whoever describes is sent the drawing they describe, and nobody else:
     // not a player who has left, who may be back watching, or in another room.
@@ -190,7 +204,7 @@ const createDoodleChainGameEngine = (
     const game = room.game;
     if (!room.isGameStarted || !IN_STEP.has(game.phase)) return;
     if (workers(room).every((playerId) => game.done.has(playerId))) {
-      finishStep(room);
+      finishStep(room, 'done');
     }
   };
 
@@ -249,12 +263,16 @@ const createDoodleChainGameEngine = (
     game.done = new Set();
   };
 
-  /** Time is up, or everybody is done: the chains move on after a pause. */
-  const finishStep = (room: DoodleChainRoom) => {
+  /**
+   * Time is up, everybody is done, or nobody had anything to do: the chains
+   * move on after a pause, which says which.
+   */
+  const finishStep = (room: DoodleChainRoom, why: DoodleChainStepEnd) => {
     const game = room.game;
     if (!IN_STEP.has(game.phase)) return;
     keepStep(room);
     game.phase = 'passing';
+    game.stepEnd = why;
     ctx.rooms.startPhase(room, durations.passing, () => {
       if (game.step < game.steps) beginStep(room, game.step + 1);
       else beginReveal(room);

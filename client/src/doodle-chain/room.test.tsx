@@ -144,16 +144,25 @@ describe('a Doodle Chain room', () => {
     // Nobody has a heart until the reveal.
     expect(scoreboard().queryByText(/^\d+$/)).toBeNull();
 
-    // A blank line cannot be Done, by the button or by Enter.
+    // The step's one field has the keyboard as it starts.
     const field = screen.getByRole('textbox', { name: 'Your first line' });
+    expect(field).toHaveFocus();
+
+    // A blank line cannot be Done, by the button or by Enter: Done says why.
     const done = screen.getByRole('button', { name: 'Done' });
-    expect(done).toHaveAttribute('aria-disabled', 'true');
+    expect(done).not.toHaveAttribute('aria-disabled');
     await user.click(done);
     await user.type(field, '{Enter}');
     expect(fake.sentArgs('dc:done')).toEqual([]);
+    expect(
+      screen.getByText('Write something first, then press Done.'),
+    ).toBeInTheDocument();
+    expect(field).toHaveFocus();
 
     await user.type(field, 'A');
-    expect(done).not.toHaveAttribute('aria-disabled', 'true');
+    expect(
+      screen.queryByText('Write something first, then press Done.'),
+    ).toBeNull();
     expect(fake.sentArgs('dc:text')[0]).toEqual(['r1', { text: 'A' }]);
     expect(
       screen.getByText('1 / 80 · anything drawable, in any language'),
@@ -189,10 +198,9 @@ describe('a Doodle Chain room', () => {
     const field = screen.getByRole('textbox', { name: 'Your first line' });
 
     await user.type(field, '   {Enter}');
-    expect(screen.getByRole('button', { name: 'Done' })).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(
+      screen.getByText('Write something first, then press Done.'),
+    ).toBeInTheDocument();
     expect(fake.sentArgs('dc:done')).toEqual([]);
   });
 
@@ -208,10 +216,7 @@ describe('a Doodle Chain room', () => {
     expect(
       screen.getByRole('textbox', { name: 'Your first line' }),
     ).toHaveValue('A ghost');
-    expect(screen.getByRole('button', { name: 'Done' })).not.toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: 'Done' })).toBeEnabled();
 
     // While the chains move on, the line written is still shown.
     update({ ...writing, phase: 'passing', phaseEndsInMs: 3_000 });
@@ -257,13 +262,19 @@ describe('a Doodle Chain room', () => {
     ).toBeInTheDocument();
     expect(scoreboard().getAllByText('Drawing')).toHaveLength(3);
 
-    // An empty drawing cannot be Done.
+    // An empty drawing cannot be Done: Done says why instead.
     const done = screen.getByRole('button', { name: 'Done' });
-    expect(done).toHaveAttribute('aria-disabled', 'true');
     await user.click(done);
     expect(fake.sentArgs('dc:done')).toEqual([]);
+    expect(
+      screen.getByText('Draw something first, then press Done.'),
+    ).toBeInTheDocument();
     act(() => fake.serverEmits('dc:canvas:sync', 'r1', [stroke]));
-    expect(done).not.toHaveAttribute('aria-disabled', 'true');
+    expect(
+      screen.getByText(
+        'When the clock runs out, your drawing goes on as it is.',
+      ),
+    ).toBeInTheDocument();
     await user.click(done);
     expect(fake.sentArgs('dc:done')).toEqual([['r1', true]]);
   });
@@ -395,6 +406,7 @@ describe('a Doodle Chain room', () => {
       ...writing,
       phase: 'passing',
       phaseEndsInMs: 3_000,
+      stepEnd: 'time',
     });
 
     expect(turn().getByText('Time’s up!')).toBeInTheDocument();
@@ -406,6 +418,50 @@ describe('a Doodle Chain room', () => {
       ),
     ).toBeInTheDocument();
     expect(scoreboard().getAllByText('Passing')).toHaveLength(3);
+  });
+
+  it('says everyone is done when the step ended early', async () => {
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      phaseEndsInMs: 3_000,
+      stepEnd: 'done',
+    });
+
+    expect(turn().getByText('Everyone’s done!')).toBeInTheDocument();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
+    expect(turn().getByText('Your line goes to Maya.')).toBeInTheDocument();
+  });
+
+  it('says why a step nobody could play was skipped', async () => {
+    const empty = {
+      ...leosLine,
+      step: 2,
+      kind: 'drawing' as const,
+      author: MAYA,
+      content: { type: 'empty' as const, reason: 'time' as const },
+    };
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      step: 3,
+      phaseEndsInMs: 3_000,
+      stepEnd: 'skipped',
+      table: {
+        p1: { done: false, sitsOut: true },
+        p2: { done: false, sitsOut: true },
+        p3: { done: false, sitsOut: true },
+      },
+      task: { kind: 'description', chain: 2, sitsOut: true, skipped: empty },
+    });
+
+    expect(turn().getByText('Nothing to play this step')).toBeInTheDocument();
+    expect(
+      turn().getByText(
+        'Every drawing came back empty, so nobody had a drawing to describe.',
+      ),
+    ).toBeInTheDocument();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
   });
 
   it('lets the host show the next entry, and a player give a heart', async () => {

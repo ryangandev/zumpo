@@ -46,24 +46,25 @@ Six steps is also as far as a line travels before it is unrecognisable, which is
 
 ## Phases and timings
 
-| Phase        | Wire name  | Length                             | What happens                                                                      |
-| ------------ | ---------- | ---------------------------------- | --------------------------------------------------------------------------------- |
-| **Write**    | `write`    | 30s                                | Everybody writes a prompt, up to 80 characters.                                   |
-| **Draw**     | `draw`     | The room's drawing time, 60s first | Everybody draws the words they were given.                                        |
-| **Describe** | `describe` | 45s                                | Everybody writes what the drawing they were given shows, up to 80 characters.     |
-| **Passing**  | `passing`  | 3s                                 | Time is up: what everybody made is kept, the inputs close and the chains move on. |
-| **Reveal**   | `reveal`   | No clock: the host steps through   | The chains are shown to the whole room, one entry at a time.                      |
+| Phase        | Wire name  | Length                             | What happens                                                                            |
+| ------------ | ---------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
+| **Write**    | `write`    | 30s                                | Everybody writes a prompt, up to 80 characters.                                         |
+| **Draw**     | `draw`     | The room's drawing time, 60s first | Everybody draws the words they were given.                                              |
+| **Describe** | `describe` | 45s                                | Everybody writes what the drawing they were given shows, up to 80 characters.           |
+| **Passing**  | `passing`  | 3s                                 | The step is over: what everybody made is kept, the inputs close and the chains move on. |
+| **Reveal**   | `reveal`   | No clock: the host steps through   | The chains are shown to the whole room, one entry at a time.                            |
 
 Between games the room is in `waiting`.
 The steps run `write`, then `draw` and `describe` in turn, with `passing` after every step, the last one included; after the last `passing` comes the `reveal`, and after the reveal the room is back in `waiting` with the album.
 
-`passing` is there so the change of step is something you see rather than a jolt: your drawing stops, the screen says time is up and whom it goes to, and three seconds later the next thing to draw or describe arrives.
+`passing` is there so the change of step is something you see rather than a jolt: your drawing stops, the screen says why the step ended and whom your entry goes to, and three seconds later the next thing to draw or describe arrives.
+It says "Time's up!" only when the clock ran out, "Everyone's done!" when everybody finished early, and that there was nothing to play when the step was skipped (see [Sitting a step out](#sitting-a-step-out)).
 
 ### Done
 
 You press **Done** when your entry is finished, and **Keep editing** takes it back, at any time until the step ends.
-**Done is unavailable while your entry is empty**: a blank line, or a canvas with no strokes.
-The button stays where it is and keeps the keyboard focus, and the server refuses a Done for an empty entry too.
+**Done does not send an empty entry**: a blank line, or a canvas with no strokes.
+The button stays pressable, and pressing it on an empty entry says what to do instead ("Write something first, then press Done."); the server refuses a Done for an empty entry too.
 So an empty entry in a chain always means the time ran out or its player left, and the reveal can say which.
 **A step ends early once every player who has something to do in it has pressed Done**, because the rest of the clock would be dead time, as in Draw & Guess.
 A player who is away and has not pressed Done keeps the step running to its clock; a drop never shortens anybody's time.
@@ -104,6 +105,9 @@ With Maya, Ryan, Leo and Sam playing in that order:
 - Maya's chain: Maya writes, Ryan draws, Leo's description is empty, and Sam sits out the last step, so the chain ends on Ryan's drawing.
 
 Sitting out is rare, since it needs an empty entry or a player who left, and it is better than its alternatives: describing words or drawing a drawing breaks the game, and reshuffling who works on what mid-game would put a player on a chain twice.
+
+**When every player sits out a step, the step is skipped**: it ends at once, with no clock, and the chat says why under its divider ("Step 4 is skipped: every description came back empty, so nobody had words to draw."), as does the pause after it.
+A game that jumped to its next step or to the reveal without a word looked broken.
 
 ### How long a game takes
 
@@ -262,6 +266,7 @@ The Doodle Chain snapshot adds:
 | `table`          | For every player in the order: whether they have pressed Done, and whether they sit this step out                                                                            |
 | `task`           | The viewer's own task this step: its kind, the chain, the entry given (absent at step 1) and whether they sit out                                                            |
 | `draft`          | The viewer's own text this step, or the number of a suggestion                                                                                                               |
+| `stepEnd`        | While the chains pass on: why the step ended, `time`, `done` (everybody was done early) or `skipped` (nobody had anything to do)                                             |
 | `reveal`         | During the reveal: the chain being shown, how many of its entries are shown, every chain's owner, and the entries shown so far with their hearts and the viewer's own hearts |
 | `lastGame`       | The album, until the next game starts: every chain and entry, hearts, the crowd favourite, standings by hearts, and whether it ended early                                   |
 

@@ -104,6 +104,15 @@ export const doodleChain = {
   whatDoesItShow: 'What does this drawing show?',
   sitOut: 'You sit this step out',
   timesUp: 'Time’s up!',
+  everyoneDone: 'Everyone’s done!',
+  stepSkipped: 'Nothing to play this step',
+  /** Why a step nobody could play was skipped, by what it asked for. */
+  skippedWhy: {
+    prompt: 'Every chain moves one place on.',
+    drawing: 'Every description came back empty, so nobody had words to draw.',
+    description:
+      'Every drawing came back empty, so nobody had a drawing to describe.',
+  } satisfies Record<DoodleChainKind, string>,
   everybody: {
     prompt: 'Everybody is writing',
     drawing: 'Everybody is drawing',
@@ -142,6 +151,7 @@ export const doodleChain = {
   doneWaiting: (names: string) => `Done. Waiting for ${names}.`,
   doneAll: 'Done. Everyone is done.',
   asItIs: 'When the clock runs out, your drawing goes on as it is.',
+  drawFirst: 'Draw something first, then press Done.',
   givenDrawing: 'The drawing you were given',
   yourDrawing: 'Your drawing',
   nothingTo: {

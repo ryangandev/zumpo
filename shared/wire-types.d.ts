@@ -1021,6 +1021,13 @@ type DoodleChainKind = 'prompt' | 'drawing' | 'description';
  * ended and the chains move on; reveal: the host shows the chains, an entry
  * at a time.
  */
+/**
+ * Why a step ended, shown while the chains pass on: its clock ran out,
+ * everybody with something to do pressed Done, or nobody had anything to do,
+ * because every entry it would follow came back empty.
+ */
+type DoodleChainStepEnd = 'time' | 'done' | 'skipped';
+
 type DoodleChainPhase =
   'waiting' | 'write' | 'draw' | 'describe' | 'passing' | 'reveal';
 
@@ -1135,6 +1142,8 @@ interface DoodleChainRoomState extends RoomState {
   task?: DoodleChainTask;
   /** A player's own words so far, while writing or describing. */
   draft?: DoodleChainDraft;
+  /** While the chains pass on: why the step before ended. */
+  stepEnd?: DoodleChainStepEnd;
   reveal?: DoodleChainReveal;
   lastGame: DoodleChainGameSummary | null;
 }
@@ -1330,6 +1339,8 @@ type RoomNotice =
   | { type: 'cb:cracked'; name: string; guesses: number; points: number }
   | { type: 'cb:revealed'; code: string }
   | { type: 'dc:step'; step: number; kind: DoodleChainKind }
+  /** Nobody could play step `step`: every entry it would follow was empty. */
+  | { type: 'dc:skipped'; step: number; kind: DoodleChainKind }
   | { type: 'dc:reveal'; host: string }
   | { type: 'dc:album' }
   | { type: 'gomoku:started'; black: string; white: string; seconds: number }
@@ -1666,6 +1677,7 @@ export type {
   DoodleChainLobbyRoomInfo,
   DoodleChainKind,
   DoodleChainPhase,
+  DoodleChainStepEnd,
   DoodleChainPlayer,
   DoodleChainDraft,
   DoodleChainContent,
