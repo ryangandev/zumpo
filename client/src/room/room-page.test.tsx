@@ -387,7 +387,8 @@ describe('a room page', () => {
     ).toHaveLength(0);
     const watching = screen.getByRole('region', { name: 'Watching' });
     expect(within(watching).getByText('1 / 5')).toBeInTheDocument();
-    expect(within(watching).getByText(/Ryan/)).toBeInTheDocument();
+    // Named on the folded line and again in the row it opens to.
+    expect(within(watching).getAllByText(/Ryan/)).toHaveLength(2);
   });
 
   it('offers a spectator a free seat between games', async () => {
