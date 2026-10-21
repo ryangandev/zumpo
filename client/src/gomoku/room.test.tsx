@@ -65,23 +65,25 @@ describe('a Gomoku room', () => {
     expect(
       screen.getByText('Two players, a 15 × 15 board, 30 seconds a move.'),
     ).toBeInTheDocument();
-    expect(screen.getByText('Host · here')).toBeInTheDocument();
-    expect(screen.getByText('Here')).toBeInTheDocument();
+    // The scoreboard says who is here; no seats repeat it before a game.
+    expect(scoreboard().getByText('Maya')).toBeInTheDocument();
+    expect(scoreboard().queryByText('Waiting')).toBeNull();
+    expect(screen.queryByText('Host · here')).toBeNull();
     expect(point('H8')).toHaveAttribute('aria-disabled', 'true');
     await user.click(screen.getByRole('button', { name: 'Start game' }));
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
-  it('shows a free seat while the host waits alone', async () => {
+  it('has the host wait alone for a second player', async () => {
     await renderSeated(
       gomokuState({
         playerList: { p1: { username: 'Ryan', points: 0, isConnected: true } },
       }),
     );
-    expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(
-      screen.getByText('Anybody watching can sit here'),
+      screen.getByRole('heading', { name: 'Waiting for a second player.' }),
     ).toBeInTheDocument();
+    expect(screen.getByText('1 / 2')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Start game' })).toBeNull();
   });
 

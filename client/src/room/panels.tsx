@@ -2,12 +2,13 @@ import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
-import { Button, ButtonLink, Notice, PlayerRow } from '../ui';
+import { Avatar, Button, ButtonLink, Notice, PlayerRow } from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
 import { NameMenuButton } from '../shell/name-menu';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { StatusLine } from '../shell/status-line';
 import { listNames, ordinal, placesOf } from './players';
 import { useRoomContext } from './room-context';
@@ -17,11 +18,14 @@ import styles from './panels.module.css';
 export function RoomPanel({
   title,
   children,
+  aside,
   notice,
   actions,
 }: {
   title: ReactNode;
   children: ReactNode;
+  /** Under the text: who is here, on a phone's waiting card. */
+  aside?: ReactNode;
   /** Something for the viewer alone, between the text and the actions. */
   notice?: ReactNode;
   actions?: ReactNode;
@@ -33,6 +37,7 @@ export function RoomPanel({
         {title}
       </h2>
       <p className={styles.body}>{children}</p>
+      {aside}
       {refusal && (
         <Notice tone="error" className={styles.notice}>
           {refusal}
@@ -130,6 +135,39 @@ function usePickedName(): { notice?: string; change?: ReactNode } {
 }
 
 /**
+ * MO20: on a phone, where the scoreboard is on its own tab, the waiting card
+ * says who else is at the table, so "Everyone's here?" can be answered on
+ * the spot. Nothing while nobody else is.
+ */
+function WhoIsHere() {
+  const m = useMessages();
+  const { state, playerId } = useRoomContext();
+  const phone = useMediaQuery(PHONE);
+  const others = Object.entries(state.playerList).filter(
+    ([id]) => id !== playerId,
+  );
+  if (!phone || others.length === 0) return null;
+  const names = others.map(([, seat]) => seat.username);
+  return (
+    <div className={styles.here}>
+      <span className={styles.faces}>
+        {others.map(([id, seat]) => (
+          <Avatar
+            key={id}
+            initials={initialsOf(seat.username)}
+            tone={toneOf(seat.username)}
+            size="small"
+          />
+        ))}
+      </span>
+      <span className={styles.hereText}>
+        {m.room.here(listNames(names, m), names.length)}
+      </span>
+    </div>
+  );
+}
+
+/**
  * D01-D03, M01-M03: before a game. The host starts once there are two; a
  * guest waits for the host.
  */
@@ -164,6 +202,7 @@ export function WaitingPanel({
     return (
       <RoomPanel
         title={m.room.waitingForHost(state.owner.username)}
+        aside={<WhoIsHere />}
         notice={picked.notice}
         actions={
           <>
@@ -181,6 +220,7 @@ export function WaitingPanel({
     return (
       <RoomPanel
         title={aloneTitle}
+        aside={<WhoIsHere />}
         notice={picked.notice}
         actions={
           <>
@@ -197,6 +237,7 @@ export function WaitingPanel({
   return (
     <RoomPanel
       title={m.room.everyoneHere}
+      aside={<WhoIsHere />}
       notice={picked.notice}
       actions={
         starting ? (

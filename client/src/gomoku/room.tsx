@@ -205,37 +205,21 @@ const avatar = (name: string) => ({
 });
 
 /**
- * The seats, Black's first: this game's or the last game's colours while
- * nobody new has sat down, else the players at the table with no colours
- * yet, as before a first game, and a free seat while one is.
+ * The seats, Black's first: this game's or the last game's colours, and a
+ * free seat while one is. Before a pair's first game nobody has a colour,
+ * and the scoreboard already says who is here: there are no seats yet.
  */
 function seatsOf(room: Room, phone: boolean, m: Messages): SeatView[] {
   const { state, playerId } = room;
   const playing = state.phase === 'playing';
-  const seated = Object.entries(state.playerList);
   const { colors } = state;
-  const free = (color: GomokuColor | null): SeatView => ({
-    key: `free-${color ?? ''}`,
+  if (!colors || !sameSeats(state)) return [];
+  const free = (color: GomokuColor): SeatView => ({
+    key: `free-${color}`,
     name: m.gomoku.freeSeat,
     detail: m.gomoku.anybodyCanSit,
     color,
   });
-
-  if (!colors || !sameSeats(state)) {
-    const seats: SeatView[] = seated.map(([id, seat]) => ({
-      key: id,
-      name: seat.username,
-      detail: !seat.isConnected
-        ? m.gomoku.away
-        : id === state.owner.playerId
-          ? m.gomoku.hostHere
-          : m.gomoku.here,
-      avatar: avatar(seat.username),
-      you: id === playerId,
-    }));
-    while (seats.length < 2) seats.push(free(null));
-    return seats;
-  }
 
   const summary = playing ? null : state.lastGame;
   return (['black', 'white'] as const).map((color) => {

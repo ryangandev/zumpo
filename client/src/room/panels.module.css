@@ -77,6 +77,24 @@
   text-align: center;
 }
 
+/* MO20: the others at the table, small avatars then their names. */
+.here {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+}
+
+.faces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zumpo-space-4);
+}
+
+.hereText {
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
 @media (max-width: 640px) {
   .panel,
   .results {

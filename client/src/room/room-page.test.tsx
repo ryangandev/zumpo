@@ -120,6 +120,51 @@ describe('a room page', () => {
     expect(within(bar).queryByRole('link', { name: 'Games' })).toBeNull();
   });
 
+  it('lists who is here before a first game, with no scores or Waiting yet', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const players = () =>
+      within(screen.getByRole('region', { name: /^Players/ }));
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+            p2: { username: 'Maya', points: 0, isConnected: false },
+          },
+        }),
+      ),
+    );
+    expect(players().getByText('Ryan')).toBeInTheDocument();
+    expect(players().queryByText('Waiting')).toBeNull();
+    expect(players().queryByText('0')).toBeNull();
+    // Away still says so: it is the one thing a lobby row has to tell.
+    expect(players().getByText('Away')).toBeInTheDocument();
+
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 90, isConnected: true },
+            p2: { username: 'Maya', points: 120, isConnected: true },
+          },
+          lastGame: {
+            endedEarly: false,
+            difficulty: 'Small',
+            rounds: 6,
+            standings: [
+              { playerId: 'p2', username: 'Maya', points: 120 },
+              { playerId: 'p1', username: 'Ryan', points: 90 },
+            ],
+          },
+        }),
+      ),
+    );
+    expect(players().getByText('90')).toBeInTheDocument();
+  });
+
   it('asks for the password of a private room', async () => {
     const user = userEvent.setup();
     const fake = server({ password: 'turtle' });

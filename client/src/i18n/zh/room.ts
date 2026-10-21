@@ -79,6 +79,7 @@ export const room: typeof en = {
   needsPlayers: (game, fewest) =>
     `${game}至少需要 ${fewest} 人。分享房间，邀请朋友加入就能开始。`,
   everyoneHere: '大家到齐了吗？',
+  here: (names) => `${names} 已经在房间里了。`,
   starting: '正在开始游戏…',
   start: '开始游戏',
   everyoneLeft: '其他人都离开了。',

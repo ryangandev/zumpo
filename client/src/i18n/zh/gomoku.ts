@@ -47,8 +47,6 @@ export const gomoku: typeof en = {
   tapHint: '再点一次淡色棋子，或点“落子”。点别的位置可以换地方。',
   colorsNote: '黑方先走。这局之后交换颜色，你们轮流先手。',
   missedNotice: '你超时了，这一手跳过。下一手再超时，这局就判负。',
-  here: '在场',
-  hostHere: '房主 · 在场',
   away: '暂离',
   freeSeat: '空位',
   anybodyCanSit: '观战的人都可以坐下',

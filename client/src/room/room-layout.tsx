@@ -97,6 +97,10 @@ export function RoomLayout({
     lockedReason: reconnecting ? m.room.reconnecting : chat.lockedReason,
   };
 
+  // Before a first game every score is 0 and everybody is waiting: the rows
+  // say only who is here, and who is away.
+  const firstLobby = !state.isGameStarted && state.lastGame === null;
+
   const scoreboard = (
     <Scoreboard
       title={scoreTitle}
@@ -109,9 +113,9 @@ export function RoomLayout({
           name={seat.username}
           initials={initialsOf(seat.username)}
           tone={toneOf(seat.username)}
-          status={status}
+          status={firstLobby && rowState !== 'away' ? undefined : status}
           statusIcon={statusIcon}
-          score={showScores ? seat.points : undefined}
+          score={showScores && !firstLobby ? seat.points : undefined}
           host={seat.playerId === state.owner.playerId}
           you={seat.playerId === room.playerId}
           state={rowState}

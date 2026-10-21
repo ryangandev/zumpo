@@ -66,6 +66,20 @@ describe('a Minesweeper room', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
+  it('on a phone, says on the waiting card who else is here', async () => {
+    onPhone();
+    await renderSeated(
+      minesweeperState({
+        playerList: {
+          p1: { username: 'Ryan', points: 0, isConnected: true },
+          p2: { username: 'Maya', points: 0, isConnected: true },
+          p3: { username: 'Leo', points: 0, isConnected: true },
+        },
+      }),
+    );
+    expect(screen.getByText('Maya and Leo are here.')).toBeInTheDocument();
+  });
+
   it('asks a player still on a picked name for one their friends know', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(minesweeperState(), { picked: true });

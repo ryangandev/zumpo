@@ -87,6 +87,9 @@ export const room = {
   needsPlayers: (game: string, fewest: number) =>
     `${game} needs at least ${fewest} players. Share the room so a friend can join, and the game can start.`,
   everyoneHere: 'Everyone’s here?',
+  /** On a phone's waiting card: the others at the table. */
+  here: (names: string, count: number) =>
+    count === 1 ? `${names} is here.` : `${names} are here.`,
   starting: 'Starting the game…',
   start: 'Start game',
   everyoneLeft: 'Everyone else left.',
