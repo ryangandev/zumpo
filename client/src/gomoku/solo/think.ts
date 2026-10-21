@@ -49,14 +49,24 @@ export function think(
     const settle = (point: number) => {
       thread.removeEventListener('message', onAnswer);
       thread.removeEventListener('error', onError);
+      thread.removeEventListener('messageerror', onError);
       resolve(point);
     };
     const onAnswer = (event: MessageEvent<MoveAnswer>) => {
       if (event.data.id === id) settle(event.data.point);
     };
-    const onError = () => settle(chooseMove(moves, color, level));
+    // A worker that failed, say to load after a deploy, never answers again:
+    // this move and every one after it is worked out here.
+    const onError = () => {
+      if (worker === thread) {
+        thread.terminate();
+        worker = null;
+      }
+      settle(chooseMove(moves, color, level));
+    };
     thread.addEventListener('message', onAnswer);
     thread.addEventListener('error', onError);
+    thread.addEventListener('messageerror', onError);
     // A worker's message has no target origin; it has nothing to transfer.
     thread.postMessage({ id, moves, color, level } satisfies MoveRequest, []);
   });
