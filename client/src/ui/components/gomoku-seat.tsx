@@ -10,11 +10,13 @@ export type GomokuSeatState = 'default' | 'turn' | 'won';
 
 export interface GomokuSeatProps {
   name: string;
-  /**
-   * Under the name: "Black · your turn", "White · Medium", "Here"; after it
-   * in a compact seat, where the stone says the colour: "Your turn".
-   */
+  /** Under the name: "Black · your turn", "White · Medium", "Here". */
   detail: string;
+  /**
+   * After the name in a compact seat, where the stone says the colour: the
+   * note alone ("Your turn", "1 win"); the detail when there is none.
+   */
+  compactDetail?: string;
   /** The player's avatar; a free seat has none. */
   avatar?: { initials: string; tone: AvatarTone };
   /** Their stones this game; none before the first. */
@@ -33,6 +35,7 @@ export interface GomokuSeatProps {
 export function GomokuSeat({
   name,
   detail,
+  compactDetail,
   avatar,
   color = null,
   state = 'default',
@@ -41,6 +44,7 @@ export function GomokuSeat({
   className,
 }: GomokuSeatProps) {
   const m = useMessages();
+  const line = compact ? (compactDetail ?? detail) : detail;
   return (
     <div
       className={cx(
@@ -57,9 +61,15 @@ export function GomokuSeat({
         <div className={styles.details}>
           <div className={styles.nameLine}>
             <span className={styles.name}>{name}</span>
-            {you && <Tag>{m.ui.you}</Tag>}
+            {you && (
+              <Tag size={compact ? 'compact' : 'regular'}>{m.ui.you}</Tag>
+            )}
           </div>
-          {detail && <span className={styles.detail}>{detail}</span>}
+          {/* The stone is drawn, not said: a screen reader hears the colour. */}
+          {compact && color && (
+            <span className={styles.colour}>{m.gomoku.color(color)}</span>
+          )}
+          {line && <span className={styles.detail}>{line}</span>}
         </div>
       </div>
       {color && <Stone color={color} size={compact ? 'small' : undefined} />}

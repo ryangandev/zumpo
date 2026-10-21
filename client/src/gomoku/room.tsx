@@ -256,28 +256,30 @@ function seatsOf(room: Room, phone: boolean, m: Messages): SeatView[] {
     const you = side.playerId === playerId;
     const turn = playing && state.turnPlayerId === side.playerId;
     const won = summary?.winner === color;
-    const note = !seat.isConnected
+    const playNote = !seat.isConnected
       ? m.gomoku.notes.away
       : playing
         ? playingNote(state, playerId, side.playerId, m)
-        : won
-          ? summary?.ending === 'five'
-            ? m.gomoku.notes.five
-            : m.gomoku.notes.won
-          : summary?.ending === 'draw'
-            ? m.gomoku.notes.draw
-            : undefined;
+        : undefined;
+    const endNote = won
+      ? summary?.ending === 'five'
+        ? m.gomoku.notes.five
+        : m.gomoku.notes.won
+      : summary?.ending === 'draw'
+        ? m.gomoku.notes.draw
+        : undefined;
+    const note = playNote ?? endNote;
     // On a phone the scoreboard is on its own tab: the seats carry the score.
-    const notes = [note, summary && phone && scoreOf(m, 'gomoku', seat.points)]
-      .filter(Boolean)
-      .join(' · ');
+    const score = summary && phone && scoreOf(m, 'gomoku', seat.points);
+    // A compact seat is one line that never wraps: the stone shows the
+    // colour, and the turn bar and the lime seat say how a game ended.
+    const short = [playNote, score].filter(Boolean).join(' · ');
+    const notes = [note, score].filter(Boolean).join(' · ');
     return {
       key: side.playerId,
       name: seat.username,
-      // A phone's seat is one line: its stone shows the colour.
-      detail: phone
-        ? m.gomoku.phoneSeat(notes)
-        : m.gomoku.seat(color, notes || undefined),
+      detail: m.gomoku.seat(color, notes || undefined),
+      compactDetail: m.gomoku.phoneSeat(short),
       avatar: avatar(seat.username),
       color,
       state: turn ? 'turn' : won ? 'won' : 'default',

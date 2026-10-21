@@ -105,7 +105,10 @@ describe('a Gomoku room', () => {
     await renderSeated(myTurn);
     // The turn bar's label, and Ryan's seat.
     expect(screen.getAllByText('Your turn')).toHaveLength(2);
-    expect(screen.queryByText(/^(Black|White)\b/)).toBeNull();
+    expect(screen.queryByText(/^(Black|White) · /)).toBeNull();
+    // The stone is drawn; a screen reader hears the colour.
+    expect(screen.getByText('Black')).toBeInTheDocument();
+    expect(screen.getByText('White')).toBeInTheDocument();
   });
 
   it('places a stone with a click, holding it faint until the server answers', async () => {
@@ -308,6 +311,10 @@ describe('a Gomoku room', () => {
       gameNumber: 2,
       samePair: true,
       moves: [{ color: 'white', point: E8 }],
+      playerList: {
+        p1: { username: 'Ryan', points: 1, isConnected: true },
+        p2: { username: 'Maya', points: 0, isConnected: true },
+      },
       lastGame: {
         endedEarly: false,
         ending: 'resigned',
@@ -325,6 +332,11 @@ describe('a Gomoku room', () => {
     expect(turn().getByText('You play White next. Ready?')).toBeInTheDocument();
     expect(screen.queryByText(/^The next game starts once/)).toBeNull();
     expect(screen.getByRole('button', { name: 'Ready' })).toBeInTheDocument();
+    // Each seat one line that never wraps: the score alone, as the turn bar
+    // and the lime seat say who won.
+    expect(screen.getByText('1 win')).toBeInTheDocument();
+    expect(screen.getByText('0 wins')).toBeInTheDocument();
+    expect(screen.queryByText(/^Won\b/)).toBeNull();
 
     update({ ...results, ready: [ME] });
     expect(

@@ -85,14 +85,16 @@
 /* GM17-GM19: the board fills the column, then the actions, then the seats
    one under the other, so the faint stone's Place stone is right under the
    board. */
+/* Spaced close, so a board in play is as large on a 360 by 640 phone as
+   its column is wide. */
 .phone .game {
   flex-direction: column;
-  gap: var(--zumpo-space-16);
+  gap: var(--zumpo-space-12);
 }
 
 .phone .side {
   flex: none;
-  gap: var(--zumpo-space-16);
+  gap: var(--zumpo-space-8);
 }
 
 .phone .actions {
@@ -112,7 +114,7 @@
 .phone .seats {
   display: grid;
   grid-auto-rows: 1fr;
-  gap: var(--zumpo-space-8);
+  gap: var(--zumpo-space-6);
 }
 
 .phone .actions {

@@ -70,14 +70,16 @@
   color: var(--zumpo-ink);
 }
 
-/* A phone's seat, one line: the stone first, then the name, and the detail
-   at the line's end. The name gives way first; a detail with no room left
-   beside it takes a line of its own rather than an ellipsis. */
+/* A phone's seat, one line as tall as the compact You tag: the stone
+   first, then the name, and the detail at the line's end. The line never
+   wraps, so both players' seats, and the board above them, keep their size
+   from a game to its results: the name gives way first, with an ellipsis. */
 .compact {
+  position: relative;
   flex-direction: row-reverse;
   justify-content: flex-end;
   gap: var(--zumpo-space-8);
-  padding: var(--zumpo-space-8) var(--zumpo-space-12);
+  padding: var(--zumpo-space-6) var(--zumpo-space-12);
 }
 
 .compact .player {
@@ -86,10 +88,10 @@
 
 .compact .details {
   flex: 1 1 0;
-  flex-flow: row wrap;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: var(--zumpo-space-2) var(--zumpo-space-12);
+  gap: var(--zumpo-space-12);
 }
 
 .compact .nameLine {
@@ -97,9 +99,16 @@
 }
 
 .compact .detail {
-  min-width: 0;
-  max-width: 100%;
+  flex: none;
+  white-space: nowrap;
+}
+
+/* The colour, for a screen reader alone: the stone shows it. */
+.colour {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  clip-path: inset(50%);
   white-space: nowrap;
 }

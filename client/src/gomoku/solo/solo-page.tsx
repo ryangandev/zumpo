@@ -254,7 +254,7 @@ function SoloBoard({
               : undefined,
             label: m.gomoku.board,
           }}
-          seats={seatsOf(game, name, phone, m)}
+          seats={seatsOf(game, name, m)}
           actions={
             tapTwice
               ? // Place stone is always there in a game, live once a faint
@@ -354,48 +354,41 @@ function deviceStats(
   ];
 }
 
-/** You and the computer, Black's seat first. */
-function seatsOf(
-  game: SoloGame,
-  yourName: string,
-  phone: boolean,
-  m: Messages,
-): SeatView[] {
+/**
+ * You and the computer, Black's seat first. A compact seat says only what is
+ * happening: the stone shows the colour, and the turn bar and the lime seat
+ * say who made five.
+ */
+function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
   const turn = game.over ? null : toMove(game);
   const computer = m.gomoku.solo.computer;
-  // A phone's seat is one line: its stone shows the colour.
-  const detail = (color: GomokuColor, note?: string) =>
-    phone ? m.gomoku.phoneSeat(note ?? '') : m.gomoku.seat(color, note);
+  const yourNote = turn === game.color ? m.gomoku.notes.yourTurn : undefined;
   const you: SeatView = {
     key: 'you',
     name: yourName,
     avatar: { initials: initialsOf(yourName), tone: toneOf(yourName) },
     color: game.color,
-    detail: detail(
+    detail: m.gomoku.seat(
       game.color,
-      turn === game.color
-        ? m.gomoku.notes.yourTurn
-        : youWon(game)
-          ? m.gomoku.notes.five
-          : undefined,
+      yourNote ?? (youWon(game) ? m.gomoku.notes.five : undefined),
     ),
+    compactDetail: m.gomoku.phoneSeat(yourNote ?? ''),
     state: turn === game.color ? 'turn' : youWon(game) ? 'won' : 'default',
     you: true,
   };
   const theirs = otherColor(game.color);
+  const theirNote =
+    turn === theirs ? m.gomoku.solo.thinking : m.gomoku.solo.levels[game.level];
   const them: SeatView = {
     key: 'computer',
     name: computer,
     avatar: { initials: initialsOf(computer), tone: 'coral' },
     color: theirs,
-    detail: detail(
+    detail: m.gomoku.seat(
       theirs,
-      turn === theirs
-        ? m.gomoku.solo.thinking
-        : computerWon(game)
-          ? m.gomoku.notes.five
-          : m.gomoku.solo.levels[game.level],
+      computerWon(game) ? m.gomoku.notes.five : theirNote,
     ),
+    compactDetail: m.gomoku.phoneSeat(theirNote),
     state: turn === theirs ? 'turn' : computerWon(game) ? 'won' : 'default',
   };
   return game.color === 'black' ? [you, them] : [them, you];

@@ -545,3 +545,62 @@ test('a phone on its side shows the whole Gomoku board beside the turn', async (
   // A touch screen shows the stone first; Place stone then places it.
   await expect(placeStone(sam)).toBeDisabled();
 });
+
+/** A Gomoku stone on a phone: a first tap puts it down faint, a second places it. */
+const tapStone = async (page: Page, name: string) => {
+  await expect(turnOf(page).getByText('Your turn')).toBeVisible();
+  await pointOf(page, name).tap();
+  await pointOf(page, name).tap();
+  await expect(pointOf(page, name)).toHaveAccessibleName(
+    new RegExp(
+      `^${name}, (black|white) stone, (last placed|in the winning line)$`,
+    ),
+  );
+};
+
+/** Where a Gomoku board is, and how tall each seat. */
+const tableLayout = (page: Page) =>
+  page.evaluate(() => {
+    const [board, ...seats] = [
+      document.querySelector('[role=grid]')!,
+      ...document.querySelectorAll('[class*="_seat_"]'),
+    ].map((element) => {
+      const rect = element.getBoundingClientRect();
+      return [rect.left, rect.top, rect.width, rect.height].map(Math.round);
+    });
+    return { board, seats: seats.map((seat) => seat[3]) };
+  });
+
+test('a Gomoku board keeps its size and place from a game to its results', async ({
+  player,
+}) => {
+  const size = { width: 360, height: 640 };
+  // Long names, the second as long as a name can be: each seat is one line
+  // that never wraps.
+  const maya = await onPhone(player, 'Sparkly Hedgehog', size);
+  const leo = await onPhone(player, 'Wandering Squirrel', size);
+  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  await maya.getByRole('button', { name: 'Start game' }).click();
+  const black = await blackOf([maya, leo]);
+  const white = black === maya ? leo : maya;
+  for (const [mine, theirs] of [
+    ['D8', 'A1'],
+    ['E8', 'C1'],
+    ['F8', 'E1'],
+    ['G8', 'G1'],
+  ] as const) {
+    await tapStone(black, mine);
+    await tapStone(white, theirs);
+  }
+  await expect(black.getByRole('button', { name: 'Resign' })).toBeVisible();
+  const before = await Promise.all([tableLayout(black), tableLayout(white)]);
+  expect(before[0]).toEqual(before[1]);
+
+  await tapStone(black, 'H8');
+  for (const page of [black, white]) {
+    await expect(page.getByRole('button', { name: 'Resign' })).toHaveCount(0);
+    await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
+  }
+  const after = await Promise.all([tableLayout(black), tableLayout(white)]);
+  expect(after).toEqual(before);
+});
