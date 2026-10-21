@@ -323,20 +323,35 @@ function turnBar(
     ? state.colors?.[last.color].playerId === playerId
     : false;
   const lastName = last ? sideName(state, last.color) : '';
-  const now = mine ? m.gomoku.place(toMove) : m.gomoku.isThinking(name);
+  // A phone's bar keeps each line to one line at 360 px whatever the names:
+  // the seats under the board name the players, so it names nobody; the
+  // main line says whose stone goes down by its colour.
+  const now = mine
+    ? m.gomoku.place(toMove)
+    : phone
+      ? m.gomoku.phone.thinking(toMove)
+      : m.gomoku.isThinking(name);
   // A turn that ran out of time leads the bar, so nobody misses that it did;
   // what happens now goes under it.
   const passed =
     last?.point === null
       ? lastMine
         ? m.gomoku.yourTurnPassed
-        : m.gomoku.passed(lastName)
+        : phone
+          ? m.gomoku.phone.passed(last.color)
+          : m.gomoku.passed(lastName)
       : null;
   // A phone's one row has no room for the hint beside the clock: it takes
   // the main line, scaled to fit, and the faint stone shows the colour.
   const hintMain = previewing && phone;
   return {
-    label: mine ? m.gomoku.yourTurn : m.gomoku.turn(name),
+    label: mine
+      ? m.gomoku.yourTurn
+      : !phone
+        ? m.gomoku.turn(name)
+        : room.spectating
+          ? m.gomoku.phone.watching
+          : m.gomoku.phone.theirTurn,
     kind: 'status',
     main: hintMain ? m.gomoku.tapAgain : (passed ?? now),
     meta: hintMain
@@ -351,9 +366,11 @@ function turnBar(
               phone
               ? undefined
               : m.gomoku.firstMove
-            : lastMine
-              ? m.gomoku.youPlayed(pointName(last.point))
-              : m.gomoku.played(lastName, pointName(last.point)),
+            : phone
+              ? m.gomoku.phone.lastMove(pointName(last.point))
+              : lastMine
+                ? m.gomoku.youPlayed(pointName(last.point))
+                : m.gomoku.played(lastName, pointName(last.point)),
     // While reconnecting the server's clock cannot be known: it holds.
     countdown: reconnecting
       ? { seconds, label: m.gomoku.paused, waiting: true }
@@ -366,11 +383,26 @@ function resultTitle(
   room: Room,
   summary: GomokuGameSummary,
   m: Messages,
+  phone = false,
 ): string {
   const { state, playerId } = room;
   if (summary.winner === null) return m.gomoku.draw;
   const winner = state.colors?.[summary.winner];
   const loser = state.colors?.[otherColor(summary.winner)];
+  if (phone) {
+    // A phone's turn bar: by colour, as the seats under the board say who.
+    const losing = otherColor(summary.winner);
+    if (winner?.playerId === playerId) {
+      return m.gomoku.phone.youWin(summary.ending, losing);
+    }
+    if (
+      loser?.playerId === playerId &&
+      (summary.ending === 'resigned' || summary.ending === 'timeout')
+    ) {
+      return m.gomoku.youLose(summary.ending, '');
+    }
+    return m.gomoku.phone.wins(summary.ending, summary.winner, losing);
+  }
   if (winner?.playerId === playerId) {
     return m.gomoku.youWin(summary.ending, loser?.username ?? '');
   }
@@ -389,12 +421,19 @@ function resultNext(
   state: GomokuRoomState,
   summary: GomokuGameSummary,
   m: Messages,
+  phone = false,
 ): string | null {
   if (summary.ending === 'left' && summary.winner !== null) {
-    return m.gomoku.seatFree(sideName(state, otherColor(summary.winner)));
+    const left = otherColor(summary.winner);
+    return phone
+      ? m.gomoku.phone.seatFree(left)
+      : m.gomoku.seatFree(sideName(state, left));
   }
   // The colours swap for the same pair; a new pair's are drawn.
-  return state.samePair ? m.gomoku.nextBlack(sideName(state, 'white')) : null;
+  if (!state.samePair) return null;
+  return phone
+    ? m.gomoku.phone.swap
+    : m.gomoku.nextBlack(sideName(state, 'white'));
 }
 
 /** GM13-GM15: the result over the finished board. */
@@ -447,7 +486,7 @@ function resultBar(
   m: Messages,
 ): TurnBarProps {
   const { state, playerId } = room;
-  const next = resultNext(state, summary, m);
+  const next = resultNext(state, summary, m, true);
   // The same pair swaps colours, so a player knows theirs before saying
   // Ready; a new pair's are drawn when the game starts.
   const played = colorOf(state, playerId);
@@ -455,18 +494,29 @@ function resultBar(
     next && state.samePair && played && summary.ending !== 'left'
       ? otherColor(played)
       : null;
+  // One line at 360 px whatever the names: the note names nobody.
+  const waits = (kind: ResultsNote['kind']) =>
+    kind === 'wait'
+      ? state.ready.includes(playerId)
+        ? m.gomoku.phone.waiting(color ?? undefined)
+        : m.gomoku.phone.theyReady(color ?? undefined)
+      : room.starting
+        ? m.room.starting
+        : room.spectating
+          ? m.gomoku.phone.waitNext
+          : m.gomoku.phone.youStart;
   const said =
     note && color && note.kind === 'ask'
       ? m.gomoku.nextAsk(color)
-      : note && color && note.kind === 'wait'
-        ? m.gomoku.nextWait(note.text, color)
+      : note && note.kind !== 'ask'
+        ? waits(note.kind)
         : note
           ? note.text
           : color && m.gomoku.nextYou(color);
   return {
     label: m.gomoku.gameOver,
     kind: 'status',
-    main: resultTitle(room, summary, m),
+    main: resultTitle(room, summary, m, true),
     meta:
       said ??
       (summary.ending === 'draw'

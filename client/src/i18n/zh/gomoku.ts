@@ -43,6 +43,28 @@ export const gomoku: typeof en = {
   tapAgain: '再点一次落子',
   toMove: '落子',
   paused: '暂停',
+  phone: {
+    theirTurn: '轮到对方',
+    watching: '观战中',
+    thinking: (color) => `${COLOR[color]}方正在思考`,
+    lastMove: (point) => `上一手 ${point}`,
+    passed: (color) => `${COLOR[color]}方超时，跳过一手`,
+    youWin: (ending, loser) =>
+      ending === 'five'
+        ? '你连成五子，获胜！'
+        : `你赢了：${COLOR[loser]}方${HOW[ending as keyof typeof HOW]}。`,
+    wins: (ending, winner, loser) =>
+      ending === 'five'
+        ? `${COLOR[winner]}方连成五子，获胜。`
+        : `${COLOR[winner]}方获胜：${COLOR[loser]}方${HOW[ending as keyof typeof HOW]}。`,
+    theyReady: (color) =>
+      color ? `对方已准备 · 你执${COLOR[color]}` : '对方已准备',
+    waiting: (color) => (color ? `等对方 · 你执${COLOR[color]}` : '等对方'),
+    youStart: '你可以开始下一局',
+    waitNext: '等下一局开始',
+    seatFree: (color) => `${COLOR[color]}方的座位空出来了`,
+    swap: '下一局交换颜色。',
+  },
 
   placeStone: '落子',
   hoverHint: '鼠标移到点上会显示你的棋子，点击落子。',
