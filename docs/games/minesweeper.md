@@ -156,7 +156,7 @@ The rules are covered by [`game.test.ts`](../../client/src/minesweeper/solo/game
 - **Every pick in a round is scored against the same board**: the one everybody could see when they chose.
   Cells are uncovered only after scoring, so a cell another player's cascade would have opened still pays what it was worth.
 - **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
-  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
+  Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
 - **A cell that is already resolved cannot be picked**, and neither can a cell outside the board.
 
 ## Leaving, dropping and coming back

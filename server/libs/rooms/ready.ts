@@ -1,39 +1,20 @@
-import { waitingOn } from '../../../shared/room.js';
-import { seatCount } from './seats.js';
 import type { GameModule, Room } from './types.js';
 
 /*
- * Between games anybody at the table may say Ready, and once everybody here
- * has, the next game starts without waiting for the host to press Play again
- * (decided by Ryan on 2026-10-21). The host, or whoever stands in for one who
- * is away, may still start at once.
+ * Between games anybody at the table may say Ready. It is a signal for the
+ * starter, never a trigger: the next game starts only when the starter (the
+ * host, or while they are away the player next in line) presses start, so it
+ * never begins while they are still choosing a setting or during a host's
+ * brief refresh (decided by Ryan on 2026-10-21).
  */
 
 /**
- * Starts the next game, for the starter or for a table that is all ready.
- * The caller has checked it may start; whoever said Ready has had their say.
+ * Starts the next game for the starter. The caller has checked they may;
+ * whoever said Ready has had their say, so the next game starts with none.
  */
 const beginGame = (room: Room, module: GameModule): void => {
   room.ready.clear();
   module.startGame(room);
 };
 
-/**
- * Whether the next game should start by itself: no game is on, enough are
- * seated, somebody here said Ready, and nobody else here is still to.
- */
-const everyoneReady = (room: Room, module: GameModule): boolean =>
-  !room.isGameStarted &&
-  seatCount(room) >= module.minPlayers &&
-  [...room.ready].some((id) => room.playerList[id]?.isConnected) &&
-  waitingOn(room, room.ready).length === 0;
-
-/**
- * After anything that can leave the table all ready: somebody saying so, or
- * somebody who had not leaving it. Starts the game if it is.
- */
-const startIfReady = (room: Room, module: GameModule): void => {
-  if (everyoneReady(room, module)) beginGame(room, module);
-};
-
-export { beginGame, startIfReady };
+export { beginGame };

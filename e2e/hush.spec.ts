@@ -79,13 +79,16 @@ test('two players play every card in order, together, without a word', async ({
     maya.getByRole('region', { name: 'The pile' }).getByRole('img'),
   ).toHaveCount(14);
   await expect(maya.getByRole('button', { name: 'Play again' })).toBeVisible();
-  // Leo need not wait for Maya: once he is ready, the next game starts.
+  // Leo says he is ready, which tells Maya; starting is still hers.
   await expect(
-    leo.getByText(
-      'The next game starts once everyone is ready, or when Maya starts it.',
-    ),
+    leo.getByText('Say you’re ready, and Maya starts the next game.'),
   ).toBeVisible();
   await leo.getByRole('button', { name: 'Ready', exact: true }).click();
+  await expect(
+    leo.getByText('Everyone’s ready. Waiting for Maya to start.'),
+  ).toBeVisible();
+  await expect(maya.getByText('Everyone’s ready.')).toBeVisible();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   for (const page of [maya, leo]) {
     await expect(page.getByRole('button', { name: 'I’m ready' })).toBeVisible();
   }

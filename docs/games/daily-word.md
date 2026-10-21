@@ -181,7 +181,7 @@ The chat says when somebody finds the word ("Maya got it in 3! (+431)"), as a qu
   Leaving and coming back to watch does not open it early.
 - **The deal, the clock and the score are the server's.**
 - **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
-  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
+  Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

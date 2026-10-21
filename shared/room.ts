@@ -129,10 +129,10 @@ export function starterOf(room: {
 }
 
 /**
- * Who the next game still waits on before it starts by itself: everybody at
- * the table who is here, other than the starter, and has not said Ready.
- * Nobody waited on, with somebody ready, starts the game; a player away
- * holds nothing up.
+ * Who the starter is still waiting on between games: everybody at the table
+ * who is here, other than the starter, and has not said Ready. Nobody left
+ * means everyone is ready, which tells the starter; it starts nothing. A
+ * player away is not waited on.
  */
 export function waitingOn(
   room: {

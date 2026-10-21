@@ -113,11 +113,16 @@ export const room = {
   ready: 'Ready',
   notReady: 'Not ready',
   readyHint: (starter: string) =>
-    `The next game starts once everyone is ready, or when ${starter} starts it.`,
+    `Say you’re ready, and ${starter} starts the next game.`,
   waitingOnReady: (names: string, starter: string) =>
-    `You’re ready. Waiting for ${names}, or for ${starter} to start.`,
+    `You’re ready. Waiting for ${names}, then for ${starter} to start.`,
+  /** For everyone but the starter, once everyone here is ready. */
+  allReadyWaiting: (starter: string) =>
+    `Everyone’s ready. Waiting for ${starter} to start.`,
   areReady: (names: string, count: number) =>
     `${names} ${count === 1 ? 'is' : 'are'} ready.`,
+  /** For the starter, once everyone else here is ready: theirs to start. */
+  everyoneReady: 'Everyone’s ready.',
   /** For the player the right to start passed to while the host is away. */
   standIn: (host: string) => `${host} is away, so you can start the next game.`,
   gameOver: 'Game over.',

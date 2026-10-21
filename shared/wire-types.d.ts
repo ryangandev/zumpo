@@ -350,8 +350,8 @@ interface RoomState extends LobbyRoomInfo {
   isGameStarted: boolean;
   /**
    * Between games, who at the table has said Ready for the next one; empty
-   * while a game is on. Once everybody here but the starter (`starterOf` in
-   * `shared/room.ts`) has, the next game starts by itself.
+   * while a game is on. It tells the starter (`starterOf` in
+   * `shared/room.ts`) who is ready; only the starter starts the next game.
    */
   ready: string[];
   /**
@@ -1463,7 +1463,8 @@ interface ClientToServerEvents {
   'game:start': (roomId: string, ack: Ack<Result>) => void;
   /**
    * Between games, a player at the table says they are ready for the next
-   * one, or takes it back. `notRoomMember` from anybody not at the table,
+   * one, or takes it back. It starts nothing: the starter sees it and starts
+   * the game. `notRoomMember` from anybody not at the table,
    * `gameAlreadyStarted` while a game is on.
    */
   'room:ready': (roomId: string, ready: boolean, ack: Ack<Result>) => void;

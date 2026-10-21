@@ -6,7 +6,6 @@ import { heirOf, isSpectator, memberCount, memberOf } from './seats.js';
 import type { Room } from './types.js';
 import { playerChannel, type IoServer } from './emit.js';
 import { guard } from '../guard.js';
-import { startIfReady } from './ready.js';
 
 /** Pending seat expiries are keyed by the pair, not by either half. */
 const graceKey = (roomId: string, playerId: string) => `${roomId}:${playerId}`;
@@ -116,8 +115,6 @@ const createRoomMembership = (
     // move the room was waiting on, or the room may have dropped below the
     // game's minimum. A spectator was never part of the game.
     if (!spectating) module?.onDeparture(room, playerId);
-    // Between games the one the table was waiting on may be the one who went.
-    if (module) startIfReady(room, module);
     registry.lookup.emitState(room);
 
     // Built after the departure is handled, so an ended game shows as 'Open'

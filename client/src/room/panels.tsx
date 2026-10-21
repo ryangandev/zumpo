@@ -403,8 +403,9 @@ function NextGame() {
  * A finished game's actions. The starter (the host, or while they are away
  * the player next in line) chooses the next game's setting and plays again
  * while there are enough players, or invites while there are not, and sees
- * who is ready. Anybody else at the table says Ready: once everyone has, the
- * next game starts without the starter. A spectator waits, and may sit.
+ * who is ready. Anybody else at the table says Ready, which only tells the
+ * starter: once everyone here has, the starter is told so, and still starts
+ * the game. A spectator waits, and may sit.
  */
 export function ResultsActions({
   onPlayAgain,
@@ -428,11 +429,15 @@ export function ResultsActions({
     if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
     const enough = count >= gameInfo(state.gameType).minPlayers;
     const ready = state.ready.filter(
-      (id) => id !== playerId && state.playerList[id],
+      (id) => id !== playerId && state.playerList[id]?.isConnected,
     );
+    const everyone =
+      ready.length > 0 && waitingOn(state, state.ready).length === 0;
     const said = [
       standIn,
-      ready.length > 0 && m.room.areReady(names(ready), ready.length),
+      everyone
+        ? m.room.everyoneReady
+        : ready.length > 0 && m.room.areReady(names(ready), ready.length),
     ].filter(Boolean);
     return (
       <>
@@ -465,7 +470,7 @@ export function ResultsActions({
           <StatusLine>
             {waiting.length > 0
               ? m.room.waitingOnReady(names(waiting), starterName)
-              : m.room.waitingForAgain(starterName)}
+              : m.room.allReadyWaiting(starterName)}
           </StatusLine>
         ) : (
           <p className={styles.body}>{m.room.readyHint(starterName)}</p>
