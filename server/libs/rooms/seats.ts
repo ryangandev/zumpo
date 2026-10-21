@@ -5,7 +5,7 @@ import type {
   RoomStatus,
   SpectatorInfo,
 } from '../../../shared/wire-types.js';
-import { MAX_SPECTATORS } from '../../../shared/room.js';
+import { heirOf, MAX_SPECTATORS } from '../../../shared/room.js';
 import { getRemainingPhaseMs } from '../utils.js';
 import type { Room } from './types.js';
 
@@ -55,26 +55,6 @@ const seatOf = (room: Room, playerId: string): PlayerInfo => {
 
 const isSpectator = (room: Room, playerId: string): boolean =>
   Boolean(room.spectators[playerId]);
-
-/** The first of `members` who is here, else the first away; none if empty. */
-const firstHere = (
-  members: Record<string, { isConnected: boolean }>,
-): string | undefined => {
-  const entries = Object.entries(members);
-  return (entries.find(([, member]) => member.isConnected) ?? entries[0])?.[0];
-};
-
-/**
- * Who the crown passes to: somebody at the table before a spectator, and in
- * either somebody here before somebody away, who could not start a game.
- * `undefined` when nobody is left to take it.
- */
-const heirOf = (
-  room: Room,
-  { playersOnly = false }: { playersOnly?: boolean } = {},
-): string | undefined =>
-  firstHere(room.playerList) ??
-  (playersOnly ? undefined : firstHere(room.spectators));
 
 /**
  * What every game's lobby row says of a room, the game aside: each module

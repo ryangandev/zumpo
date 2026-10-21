@@ -34,6 +34,16 @@ export const room = {
   leaveTitle: (name: string) => `Leave ${name}?`,
   leaveInGame: (score: string) =>
     `The game carries on without you, and your seat and your ${score} go with you. You can join again while a seat is open.`,
+  leaveInGameNoScore:
+    'The game carries on without you, and your seat goes with you. You can join again while a seat is open.',
+  leaveEndsGame:
+    'Too few players would be left, so leaving ends the game for everyone.',
+  leaveResigns: (opponent: string) =>
+    `Leaving ends the game, and ${opponent} wins it.`,
+  leaveNextHost: (name: string) => `${name} becomes the host.`,
+  leaveCloses: 'Nobody else is here, so the room closes.',
+  /** Two sentences, one after the other. */
+  both: (first: string, second: string) => `${first} ${second}`,
   leaveBetweenGames:
     'Your seat goes with you. You can join again while a seat is open.',
   leaveSpectating:

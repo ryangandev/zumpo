@@ -95,7 +95,8 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
 - Leave room between games leaves at once; nothing is at stake and the click says what it means.
 - Every other way out asks first, mid-game and between games: Leave room mid-game, the wordmark and the browser's back button.
   Changing your name is not a way out: it happens in place, so it never asks.
-  Mid-game the dialog names the points that go (P11); between games only the seat (P16).
+  Mid-game the dialog names the points that go (P11), or says the game ends where too few would be left, or in Gomoku that the opponent wins it; between games only the seat (P16).
+  A host is also told who takes the crown, the same player the server picks (`heirOf` in `shared/room.ts`), or that the room closes with them.
 - While reconnecting the bar has no Leave room; the notice under it says what is happening (P07).
 - The room screens' hidden notice layers are gone; the visible notices, such as D10's pending one, stay.
 

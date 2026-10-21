@@ -10,7 +10,7 @@ import {
 import { Navigate, useBlocker, useNavigate, type Location } from 'react-router';
 import type { ErrorType, GameType } from '../../../shared/wire-types';
 import { Button, ButtonLink, Card, TextField } from '../ui';
-import { gameInfo, gamePath, roomPath, scoreOf } from '../games/catalog';
+import { gameInfo, gamePath, roomPath } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
 import { DrawAndGuessRoom } from '../draw-and-guess/room';
 import { MinesweeperRoom } from '../minesweeper/room';
@@ -35,7 +35,7 @@ import { StatusLine } from '../shell/status-line';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { LobbyHeading, lobbyHeading } from '../pages/lobby-heading';
 import { Confetti } from './confetti';
-import { InviteDialog, LeaveDialog } from './dialogs';
+import { InviteDialog, LeaveDialog, leaveCost } from './dialogs';
 import { roomNameOf } from './players';
 import { RoomContext, type Room } from './room-context';
 
@@ -469,9 +469,7 @@ function SeatedRoom({
       <LeaveDialog
         open={blocked && !sure}
         roomName={roomNameOf(state, m)}
-        inGame={state.isGameStarted}
-        spectating={room.spectating}
-        score={scoreOf(m, state.gameType, room.me.points)}
+        cost={leaveCost(state, playerId, m)}
         onStay={() => blocker.reset?.()}
         onLeave={() => {
           leave();

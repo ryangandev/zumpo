@@ -1,31 +1,75 @@
 import { useRef } from 'react';
+import { heirOf } from '../../../shared/room';
+import type { AnyRoomState } from '../../../shared/wire-types';
 import { Button, Dialog, DialogClose, TextField } from '../ui';
-import type { GameInfo } from '../games/catalog';
-import { useMessages } from '../i18n';
+import { gameInfo, scoreOf, type GameInfo } from '../games/catalog';
+import { useMessages, type Messages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
 import styles from './dialogs.module.css';
 
 /**
- * P11, P16: leaving asks first. Mid-game it costs the seat and the score
- * (P11); between games only the seat, for a way out other than Leave room
- * (P16).
+ * What leaving costs this viewer, as the room stands: watching costs
+ * nothing; mid-game a Gomoku player resigns, a player whose going leaves too
+ * few ends the game for everybody, and anybody else gives up their seat and
+ * score while the game carries on; between games only the seat. A host is
+ * told who takes the crown, or that the room closes with them.
+ */
+export function leaveCost(
+  state: AnyRoomState,
+  playerId: string,
+  m: Messages,
+): string {
+  const seat = state.playerList[playerId];
+  const others = Object.keys(state.playerList).filter((id) => id !== playerId);
+  const cost = !seat
+    ? m.room.leaveSpectating
+    : !state.isGameStarted
+      ? m.room.leaveBetweenGames
+      : state.gameType === 'gomoku'
+        ? m.room.leaveResigns(state.playerList[others[0] ?? '']?.username ?? '')
+        : others.length < gameInfo(state.gameType).minPlayers
+          ? m.room.leaveEndsGame
+          : seat.points === 0
+            ? m.room.leaveInGameNoScore
+            : m.room.leaveInGame(scoreOf(m, state.gameType, seat.points));
+  if (state.owner.playerId !== playerId) return cost;
+  const rest = {
+    playerList: without(state.playerList, playerId),
+    spectators: without(state.spectators, playerId),
+  };
+  const heir = heirOf(rest);
+  const next = heir
+    ? m.room.leaveNextHost(
+        (rest.playerList[heir] ?? rest.spectators[heir])?.username ?? '',
+      )
+    : m.room.leaveCloses;
+  return m.room.both(cost, next);
+}
+
+function without<T>(
+  members: Readonly<Record<string, T>>,
+  playerId: string,
+): Record<string, T> {
+  return Object.fromEntries(
+    Object.entries(members).filter(([id]) => id !== playerId),
+  );
+}
+
+/**
+ * P11, P16: leaving asks first, and says what it costs (`leaveCost`): mid-game
+ * the seat and the score, or the game itself (P11); between games only the
+ * seat, for a way out other than Leave room (P16).
  */
 export function LeaveDialog({
   open,
   roomName,
-  inGame,
-  spectating,
-  score,
+  cost,
   onStay,
   onLeave,
 }: {
   open: boolean;
   roomName: string;
-  inGame: boolean;
-  /** Watching: nothing is lost, in a game or not. */
-  spectating: boolean;
-  /** "180 points", "3 pairs". */
-  score: string;
+  cost: string;
   onStay: () => void;
   onLeave: () => void;
 }) {
@@ -38,13 +82,7 @@ export function LeaveDialog({
         if (!next) onStay();
       }}
       title={m.room.leaveTitle(roomName)}
-      description={
-        spectating
-          ? m.room.leaveSpectating
-          : inGame
-            ? m.room.leaveInGame(score)
-            : m.room.leaveBetweenGames
-      }
+      description={cost}
       initialFocus={stay}
       actions={
         <>

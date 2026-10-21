@@ -34,6 +34,13 @@ export const room: typeof en = {
   leaveTitle: (name) => `离开“${name}”？`,
   leaveInGame: (score) =>
     `游戏会继续，但你的座位和 ${score} 会被移除。还有空位时，你可以再次加入。`,
+  leaveInGameNoScore:
+    '游戏会继续，但你的座位会被移除。还有空位时，你可以再次加入。',
+  leaveEndsGame: '剩下的玩家会不够，所以你离开后，这一局对所有人都会结束。',
+  leaveResigns: (opponent) => `离开会结束这一局，${opponent} 获胜。`,
+  leaveNextHost: (name) => `${name} 会成为房主。`,
+  leaveCloses: '房间里没有别人了，所以房间会关闭。',
+  both: (first, second) => `${first}${second}`,
   leaveBetweenGames: '你的座位会被释放。还有空位时，你可以再次加入。',
   leaveSpectating:
     '你只是在观战，离开不会有任何损失。观战席有空位时可以再回来。',

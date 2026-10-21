@@ -598,7 +598,7 @@ describe('a room page', () => {
     const dialog = screen.getByRole('dialog', { name: 'Leave Friday table?' });
     expect(
       within(dialog).getByText(
-        'Your seat goes with you. You can join again while a seat is open.',
+        'Your seat goes with you. You can join again while a seat is open. Maya becomes the host.',
       ),
     ).toBeInTheDocument();
 
@@ -630,7 +630,7 @@ describe('a room page', () => {
     await user.click(screen.getByRole('link', { name: 'Zumpo home' }));
     expect(
       within(screen.getByRole('dialog')).getByText(
-        /The game carries on without you/,
+        'Too few players would be left, so leaving ends the game for everyone. Maya becomes the host.',
       ),
     ).toBeInTheDocument();
   });
