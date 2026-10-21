@@ -170,7 +170,10 @@ describe('a Gomoku room', () => {
         { color: 'black', point: null },
       ),
     );
-    expect(turn().getByText('Your turn passed')).toBeInTheDocument();
+    // It leads the bar, with what happens now under it.
+    const passed = turn().getByText('Your turn passed');
+    expect(passed.className).toMatch(/main/);
+    expect(turn().getByText('Maya is thinking')).toBeInTheDocument();
     expect(
       screen.getByText(
         'You ran out of time, so your turn passed. Run out again on your next turn and you lose this game.',

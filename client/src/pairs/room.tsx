@@ -148,21 +148,37 @@ function turnBar(
       countdown: clock(m.pairs.flipBack, true),
     };
   }
+  // Whose turn just ran out of time, said until the next card is turned.
+  const timedOut = state.timedOut;
+  const late = timedOut === playerId ? null : nameOf(timedOut);
   if (mine) {
     const oneUp = state.cards.some((card) => card.state === 'up');
     return {
       label,
       kind: 'status',
       main: oneUp ? m.pairs.flipSecond : m.pairs.flipCard,
-      meta: phone ? m.pairs.pairKeepsTurn : m.pairs.goAgain,
+      meta: late
+        ? m.pairs.ranOutYourTurn(late)
+        : phone
+          ? m.pairs.pairKeepsTurn
+          : m.pairs.goAgain,
       countdown: clock(m.pairs.toFlip, false),
+    };
+  }
+  if (timedOut === playerId) {
+    return {
+      label,
+      kind: 'status',
+      main: m.pairs.yourTurnPassed,
+      meta: whoIsNext || undefined,
+      countdown: clock(m.pairs.toFlip, true),
     };
   }
   return {
     label,
     kind: 'status',
     main: m.pairs.watchClosely,
-    meta: whoIsNext || undefined,
+    meta: late ? m.pairs.ranOut(late) : whoIsNext || undefined,
     countdown: clock(m.pairs.toFlip, true),
   };
 }

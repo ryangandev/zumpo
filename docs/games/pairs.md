@@ -61,6 +61,7 @@ Between games the room is in `waiting`.
 - **A pair** is the finder's: **+1**, and they go again, with a fresh 10 seconds.
 - **Not a pair:** both cards stay up for everybody for 2 seconds, then turn back, and the turn passes to the next player.
 - **Out of time:** a card turned over alone turns back, and the turn passes on.
+  The turn card says so to everybody ("Leo ran out of time", and to Leo "Time's up, your turn passed") until the next card is turned; the chat stays quiet.
 - **A player who is not connected** when their turn comes is skipped.
 
 When the last pair is found the game ends, and the room reopens for a new one.
@@ -99,6 +100,7 @@ Every change reaches a player as `room:state`, the whole room as that player may
 | `turnPlayerId` | Whose turn it is; `null` between games                                                                               |
 | `nextPlayerId` | Whose turn comes next, skipping anybody not connected; `null` between games                                          |
 | `lastMiss`     | The two cards that just did not match, while they show                                                               |
+| `timedOut`     | Who just lost their turn to the clock, until the next card is turned; `null` otherwise                               |
 | `lastGame`     | The summary of the last finished game, until the next one starts                                                     |
 
 Pairs' one event of its own is `pairs:flip`, with the room and the card's place.

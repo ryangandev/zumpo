@@ -53,23 +53,35 @@ const createPairsGameEngine = (
     );
   };
 
-  /** `playerId` turns over two cards, with a fresh clock. */
-  const beginTurn = (room: PairsRoom, playerId: string) => {
+  /**
+   * `playerId` turns over two cards, with a fresh clock. `timedOut` is whose
+   * turn ran out just before, which the turn card says.
+   */
+  const beginTurn = (
+    room: PairsRoom,
+    playerId: string,
+    timedOut: string | null = null,
+  ) => {
     const game = room.game;
     game.phase = 'flipping';
     game.turnPlayerId = playerId;
+    game.timedOut = timedOut;
     game.up = [];
-    ctx.rooms.startPhase(room, durations.turn, () => passTurn(room));
+    ctx.rooms.startPhase(room, durations.turn, () => runOutOfTime(room));
     ctx.rooms.emitState(room);
   };
 
   /** The turn goes to the next player, and any card still up turns back. */
-  const passTurn = (room: PairsRoom) => {
+  const passTurn = (room: PairsRoom, timedOut: string | null = null) => {
     if (!room.isGameStarted) return;
     const next = playerAfter(room, room.game.turnPlayerId);
     if (next === null) return;
-    beginTurn(room, next);
+    beginTurn(room, next, timedOut);
   };
+
+  /** Nobody turned a pair in time: the turn passes, and the room is told whose ran out. */
+  const runOutOfTime = (room: PairsRoom) =>
+    passTurn(room, room.game.turnPlayerId);
 
   /**
    * The player whose turn it is turns over the card at `index`. Only during
@@ -88,6 +100,8 @@ const createPairsGameEngine = (
 
     game.up.push(index);
     if (game.up.length === 1) {
+      // The player now flipping has moved: whose turn ran out is old news.
+      game.timedOut = null;
       ctx.rooms.emitState(room);
       return;
     }
@@ -142,6 +156,7 @@ const createPairsGameEngine = (
     game.up = [];
     game.order = [];
     game.turnPlayerId = null;
+    game.timedOut = null;
 
     ctx.rooms.emitState(room);
     // A game cut short has no result: game:interrupted already said so.

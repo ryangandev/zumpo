@@ -47,6 +47,7 @@ export const make24 = {
   makes: (value: string) => `That makes ${value}`,
   undoPrompt: 'Undo a step or start over',
   solvers: (names: string) => `${names} solved it`,
+  solversUndo: (names: string) => `${names} solved it · undo a step`,
   useEachNumber: 'Use each number once',
   away: 'Away',
   waiting: 'Waiting',

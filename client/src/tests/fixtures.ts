@@ -117,6 +117,7 @@ export function pairsState(
     turnPlayerId: null,
     nextPlayerId: null,
     lastMiss: [],
+    timedOut: null,
     lastGame: null,
     ...overrides,
   };

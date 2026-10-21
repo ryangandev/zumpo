@@ -282,16 +282,23 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     ? state.colors?.[last.color].playerId === playerId
     : false;
   const lastName = last ? sideName(state, last.color) : '';
+  const now = mine ? m.gomoku.place(toMove) : m.gomoku.isThinking(name);
+  // A turn that ran out of time leads the bar, so nobody misses that it did;
+  // what happens now goes under it.
+  const passed =
+    last?.point === null
+      ? lastMine
+        ? m.gomoku.yourTurnPassed
+        : m.gomoku.passed(lastName)
+      : null;
   return {
     label: mine ? m.gomoku.yourTurn : m.gomoku.turn(name),
     kind: 'status',
-    main: mine ? m.gomoku.place(toMove) : m.gomoku.isThinking(name),
-    meta: !last
-      ? m.gomoku.firstMove
-      : last.point === null
-        ? lastMine
-          ? m.gomoku.yourTurnPassed
-          : m.gomoku.passed(lastName)
+    main: passed ?? now,
+    meta: passed
+      ? now
+      : !last || last.point === null
+        ? m.gomoku.firstMove
         : lastMine
           ? m.gomoku.youPlayed(pointName(last.point))
           : m.gomoku.played(lastName, pointName(last.point)),

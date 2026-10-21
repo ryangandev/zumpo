@@ -226,6 +226,8 @@ describe('a turn', () => {
     expect(passed.lastMiss).toEqual([]);
     expect(passed.cards.every((card) => card.state === 'down')).toBe(true);
     expect(passed.playerList[mover.playerId]!.points).toBe(0);
+    // A miss is not a timeout.
+    expect(passed.timedOut).toBeNull();
   });
 
   it('turns a lone card back when the clock runs out, and passes the turn', async () => {
@@ -237,6 +239,12 @@ describe('a turn', () => {
     mover.emit('pairs:flip', roomId, a);
     const passed = await turnOf(other, other);
     expect(passed.cards[a]).toEqual({ state: 'down', symbol: null });
+    // Everybody is told whose turn ran out, until the next card is turned.
+    expect(passed.timedOut).toBe(mover.playerId);
+    const [b] = placesOf(harness, roomId)[1]!;
+    const moved = waitForPairsState(mover, (s) => s.cards[b]?.state === 'up');
+    other.emit('pairs:flip', roomId, b);
+    expect((await moved).timedOut).toBeNull();
   });
 
   it('skips a player who is not connected', async () => {

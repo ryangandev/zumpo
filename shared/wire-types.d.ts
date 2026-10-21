@@ -586,6 +586,11 @@ interface PairsRoomState extends RoomState {
   nextPlayerId: string | null;
   /** The places of the two cards that just did not match, while they show. */
   lastMiss: number[];
+  /**
+   * Whose turn ran out of time just before this one, until the player now
+   * flipping turns their first card; null otherwise.
+   */
+  timedOut: string | null;
   lastGame: PairsGameSummary | null;
 }
 
