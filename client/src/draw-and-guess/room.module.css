@@ -37,7 +37,37 @@
   text-align: center;
 }
 
-/* The round that just ended, under the drawing, on paper of its own. */
+/* The sheet, with the round that just ended over it. */
+.board {
+  position: relative;
+}
+
+/* The round that just ended, on paper of its own over the top of the
+   sheet, under the turn bar where it is always in sight, scrolling within
+   the sheet when it is longer. */
+.board > .roundResults {
+  position: absolute;
+  z-index: 1;
+  top: var(--zumpo-space-16);
+  right: var(--zumpo-space-16);
+  left: var(--zumpo-space-16);
+  max-height: calc(100% - 2 * var(--zumpo-space-16));
+  overflow-y: auto;
+  box-shadow: var(--zumpo-shadow-menu-lift);
+}
+
+/* On a phone, where the whole sheet is in sight, the results cover its
+   width at its foot. */
+@media (max-width: 640px) {
+  .board > .roundResults {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-height: 100%;
+  }
+}
+
 .roundResults {
   display: flex;
   flex-direction: column;

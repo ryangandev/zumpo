@@ -56,7 +56,7 @@ export function Fit({ children, align = 'center', className }: FitProps) {
  * content centred in a piece narrower than itself hangs over both sides, so
  * the piece's own scroll width would miss the left half.
  */
-function extentOf(piece: HTMLElement): number {
+export function extentOf(piece: HTMLElement): number {
   let { left, right } = piece.getBoundingClientRect();
   for (const element of piece.querySelectorAll('*')) {
     const rect = element.getBoundingClientRect();

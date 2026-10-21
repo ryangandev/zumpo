@@ -49,9 +49,21 @@
 
   .boardPanel {
     display: block;
-    overflow: hidden;
-    border-radius: var(--zumpo-radius-16);
-    background: var(--zumpo-paper);
+  }
+
+  /* In play the board keeps the screen it has: a round's results lie over
+     its foot while the round is revealed, rather than push it up. */
+  .minefield:has([data-play-board]) {
+    position: relative;
+  }
+
+  .minefield:has([data-play-board]) > .results {
+    position: absolute;
+    z-index: 1;
+    inset: auto 0 0;
+    max-height: 60%;
+    overflow-y: auto;
+    box-shadow: var(--zumpo-shadow-menu-lift);
   }
 
   .results {

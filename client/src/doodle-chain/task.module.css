@@ -51,7 +51,27 @@
   overflow-wrap: anywhere;
 }
 
-/* Under the canvas: what the clock does, and Done. */
+/* The toolbar over the canvas, as wide as the column. */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Kept for its room, out of sight and out of reach. */
+.held {
+  visibility: hidden;
+}
+
+/* Under the canvas: what the clock does and Done, or the note and Keep
+   editing, one over the other in the same place. */
+.swap {
+  display: grid;
+}
+
+.swap > .actions {
+  grid-area: 1 / 1;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

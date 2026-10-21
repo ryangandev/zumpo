@@ -7,6 +7,7 @@
 }
 
 .language {
+  position: relative;
   margin: 0;
   padding: 0;
   border: 0;
@@ -23,6 +24,15 @@
   content: '·';
   margin-inline-end: var(--zumpo-space-8);
   color: var(--zumpo-muted);
+}
+
+/* Drawn as a line of small text, a language takes a tap from 44 px tall,
+   the size a thumb needs, and 4 px either side of its name. */
+.language::after {
+  position: absolute;
+  inset: calc(-1 * (var(--zumpo-space-12) + var(--zumpo-space-1)))
+    calc(-1 * var(--zumpo-space-4));
+  content: '';
 }
 
 .language[aria-checked='true'] {

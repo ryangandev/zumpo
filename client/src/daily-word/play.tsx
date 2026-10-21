@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import type { DailyWordMark } from '../../../shared/wire-types';
 import { keyMarks, WORD_LENGTH } from '../../../shared/daily-word';
 import { Keyboard, Notice, WordBoard, type WordBoardRow } from '../ui';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import {
@@ -62,14 +63,27 @@ export function PlayArea({
   const { play, over } = useNoteOverBoard(problem ? rows.length : null);
   useTypingKeys(typing, keyboard && !disabled, LETTER);
   const last = rows.at(-1);
+  const board = (
+    <WordBoard
+      rows={rows}
+      typed={typed.slice(0, WORD_LENGTH)}
+      size={phone ? 'compact' : 'regular'}
+      label={m.dailyWord.yourGuesses}
+    />
+  );
   return (
-    <div ref={play} className={cx(styles.play, className)}>
-      <WordBoard
-        rows={rows}
-        typed={typed.slice(0, WORD_LENGTH)}
-        size={phone ? 'compact' : 'regular'}
-        label={m.dailyWord.yourGuesses}
-      />
+    <div
+      ref={play}
+      className={cx(styles.play, keyboard && playColumn, className)}
+    >
+      {keyboard ? (
+        // In play the board gives the height the keyboard needs.
+        <PlayBoard min={0.6} current={rows.length}>
+          {board}
+        </PlayBoard>
+      ) : (
+        board
+      )}
       {phone || !prompt ? (
         // With nothing to say under the board, or no room for it on a phone,
         // there is no line: a row turned back is said over the board, so the

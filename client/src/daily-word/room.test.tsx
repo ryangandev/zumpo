@@ -56,6 +56,24 @@ const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const mine = () => screen.getByRole('group', { name: 'Your guesses' });
 
 describe('a Daily Word room', () => {
+  it('shows each player’s guesses in a phone’s standings strip, not their 0 points', async () => {
+    onPhone();
+    const row = { word: null, marks: [...SLATE.marks] };
+    await renderSeated(
+      guessing([
+        board(ME, 'Ryan', { rows: [row] }),
+        board('p2', 'Maya', {
+          rows: [row, row],
+          status: 'found',
+          points: 410,
+        }),
+      ]),
+    );
+    expect(
+      await screen.findByRole('button', { name: /^Standings:/ }),
+    ).toHaveAccessibleName('Standings: You 1/6, Maya ✓ 2/6. Show the players');
+  });
+
   it('lets the host start once two players are in', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(dailyWordState());

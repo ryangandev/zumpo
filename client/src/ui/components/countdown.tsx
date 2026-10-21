@@ -60,7 +60,9 @@ export function Countdown({
           ),
         )}
       </span>
-      <span className={styles.label}>{label}</span>
+      <span className={styles.label} data-countdown-label="">
+        {label}
+      </span>
     </span>
   );
 }

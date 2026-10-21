@@ -1,13 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 import type { Card } from '../../../shared/snap';
-import {
-  SnapCard,
-  Tag,
-  TurnBar,
-  type SnapCardState,
-  type SnapSpotMark,
-  type TurnBarProps,
-} from '../ui';
+import { SnapCard, Tag, type SnapCardState, type SnapSpotMark } from '../ui';
+import { Fit } from '../shell/fit';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import styles from './board.module.css';
@@ -33,6 +28,11 @@ export interface SnapBoardProps {
   onTap?: (symbol: number) => void;
   /** Taps nothing for now, keeping the buttons and their focus. */
   disabled?: boolean;
+  /**
+   * The cards being played, which a phone fits into its one screen with the
+   * turn bar; false for the last card under the results.
+   */
+  inPlay?: boolean;
 }
 
 /**
@@ -40,44 +40,53 @@ export interface SnapBoardProps {
  * yours on a phone, so yours is nearer the thumb. Either card's spots tap
  * the same symbol, so it does not matter which one you find it on.
  */
-export function SnapBoard({ middle, mine, onTap, disabled }: SnapBoardProps) {
+export function SnapBoard({
+  middle,
+  mine,
+  onTap,
+  disabled,
+  inPlay = true,
+}: SnapBoardProps) {
   const phone = useMediaQuery(PHONE);
   const size = phone ? 'compact' : 'regular';
+  const Holder = inPlay ? PlayBoard : Fit;
   const boxes = useRef<(HTMLDivElement | null)[]>([]);
   useCardMotion(boxes, middle.symbols, mine?.symbols ?? null);
   return (
-    <div className={styles.panel}>
-      <div className={styles.cards}>
-        {[middle, mine].map(
-          (view, index) =>
-            view && (
-              <section key={view.label} className={styles.column}>
-                <h2 className={styles.label}>
-                  {view.label}
-                  {view.tag !== undefined && <Tag>{view.tag}</Tag>}
-                </h2>
-                <div
-                  ref={(box) => {
-                    boxes.current[index] = box;
-                  }}
-                  className={styles.cardBox}
-                >
-                  <SnapCard
-                    symbols={view.symbols}
-                    size={size}
-                    state={view.state}
-                    marks={view.marks}
-                    badge={view.badge}
-                    badgeLabel={view.badgeLabel}
-                    label={view.label}
-                    onTap={onTap}
-                    disabled={disabled}
-                  />
-                </div>
-              </section>
-            ),
-        )}
-      </div>
+    <div className={cx(styles.panel, playColumn)}>
+      <Holder>
+        <div className={styles.cards}>
+          {[middle, mine].map(
+            (view, index) =>
+              view && (
+                <section key={view.label} className={styles.column}>
+                  <h2 className={styles.label}>
+                    {view.label}
+                    {view.tag !== undefined && <Tag>{view.tag}</Tag>}
+                  </h2>
+                  <div
+                    ref={(box) => {
+                      boxes.current[index] = box;
+                    }}
+                    className={styles.cardBox}
+                  >
+                    <SnapCard
+                      symbols={view.symbols}
+                      size={size}
+                      state={view.state}
+                      marks={view.marks}
+                      badge={view.badge}
+                      badgeLabel={view.badgeLabel}
+                      label={view.label}
+                      onTap={onTap}
+                      disabled={disabled}
+                    />
+                  </div>
+                </section>
+              ),
+          )}
+        </div>
+      </Holder>
     </div>
   );
 }
@@ -134,19 +143,4 @@ function useCardMotion(
       );
     }
   }, [boxes, middle, mine]);
-}
-
-/**
- * The turn bar over the cards. It keeps room for the most it says at its
- * width, the meta under what it says, so a phase that says less never pulls
- * the cards up under a finger. A room's says who took a card, and a long
- * name takes two lines on a phone.
- */
-export function SnapTurnBar({
-  names = false,
-  ...props
-}: TurnBarProps & { names?: boolean }) {
-  return (
-    <TurnBar {...props} className={cx(styles.turnBar, names && styles.names)} />
-  );
 }

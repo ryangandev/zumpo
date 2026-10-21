@@ -46,14 +46,14 @@ export const gomoku = {
   passed: (name: string) => `${name}’s turn passed`,
   yourTurnPassed: 'Your turn passed',
   firstMove: 'Black moves first, anywhere on the board',
+  /** A faint stone is down on a phone: the second tap places it. */
+  tapAgain: 'Tap again to place',
   toMove: 'to move',
   paused: 'paused',
 
   // Under the board.
   placeStone: 'Place stone',
   hoverHint: 'Hover a point to see your stone there; click to place it.',
-  tapHint:
-    'Tap the faint stone again, or Place stone. Tap another point to move it.',
   colorsNote:
     'Black moves first. After this game the colours swap, so each of you opens every other game.',
   missedNotice:

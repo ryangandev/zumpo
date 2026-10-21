@@ -36,6 +36,23 @@ export function roomNameOf(
   return room.roomName || m.createRoom.defaultName(room.owner.username);
 }
 
+/**
+ * A race board's place in the phone's standings strip, Daily Word's or Code
+ * Breaker's: guesses used so far, solved in so many, or out of guesses.
+ */
+export function raceStanding(
+  board: { rows: readonly unknown[]; status: string } | undefined,
+  most: number,
+  m: Messages,
+): string {
+  const used = board?.rows.length ?? 0;
+  if (board?.status === 'found' || board?.status === 'cracked') {
+    return m.ui.standings.solved(used, most);
+  }
+  if (board?.status === 'out') return m.ui.standings.missed(most);
+  return m.ui.standings.guesses(used, most);
+}
+
 /** "Ryan", "Ryan and Maya", "Ryan, Maya and Sam". */
 export function listNames(names: readonly string[], m: Messages): string {
   return m.room.listNames(names);

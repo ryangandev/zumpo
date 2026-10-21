@@ -101,7 +101,12 @@ function BetweenGames({ room }: { room: Room }) {
               }
               lives={summary.lives}
             />
-            <Pile pile={state.pile} discards={state.discards} empty="" />
+            <Pile
+              pile={state.pile}
+              discards={state.discards}
+              empty=""
+              inPlay={false}
+            />
           </TablePanel>
         )}
       </>
@@ -347,12 +352,14 @@ function Hand({ room }: { room: Room }) {
           // nobody can ask.
           message={state.level === 1 ? m.hush.firstRule : m.hush.chatTiming}
           action={
-            !ready && !reconnecting ? (
-              <Button onClick={() => socket.emit('hush:ready', state.roomId)}>
-                {m.hush.readyButton}
-              </Button>
-            ) : undefined
+            <Button
+              disabled={ready || reconnecting}
+              onClick={() => socket.emit('hush:ready', state.roomId)}
+            >
+              {m.hush.readyButton}
+            </Button>
           }
+          held={ready || reconnecting}
           status={ready ? m.hush.waitingOthers : undefined}
         />
       );
@@ -370,17 +377,23 @@ function Hand({ room }: { room: Room }) {
   if (hand.length === 0) {
     return <HandRow label={m.hush.hand} message={m.hush.handEmpty} />;
   }
+  // Play is held, not taken away, while it cannot be pressed: the cards
+  // above it and the button stay where the thumb found them.
+  const next = itemAt(hand, 0);
+  const play = (
+    <Button
+      disabled={phase !== 'playing' || reconnecting}
+      onClick={() => socket.emit('hush:play', state.roomId, next)}
+    >
+      {m.hush.play(next)}
+    </Button>
+  );
   if (phase === 'playing' && !reconnecting) {
-    const next = itemAt(hand, 0);
     return (
       <HandRow
         label={m.hush.hand}
         cards={hand}
-        action={
-          <Button onClick={() => socket.emit('hush:play', state.roomId, next)}>
-            {m.hush.play(next)}
-          </Button>
-        }
+        action={play}
         status={m.hush.onlyLowest}
       />
     );
@@ -392,6 +405,8 @@ function Hand({ room }: { room: Room }) {
     <HandRow
       label={m.hush.hand}
       cards={hand}
+      action={play}
+      held
       status={
         phase === 'countdown'
           ? m.hush.opensSoon

@@ -56,7 +56,7 @@ export function MobileTabs<View extends string>({
         ))}
       </Tabs.List>
       {tabs.map((tab) => (
-        <Tabs.Panel key={tab.value} value={tab.value}>
+        <Tabs.Panel key={tab.value} value={tab.value} className={styles.panel}>
           {tab.panel}
         </Tabs.Panel>
       ))}

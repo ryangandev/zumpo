@@ -1,0 +1,58 @@
+/* One line, 32 px tall, scrolling sideways when the chips are wider. */
+.strip {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  border: 0;
+  border-radius: var(--zumpo-radius-999);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  scrollbar-width: none;
+  touch-action: manipulation;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.strip:focus-visible {
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+/* Zumpo/Standing: the avatar and the value on a paper chip. */
+.standing {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  padding-right: var(--zumpo-space-12);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-paper);
+  box-shadow: inset 0 0 0 1px var(--zumpo-line);
+}
+
+.value {
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  white-space: nowrap;
+}
+
+.you {
+  background: var(--zumpo-sand);
+  box-shadow: inset 0 0 0 1px var(--zumpo-ink);
+}
+
+.away > :first-child {
+  opacity: 0.5;
+}
+
+.away .value {
+  color: var(--zumpo-muted);
+}

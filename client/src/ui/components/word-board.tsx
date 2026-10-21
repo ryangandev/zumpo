@@ -51,7 +51,11 @@ export function WordBoard({
           const guess = rows[row];
           const open = row === rows.length;
           return (
-            <div key={row} className={styles.row}>
+            <div
+              key={row}
+              className={styles.row}
+              data-play-current={open ? '' : undefined}
+            >
               {Array.from({ length: LETTERS }, (_letter, index) => {
                 let state: LetterTileState = 'empty';
                 let letter: string | undefined;

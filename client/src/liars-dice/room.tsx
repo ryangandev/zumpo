@@ -24,6 +24,8 @@ export function LiarsDiceRoom() {
   const ended = !inGame ? state.lastGame : null;
   return (
     <RoomLayout
+      // No standings over the board: everybody’s cups are on the table.
+      standings={false}
       phase={
         inGame
           ? { tone: 'blue', label: m.liarsDice.round(state.round) }
