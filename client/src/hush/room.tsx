@@ -323,9 +323,19 @@ function Hand({ room }: { room: Room }) {
   const { phase, hand } = state;
   const ready = state.table[playerId]?.ready ?? false;
 
-  // A spectator holds no cards and readies for nothing.
+  // A spectator holds no cards and readies for nothing, but learns the rule
+  // before the first deal as the players do.
   if (room.spectating) {
-    return <HandRow label={m.room.watching} message={m.hush.watchingHand} />;
+    return (
+      <HandRow
+        label={m.room.watching}
+        message={
+          phase === 'ready' && state.level === 1
+            ? m.hush.firstRule
+            : m.hush.watchingHand
+        }
+      />
+    );
   }
 
   switch (phase) {

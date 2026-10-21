@@ -114,6 +114,30 @@ describe('a Hush room', () => {
     ).toBeInTheDocument();
   });
 
+  it('says the rule to a spectator before the first deal too', async () => {
+    const watching = (level: number) => ({
+      ...readyAt(level),
+      table: {
+        p2: { held: 0, ready: false },
+        p3: { held: 0, ready: false },
+      },
+      playerList: {
+        p2: { username: 'Maya', points: 0, isConnected: true },
+        p3: { username: 'Sam', points: 0, isConnected: true },
+      },
+      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+    });
+    const { update } = await renderSeated(watching(1));
+    expect(
+      screen.getByText(/^No turns, no talking: play your lowest card/),
+    ).toBeInTheDocument();
+
+    update(watching(2));
+    expect(
+      screen.getByText('You’re watching. The team plays without a word.'),
+    ).toBeInTheDocument();
+  });
+
   it('counts down with the hands dealt and the chat locked', async () => {
     await renderSeated({
       ...playing,

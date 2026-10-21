@@ -80,7 +80,7 @@ The last pile stays on the table under the results until the next game starts.
 - **Ready** is pressed once per level and cannot be taken back.
   The level waits for every seated player, including one who is away, whose seat comes back or goes within 30 seconds.
   There is no time limit: settling is part of the game, and the chat is open to nudge a slow friend.
-  Before level 1 the line beside Ready says the game's one rule, no turns and no talking, lowest card first; from level 2 on it says only when the chat locks.
+  Before level 1 the line beside Ready says the game's one rule, no turns and no talking, lowest card first, and a spectator's line says it too; from level 2 on it says only when the chat locks.
 - **The hands are dealt when the countdown starts, not before,** because the chat is open during `ready`: a hand you could see while the chat is open is a hand you could talk about.
   The countdown gives everybody one shared moment to start from, which matters in a game played on timing.
 - **The chat is locked in `countdown`, `playing`, `mistake` and `paused`,** for everybody, and open in `waiting`, `ready` and `cleared`.
