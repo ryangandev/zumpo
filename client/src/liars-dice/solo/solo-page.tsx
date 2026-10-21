@@ -8,7 +8,7 @@ import {
   Button,
   ButtonLink,
   Card,
-  SelectField,
+  ChipField,
   StatList,
   TurnBar,
   type TurnBarProps,
@@ -24,7 +24,6 @@ import { useBidChoice } from '../bid-choice';
 import { Table, type TableSeat } from '../table';
 import { bidLine, naming, revealBar, type Naming } from '../words';
 import {
-  BOT_NAMES,
   BOT_TURN_MS,
   bid,
   call,
@@ -124,18 +123,17 @@ function TablePicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
         </>
       }
     >
-      <SelectField
+      <ChipField
         label={m.liarsDice.solo.bots}
-        helper={m.liarsDice.solo.botsHelper(BOT_NAMES)}
         options={BOT_COUNTS.map((count) => ({
           value: count,
-          label: m.liarsDice.solo.botCount(count),
+          label: String(count),
+          name: m.liarsDice.solo.botCount(count),
         }))}
         value={picks.bots}
         onValueChange={(bots: number) => setPicks({ ...picks, bots })}
-        name="bots"
       />
-      <SelectField
+      <ChipField
         label={m.liarsDice.solo.diceEach}
         helper={
           picks.dicePerPlayer === 3
@@ -150,7 +148,6 @@ function TablePicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
         onValueChange={(dicePerPlayer: DicePerPlayer) =>
           setPicks({ ...picks, dicePerPlayer })
         }
-        name="dicePerPlayer"
       />
     </FormPage>
   );

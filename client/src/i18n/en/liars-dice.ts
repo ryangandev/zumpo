@@ -102,8 +102,6 @@ export const liarsDice = {
     leaveWarning: 'This game ends here, and it is not counted.',
     start: 'Start',
     bots: 'Bots',
-    botsHelper: (names: readonly string[]) =>
-      `Taken from ${names.slice(0, -1).join(', ')} and ${names.at(-1)}.`,
     botCount: (count: number) => plural(count, 'bot'),
     diceEach: 'Dice each',
     quick: 'The quick game.',

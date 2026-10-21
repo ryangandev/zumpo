@@ -21,6 +21,14 @@ const { reseed } = (await import('./random')) as unknown as {
 };
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+/** The chip picked in a group of the table picker, by its name. */
+const picked = (group: string) => {
+  const chip = within(screen.getByRole('group', { name: group })).getByRole(
+    'button',
+    { pressed: true },
+  );
+  return chip.getAttribute('aria-label') ?? chip.textContent;
+};
 
 let user: ReturnType<typeof userEvent.setup>;
 
@@ -50,9 +58,9 @@ describe('Liar’s Dice on your own', () => {
     });
     expect(router.state.location.pathname).toBe('/games/liars-dice/solo');
     expect(screen.getByText('Pick a table.')).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Bots' })).toHaveTextContent(
-      '3 bots',
-    );
+    expect(picked('Bots')).toBe('3 bots');
+    expect(picked('Dice each')).toBe('3 dice');
+    expect(screen.queryByText(/^Taken from/)).toBeNull();
 
     await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(screen.getByText('Round 1')).toBeInTheDocument();
@@ -75,12 +83,21 @@ describe('Liar’s Dice on your own', () => {
   it('offers the last table picked first', async () => {
     writePicks({ bots: 5, dicePerPlayer: 5 });
     await renderApp('/games/liars-dice/solo');
-    expect(screen.getByRole('combobox', { name: 'Bots' })).toHaveTextContent(
-      '5 bots',
-    );
+    expect(picked('Bots')).toBe('5 bots');
+    expect(picked('Dice each')).toBe('5 dice');
+    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
+  });
+
+  it('picks a table with one tap each', async () => {
+    await renderApp('/games/liars-dice/solo', { firstVisit: true });
+    await user.click(screen.getByRole('button', { name: '1 bot' }));
+    await user.click(screen.getByRole('button', { name: '5 dice' }));
+    expect(picked('Bots')).toBe('1 bot');
+    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(
-      screen.getByRole('combobox', { name: 'Dice each' }),
-    ).toHaveTextContent('5 dice');
+      screen.getAllByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ }),
+    ).toHaveLength(1);
   });
 
   it('plays a game to its end, and keeps it on this device', async () => {

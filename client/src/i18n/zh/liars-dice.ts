@@ -84,8 +84,6 @@ export const liarsDice: typeof en = {
     leaveWarning: '这局到此结束，不计入战绩。',
     start: '开始',
     bots: '电脑对手',
-    botsHelper: (names) =>
-      `从 ${names.slice(0, -1).join('、')} 和 ${names.at(-1)} 中选取。`,
     botCount: (count) => `${count} 个电脑对手`,
     diceEach: '每人骰子数',
     quick: '快速局。',
