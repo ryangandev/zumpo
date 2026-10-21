@@ -135,10 +135,15 @@ function useCardMotion(
       const from = middleBox.getBoundingClientRect();
       const to = mineBox.getBoundingClientRect();
       const scale = from.width / to.width;
+      // The rects are on screen; a translate is in the card's own pixels,
+      // which a board scaled to fit (zoom) makes smaller or larger.
+      const zoom = zoomAt(mineBox);
+      const x = (from.left - to.left) / zoom;
+      const y = (from.top - to.top) / zoom;
       mineBox.animate(
         [
           {
-            transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${scale})`,
+            transform: `translate(${x}px, ${y}px) scale(${scale})`,
           },
           { transform: 'none' },
         ],
@@ -146,4 +151,13 @@ function useCardMotion(
       );
     }
   }, [boxes, middle, mine]);
+}
+
+/** How much the element and everything around it are zoomed, together. */
+function zoomAt(element: Element): number {
+  let zoom = 1;
+  for (let at: Element | null = element; at; at = at.parentElement) {
+    zoom *= Number.parseFloat(getComputedStyle(at).zoom) || 1;
+  }
+  return zoom;
 }
