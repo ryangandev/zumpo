@@ -23,10 +23,9 @@ const { reseed } = (await import('./random')) as unknown as {
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 /** The chip picked in a group of the table picker, by its name. */
 const picked = (group: string) => {
-  const chip = within(screen.getByRole('group', { name: group })).getByRole(
-    'button',
-    { pressed: true },
-  );
+  const chip = within(
+    screen.getByRole('radiogroup', { name: group }),
+  ).getByRole('radio', { checked: true });
   return chip.getAttribute('aria-label') ?? chip.textContent;
 };
 
@@ -92,10 +91,16 @@ describe('Liar’s Dice on your own', () => {
 
   it('picks a table with one tap each', async () => {
     await renderApp('/games/liars-dice/solo', { firstVisit: true });
-    await user.click(screen.getByRole('button', { name: '1 bot' }));
-    await user.click(screen.getByRole('button', { name: '5 dice' }));
+    await user.click(screen.getByRole('radio', { name: '1 bot' }));
+    await user.click(screen.getByRole('radio', { name: '5 dice' }));
     expect(picked('Bots')).toBe('1 bot');
     expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
+    await user.click(screen.getByRole('radio', { name: '1 bot' }));
+    await user.keyboard('{ArrowRight}');
+    expect(picked('Bots')).toBe('2 bots');
+    expect(screen.getByRole('radio', { name: '2 bots' })).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(picked('Bots')).toBe('1 bot');
     await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(
       screen.getAllByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ }),

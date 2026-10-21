@@ -1,7 +1,9 @@
+import { Radio } from '@base-ui/react/radio';
+import { RadioGroup } from '@base-ui/react/radio-group';
 import { useId, type ReactNode } from 'react';
 import { cx } from '../cx';
-import { FilterChip } from './filter-chip';
 import fieldStyles from './field.module.css';
+import chipStyles from './filter-chip.module.css';
 import styles from './chip-field.module.css';
 
 export interface ChipOption<Value extends string | number> {
@@ -23,7 +25,8 @@ export interface ChipFieldProps<Value extends string | number> {
 
 /**
  * Zumpo/Input's label and helper around a row of Zumpo/Filter chips (LD01):
- * a few presets picked with one tap, where a menu would take two.
+ * a few presets picked with one tap, where a menu would take two. It is one
+ * choice, so it is a radio group: one Tab stop, and the arrow keys move it.
  */
 export function ChipField<Value extends string | number>({
   label,
@@ -35,27 +38,28 @@ export function ChipField<Value extends string | number>({
 }: ChipFieldProps<Value>) {
   const id = useId();
   return (
-    <div
-      role="group"
-      aria-labelledby={`${id}-label`}
-      aria-describedby={helper != null ? `${id}-helper` : undefined}
-      className={cx(fieldStyles.field, className)}
-    >
+    <div className={cx(fieldStyles.field, className)}>
       <span id={`${id}-label`} className={fieldStyles.label}>
         {label}
       </span>
-      <div className={styles.chips}>
+      <RadioGroup<Value>
+        aria-labelledby={`${id}-label`}
+        aria-describedby={helper != null ? `${id}-helper` : undefined}
+        value={value}
+        onValueChange={(next) => onValueChange(next)}
+        className={styles.chips}
+      >
         {options.map((option) => (
-          <FilterChip
+          <Radio.Root
             key={option.value}
-            selected={option.value === value}
-            onSelect={() => onValueChange(option.value)}
-            name={option.name}
+            value={option.value}
+            aria-label={option.name}
+            className={chipStyles.chip}
           >
             {option.label}
-          </FilterChip>
+          </Radio.Root>
         ))}
-      </div>
+      </RadioGroup>
       {helper != null && (
         <span id={`${id}-helper`} className={fieldStyles.helper}>
           {helper}

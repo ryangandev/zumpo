@@ -13,6 +13,7 @@ import {
   BidPicker,
   Button,
   Card,
+  ChipField,
   ChoiceList,
   Chat,
   CodeBoard,
@@ -236,6 +237,7 @@ export default function Gallery() {
   const [rounds, setRounds] = useState(2);
   const [board, setBoard] = useState<'small' | 'medium' | 'large'>('medium');
   const [choice, setChoice] = useState('medium');
+  const [bots, setBots] = useState(3);
   const [colour, setColour] = useState<BrushName>('ink');
   const [size, setSize] = useState<BrushSize>(10);
   const [view, setView] = useState<'board' | 'players' | 'chat'>('board');
@@ -347,6 +349,18 @@ export default function Gallery() {
           <FilterChip selected onSelect={() => {}}>
             Puzzles
           </FilterChip>
+        </Specimen>
+        <Specimen label="Chip field: Bots, one choice" width={320}>
+          <ChipField
+            label="Bots"
+            value={bots}
+            onValueChange={setBots}
+            options={[1, 2, 3, 4, 5].map((count) => ({
+              value: count,
+              label: String(count),
+              name: count === 1 ? '1 bot' : `${count} bots`,
+            }))}
+          />
         </Specimen>
       </Family>
 
