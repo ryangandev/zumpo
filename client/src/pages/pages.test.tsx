@@ -701,7 +701,7 @@ describe('making a Doodle Chain room', () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/doodle-chain/new');
     expect(
-      screen.getByText('Writing and describing take 30s.'),
+      screen.getByText('Writing takes 30s, describing 45s.'),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'More options' }));
     await user.click(screen.getByRole('combobox', { name: 'Seats' }));

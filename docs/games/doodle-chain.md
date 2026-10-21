@@ -46,24 +46,26 @@ Six steps is also as far as a line travels before it is unrecognisable, which is
 
 ## Phases and timings
 
-| Phase        | Wire name  | Length                             | What happens                                                                      |
-| ------------ | ---------- | ---------------------------------- | --------------------------------------------------------------------------------- |
-| **Write**    | `write`    | 30s                                | Everybody writes a prompt, up to 80 characters.                                   |
-| **Draw**     | `draw`     | The room's drawing time, 60s first | Everybody draws the words they were given.                                        |
-| **Describe** | `describe` | 30s                                | Everybody writes what the drawing they were given shows, up to 80 characters.     |
-| **Passing**  | `passing`  | 3s                                 | Time is up: what everybody made is kept, the inputs close and the chains move on. |
-| **Reveal**   | `reveal`   | No clock: the host steps through   | The chains are shown to the whole room, one entry at a time.                      |
+| Phase        | Wire name  | Length                             | What happens                                                                            |
+| ------------ | ---------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
+| **Write**    | `write`    | 30s                                | Everybody writes a prompt, up to 80 characters.                                         |
+| **Draw**     | `draw`     | The room's drawing time, 60s first | Everybody draws the words they were given.                                              |
+| **Describe** | `describe` | 45s                                | Everybody writes what the drawing they were given shows, up to 80 characters.           |
+| **Passing**  | `passing`  | 3s                                 | The step is over: what everybody made is kept, the inputs close and the chains move on. |
+| **Reveal**   | `reveal`   | No clock: the host steps through   | The chains are shown to the whole room, one entry at a time.                            |
 
 Between games the room is in `waiting`.
 The steps run `write`, then `draw` and `describe` in turn, with `passing` after every step, the last one included; after the last `passing` comes the `reveal`, and after the reveal the room is back in `waiting` with the album.
 
-`passing` is there so the change of step is something you see rather than a jolt: your drawing stops, the screen says time is up and whom it goes to, and three seconds later the next thing to draw or describe arrives.
+`passing` is there so the change of step is something you see rather than a jolt: your drawing stops, the screen says why the step ended and whom your entry goes to, and three seconds later the next thing to draw or describe arrives.
+It says "Time's up!" only when the clock ran out, "Everyone's done!" when everybody finished early, and that there was nothing to play when the step was skipped (see [Sitting a step out](#sitting-a-step-out)).
+A step that ends because everybody with something to do left the table says only "This step is over", since nobody finished it.
 
 ### Done
 
 You press **Done** when your entry is finished, and **Keep editing** takes it back, at any time until the step ends.
-**Done is unavailable while your entry is empty**: a blank line, or a canvas with no strokes.
-The button stays where it is and keeps the keyboard focus, and the server refuses a Done for an empty entry too.
+**Done does not send an empty entry**: a blank line, or a canvas with no strokes.
+The button stays pressable, and pressing it on an empty entry says what to do instead ("Write something first, then press Done."); the server refuses a Done for an empty entry too.
 So an empty entry in a chain always means the time ran out or its player left, and the reveal can say which.
 **A step ends early once every player who has something to do in it has pressed Done**, because the rest of the clock would be dead time, as in Draw & Guess.
 A player who is away and has not pressed Done keeps the step running to its clock; a drop never shortens anybody's time.
@@ -105,16 +107,19 @@ With Maya, Ryan, Leo and Sam playing in that order:
 
 Sitting out is rare, since it needs an empty entry or a player who left, and it is better than its alternatives: describing words or drawing a drawing breaks the game, and reshuffling who works on what mid-game would put a player on a chain twice.
 
+**When every player sits out a step, the step is skipped**: it ends at once, with no clock, and the chat says why under its divider ("Step 4 is skipped: every description came back empty, so nobody had words to draw."), as does the pause after it.
+A game that jumped to its next step or to the reveal without a word looked broken.
+
 ### How long a game takes
 
 At the default 60 seconds of drawing, with nobody finishing early:
 
 | Players | Write | Draw    | Describe | Passing | Steps in all | Reveal        |
 | ------- | ----- | ------- | -------- | ------- | ------------ | ------------- |
-| 3       | 30s   | 1 × 60s | 1 × 30s  | 3 × 3s  | about 2 min  | 9 entries     |
-| 4       | 30s   | 2 × 60s | 1 × 30s  | 4 × 3s  | about 3 min  | 16 entries    |
-| 5       | 30s   | 2 × 60s | 2 × 30s  | 5 × 3s  | about 4 min  | 25 entries    |
-| 6–8     | 30s   | 3 × 60s | 2 × 30s  | 6 × 3s  | about 5 min  | 36-48 entries |
+| 3       | 30s   | 1 × 60s | 1 × 45s  | 3 × 3s  | about 2 min  | 9 entries     |
+| 4       | 30s   | 2 × 60s | 1 × 45s  | 4 × 3s  | about 3 min  | 16 entries    |
+| 5       | 30s   | 2 × 60s | 2 × 45s  | 5 × 3s  | about 4 min  | 25 entries    |
+| 6–8     | 30s   | 3 × 60s | 2 × 45s  | 6 × 3s  | about 5 min  | 36-48 entries |
 
 A revealed entry takes a few seconds to read and laugh at, so a reveal takes one to three minutes, and a whole game 5–8 minutes for four players and more.
 A game of three is shorter, which suits it: the room plays again.
@@ -156,7 +161,8 @@ After the last step everybody, spectators included, watches the chains together:
 Next names the entry it means to show (`dc:reveal:next` carries how many are shown), so a double tap shows one entry, never two.
 There is no Back: the album is where chains are read again, at each player's own pace.
 
-**A host who is away holds the reveal** until they come back or their seat goes, as the crown passes when a seat goes; the new host carries on from the same entry.
+**A host who is away does not hold the reveal:** at once the player next in line steps it on from the same entry, as they may start a game (`starterOf` in [`shared/room.ts`](../../shared/room.ts)), and is told "Maya isn’t at the table, so you show the chains."
+The host takes it back the moment they return; if their seat goes, the crown passes and the new host carries on.
 
 ### Hearts
 
@@ -202,7 +208,8 @@ The album is the game's result, so a game that ended early has one too.
 | Drawing time | 45s, 60s, 90s | 60s     | Groups differ: friends who only scribble, and friends who draw shading.       |
 | Password     | Optional      |         | As in every room.                                                             |
 
-Writing and describing stay at 30 seconds, because a line takes about as long for anybody.
+Writing takes 30 seconds and describing 45, because a line takes about as long for anybody, and putting somebody else's drawing into words takes longer than a first line.
+Describing had 30 seconds until 2026-10-21, when a three-player room ran out of time on every description and so sat out the whole next drawing step.
 There is no setting for the number of steps: the players are the length, as in Hush.
 
 ## Rules the server enforces
@@ -213,9 +220,10 @@ There is no setting for the number of steps: the players are the length, as in H
 - **The deal of chains is the server's:** the order is fixed when the game starts, and which chain each player works on, and who sits out, follows from it.
 - **Nothing a client sends ends a step**, except that the server ends it early once everybody who has something to do has pressed Done.
   The clock is the server's; a client is told how many milliseconds are left and renders a countdown from it.
-- **Only the host steps the reveal**, one entry at a time, and only to the entry it names.
+- **Only the host steps the reveal**, or while they are away the player next in line, one entry at a time, and only to the entry it names.
 - **A heart is a player's,** only during the reveal, only on a shown entry, never on their own, and one per chain.
-- **Only the room owner may start a game**, and only with three or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with three or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 
@@ -261,6 +269,7 @@ The Doodle Chain snapshot adds:
 | `table`          | For every player in the order: whether they have pressed Done, and whether they sit this step out                                                                            |
 | `task`           | The viewer's own task this step: its kind, the chain, the entry given (absent at step 1) and whether they sit out                                                            |
 | `draft`          | The viewer's own text this step, or the number of a suggestion                                                                                                               |
+| `stepEnd`        | While the chains pass on: why the step ended, `time`, `done` (everybody was done early) or `skipped` (nobody had anything to do)                                             |
 | `reveal`         | During the reveal: the chain being shown, how many of its entries are shown, every chain's owner, and the entries shown so far with their hearts and the viewer's own hearts |
 | `lastGame`       | The album, until the next game starts: every chain and entry, hearts, the crowd favourite, standings by hearts, and whether it ended early                                   |
 
@@ -280,7 +289,7 @@ Doodle Chain's events of its own:
 | `dc:text`                                       | The room, and the text or a suggestion number | A player writing or describing |
 | `dc:done`                                       | The room, and Done or not                     | A player                       |
 | `dc:draw:start`, `move`, `end`, `undo`, `clear` | As Draw & Guess's, for your own drawing       | A player drawing               |
-| `dc:reveal:next`                                | The room, and how many entries are shown      | The host                       |
+| `dc:reveal:next`                                | The room, and how many entries are shown      | The starter                    |
 | `dc:heart`                                      | The room, the chain, and an entry or none     | A player, in the reveal        |
 | `dc:drawing`                                    | The room, a drawing id and its strokes        | The server                     |
 | `dc:canvas:sync`                                | The room, and your own strokes                | The server                     |
@@ -290,7 +299,7 @@ Doodle Chain's events of its own:
 | Variable                  | Default | Purpose                                                                              |
 | ------------------------- | ------- | ------------------------------------------------------------------------------------ |
 | `DC_WRITE_SECONDS`        | `30`    | Length of the write step                                                             |
-| `DC_DESCRIBE_SECONDS`     | `30`    | Length of a describing step                                                          |
+| `DC_DESCRIBE_SECONDS`     | `45`    | Length of a describing step                                                          |
 | `DC_PASSING_SECONDS`      | `3`     | The pause between steps                                                              |
 | `DC_DRAW_SECONDS`         | unset   | When set, every room's drawing time, to play a game through quickly while developing |
 | `RECONNECT_GRACE_SECONDS` | `30`    | How long a dropped player keeps their seat                                           |

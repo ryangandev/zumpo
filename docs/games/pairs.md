@@ -61,6 +61,7 @@ Between games the room is in `waiting`.
 - **A pair** is the finder's: **+1**, and they go again, with a fresh 10 seconds.
 - **Not a pair:** both cards stay up for everybody for 2 seconds, then turn back, and the turn passes to the next player.
 - **Out of time:** a card turned over alone turns back, and the turn passes on.
+  The turn card says so to everybody ("Leo ran out of time", and to Leo "Time's up, your turn passed") until the next card is turned; the chat stays quiet.
 - **A player who is not connected** when their turn comes is skipped.
 
 When the last pair is found the game ends, and the room reopens for a new one.
@@ -76,7 +77,8 @@ The chat says when somebody finds a pair ("Maya found a pair! (+1)"), as a quiet
   A client is sent the symbol of a card only while it is face up or matched; where the others lie is never sent.
 - **Only the player whose turn it is may turn a card over,** and only during `flipping`, two cards a turn.
 - **The clock and the score are the server's.**
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 
@@ -99,6 +101,7 @@ Every change reaches a player as `room:state`, the whole room as that player may
 | `turnPlayerId` | Whose turn it is; `null` between games                                                                               |
 | `nextPlayerId` | Whose turn comes next, skipping anybody not connected; `null` between games                                          |
 | `lastMiss`     | The two cards that just did not match, while they show                                                               |
+| `timedOut`     | Who just lost their turn to the clock, until the next card is turned; `null` otherwise                               |
 | `lastGame`     | The summary of the last finished game, until the next one starts                                                     |
 
 Pairs' one event of its own is `pairs:flip`, with the room and the card's place.

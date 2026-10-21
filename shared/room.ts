@@ -110,3 +110,52 @@ export function heirOf(
     (playersOnly ? undefined : firstHere(room.spectators))
   );
 }
+
+type StartingRoom = {
+  owner: { playerId: string };
+  playerList: Readonly<Record<string, { isConnected: boolean }>>;
+  spectators: Readonly<Record<string, { isConnected: boolean }>>;
+};
+
+/**
+ * Who may start the next game, change its settings and step a reveal: the
+ * host while they are here at the table, and otherwise (away, or watching)
+ * the player the crown would pass to, at once rather than when the host's
+ * seat is given up. A room never waits on a host who is not there. With
+ * nobody at the table here, the host is named, though they may do none of it
+ * from the spectator seats (`mayStart`).
+ */
+export function starterOf(room: StartingRoom): string {
+  const { playerId } = room.owner;
+  if (room.playerList[playerId]?.isConnected) return playerId;
+  return heirOf(room, { playersOnly: true }) ?? playerId;
+}
+
+/**
+ * Whether `playerId` may start, change the settings and step a reveal now:
+ * they are the starter, and seated. A spectator never may.
+ */
+export function mayStart(room: StartingRoom, playerId: string): boolean {
+  return playerId in room.playerList && starterOf(room) === playerId;
+}
+
+/**
+ * Who the next game still waits on before it starts by itself: everybody at
+ * the table who is here, other than the starter, and has not said Ready.
+ * Nobody waited on, with somebody ready, starts the game; a player away
+ * holds nothing up.
+ */
+export function waitingOn(
+  room: {
+    owner: { playerId: string };
+    playerList: Readonly<Record<string, { isConnected: boolean }>>;
+    spectators: Readonly<Record<string, { isConnected: boolean }>>;
+  },
+  ready: Iterable<string>,
+): string[] {
+  const said = new Set(ready);
+  const starter = starterOf(room);
+  return Object.entries(room.playerList)
+    .filter(([id, seat]) => seat.isConnected && id !== starter && !said.has(id))
+    .map(([id]) => id);
+}

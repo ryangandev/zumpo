@@ -190,6 +190,7 @@ export type {
   DoodleChainLobbyRoomInfo,
   DoodleChainKind,
   DoodleChainPhase,
+  DoodleChainStepEnd,
   DoodleChainPlayer,
   DoodleChainDraft,
   DoodleChainContent,

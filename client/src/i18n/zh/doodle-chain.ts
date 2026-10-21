@@ -84,6 +84,14 @@ export const doodleChain: typeof en = {
   whatDoesItShow: '这幅画画的是什么？',
   sitOut: '这一步你轮空',
   timesUp: '时间到！',
+  everyoneDone: '大家都完成了！',
+  stepSkipped: '这一步没有可做的',
+  stepOver: '这一步结束了',
+  skippedWhy: {
+    prompt: '每条传话都往下传一位。',
+    drawing: '上一步的描述都是空的，没人有字可画。',
+    description: '上一步的画都是空的，没人有画可描述。',
+  },
   everybody: {
     prompt: '大家都在写',
     drawing: '大家都在画',
@@ -119,6 +127,7 @@ export const doodleChain: typeof en = {
   doneWaiting: (names) => `已完成。在等 ${names}。`,
   doneAll: '已完成。大家都完成了。',
   asItIs: '时间到时，你的画会原样传下去。',
+  drawFirst: '先画点什么，再按“完成”。',
   givenDrawing: '你拿到的画',
   yourDrawing: '你的画',
   nothingTo: { drawing: '没有可画的', description: '没有可描述的' },
@@ -173,7 +182,7 @@ export const doodleChain: typeof en = {
   allShown: '所有传话都看完了，画册里都有。',
   hostShowing: (host) => `${host} 在逐条揭晓传话。`,
   hostNext: (host, next) => `${host} 在逐条揭晓传话。接下来是 ${next} 的传话。`,
-  hostAway: (host) => `${host} 暂时离开了。等对方回来，揭晓继续。`,
+  standInReveal: (host) => `${host} 不在座位上，由你来揭晓传话。`,
 
   everyChain: '每条传话都在这里了。',
   soFar: '到目前为止的每条传话都在这里了。',

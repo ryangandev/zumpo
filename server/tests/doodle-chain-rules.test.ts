@@ -3,13 +3,16 @@ import {
   canFollow,
   chainAt,
   cleanText,
+  DESCRIBE_SECONDS,
   kindOf,
   MAX_PLAYERS,
   MIN_PLAYERS,
   placeAt,
   stepsFor,
   TEXT_MAX,
+  WRITE_SECONDS,
 } from '../../shared/doodle-chain.js';
+import { doodleChainDurationsInSeconds } from '../libs/game-clock.js';
 
 const range = (count: number) => Array.from({ length: count }, (_, i) => i);
 
@@ -64,6 +67,14 @@ describe('Doodle Chain rules', () => {
     expect(canFollow('drawing', 'drawing')).toBe(false);
     expect(canFollow('prompt', 'description')).toBe(false);
     expect(canFollow('description', 'description')).toBe(false);
+  });
+
+  it('gives 30 seconds to write a line and 45 to describe a drawing', () => {
+    expect(WRITE_SECONDS).toBe(30);
+    expect(DESCRIBE_SECONDS).toBe(45);
+    // The server's clock, unless the environment says otherwise.
+    expect(doodleChainDurationsInSeconds.write).toBe(30);
+    expect(doodleChainDurationsInSeconds.describe).toBe(45);
   });
 
   it('trims a line and keeps at most 80 characters of it', () => {

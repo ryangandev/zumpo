@@ -140,6 +140,22 @@ describe('a Make 24 room', () => {
     ).toBeInTheDocument();
   });
 
+  it('keeps who has solved it in view through a wrong answer', async () => {
+    const user = userEvent.setup();
+    await renderSeated({
+      ...solving,
+      solved: [{ ...mine, playerId: 'p2', username: 'Maya' }],
+    });
+
+    await step(user, '3', 'plus', '4');
+    await step(user, '7, from 3 + 4', 'plus', '6');
+    await step(user, '13, from 7 + 6', 'plus', '9');
+    expect(screen.getByText('That makes 22')).toBeInTheDocument();
+    expect(
+      screen.getByText('Maya solved it · undo a step'),
+    ).toBeInTheDocument();
+  });
+
   it('keeps a player who has solved it waiting, and quiet', async () => {
     await renderSeated({
       ...solving,

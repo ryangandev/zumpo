@@ -35,6 +35,7 @@ const room = {
   playerList: players,
   spectators: {},
   isGameStarted: false,
+  ready: [] as string[],
   phaseEndsInMs: 0,
 };
 
@@ -117,6 +118,7 @@ export function pairsState(
     turnPlayerId: null,
     nextPlayerId: null,
     lastMiss: [],
+    timedOut: null,
     lastGame: null,
     ...overrides,
   };

@@ -157,20 +157,27 @@ interface RoomCreateRequest {
   /** '' for an open room. */
   password: string;
   /** The game's own half, which only its module can read. */
-  settings:
-    | DrawAndGuessSettings
-    | MinesweeperSettings
-    | Make24Settings
-    | PairsSettings
-    | TriosSettings
-    | SnapSettings
-    | LiarsDiceSettings
-    | HushSettings
-    | DailyWordSettings
-    | CodeBreakerSettings
-    | DoodleChainSettings
-    | GomokuSettings;
+  settings: GameSettings;
 }
+
+/**
+ * What a game lets a room choose. Each is kept in the room's snapshot and
+ * lobby row under the same names, and the starter may change it between
+ * games with `room:settings`.
+ */
+type GameSettings =
+  | DrawAndGuessSettings
+  | MinesweeperSettings
+  | Make24Settings
+  | PairsSettings
+  | TriosSettings
+  | SnapSettings
+  | LiarsDiceSettings
+  | HushSettings
+  | DailyWordSettings
+  | CodeBreakerSettings
+  | DoodleChainSettings
+  | GomokuSettings;
 
 interface DrawAndGuessSettings {
   rounds: number;
@@ -341,6 +348,12 @@ interface RoomState extends LobbyRoomInfo {
    */
   spectators: Record<string, SpectatorInfo>;
   isGameStarted: boolean;
+  /**
+   * Between games, who at the table has said Ready for the next one; empty
+   * while a game is on. Once everybody here but the starter (`starterOf` in
+   * `shared/room.ts`) has, the next game starts by itself.
+   */
+  ready: string[];
   /**
    * Time left in the current phase, relative rather than absolute so that a
    * client whose clock disagrees with the server's still counts down right.
@@ -586,6 +599,11 @@ interface PairsRoomState extends RoomState {
   nextPlayerId: string | null;
   /** The places of the two cards that just did not match, while they show. */
   lastMiss: number[];
+  /**
+   * Whose turn ran out of time just before this one, until the player now
+   * flipping turns their first card; null otherwise.
+   */
+  timedOut: string | null;
   lastGame: PairsGameSummary | null;
 }
 
@@ -1021,6 +1039,14 @@ type DoodleChainKind = 'prompt' | 'drawing' | 'description';
  * ended and the chains move on; reveal: the host shows the chains, an entry
  * at a time.
  */
+/**
+ * Why a step ended, shown while the chains pass on: its clock ran out,
+ * everybody with something to do pressed Done, nobody had anything to do,
+ * because every entry it would follow came back empty, or everybody with
+ * something to do left the table mid-step.
+ */
+type DoodleChainStepEnd = 'time' | 'done' | 'skipped' | 'left';
+
 type DoodleChainPhase =
   'waiting' | 'write' | 'draw' | 'describe' | 'passing' | 'reveal';
 
@@ -1135,6 +1161,8 @@ interface DoodleChainRoomState extends RoomState {
   task?: DoodleChainTask;
   /** A player's own words so far, while writing or describing. */
   draft?: DoodleChainDraft;
+  /** While the chains pass on: why the step before ended. */
+  stepEnd?: DoodleChainStepEnd;
   reveal?: DoodleChainReveal;
   lastGame: DoodleChainGameSummary | null;
 }
@@ -1330,6 +1358,8 @@ type RoomNotice =
   | { type: 'cb:cracked'; name: string; guesses: number; points: number }
   | { type: 'cb:revealed'; code: string }
   | { type: 'dc:step'; step: number; kind: DoodleChainKind }
+  /** Nobody could play step `step`: every entry it would follow was empty. */
+  | { type: 'dc:skipped'; step: number; kind: DoodleChainKind }
   | { type: 'dc:reveal'; host: string }
   | { type: 'dc:album' }
   | { type: 'gomoku:started'; black: string; white: string; seconds: number }
@@ -1426,7 +1456,29 @@ interface ClientToServerEvents {
    * goes by gets a number after it there.
    */
   'player:rename': (username: string, ack: Ack<Result>) => void;
+  /**
+   * Starts the next game. Only the starter may (`starterOf` in
+   * `shared/room.ts`: the host, or while they are away whoever the crown
+   * would pass to): `notRoomOwner` for anybody else.
+   */
   'game:start': (roomId: string, ack: Ack<Result>) => void;
+  /**
+   * Between games, a player at the table says they are ready for the next
+   * one, or takes it back. `notRoomMember` from anybody not at the table,
+   * `gameAlreadyStarted` while a game is on.
+   */
+  'room:ready': (roomId: string, ready: boolean, ack: Ack<Result>) => void;
+  /**
+   * Between games, the starter changes the next game's settings, the same
+   * game's half of a create request: `notRoomOwner` from anybody else,
+   * `gameAlreadyStarted` while a game is on, `invalidRequest` for settings
+   * the game does not offer.
+   */
+  'room:settings': (
+    roomId: string,
+    settings: GameSettings,
+    ack: Ack<Result>,
+  ) => void;
 
   /** Talking, and in Draw & Guess also guessing: the game decides which. */
   'chat:send': (roomId: string, text: string) => void;
@@ -1492,7 +1544,10 @@ interface ClientToServerEvents {
   'dc:draw:end': (roomId: string) => void;
   'dc:draw:undo': (roomId: string) => void;
   'dc:draw:clear': (roomId: string) => void;
-  /** The host shows the next entry; `total` is how many are shown before it. */
+  /**
+   * The starter (the host, or while they are away the player next in line,
+   * `starterOf`) shows the next entry; `total` is how many are shown before it.
+   */
   'dc:reveal:next': (roomId: string, total: number) => void;
   /** Gives the chain's heart to the entry made at `step`, or takes it back. */
   'dc:heart': (roomId: string, chain: number, step: number | null) => void;
@@ -1572,6 +1627,7 @@ export type {
   RoomError,
   Result,
   RoomCreateRequest,
+  GameSettings,
   DrawAndGuessSettings,
   MinesweeperDifficulty,
   MinesweeperSettings,
@@ -1666,6 +1722,7 @@ export type {
   DoodleChainLobbyRoomInfo,
   DoodleChainKind,
   DoodleChainPhase,
+  DoodleChainStepEnd,
   DoodleChainPlayer,
   DoodleChainDraft,
   DoodleChainContent,

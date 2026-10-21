@@ -127,6 +127,11 @@ describe('room announcements', () => {
       '第 1 步 · 写',
     ],
     [
+      { type: 'dc:skipped', step: 4, kind: 'drawing' },
+      'Step 4 is skipped: every description came back empty, so nobody had words to draw.',
+      '第 4 步跳过了：上一步的描述都是空的，没人有字可画。',
+    ],
+    [
       { type: 'room:disconnected', name: '' },
       'A player lost connection.',
       '某位玩家 的连接中断了。',
