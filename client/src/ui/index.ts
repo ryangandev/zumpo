@@ -17,6 +17,15 @@ export {
   type ButtonVariant,
 } from './components/button';
 export { Card, type CardProps } from './components/card';
+export {
+  ChainComposer,
+  type ChainComposerProps,
+} from './components/chain-composer';
+export {
+  ChainEntry,
+  type ChainEntryKind,
+  type ChainEntryProps,
+} from './components/chain-entry';
 export { ChoiceList, type ChoiceListProps } from './components/choice-list';
 export { Chat, type ChatProps } from './components/chat';
 export {
@@ -83,6 +92,7 @@ export {
   type Viewer,
   type ViewerMenu,
 } from './components/header';
+export { HeartButton, type HeartButtonProps } from './components/heart-button';
 export {
   HushCard,
   type HushCardProps,
@@ -200,3 +210,4 @@ export {
 export { WordChoice, type WordChoiceProps } from './components/word-choice';
 export { Wordmark } from './components/wordmark';
 export { brushes, type BrushName } from './generated/brushes';
+export { useFocusFollows } from './use-focus-follows';

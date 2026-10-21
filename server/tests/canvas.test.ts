@@ -6,7 +6,7 @@ import {
   createRoomCanvas,
   extendStroke,
   undoStroke,
-} from '../socket/draw-and-guess/canvas.js';
+} from '../libs/drawing/canvas.js';
 
 const at = (x: number, y: number) => ({ x, y });
 

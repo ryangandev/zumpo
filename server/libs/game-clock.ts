@@ -1,3 +1,5 @@
+import * as doodleChain from '../../shared/doodle-chain.js';
+
 /**
  * How long each phase of a turn lasts. These live on the server because the
  * server is what enforces them - clients are told how much time is left, they
@@ -145,6 +147,41 @@ const codeBreakerDurationsInSeconds: CodeBreakerDurationsInSeconds = {
 };
 
 /**
+ * Doodle Chain's clock. A drawing step lasts as long as its room chose, so it
+ * is here only to be overridden: unset, each room's own setting stands.
+ */
+interface DoodleChainDurationsInSeconds {
+  /** How long everybody has to write a prompt. */
+  write: number;
+  /** How long everybody has to describe a drawing. */
+  describe: number;
+  /** The pause between steps, while the chains move on. */
+  passing: number;
+  /** When set, every room's drawing time, whatever the room chose. */
+  draw?: number;
+}
+
+const doodleChainDurationsInSeconds: DoodleChainDurationsInSeconds = {
+  write: readSecondsFromEnv('DC_WRITE_SECONDS', doodleChain.WRITE_SECONDS),
+  describe: readSecondsFromEnv(
+    'DC_DESCRIBE_SECONDS',
+    doodleChain.DESCRIBE_SECONDS,
+  ),
+  passing: readSecondsFromEnv(
+    'DC_PASSING_SECONDS',
+    doodleChain.PASSING_SECONDS,
+  ),
+  ...(process.env.DC_DRAW_SECONDS
+    ? {
+        draw: readSecondsFromEnv(
+          'DC_DRAW_SECONDS',
+          doodleChain.DEFAULT_DRAWING_SECONDS,
+        ),
+      }
+    : {}),
+};
+
+/**
  * Trios' clock. A table has no deadline of its own: nothing ends while
  * everybody looks, so these are the pause after a trio, the cost of a wrong
  * claim, and how long a silence lasts before a hint breaks it.
@@ -206,6 +243,7 @@ export {
   hushDurationsInSeconds,
   dailyWordDurationsInSeconds,
   codeBreakerDurationsInSeconds,
+  doodleChainDurationsInSeconds,
   reconnectGraceInSeconds,
 };
 export type {
@@ -219,4 +257,5 @@ export type {
   HushDurationsInSeconds,
   DailyWordDurationsInSeconds,
   CodeBreakerDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
 };

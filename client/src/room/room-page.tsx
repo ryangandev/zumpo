@@ -21,6 +21,7 @@ import { SnapRoom } from '../snap/room';
 import { LiarsDiceRoom } from '../liars-dice/room';
 import { HushRoom } from '../hush/room';
 import { CodeBreakerRoom } from '../code-breaker/room';
+import { DoodleChainRoom } from '../doodle-chain/room';
 import { useSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useLobby } from '../net/use-lobby';
@@ -379,6 +380,7 @@ function SeatedRoom({
             isHost: state.owner.playerId === playerId,
             chat: connection.chat,
             canvas: connection.canvas,
+            drawings: connection.drawings,
             socket,
             sendChat: (text) => socket.emit('chat:send', state.roomId, text),
             openInvite: () => setInviting(true),
@@ -404,6 +406,7 @@ function SeatedRoom({
       seat,
       connection.chat,
       connection.canvas,
+      connection.drawings,
       socket,
       navigate,
       startGame,
@@ -437,6 +440,8 @@ function SeatedRoom({
         <HushRoom />
       ) : state.gameType === 'code-breaker' ? (
         <CodeBreakerRoom />
+      ) : state.gameType === 'doodle-chain' ? (
+        <DoodleChainRoom />
       ) : (
         <Suspense>
           <DailyWordRoom />

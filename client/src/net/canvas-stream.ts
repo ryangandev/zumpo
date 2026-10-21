@@ -10,8 +10,8 @@ export type CanvasChange =
 type Listener = (change: CanvasChange) => void;
 
 /**
- * The shared drawing of a Draw & Guess room: the strokes so far, kept outside
- * React because a stroke grows dozens of times a second.
+ * The drawing in progress in a room: the strokes so far, kept outside React
+ * because a stroke grows dozens of times a second.
  *
  * The server streams other players' strokes and never echoes the drawer's own,
  * so the drawer's input is applied here directly as well as sent.

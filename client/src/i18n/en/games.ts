@@ -59,6 +59,7 @@ export const games = {
     snap: (cards) => plural(cards, 'card'),
     'liars-dice': (dice) => `${dice} dice each`,
     hush: (levels) => plural(levels, 'level'),
+    'doodle-chain': (seconds) => `${seconds}s to draw`,
     'daily-word': (words) => plural(words, 'word'),
     'code-breaker': (codes) => plural(codes, 'code'),
   },
@@ -324,6 +325,31 @@ Clear the last level to win together. Two players play 7 levels, three play 6 an
       createDescription:
         'Play every card in order, together, without a word. Fewer players play more levels.',
       score: (levels) => plural(levels, 'level'),
+    },
+    'doodle-chain': {
+      name: 'Doodle Chain',
+      tagline: 'Write a line, draw it, pass it on, and watch it fall apart.',
+      facts: '3–8 players',
+      lobbySummary:
+        'Everyone writes a line. The next player draws it, the next says what the drawing shows, and so on round the table. Then the host shows every chain.',
+      lobbyFacts: [
+        '3–8 players',
+        'Up to 6 steps: write, then draw and describe in turn',
+        '30s to write · 60s to draw · 30s to describe',
+        'The host steps through the reveal',
+      ],
+      rules: `3–8 players · one step each, up to six
+
+Everyone starts a chain by writing a line: anything drawable, in any language. Stuck? Suggest fills in one. Then every chain moves one place round the table, and the next player draws the line they are given. The next one says in words what that drawing shows, the next draws those words, and so on. You only ever see the step before yours.
+
+Everyone plays each step at once. Writing and describing take 30 seconds, drawing takes the room’s drawing time. Press Done when you are finished, and the step ends early once everyone is done; when the clock runs out, whatever you have goes on as it is.
+
+A game has one step per player, but never more than six. If the entry before yours came back empty, you sit that step out and the chain goes on from the entry before it.
+
+Then the host shows every chain, one entry at a time, from its first line to its last. Give one heart in each chain to its best moment; your score is the hearts your entries get. The chains stay in the album until the next game starts.`,
+      createDescription:
+        'Write, draw and describe round the table, then watch every chain unfold. The players are the length: one step each, up to six.',
+      score: (hearts) => plural(hearts, 'heart'),
     },
     'daily-word': {
       name: 'Daily Word',

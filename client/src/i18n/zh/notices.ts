@@ -101,4 +101,12 @@ export const notices: typeof en = {
   'cb:cracked': (n) =>
     `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
   'cb:revealed': (n) => `答案是 ${n.code}。`,
+  'dc:step': (n) =>
+    n.kind === 'prompt'
+      ? `第 ${n.step} 步：写下第一句。`
+      : n.kind === 'drawing'
+        ? `第 ${n.step} 步：把收到的句子画出来。`
+        : `第 ${n.step} 步：说说收到的画是什么。`,
+  'dc:reveal': (n) => `揭晓时间！${who(n.host)} 来逐条展示每条传话。`,
+  'dc:album': (_n) => '所有传话都收进画册了。',
 };

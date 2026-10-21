@@ -21,6 +21,7 @@ const SETTINGS: Record<GameType, object> = {
   hush: {},
   'daily-word': { rounds: 3 },
   'code-breaker': { rounds: 3 },
+  'doodle-chain': { drawingSeconds: 60 },
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];

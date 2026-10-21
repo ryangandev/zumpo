@@ -14,11 +14,13 @@ import {
   Tag,
   TriosCard,
 } from '../ui';
+import { turtle, TURTLE_SIZE } from '../ui/generated/drawings';
 import {
-  turtle,
-  TURTLE_SIZE,
-  type DrawingPart,
-} from '../ui/generated/drawings';
+  CHAIN_DRAWING_SIZE,
+  chainDrawings,
+  type ChainDrawingName,
+  type ChainDrawingPart,
+} from '../ui/generated/chain-drawings';
 import { SYMBOLS, type SymbolName } from '../../../shared/snap';
 import type { GameType } from '../../../shared/wire-types';
 import { cx } from '../ui/cx';
@@ -60,14 +62,50 @@ function DrawingArtwork() {
 
 export function TurtleDrawing({ className }: { className?: string }) {
   return (
+    <SampleDrawing
+      parts={turtle.Done}
+      size={TURTLE_SIZE}
+      className={className}
+    />
+  );
+}
+
+/** Sample / Chain drawing: one of the drawings a chain shows off with. */
+export function ChainDrawing({
+  name,
+  className,
+}: {
+  name: ChainDrawingName;
+  className?: string;
+}) {
+  return (
+    <SampleDrawing
+      parts={chainDrawings[name]}
+      size={CHAIN_DRAWING_SIZE}
+      className={className}
+    />
+  );
+}
+
+/** A drawing from the Figma file, path for path, at any size. */
+function SampleDrawing({
+  parts,
+  size,
+  className,
+}: {
+  parts: readonly ChainDrawingPart[];
+  size: { width: number; height: number };
+  className?: string;
+}) {
+  return (
     <svg
       className={className}
-      viewBox={`0 0 ${TURTLE_SIZE.width} ${TURTLE_SIZE.height}`}
+      viewBox={`0 0 ${size.width} ${size.height}`}
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {turtle.Done.map((part: DrawingPart, index) =>
+      {parts.map((part, index) =>
         'ellipse' in part ? (
           <ellipse
             key={index}
@@ -76,6 +114,17 @@ export function TurtleDrawing({ className }: { className?: string }) {
             rx={part.w / 2}
             ry={part.h / 2}
             fill={part.fill}
+          />
+        ) : 'ring' in part ? (
+          // Stroked inside its box, as Figma strokes an ellipse.
+          <ellipse
+            key={index}
+            cx={part.x + part.w / 2}
+            cy={part.y + part.h / 2}
+            rx={(part.w - part.width) / 2}
+            ry={(part.h - part.width) / 2}
+            stroke={part.stroke}
+            strokeWidth={part.width}
           />
         ) : (
           <path
@@ -245,6 +294,20 @@ function CodeArtwork() {
   );
 }
 
+/** A chain's first line, its drawing, and what the drawing became. */
+function ChainArtwork() {
+  return (
+    <div className={styles.chain}>
+      <Tag tone="lime">turtle</Tag>
+      <ChainDrawing
+        name="Turtle on skateboard"
+        className={styles.chainDrawing}
+      />
+      <Tag tone="peach">burger?</Tag>
+    </div>
+  );
+}
+
 const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   'draw-and-guess': DrawingArtwork,
   minesweeper: BoardArtwork,
@@ -254,6 +317,7 @@ const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   snap: SnapArtwork,
   'liars-dice': DiceArtwork,
   hush: PileArtwork,
+  'doodle-chain': ChainArtwork,
   'daily-word': WordArtwork,
   'code-breaker': CodeArtwork,
 };
@@ -307,6 +371,9 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
     <span className={styles.iconPile}>
       <HushCard value={58} state="pile" size="small" />
     </span>
+  ),
+  'doodle-chain': () => (
+    <ChainDrawing name="Burger on skates" className={styles.iconChain} />
   ),
   'daily-word': () => (
     <div className={styles.iconGrid}>

@@ -68,9 +68,12 @@ import {
   type BrushSize,
   type DieFace,
   type GlyphName,
+  ChainComposer,
+  ChainEntry,
+  HeartButton,
 } from '..';
 import { GAMES } from '../../games/catalog';
-import { GameArtwork } from '../../games/artwork';
+import { ChainDrawing, GameArtwork } from '../../games/artwork';
 import { GameCard } from '../../games/game-card';
 import { GameIntro } from '../../games/game-intro';
 import { useMessages } from '../../i18n';
@@ -88,6 +91,24 @@ const SNAP_SAMPLE = ['Star', 'Heart', 'Cloud', 'Crown', 'Fish', 'Leaf'].map(
   (name) => snapSymbols.findIndex((symbol) => symbol.name === name),
 );
 const SNAP_STAR = snapSymbols.findIndex((symbol) => symbol.name === 'Star');
+
+/** Who made each kind of entry in the chain the gallery shows. */
+const CHAIN_AUTHORS = {
+  prompt: {
+    name: 'Maya',
+    initials: 'MA',
+    tone: 'peach',
+    verb: 'started the chain',
+  },
+  drawing: { name: 'Ryan', initials: 'RG', tone: 'blue', verb: 'drew it' },
+  description: {
+    name: 'Leo',
+    initials: 'LE',
+    tone: 'lime',
+    verb: 'described it',
+  },
+  empty: { name: 'Sam', initials: 'SA', tone: 'sand', verb: 'ran out of time' },
+} as const;
 
 /** Trios cards for the gallery, with how many shapes each shows. */
 const TRIOS_SPECIMENS = [
@@ -1281,6 +1302,102 @@ export default function Gallery() {
         <Specimen family="lives" label="Show label off">
           <Lives lives={2} showLabel={false} />
         </Specimen>
+      </Family>
+
+      <Family
+        name="Heart button"
+        file="heart-button"
+        note="Doodle Chain's heart: yours to give on an entry (off or on), or only its count on your own."
+      >
+        {(['off', 'on', 'count'] as const).map((state) => (
+          <Specimen
+            key={state}
+            family="heart-button"
+            variant={`State=${cap(state)}`}
+            label={cap(state)}
+          >
+            <HeartButton count={2} state={state} onPress={noop} />
+          </Specimen>
+        ))}
+      </Family>
+
+      <Family
+        name="Chain entry"
+        file="chain-entry"
+        note="One entry of a Doodle Chain chain, its author beside it like a line of a conversation."
+      >
+        {(['desktop', 'phone'] as const).map((layout) => (
+          <div key={layout} className={styles.cellRow}>
+            {(['prompt', 'drawing', 'description', 'empty'] as const).map(
+              (kind) => (
+                <Specimen
+                  key={kind}
+                  family="chain-entry"
+                  variant={`Kind=${cap(kind)}, Layout=${cap(layout)}`}
+                  width={layout === 'desktop' ? 600 : 350}
+                >
+                  <ChainEntry
+                    kind={kind}
+                    {...CHAIN_AUTHORS[kind]}
+                    text={
+                      kind === 'prompt'
+                        ? 'A turtle on a skateboard'
+                        : 'A hamburger on roller skates'
+                    }
+                    drawing={<ChainDrawing name="Turtle on skateboard" />}
+                    heart={<HeartButton count={2} state="off" onPress={noop} />}
+                  />
+                </Specimen>
+              ),
+            )}
+          </div>
+        ))}
+      </Family>
+
+      <Family
+        name="Chain composer"
+        file="chain-composer"
+        note="Writing a line of a chain, then Done; Keep editing takes it back."
+      >
+        {(['desktop', 'phone'] as const).map((layout) =>
+          ([false, true] as const).map((done) => (
+            <Specimen
+              key={`${layout}-${done}`}
+              family="chain-composer"
+              variant={`State=${done ? 'Done' : 'Editing'}, Layout=${cap(layout)}`}
+              width={layout === 'desktop' ? 600 : 310}
+            >
+              <ChainComposer
+                label="Your first line"
+                helper="22 / 80 · anything drawable, in any language"
+                value="A cat riding a bicycle"
+                onValueChange={noop}
+                done={done}
+                doneMessage="Done. Waiting for Leo and Sam."
+                onDone={noop}
+                onKeepEditing={noop}
+                onSuggest={noop}
+              />
+            </Specimen>
+          )),
+        )}
+      </Family>
+
+      <Family
+        name="Sample / Chain drawing"
+        file="sample-chain-drawing"
+        note="The example drawings of Doodle Chain's artwork and gallery."
+      >
+        {(['Turtle on skateboard', 'Burger on skates'] as const).map((name) => (
+          <Specimen
+            key={name}
+            family="sample-chain-drawing"
+            variant={`Drawing=${name}`}
+            width={480}
+          >
+            <ChainDrawing name={name} />
+          </Specimen>
+        ))}
       </Family>
 
       <Family name="Letter tile" file="letter-tile">

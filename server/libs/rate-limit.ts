@@ -25,7 +25,7 @@ interface BucketRule {
   burst: number;
 }
 
-type BucketName = 'drawing' | 'canvasCommand' | 'chat' | 'room';
+type BucketName = 'drawing' | 'canvasCommand' | 'chat' | 'typing' | 'room';
 
 const RULES: Record<BucketName, BucketRule> = {
   // A mouse drag is a stream. Browsers coalesce `mousemove` to somewhere
@@ -37,6 +37,9 @@ const RULES: Record<BucketName, BucketRule> = {
   canvasCommand: { ratePerSecond: 4, burst: 12 },
   // The chat box caps at 40 characters and needs a keystroke to send.
   chat: { ratePerSecond: 4, burst: 8 },
+  // Words saved as they are typed: the client sends at most three a second,
+  // and always its last, so a dropped one would lose what was written.
+  typing: { ratePerSecond: 8, burst: 16 },
   // Joining, leaving, creating, starting: all clicks.
   room: { ratePerSecond: 4, burst: 10 },
 };
@@ -52,6 +55,13 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
 
   'dg:draw:undo': 'canvasCommand',
   'dg:draw:clear': 'canvasCommand',
+
+  'dc:draw:start': 'drawing',
+  'dc:draw:move': 'drawing',
+  'dc:draw:end': 'drawing',
+  'dc:draw:undo': 'canvasCommand',
+  'dc:draw:clear': 'canvasCommand',
+  'dc:text': 'typing',
 
   // Talking and guessing are one event, so they share one budget.
   'chat:send': 'chat',
@@ -88,6 +98,10 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
   'dw:guess': 'room',
   // Ten guesses a code, typed out a digit at a time.
   'cb:guess': 'room',
+  // Done is a toggle, Next a host's click, and a heart one a chain.
+  'dc:done': 'room',
+  'dc:reveal:next': 'room',
+  'dc:heart': 'room',
 };
 
 /**

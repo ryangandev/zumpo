@@ -44,6 +44,7 @@ export default defineConfig({
       HUSH_CLEARED_SECONDS: '1',
       DAILY_WORD_REVEAL_SECONDS: '1',
       CODE_BREAKER_REVEAL_SECONDS: '1',
+      DC_PASSING_SECONDS: '1',
     },
   },
 });

@@ -19,7 +19,8 @@ export type GameType =
   | 'liars-dice'
   | 'hush'
   | 'daily-word'
-  | 'code-breaker';
+  | 'code-breaker'
+  | 'doodle-chain';
 
 export interface PlayerOptions {
   /** Browser language, independent for each player in a mixed-language room. */

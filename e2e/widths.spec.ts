@@ -310,3 +310,16 @@ test('code breaker fits every width', async ({ player }) => {
   await expect(maya.getByText('Code 1 of 3').first()).toBeVisible();
   await fitsEveryWidth(maya, 'a code in a room');
 });
+
+test('doodle chain fits every width', async ({ player }) => {
+  const maya = await player('Maya');
+  const link = await createRoom(maya, 'doodle-chain', { seats: 3 });
+  for (const name of ['Leo', 'Sam']) await joinRoom(await player(name), link);
+  await expect(maya.getByText(/^3 players, so 3 steps/)).toBeVisible();
+  await start(maya);
+  const field = maya.getByRole('textbox', { name: 'Your first line' });
+  await field.fill('A turtle on a skateboard');
+  await fitsEveryWidth(maya, 'writing the first line');
+  await maya.getByRole('button', { name: 'Done' }).click();
+  await fitsEveryWidth(maya, 'done, waiting for the others');
+});

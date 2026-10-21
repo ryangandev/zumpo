@@ -5,6 +5,7 @@ import type {
   PlayerInfo,
 } from '../../../shared/wire-types';
 import type { CanvasStream } from '../net/canvas-stream';
+import type { DrawingStore } from '../net/drawing-store';
 import type { ZumpoSocket } from '../net/socket';
 
 /** Everything a game's room view needs from the room around it. */
@@ -27,6 +28,8 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   isHost: boolean;
   chat: readonly ChatMessage[];
   canvas: CanvasStream;
+  /** Finished drawings sent apart from the snapshots, by id. */
+  drawings: DrawingStore;
   socket: ZumpoSocket;
   sendChat: (text: string) => void;
   /** Asks the server to start a game; `starting` until it answers. */

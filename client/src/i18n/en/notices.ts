@@ -136,4 +136,14 @@ export const notices = {
     `${who(n.name)} cracked it in ${n.guesses}! (+${n.points})`,
   'cb:revealed': (n: Extract<RoomNotice, { type: 'cb:revealed' }>): string =>
     `The code was ${n.code}.`,
+  'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
+    n.kind === 'prompt'
+      ? `Step ${n.step}: write the first line.`
+      : n.kind === 'drawing'
+        ? `Step ${n.step}: draw the words you were given.`
+        : `Step ${n.step}: describe the drawing you were given.`,
+  'dc:reveal': (n: Extract<RoomNotice, { type: 'dc:reveal' }>): string =>
+    `Time for the reveal! ${who(n.host)} shows the chains.`,
+  'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>
+    'Every chain is in the album.',
 };

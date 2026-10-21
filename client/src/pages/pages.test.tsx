@@ -150,6 +150,7 @@ describe('the home page', () => {
       screen.getByRole('heading', { level: 2, name: 'Pick a game' }),
     ).toBeInTheDocument();
     expect(tiles()).toEqual([
+      'Doodle Chain',
       'Draw & Guess',
       'Hush',
       'Liar’s Dice',
@@ -531,6 +532,45 @@ describe('making a Hush room', () => {
   });
 });
 
+describe('making a Doodle Chain room', () => {
+  it('asks for three seats or more, and the drawing time', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderApp('/games/doodle-chain/new');
+    expect(screen.getByText('Choose 3–8 seats.')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        '45, 60 or 90 seconds a drawing. Writing and describing take 30s.',
+      ),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('combobox', { name: 'Drawing time' }));
+    await user.click(await screen.findByRole('option', { name: '90 seconds' }));
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
+    await waitFor(() =>
+      expect(fake.requests).toContainEqual({
+        event: 'room:create',
+        args: [
+          expect.objectContaining({
+            gameType: 'doodle-chain',
+            maxPlayers: 8,
+            settings: { drawingSeconds: 90 },
+          }),
+        ],
+      }),
+    );
+  });
+
+  it('offers only rooms, beside its rules', async () => {
+    await renderApp('/how-to-play');
+    expect(
+      rules('Doodle Chain').getByRole('link', { name: 'Find a room' }),
+    ).toHaveAttribute('href', '/games/doodle-chain');
+    expect(
+      rules('Doodle Chain').queryByRole('link', { name: 'Play solo' }),
+    ).toBeNull();
+  });
+});
+
 describe('on a phone', () => {
   it('lists the games under a heading per kind', async () => {
     onPhone();
@@ -545,7 +585,7 @@ describe('on a phone', () => {
       within(party)
         .getAllByRole('heading', { level: 3 })
         .map((heading) => heading.textContent),
-    ).toEqual(['Draw & Guess', 'Hush', 'Liar’s Dice']);
+    ).toEqual(['Doodle Chain', 'Draw & Guess', 'Hush', 'Liar’s Dice']);
     expect(
       within(party).getByText('Draw, bluff and read the room.'),
     ).toBeInTheDocument();

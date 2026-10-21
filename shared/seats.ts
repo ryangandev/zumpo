@@ -1,4 +1,5 @@
 import { MAX_PLAYERS, MIN_PLAYERS } from './hush.js';
+import * as doodleChain from './doodle-chain.js';
 import type { GameType } from './wire-types.js';
 
 /**
@@ -17,4 +18,8 @@ export const SEATS: Readonly<Record<GameType, { min: number; max: number }>> = {
   hush: { min: MIN_PLAYERS, max: MAX_PLAYERS },
   'daily-word': { min: 2, max: 8 },
   'code-breaker': { min: 2, max: 8 },
+  'doodle-chain': {
+    min: doodleChain.MIN_PLAYERS,
+    max: doodleChain.MAX_PLAYERS,
+  },
 };
