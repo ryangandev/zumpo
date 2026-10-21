@@ -99,6 +99,7 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
 - While reconnecting the bar has no Leave room; the notice under it says what is happening (P07).
 - On your own the bar says On your own in place of the room, and Leave goes to the game's page, where the game starts again with other settings.
   It asks first only where leaving throws away minutes of play: a Liar's Dice game under way, and a Trios run once a trio is found (LD16).
+  While it asks, the game's time stands still and the board is put away, as under How to play, so staying costs nothing.
   A Pairs board, a Snap run and the puzzles leave at once: each is a minute or two to play again, and a question on every way out would cost more than it saves.
 - The room screens' hidden notice layers are gone; the visible notices, such as D10's pending one, stay.
 

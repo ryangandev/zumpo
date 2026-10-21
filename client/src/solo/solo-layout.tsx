@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useBlocker, useNavigate } from 'react-router';
 import type { GameType } from '../../../shared/wire-types';
 import { Button, Dialog, RoomBar, type TagTone } from '../ui';
@@ -20,8 +20,8 @@ export interface SoloLayoutProps {
   /** Cards beside the game on a wide screen; a phone shows only the game. */
   side?: ReactNode;
   /**
-   * The game's own time, for a game in progress: How to play pauses it, and
-   * puts the game away behind the dialog until it closes.
+   * The game's own time, for a game in progress: How to play and the Leave
+   * question pause it, and put the game away behind the dialog until it closes.
    */
   time?: SoloTime;
   /**
@@ -36,8 +36,8 @@ export interface SoloLayoutProps {
  * it (MS02-MS05, T01-T05, PR01-PR04), or under it from 1023 px down. There is
  * no seat, so Leave goes back to the game's page, where the game can be
  * started again with other settings; it asks first only with `leaveWarning`.
- * While How to play is open the game's time stands still, and the game is put
- * away so the pause cannot be spent on it.
+ * While How to play or that question is open the game's time stands still, and
+ * the game is put away so the pause cannot be spent on it.
  */
 export function SoloLayout({
   gameType,
@@ -53,12 +53,7 @@ export function SoloLayout({
   const oneColumn = useMediaQuery(ONE_COLUMN);
   const navigate = useNavigate();
   const { viewer, viewerMenu } = useViewer();
-  const [rules, setRulesOpen] = useState(false);
-  const setRules = (open: boolean) => {
-    setRulesOpen(open);
-    time?.setPaused(open);
-  };
-  const stageClass = cx(styles.stage, time?.paused && styles.away);
+  const [rules, setRules] = useState(false);
   // The Leave button, the wordmark and the browser's back button alike.
   const blocker = useBlocker(
     ({ currentLocation, nextLocation }) =>
@@ -66,6 +61,13 @@ export function SoloLayout({
       currentLocation.pathname !== nextLocation.pathname,
   );
   const stay = useRef<HTMLButtonElement>(null);
+  const asking = blocker.state === 'blocked';
+  // Staying costs no time, and bots wait for the answer.
+  const away = rules || asking;
+  useLayoutEffect(() => {
+    time?.setPaused(away);
+  }, [time, away]);
+  const stageClass = cx(styles.stage, time?.paused && styles.away);
 
   return (
     <Page
@@ -93,7 +95,7 @@ export function SoloLayout({
       )}
       <RulesDialog open={rules} onOpenChange={setRules} game={game} solo />
       <Dialog
-        open={blocker.state === 'blocked'}
+        open={asking}
         onOpenChange={(open) => {
           if (!open) blocker.reset?.();
         }}

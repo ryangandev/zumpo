@@ -38,14 +38,17 @@ export class PausableClock {
 export interface SoloTime {
   /** The game's time now; read it for every timestamp the game keeps. */
   now: () => number;
-  /** True while How to play is open: the game waits, and its board is put away. */
+  /**
+   * True while How to play or the Leave question is open: the game waits, and
+   * its board is put away.
+   */
   paused: boolean;
   setPaused: (paused: boolean) => void;
 }
 
 /**
  * A game on your own's own clock, which `SoloLayout` pauses while How to play
- * is open. A game passes it to `SoloLayout`, stamps its moves with `now()`
+ * or the Leave question is open. A game passes it to `SoloLayout`, stamps its moves with `now()`
  * and holds its timers while `paused`.
  */
 export function useSoloTime(): SoloTime {
