@@ -263,7 +263,7 @@
             "type": "FRAME",
             "id": "39:19300",
             "name": "Room identity",
-            "w": 202,
+            "w": 170,
             "h": 68,
             "wSize": "fill",
             "hSize": "hug",
@@ -360,7 +360,7 @@
             "type": "INSTANCE",
             "id": "39:19305",
             "name": "Action / How to play (icon)",
-            "w": 46,
+            "w": 62,
             "h": 48,
             "wSize": "hug",
             "component": "Zumpo/Button",
@@ -378,9 +378,9 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": 12,
-                "paddingRight": 12,
-                "width": 46
+                "paddingLeft": "$Zumpo · UI:space/20",
+                "paddingRight": "$Zumpo · UI:space/20",
+                "width": 62
               },
               {
                 "path": "Let’s play",
@@ -392,7 +392,7 @@
             "type": "INSTANCE",
             "id": "39:19311",
             "name": "Action / Leave room (icon)",
-            "w": 46,
+            "w": 62,
             "h": 48,
             "wSize": "hug",
             "component": "Zumpo/Button",
@@ -409,9 +409,9 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": 12,
-                "paddingRight": 12,
-                "width": 46
+                "paddingLeft": "$Zumpo · UI:space/20",
+                "paddingRight": "$Zumpo · UI:space/20",
+                "width": 62
               },
               {
                 "path": "Let’s play",

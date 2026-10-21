@@ -66,10 +66,10 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            6,
-            8
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -97,7 +97,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [
@@ -111,7 +111,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 6,
+                  "gap": "$Zumpo · UI:space/6",
                   "align": "center",
                   "strokesIncluded": true
                 },
@@ -173,10 +173,10 @@
                       {
                         "path": ".",
                         "height": 20,
-                        "paddingBottom": 1,
-                        "paddingLeft": 8,
-                        "paddingRight": 8,
-                        "paddingTop": 1,
+                        "paddingBottom": "$Zumpo · UI:space/6",
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "paddingTop": "$Zumpo · UI:space/6",
                         "width": 37
                       }
                     ]
@@ -289,10 +289,10 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            6,
-            8
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -320,7 +320,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [
@@ -334,7 +334,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 6,
+                  "gap": "$Zumpo · UI:space/6",
                   "align": "center",
                   "strokesIncluded": true
                 },
@@ -396,10 +396,10 @@
                       {
                         "path": ".",
                         "height": 20,
-                        "paddingBottom": 1,
-                        "paddingLeft": 8,
-                        "paddingRight": 8,
-                        "paddingTop": 1,
+                        "paddingBottom": "$Zumpo · UI:space/6",
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "paddingTop": "$Zumpo · UI:space/6",
                         "width": 37
                       }
                     ]
@@ -509,10 +509,10 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            6,
-            8
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -540,7 +540,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [
@@ -554,7 +554,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 6,
+                  "gap": "$Zumpo · UI:space/6",
                   "align": "center",
                   "strokesIncluded": true
                 },
@@ -616,10 +616,10 @@
                       {
                         "path": ".",
                         "height": 20,
-                        "paddingBottom": 1,
-                        "paddingLeft": 8,
-                        "paddingRight": 8,
-                        "paddingTop": 1,
+                        "paddingBottom": "$Zumpo · UI:space/6",
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "paddingTop": "$Zumpo · UI:space/6",
                         "width": 37
                       }
                     ]
@@ -729,10 +729,10 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            6,
-            8
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -766,7 +766,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [
@@ -780,7 +780,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 6,
+                  "gap": "$Zumpo · UI:space/6",
                   "align": "center",
                   "strokesIncluded": true
                 },
@@ -842,10 +842,10 @@
                       {
                         "path": ".",
                         "height": 20,
-                        "paddingBottom": 1,
-                        "paddingLeft": 8,
-                        "paddingRight": 8,
-                        "paddingTop": 1,
+                        "paddingBottom": "$Zumpo · UI:space/6",
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "paddingTop": "$Zumpo · UI:space/6",
                         "width": 37
                       }
                     ]

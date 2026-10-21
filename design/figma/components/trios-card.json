@@ -134,8 +134,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -266,8 +266,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -416,8 +416,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -531,8 +531,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -664,8 +664,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -815,8 +815,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -930,8 +930,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1063,8 +1063,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1214,8 +1214,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1329,8 +1329,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1462,8 +1462,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1613,8 +1613,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1727,8 +1727,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -1859,8 +1859,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2009,8 +2009,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2124,8 +2124,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2257,8 +2257,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2408,8 +2408,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2523,8 +2523,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2656,8 +2656,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2807,8 +2807,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -2922,8 +2922,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3055,8 +3055,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3206,8 +3206,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3320,8 +3320,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3452,8 +3452,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3602,8 +3602,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3717,8 +3717,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -3850,8 +3850,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true
@@ -4001,8 +4001,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                8
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
               ],
               "align": "center",
               "strokesIncluded": true

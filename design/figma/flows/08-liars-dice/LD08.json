@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -103,7 +103,7 @@
             "id": "72:78148",
             "name": "Board stage",
             "w": 944,
-            "h": 544,
+            "h": 554,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -163,7 +163,7 @@
                 "id": "72:78150",
                 "name": "Table panel",
                 "w": 944,
-                "h": 436,
+                "h": 446,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -194,7 +194,7 @@
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
                       "wrap": true,
-                      "crossGap": 16,
+                      "crossGap": "$Zumpo · UI:space/16",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -335,7 +335,7 @@
                           "mode": "row",
                           "gap": "$Zumpo · UI:space/8",
                           "wrap": true,
-                          "crossGap": 8,
+                          "crossGap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -474,7 +474,7 @@
                     "id": "72:78656",
                     "name": "Your cup",
                     "w": 894,
-                    "h": 142,
+                    "h": 152,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -489,7 +489,7 @@
                         "id": "72:78657",
                         "name": "Cup / Sam",
                         "w": 218,
-                        "h": 142,
+                        "h": 152,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Cup",
@@ -505,6 +505,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 152,
+                            "width": 218
+                          },
                           {
                             "path": "Player / Avatar",
                             "componentProperties": {

@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 150,
     "w": 1440,
-    "h": 623,
+    "h": 624,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -104,7 +104,7 @@
         "id": "69:77022",
         "name": "Board & room",
         "w": 1312,
-        "h": 453,
+        "h": 454,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "69:77023",
             "name": "Board stage",
             "w": 944,
-            "h": 452,
+            "h": 454,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -176,7 +176,7 @@
                 "id": "69:77025",
                 "name": "Table panel",
                 "w": 944,
-                "h": 344,
+                "h": 346,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -207,7 +207,7 @@
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
                       "wrap": true,
-                      "crossGap": 16,
+                      "crossGap": "$Zumpo · UI:space/16",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -317,7 +317,7 @@
                     "id": "69:77291",
                     "name": "Your cup",
                     "w": 894,
-                    "h": 152,
+                    "h": 154,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -332,7 +332,7 @@
                         "id": "69:77292",
                         "name": "Cup / Maya",
                         "w": 220,
-                        "h": 144,
+                        "h": 154,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Cup",
@@ -348,6 +348,11 @@
                           "Name": "Maya"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 154,
+                            "width": 220
+                          },
                           {
                             "path": "Player / Avatar",
                             "componentProperties": {

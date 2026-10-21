@@ -1,6 +1,6 @@
 [
   {
-    "file": "svg/alert-c9a66d.svg",
+    "file": "svg/alert-37972c.svg",
     "name": "alert",
     "w": 0,
     "h": 5.5,
@@ -10,7 +10,7 @@
     ]
   },
   {
-    "file": "svg/away-3108ba.svg",
+    "file": "svg/away-3fed25.svg",
     "name": "away",
     "w": 18,
     "h": 18,
@@ -20,27 +20,7 @@
     ]
   },
   {
-    "file": "svg/away-61948f.svg",
-    "name": "away",
-    "w": 2.4,
-    "h": 1.7,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=away > away"
-    ]
-  },
-  {
-    "file": "svg/away-b367d7.svg",
-    "name": "away",
-    "w": 4,
-    "h": 2.3,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=away > away"
-    ]
-  },
-  {
-    "file": "svg/away-c8ce81.svg",
+    "file": "svg/away-9d9d5b.svg",
     "name": "away",
     "w": 7,
     "h": 1.43,
@@ -50,7 +30,27 @@
     ]
   },
   {
-    "file": "svg/back-42090f.svg",
+    "file": "svg/away-c1bc32.svg",
+    "name": "away",
+    "w": 4,
+    "h": 2.3,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=away > away"
+    ]
+  },
+  {
+    "file": "svg/away-ec7e40.svg",
+    "name": "away",
+    "w": 2.4,
+    "h": 1.7,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=away > away"
+    ]
+  },
+  {
+    "file": "svg/back-8aeb1b.svg",
     "name": "back",
     "w": 14,
     "h": 0,
@@ -61,7 +61,7 @@
     ]
   },
   {
-    "file": "svg/back-d2fc96.svg",
+    "file": "svg/back-df8ff4.svg",
     "name": "back",
     "w": 6,
     "h": 12,
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "file": "svg/backleg-b793de.svg",
+    "file": "svg/backleg-59d6d5.svg",
     "name": "backLeg",
     "w": 32.08,
     "h": 31.02,
@@ -86,7 +86,7 @@
     ]
   },
   {
-    "file": "svg/brush-07c55c.svg",
+    "file": "svg/brush-030263.svg",
     "name": "brush",
     "w": 15,
     "h": 15,
@@ -96,7 +96,7 @@
     ]
   },
   {
-    "file": "svg/brush-8d3fc7.svg",
+    "file": "svg/brush-249e35.svg",
     "name": "brush",
     "w": 3,
     "h": 3,
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "file": "svg/chat-80f20a.svg",
+    "file": "svg/chat-ada7b5.svg",
     "name": "chat",
     "w": 16,
     "h": 15,
@@ -116,7 +116,7 @@
     ]
   },
   {
-    "file": "svg/check-de927a.svg",
+    "file": "svg/check-9d5731.svg",
     "name": "check",
     "w": 8.2,
     "h": 5.8,
@@ -126,7 +126,7 @@
     ]
   },
   {
-    "file": "svg/chevron-down-93d01e.svg",
+    "file": "svg/chevron-down-66695c.svg",
     "name": "chevron-down",
     "w": 12,
     "h": 6,
@@ -136,7 +136,7 @@
     ]
   },
   {
-    "file": "svg/clock-135c8c.svg",
+    "file": "svg/clock-fcc82f.svg",
     "name": "clock",
     "w": 3.5,
     "h": 7,
@@ -146,7 +146,7 @@
     ]
   },
   {
-    "file": "svg/close-161c17.svg",
+    "file": "svg/close-4fe07d.svg",
     "name": "close",
     "w": 12,
     "h": 12,
@@ -156,7 +156,7 @@
     ]
   },
   {
-    "file": "svg/close-54b85e.svg",
+    "file": "svg/close-59c48b.svg",
     "name": "close",
     "w": 12,
     "h": 12,
@@ -166,7 +166,7 @@
     ]
   },
   {
-    "file": "svg/copy-198ed8.svg",
+    "file": "svg/copy-0d4cde.svg",
     "name": "copy",
     "w": 12,
     "h": 12,
@@ -176,7 +176,7 @@
     ]
   },
   {
-    "file": "svg/copy-3c24ca.svg",
+    "file": "svg/copy-48e471.svg",
     "name": "copy",
     "w": 12,
     "h": 12,
@@ -186,17 +186,7 @@
     ]
   },
   {
-    "file": "svg/cross-8c173a.svg",
-    "name": "Cross",
-    "w": 16,
-    "h": 16,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Mine cell > State=Wrong flag, Size=Regular > Crossed flag > Cross"
-    ]
-  },
-  {
-    "file": "svg/cross-cf3c6b.svg",
+    "file": "svg/cross-079075.svg",
     "name": "Cross",
     "w": 10,
     "h": 10,
@@ -206,17 +196,17 @@
     ]
   },
   {
-    "file": "svg/crown-afbf32.svg",
-    "name": "crown",
-    "w": 18,
-    "h": 10,
+    "file": "svg/cross-6eab7f.svg",
+    "name": "Cross",
+    "w": 16,
+    "h": 16,
     "uses": 1,
     "samples": [
-      "Zumpo/Icon > Glyph=crown > crown"
+      "Zumpo/Mine cell > State=Wrong flag, Size=Regular > Crossed flag > Cross"
     ]
   },
   {
-    "file": "svg/crown-eea561.svg",
+    "file": "svg/crown-1b5b0c.svg",
     "name": "crown",
     "w": 16,
     "h": 0,
@@ -227,17 +217,17 @@
     ]
   },
   {
-    "file": "svg/dice-2b52db.svg",
-    "name": "dice",
-    "w": 16,
-    "h": 16,
+    "file": "svg/crown-38e310.svg",
+    "name": "crown",
+    "w": 18,
+    "h": 10,
     "uses": 1,
     "samples": [
-      "Zumpo/Icon > Glyph=dice > dice"
+      "Zumpo/Icon > Glyph=crown > crown"
     ]
   },
   {
-    "file": "svg/dice-684cb8.svg",
+    "file": "svg/dice-00e5c9.svg",
     "name": "dice",
     "w": 1,
     "h": 1,
@@ -249,7 +239,17 @@
     ]
   },
   {
-    "file": "svg/edit-c2c9d0.svg",
+    "file": "svg/dice-3287e0.svg",
+    "name": "dice",
+    "w": 16,
+    "h": 16,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=dice > dice"
+    ]
+  },
+  {
+    "file": "svg/edit-e873a7.svg",
     "name": "edit",
     "w": 15,
     "h": 15,
@@ -259,7 +259,7 @@
     ]
   },
   {
-    "file": "svg/flag-0584f0.svg",
+    "file": "svg/flag-34b8a1.svg",
     "name": "flag",
     "w": 11,
     "h": 9,
@@ -279,7 +279,7 @@
     ]
   },
   {
-    "file": "svg/flag-a3c7e1.svg",
+    "file": "svg/flag-fca34a.svg",
     "name": "flag",
     "w": 0,
     "h": 17,
@@ -289,7 +289,7 @@
     ]
   },
   {
-    "file": "svg/forward-65115a.svg",
+    "file": "svg/forward-faeff0.svg",
     "name": "forward",
     "w": 6,
     "h": 12,
@@ -299,7 +299,7 @@
     ]
   },
   {
-    "file": "svg/ground-592439.svg",
+    "file": "svg/ground-5561b6.svg",
     "name": "ground",
     "w": 368,
     "h": 5.77,
@@ -309,7 +309,7 @@
     ]
   },
   {
-    "file": "svg/head-d7c6a6.svg",
+    "file": "svg/head-64c42f.svg",
     "name": "head",
     "w": 60,
     "h": 60,
@@ -350,7 +350,7 @@
     ]
   },
   {
-    "file": "svg/hex-6959b4.svg",
+    "file": "svg/hex-d42fde.svg",
     "name": "hex",
     "w": 68,
     "h": 72,
@@ -360,7 +360,17 @@
     ]
   },
   {
-    "file": "svg/info-38caa6.svg",
+    "file": "svg/info-402763.svg",
+    "name": "info",
+    "w": 0,
+    "h": 5,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=info > info"
+    ]
+  },
+  {
+    "file": "svg/info-cb161e.svg",
     "name": "info",
     "w": 0.01,
     "h": 0,
@@ -372,7 +382,7 @@
     ]
   },
   {
-    "file": "svg/info-65b650.svg",
+    "file": "svg/info-d9c5e3.svg",
     "name": "info",
     "w": 18,
     "h": 18,
@@ -385,27 +395,7 @@
     ]
   },
   {
-    "file": "svg/info-f74558.svg",
-    "name": "info",
-    "w": 0,
-    "h": 5,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=info > info"
-    ]
-  },
-  {
-    "file": "svg/leave-08a276.svg",
-    "name": "leave",
-    "w": 6,
-    "h": 16,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=leave > leave"
-    ]
-  },
-  {
-    "file": "svg/leave-4343fb.svg",
+    "file": "svg/leave-4a2d62.svg",
     "name": "leave",
     "w": 4,
     "h": 8,
@@ -415,7 +405,17 @@
     ]
   },
   {
-    "file": "svg/leave-db4a62.svg",
+    "file": "svg/leave-a13b87.svg",
+    "name": "leave",
+    "w": 6,
+    "h": 16,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=leave > leave"
+    ]
+  },
+  {
+    "file": "svg/leave-e1d654.svg",
     "name": "leave",
     "w": 10,
     "h": 0,
@@ -425,7 +425,7 @@
     ]
   },
   {
-    "file": "svg/link-3c469b.svg",
+    "file": "svg/link-36a0b4.svg",
     "name": "link",
     "w": 9.88,
     "h": 11.07,
@@ -435,7 +435,7 @@
     ]
   },
   {
-    "file": "svg/link-a07b74.svg",
+    "file": "svg/link-eeec81.svg",
     "name": "link",
     "w": 9.88,
     "h": 11.07,
@@ -445,7 +445,7 @@
     ]
   },
   {
-    "file": "svg/lock-3cfd75.svg",
+    "file": "svg/lock-972979.svg",
     "name": "lock",
     "w": 14,
     "h": 10,
@@ -455,7 +455,7 @@
     ]
   },
   {
-    "file": "svg/lock-a714d0.svg",
+    "file": "svg/lock-ca93db.svg",
     "name": "lock",
     "w": 8,
     "h": 7,
@@ -465,7 +465,7 @@
     ]
   },
   {
-    "file": "svg/mine-3b5b66.svg",
+    "file": "svg/mine-20dab4.svg",
     "name": "mine",
     "w": 0,
     "h": 3,
@@ -476,17 +476,7 @@
     ]
   },
   {
-    "file": "svg/mine-4da9a1.svg",
-    "name": "mine",
-    "w": 10,
-    "h": 10,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=mine > mine"
-    ]
-  },
-  {
-    "file": "svg/mine-79e36f.svg",
+    "file": "svg/mine-7eef9d.svg",
     "name": "mine",
     "w": 2.1,
     "h": 2.1,
@@ -497,7 +487,7 @@
     ]
   },
   {
-    "file": "svg/mine-9f5e6f.svg",
+    "file": "svg/mine-931c75.svg",
     "name": "mine",
     "w": 2.1,
     "h": 2.1,
@@ -508,7 +498,7 @@
     ]
   },
   {
-    "file": "svg/mine-c2caab.svg",
+    "file": "svg/mine-c7d6d8.svg",
     "name": "mine",
     "w": 3,
     "h": 0,
@@ -519,7 +509,17 @@
     ]
   },
   {
-    "file": "svg/neck-624ca9.svg",
+    "file": "svg/mine-db9699.svg",
+    "name": "mine",
+    "w": 10,
+    "h": 10,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=mine > mine"
+    ]
+  },
+  {
+    "file": "svg/neck-48941d.svg",
     "name": "neck",
     "w": 16,
     "h": 0,
@@ -530,7 +530,7 @@
     ]
   },
   {
-    "file": "svg/pending-1205d6.svg",
+    "file": "svg/pending-30bf4c.svg",
     "name": "pending",
     "w": 18,
     "h": 18,
@@ -540,17 +540,7 @@
     ]
   },
   {
-    "file": "svg/plus-b31d56.svg",
-    "name": "plus",
-    "w": 0,
-    "h": 14,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=plus > plus"
-    ]
-  },
-  {
-    "file": "svg/plus-c76862.svg",
+    "file": "svg/plus-104a6e.svg",
     "name": "plus",
     "w": 14,
     "h": 0,
@@ -560,7 +550,17 @@
     ]
   },
   {
-    "file": "svg/shape-161a09.svg",
+    "file": "svg/plus-8a1805.svg",
+    "name": "plus",
+    "w": 0,
+    "h": 14,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=plus > plus"
+    ]
+  },
+  {
+    "file": "svg/shape-0e12a8.svg",
     "name": "Shape",
     "w": 37,
     "h": 33,
@@ -570,13 +570,15 @@
     ]
   },
   {
-    "file": "svg/shape-1d189b.svg",
+    "file": "svg/shape-12b8d0.svg",
     "name": "Shape",
-    "w": 36,
-    "h": 32,
-    "uses": 1,
+    "w": 37,
+    "h": 33,
+    "uses": 3,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Triangle Coral > Shape"
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Blue, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Coarse > Shape"
     ]
   },
   {
@@ -590,47 +592,25 @@
     ]
   },
   {
-    "file": "svg/shape-3637f4.svg",
+    "file": "svg/shape-67891f.svg",
+    "name": "Shape",
+    "w": 37,
+    "h": 33,
+    "uses": 3,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Coral, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Coral, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Coral, Stripes=Coarse > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-67a9b8.svg",
     "name": "Shape",
     "w": 36,
     "h": 32,
     "uses": 1,
     "samples": [
       "Zumpo/Pairs symbol > Symbol=Triangle Green > Shape"
-    ]
-  },
-  {
-    "file": "svg/shape-3b967d.svg",
-    "name": "Shape",
-    "w": 37,
-    "h": 33,
-    "uses": 3,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Blue, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Coarse > Shape"
-    ]
-  },
-  {
-    "file": "svg/shape-523041.svg",
-    "name": "Shape",
-    "w": 37,
-    "h": 33,
-    "uses": 3,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Ink, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Coarse > Shape"
-    ]
-  },
-  {
-    "file": "svg/shape-642bba.svg",
-    "name": "Shape",
-    "w": 37,
-    "h": 33,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Solid, Colour=Ink, Stripes=Fine > Shape"
     ]
   },
   {
@@ -664,6 +644,18 @@
     ]
   },
   {
+    "file": "svg/shape-897d3d.svg",
+    "name": "Shape",
+    "w": 37,
+    "h": 33,
+    "uses": 3,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Ink, Stripes=Fine > Shape",
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Coarse > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-8b994c.svg",
     "name": "Shape",
     "w": 36,
@@ -671,6 +663,16 @@
     "uses": 1,
     "samples": [
       "Zumpo/Pairs symbol > Symbol=Diamond Violet > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-b9ad83.svg",
+    "name": "Shape",
+    "w": 36,
+    "h": 32,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Pairs symbol > Symbol=Triangle Coral > Shape"
     ]
   },
   {
@@ -684,6 +686,16 @@
     ]
   },
   {
+    "file": "svg/shape-c6b290.svg",
+    "name": "Shape",
+    "w": 37,
+    "h": 33,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Solid, Colour=Coral, Stripes=Fine > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-cf2be9.svg",
     "name": "Shape",
     "w": 34,
@@ -691,16 +703,6 @@
     "uses": 1,
     "samples": [
       "Zumpo/Pairs symbol > Symbol=Hexagon Leaf > Shape"
-    ]
-  },
-  {
-    "file": "svg/shape-d8b297.svg",
-    "name": "Shape",
-    "w": 37,
-    "h": 33,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Solid, Colour=Coral, Stripes=Fine > Shape"
     ]
   },
   {
@@ -714,19 +716,17 @@
     ]
   },
   {
-    "file": "svg/shape-f3e5d2.svg",
+    "file": "svg/shape-fbd7fd.svg",
     "name": "Shape",
     "w": 37,
     "h": 33,
-    "uses": 3,
+    "uses": 1,
     "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Coral, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Outline, Colour=Coral, Stripes=Fine > Shape",
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Coral, Stripes=Coarse > Shape"
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Solid, Colour=Ink, Stripes=Fine > Shape"
     ]
   },
   {
-    "file": "svg/shell-523a89.svg",
+    "file": "svg/shell-e3c827.svg",
     "name": "shell",
     "w": 220,
     "h": 96,
@@ -738,7 +738,7 @@
     ]
   },
   {
-    "file": "svg/smile-effed6.svg",
+    "file": "svg/smile-956461.svg",
     "name": "smile",
     "w": 16,
     "h": 5.62,
@@ -748,7 +748,7 @@
     ]
   },
   {
-    "file": "svg/spokes-c9b304.svg",
+    "file": "svg/spokes-7c33bd.svg",
     "name": "spokes",
     "w": 136,
     "h": 78,
@@ -758,7 +758,7 @@
     ]
   },
   {
-    "file": "svg/stripes-0a285d.svg",
+    "file": "svg/stripes-65c6d8.svg",
     "name": "Stripes",
     "w": 37,
     "h": 33,
@@ -768,7 +768,7 @@
     ]
   },
   {
-    "file": "svg/stripes-1a4f3a.svg",
+    "file": "svg/stripes-8740cc.svg",
     "name": "Stripes",
     "w": 37,
     "h": 33,
@@ -778,37 +778,7 @@
     ]
   },
   {
-    "file": "svg/stripes-207c15.svg",
-    "name": "Stripes",
-    "w": 37,
-    "h": 33,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Fine > Stripes"
-    ]
-  },
-  {
-    "file": "svg/stripes-3395e8.svg",
-    "name": "Stripes",
-    "w": 37,
-    "h": 33,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Coarse > Stripes"
-    ]
-  },
-  {
-    "file": "svg/stripes-6b7b0a.svg",
-    "name": "Stripes",
-    "w": 37,
-    "h": 33,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Fine > Stripes"
-    ]
-  },
-  {
-    "file": "svg/stripes-c38d24.svg",
+    "file": "svg/stripes-8f8d9d.svg",
     "name": "Stripes",
     "w": 37,
     "h": 33,
@@ -818,7 +788,37 @@
     ]
   },
   {
-    "file": "svg/tail-0b9dcd.svg",
+    "file": "svg/stripes-c7a132.svg",
+    "name": "Stripes",
+    "w": 37,
+    "h": 33,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Ink, Stripes=Fine > Stripes"
+    ]
+  },
+  {
+    "file": "svg/stripes-ea5e51.svg",
+    "name": "Stripes",
+    "w": 37,
+    "h": 33,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Fine > Stripes"
+    ]
+  },
+  {
+    "file": "svg/stripes-fde6d7.svg",
+    "name": "Stripes",
+    "w": 37,
+    "h": 33,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Trios shape > Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Coarse > Stripes"
+    ]
+  },
+  {
+    "file": "svg/tail-90e7a4.svg",
     "name": "tail",
     "w": 30,
     "h": 16,
@@ -828,17 +828,7 @@
     ]
   },
   {
-    "file": "svg/trash-76e26e.svg",
-    "name": "trash",
-    "w": 6,
-    "h": 3,
-    "uses": 1,
-    "samples": [
-      "Zumpo/Icon > Glyph=trash > trash"
-    ]
-  },
-  {
-    "file": "svg/trash-aa024e.svg",
+    "file": "svg/trash-1ab7d5.svg",
     "name": "trash",
     "w": 0,
     "h": 6,
@@ -849,7 +839,7 @@
     ]
   },
   {
-    "file": "svg/trash-dbe233.svg",
+    "file": "svg/trash-241e1b.svg",
     "name": "trash",
     "w": 12,
     "h": 13,
@@ -859,17 +849,17 @@
     ]
   },
   {
-    "file": "svg/undo-5b93a3.svg",
-    "name": "undo",
-    "w": 5,
-    "h": 10,
+    "file": "svg/trash-5d4e35.svg",
+    "name": "trash",
+    "w": 6,
+    "h": 3,
     "uses": 1,
     "samples": [
-      "Zumpo/Icon > Glyph=undo > undo"
+      "Zumpo/Icon > Glyph=trash > trash"
     ]
   },
   {
-    "file": "svg/undo-9a737a.svg",
+    "file": "svg/undo-c9a72c.svg",
     "name": "undo",
     "w": 16,
     "h": 11,
@@ -879,9 +869,19 @@
     ]
   },
   {
-    "file": "svg/user-7b373a.svg",
+    "file": "svg/undo-e9809b.svg",
+    "name": "undo",
+    "w": 5,
+    "h": 10,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=undo > undo"
+    ]
+  },
+  {
+    "file": "svg/user-a434b8.svg",
     "name": "user",
-    "w": 8,
+    "w": 16,
     "h": 8,
     "uses": 1,
     "samples": [
@@ -889,9 +889,9 @@
     ]
   },
   {
-    "file": "svg/user-857b43.svg",
+    "file": "svg/user-ba1a66.svg",
     "name": "user",
-    "w": 16,
+    "w": 8,
     "h": 8,
     "uses": 1,
     "samples": [

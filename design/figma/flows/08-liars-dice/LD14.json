@@ -14,7 +14,7 @@
     "x": 530,
     "y": 4350,
     "w": 390,
-    "h": 1266,
+    "h": 1276,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -26,7 +26,7 @@
       "pad": [
         "$Zumpo · UI:space/20",
         "$Zumpo · UI:space/20",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -139,7 +139,7 @@
         "id": "79:89906",
         "name": "Table",
         "w": 350,
-        "h": 854,
+        "h": 864,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -280,7 +280,7 @@
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/8",
                   "wrap": true,
-                  "crossGap": 8,
+                  "crossGap": "$Zumpo · UI:space/8",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -433,7 +433,7 @@
             "id": "79:90226",
             "name": "Your cup",
             "w": 350,
-            "h": 408,
+            "h": 418,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -448,7 +448,7 @@
                 "id": "79:90227",
                 "name": "Cup / Sam",
                 "w": 350,
-                "h": 144,
+                "h": 154,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Cup",
@@ -467,7 +467,7 @@
                   {
                     "path": ".",
                     "counterAxisSizingMode": "FIXED",
-                    "height": 144,
+                    "height": 154,
                     "width": 350
                   },
                   {

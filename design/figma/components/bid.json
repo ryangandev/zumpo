@@ -56,9 +56,9 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            6,
-            6,
-            6,
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/6",
             "$Zumpo · UI:space/16"
           ],
           "align": "center",
@@ -159,9 +159,9 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            6,
-            6,
-            6,
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/6",
             "$Zumpo · UI:space/16"
           ],
           "align": "center",

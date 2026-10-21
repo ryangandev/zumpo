@@ -39,7 +39,7 @@
             "y": 124,
             "w": 220,
             "h": 96,
-            "svg": "svg/shell-523a89.svg"
+            "svg": "svg/shell-e3c827.svg"
           },
           {
             "type": "VECTOR",
@@ -49,7 +49,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           },
           {
             "type": "VECTOR",
@@ -59,7 +59,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           }
         ]
       }
@@ -85,7 +85,7 @@
             "y": 124,
             "w": 220,
             "h": 96,
-            "svg": "svg/shell-523a89.svg"
+            "svg": "svg/shell-e3c827.svg"
           },
           {
             "type": "VECTOR",
@@ -95,7 +95,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           },
           {
             "type": "VECTOR",
@@ -105,7 +105,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           },
           {
             "type": "VECTOR",
@@ -115,7 +115,7 @@
             "y": 206,
             "w": 16,
             "h": 0,
-            "svg": "svg/neck-624ca9.svg"
+            "svg": "svg/neck-48941d.svg"
           },
           {
             "type": "VECTOR",
@@ -125,7 +125,7 @@
             "y": 166,
             "w": 60,
             "h": 60,
-            "svg": "svg/head-d7c6a6.svg"
+            "svg": "svg/head-64c42f.svg"
           }
         ]
       }
@@ -151,7 +151,7 @@
             "y": 273.11,
             "w": 368,
             "h": 5.77,
-            "svg": "svg/ground-592439.svg"
+            "svg": "svg/ground-5561b6.svg"
           },
           {
             "type": "VECTOR",
@@ -161,7 +161,7 @@
             "y": 124,
             "w": 220,
             "h": 96,
-            "svg": "svg/shell-523a89.svg"
+            "svg": "svg/shell-e3c827.svg"
           },
           {
             "type": "VECTOR",
@@ -171,7 +171,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           },
           {
             "type": "VECTOR",
@@ -181,7 +181,7 @@
             "y": 222,
             "w": 32.08,
             "h": 31.02,
-            "svg": "svg/backleg-b793de.svg"
+            "svg": "svg/backleg-59d6d5.svg"
           },
           {
             "type": "VECTOR",
@@ -191,7 +191,7 @@
             "y": 214,
             "w": 30,
             "h": 16,
-            "svg": "svg/tail-0b9dcd.svg"
+            "svg": "svg/tail-90e7a4.svg"
           },
           {
             "type": "VECTOR",
@@ -201,7 +201,7 @@
             "y": 206,
             "w": 16,
             "h": 0,
-            "svg": "svg/neck-624ca9.svg"
+            "svg": "svg/neck-48941d.svg"
           },
           {
             "type": "VECTOR",
@@ -211,7 +211,7 @@
             "y": 166,
             "w": 60,
             "h": 60,
-            "svg": "svg/head-d7c6a6.svg"
+            "svg": "svg/head-64c42f.svg"
           },
           {
             "type": "VECTOR",
@@ -221,7 +221,7 @@
             "y": 134,
             "w": 68,
             "h": 72,
-            "svg": "svg/hex-6959b4.svg"
+            "svg": "svg/hex-d42fde.svg"
           },
           {
             "type": "VECTOR",
@@ -231,7 +231,7 @@
             "y": 138,
             "w": 136,
             "h": 78,
-            "svg": "svg/spokes-c9b304.svg"
+            "svg": "svg/spokes-7c33bd.svg"
           },
           {
             "type": "VECTOR",
@@ -241,7 +241,7 @@
             "y": 208,
             "w": 16,
             "h": 5.62,
-            "svg": "svg/smile-effed6.svg"
+            "svg": "svg/smile-956461.svg"
           },
           {
             "type": "ELLIPSE",

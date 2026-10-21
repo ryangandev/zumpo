@@ -174,7 +174,7 @@
             "fills": [
               "$Zumpo · UI:color/brush/leaf"
             ],
-            "radius": 6
+            "radius": "$Zumpo · UI:radius/6"
           }
         ]
       }
@@ -238,7 +238,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-3637f4.svg"
+            "svg": "svg/shape-67a9b8.svg"
           }
         ]
       }
@@ -481,7 +481,7 @@
             "fills": [
               "$Zumpo · UI:color/brush/red"
             ],
-            "radius": 6
+            "radius": "$Zumpo · UI:radius/6"
           }
         ]
       }
@@ -545,7 +545,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-1d189b.svg"
+            "svg": "svg/shape-b9ad83.svg"
           }
         ]
       }

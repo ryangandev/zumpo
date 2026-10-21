@@ -24,10 +24,10 @@
     "radius": "$Zumpo · UI:radius/24",
     "layout": {
       "mode": "column",
-      "gap": 4,
+      "gap": "$Zumpo · UI:space/4",
       "pad": [
-        20,
-        16
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/16"
       ],
       "strokesIncluded": true
     },
@@ -45,7 +45,7 @@
           "pad": [
             0,
             0,
-            8,
+            "$Zumpo · UI:space/8",
             0
           ],
           "justify": "space_between",

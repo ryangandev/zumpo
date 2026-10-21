@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -139,7 +139,7 @@
         "layout": {
           "mode": "row",
           "pad": [
-            56,
+            "$Zumpo · UI:space/56",
             0
           ],
           "justify": "center",
@@ -343,14 +343,14 @@
                   "y": 365,
                   "absolute": true,
                   "w": 496,
-                  "h": 186,
+                  "h": 198,
                   "hSize": "hug",
                   "component": "Zumpo/Select menu / Board",
                   "componentId": "9:427",
                   "overrides": [
                     {
                       "path": ".",
-                      "height": 186,
+                      "height": 198,
                       "layoutPositioning": "ABSOLUTE",
                       "width": 496
                     }

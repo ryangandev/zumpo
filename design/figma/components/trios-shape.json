@@ -794,7 +794,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-d8b297.svg"
+            "svg": "svg/shape-c6b290.svg"
           }
         ]
       }
@@ -829,7 +829,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-161a09.svg"
+            "svg": "svg/shape-0e12a8.svg"
           }
         ]
       }
@@ -864,7 +864,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-642bba.svg"
+            "svg": "svg/shape-fbd7fd.svg"
           }
         ]
       }
@@ -895,7 +895,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-1a4f3a.svg"
+            "svg": "svg/stripes-8740cc.svg"
           },
           {
             "type": "VECTOR",
@@ -909,7 +909,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-f3e5d2.svg"
+            "svg": "svg/shape-67891f.svg"
           }
         ]
       }
@@ -940,7 +940,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-207c15.svg"
+            "svg": "svg/stripes-ea5e51.svg"
           },
           {
             "type": "VECTOR",
@@ -954,7 +954,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-3b967d.svg"
+            "svg": "svg/shape-12b8d0.svg"
           }
         ]
       }
@@ -985,7 +985,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-6b7b0a.svg"
+            "svg": "svg/stripes-c7a132.svg"
           },
           {
             "type": "VECTOR",
@@ -999,7 +999,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-523041.svg"
+            "svg": "svg/shape-897d3d.svg"
           }
         ]
       }
@@ -1034,7 +1034,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-f3e5d2.svg"
+            "svg": "svg/shape-67891f.svg"
           }
         ]
       }
@@ -1069,7 +1069,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-3b967d.svg"
+            "svg": "svg/shape-12b8d0.svg"
           }
         ]
       }
@@ -1104,7 +1104,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-523041.svg"
+            "svg": "svg/shape-897d3d.svg"
           }
         ]
       }
@@ -1147,7 +1147,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1190,7 +1190,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1233,7 +1233,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1277,7 +1277,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/coral"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -1394,7 +1394,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1438,7 +1438,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/blue"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -1555,7 +1555,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1599,7 +1599,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/ink"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -1716,7 +1716,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1756,7 +1756,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1796,7 +1796,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -1836,7 +1836,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -2236,7 +2236,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-c38d24.svg"
+            "svg": "svg/stripes-8f8d9d.svg"
           },
           {
             "type": "VECTOR",
@@ -2250,7 +2250,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-f3e5d2.svg"
+            "svg": "svg/shape-67891f.svg"
           }
         ]
       }
@@ -2281,7 +2281,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-3395e8.svg"
+            "svg": "svg/stripes-fde6d7.svg"
           },
           {
             "type": "VECTOR",
@@ -2295,7 +2295,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-3b967d.svg"
+            "svg": "svg/shape-12b8d0.svg"
           }
         ]
       }
@@ -2326,7 +2326,7 @@
             "y": 2,
             "w": 37,
             "h": 33,
-            "svg": "svg/stripes-0a285d.svg"
+            "svg": "svg/stripes-65c6d8.svg"
           },
           {
             "type": "VECTOR",
@@ -2340,7 +2340,7 @@
               "scale",
               "scale"
             ],
-            "svg": "svg/shape-523041.svg"
+            "svg": "svg/shape-897d3d.svg"
           }
         ]
       }
@@ -2384,7 +2384,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/coral"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -2465,7 +2465,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -2509,7 +2509,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/blue"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -2590,7 +2590,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }
@@ -2634,7 +2634,7 @@
                 "fills": [
                   "$Zumpo · UI:color/trios/ink"
                 ],
-                "radius": 4
+                "radius": "$Zumpo · UI:radius/4"
               },
               {
                 "type": "RECTANGLE",
@@ -2715,7 +2715,7 @@
             ],
             "strokeWeight": 3,
             "strokeAlign": "center",
-            "radius": 4
+            "radius": "$Zumpo · UI:radius/4"
           }
         ]
       }

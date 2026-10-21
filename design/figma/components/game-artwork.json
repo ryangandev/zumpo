@@ -53,7 +53,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -122,7 +122,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -261,7 +261,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -398,7 +398,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -510,7 +510,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -711,7 +711,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
@@ -808,7 +808,7 @@
         "clip": true,
         "layout": {
           "mode": "row",
-          "gap": 16,
+          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true

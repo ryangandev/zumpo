@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -144,7 +144,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 40,
+                  "pad": "$Zumpo · UI:space/40",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -434,7 +434,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 24,
+                  "pad": "$Zumpo · UI:space/24",
                   "align": "center",
                   "strokesIncluded": true
                 },
@@ -449,7 +449,7 @@
                     "hSize": "hug",
                     "layout": {
                       "mode": "column",
-                      "gap": 8,
+                      "gap": "$Zumpo · UI:space/8",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -463,7 +463,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -611,7 +611,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -759,7 +759,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -907,7 +907,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -1049,7 +1049,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -1197,7 +1197,7 @@
                         "hSize": "hug",
                         "layout": {
                           "mode": "row",
-                          "gap": 8,
+                          "gap": "$Zumpo · UI:space/8",
                           "strokesIncluded": true
                         },
                         "children": [

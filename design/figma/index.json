@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-08T18:56:32.897Z",
+  "exportedAt": "2026-10-21T04:00:12.461Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -17,7 +17,7 @@
     "componentFamilies": 54,
     "outsideComponents": 0,
     "svgs": 86,
-    "seconds": 31,
+    "seconds": 29,
     "nodes": 10738,
     "instances": 5847,
     "grids": 69,
@@ -34,7 +34,7 @@
       },
       {
         "name": "Zumpo · UI",
-        "variables": 52,
+        "variables": 63,
         "modes": [
           "Light"
         ]
@@ -2060,7 +2060,7 @@
           "id": "79:89111",
           "size": [
             390,
-            860
+            830
           ],
           "file": "flows/07-trios/TS12.json",
           "preview": "previews/07-trios/TS12.png",
@@ -2116,7 +2116,7 @@
           "id": "69:77020",
           "size": [
             1440,
-            623
+            624
           ],
           "file": "flows/08-liars-dice/LD02.json",
           "preview": "previews/08-liars-dice/LD02.png",
@@ -2128,7 +2128,7 @@
           "id": "69:77415",
           "size": [
             1440,
-            714
+            724
           ],
           "file": "flows/08-liars-dice/LD03.json",
           "preview": "previews/08-liars-dice/LD03.png",
@@ -2140,7 +2140,7 @@
           "id": "71:77767",
           "size": [
             1440,
-            722
+            732
           ],
           "file": "flows/08-liars-dice/LD04.json",
           "preview": "previews/08-liars-dice/LD04.png",
@@ -2152,7 +2152,7 @@
           "id": "77:82481",
           "size": [
             1440,
-            1006
+            1016
           ],
           "file": "flows/08-liars-dice/LD05.json",
           "preview": "previews/08-liars-dice/LD05.png",
@@ -2164,7 +2164,7 @@
           "id": "78:82778",
           "size": [
             1440,
-            1006
+            1016
           ],
           "file": "flows/08-liars-dice/LD06.json",
           "preview": "previews/08-liars-dice/LD06.png",
@@ -2236,7 +2236,7 @@
           "id": "73:80508",
           "size": [
             1440,
-            1092
+            1102
           ],
           "file": "flows/08-liars-dice/LD12.json",
           "preview": "previews/08-liars-dice/LD12.png",
@@ -2248,7 +2248,7 @@
           "id": "79:89587",
           "size": [
             390,
-            1098
+            1108
           ],
           "file": "flows/08-liars-dice/LD13.json",
           "preview": "previews/08-liars-dice/LD13.png",
@@ -2260,7 +2260,7 @@
           "id": "79:89902",
           "size": [
             390,
-            1266
+            1276
           ],
           "file": "flows/08-liars-dice/LD14.json",
           "preview": "previews/08-liars-dice/LD14.png",
@@ -2272,7 +2272,7 @@
           "id": "79:90326",
           "size": [
             390,
-            939
+            949
           ],
           "file": "flows/08-liars-dice/LD15.json",
           "preview": "previews/08-liars-dice/LD15.png",

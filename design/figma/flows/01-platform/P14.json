@@ -21,9 +21,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -138,7 +138,7 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/24",
           "wrap": true,
-          "crossGap": 24,
+          "crossGap": "$Zumpo · UI:space/24",
           "strokesIncluded": true
         },
         "children": [

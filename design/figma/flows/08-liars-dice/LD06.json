@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1550,
     "w": 1440,
-    "h": 1006,
+    "h": 1016,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -106,7 +106,7 @@
         "id": "78:82780",
         "name": "Board & room",
         "w": 1312,
-        "h": 836,
+        "h": 846,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -119,7 +119,7 @@
             "id": "78:82781",
             "name": "Board stage",
             "w": 944,
-            "h": 836,
+            "h": 846,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -146,7 +146,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 40,
+                  "pad": "$Zumpo · UI:space/40",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -423,7 +423,7 @@
                 "id": "78:82799",
                 "name": "Table panel",
                 "w": 944,
-                "h": 444,
+                "h": 454,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -437,7 +437,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 24,
+                  "pad": "$Zumpo · UI:space/24",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -454,7 +454,7 @@
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
                       "wrap": true,
-                      "crossGap": 16,
+                      "crossGap": "$Zumpo · UI:space/16",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -666,7 +666,7 @@
                     "id": "79:83046",
                     "name": "Your cup",
                     "w": 894,
-                    "h": 144,
+                    "h": 154,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -681,7 +681,7 @@
                         "id": "79:83047",
                         "name": "Cup / Maya",
                         "w": 220,
-                        "h": 144,
+                        "h": 154,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Cup",
@@ -697,6 +697,11 @@
                           "Name": "Maya"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 154,
+                            "width": 220
+                          },
                           {
                             "path": "Player / Avatar",
                             "componentProperties": {

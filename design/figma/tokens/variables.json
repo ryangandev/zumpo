@@ -1389,6 +1389,138 @@
           },
           "value": "$Zumpo · Primitives:color/ink",
           "resolved": "#282B25"
+        },
+        {
+          "name": "radius/20",
+          "type": "float",
+          "id": "VariableID:158:27584",
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-radius-20)"
+          },
+          "value": 20
+        },
+        {
+          "name": "space/6",
+          "type": "float",
+          "id": "VariableID:158:27585",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-6)"
+          },
+          "value": 6
+        },
+        {
+          "name": "space/2",
+          "type": "float",
+          "id": "VariableID:158:27586",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-2)"
+          },
+          "value": 2
+        },
+        {
+          "name": "space/10",
+          "type": "float",
+          "id": "VariableID:158:27587",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-10)"
+          },
+          "value": 10
+        },
+        {
+          "name": "space/18",
+          "type": "float",
+          "id": "VariableID:158:27588",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-18)"
+          },
+          "value": 18
+        },
+        {
+          "name": "space/14",
+          "type": "float",
+          "id": "VariableID:158:27589",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-14)"
+          },
+          "value": 14
+        },
+        {
+          "name": "radius/6",
+          "type": "float",
+          "id": "VariableID:158:27590",
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-radius-6)"
+          },
+          "value": 6
+        },
+        {
+          "name": "space/1",
+          "type": "float",
+          "id": "VariableID:158:27591",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-1)"
+          },
+          "value": 1
+        },
+        {
+          "name": "radius/4",
+          "type": "float",
+          "id": "VariableID:158:27592",
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-radius-4)"
+          },
+          "value": 4
+        },
+        {
+          "name": "space/3",
+          "type": "float",
+          "id": "VariableID:160:38439",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-3)"
+          },
+          "value": 3
+        },
+        {
+          "name": "space/56",
+          "type": "float",
+          "id": "VariableID:160:38440",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--zumpo-space-56)"
+          },
+          "value": 56
         }
       ]
     },

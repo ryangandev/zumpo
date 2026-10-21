@@ -65,8 +65,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -158,8 +158,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -247,8 +247,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -339,8 +339,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -432,8 +432,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -525,8 +525,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -613,8 +613,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -706,8 +706,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -795,8 +795,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -883,8 +883,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -976,8 +976,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1065,8 +1065,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1153,8 +1153,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1228,7 +1228,7 @@
             ],
             "strokeWeight": 2,
             "strokeAlign": "inside",
-            "radius": 20,
+            "radius": "$Zumpo · UI:radius/20",
             "clip": true
           }
         ]
@@ -1262,8 +1262,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1337,7 +1337,7 @@
             ],
             "strokeWeight": 2,
             "strokeAlign": "inside",
-            "radius": 20,
+            "radius": "$Zumpo · UI:radius/20",
             "clip": true
           }
         ]
@@ -1367,8 +1367,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1442,7 +1442,7 @@
             ],
             "strokeWeight": 2,
             "strokeAlign": "inside",
-            "radius": 20,
+            "radius": "$Zumpo · UI:radius/20",
             "clip": true
           }
         ]
@@ -1472,8 +1472,8 @@
           "mode": "row",
           "gap": "$Zumpo · UI:space/8",
           "pad": [
-            12,
-            20
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/20"
           ],
           "justify": "center",
           "align": "center",
@@ -1547,7 +1547,7 @@
             ],
             "strokeWeight": 2,
             "strokeAlign": "inside",
-            "radius": 20,
+            "radius": "$Zumpo · UI:radius/20",
             "clip": true
           }
         ]

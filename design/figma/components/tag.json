@@ -53,10 +53,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -119,10 +119,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -185,10 +185,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -251,10 +251,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -317,10 +317,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -383,10 +383,10 @@
         "radius": "$Zumpo · UI:radius/999",
         "layout": {
           "mode": "row",
-          "gap": 6,
+          "gap": "$Zumpo · UI:space/6",
           "pad": [
-            6,
-            12
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
