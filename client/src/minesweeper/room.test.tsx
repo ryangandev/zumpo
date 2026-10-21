@@ -134,6 +134,17 @@ describe('a Minesweeper room', () => {
     ).toHaveAttribute('aria-disabled', 'true');
   });
 
+  it('keeps a phone’s turn bar to the round and the mines, cut short nowhere', async () => {
+    onPhone();
+    const { update } = await renderSeated(picking);
+    const turn = screen.getByRole('region', { name: 'Turn' });
+
+    expect(turn).toHaveTextContent(/^Round 1Pick a cell10 mines\d/);
+    expect(turn).not.toHaveTextContent('Small');
+    update({ ...picking, minesFound: 2 });
+    expect(turn).toHaveTextContent('10 mines · 2 hit');
+  });
+
   it('shows what each pick was worth', async () => {
     await renderSeated({
       ...picking,

@@ -36,6 +36,7 @@
     min-height: 0;
   }
 
+  .box.start,
   .box[data-scroll] {
     justify-content: flex-start;
     overflow-y: auto;
@@ -58,6 +59,7 @@
     height: calc(100dvh - 2 * var(--zumpo-space-24));
   }
 
+  .box.start,
   .box[data-scroll] {
     justify-content: flex-start;
     overflow-y: auto;

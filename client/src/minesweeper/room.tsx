@@ -190,7 +190,11 @@ function turnBar(
   m: Messages,
 ): TurnBarProps {
   const { state, playerId, reconnecting } = room;
-  const category = m.minesweeper.boardLabel(state.difficulty);
+  // A phone's one row has no room for the board's tag beside the round and
+  // the mines: the board is in view under it, and the room said its size.
+  const category = phone
+    ? undefined
+    : m.minesweeper.boardLabel(state.difficulty);
   const clock = (label: string, waiting = false) =>
     reconnecting
       ? { seconds, label: m.minesweeper.paused, waiting: true }
@@ -275,8 +279,9 @@ function turnBar(
     label,
     kind: 'status',
     main: m.minesweeper.pickCell,
-    meta:
-      state.minesFound > 0
+    meta: phone
+      ? m.minesweeper.minesShort(state.totalMines, state.minesFound)
+      : state.minesFound > 0
         ? m.minesweeper.minesFound(state.totalMines, state.minesFound)
         : m.minesweeper.pickLocks(state.totalMines),
     countdown: clock(m.minesweeper.toPick),

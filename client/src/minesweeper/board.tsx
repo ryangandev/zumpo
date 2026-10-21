@@ -192,12 +192,14 @@ export function MineGrid({
   if (!inPlay || !phone) return grid;
   // A board that pans is never scaled: it scrolls, down within the room
   // left and sideways within itself.
+  // It sits under the turn bar, the spare height under it, where a round's
+  // results lie over the board's foot.
   return pans ? (
-    <PlayBoard min={1} fitWidth={false}>
+    <PlayBoard min={1} fitWidth={false} align="start">
       {grid}
     </PlayBoard>
   ) : (
-    <PlayBoard>{grid}</PlayBoard>
+    <PlayBoard align="start">{grid}</PlayBoard>
   );
 }
 

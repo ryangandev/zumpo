@@ -20,6 +20,11 @@ export interface PlayBoardProps {
   fitWidth?: boolean;
   /** Changes when the element to keep in view may have moved. */
   current?: unknown;
+  /**
+   * Centred in the height left, or at its top, for a board whose spare
+   * height is better under it, where a round's results lie over its foot.
+   */
+  align?: 'center' | 'start';
   className?: string;
 }
 
@@ -41,6 +46,7 @@ export function PlayBoard({
   min = 0.5,
   fitWidth = true,
   current,
+  align = 'center',
   className,
 }: PlayBoardProps) {
   const box = useRef<HTMLDivElement>(null);
@@ -84,7 +90,11 @@ export function PlayBoard({
   }, [current]);
 
   return (
-    <div ref={box} className={cx(styles.box, className)} data-play-board="">
+    <div
+      ref={box}
+      className={cx(styles.box, align === 'start' && styles.start, className)}
+      data-play-board=""
+    >
       <div ref={piece} className={cx(styles.piece, !fitWidth && styles.wide)}>
         {children}
       </div>
