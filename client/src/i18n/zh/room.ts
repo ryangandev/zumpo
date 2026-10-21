@@ -29,6 +29,7 @@ export const room: typeof en = {
   reconnectingNotice: (name, seconds) =>
     `正在重新连接“${name}”…你的座位和得分会保留 ${seconds} 秒。`,
   board: '棋盘',
+  nowHost: '你现在是房主了。',
   players: (count) => `玩家 · ${count}`,
   chat: '聊天',
   leaveTitle: (name) => `离开“${name}”？`,

@@ -12,6 +12,8 @@ import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { HIDDEN } from '../../../shared/minesweeper';
+import { playColumn } from '../shell/play-board';
+import { cx } from '../ui/cx';
 import { Board } from './board';
 import styles from './room.module.css';
 
@@ -138,9 +140,14 @@ function Minefield({
       : state.round - 1;
 
   return (
-    <div className={styles.minefield}>
-      <div className={styles.boardPanel}>
-        <Board state={state} onPick={onPick} showPicks={showPicks} />
+    <div className={cx(styles.minefield, playColumn)}>
+      <div className={cx(styles.boardPanel, playColumn)}>
+        <Board
+          state={state}
+          onPick={onPick}
+          showPicks={showPicks}
+          inPlay={state.isGameStarted}
+        />
       </div>
       {results.length > 0 && (
         <section className={styles.results} aria-labelledby="round-results">

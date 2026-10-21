@@ -29,6 +29,7 @@ export const room = {
   reconnectingNotice: (name: string, seconds: number) =>
     `Reconnecting to ${name}… Your seat and score are kept for ${seconds} seconds.`,
   board: 'Board',
+  nowHost: 'You’re the host now.',
   players: (count: number) => `Players · ${count}`,
   chat: 'Chat',
   leaveTitle: (name: string) => `Leave ${name}?`,

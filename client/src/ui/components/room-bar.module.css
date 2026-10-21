@@ -59,10 +59,16 @@
 .phone .identity {
   flex-direction: column;
   flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: var(--zumpo-space-8);
+  align-items: stretch;
+  gap: 0;
 }
 
-.phone .tags {
-  gap: var(--zumpo-space-8);
+/* The room and its phase under the game, in one line however long. */
+.context {
+  overflow: hidden;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -16,9 +16,18 @@ export const ui = {
   seatsTaken: (players: number, seats: number) =>
     `${players} of ${seats} seats taken`,
   turn: 'Turn',
+  standings: {
+    entry: (name: string, value: string) => `${name} ${value}`,
+    /** The phone strip's name, which opens the Players tab. */
+    label: (entries: readonly string[]) =>
+      `Standings: ${entries.join(', ')}. Show the players`,
+    away: 'Away',
+  },
   room: {
     leave: 'Leave room',
     howToPlay: 'How to play',
+    /** The phone room bar's line under the game: "Maya's room · Round 2". */
+    context: (room: string, phase: string) => `${room} · ${phase}`,
     password: 'Password protected',
     players: (players: number, seats: number) =>
       `${players} of ${seats} players`,

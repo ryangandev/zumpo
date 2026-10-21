@@ -9,13 +9,15 @@ import styles from './room-bar.module.css';
 
 export interface RoomBarProps {
   /**
-   * Desktop is one row after the wordmark. Phone has no wordmark, puts the
-   * tags under the game and keeps the actions to their icons.
+   * Desktop is one row after the wordmark. Phone is one row too, 48 px tall:
+   * no wordmark, the game over a line saying the room and its phase, and the
+   * actions as their icons, so it never wraps and never moves the game under
+   * it.
    */
   layout?: 'desktop' | 'phone';
   game: string;
-  /** The room's name, the first tag. */
-  room: string;
+  /** The room's name, the first tag; a game on your own's phone bar has none. */
+  room?: string;
   /** Where the room is: "Waiting room", "Round 2 of 2", "Game over". */
   phase: { tone: TagTone; label: string };
   onHowToPlay: () => void;
@@ -59,10 +61,16 @@ export function RoomBar({
       )}
       <div className={styles.identity}>
         <h1 className={styles.game}>{game}</h1>
-        <div className={styles.tags}>
-          <Tag>{room}</Tag>
-          <Tag tone={phase.tone}>{phase.label}</Tag>
-        </div>
+        {phone ? (
+          <p className={styles.context}>
+            {room ? m.ui.room.context(room, phase.label) : phase.label}
+          </p>
+        ) : (
+          <div className={styles.tags}>
+            {room && <Tag>{room}</Tag>}
+            <Tag tone={phase.tone}>{phase.label}</Tag>
+          </div>
+        )}
       </div>
       <Button
         variant="secondary"

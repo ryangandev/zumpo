@@ -275,6 +275,7 @@ function SoloGameView({
             <PairsGrid
               cards={cardsOf(game)}
               onFlip={finish ? undefined : play}
+              inPlay={!finish}
             />
           </BoardPanel>
         </>

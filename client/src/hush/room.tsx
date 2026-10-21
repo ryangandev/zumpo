@@ -101,7 +101,12 @@ function BetweenGames({ room }: { room: Room }) {
               }
               lives={summary.lives}
             />
-            <Pile pile={state.pile} discards={state.discards} empty="" />
+            <Pile
+              pile={state.pile}
+              discards={state.discards}
+              empty=""
+              inPlay={false}
+            />
           </TablePanel>
         )}
       </>

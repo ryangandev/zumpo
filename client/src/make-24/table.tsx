@@ -15,6 +15,7 @@ import {
 import { Button, NumberCard, OperatorKey, type NumberCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { Fit } from '../shell/fit';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages, type Messages } from '../i18n';
 import styles from './table.module.css';
@@ -25,13 +26,14 @@ export const cardsAfter = (deal: readonly number[], steps: readonly Step[]) =>
 
 /** The paper panel a hand is played on (T02-T09); bare on a phone. */
 export function TablePanel({ children }: { children: ReactNode }) {
-  return <div className={styles.panel}>{children}</div>;
+  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
 }
 
 /** The cards in one row, each as it stands; scaled down where the row is wider than the table. */
 function CardRow({
   cards,
   compact,
+  inPlay = false,
   children,
 }: {
   cards: readonly {
@@ -44,10 +46,13 @@ function CardRow({
     disabled?: boolean;
   }[];
   compact: boolean;
+  /** The hand being played: on a phone it takes the height left. */
+  inPlay?: boolean;
   children?: ReactNode;
 }) {
+  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Fit>
+    <Holder>
       <div className={cx(styles.cards, compact && styles.compactCards)}>
         {cards.map(({ key, ...card }) => (
           <NumberCard
@@ -58,7 +63,7 @@ function CardRow({
         ))}
         {children}
       </div>
-    </Fit>
+    </Holder>
   );
 }
 
@@ -222,9 +227,10 @@ export function HandTable({
   );
 
   return (
-    <div className={styles.table}>
+    <div className={cx(styles.table, playColumn)}>
       <CardRow
         compact={compact}
+        inPlay
         cards={views.map((view, index) => ({
           key: String(index),
           ...view,
@@ -239,29 +245,32 @@ export function HandTable({
               itemAt(cards, index).value.n === 0),
         }))}
       />
-      {!finished && (
-        <>
-          <p className={styles.prompt} aria-live="polite">
-            {prompt}
-          </p>
-          <div
-            className={styles.operators}
-            role="group"
-            aria-label={m.make24.table.signs}
-          >
-            {OPERATORS.map((sign) => (
-              <OperatorKey
-                key={sign}
-                symbol={OPERATOR_SYMBOLS[sign]}
-                label={m.make24.table.operator(sign)}
-                selected={op === sign}
-                disabled={paused || first === null}
-                onPick={() => select({ first, op: op === sign ? null : sign })}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      {/* With one card left there is nothing to pick: the prompt and the
+          signs keep their room out of sight, so the tools stay put. */}
+      <div
+        className={cx(styles.picking, finished && styles.held)}
+        aria-hidden={finished || undefined}
+      >
+        <p className={styles.prompt} aria-live="polite">
+          {finished ? '' : prompt}
+        </p>
+        <div
+          className={styles.operators}
+          role="group"
+          aria-label={m.make24.table.signs}
+        >
+          {OPERATORS.map((sign) => (
+            <OperatorKey
+              key={sign}
+              symbol={OPERATOR_SYMBOLS[sign]}
+              label={m.make24.table.operator(sign)}
+              selected={op === sign}
+              disabled={paused || first === null || finished}
+              onPick={() => select({ first, op: op === sign ? null : sign })}
+            />
+          ))}
+        </div>
+      </div>
       {phone && extraTool ? (
         <>
           <div className={styles.tools}>{tools}</div>

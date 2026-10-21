@@ -1,13 +1,9 @@
 import type { ReactNode } from 'react';
 import { useMessages } from '../i18n';
-import {
-  TriosCard,
-  TurnBar,
-  type TriosCardState,
-  type TurnBarProps,
-} from '../ui';
+import { TriosCard, type TriosCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { Fit } from '../shell/fit';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
 
@@ -27,6 +23,11 @@ export interface TriosTableProps {
   places?: Readonly<Record<number, PlaceView>>;
   /** Set while cards may be picked: picks or puts back the card at a place. */
   onPick?: (place: number) => void;
+  /**
+   * The table being played, which a phone fits into its one screen with the
+   * turn bar; false for a finished table under its results.
+   */
+  inPlay?: boolean;
 }
 
 /**
@@ -34,11 +35,17 @@ export interface TriosTableProps {
  * compact cards on a phone, in the same order, so nothing moves while you
  * look. Where neither fits, the table scales down to the width it has.
  */
-export function TriosTable({ cards, places = {}, onPick }: TriosTableProps) {
+export function TriosTable({
+  cards,
+  places = {},
+  onPick,
+  inPlay = true,
+}: TriosTableProps) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
+  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Fit>
+    <Holder>
       <div className={styles.table} role="group" aria-label={m.trios.table}>
         {cards.map((card, place) => (
           <TriosCard
@@ -50,31 +57,13 @@ export function TriosTable({ cards, places = {}, onPick }: TriosTableProps) {
           />
         ))}
       </div>
-    </Fit>
-  );
-}
-
-/**
- * The turn bar over the table. On a narrow screen it stacks its lines, so one
- * that wraps would push the table down, and a tap meant for one card would
- * land on another. It keeps room for `lines` lines of what it says, the most
- * any phase needs, and a clock in every phase keeps its top row.
- */
-export function TriosTurnBar({
-  lines,
-  ...props
-}: TurnBarProps & { lines: 1 | 2 }) {
-  return (
-    <TurnBar
-      {...props}
-      className={cx(styles.turnBar, lines === 2 && styles.twoLines)}
-    />
+    </Holder>
   );
 }
 
 /** The paper panel the table sits on; bare on a phone. */
 export function TablePanel({ children }: { children: ReactNode }) {
-  return <div className={styles.panel}>{children}</div>;
+  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
 }
 
 /** A trio in a line of mini cards: the last one taken, or one of a run. */
@@ -88,24 +77,46 @@ export function MiniTrio({ cards }: { cards: readonly number[] }) {
   );
 }
 
-/** TS05-TS09: the latest trio taken, so a player who looked away sees it. */
+/**
+ * TS05-TS09: the latest trio taken, so a player who looked away sees it.
+ * Before the first, its line is kept empty, so the table never moves.
+ */
 export function LastTrio({
-  finder,
-  cards,
+  trio,
 }: {
-  finder: string;
-  cards: readonly number[];
+  trio: { finder: string; cards: readonly number[] } | null;
 }) {
   const m = useMessages();
   return (
-    <div className={styles.lastTrio}>
-      <span className={styles.lastLabel}>{m.trios.lastTrio(finder)}</span>
-      <MiniTrio cards={cards} />
+    <div
+      className={cx(styles.lastTrio, !trio && styles.held)}
+      aria-hidden={trio ? undefined : true}
+    >
+      <span className={styles.lastLabel}>
+        {m.trios.lastTrio(trio?.finder ?? '')}
+      </span>
+      <MiniTrio cards={trio?.cards ?? [0, 1, 2]} />
     </div>
   );
 }
 
-/** The row under the table, for Hint. */
-export function TableTools({ children }: { children: ReactNode }) {
-  return <div className={styles.tools}>{children}</div>;
+/**
+ * The row under the table, for Hint. Held, it keeps its room with nothing
+ * in sight, so the table does not move when it has nothing to offer.
+ */
+export function TableTools({
+  held = false,
+  children,
+}: {
+  held?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={cx(styles.tools, held && styles.held)}
+      aria-hidden={held || undefined}
+    >
+      {children}
+    </div>
+  );
 }

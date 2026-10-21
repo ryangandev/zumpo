@@ -27,7 +27,9 @@ import {
 } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
-import { DrawingCanvas, type Brush } from '../drawing/canvas';
+import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
+import { playColumn } from '../shell/play-board';
+import { cx } from '../ui/cx';
 import { Picture } from '../drawing/picture';
 import { listNames } from '../room/players';
 import type { Room as RoomOf } from '../room/room-context';
@@ -120,7 +122,7 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
       {state.phase === 'draw' && task && !task.sitsOut ? (
         <Drawing room={room} desk={desk} onDesk={onDesk} />
       ) : (
-        <section className={styles.panel}>
+        <section className={cx(styles.panel, playColumn)}>
           {!task ? (
             <Watching room={room} />
           ) : state.phase === 'passing' ? (
@@ -348,12 +350,14 @@ function Writing({
   return (
     <>
       {task.given?.content.type === 'drawing' && (
-        <div className={styles.frame}>
-          <EntryDrawing
-            drawing={task.given.content.drawing}
-            label={m.doodleChain.givenDrawing}
-          />
-        </div>
+        <PlaySheet>
+          <div className={styles.frame}>
+            <EntryDrawing
+              drawing={task.given.content.drawing}
+              label={m.doodleChain.givenDrawing}
+            />
+          </div>
+        </PlaySheet>
       )}
       <ChainComposer
         className={styles.composer}
@@ -431,7 +435,12 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
 
   return (
     <>
-      {canDraw && (
+      {/* Out of reach once Done, and kept for its room, so the sheet stays
+          where it is. */}
+      <div
+        className={cx(styles.toolbar, !canDraw && styles.held)}
+        aria-hidden={canDraw ? undefined : true}
+      >
         <DrawingToolbar
           colour={colour}
           onColourChange={(next) => onDesk({ colour: next })}
@@ -446,14 +455,16 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
             socket.emit('dc:draw:clear', roomId);
           }}
         />
-      )}
-      <DrawingCanvas
-        stream={canvas}
-        brush={brush}
-        onStart={start}
-        onMove={move}
-        onEnd={end}
-      />
+      </div>
+      <PlaySheet>
+        <DrawingCanvas
+          stream={canvas}
+          brush={brush}
+          onStart={start}
+          onMove={move}
+          onEnd={end}
+        />
+      </PlaySheet>
       <div ref={actions} className={styles.actions}>
         {done ? (
           <>

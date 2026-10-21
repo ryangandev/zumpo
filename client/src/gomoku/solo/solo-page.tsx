@@ -276,10 +276,11 @@ function SoloBoard({
               }
             />
           ) : (
-            <TurnBar {...turnBar(game, m)} />
+            <TurnBar {...turnBar(game, previewing !== null, m)} />
           )}
           <GomokuTable
             phone={phone}
+            fill={phone && !game.over}
             board={{
               stones: boardOf(game.moves),
               last: lastStoneOf(game.moves),
@@ -295,18 +296,21 @@ function SoloBoard({
             }}
             seats={seatsOf(game, name, m)}
             actions={
-              yours && (
-                <>
-                  {previewing !== null && (
-                    <Button onClick={() => place(previewing)}>
+              phone
+                ? // Always there in a game, live once a faint stone is down,
+                  // so nothing moves when one is; the turn bar says to tap
+                  // again.
+                  !game.over && (
+                    <Button
+                      disabled={previewing === null}
+                      onClick={() => {
+                        if (previewing !== null) place(previewing);
+                      }}
+                    >
                       {m.gomoku.placeStone}
                     </Button>
-                  )}
-                  <p className={styles.hint}>
-                    {phone ? m.gomoku.tapHint : m.gomoku.hoverHint}
-                  </p>
-                </>
-              )
+                  )
+                : yours && <p className={styles.hint}>{m.gomoku.hoverHint}</p>
             }
           />
         </>
@@ -423,11 +427,16 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
 }
 
 /** GM03, GM04: whose turn, and the last stone; your turn has no clock. */
-function turnBar(game: SoloGame, m: Messages): TurnBarProps {
+function turnBar(
+  game: SoloGame,
+  previewing: boolean,
+  m: Messages,
+): TurnBarProps {
   const last = lastStoneOf(game.moves);
   const lastWasYours = game.moves.at(-1)?.color === game.color;
-  const meta =
-    last === null
+  const meta = previewing
+    ? m.gomoku.tapAgain
+    : last === null
       ? m.gomoku.firstMove
       : lastWasYours
         ? m.gomoku.youPlayed(pointName(last))

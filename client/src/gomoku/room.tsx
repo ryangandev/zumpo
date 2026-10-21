@@ -97,6 +97,8 @@ export function GomokuRoom() {
 
   return (
     <RoomLayout
+      // No standings over the board: the seats under the board say who is who.
+      standings={false}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }
@@ -107,7 +109,7 @@ export function GomokuRoom() {
       stage={
         <>
           {playing ? (
-            <TurnBar {...turnBar(room, seconds, m)} />
+            <TurnBar {...turnBar(room, seconds, previewing !== null, m)} />
           ) : summary ? (
             phone ? (
               <TurnBar {...resultBar(room, summary, m)} />
@@ -125,6 +127,7 @@ export function GomokuRoom() {
           )}
           <GomokuTable
             phone={phone}
+            fill={phone && (playing || summary !== null)}
             board={board}
             seats={seatsOf(room, phone, m)}
             notice={
@@ -135,10 +138,17 @@ export function GomokuRoom() {
             note={state.colors === null ? m.gomoku.colorsNote : undefined}
             actions={
               playing ? (
-                (previewing !== null || resign) && (
+                (phone ? mine !== null : resign) && (
                   <>
-                    {previewing !== null && (
-                      <Button onClick={() => place(previewing)}>
+                    {/* A phone's player always has it, live once a faint
+                        stone is down, so nothing moves when one is. */}
+                    {phone && mine !== null && (
+                      <Button
+                        disabled={previewing === null}
+                        onClick={() => {
+                          if (previewing !== null) place(previewing);
+                        }}
+                      >
                         {m.gomoku.placeStone}
                       </Button>
                     )}
@@ -282,7 +292,12 @@ function playingNote(
 }
 
 /** GM09-GM11: whose turn, what was played last, and the clock. */
-function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
+function turnBar(
+  room: Room,
+  seconds: number,
+  previewing: boolean,
+  m: Messages,
+): TurnBarProps {
   const { state, playerId, reconnecting } = room;
   const toMove = colorToMove(state.moves);
   const name = sideName(state, toMove);
@@ -296,15 +311,17 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     label: mine ? m.gomoku.yourTurn : m.gomoku.turn(name),
     kind: 'status',
     main: mine ? m.gomoku.place(toMove) : m.gomoku.isThinking(name),
-    meta: !last
-      ? m.gomoku.firstMove
-      : last.point === null
-        ? lastMine
-          ? m.gomoku.yourTurnPassed
-          : m.gomoku.passed(lastName)
-        : lastMine
-          ? m.gomoku.youPlayed(pointName(last.point))
-          : m.gomoku.played(lastName, pointName(last.point)),
+    meta: previewing
+      ? m.gomoku.tapAgain
+      : !last
+        ? m.gomoku.firstMove
+        : last.point === null
+          ? lastMine
+            ? m.gomoku.yourTurnPassed
+            : m.gomoku.passed(lastName)
+          : lastMine
+            ? m.gomoku.youPlayed(pointName(last.point))
+            : m.gomoku.played(lastName, pointName(last.point)),
     // While reconnecting the server's clock cannot be known: it holds.
     countdown: reconnecting
       ? { seconds, label: m.gomoku.paused, waiting: true }

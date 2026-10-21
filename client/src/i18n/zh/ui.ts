@@ -15,9 +15,15 @@ export const ui: typeof en = {
   players: '玩家',
   seatsTaken: (players, seats) => `已有 ${players} 人，共 ${seats} 个位置`,
   turn: '当前回合',
+  standings: {
+    entry: (name, value) => `${name} ${value}`,
+    label: (entries) => `排名：${entries.join('，')}。查看玩家`,
+    away: '暂离',
+  },
   room: {
     leave: '离开房间',
     howToPlay: '玩法',
+    context: (room, phase) => `${room} · ${phase}`,
     password: '需要密码',
     players: (players, seats) => `${players} / ${seats} 位玩家`,
     full: '已满',

@@ -6,7 +6,9 @@ import { gameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
+import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import styles from './solo-layout.module.css';
 
 export interface SoloLayoutProps {
@@ -39,7 +41,7 @@ export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
         <RoomBar
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[gameType].name}
-          room={m.solo.onYourOwn}
+          room={oneColumn ? undefined : m.solo.onYourOwn}
           phase={phase}
           onHowToPlay={() => setRules(true)}
           onLeave={() => navigate('/')}
@@ -50,7 +52,7 @@ export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
       }
     >
       {phone || side == null ? (
-        <div className={styles.stage}>{stage}</div>
+        <div className={cx(styles.stage, playColumn)}>{stage}</div>
       ) : (
         <div className={styles.solo}>
           <div className={styles.stage}>{stage}</div>

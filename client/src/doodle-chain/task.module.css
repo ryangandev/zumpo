@@ -51,6 +51,17 @@
   overflow-wrap: anywhere;
 }
 
+/* The toolbar over the canvas, as wide as the column. */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Kept for its room, out of sight and out of reach. */
+.held {
+  visibility: hidden;
+}
+
 /* Under the canvas: what the clock does, and Done. */
 .actions {
   display: flex;

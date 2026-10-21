@@ -15,6 +15,11 @@
   gap: var(--zumpo-space-24);
 }
 
+/* Only a phone's board in play has a box of its own (see the foot). */
+.boardBox {
+  display: contents;
+}
+
 /* The board's column is as wide as a regular board, or narrower with it. */
 .board {
   flex: 0 1
@@ -77,10 +82,29 @@
   }
 }
 
-/* GM17-GM19: the board fills the column, then the seats, then the actions
-   full width. */
+/* GM17-GM19: the board fills the column, then the actions, then the seats
+   side by side, so the faint stone's Place stone is right under the board. */
 .phone .game {
   flex-direction: column;
+  gap: var(--zumpo-space-16);
+}
+
+.phone .side {
+  flex: none;
+  gap: var(--zumpo-space-16);
+}
+
+.phone .actions {
+  order: -1;
+}
+
+.phone .seats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.phone .seats > :not(:nth-child(-n + 2)) {
+  grid-column: 1 / -1;
 }
 
 .phone .board {
@@ -97,5 +121,34 @@
 }
 
 .phone .actions {
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: stretch;
+}
+
+.phone .actions > * {
+  flex: 1 1 0;
+}
+
+.phone .actions > p {
+  flex-basis: 100%;
+}
+
+/* In play a phone's board is as large as the room the actions and the seats
+   leave it, square: its box is the height left, and the board is as wide as
+   the box is tall where that is less than the column. */
+@media (max-width: 640px) {
+  .phone .boardBox[data-play-board] {
+    display: flex;
+    flex: 1 1 0;
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    container-type: size;
+  }
+
+  .phone .boardBox[data-play-board] > .board {
+    width: min(100cqw, 100cqh);
+  }
 }

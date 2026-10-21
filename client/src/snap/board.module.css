@@ -38,31 +38,6 @@
   letter-spacing: var(--zumpo-text-label-tracking);
 }
 
-/* The lines of what the turn bar says, and the meta under them. */
-.turnBar {
-  --lines: 1;
-}
-
-/* Beside the clock, what the turn bar says and its meta share a line where
-   they fit. Narrower, a long name pushes the meta under it, so the bar keeps
-   room for both; the 4 px is the answer's own gap between its lines. */
-@container (max-width: 860px) {
-  .turnBar p {
-    min-height: calc(
-      var(--lines) * var(--zumpo-text-heading-line) + var(--zumpo-space-4) +
-        var(--zumpo-text-small-line)
-    );
-  }
-}
-
-/* Stacked, as on a phone, "… took it" takes two lines for a long name, as
-   SN12 keeps room for. */
-@container (max-width: 560px) {
-  .names p {
-    --lines: 2;
-  }
-}
-
 /* SN11, SN12: on a phone, the two compact cards one above the other, on the
    page itself. */
 @media (max-width: 640px) {

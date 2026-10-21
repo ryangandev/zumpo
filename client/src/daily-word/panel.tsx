@@ -1,11 +1,13 @@
 import { useMessages } from '../i18n';
 import type { ReactNode } from 'react';
 import { LetterTile } from '../ui';
+import { cx } from '../ui/cx';
+import { playColumn } from '../shell/play-board';
 import styles from './panel.module.css';
 
 /** The paper panel a board is played on (DW01-DW10); bare on a phone. */
 export function BoardPanel({ children }: { children: ReactNode }) {
-  return <div className={styles.panel}>{children}</div>;
+  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
 }
 
 /** DW01-DW03: what the three marks mean, beside a board on your own. */

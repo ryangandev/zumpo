@@ -65,6 +65,7 @@ export function CodeBoard({
             role={name ? 'img' : undefined}
             aria-label={name}
             className={styles.row}
+            data-play-current={open ? '' : undefined}
           >
             <span className={styles.digits} aria-hidden="true">
               {Array.from({ length: CODE_LENGTH }, (_digit, place) => {

@@ -65,3 +65,18 @@
 .won .detail {
   color: var(--zumpo-ink);
 }
+
+/* A phone's seat beside the other: the stone first, then the name and the
+   detail, each on one line. */
+.compact {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--zumpo-space-8);
+  padding: var(--zumpo-space-8) var(--zumpo-space-12);
+}
+
+.compact .detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

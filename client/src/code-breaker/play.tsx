@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { useMessages, type Messages } from '../i18n';
 import { CodeBoard, DigitPad, Notice, type CodeBoardRow } from '../ui';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import {
@@ -64,7 +65,7 @@ export function PlayArea({
   const last = rows.at(-1);
   const line =
     prompt !== undefined && noting && pad ? m.codeBreaker.notesPrompt : prompt;
-  const board = (
+  const codeBoard = (
     <CodeBoard
       rows={rows}
       typed={pad ? draft.typed : ''}
@@ -74,8 +75,17 @@ export function PlayArea({
       describe={(row) => describeRow(row, m)}
     />
   );
+  // In play the board gives the height the pad needs; done, it is as tall
+  // as it is.
+  const board = pad ? (
+    <PlayBoard min={0.75} current={rows.length}>
+      {codeBoard}
+    </PlayBoard>
+  ) : (
+    codeBoard
+  );
   return (
-    <div ref={play} className={cx(styles.play, className)}>
+    <div ref={play} className={cx(styles.play, pad && playColumn, className)}>
       {children ? (
         <div className={styles.boards}>
           {board}

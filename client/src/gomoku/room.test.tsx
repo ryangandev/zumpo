@@ -349,9 +349,16 @@ describe('a Gomoku room', () => {
     const tap = (name: string) =>
       user.pointer({ keys: '[TouchA]', target: point(name) });
 
-    expect(screen.queryByRole('button', { name: 'Place stone' })).toBeNull();
+    // Place stone is always there, live only once a faint stone is down,
+    // and the turn bar says the second tap places it.
+    const placeStone = () =>
+      screen.getByRole('button', { name: 'Place stone' });
+    expect(placeStone()).toBeDisabled();
+    expect(turn().queryByText('Tap again to place')).toBeNull();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([]);
+    expect(placeStone()).toBeEnabled();
+    expect(turn().getByText('Tap again to place')).toBeInTheDocument();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([['r1', F8]]);
   });
@@ -368,6 +375,6 @@ describe('a Gomoku room', () => {
     expect(fake.sentArgs('gomoku:place')).toEqual([]);
     await user.click(screen.getByRole('button', { name: 'Place stone' }));
     expect(fake.sentArgs('gomoku:place')).toEqual([['r1', pointAt(7, 8)]]);
-    expect(screen.queryByRole('button', { name: 'Place stone' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Place stone' })).toBeDisabled();
   });
 });

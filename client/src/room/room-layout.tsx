@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import {
   ChatInput,
@@ -7,6 +7,7 @@ import {
   PlayerRow,
   RoomBar,
   Scoreboard,
+  StandingsStrip,
   type PlayerRowProps,
   type GlyphName,
   type TagTone,
@@ -15,7 +16,9 @@ import { gameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
+import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RoomChat } from './room-chat';
 import { useRoomContext } from './room-context';
@@ -57,7 +60,16 @@ export interface RoomLayoutProps {
   scoreTitle?: string;
   /** On a phone, more under the scoreboard on the Players tab: the race. */
   playersAside?: ReactNode;
+  /**
+   * Whether a phone's Board tab shows the standings strip while a game is
+   * on; by default where scores are shown. Off where the board itself shows
+   * everyone, as Gomoku's seats do.
+   */
+  standings?: boolean;
 }
+
+/** How long a phone says "You're the host now" over the board. */
+const HOST_NOTICE_MS = 5000;
 
 type View = 'board' | 'players' | 'chat';
 
@@ -78,6 +90,7 @@ export function RoomLayout({
   showScores = true,
   scoreTitle,
   playersAside,
+  standings = showScores,
 }: RoomLayoutProps) {
   const room = useRoomContext();
   const { state, reconnecting, reconnectGraceMs } = room;
@@ -90,6 +103,7 @@ export function RoomLayout({
   const { viewer, viewerMenu } = useViewer({
     seatName: room.me.username,
   });
+  const newHost = useBecameHost(state.owner.playerId === room.playerId);
 
   const input = {
     onSend: room.sendChat,
@@ -186,9 +200,29 @@ export function RoomLayout({
               value: 'board',
               label: m.room.board,
               panel: (
-                <div className={styles.stage}>
+                <div className={cx(styles.stage, playColumn)}>
+                  {standings && state.isGameStarted && (
+                    <StandingsStrip
+                      standings={players.map(({ seat }) => ({
+                        key: seat.playerId,
+                        name: seat.username,
+                        initials: initialsOf(seat.username),
+                        tone: toneOf(seat.username),
+                        value: String(seat.points),
+                        you: seat.playerId === room.playerId,
+                        away: !seat.isConnected,
+                      }))}
+                      onOpen={() => setView('players')}
+                    />
+                  )}
                   {stage}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
+                  {newHost && (
+                    // Over the top of the board, so nothing under it moves.
+                    <div className={styles.toast}>
+                      <Notice tone="success">{m.room.nowHost}</Notice>
+                    </div>
+                  )}
                 </div>
               ),
             },
@@ -222,4 +256,24 @@ export function RoomLayout({
       <RulesDialog open={rules} onOpenChange={setRules} game={game} />
     </Page>
   );
+}
+
+/**
+ * True for a few seconds after the host's crown passes to this player, as
+ * when the host leaves mid-game, so a phone, whose Players tab is out of
+ * sight, says so over the board.
+ */
+function useBecameHost(host: boolean): boolean {
+  const [shown, setShown] = useState(false);
+  const was = useRef(host);
+  useEffect(() => {
+    const became = host && !was.current;
+    was.current = host;
+    if (!host) setShown(false);
+    if (!became) return;
+    setShown(true);
+    const timer = setTimeout(() => setShown(false), HOST_NOTICE_MS);
+    return () => clearTimeout(timer);
+  }, [host]);
+  return shown;
 }

@@ -198,6 +198,11 @@ export {
   type StoneMark,
   type StoneProps,
 } from './components/stone';
+export {
+  StandingsStrip,
+  type Standing,
+  type StandingsStripProps,
+} from './components/standings-strip';
 export { StatList, type Stat } from './components/stat-list';
 export { Tag, type TagProps, type TagTone } from './components/tag';
 export { TextField, type TextFieldProps } from './components/text-field';

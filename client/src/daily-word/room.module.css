@@ -20,6 +20,13 @@
   flex: 1 1 280px;
 }
 
+/* A phone's table in play is a column handing the board the height left. */
+@media (max-width: 640px) {
+  .table:has([data-play-board]) > .mine {
+    flex: 1 1 0;
+  }
+}
+
 .others,
 .results {
   display: flex;

@@ -8,7 +8,7 @@
   grid-template-areas:
     'tag label clock'
     'answer answer clock';
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--zumpo-space-8);
   padding: var(--zumpo-space-16) var(--zumpo-space-16) var(--zumpo-space-16)
@@ -32,9 +32,13 @@
 
 .label {
   grid-area: label;
+  min-width: 0;
+  overflow: hidden;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-label);
   letter-spacing: var(--zumpo-text-label-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .clock {
@@ -44,15 +48,23 @@
 
 .answer {
   display: flex;
-  flex-wrap: wrap;
   grid-area: answer;
   align-items: baseline;
-  gap: var(--zumpo-space-4) var(--zumpo-space-12);
+  gap: var(--zumpo-space-12);
+  min-width: 0;
+}
+
+/* One line whatever it says, so the bar keeps its height: the main line
+   hugs its words and is scaled down (Fit) rather than wrap, and the meta
+   beside it ends in an ellipsis. */
+.answer > .mainBox {
+  flex: 0 1 auto;
+  width: auto;
   min-width: 0;
 }
 
 .main {
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .word {
@@ -64,7 +76,7 @@
 .hint {
   font: var(--zumpo-text-hint);
   letter-spacing: var(--zumpo-text-hint-tracking);
-  white-space: pre-wrap;
+  white-space: pre;
 }
 
 .status {
@@ -73,44 +85,78 @@
 }
 
 .meta {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Phone: the category and the clock on top, then what to do, then the answer. */
+/* Phone: one compact row of fixed height. The tag, what to do and the meta
+   share the first line, cut short with an ellipsis; the main line is under
+   them at Heading size; the clock shows its time beside both. */
 @container (max-width: 560px) {
   .bar {
     grid-template-areas:
-      'tag . clock'
-      'label label label'
-      'answer answer answer';
-    gap: var(--zumpo-space-4) var(--zumpo-space-8);
-    padding: var(--zumpo-space-16);
+      'tag label meta clock'
+      'main main main clock';
+    grid-template-columns:
+      minmax(0, max-content) minmax(0, max-content) minmax(0, 1fr)
+      auto;
+    gap: 0 var(--zumpo-space-8);
+    padding: var(--zumpo-space-12) var(--zumpo-space-16);
     border-radius: var(--zumpo-radius-20);
   }
 
-  .untagged {
-    grid-template-areas:
-      '. . clock'
-      'label label label'
-      'answer answer answer';
-  }
-
-  /* Figma's Top row off: with neither a tag nor a clock, no empty row. */
+  .untagged,
   .topless {
     grid-template-areas:
-      'label label label'
-      'answer answer answer';
+      'label label meta clock'
+      'main main main clock';
+  }
+
+  .answer {
+    display: contents;
+  }
+
+  .answer > .mainBox {
+    grid-area: main;
+    width: 100%;
+  }
+
+  .meta {
+    grid-area: meta;
+  }
+
+  .tag {
+    margin-bottom: var(--zumpo-space-2);
   }
 
   .clock {
-    margin: 0 0 var(--zumpo-space-8);
+    margin: 0 0 0 var(--zumpo-space-4);
   }
 
-  /* A long category gives way to the clock beside it. */
-  .tag {
-    min-width: 0;
-    margin-bottom: var(--zumpo-space-8);
+  /* The clock says what it is for to a screen reader only. */
+  .clock [data-countdown-label] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .word,
+  .status {
+    font: var(--zumpo-text-heading);
+    letter-spacing: var(--zumpo-text-heading-tracking);
+  }
+
+  .hint {
+    font: var(--zumpo-text-hint-compact);
+    letter-spacing: var(--zumpo-text-hint-compact-tracking);
   }
 }

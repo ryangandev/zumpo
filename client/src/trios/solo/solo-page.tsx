@@ -7,6 +7,7 @@ import {
   ButtonLink,
   Card,
   StatList,
+  TurnBar,
   type Stat,
   type TurnBarProps,
 } from '../../ui';
@@ -34,7 +35,6 @@ import {
   TablePanel,
   TableTools,
   TriosTable,
-  TriosTurnBar,
   type PlaceView,
 } from '../table';
 import { whyNotATrio } from '../words';
@@ -273,7 +273,7 @@ function RunView({
       phase={{ tone: 'blue', label }}
       stage={
         <>
-          <TriosTurnBar lines={1} {...turnBar(run, now, label, m)} />
+          <TurnBar {...turnBar(run, now, label, m)} />
           <TablePanel>
             <TriosTable
               cards={run.deal.table}
@@ -284,15 +284,13 @@ function RunView({
                   : undefined
               }
             />
-            {/* Offered until a trio's two hints are given; between trios
-                it stays, so the table does not move. */}
-            {run.hints < MAX_HINTS && (
-              <TableTools>
-                <Button variant="quiet" onClick={() => setRun(hint(run))}>
-                  {m.trios.solo.hintButton}
-                </Button>
-              </TableTools>
-            )}
+            {/* Offered until a trio's two hints are given, then held out
+                of sight, so the table does not move. */}
+            <TableTools held={run.hints >= MAX_HINTS}>
+              <Button variant="quiet" onClick={() => setRun(hint(run))}>
+                {m.trios.solo.hintButton}
+              </Button>
+            </TableTools>
           </TablePanel>
         </>
       }

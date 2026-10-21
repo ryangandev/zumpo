@@ -11,6 +11,7 @@
 }
 
 .tab {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--zumpo-space-8);
@@ -26,6 +27,14 @@
   cursor: pointer;
 }
 
+/* Drawn 34 px tall, a tab takes a tap from 46 px, more than the 44 a thumb
+   needs: the area reaches 6 px around it, halfway into the gaps beside it. */
+.tab::before {
+  position: absolute;
+  inset: calc(-1 * var(--zumpo-space-6));
+  content: '';
+}
+
 .tab[data-active] {
   background: var(--zumpo-ink);
   color: var(--zumpo-white);
@@ -34,4 +43,13 @@
 .tab:focus-visible {
   outline: 2px solid var(--zumpo-ink);
   outline-offset: 2px;
+}
+
+/* The open panel passes the page's height on, so a game in play on a phone
+   fits one screen (play-board.tsx). */
+.panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
 }

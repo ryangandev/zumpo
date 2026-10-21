@@ -86,7 +86,10 @@ export function Chain({
           const { author, content } = entry;
           const empty = content.type === 'empty';
           return (
-            <li key={entry.step}>
+            <li
+              key={entry.step}
+              data-play-current={announce && entry === last ? '' : undefined}
+            >
               <ChainEntry
                 kind={empty ? 'empty' : entry.kind}
                 name={author.username}

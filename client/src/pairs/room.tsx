@@ -68,7 +68,7 @@ function BetweenGames({ room }: { room: Room }) {
         />
         {/* PR07: the finished board stays on the table. */}
         <BoardPanel>
-          <PairsGrid cards={cardsOf(state.cards)} />
+          <PairsGrid cards={cardsOf(state.cards)} inPlay={false} />
         </BoardPanel>
       </>
     );

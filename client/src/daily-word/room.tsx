@@ -12,7 +12,9 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import { BoardPanel } from './panel';
 import { PlayArea } from './play';
 import styles from './room.module.css';
@@ -217,7 +219,7 @@ function Round({
     <>
       <TurnBar {...turnBar(room, seconds, mine, m)} />
       <BoardPanel>
-        <div className={styles.table}>
+        <div className={cx(styles.table, !done && playColumn)}>
           <PlayArea
             rows={rows}
             typed={done ? '' : typed}
