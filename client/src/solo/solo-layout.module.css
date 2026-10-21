@@ -50,6 +50,14 @@
   }
 }
 
+/* A short window (SHORT_WINDOW in use-media-query.ts): the turn bar sits
+   closer to a board fitted to the height. */
+@media (min-width: 641px) and (max-height: 800px) {
+  .stage:has([data-fit-height]) {
+    gap: var(--zumpo-space-12);
+  }
+}
+
 @media (max-width: 640px) {
   .stage {
     gap: var(--zumpo-space-24);

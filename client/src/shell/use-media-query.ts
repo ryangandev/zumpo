@@ -41,3 +41,11 @@ export const ONE_COLUMN = '(max-width: 1023px)';
  * layouts' CSS.
  */
 export const SHORT_SCREEN = '(min-width: 641px) and (max-height: 500px)';
+
+/**
+ * A window too short for a desktop's spacing, such as a 13-inch laptop's
+ * browser (1280 × 720 to 1366 × 768): a game on your own tightens the room
+ * around its board, and its turn bar takes the compact phone row. The same
+ * query is in the layouts' CSS.
+ */
+export const SHORT_WINDOW = '(min-width: 641px) and (max-height: 800px)';

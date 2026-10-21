@@ -8,12 +8,18 @@ import {
 import { useBlocker, useNavigate } from 'react-router';
 import type { GameType } from '../../../shared/wire-types';
 import { Button, Dialog, RoomBar, type TagTone } from '../ui';
+import { CompactTurnBar } from '../ui/components/turn-bar';
 import { gameInfo, gamePath } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
 import { playColumn } from '../shell/play-board';
-import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import {
+  ONE_COLUMN,
+  PHONE,
+  SHORT_WINDOW,
+  useMediaQuery,
+} from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
 import styles from './solo-layout.module.css';
@@ -98,6 +104,7 @@ export function SoloLayout({
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
   const oneColumn = useMediaQuery(ONE_COLUMN);
+  const shortWindow = useMediaQuery(SHORT_WINDOW);
   const navigate = useNavigate();
   const { viewer, viewerMenu } = useViewer();
   const [rules, setRules] = useState(false);
@@ -187,7 +194,10 @@ export function SoloLayout({
           </div>
         )}
         <div ref={stageBox} className={cx(stageClass, alone && playColumn)}>
-          {stage}
+          {/* A short window leaves the board more of the height. */}
+          <CompactTurnBar.Provider value={shortWindow}>
+            {stage}
+          </CompactTurnBar.Provider>
         </div>
         {!alone && (
           <div className={styles.side}>

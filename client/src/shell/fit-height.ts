@@ -16,7 +16,9 @@ const MIN_SCALE = 0.5;
  * the page's tallest; on one column the page scrolls as it is. The element
  * is measured unscaled each time the window or the element changes size.
  * Scaled, it lays its content out wider by as much, so a board that pans or
- * a keyboard that narrows keeps its desktop layout.
+ * a keyboard that narrows keeps its desktop layout. The element is marked
+ * `data-fit-height`, so a page around it can tighten itself on a short
+ * window (page.module.css).
  */
 export function useFitHeight<T extends HTMLElement>(enabled = true) {
   const ref = useRef<T>(null);
@@ -24,6 +26,7 @@ export function useFitHeight<T extends HTMLElement>(enabled = true) {
   useLayoutEffect(() => {
     const element = ref.current;
     if (!element || !enabled) return;
+    element.setAttribute('data-fit-height', '');
     // The board keeps its size as the game goes on, such as when its
     // controls go at the end; only a change of window lets it grow back.
     let most = 1;
@@ -45,6 +48,7 @@ export function useFitHeight<T extends HTMLElement>(enabled = true) {
       observer.disconnect();
       window.removeEventListener('resize', refit);
       element.style.removeProperty('zoom');
+      element.removeAttribute('data-fit-height');
     };
   }, [enabled]);
 
