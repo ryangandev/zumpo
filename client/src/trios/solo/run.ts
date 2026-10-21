@@ -1,4 +1,4 @@
-import { itemAt, pickFrom } from '../../../../shared/list';
+import { itemAt, pickFrom, shuffle } from '../../../../shared/list';
 import {
   brokenFeature,
   dealTable,
@@ -9,7 +9,6 @@ import {
   type Deal,
   type Feature,
 } from '../../../../shared/trios';
-import { shuffle } from '../../../../shared/pairs';
 import { seededRandom, seedNumber } from '../../../../shared/seed';
 
 /**

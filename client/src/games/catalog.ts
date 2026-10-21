@@ -80,6 +80,12 @@ const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
     tone: 'blue',
     solo: true,
   },
+  {
+    type: 'code-breaker',
+    kind: 'puzzles',
+    tone: 'sand',
+    solo: true,
+  },
   { type: 'gomoku', kind: 'strategy', tone: 'blue', solo: true },
 ];
 

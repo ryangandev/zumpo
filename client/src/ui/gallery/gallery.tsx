@@ -15,6 +15,10 @@ import {
   Card,
   ChoiceList,
   Chat,
+  CodeBoard,
+  CodeMarks,
+  CodeMarksBoard,
+  CodeRaceBoard,
   ChatInput,
   ChatMessage,
   Countdown,
@@ -22,6 +26,8 @@ import {
   Dialog,
   DialogClose,
   Die,
+  DigitPad,
+  DigitTile,
   DrawingToolbar,
   FilterChip,
   GomokuBoard,
@@ -52,6 +58,7 @@ import {
   StatList,
   Tag,
   TextField,
+  ToggleChip,
   SnapCard,
   SnapSymbol,
   Stone,
@@ -1586,6 +1593,191 @@ export default function Gallery() {
             ))}
           </div>
         ))}
+      </Family>
+
+      <Family name="Digit tile" file="digit-tile">
+        {(
+          [
+            ['regular', 'Regular'],
+            ['compact', 'Compact'],
+            ['small', 'Small'],
+          ] as const
+        ).map(([tileSize, sizeName]) => (
+          <div key={tileSize} className={styles.cellRow}>
+            {(
+              [
+                ['Empty', 'empty'],
+                ['Typed', 'typed'],
+                ['Guessed', 'guessed'],
+                ['Cracked', 'cracked'],
+              ] as const
+            ).map(([stateName, state]) => (
+              <Specimen
+                key={state}
+                family="digit-tile"
+                variant={`State=${stateName}, Size=${sizeName}`}
+                label={`${stateName} · ${sizeName}`}
+              >
+                <DigitTile
+                  digit={state === 'empty' ? undefined : '7'}
+                  state={state}
+                  size={tileSize}
+                />
+              </Specimen>
+            ))}
+          </div>
+        ))}
+      </Family>
+
+      <Family name="Code marks" file="code-marks">
+        <div className={styles.cellRow}>
+          {(
+            [
+              ['grid', 'Grid'],
+              ['row', 'Row'],
+            ] as const
+          ).map(([layout, layoutName]) => (
+            <Specimen
+              key={layout}
+              family="code-marks"
+              variant={`Layout=${layoutName}`}
+              label={layoutName}
+            >
+              <CodeMarks layout={layout} />
+            </Specimen>
+          ))}
+          <Specimen label="1 in place, 2 elsewhere">
+            <CodeMarks mark={{ right: 1, moved: 2 }} />
+          </Specimen>
+        </div>
+      </Family>
+
+      <Family
+        name="Code board"
+        file="code-board"
+        note="Zumpo/Code row is drawn by the board, one row a guess."
+      >
+        <div className={styles.cellRow}>
+          {(
+            [
+              ['compact', 'Compact'],
+              ['small', 'Small'],
+            ] as const
+          ).map(([boardSize, sizeName]) => (
+            <Specimen
+              key={boardSize}
+              family="code-board"
+              variant={`Size=${sizeName}`}
+            >
+              <CodeBoard
+                rows={[]}
+                size={boardSize}
+                label={`${sizeName} board`}
+                describe={() => ''}
+              />
+            </Specimen>
+          ))}
+          <Specimen label="Two guesses and one typing">
+            <CodeBoard
+              rows={[
+                { guess: '1234', mark: { right: 0, moved: 2 } },
+                { guess: '4071', mark: { right: 4, moved: 0 } },
+              ]}
+              typed="56"
+              label="Sample board"
+              describe={(row) => row.guess}
+            />
+          </Specimen>
+        </div>
+      </Family>
+
+      <Family name="Code marks board" file="code-marks-board">
+        <Specimen family="code-marks-board">
+          <CodeMarksBoard marks={[]} label="Marks board" />
+        </Specimen>
+      </Family>
+
+      <Family name="Digit pad" file="digit-pad">
+        {(
+          [
+            ['desktop', 'Desktop', 727],
+            ['phone', 'Phone', 350],
+          ] as const
+        ).map(([layout, layoutName, width]) => (
+          <Specimen
+            key={layout}
+            family="digit-pad"
+            variant={`Layout=${layoutName}`}
+            width={width}
+          >
+            <DigitPad
+              notes={{ 2: 'out', 9: 'out', 1: 'in', 4: 'in' }}
+              layout={layout}
+              onNoting={noop}
+              onDigit={noop}
+              onEnter={noop}
+              onDelete={noop}
+            />
+          </Specimen>
+        ))}
+      </Family>
+
+      <Family name="Code race board" file="code-race-board">
+        {(
+          [
+            ['Marks', 'column'],
+            ['Digits', 'column'],
+            ['Digits', 'row'],
+          ] as const
+        ).map(([boardName, layout]) => (
+          <div key={boardName + layout} className={styles.cellRow}>
+            {(
+              [
+                ['Guessing', 'guessing'],
+                ['Cracked', 'cracked'],
+                ['Out', 'out'],
+              ] as const
+            ).map(([stateName, state]) => (
+              <Specimen
+                key={state}
+                family="code-race-board"
+                variant={`State=${stateName}, Board=${boardName}, Layout=${cap(layout)}`}
+                label={`${stateName} · ${boardName} · ${cap(layout)}`}
+              >
+                <CodeRaceBoard
+                  name="Maya"
+                  status="Cracked · +633"
+                  state={state}
+                  layout={layout}
+                  rows={[]}
+                  describe={boardName === 'Digits' ? () => '' : undefined}
+                />
+              </Specimen>
+            ))}
+          </div>
+        ))}
+      </Family>
+
+      <Family name="Toggle chip" file="toggle-chip">
+        <div className={styles.cellRow}>
+          {(
+            [
+              ['Off', false],
+              ['On', true],
+            ] as const
+          ).map(([stateName, on]) => (
+            <Specimen
+              key={stateName}
+              family="toggle-chip"
+              variant={`State=${stateName}`}
+              label={stateName}
+            >
+              <ToggleChip on={on} onToggle={noop}>
+                Notes
+              </ToggleChip>
+            </Specimen>
+          ))}
+        </div>
       </Family>
 
       <Family name="Pick result" file="pick-result">

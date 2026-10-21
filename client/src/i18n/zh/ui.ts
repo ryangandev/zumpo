@@ -84,6 +84,15 @@ export const ui: typeof en = {
     board: (name) => `${name} 的猜词板`,
     letters: (count) => `${count} 个字母`,
   },
+  code: {
+    pad: '数字键盘',
+    notes: '笔记',
+    delete: '删除数字',
+    noted: (digit, note) =>
+      `${digit}，已记为${note === 'out' ? '不在答案中' : '在答案中'}`,
+    mark: (right, moved) => `${right} 个位置正确，${moved} 个位置不对`,
+    board: (name) => `${name} 的猜数板`,
+  },
   lives: (lives) => (lives === 0 ? '没有命了' : `${lives} 条命`),
   discarded: (value) => `${value}，已弃置`,
   position: (row, column, detail) => `第 ${row} 行，第 ${column} 列：${detail}`,

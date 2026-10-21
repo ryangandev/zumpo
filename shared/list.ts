@@ -33,3 +33,13 @@ export function swap<T>(list: T[], i: number, j: number): void {
   list[i] = itemAt(list, j);
   list[j] = first;
 }
+
+/** A shuffled copy of a list, Fisher-Yates, drawing from `random`. */
+export function shuffle<T>(items: readonly T[], random: () => number): T[] {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    swap(shuffled, i, j);
+  }
+  return shuffled;
+}

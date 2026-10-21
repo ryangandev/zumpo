@@ -6,6 +6,7 @@ import path from 'node:path';
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  CodeBreakerDurationsInSeconds,
   DoodleChainDurationsInSeconds,
   GomokuDurationsInSeconds,
   HushDurationsInSeconds,
@@ -31,6 +32,7 @@ import { createSnapModule } from './socket/snap/index.js';
 import { createLiarsDiceModule } from './socket/liars-dice/index.js';
 import { createHushModule } from './socket/hush/index.js';
 import { createDailyWordModule } from './socket/daily-word/index.js';
+import { createCodeBreakerModule } from './socket/code-breaker/index.js';
 import { createDoodleChainModule } from './socket/doodle-chain/index.js';
 import { createGomokuModule } from './socket/gomoku/index.js';
 import { clientDepartureOnDisconnectHandler } from './socket/client-disconnect-handler.js';
@@ -147,6 +149,14 @@ interface CreateZumpoServerOptions {
    * `process.env.DAILY_WORD_SEED`; never set in production.
    */
   dailyWordSeed?: string;
+  /** A Code Breaker round and its results. Shortened by tests. */
+  codeBreakerDurations?: CodeBreakerDurationsInSeconds;
+  /**
+   * Deals every Code Breaker game's codes from this seed instead of at random,
+   * so a test run plays the same codes each time. Defaults to
+   * `process.env.CODE_BREAKER_SEED`; never set in production.
+   */
+  codeBreakerSeed?: string;
   /** How long a dropped player keeps their seat. Shortened by tests. */
   graceInSeconds?: number;
   /** The most rooms open at once. Lowered by tests. */
@@ -207,6 +217,8 @@ const createZumpoServer = (
     gomokuDurations,
     gomokuRandom,
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
+    codeBreakerDurations,
+    codeBreakerSeed = process.env.CODE_BREAKER_SEED || undefined,
     graceInSeconds,
     maxRooms = DEFAULT_MAX_ROOMS,
     connectionLimits,
@@ -274,6 +286,13 @@ const createZumpoServer = (
   );
   registry.register(
     createDailyWordModule(registry.context, dailyWordDurations, dailyWordSeed),
+  );
+  registry.register(
+    createCodeBreakerModule(
+      registry.context,
+      codeBreakerDurations,
+      codeBreakerSeed,
+    ),
   );
   registry.register(
     createDoodleChainModule(registry.context, doodleChainDurations),

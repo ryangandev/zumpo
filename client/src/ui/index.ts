@@ -51,7 +51,33 @@ export {
   type DieProps,
   type DieState,
 } from './components/die';
+export {
+  CodeBoard,
+  type CodeBoardProps,
+  type CodeBoardRow,
+} from './components/code-board';
+export { CodeMarks, type CodeMarksProps } from './components/code-marks';
+export {
+  CodeMarksBoard,
+  type CodeMarksBoardProps,
+} from './components/code-marks-board';
+export {
+  CodeRaceBoard,
+  type CodeRaceBoardProps,
+  type CodeRaceBoardState,
+} from './components/code-race-board';
 export { Dialog, DialogClose, type DialogProps } from './components/dialog';
+export {
+  DigitPad,
+  type DigitNote,
+  type DigitPadProps,
+} from './components/digit-pad';
+export {
+  DigitTile,
+  type DigitTileProps,
+  type DigitTileSize,
+  type DigitTileState,
+} from './components/digit-tile';
 export {
   BRUSH_SIZES,
   DrawingToolbar,
@@ -175,6 +201,7 @@ export {
 export { StatList, type Stat } from './components/stat-list';
 export { Tag, type TagProps, type TagTone } from './components/tag';
 export { TextField, type TextFieldProps } from './components/text-field';
+export { ToggleChip, type ToggleChipProps } from './components/toggle-chip';
 export {
   TriosCard,
   type TriosCardProps,

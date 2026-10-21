@@ -94,6 +94,13 @@ export const notices: typeof en = {
   'dw:solved': (n) =>
     `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
   'dw:revealed': (n) => `答案是 ${n.word}。`,
+  'cb:started': (n) =>
+    n.rounds === 1
+      ? `游戏开始！共 1 局，限时 ${n.seconds} 秒。`
+      : `游戏开始！共 ${n.rounds} 局，每局 ${n.seconds} 秒。`,
+  'cb:cracked': (n) =>
+    `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
+  'cb:revealed': (n) => `答案是 ${n.code}。`,
   'dc:step': (n) =>
     n.kind === 'prompt'
       ? `第 ${n.step} 步：写下第一句。`

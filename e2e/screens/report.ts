@@ -60,6 +60,12 @@ const CONTENT: Record<string, string> = {
   DW08: 'The chat holds the game so far, from the start and the first word on; Figma’s example has a few lines.',
   DW09: 'The chat holds the game so far, from the start and the first word on; Figma’s example has the second word only.',
   DW16: 'The test’s game ends in a tie, whose heading takes a third line on a phone; Figma’s Maya wins in two.',
+  CB09: 'The chat holds the game so far, from the start and the first code on; Figma’s example has three lines.',
+  CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
+  CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
+  CB12: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
+  CB15: 'Code Breaker plays on your own too, so How to play lists On your own under Play together, as Daily Word’s does; Figma’s lists Play together only.',
+  CB21: 'Between games a player may move to the spectator seats, a button no Figma screen has yet.',
 };
 
 interface Screen {

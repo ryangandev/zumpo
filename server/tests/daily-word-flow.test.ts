@@ -5,6 +5,7 @@ import {
   collectChat,
   createDailyWordRoom,
   dailyWordRoom,
+  joinRoom,
   lobbyView,
   playToFirstWord,
   request,
@@ -203,6 +204,25 @@ describe('a round', () => {
     const heard = waitForChat(alice, (m) => m.kind === 'player');
     bob.emit('chat:send', roomId, 'hmm');
     expect(textOf(await heard)).toBe('hmm');
+  });
+
+  it('keeps a player who found the word, left and came back to watch, out of the chat', async () => {
+    const { roomId, alice, bob } = await playToFirstWord(harness, 3, {
+      carol: true,
+    });
+    await guess(alice, roomId, wordOf(harness, roomId)!);
+    alice.emit('room:leave', roomId);
+    const watching = waitForDailyWordState(
+      alice,
+      (s) => alice.playerId in s.spectators,
+    );
+    await joinRoom(alice, roomId, 'Alice');
+    await watching;
+
+    const bobHears = collectChat(bob);
+    alice.emit('chat:send', roomId, 'that was easy');
+    await settle();
+    expect(bobHears.filter((m) => m.kind === 'player')).toEqual([]);
   });
 
   it('lets a player who is out of guesses talk, and says so on their board', async () => {

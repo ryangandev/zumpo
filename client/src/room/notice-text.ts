@@ -94,6 +94,12 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['dw:solved'](notice);
     case 'dw:revealed':
       return m.notices['dw:revealed'](notice);
+    case 'cb:started':
+      return m.notices['cb:started'](notice);
+    case 'cb:cracked':
+      return m.notices['cb:cracked'](notice);
+    case 'cb:revealed':
+      return m.notices['cb:revealed'](notice);
     case 'dc:step':
       return m.notices['dc:step'](notice);
     case 'dc:reveal':

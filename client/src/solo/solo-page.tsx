@@ -6,6 +6,7 @@ import { PairsSolo } from '../pairs/solo/solo-page';
 import { TriosSolo } from '../trios/solo/solo-page';
 import { SnapSolo } from '../snap/solo/solo-page';
 import { LiarsDiceSolo } from '../liars-dice/solo/solo-page';
+import { CodeBreakerSolo } from '../code-breaker/solo/solo-page';
 import { GomokuSolo } from '../gomoku/solo/solo-page';
 import NotFoundPage from '../pages/not-found';
 
@@ -39,6 +40,8 @@ export default function SoloPage({ gameType }: { gameType: GameType }) {
           <DailyWordSolo />
         </Suspense>
       );
+    case 'code-breaker':
+      return <CodeBreakerSolo />;
     default:
       return <NotFoundPage />;
   }

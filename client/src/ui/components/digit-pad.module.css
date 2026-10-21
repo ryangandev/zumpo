@@ -1,0 +1,33 @@
+/* Zumpo/Digit pad. */
+.container {
+  width: 100%;
+}
+
+.desktop {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+.keys {
+  display: flex;
+  gap: var(--zumpo-space-8);
+}
+
+/* Phone: the toggle over two rows of six keys that share the width, the
+   most a phone's width gives a thumb. */
+.phone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+  width: 100%;
+}
+
+.notes {
+  display: flex;
+}
+
+.row {
+  display: flex;
+  gap: var(--zumpo-space-6);
+}

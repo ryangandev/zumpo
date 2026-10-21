@@ -1,0 +1,86 @@
+/* Zumpo/Digit tile. Outlines are inset shadows, so a typed digit never moves
+   the tiles beside it. */
+.tile {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--zumpo-radius-8);
+  background: var(--zumpo-paper);
+  color: var(--zumpo-ink);
+}
+
+.digit {
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+}
+
+.regular {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--zumpo-radius-12);
+}
+
+.regular .digit {
+  font: var(--zumpo-text-title);
+  letter-spacing: var(--zumpo-text-title-tracking);
+}
+
+.small {
+  width: 32px;
+  height: 32px;
+}
+
+.small .digit {
+  font: var(--zumpo-text-number);
+  letter-spacing: var(--zumpo-text-number-tracking);
+}
+
+.empty {
+  box-shadow: inset 0 0 0 2px var(--zumpo-line);
+}
+
+.typed {
+  box-shadow: inset 0 0 0 2px var(--zumpo-ink);
+}
+
+.small.empty {
+  box-shadow: inset 0 0 0 1px var(--zumpo-line);
+}
+
+.small.typed {
+  box-shadow: inset 0 0 0 1px var(--zumpo-ink);
+}
+
+.guessed {
+  background: var(--zumpo-blue);
+}
+
+.cracked {
+  box-shadow: var(--zumpo-shadow-cell-edge);
+  background: var(--zumpo-green);
+  color: var(--zumpo-paper);
+}
+
+/* A digit typed again: the tile that has it shakes its head. */
+.nudge {
+  animation: nudge 0.3s ease-in-out;
+}
+
+@keyframes nudge {
+  25% {
+    transform: translateX(calc(-1 * var(--zumpo-space-4)));
+  }
+
+  75% {
+    transform: translateX(var(--zumpo-space-4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge {
+    animation: none;
+  }
+}

@@ -1,6 +1,7 @@
 import type { DailyWordMark } from './wire-types.js';
 import { ANSWERS } from './daily-word-answers.js';
 import { GUESSES } from './daily-word-guesses.js';
+import { msUntilMidnight, puzzleDays } from './daily.js';
 import { seededRandom, seedNumber } from './seed.js';
 import { charAt, itemAt, pickFrom } from './list.js';
 
@@ -94,48 +95,23 @@ export function keyMarks(
 // The daily word
 
 /** Puzzle #1 is this local date: 5 October 2026. */
-const FIRST_DAY = { year: 2026, month: 10, day: 5 };
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-/** Whole days since 1970 for a calendar date, whatever the time zone. */
-const dayIndex = (year: number, month: number, day: number) =>
-  Math.round(Date.UTC(year, month - 1, day) / DAY_MS);
-
-const FIRST_DAY_INDEX = dayIndex(
-  FIRST_DAY.year,
-  FIRST_DAY.month,
-  FIRST_DAY.day,
-);
+const DAYS = puzzleDays({ year: 2026, month: 10, day: 5 });
 
 /**
  * The daily puzzle for the device's own date, from 1. A clock set before the
  * first day plays the first.
  */
-export function puzzleNumber(now: Date): number {
-  const today = dayIndex(now.getFullYear(), now.getMonth() + 1, now.getDate());
-  return Math.max(1, today - FIRST_DAY_INDEX + 1);
-}
+export const puzzleNumber = DAYS.puzzleNumber;
 
 /** The same, for the UTC date, which is what the server goes by. */
-export function utcPuzzleNumber(now: Date): number {
-  const today = dayIndex(
-    now.getUTCFullYear(),
-    now.getUTCMonth() + 1,
-    now.getUTCDate(),
-  );
-  return Math.max(1, today - FIRST_DAY_INDEX + 1);
-}
+export const utcPuzzleNumber = DAYS.utcPuzzleNumber;
 
 /** Puzzle n is entry n - 1, and the list starts again after the last. */
 export const dailyAnswer = (puzzle: number): string =>
   itemAt(ANSWERS, (puzzle - 1) % ANSWERS.length);
 
 /** Milliseconds until the device's next midnight, when the next word is out. */
-export function msUntilNextPuzzle(now: Date): number {
-  const midnight = new Date(now);
-  midnight.setHours(24, 0, 0, 0);
-  return midnight.getTime() - now.getTime();
-}
+export const msUntilNextPuzzle = msUntilMidnight;
 
 // ---------------------------------------------------------------------------
 // Practice words and rooms

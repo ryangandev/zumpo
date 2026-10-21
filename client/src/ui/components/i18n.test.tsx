@@ -4,7 +4,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LocaleProvider, useLocale } from '../../i18n';
 import { BidPicker } from './bid-picker';
 import { ChatInput } from './chat-input';
+import { CodeMarks } from './code-marks';
+import { CodeRaceBoard } from './code-race-board';
 import { Die } from './die';
+import { DigitPad } from './digit-pad';
 import { DrawingToolbar } from './drawing-toolbar';
 import { Keyboard } from './keyboard';
 import { Lives } from './lives';
@@ -88,6 +91,45 @@ describe('public components in Chinese', () => {
     expect(
       within(keyboard).getByRole('button', { name: 'Enter' }),
     ).toBeVisible();
+  });
+
+  it('words the digit pad and a guess’s pegs, never its digits', () => {
+    renderChinese(
+      <>
+        <DigitPad
+          notes={{ 5: 'out', 4: 'in' }}
+          onNoting={noop}
+          onDigit={noop}
+          onEnter={noop}
+          onDelete={noop}
+        />
+        <CodeMarks mark={{ right: 2, moved: 1 }} />
+        <CodeRaceBoard
+          name="Maya"
+          status="2 次"
+          rows={[{ guess: null, mark: { right: 0, moved: 1 } }]}
+        />
+      </>,
+    );
+    expect(screen.getByRole('group', { name: 'Maya 的猜数板' })).toBeVisible();
+    const pad = screen.getByRole('group', { name: '数字键盘' });
+    expect(
+      within(pad).getByRole('button', { name: '5，已记为不在答案中' }),
+    ).toBeVisible();
+    expect(
+      within(pad).getByRole('button', { name: '4，已记为在答案中' }),
+    ).toBeVisible();
+    expect(within(pad).getByRole('button', { name: '7' })).toBeVisible();
+    expect(within(pad).getByRole('button', { name: '删除数字' })).toBeVisible();
+    expect(within(pad).getByRole('button', { name: '笔记' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+    expect(
+      screen.getByRole('img', { name: '2 个位置正确，1 个位置不对' }),
+    ).toBeVisible();
+    // The pegs are Letter tiles, but no word game's wording reaches them.
+    expect(document.querySelector('[aria-label*="单词"]')).toBeNull();
   });
 
   it('translates player markers, seat counts, lives and card descriptions', () => {

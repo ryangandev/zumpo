@@ -1,5 +1,4 @@
-import { shuffle } from './pairs.js';
-import { itemAt } from './list.js';
+import { itemAt, shuffle } from './list.js';
 
 /**
  * Trios rules that a room on the server and a run on your own in the browser

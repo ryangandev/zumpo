@@ -24,6 +24,11 @@ export interface LetterTileProps {
    * at the reveal, Mini another player's board, marks only.
    */
   size?: LetterTileSize;
+  /**
+   * A peg in another game's marks, whose row says what it means: the tile
+   * says nothing, so no word game's wording reaches it.
+   */
+  decorative?: boolean;
 }
 
 /**
@@ -35,16 +40,19 @@ export function LetterTile({
   letter,
   state = 'empty',
   size = 'regular',
+  decorative = false,
 }: LetterTileProps) {
   const m = useMessages();
   const shown = size === 'mini' ? undefined : letter?.toUpperCase();
   const marked =
     state === 'correct' || state === 'present' || state === 'absent';
-  const name = marked
-    ? shown
-      ? m.ui.word.marked(shown, m.ui.word.marks[state])
-      : m.ui.word.marks[state]
-    : shown;
+  const name = decorative
+    ? undefined
+    : marked
+      ? shown
+        ? m.ui.word.marked(shown, m.ui.word.marks[state])
+        : m.ui.word.marks[state]
+      : shown;
   // An empty tile says nothing, so a board reads as its guesses only.
   return (
     <span
