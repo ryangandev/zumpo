@@ -106,6 +106,7 @@ Decisions from the design review rounds (their reports are in git history):
 - Text on a tinted surface (peach, blue, lime) is ink; muted text is only for cream, paper and sand, where it passes WCAG AA.
 - Keyboard focus is a 2 px ink ring 2 px outside the control, distinct from hover's border.
   A focus moved by script, as a game starts, a result comes, a page is gone to or How to play opens on its title, draws no ring until the next key (`focusQuietly`), so a touch or a click never leaves a frame nobody asked for.
+  A control handed the focus right after a key, as the word choices after Enter on Start game, keeps its ring; a heading or a region is quiet either way.
 - A line of metadata has at most one middle dot.
 - An icon beside text is centred on the text's first line, never top-aligned: a leading icon sits in a slot one line-height tall (`height: 1lh` in code), so a wrapped message keeps it level with line one.
   Trailing indicators, like the check on a selected option, centre on the whole row.
@@ -296,6 +297,7 @@ Code differs from Figma on purpose in a few places:
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 - Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
 - Until `j-fig-8-phone-turn-meta-line.js` runs, the Phone turn bar sets the tag, the label and the meta on one first line; at 560 px or narrower code gives the tag and the meta a line of their own under the main line, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
+  Gomoku, whose words fit the one row, keeps it (TurnBar `stackOnPhone={false}`), so its board keeps that height.
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
   On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
 - Until `j-fig-9-hush-phone-panel-gap.js` runs, HU10 and HU11 set the phone table's parts 24 apart; code sets them 16 apart, which gives back most of the height the turn bar's meta line takes on a 360 by 640 phone.
