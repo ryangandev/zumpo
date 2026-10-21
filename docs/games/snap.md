@@ -144,7 +144,7 @@ It is not a deadline, so it never turns urgent; a lockout's 2 seconds count down
 ### The end
 
 A game ends when the pile runs out: after the last middle card is taken, and its 1.5 seconds, the room reopens for a new game.
-The last middle card stays under the results, with its taker, until the next game is dealt.
+The last middle card stays under the results, with its taker, until the next game is dealt; your own card does not, since the standings already count the cards everybody took.
 **The winner is whoever took the most cards.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 

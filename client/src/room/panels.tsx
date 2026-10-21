@@ -450,6 +450,7 @@ export function ResultsPanel<Summary extends GameSummary>({
               <PlayerRow
                 as="div"
                 className={styles.row}
+                wrap
                 name={standing.username}
                 initials={initialsOf(standing.username)}
                 tone={toneOf(standing.username)}

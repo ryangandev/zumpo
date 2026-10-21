@@ -58,6 +58,10 @@
   white-space: nowrap;
 }
 
+.wrap .status {
+  white-space: normal;
+}
+
 .statusIcon {
   flex: none;
 }

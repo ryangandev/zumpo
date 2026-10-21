@@ -185,6 +185,7 @@ Minesweeper has no other events of its own to send: the snapshot has it all.
 | `lastGame`            | The summary of the last finished game, until the next one starts               |
 
 When a game ends the final board and its last round stay up, for the results screen and for a refresh.
+The results screen shows the final board alone under the standings, which already count the last round, so its results are not repeated.
 `lastGame` holds the standings best first, the board size, how many rounds were played (a round still open for picks when the game stopped does not count), and whether it ended early.
 
 ## Configuration

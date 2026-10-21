@@ -85,7 +85,12 @@ function BetweenGames({ room }: { room: Room }) {
           onPlayAgain={startGame}
           starting={starting}
         />
-        <HandResults state={state} />
+        {/* The standings count the last hand: its cards stand alone. */}
+        {state.lastDeal.length > 0 && (
+          <TablePanel>
+            <DealtCards deal={state.lastDeal} />
+          </TablePanel>
+        )}
       </>
     );
   }
@@ -170,15 +175,11 @@ function Hand({ room }: { room: Room }) {
   );
 }
 
-/** T08, T09: a finished hand's cards, and how everybody did. */
+/** T08: a revealed hand's cards, and how everybody did. */
 function HandResults({ state }: { state: Make24RoomState }) {
   const m = useMessages();
   const deal = state.lastDeal;
-  // The hand the results belong to: the one being revealed, or the last of
-  // a finished game.
-  const hand = state.isGameStarted
-    ? state.hand
-    : (state.lastGame?.hands ?? state.hand);
+  const hand = state.hand;
   if (deal.length === 0) return null;
   return (
     <TablePanel>

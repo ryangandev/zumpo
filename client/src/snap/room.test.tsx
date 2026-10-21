@@ -226,7 +226,9 @@ describe('a Snap room', () => {
     expect(
       screen.getByRole('group', { name: 'Last card, taken by Maya' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('12 won')).toBeInTheDocument();
+    // The standings count the viewer's cards: their own card is not shown.
+    expect(screen.queryByText('12 won')).toBeNull();
+    expect(screen.queryByText('Your card')).toBeNull();
   });
 
   it('shows the taker of the last card only that card, theirs now', async () => {

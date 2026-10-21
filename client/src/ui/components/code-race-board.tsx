@@ -14,7 +14,7 @@ export interface CodeRaceBoardProps {
   state?: CodeRaceBoardState;
   /**
    * The rows: marks only during a round, so a row's digits are never needed;
-   * with their digits at the reveal.
+   * with their digits at the reveal, and only the rows played.
    */
   rows: readonly CodeBreakerRow[];
   /**
@@ -59,6 +59,7 @@ export function CodeRaceBoard({
         <CodeBoard
           rows={rows.map((row) => ({ guess: row.guess ?? '', mark: row.mark }))}
           size="small"
+          played
           label={label}
           describe={describe}
         />

@@ -75,6 +75,7 @@ Decisions from the design review rounds (their reports are in git history):
 - Minesweeper shows each round's outcome as `Zumpo/Pick result` rows: who picked how risky a cell, and what it paid.
   On a phone the row is its Phone layout, two lines with the name above the outcome tag and its detail, so a long tag such as Auto-picked never squeezes the name (MO13, MO19); Make 24's hand results are the same rows.
 - Daily Word's reveal lists every board as a `Zumpo/Race board` with its letters, best first; on a phone each is the Row layout, the name beside the board, one under another (DW15, DW16), since two Small boards do not fit across.
+  A revealed board, Daily Word's or Code Breaker's, draws only the rows played, so a word found in 3 is three rows, not six with three empty.
 - No disabled primary buttons: a request in flight is a status line, and an action you cannot take is not shown.
 - Dialogs (leave, invite) sit over the screen they come from, behind a scrim.
 - Example data follows one story with four players (Maya, Ryan, Leo, Sam), each with a fixed avatar colour, and every score is computed with the real formula.
@@ -192,6 +193,7 @@ Code differs from Figma on purpose in a few places:
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
+  In a game's final standings it wraps to a second line instead, since there the detail is what the row is for.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
 
 ## Editing the Figma file

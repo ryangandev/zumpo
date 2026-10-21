@@ -195,7 +195,7 @@ describe('a Make 24 room', () => {
     expect(screen.queryByText('Your steps')).toBeNull();
   });
 
-  it('keeps the last hand up under the final scores', async () => {
+  it('keeps the last hand’s cards up under the final scores, not its results', async () => {
     await renderSeated(
       make24State({
         lastHand: [mine, theirs],
@@ -214,7 +214,8 @@ describe('a Make 24 room', () => {
       screen.getByRole('heading', { name: 'You win with 420 points.' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: 'Hand 5 results' }),
-    ).toBeInTheDocument();
+      screen.queryByRole('heading', { name: 'Hand 5 results' }),
+    ).toBeNull();
+    expect(screen.getByText('9')).toBeInTheDocument();
   });
 });

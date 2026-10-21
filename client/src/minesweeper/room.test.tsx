@@ -241,6 +241,7 @@ describe('a Minesweeper room', () => {
 
   it('celebrates a game that ends while the room is open', async () => {
     const ended = minesweeperState({
+      lastRound: [pick],
       lastGame: {
         endedEarly: false,
         standings: [{ playerId: ME, username: 'Ryan', points: 120 }],
@@ -256,6 +257,10 @@ describe('a Minesweeper room', () => {
     expect(
       screen.getByRole('heading', { name: 'You win with 120 points.' }),
     ).toBeInTheDocument();
+    // The standings count the last round: its results are not repeated.
+    expect(
+      screen.queryByRole('heading', { name: /^Round \d+ results$/ }),
+    ).toBeNull();
     expect(confetti()).not.toBeNull();
   });
 });

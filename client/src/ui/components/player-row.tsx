@@ -19,6 +19,11 @@ export interface PlayerRowProps {
   status?: string;
   statusIcon?: GlyphName;
   /**
+   * A long status wraps instead of ending in an ellipsis: the final
+   * standings, where the detail is the point of the row.
+   */
+  wrap?: boolean;
+  /**
    * Left out where a score says nothing, as in Hush, where a team scores
    * together: Figma's Show score off.
    */
@@ -44,6 +49,7 @@ export function PlayerRow({
   tone,
   status,
   statusIcon,
+  wrap = false,
   score,
   host = false,
   you = false,
@@ -57,6 +63,7 @@ export function PlayerRow({
       className={cx(
         styles.row,
         state !== 'default' && styles[state],
+        wrap && styles.wrap,
         className,
       )}
     >

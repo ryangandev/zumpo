@@ -84,7 +84,6 @@ function BetweenGames({ room }: { room: Room }) {
   const summary = state.lastGame;
 
   if (summary && !summary.endedEarly) {
-    const finder = finderOf(state, playerId, m);
     return (
       <>
         <ResultsPanel
@@ -93,15 +92,13 @@ function BetweenGames({ room }: { room: Room }) {
           onPlayAgain={startGame}
           starting={starting}
         />
-        {/* TS09: the finished table stays until the next game is dealt. */}
+        {/* TS09: the finished table stays until the next game is dealt, its
+            last trio marked with who took it, so no strip repeats it. */}
         <TablePanel>
           <TriosTable
             cards={state.table}
             places={takenPlaces(state, playerId, m)}
           />
-          {state.lastTrio && finder && (
-            <LastTrio finder={finder.name} cards={state.lastTrio.cards} />
-          )}
         </TablePanel>
       </>
     );

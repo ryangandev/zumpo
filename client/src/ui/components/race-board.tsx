@@ -12,7 +12,7 @@ export interface RaceBoardProps {
   state?: RaceBoardState;
   /**
    * Mini during a round, marks only and never letters; Small at the reveal,
-   * with the letters.
+   * with the letters and only the rows played.
    */
   board?: 'mini' | 'small';
   /**
@@ -47,7 +47,12 @@ export function RaceBoard({
         <span className={styles.name}>{name}</span>
         <span className={styles.status}>{status}</span>
       </div>
-      <WordBoard rows={rows} size={board} label={m.ui.word.board(name)} />
+      <WordBoard
+        rows={rows}
+        size={board}
+        played={board === 'small'}
+        label={m.ui.word.board(name)}
+      />
     </div>
   );
 }
