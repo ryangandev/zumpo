@@ -956,6 +956,12 @@ describe('a room page', () => {
     const dialog = screen.getByRole('dialog', {
       name: 'How to play Minesweeper',
     });
+    // It opens on its title, to read from the top, with no ring until a key.
+    const title = within(dialog).getByRole('heading', {
+      name: 'How to play Minesweeper',
+    });
+    await vi.waitFor(() => expect(title).toHaveFocus());
+    expect(title).toHaveAttribute('data-quiet-focus');
     // The goal, three lines on how to play and one on the score.
     expect(
       within(dialog).getByText(

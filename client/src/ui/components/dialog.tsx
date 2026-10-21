@@ -1,5 +1,6 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog';
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
+import { quiet } from '../../shell/quiet-focus';
 import { cx } from '../cx';
 import card from './card.module.css';
 import styles from './dialog.module.css';
@@ -15,9 +16,10 @@ export interface DialogProps {
   /**
    * What takes focus on opening; by default the first thing that can, a
    * field before a button. A destructive confirmation points this at its safe
-   * choice, so Enter never destroys.
+   * choice, so Enter never destroys. `'title'` starts on the title, for a
+   * dialog to read, such as How to play, with no ring until a key.
    */
-  initialFocus?: BaseDialog.Popup.Props['initialFocus'];
+  initialFocus?: BaseDialog.Popup.Props['initialFocus'] | 'title';
 }
 
 /** A dialog over the screen it comes from (leave, invite), behind an ink scrim. */
@@ -30,6 +32,8 @@ export function Dialog({
   actions,
   initialFocus,
 }: DialogProps) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const onTitle = initialFocus === 'title';
   return (
     <BaseDialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
       <BaseDialog.Portal>
@@ -37,9 +41,19 @@ export function Dialog({
         <BaseDialog.Viewport className={cx('zumpo', styles.viewport)}>
           <BaseDialog.Popup
             className={cx(card.card, styles.popup)}
-            initialFocus={initialFocus}
+            initialFocus={
+              onTitle
+                ? () => (titleRef.current ? quiet(titleRef.current) : true)
+                : initialFocus
+            }
           >
-            <BaseDialog.Title className={card.title}>{title}</BaseDialog.Title>
+            <BaseDialog.Title
+              ref={titleRef}
+              className={card.title}
+              tabIndex={onTitle ? -1 : undefined}
+            >
+              {title}
+            </BaseDialog.Title>
             {description != null && (
               <BaseDialog.Description className={card.description}>
                 {description}
