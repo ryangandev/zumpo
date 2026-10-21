@@ -56,8 +56,10 @@ export const games = {
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
     'make-24': (hands) => plural(hands, 'hand'),
     trios: (trios) => plural(trios, 'trio'),
+    snap: (cards) => plural(cards, 'card'),
     'liars-dice': (dice) => `${dice} dice each`,
     hush: (levels) => plural(levels, 'level'),
+    'doodle-chain': (seconds) => `${seconds}s to draw`,
     'daily-word': (words) => plural(words, 'word'),
   },
   of: <Record<GameType, GameText>>{
@@ -227,6 +229,43 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
       },
       score: (trios) => plural(trios, 'trio'),
     },
+    snap: {
+      name: 'Snap',
+      tagline: 'Spot the symbol both cards share.',
+      facts: '2–6 players',
+      lobbySummary:
+        'Everybody has a card, and everybody looks at the same middle card. Your card and the middle card share exactly one symbol: tap it first, and the middle card is yours.',
+      lobbyFacts: [
+        '2–6 players',
+        '31 cards, six symbols each',
+        'Any two cards share exactly one symbol',
+        'A wrong tap locks you out for 2s',
+      ],
+      rules: `2–6 players · 31 cards
+
+Every card has six symbols, and any two cards share exactly one of them, never more and never less. No two symbols share a shape, so colour alone never tells them apart.
+
+Everybody is dealt one card face up, and one more is turned up in the middle. Everyone looks at the same middle card at the same time, and there are no turns. Find the one symbol your card shares with it, and tap that symbol on either card.
+
+The first right tap takes the middle card, for 1 point: everyone sees who took it, and the symbol, for a moment, and it becomes the taker’s card. Then the next card is turned. A symbol that is on only one of the two cards locks you out for 2 seconds, and never costs a point.
+
+The game ends when the pile runs out. Whoever took the most cards wins.
+
+On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds. Your best time is kept on this device, and Challenge a friend sends them the same deck.`,
+      createDescription:
+        'Everybody races to spot the symbol their card shares with the middle card. A game is about two minutes.',
+      solo: {
+        summary:
+          'Your card and the middle card share exactly one symbol. Spot it thirty times, as fast as you can.',
+        facts: [
+          'Thirty cards against one clock',
+          'Any two cards share exactly one symbol',
+          'A wrong tap adds 3 seconds',
+          'Your best time is kept on this device',
+        ],
+      },
+      score: (cards) => plural(cards, 'card'),
+    },
     'liars-dice': {
       name: 'Liar’s Dice',
       tagline: 'Roll in secret. Bid on the whole table. Call the bluff.',
@@ -285,6 +324,31 @@ Clear the last level to win together. Two players play 7 levels, three play 6 an
       createDescription:
         'Play every card in order, together, without a word. Fewer players play more levels.',
       score: (levels) => plural(levels, 'level'),
+    },
+    'doodle-chain': {
+      name: 'Doodle Chain',
+      tagline: 'Write a line, draw it, pass it on, and watch it fall apart.',
+      facts: '3–8 players',
+      lobbySummary:
+        'Everyone writes a line. The next player draws it, the next says what the drawing shows, and so on round the table. Then the host shows every chain.',
+      lobbyFacts: [
+        '3–8 players',
+        'Up to 6 steps: write, then draw and describe in turn',
+        '30s to write · 60s to draw · 30s to describe',
+        'The host steps through the reveal',
+      ],
+      rules: `3–8 players · one step each, up to six
+
+Everyone starts a chain by writing a line: anything drawable, in any language. Stuck? Suggest fills in one. Then every chain moves one place round the table, and the next player draws the line they are given. The next one says in words what that drawing shows, the next draws those words, and so on. You only ever see the step before yours.
+
+Everyone plays each step at once. Writing and describing take 30 seconds, drawing takes the room’s drawing time. Press Done when you are finished, and the step ends early once everyone is done; when the clock runs out, whatever you have goes on as it is.
+
+A game has one step per player, but never more than six. If the entry before yours came back empty, you sit that step out and the chain goes on from the entry before it.
+
+Then the host shows every chain, one entry at a time, from its first line to its last. Give one heart in each chain to its best moment; your score is the hearts your entries get. The chains stay in the album until the next game starts.`,
+      createDescription:
+        'Write, draw and describe round the table, then watch every chain unfold. The players are the length: one step each, up to six.',
+      score: (hearts) => plural(hearts, 'heart'),
     },
     'daily-word': {
       name: 'Daily Word',

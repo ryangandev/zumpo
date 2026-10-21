@@ -8,10 +8,8 @@ import {
   roomCreateRequest,
   roomIdOnly,
 } from '../libs/validation.js';
-import {
-  roundsSetting,
-  startDrawingRequest,
-} from '../socket/draw-and-guess/validation.js';
+import { roundsSetting } from '../socket/draw-and-guess/validation.js';
+import { startDrawingRequest } from '../libs/drawing/validation.js';
 
 const validRoomId = randomUUID();
 

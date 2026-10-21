@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "name": "Zumpo/Win line",
+  "id": "162:62900",
+  "type": "COMPONENT_SET",
+  "key": "4d28681dbcb6b840b2b589fad8e8110cb200d994",
+  "properties": {
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Size=Regular",
+  "variants": [
+    {
+      "name": "Size=Regular",
+      "id": "162:62898",
+      "props": {
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62898",
+        "name": "Size=Regular",
+        "x": 24,
+        "y": 24,
+        "w": 176,
+        "h": "$Zumpo · UI:space/6",
+        "fills": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    },
+    {
+      "name": "Size=Small",
+      "id": "162:62899",
+      "props": {
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62899",
+        "name": "Size=Small",
+        "x": 24,
+        "y": 54,
+        "w": 106,
+        "h": "$Zumpo · UI:space/4",
+        "fills": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    }
+  ]
+}

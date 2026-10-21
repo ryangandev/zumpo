@@ -23,7 +23,7 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { DrawingCanvas, type Brush } from './canvas';
+import { DrawingCanvas, type Brush } from '../drawing/canvas';
 import styles from './room.module.css';
 
 type Room = RoomOf<DrawAndGuessRoomState>;

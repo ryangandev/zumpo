@@ -16,9 +16,11 @@ const SETTINGS: Record<GameType, object> = {
   'make-24': { hands: 5 },
   pairs: { board: 'Small' },
   trios: { trios: 10 },
+  snap: {},
   'liars-dice': { dicePerPlayer: 3 },
   hush: {},
   'daily-word': { rounds: 3 },
+  'doodle-chain': { drawingSeconds: 60 },
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];

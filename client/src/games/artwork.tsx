@@ -7,15 +7,19 @@ import {
   NumberCard,
   PairsCard,
   PickMarker,
+  SnapCard,
   symbolNamed,
   Tag,
   TriosCard,
 } from '../ui';
+import { turtle, TURTLE_SIZE } from '../ui/generated/drawings';
 import {
-  turtle,
-  TURTLE_SIZE,
-  type DrawingPart,
-} from '../ui/generated/drawings';
+  CHAIN_DRAWING_SIZE,
+  chainDrawings,
+  type ChainDrawingName,
+  type ChainDrawingPart,
+} from '../ui/generated/chain-drawings';
+import { SYMBOLS, type SymbolName } from '../../../shared/snap';
 import type { GameType } from '../../../shared/wire-types';
 import { cx } from '../ui/cx';
 import styles from './artwork.module.css';
@@ -56,14 +60,50 @@ function DrawingArtwork() {
 
 export function TurtleDrawing({ className }: { className?: string }) {
   return (
+    <SampleDrawing
+      parts={turtle.Done}
+      size={TURTLE_SIZE}
+      className={className}
+    />
+  );
+}
+
+/** Sample / Chain drawing: one of the drawings a chain shows off with. */
+export function ChainDrawing({
+  name,
+  className,
+}: {
+  name: ChainDrawingName;
+  className?: string;
+}) {
+  return (
+    <SampleDrawing
+      parts={chainDrawings[name]}
+      size={CHAIN_DRAWING_SIZE}
+      className={className}
+    />
+  );
+}
+
+/** A drawing from the Figma file, path for path, at any size. */
+function SampleDrawing({
+  parts,
+  size,
+  className,
+}: {
+  parts: readonly ChainDrawingPart[];
+  size: { width: number; height: number };
+  className?: string;
+}) {
+  return (
     <svg
       className={className}
-      viewBox={`0 0 ${TURTLE_SIZE.width} ${TURTLE_SIZE.height}`}
+      viewBox={`0 0 ${size.width} ${size.height}`}
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {turtle.Done.map((part: DrawingPart, index) =>
+      {parts.map((part, index) =>
         'ellipse' in part ? (
           <ellipse
             key={index}
@@ -72,6 +112,17 @@ export function TurtleDrawing({ className }: { className?: string }) {
             rx={part.w / 2}
             ry={part.h / 2}
             fill={part.fill}
+          />
+        ) : 'ring' in part ? (
+          // Stroked inside its box, as Figma strokes an ellipse.
+          <ellipse
+            key={index}
+            cx={part.x + part.w / 2}
+            cy={part.y + part.h / 2}
+            rx={(part.w - part.width) / 2}
+            ry={(part.h - part.width) / 2}
+            stroke={part.stroke}
+            strokeWidth={part.width}
           />
         ) : (
           <path
@@ -169,6 +220,36 @@ function TriosArtwork() {
   );
 }
 
+const snapSymbols = (...names: SymbolName[]) =>
+  names.map((name) => SYMBOLS.indexOf(name));
+/** Two Snap cards that share the star, marked on both. */
+const SNAP_A = snapSymbols(
+  'tree',
+  'star',
+  'plus',
+  'heart',
+  'diamond',
+  'triangle',
+);
+const SNAP_B = snapSymbols('star', 'bolt', 'crown', 'note', 'moon', 'cloud');
+const STAR_MATCH = { [SYMBOLS.indexOf('star')]: 'match' } as const;
+
+/** Two cards and the one symbol they share. */
+function SnapArtwork() {
+  return (
+    <div className={styles.snap}>
+      {[SNAP_A, SNAP_B].map((symbols) => (
+        <SnapCard
+          key={symbols.join()}
+          symbols={symbols}
+          size="mini"
+          marks={STAR_MATCH}
+        />
+      ))}
+    </div>
+  );
+}
+
 /** The top of a pile mid-level: two cards played, and the one on top. */
 function PileArtwork() {
   return (
@@ -199,14 +280,30 @@ function WordArtwork() {
   );
 }
 
+/** A chain's first line, its drawing, and what the drawing became. */
+function ChainArtwork() {
+  return (
+    <div className={styles.chain}>
+      <Tag tone="lime">turtle</Tag>
+      <ChainDrawing
+        name="Turtle on skateboard"
+        className={styles.chainDrawing}
+      />
+      <Tag tone="peach">burger?</Tag>
+    </div>
+  );
+}
+
 const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   'draw-and-guess': DrawingArtwork,
   minesweeper: BoardArtwork,
   'make-24': HandArtwork,
   pairs: PairsArtwork,
   trios: TriosArtwork,
+  snap: SnapArtwork,
   'liars-dice': DiceArtwork,
   hush: PileArtwork,
+  'doodle-chain': ChainArtwork,
   'daily-word': WordArtwork,
 };
 
@@ -246,6 +343,7 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
   ),
   // Two coral solid circles (shared/trios.ts)
   trios: () => <TriosCard card={3} state="found" size="mini" />,
+  snap: () => <SnapCard symbols={SNAP_B} size="mini" marks={STAR_MATCH} />,
   'liars-dice': () => (
     <div className={styles.iconGrid}>
       <Die face={5} state="counted" size="compact" label={null} />
@@ -258,6 +356,9 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
     <span className={styles.iconPile}>
       <HushCard value={58} state="pile" size="small" />
     </span>
+  ),
+  'doodle-chain': () => (
+    <ChainDrawing name="Burger on skates" className={styles.iconChain} />
   ),
   'daily-word': () => (
     <div className={styles.iconGrid}>

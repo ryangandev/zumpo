@@ -6,11 +6,13 @@ import path from 'node:path';
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
   PairsDurationsInSeconds,
   PhaseDurationsInSeconds,
+  SnapDurationsInSeconds,
   TriosDurationsInSeconds,
 } from './libs/game-clock.js';
 import { createRoomRegistry } from './libs/rooms/registry.js';
@@ -24,9 +26,11 @@ import { createMinesweeperModule } from './socket/minesweeper/index.js';
 import { createMake24Module } from './socket/make-24/index.js';
 import { createPairsModule } from './socket/pairs/index.js';
 import { createTriosModule } from './socket/trios/index.js';
+import { createSnapModule } from './socket/snap/index.js';
 import { createLiarsDiceModule } from './socket/liars-dice/index.js';
 import { createHushModule } from './socket/hush/index.js';
 import { createDailyWordModule } from './socket/daily-word/index.js';
+import { createDoodleChainModule } from './socket/doodle-chain/index.js';
 import { clientDepartureOnDisconnectHandler } from './socket/client-disconnect-handler.js';
 import { playerSessionHandler } from './socket/player-session-handler.js';
 import {
@@ -121,12 +125,16 @@ interface CreateZumpoServerOptions {
   pairsDurations?: PairsDurationsInSeconds;
   /** A taken trio's pause, a lockout and the hint clock. Shortened by tests. */
   triosDurations?: TriosDurationsInSeconds;
+  /** A taken middle card's pause and a lockout. Shortened by tests. */
+  snapDurations?: SnapDurationsInSeconds;
   /** A Liar's Dice turn and a call's reveal. Shortened by tests. */
   liarsDiceDurations?: LiarsDiceDurationsInSeconds;
   /** Hush's countdown, mistake pause and cleared level. Shortened by tests. */
   hushDurations?: HushDurationsInSeconds;
   /** A Daily Word round and its results. Shortened by tests. */
   dailyWordDurations?: DailyWordDurationsInSeconds;
+  /** Doodle Chain's steps and the pause between them. Shortened by tests. */
+  doodleChainDurations?: DoodleChainDurationsInSeconds;
   /**
    * Deals every Daily Word game's words from this seed instead of at random,
    * so a test run plays the same words each time. Defaults to
@@ -185,9 +193,11 @@ const createZumpoServer = (
     make24Durations,
     pairsDurations,
     triosDurations,
+    snapDurations,
     liarsDiceDurations,
     hushDurations,
     dailyWordDurations,
+    doodleChainDurations,
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
     graceInSeconds,
     maxRooms = DEFAULT_MAX_ROOMS,
@@ -245,6 +255,7 @@ const createZumpoServer = (
   registry.register(createMake24Module(registry.context, make24Durations));
   registry.register(createPairsModule(registry.context, pairsDurations));
   registry.register(createTriosModule(registry.context, triosDurations));
+  registry.register(createSnapModule(registry.context, snapDurations));
   // A Hush level waits for a dropped player as long as their seat is held,
   // and shows that wait as its clock.
   registry.register(
@@ -255,6 +266,9 @@ const createZumpoServer = (
   );
   registry.register(
     createDailyWordModule(registry.context, dailyWordDurations, dailyWordSeed),
+  );
+  registry.register(
+    createDoodleChainModule(registry.context, doodleChainDurations),
   );
 
   const membership = createRoomMembership(

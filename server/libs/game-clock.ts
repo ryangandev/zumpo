@@ -1,3 +1,5 @@
+import * as doodleChain from '../../shared/doodle-chain.js';
+
 /**
  * How long each phase of a turn lasts. These live on the server because the
  * server is what enforces them - clients are told how much time is left, they
@@ -132,6 +134,41 @@ const dailyWordDurationsInSeconds: DailyWordDurationsInSeconds = {
 };
 
 /**
+ * Doodle Chain's clock. A drawing step lasts as long as its room chose, so it
+ * is here only to be overridden: unset, each room's own setting stands.
+ */
+interface DoodleChainDurationsInSeconds {
+  /** How long everybody has to write a prompt. */
+  write: number;
+  /** How long everybody has to describe a drawing. */
+  describe: number;
+  /** The pause between steps, while the chains move on. */
+  passing: number;
+  /** When set, every room's drawing time, whatever the room chose. */
+  draw?: number;
+}
+
+const doodleChainDurationsInSeconds: DoodleChainDurationsInSeconds = {
+  write: readSecondsFromEnv('DC_WRITE_SECONDS', doodleChain.WRITE_SECONDS),
+  describe: readSecondsFromEnv(
+    'DC_DESCRIBE_SECONDS',
+    doodleChain.DESCRIBE_SECONDS,
+  ),
+  passing: readSecondsFromEnv(
+    'DC_PASSING_SECONDS',
+    doodleChain.PASSING_SECONDS,
+  ),
+  ...(process.env.DC_DRAW_SECONDS
+    ? {
+        draw: readSecondsFromEnv(
+          'DC_DRAW_SECONDS',
+          doodleChain.DEFAULT_DRAWING_SECONDS,
+        ),
+      }
+    : {}),
+};
+
+/**
  * Trios' clock. A table has no deadline of its own: nothing ends while
  * everybody looks, so these are the pause after a trio, the cost of a wrong
  * claim, and how long a silence lasts before a hint breaks it.
@@ -149,6 +186,23 @@ const triosDurationsInSeconds: TriosDurationsInSeconds = {
   taken: readSecondsFromEnv('TRIOS_TAKEN_SECONDS', 2),
   lockout: readSecondsFromEnv('TRIOS_LOCKOUT_SECONDS', 3),
   hint: readSecondsFromEnv('TRIOS_HINT_SECONDS', 30),
+};
+
+/**
+ * Snap's clock. A middle card has no deadline: nothing ends while everybody
+ * looks, so these are the pause after a card is taken and the cost of a
+ * wrong claim.
+ */
+interface SnapDurationsInSeconds {
+  /** How long a taken middle card stays in play before the next is turned. */
+  taken: number;
+  /** How long a wrong claim locks its player out. */
+  lockout: number;
+}
+
+const snapDurationsInSeconds: SnapDurationsInSeconds = {
+  taken: readSecondsFromEnv('SNAP_TAKEN_SECONDS', 1.5),
+  lockout: readSecondsFromEnv('SNAP_LOCKOUT_SECONDS', 2),
 };
 
 /**
@@ -171,9 +225,11 @@ export {
   make24DurationsInSeconds,
   pairsDurationsInSeconds,
   triosDurationsInSeconds,
+  snapDurationsInSeconds,
   liarsDiceDurationsInSeconds,
   hushDurationsInSeconds,
   dailyWordDurationsInSeconds,
+  doodleChainDurationsInSeconds,
   reconnectGraceInSeconds,
 };
 export type {
@@ -182,7 +238,9 @@ export type {
   Make24DurationsInSeconds,
   PairsDurationsInSeconds,
   TriosDurationsInSeconds,
+  SnapDurationsInSeconds,
   LiarsDiceDurationsInSeconds,
   HushDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
 };

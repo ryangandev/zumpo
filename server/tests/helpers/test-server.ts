@@ -10,26 +10,31 @@ import {
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
   PairsDurationsInSeconds,
   PhaseDurationsInSeconds,
   TriosDurationsInSeconds,
+  SnapDurationsInSeconds,
 } from '../../libs/game-clock.js';
 import type { MinesweeperState } from '../../socket/minesweeper/index.js';
 import type { Make24State } from '../../socket/make-24/index.js';
 import type { PairsState } from '../../socket/pairs/index.js';
 import type { TriosState } from '../../socket/trios/index.js';
+import type { SnapState } from '../../socket/snap/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
+import type { DoodleChainState } from '../../socket/doodle-chain/index.js';
 import type {
   AnyLobbyRoomInfo,
   AnyRoomState,
   ChatMessage,
   ClientToServerEvents,
   DailyWordRoomState,
+  DoodleChainRoomState,
   DrawAndGuessRoomState,
   DrawAndGuessState,
   GameType,
@@ -44,6 +49,7 @@ import type {
   PlayerIdentity,
   RoomSeat,
   TriosRoomState,
+  SnapRoomState,
   ServerToClientEvent,
   ServerToClientEvents,
 } from '../../models/types.js';
@@ -104,6 +110,15 @@ const FAST_TRIOS: TriosDurationsInSeconds = {
 };
 
 /**
+ * A taken card on show long enough to assert on, and a lockout that outlasts
+ * a second claim.
+ */
+const FAST_SNAP: SnapDurationsInSeconds = {
+  taken: 0.2,
+  lockout: 1,
+};
+
+/**
  * A turn long enough to bid or call deliberately inside it, and a reveal long
  * enough to assert on before the next round is rolled.
  */
@@ -129,6 +144,17 @@ const FAST_HUSH: HushDurationsInSeconds = {
 const FAST_DAILY_WORD: DailyWordDurationsInSeconds = {
   round: 2,
   reveal: 0.1,
+};
+
+/**
+ * Steps long enough to write, draw and press Done deliberately inside them,
+ * which is how most tests end a step, and a short pause between them.
+ */
+const FAST_DOODLE_CHAIN: DoodleChainDurationsInSeconds = {
+  write: 2,
+  describe: 2,
+  draw: 2,
+  passing: 0.15,
 };
 
 /** A client socket typed on the contract, from the client's side of it. */
@@ -188,9 +214,11 @@ const startTestServer = async (
     make24Durations,
     pairsDurations,
     triosDurations: FAST_TRIOS,
+    snapDurations: FAST_SNAP,
     liarsDiceDurations: FAST_LIARS_DICE,
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
+    doodleChainDurations: FAST_DOODLE_CHAIN,
     graceInSeconds,
     // Every test client comes from this machine; the limits' own tests turn
     // them back on.
@@ -344,6 +372,13 @@ const waitForTriosState = (
   timeoutMs = 3000,
 ) => waitForState<TriosRoomState>(client, predicate, timeoutMs);
 
+/** And for Snap. */
+const waitForSnapState = (
+  client: ClientSocket,
+  predicate: (state: SnapRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<SnapRoomState>(client, predicate, timeoutMs);
+
 /** And for Liar's Dice. */
 const waitForLiarsDiceState = (
   client: ClientSocket,
@@ -364,6 +399,13 @@ const waitForDailyWordState = (
   predicate: (state: DailyWordRoomState) => boolean = () => true,
   timeoutMs = 3000,
 ) => waitForState<DailyWordRoomState>(client, predicate, timeoutMs);
+
+/** And for Doodle Chain. */
+const waitForDoodleChainState = (
+  client: ClientSocket,
+  predicate: (state: DoodleChainRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<DoodleChainRoomState>(client, predicate, timeoutMs);
 
 /** Resolves with the next chat message that satisfies `predicate`. */
 const waitForChat = async (
@@ -539,6 +581,23 @@ const createTriosRoom = async (
   return answer.roomId;
 };
 
+/** Creates a Snap room, with its creator seated, and returns its id. */
+const createSnapRoom = async (
+  client: ClientSocket,
+  options: { username?: string; maxPlayers?: number } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'snap',
+    roomName: 'Spot on',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 4,
+    password: '',
+    settings: {},
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
 /** Creates a Liar's Dice room, with its creator seated, and returns its id. */
 const createLiarsDiceRoom = async (
   client: ClientSocket,
@@ -576,6 +635,38 @@ const createHushRoom = async (
   if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
   return answer.roomId;
 };
+
+/** Creates a Doodle Chain room, with its creator seated, and returns its id. */
+const createDoodleChainRoom = async (
+  client: ClientSocket,
+  options: {
+    username?: string;
+    drawingSeconds?: number;
+    maxPlayers?: number;
+  } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'doodle-chain',
+    roomName: 'Sketchbook',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 8,
+    password: '',
+    settings: { drawingSeconds: options.drawingSeconds ?? 60 },
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/**
+ * The server's own Doodle Chain room. Tests read the chains through it on
+ * purpose: what everybody made is exactly what no client is sent before the
+ * reveal.
+ */
+const doodleChainRoom = (
+  harness: TestServer,
+  roomId: string,
+): Room<DoodleChainState> =>
+  harness.server.rooms.get(roomId) as Room<DoodleChainState>;
 
 /**
  * Takes a seat, or a spectator seat, and fails the test if the server
@@ -772,6 +863,13 @@ const triosRoom = (harness: TestServer, roomId: string): Room<TriosState> =>
   harness.server.rooms.get(roomId) as Room<TriosState>;
 
 /**
+ * The server's own Snap room. Tests read the pile and the hands through it to
+ * know what is coming and what another player holds, which no client is sent.
+ */
+const snapRoom = (harness: TestServer, roomId: string): Room<SnapState> =>
+  harness.server.rooms.get(roomId) as Room<SnapState>;
+
+/**
  * The server's own Liar's Dice room. Tests read and set the dice through it on
  * purpose: a call can only be played deliberately by knowing what the cups
  * hold, which is exactly what a client is never sent.
@@ -866,9 +964,11 @@ export {
   FAST_MAKE24,
   FAST_PAIRS,
   FAST_TRIOS,
+  FAST_SNAP,
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
+  FAST_DOODLE_CHAIN,
   startTestServer,
   waitFor,
   waitForState,
@@ -877,9 +977,11 @@ export {
   waitForMake24State,
   waitForPairsState,
   waitForTriosState,
+  waitForSnapState,
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
+  waitForDoodleChainState,
   waitForChat,
   collect,
   collectChat,
@@ -891,9 +993,11 @@ export {
   createMake24Room,
   createPairsRoom,
   createTriosRoom,
+  createSnapRoom,
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
+  createDoodleChainRoom,
   joinRoom,
   seatTable,
   TWO_NAMES,
@@ -909,10 +1013,12 @@ export {
   playToFirstHand,
   pairsRoom,
   triosRoom,
+  snapRoom,
   liarsDiceRoom,
   hushRoom,
   dailyWordRoom,
   playToFirstWord,
+  doodleChainRoom,
 };
 export type { TestServer, TestClient, ClientSocket, ClientsFor };
 

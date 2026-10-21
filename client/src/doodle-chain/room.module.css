@@ -1,0 +1,80 @@
+/* DC12-DC14: the reveal and the album, on a paper panel. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-24);
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+  container-type: inline-size;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+}
+
+.title {
+  margin: 0;
+  font: var(--zumpo-text-title);
+  letter-spacing: var(--zumpo-text-title-tracking);
+}
+
+.detail {
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zumpo-space-8);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--zumpo-line);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+.hint {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+/* The host's hint, then Next. */
+.reveal {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+/* On a phone the album's hint takes a line of its own under the buttons, and
+   Next spans the panel above the reveal's (DC19). */
+@container (max-width: 560px) {
+  .hint {
+    flex-basis: 100%;
+  }
+
+  .reveal {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

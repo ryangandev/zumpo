@@ -1,0 +1,1615 @@
+{
+  "format": 1,
+  "name": "Zumpo/Chain entry",
+  "id": "162:66197",
+  "type": "COMPONENT_SET",
+  "key": "ce232e75ae6780597c5a05a03141c2b450191f05",
+  "description": "One entry of a chain, in the reveal and the album: who made it, and the words or the drawing. Prompt is the first line, Description a later one, Empty a step that ran out of time. Heart shows the heart button; Favourite marks the crowd favourite.",
+  "properties": {
+    "Heart": {
+      "type": "boolean",
+      "default": true
+    },
+    "Favourite": {
+      "type": "boolean",
+      "default": false
+    },
+    "Kind": {
+      "type": "variant",
+      "default": "Prompt",
+      "options": [
+        "Prompt",
+        "Drawing",
+        "Description",
+        "Empty"
+      ]
+    },
+    "Layout": {
+      "type": "variant",
+      "default": "Desktop",
+      "options": [
+        "Desktop",
+        "Phone"
+      ]
+    }
+  },
+  "defaultVariant": "Kind=Prompt, Layout=Desktop",
+  "variants": [
+    {
+      "name": "Kind=Prompt, Layout=Desktop",
+      "id": "162:66025",
+      "props": {
+        "Kind": "Prompt",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66025",
+        "name": "Kind=Prompt, Layout=Desktop",
+        "x": 24,
+        "y": 24,
+        "w": 600,
+        "h": 92,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66026",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "4:34",
+            "props": {
+              "Initials": "MA"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66028",
+            "name": "Body",
+            "w": 548,
+            "h": 92,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66029",
+                "name": "Head",
+                "w": 548,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66030",
+                    "name": "Who",
+                    "w": 489,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66031",
+                        "name": "Name",
+                        "w": 37,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Maya",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66032",
+                        "name": "Verb",
+                        "w": 98,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "started the chain",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66033",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66038",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66041",
+                "name": "Bubble",
+                "w": 548,
+                "h": 54,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/lime"
+                ],
+                "radius": [
+                  "$Zumpo · UI:radius/4",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16"
+                ],
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    "$Zumpo · UI:space/12",
+                    "$Zumpo · UI:space/16"
+                  ],
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66042",
+                    "name": "Line",
+                    "w": 516,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "A turtle on a skateboard",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Drawing, Layout=Desktop",
+      "id": "162:66043",
+      "props": {
+        "Kind": "Drawing",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66043",
+        "name": "Kind=Drawing, Layout=Desktop",
+        "x": 656,
+        "y": 24,
+        "w": 600,
+        "h": 337,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66044",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Blue"
+            },
+            "componentId": "26:10568"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66046",
+            "name": "Body",
+            "w": 548,
+            "h": 337,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66047",
+                "name": "Head",
+                "w": 548,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66048",
+                    "name": "Who",
+                    "w": 489,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66049",
+                        "name": "Name",
+                        "w": 34,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Ryan",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66050",
+                        "name": "Verb",
+                        "w": 40,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "drew it",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66051",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66056",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66059",
+                "name": "Drawing",
+                "w": 399,
+                "h": 299,
+                "fills": [
+                  "$Zumpo · UI:color/white"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/16",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66060",
+                    "name": "Sample drawing",
+                    "w": 399,
+                    "h": 266,
+                    "component": "Sample / Chain drawing",
+                    "variant": {
+                      "Drawing": "Turtle on skateboard"
+                    },
+                    "componentId": "162:65765"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Description, Layout=Desktop",
+      "id": "162:66077",
+      "props": {
+        "Kind": "Description",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66077",
+        "name": "Kind=Description, Layout=Desktop",
+        "x": 1288,
+        "y": 24,
+        "w": 600,
+        "h": 94,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66078",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Lime"
+            },
+            "componentId": "26:10570",
+            "props": {
+              "Initials": "LE"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66080",
+            "name": "Body",
+            "w": 548,
+            "h": 94,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66081",
+                "name": "Head",
+                "w": 548,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66082",
+                    "name": "Who",
+                    "w": 489,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66083",
+                        "name": "Name",
+                        "w": 25,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Leo",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66084",
+                        "name": "Verb",
+                        "w": 69,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "described it",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66085",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66090",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66093",
+                "name": "Bubble",
+                "w": 548,
+                "h": 56,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": [
+                  "$Zumpo · UI:radius/4",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16"
+                ],
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    "$Zumpo · UI:space/12",
+                    "$Zumpo · UI:space/16"
+                  ],
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66094",
+                    "name": "Line",
+                    "w": 514,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "A hamburger on roller skates",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Empty, Layout=Desktop",
+      "id": "162:66095",
+      "props": {
+        "Kind": "Empty",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66095",
+        "name": "Kind=Empty, Layout=Desktop",
+        "x": 1920,
+        "y": 24,
+        "w": 600,
+        "h": 40,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66096",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Sand"
+            },
+            "componentId": "26:10572",
+            "props": {
+              "Initials": "SA"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66098",
+            "name": "Body",
+            "w": 548,
+            "h": 20,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66099",
+                "name": "Head",
+                "w": 548,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66100",
+                    "name": "Who",
+                    "w": 548,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66101",
+                        "name": "Name",
+                        "w": 30,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Sam",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66102",
+                        "name": "Verb",
+                        "w": 85,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "ran out of time",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66103",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66108",
+                    "name": "Heart",
+                    "visible": false,
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Prompt, Layout=Phone",
+      "id": "162:66111",
+      "props": {
+        "Kind": "Prompt",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66111",
+        "name": "Kind=Prompt, Layout=Phone",
+        "x": 24,
+        "y": 393,
+        "w": 350,
+        "h": 118,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66112",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "4:34",
+            "props": {
+              "Initials": "MA"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66114",
+            "name": "Body",
+            "w": 302,
+            "h": 118,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66115",
+                "name": "Head",
+                "w": 302,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66116",
+                    "name": "Who",
+                    "w": 243,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66117",
+                        "name": "Name",
+                        "w": 37,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Maya",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66118",
+                        "name": "Verb",
+                        "w": 98,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "started the chain",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66119",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66124",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66127",
+                "name": "Bubble",
+                "w": 302,
+                "h": 80,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/lime"
+                ],
+                "radius": [
+                  "$Zumpo · UI:radius/4",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16"
+                ],
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    "$Zumpo · UI:space/10",
+                    "$Zumpo · UI:space/14"
+                  ],
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66128",
+                    "name": "Line",
+                    "w": 274,
+                    "h": 60,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "A turtle on a skateboard",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Drawing, Layout=Phone",
+      "id": "162:66129",
+      "props": {
+        "Kind": "Drawing",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66129",
+        "name": "Kind=Drawing, Layout=Phone",
+        "x": 406,
+        "y": 393,
+        "w": 350,
+        "h": 261,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66130",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Blue"
+            },
+            "componentId": "26:10568"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66132",
+            "name": "Body",
+            "w": 302,
+            "h": 261,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66133",
+                "name": "Head",
+                "w": 302,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66134",
+                    "name": "Who",
+                    "w": 243,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66135",
+                        "name": "Name",
+                        "w": 34,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Ryan",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66136",
+                        "name": "Verb",
+                        "w": 40,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "drew it",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66137",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66142",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66145",
+                "name": "Drawing",
+                "w": 298,
+                "h": 223,
+                "fills": [
+                  "$Zumpo · UI:color/white"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/16",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66146",
+                    "name": "Sample drawing",
+                    "w": 298,
+                    "h": 198.67,
+                    "component": "Sample / Chain drawing",
+                    "variant": {
+                      "Drawing": "Turtle on skateboard"
+                    },
+                    "componentId": "162:65765"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Description, Layout=Phone",
+      "id": "162:66163",
+      "props": {
+        "Kind": "Description",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66163",
+        "name": "Kind=Description, Layout=Phone",
+        "x": 788,
+        "y": 393,
+        "w": 350,
+        "h": 120,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66164",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Lime"
+            },
+            "componentId": "26:10570",
+            "props": {
+              "Initials": "LE"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66166",
+            "name": "Body",
+            "w": 302,
+            "h": 120,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66167",
+                "name": "Head",
+                "w": 302,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66168",
+                    "name": "Who",
+                    "w": 243,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66169",
+                        "name": "Name",
+                        "w": 25,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Leo",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66170",
+                        "name": "Verb",
+                        "w": 69,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "described it",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66171",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66176",
+                    "name": "Heart",
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "visible": "Heart"
+                    },
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66179",
+                "name": "Bubble",
+                "w": 302,
+                "h": 82,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": [
+                  "$Zumpo · UI:radius/4",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16",
+                  "$Zumpo · UI:radius/16"
+                ],
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    "$Zumpo · UI:space/10",
+                    "$Zumpo · UI:space/14"
+                  ],
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66180",
+                    "name": "Line",
+                    "w": 272,
+                    "h": 60,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "A hamburger on roller skates",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Empty, Layout=Phone",
+      "id": "162:66181",
+      "props": {
+        "Kind": "Empty",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66181",
+        "name": "Kind=Empty, Layout=Phone",
+        "x": 1170,
+        "y": 393,
+        "w": 350,
+        "h": 40,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66182",
+            "name": "Avatar",
+            "w": 40,
+            "h": 40,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Sand"
+            },
+            "componentId": "26:10572",
+            "props": {
+              "Initials": "SA"
+            }
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66184",
+            "name": "Body",
+            "w": 302,
+            "h": 20,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66185",
+                "name": "Head",
+                "w": 302,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:66186",
+                    "name": "Who",
+                    "w": 302,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:66187",
+                        "name": "Name",
+                        "w": 30,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Sam",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:66188",
+                        "name": "Verb",
+                        "w": 85,
+                        "h": 18,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "ran out of time",
+                        "textStyle": "Zumpo/Small",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66189",
+                        "name": "Favourite",
+                        "visible": false,
+                        "w": 115,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "visible": "Favourite"
+                        },
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Peach"
+                        },
+                        "componentId": "24:6526",
+                        "props": {
+                          "Label": "Crowd favourite"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 115
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66194",
+                    "name": "Heart",
+                    "visible": false,
+                    "w": 51,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Heart button",
+                    "variant": {
+                      "State": "Off"
+                    },
+                    "componentId": "162:65803"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

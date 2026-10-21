@@ -1,0 +1,166 @@
+{
+  "format": 1,
+  "name": "Zumpo/Code marks board",
+  "id": "162:69758",
+  "type": "COMPONENT",
+  "key": "37230b5b692c7cfdeb89ac9f15a5e84d3bfb77f5",
+  "description": "A board as marks only: ten rows of Code marks (Row), no digits. The others' boards while a round runs, and the challenge preview of your own result.",
+  "node": {
+    "type": "COMPONENT",
+    "id": "162:69758",
+    "name": "Zumpo/Code marks board",
+    "x": 1265,
+    "y": 71,
+    "w": 76,
+    "h": 196,
+    "wSize": "hug",
+    "hSize": "hug",
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/4",
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:69759",
+        "name": "Guess 1",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69764",
+        "name": "Guess 2",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69769",
+        "name": "Guess 3",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69774",
+        "name": "Guess 4",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69779",
+        "name": "Guess 5",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69784",
+        "name": "Guess 6",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69789",
+        "name": "Guess 7",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69794",
+        "name": "Guess 8",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69799",
+        "name": "Guess 9",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:69804",
+        "name": "Guess 10",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Code marks",
+        "variant": {
+          "Layout": "Row"
+        },
+        "componentId": "162:62573"
+      }
+    ]
+  }
+}

@@ -88,6 +88,10 @@ export const notices = {
   ): string => `Game has started! ${n.trios} trios to find.`,
   'trios:found': (n: Extract<RoomNotice, { type: 'trios:found' }>): string =>
     `${who(n.name)} found a trio! (+1)`,
+  'snap:started': (n: Extract<RoomNotice, { type: 'snap:started' }>): string =>
+    `Game has started! ${n.cards} cards to win.`,
+  'snap:took': (n: Extract<RoomNotice, { type: 'snap:took' }>): string =>
+    `${who(n.name)} took a card! (+1)`,
   'ld:started': (n: Extract<RoomNotice, { type: 'ld:started' }>): string =>
     `Game has started! ${n.dice} dice each, ${n.seconds} seconds a turn.`,
   'ld:auto-bid': (n: Extract<RoomNotice, { type: 'ld:auto-bid' }>): string =>
@@ -124,4 +128,14 @@ export const notices = {
     `${who(n.name)} got it in ${n.guesses}! (+${n.points})`,
   'dw:revealed': (n: Extract<RoomNotice, { type: 'dw:revealed' }>): string =>
     `The word was ${n.word}.`,
+  'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
+    n.kind === 'prompt'
+      ? `Step ${n.step}: write the first line.`
+      : n.kind === 'drawing'
+        ? `Step ${n.step}: draw the words you were given.`
+        : `Step ${n.step}: describe the drawing you were given.`,
+  'dc:reveal': (n: Extract<RoomNotice, { type: 'dc:reveal' }>): string =>
+    `Time for the reveal! ${who(n.host)} shows the chains.`,
+  'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>
+    'Every chain is in the album.',
 };

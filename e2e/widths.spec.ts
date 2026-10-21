@@ -228,6 +228,20 @@ test('trios fits every width', async ({ player }) => {
   await fitsEveryWidth(maya, 'a table in a room');
 });
 
+test('snap fits every width', async ({ player }) => {
+  const sam = await player('Sam');
+  await sam.goto('/games/snap/solo');
+  await startSolo(sam);
+  await expect(sam.getByText('Card 1 of 30').first()).toBeVisible();
+  await fitsEveryWidth(sam, 'two cards on your own');
+  const maya = await player('Maya');
+  const leo = await player('Leo');
+  await joinRoom(leo, await createRoom(maya, 'snap', { seats: 2 }));
+  await start(maya);
+  await expect(maya.getByText('0 of 29 cards').first()).toBeVisible();
+  await fitsEveryWidth(maya, 'two cards in a room');
+});
+
 test("liar's dice fits every width", async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/liars-dice/solo');
@@ -282,4 +296,17 @@ test('daily word fits every width', async ({ player }) => {
   await start(maya);
   await expect(maya.getByText('Word 1 of 3').first()).toBeVisible();
   await fitsEveryWidth(maya, 'a word in a room');
+});
+
+test('doodle chain fits every width', async ({ player }) => {
+  const maya = await player('Maya');
+  const link = await createRoom(maya, 'doodle-chain', { seats: 3 });
+  for (const name of ['Leo', 'Sam']) await joinRoom(await player(name), link);
+  await expect(maya.getByText(/^3 players, so 3 steps/)).toBeVisible();
+  await start(maya);
+  const field = maya.getByRole('textbox', { name: 'Your first line' });
+  await field.fill('A turtle on a skateboard');
+  await fitsEveryWidth(maya, 'writing the first line');
+  await maya.getByRole('button', { name: 'Done' }).click();
+  await fitsEveryWidth(maya, 'done, waiting for the others');
 });

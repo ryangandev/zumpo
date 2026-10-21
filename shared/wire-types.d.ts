@@ -32,9 +32,11 @@ type GameType =
   | 'make-24'
   | 'pairs'
   | 'trios'
+  | 'snap'
   | 'liars-dice'
   | 'hush'
-  | 'daily-word';
+  | 'daily-word'
+  | 'doodle-chain';
 
 type RoomStatus = 'Open' | 'Full' | 'In Progress';
 
@@ -155,9 +157,11 @@ interface RoomCreateRequest {
     | Make24Settings
     | PairsSettings
     | TriosSettings
+    | SnapSettings
     | LiarsDiceSettings
     | HushSettings
-    | DailyWordSettings;
+    | DailyWordSettings
+    | DoodleChainSettings;
 }
 
 interface DrawAndGuessSettings {
@@ -187,6 +191,9 @@ interface TriosSettings {
   trios: number;
 }
 
+/** Snap has nothing to choose but the seats; the deck is always 31 cards. */
+type SnapSettings = Record<string, never>;
+
 interface LiarsDiceSettings {
   /** Dice each player starts a game with: 3 or 5. */
   dicePerPlayer: number;
@@ -194,6 +201,11 @@ interface LiarsDiceSettings {
 
 /** Hush has nothing to choose but the seats; its level count follows them. */
 type HushSettings = Record<string, never>;
+
+/** How long a drawing step lasts, one of `DRAWING_SECONDS` in `shared/doodle-chain.ts`. */
+interface DoodleChainSettings {
+  drawingSeconds: number;
+}
 
 interface DailyWordSettings {
   /** Words a game has: 3 or 5. */
@@ -245,6 +257,10 @@ interface TriosLobbyRoomInfo extends LobbyRoomInfo {
   trios: number;
 }
 
+interface SnapLobbyRoomInfo extends LobbyRoomInfo {
+  gameType: 'snap';
+}
+
 interface LiarsDiceLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'liars-dice';
   dicePerPlayer: number;
@@ -252,6 +268,11 @@ interface LiarsDiceLobbyRoomInfo extends LobbyRoomInfo {
 
 interface HushLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'hush';
+}
+
+interface DoodleChainLobbyRoomInfo extends LobbyRoomInfo {
+  gameType: 'doodle-chain';
+  drawingSeconds: number;
 }
 
 interface DailyWordLobbyRoomInfo extends LobbyRoomInfo {
@@ -265,9 +286,11 @@ type AnyLobbyRoomInfo =
   | Make24LobbyRoomInfo
   | PairsLobbyRoomInfo
   | TriosLobbyRoomInfo
+  | SnapLobbyRoomInfo
   | LiarsDiceLobbyRoomInfo
   | HushLobbyRoomInfo
-  | DailyWordLobbyRoomInfo;
+  | DailyWordLobbyRoomInfo
+  | DoodleChainLobbyRoomInfo;
 
 // ---------------------------------------------------------------------------
 // Rooms
@@ -587,6 +610,72 @@ interface TriosRoomState extends RoomState {
 }
 
 /**
+ * waiting: no game; finding: everybody looks for their match with the middle
+ * card; taken: the middle card just taken stays for everybody, before the
+ * next is turned up.
+ */
+type SnapPhase = 'waiting' | 'finding' | 'taken';
+
+/** A Snap card: its six symbols in spot order, the first in the centre. */
+type SnapCard = number[];
+
+/** The middle card, and which card of the game it is, from 0. */
+interface SnapMiddle {
+  number: number;
+  symbols: SnapCard;
+}
+
+/** A middle card somebody took: who, which, and the symbol they matched. */
+interface SnapTake {
+  playerId: string;
+  username: string;
+  number: number;
+  symbol: number;
+}
+
+/** A symbol on only one of the two cards: which card it is on. */
+interface SnapMiss {
+  symbol: number;
+  on: 'mine' | 'middle';
+}
+
+interface SnapGameSummary extends GameSummary {
+  /** Cards a game has to take: 31 less the players dealt in. */
+  cards: number;
+  /** Cards taken; fewer when the game ended early. */
+  taken: number;
+}
+
+/**
+ * A Snap room, as one player may see it. Points are cards taken. The pile's
+ * order and everybody else's card never leave the server; a lockout and its
+ * symbol are the viewer's own.
+ */
+interface SnapRoomState extends RoomState {
+  gameType: 'snap';
+  phase: SnapPhase;
+  /** Cards this game has to take; 0 before the first game. */
+  cards: number;
+  taken: number;
+  /** The middle card in play, or the last game's as it ended; null before. */
+  middle: SnapMiddle | null;
+  /** This player's own card; null for a spectator or before the first game. */
+  myCard: SnapCard | null;
+  /** The latest card taken this game, kept after the next is turned up. */
+  lastTake: SnapTake | null;
+  /** How long the middle card has been in play, during `finding`; 0 otherwise. */
+  cardMs: number;
+  /** How long this player is still locked out after a wrong claim; 0 if not. */
+  lockedOutMs: number;
+  /**
+   * This player's symbol that was not a match, while locked out and the
+   * middle card it was about is still in play.
+   */
+  myMiss: SnapMiss | null;
+  lastGame: SnapGameSummary | null;
+}
+
+/**
  * waiting: no game; bidding: the player whose turn it is raises or calls Liar;
  * reveal: every cup is open after a call.
  */
@@ -823,15 +912,145 @@ interface DailyWordRoomState extends RoomState {
   lastGame: DailyWordGameSummary | null;
 }
 
+/** What a step asks for, and so what each entry of a chain is. */
+type DoodleChainKind = 'prompt' | 'drawing' | 'description';
+
+/**
+ * waiting: no game, and the album of the last one; write: everybody writes a
+ * prompt; draw: everybody draws the words they were given; describe:
+ * everybody says what the drawing they were given shows; passing: a step has
+ * ended and the chains move on; reveal: the host shows the chains, an entry
+ * at a time.
+ */
+type DoodleChainPhase =
+  'waiting' | 'write' | 'draw' | 'describe' | 'passing' | 'reveal';
+
+/** Somebody in the game, under the name they go by now. */
+interface DoodleChainPlayer {
+  playerId: string;
+  username: string;
+}
+
+/**
+ * What a player is writing: their own words, or a suggestion by its number in
+ * the catalog's list, which each viewer reads in their own language.
+ */
+type DoodleChainDraft = { text: string } | { suggestion: number };
+
+/**
+ * What an entry holds. A drawing is its id: its strokes travel apart, by
+ * `dc:drawing`. An empty entry ran out of time, or its player had left.
+ */
+type DoodleChainContent =
+  | { type: 'text'; text: string }
+  | { type: 'suggestion'; suggestion: number }
+  | { type: 'drawing'; drawing: string }
+  | { type: 'empty'; reason: 'time' | 'left' };
+
+/** One entry of a chain: what one player made of it at one step. */
+interface DoodleChainEntry {
+  /** The chain, by the place of the player who started it, from 0. */
+  chain: number;
+  /** The step it was made at, from 1. */
+  step: number;
+  kind: DoodleChainKind;
+  author: DoodleChainPlayer;
+  content: DoodleChainContent;
+  /** Hearts it was given in the reveal. */
+  hearts: number;
+}
+
+/** What everybody may know about one player during a step. */
+interface DoodleChainSeat {
+  done: boolean;
+  /** Has nothing to work on this step: see `DoodleChainTask.sitsOut`. */
+  sitsOut: boolean;
+}
+
+/** The viewer's own part in the step being played. */
+interface DoodleChainTask {
+  kind: DoodleChainKind;
+  /** The chain they work on, or sit out. */
+  chain: number;
+  /**
+   * What they work from: the chain's last entry that is not empty. Absent at
+   * step 1, in `passing`, and while sitting out.
+   */
+  given?: DoodleChainEntry;
+  /**
+   * The chain's last entry that is not empty is the wrong kind for this step,
+   * because the one after it is empty: they sit this chain out for a step.
+   */
+  sitsOut: boolean;
+  /** While sitting out: the empty entry the chain stopped at. */
+  skipped?: DoodleChainEntry;
+}
+
+/** One chain, whole: whose it is, and its entries in the order made. */
+interface DoodleChainChain {
+  owner: DoodleChainPlayer;
+  entries: DoodleChainEntry[];
+}
+
+/** The reveal, as far as the host has taken it, the same for everybody. */
+interface DoodleChainReveal {
+  /** The chain on show, by index. */
+  chain: number;
+  /** How many of its entries are shown, from 1. */
+  shown: number;
+  /** How many entries of every chain are shown in all; Next names it. */
+  total: number;
+  /** Every chain in the order of play: whose it is, and how many entries it has. */
+  chains: { owner: DoodleChainPlayer; length: number }[];
+  /** The entries shown, chain by chain, up to the one on show. */
+  entries: DoodleChainEntry[][];
+  /** The viewer's own hearts: for each chain, the step of the entry hearted. */
+  hearts: Record<number, number>;
+}
+
+/** The album: every chain, every heart, and the crowd favourite. */
+interface DoodleChainGameSummary extends GameSummary {
+  /** Every player's points are the hearts their entries were given. */
+  chains: DoodleChainChain[];
+  /** The entries with the most hearts, when anybody gave one. */
+  favourites: { chain: number; step: number }[];
+}
+
+/**
+ * A Doodle Chain room, as one viewer may see it: their own task and draft,
+ * and no chain until the reveal shows it.
+ */
+interface DoodleChainRoomState extends RoomState {
+  gameType: 'doodle-chain';
+  phase: DoodleChainPhase;
+  /** The step being played, from 1; 0 between games. */
+  step: number;
+  /** Steps in this game; between games, what a game would have now. */
+  steps: number;
+  drawingSeconds: number;
+  /** The players in the order of play, those who have left included. */
+  order: DoodleChainPlayer[];
+  /** Done and sitting out, by player id, for everybody at the table. */
+  table: Record<string, DoodleChainSeat>;
+  /** A player's own, during a step and its passing. */
+  task?: DoodleChainTask;
+  /** A player's own words so far, while writing or describing. */
+  draft?: DoodleChainDraft;
+  reveal?: DoodleChainReveal;
+  lastGame: DoodleChainGameSummary | null;
+}
+
 type AnyRoomState =
   | DrawAndGuessRoomState
   | MinesweeperRoomState
   | Make24RoomState
   | PairsRoomState
   | TriosRoomState
+  | SnapRoomState
   | LiarsDiceRoomState
   | HushRoomState
-  | DailyWordRoomState;
+  | DailyWordRoomState
+  | DoodleChainRoomState;
 
 // ---------------------------------------------------------------------------
 // Chat and the drawing
@@ -865,7 +1084,7 @@ type RoomNotice =
       type: 'game:over';
       names: string[];
       points: number;
-      unit: 'point' | 'pair' | 'trio' | 'die';
+      unit: 'point' | 'pair' | 'trio' | 'card' | 'die';
     }
   | { type: 'dg:started'; category: WordCategory }
   | { type: 'dg:drawer-left' }
@@ -882,6 +1101,8 @@ type RoomNotice =
   | { type: 'pairs:found'; name: string }
   | { type: 'trios:started'; trios: number }
   | { type: 'trios:found'; name: string }
+  | { type: 'snap:started'; cards: number }
+  | { type: 'snap:took'; name: string }
   | { type: 'ld:started'; dice: number; seconds: number }
   | {
       type: 'ld:auto-bid';
@@ -911,7 +1132,10 @@ type RoomNotice =
   | { type: 'hush:discarded'; cards: number[] }
   | { type: 'dw:started'; rounds: number; seconds: number }
   | { type: 'dw:solved'; name: string; guesses: number; points: number }
-  | { type: 'dw:revealed'; word: string };
+  | { type: 'dw:revealed'; word: string }
+  | { type: 'dc:step'; step: number; kind: DoodleChainKind }
+  | { type: 'dc:reveal'; host: string }
+  | { type: 'dc:album' };
 
 /** A player speaks verbatim; announcements are rendered by each viewer. */
 type ChatMessage =
@@ -1019,6 +1243,8 @@ interface ClientToServerEvents {
 
   /** Three cards claimed as a trio, by their numbers, on the third pick. */
   'trios:claim': (roomId: string, cards: number[]) => void;
+  /** A tapped symbol, for the middle card numbered `card`. */
+  'snap:claim': (roomId: string, card: number, symbol: number) => void;
   /** Raising to at least `count` dice showing `face`, on your turn. */
   'ld:bid': (roomId: string, count: number, face: number) => void;
   /** Calling Liar on the bid in front of you, on your turn. */
@@ -1033,6 +1259,25 @@ interface ClientToServerEvents {
    * reason; an accepted one arrives marked in the next snapshot.
    */
   'dw:guess': (roomId: string, word: string, ack: Ack<Result>) => void;
+
+  /** The viewer's words so far, a few times a second at most while typing. */
+  'dc:text': (roomId: string, draft: DoodleChainDraft) => void;
+  'dc:done': (roomId: string, done: boolean) => void;
+  /** The viewer's own drawing, as Draw & Guess's; nobody else is sent it. */
+  'dc:draw:start': (
+    roomId: string,
+    point: Coordinate,
+    color: string,
+    size: number,
+  ) => void;
+  'dc:draw:move': (roomId: string, point: Coordinate) => void;
+  'dc:draw:end': (roomId: string) => void;
+  'dc:draw:undo': (roomId: string) => void;
+  'dc:draw:clear': (roomId: string) => void;
+  /** The host shows the next entry; `total` is how many are shown before it. */
+  'dc:reveal:next': (roomId: string, total: number) => void;
+  /** Gives the chain's heart to the entry made at `step`, or takes it back. */
+  'dc:heart': (roomId: string, chain: number, step: number | null) => void;
 }
 
 interface ServerToClientEvents {
@@ -1075,6 +1320,15 @@ interface ServerToClientEvents {
   'dg:canvas:end': (roomId: string) => void;
   'dg:canvas:undo': (roomId: string) => void;
   'dg:canvas:clear': (roomId: string) => void;
+
+  /** A drawing the viewer may now see, sent once: by its id, and its strokes. */
+  'dc:drawing': (
+    roomId: string,
+    drawing: string,
+    strokes: CanvasStroke[],
+  ) => void;
+  /** The viewer's own drawing in progress, on a page that syncs. */
+  'dc:canvas:sync': (roomId: string, strokes: CanvasStroke[]) => void;
 }
 
 type ClientToServerEvent = keyof ClientToServerEvents;
@@ -1136,6 +1390,15 @@ export type {
   TriosTrio,
   TriosGameSummary,
   TriosRoomState,
+  SnapSettings,
+  SnapLobbyRoomInfo,
+  SnapPhase,
+  SnapCard,
+  SnapMiddle,
+  SnapTake,
+  SnapMiss,
+  SnapGameSummary,
+  SnapRoomState,
   LiarsDiceSettings,
   LiarsDiceLobbyRoomInfo,
   LiarsDicePhase,
@@ -1166,6 +1429,20 @@ export type {
   DailyWordRoundResult,
   DailyWordGameSummary,
   DailyWordRoomState,
+  DoodleChainSettings,
+  DoodleChainLobbyRoomInfo,
+  DoodleChainKind,
+  DoodleChainPhase,
+  DoodleChainPlayer,
+  DoodleChainDraft,
+  DoodleChainContent,
+  DoodleChainEntry,
+  DoodleChainSeat,
+  DoodleChainTask,
+  DoodleChainChain,
+  DoodleChainReveal,
+  DoodleChainGameSummary,
+  DoodleChainRoomState,
   AnyRoomState,
   RoomNotice,
   ChatMessageKind,

@@ -25,7 +25,7 @@ import {
   type PhaseDurationsInSeconds,
 } from '../../libs/game-clock.js';
 import { wordBank } from '../../libs/word-bank.js';
-import { clearCanvas } from './canvas.js';
+import { clearCanvas } from '../../libs/drawing/canvas.js';
 import { swap } from '../../../shared/list.js';
 
 const WORD_CHOICE_COUNT = 3;

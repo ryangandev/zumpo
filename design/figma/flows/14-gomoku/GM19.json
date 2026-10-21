@@ -1,0 +1,533 @@
+{
+  "format": 1,
+  "code": "GM19",
+  "title": "Phone · room, you won",
+  "id": "162:102362",
+  "section": "14 / Gomoku / complete flow",
+  "reviewNotes": [
+    "GM19 · The result on a phone sits in the turn bar, with the finished board and the win line under it; the owner starts the next game from here."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:102362",
+    "name": "GM19 / Phone · room, you won",
+    "x": 1020,
+    "y": 5580,
+    "w": 390,
+    "h": 976,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:102363",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Gomoku"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Game over",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:102364",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          },
+          {
+            "path": "Status / Players · 4 / Players · 4",
+            "characters": "Players · 2"
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:102365",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 110,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Top row": false,
+          "Countdown": false,
+          "Main": "You win with five in a row",
+          "Category": false,
+          "Meta": "Next game, Leo plays Black",
+          "Label": "Game over"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 110,
+            "width": 350
+          },
+          {
+            "path": "Top / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Label": "to bid",
+              "Time": "00:12",
+              "Tone": "Running"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:102366",
+        "name": "Table",
+        "w": 350,
+        "h": 598,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:102638",
+            "name": "Board",
+            "w": 350,
+            "h": 350,
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:102639",
+                "name": "Zumpo/Gomoku board",
+                "x": 0,
+                "y": 0,
+                "w": 350,
+                "h": 350,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Gomoku board",
+                "variant": {
+                  "Layout": "Phone"
+                },
+                "componentId": "162:62938"
+              },
+              {
+                "type": "GRID",
+                "rows": 6,
+                "cols": 8,
+                "count": 21,
+                "kind": "Zumpo/Stone",
+                "firstId": "162:102676",
+                "pitch": [
+                  22,
+                  22
+                ],
+                "holes": 27,
+                "cell": {
+                  "type": "INSTANCE",
+                  "name": "Stone I9",
+                  "w": "$Zumpo · UI:space/18",
+                  "h": "$Zumpo · UI:space/18",
+                  "component": "Zumpo/Stone",
+                  "variant": {
+                    "Color": "White",
+                    "Mark": "None",
+                    "State": "Placed",
+                    "Size": "Small"
+                  },
+                  "componentId": "162:62889"
+                },
+                "special": [
+                  {
+                    "r": 3,
+                    "c": 5,
+                    "id": "162:102676",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone H8"
+                  },
+                  {
+                    "r": 4,
+                    "c": 4,
+                    "id": "162:102678",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887",
+                    "name": "Stone G7"
+                  },
+                  {
+                    "r": 3,
+                    "c": 6,
+                    "id": "162:102680",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone I8"
+                  },
+                  {
+                    "r": 3,
+                    "c": 4,
+                    "id": "162:102682",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone G8"
+                  },
+                  {
+                    "r": 2,
+                    "c": 4,
+                    "id": "162:102684",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone G9"
+                  },
+                  {
+                    "r": 1,
+                    "c": 4,
+                    "id": "162:102686",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone G10"
+                  },
+                  {
+                    "r": 2,
+                    "c": 3,
+                    "id": "162:102688",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884",
+                    "name": "Stone F9"
+                  },
+                  {
+                    "r": 3,
+                    "c": 3,
+                    "id": "162:102690",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887",
+                    "name": "Stone F8"
+                  },
+                  {
+                    "r": 2,
+                    "c": 2,
+                    "id": "162:102692",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887",
+                    "name": "Stone E9"
+                  },
+                  {
+                    "r": 1,
+                    "c": 1,
+                    "id": "162:102694",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887",
+                    "name": "Stone D10"
+                  },
+                  {
+                    "r": 0,
+                    "c": 0,
+                    "id": "162:102696",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887",
+                    "name": "Stone C11"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:102697",
+                "name": "Win line",
+                "x": 60.05,
+                "y": 101.22,
+                "w": 142.45,
+                "h": "$Zumpo · UI:space/4",
+                "rotation": -45,
+                "component": "Zumpo/Win line",
+                "variant": {
+                  "Size": "Small"
+                },
+                "componentId": "162:62899",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": "$Zumpo · UI:space/4",
+                    "width": 142.45
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:102698",
+            "name": "Seats",
+            "w": 350,
+            "h": 152,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:102603",
+                "name": "Seat / Maya",
+                "w": 350,
+                "h": 78,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Gomoku seat",
+                "variant": {
+                  "Color": "Black",
+                  "State": "Won"
+                },
+                "componentId": "162:63073",
+                "props": {
+                  "You": true,
+                  "Detail": "Black · five in a row · 1 win"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 78,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:102617",
+                "name": "Seat / Leo",
+                "w": 350,
+                "h": 66,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Gomoku seat",
+                "variant": {
+                  "Color": "White",
+                  "State": "Default"
+                },
+                "componentId": "162:63087",
+                "props": {
+                  "Detail": "White · 1 win",
+                  "Name": "Leo"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 66,
+                    "width": 350
+                  },
+                  {
+                    "path": "Player / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:102699",
+            "name": "Actions",
+            "w": 350,
+            "h": 48,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:102632",
+                "name": "Action / Start game 3",
+                "w": 350,
+                "h": 48,
+                "wSize": "fill",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Label": "Start game 3"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 350
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:102383",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:102384",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}

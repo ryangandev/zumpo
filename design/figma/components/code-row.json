@@ -1,0 +1,235 @@
+{
+  "format": 1,
+  "name": "Zumpo/Code row",
+  "id": "162:62605",
+  "type": "COMPONENT_SET",
+  "key": "0699abb01aea96f903968d6769a038f63e09f605",
+  "description": "One guess: four Digit tiles and its Code marks (Grid). Override each Digit's State and Digit, and each Peg's State.",
+  "properties": {
+    "Size": {
+      "type": "variant",
+      "default": "Compact",
+      "options": [
+        "Compact",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Size=Compact",
+  "variants": [
+    {
+      "name": "Size=Compact",
+      "id": "162:62579",
+      "props": {
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62579",
+        "name": "Size=Compact",
+        "w": 268,
+        "h": 48,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:62580",
+            "name": "Digits",
+            "w": 216,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:62581",
+                "name": "Digit 1",
+                "w": 48,
+                "h": 48,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Compact"
+                },
+                "componentId": "162:62551"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62582",
+                "name": "Digit 2",
+                "w": 48,
+                "h": 48,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Compact"
+                },
+                "componentId": "162:62551"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62583",
+                "name": "Digit 3",
+                "w": 48,
+                "h": 48,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Compact"
+                },
+                "componentId": "162:62551"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62584",
+                "name": "Digit 4",
+                "w": 48,
+                "h": 48,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Compact"
+                },
+                "componentId": "162:62551"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62585",
+            "name": "Mark",
+            "w": 36,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks",
+            "variant": {
+              "Layout": "Grid"
+            },
+            "componentId": "162:62566"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Size=Small",
+      "id": "162:62592",
+      "props": {
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62592",
+        "name": "Size=Small",
+        "w": 184,
+        "h": 36,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:62593",
+            "name": "Digits",
+            "w": 140,
+            "h": 32,
+            "wSize": "hug",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:62594",
+                "name": "Digit 1",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Small"
+                },
+                "componentId": "162:62558"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62595",
+                "name": "Digit 2",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Small"
+                },
+                "componentId": "162:62558"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62596",
+                "name": "Digit 3",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Small"
+                },
+                "componentId": "162:62558"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62597",
+                "name": "Digit 4",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Small"
+                },
+                "componentId": "162:62558"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62598",
+            "name": "Mark",
+            "w": 36,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks",
+            "variant": {
+              "Layout": "Grid"
+            },
+            "componentId": "162:62566"
+          }
+        ]
+      }
+    }
+  ]
+}

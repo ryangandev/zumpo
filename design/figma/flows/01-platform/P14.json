@@ -11,7 +11,7 @@
     "x": 1580,
     "y": 5391,
     "w": 1440,
-    "h": 3200,
+    "h": 4559,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -132,7 +132,7 @@
         "id": "9:16020",
         "name": "Game rules",
         "w": 1312,
-        "h": 2757,
+        "h": 4116,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -876,10 +876,165 @@
           },
           {
             "type": "FRAME",
+            "id": "162:68129",
+            "name": "Snap",
+            "w": 644,
+            "h": 765,
+            "fills": [
+              "$Zumpo · UI:color/blue"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "pad": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:68130",
+                "name": "Title",
+                "w": 580,
+                "h": 30,
+                "hSize": "hug",
+                "text": "Snap",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:68131",
+                "name": "Rules",
+                "w": 578,
+                "h": 525,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "2–6 players · 31 cards\n\nEvery card has six symbols, and any two cards share exactly one of them, never more and never less. No two symbols share a shape, so colour alone never tells them apart.\n\nEverybody is dealt one card face up, and one more is turned up in the middle. Everyone looks at the same middle card at the same time, and there are no turns. Find the one symbol your card shares with it, and tap that symbol on either card.\n\nThe first right tap takes the middle card, for 1 point: everyone sees who took it, and the symbol, for a moment, and it becomes the taker’s card. Then the next card is turned. A symbol that is on only one of the two cards locks you out for 2 seconds, and never costs a point.\n\nThe game ends when the pile runs out. Whoever took the most cards wins.\n\nOn your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds. Your best time is kept on this device, and Challenge a friend sends them the same deck.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:68132",
+                "name": "Push",
+                "w": 10,
+                "h": 48,
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "strokesIncluded": true
+                }
+              },
+              {
+                "type": "FRAME",
+                "id": "162:68133",
+                "name": "Actions",
+                "w": 236,
+                "h": 48,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:68134",
+                    "name": "Action / Play solo",
+                    "w": 101,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Play solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "reactions": [
+                          {
+                            "on": "on_click",
+                            "do": [
+                              {
+                                "nav": "navigate",
+                                "to": "40:49758",
+                                "toName": "PR01 / Solo · choose a board",
+                                "transition": "dissolve"
+                              }
+                            ]
+                          }
+                        ],
+                        "width": 101
+                      }
+                    ],
+                    "reactions": [
+                      {
+                        "on": "on_click",
+                        "do": [
+                          {
+                            "nav": "navigate",
+                            "to": "40:49758",
+                            "toName": "PR01 / Solo · choose a board",
+                            "transition": "dissolve"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:68135",
+                    "name": "Action / Find a room",
+                    "w": 123,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Label": "Find a room"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "width": 123
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
             "id": "79:104214",
             "name": "Daily Word",
             "w": 644,
-            "h": 765,
+            "h": 693,
             "fills": [
               "$Zumpo · UI:color/blue"
             ],
@@ -929,7 +1084,7 @@
                 "id": "79:104217",
                 "name": "Push",
                 "w": 10,
-                "h": 73,
+                "h": 1,
                 "hSize": "fill",
                 "layout": {
                   "mode": "row",
@@ -1034,7 +1189,7 @@
             "id": "79:104231",
             "name": "Liar’s Dice",
             "w": 644,
-            "h": 640,
+            "h": 693,
             "fills": [
               "$Zumpo · UI:color/lime"
             ],
@@ -1084,7 +1239,7 @@
                 "id": "79:104234",
                 "name": "Push",
                 "w": 10,
-                "h": 1,
+                "h": 51,
                 "hSize": "fill",
                 "layout": {
                   "mode": "row",
@@ -1289,6 +1444,428 @@
                         "nav": "navigate",
                         "to": "9:868",
                         "toName": "DL01 / Game page · open, private, full and playing rooms"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113143",
+            "name": "Doodle Chain",
+            "w": 644,
+            "h": 640,
+            "fills": [
+              "$Zumpo · UI:color/blue"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "pad": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:113144",
+                "name": "Title",
+                "w": 580,
+                "h": 30,
+                "hSize": "hug",
+                "text": "Doodle Chain",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:113145",
+                "name": "Rules",
+                "w": 578,
+                "h": 375,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "3–8 players · 45, 60 or 90 seconds to draw\n\nEverybody writes a line to draw. Then the lines go round the table: the next player draws the line they are given, the next says in words what that drawing shows, and so on, each seeing only the step before theirs. A game has one step per player, never more than six.\n\nWriting and describing take 30 seconds, drawing as long as the room chose. Press Done when you are finished, or let the clock take what you have: nothing is lost to the clock. Stuck for a line? Press Suggest.\n\nThen the host steps through every chain, one entry at a time, and the room watches each line turn into something else. Give one heart per chain to its best moment. Nobody wins: the album keeps every chain and names the crowd favourite.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113146",
+                "name": "Push",
+                "w": 10,
+                "h": 73,
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "strokesIncluded": true
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113147",
+                "name": "Action / Find a room",
+                "w": 121,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Label": "Find a room"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "reactions": [
+                      {
+                        "on": "on_click",
+                        "do": [
+                          {
+                            "nav": "navigate",
+                            "to": "9:868",
+                            "toName": "DL01 / Game page · open, private, full and playing rooms"
+                          }
+                        ]
+                      }
+                    ],
+                    "width": 121
+                  }
+                ],
+                "reactions": [
+                  {
+                    "on": "on_click",
+                    "do": [
+                      {
+                        "nav": "navigate",
+                        "to": "9:868",
+                        "toName": "DL01 / Game page · open, private, full and playing rooms"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113150",
+            "name": "Gomoku",
+            "w": 644,
+            "h": 618,
+            "fills": [
+              "$Zumpo · UI:color/blue"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "pad": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:113151",
+                "name": "Title",
+                "w": 580,
+                "h": 30,
+                "hSize": "hug",
+                "text": "Gomoku",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:113152",
+                "name": "Rules",
+                "w": 578,
+                "h": 325,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "2 players · a 15 × 15 board\n\nBlack and White take turns placing one stone on any empty point, Black first. The first to make five or more in a row, across, down or diagonally, wins. A full board with no five is a draw.\n\nYou have 30 seconds a move; run out and the turn passes, and miss two turns in a row and you lose the game. You can resign at any time. Colours are drawn for the first game and swap every game after it, and every game won is a point. Up to 5 more can watch.\n\nOn your own, play the computer at Easy, Medium or Hard, as Black or White. Your wins are kept on this device.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113153",
+                "name": "Push",
+                "w": 10,
+                "h": 101,
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "strokesIncluded": true
+                }
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113154",
+                "name": "Actions",
+                "w": 236,
+                "h": 48,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113155",
+                    "name": "Action / Play solo",
+                    "w": 101,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Play solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "reactions": [
+                          {
+                            "on": "on_click",
+                            "do": [
+                              {
+                                "nav": "navigate",
+                                "to": "40:49758",
+                                "toName": "PR01 / Solo · choose a board",
+                                "transition": "dissolve"
+                              }
+                            ]
+                          }
+                        ],
+                        "width": 101
+                      }
+                    ],
+                    "reactions": [
+                      {
+                        "on": "on_click",
+                        "do": [
+                          {
+                            "nav": "navigate",
+                            "to": "40:49758",
+                            "toName": "PR01 / Solo · choose a board",
+                            "transition": "dissolve"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113156",
+                    "name": "Action / Find a room",
+                    "w": 123,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Label": "Find a room"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "width": 123
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113624",
+            "name": "Code Breaker",
+            "w": 644,
+            "h": 618,
+            "fills": [
+              "$Zumpo · UI:color/sand"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "pad": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:113625",
+                "name": "Title",
+                "w": 580,
+                "h": 30,
+                "hSize": "hug",
+                "text": "Code Breaker",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:113626",
+                "name": "Rules",
+                "w": 578,
+                "h": 425,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "2–8 players · 1 or 3 codes\n\nCrack a hidden code of four different digits in ten guesses. After each guess, four pegs tell you how many of its digits are in the right place, a green square each, and how many are in the code but somewhere else, a coral circle each. They never say which digits.\n\nEverybody races the same code at the same time, with 3 minutes for each. Crack it for 100 points, plus 100 for every guess left over and up to 50 for the time left, so fewer guesses always win. While you play you see everybody else’s pegs, never their digits.\n\nTurn on Notes to mark digits on the pad as out or in while you work it out.\n\nOn your own, there is one code a day, the same for everybody, and practice codes after it. Your stats and streak are kept on this device, and Challenge a friend sends them the same code.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113627",
+                "name": "Push",
+                "w": 10,
+                "h": 1,
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "strokesIncluded": true
+                }
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113628",
+                "name": "Actions",
+                "w": 236,
+                "h": 48,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113629",
+                    "name": "Action / Play solo",
+                    "w": 101,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Play solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "reactions": [
+                          {
+                            "on": "on_click",
+                            "do": [
+                              {
+                                "nav": "navigate",
+                                "to": "40:49758",
+                                "toName": "PR01 / Solo · choose a board",
+                                "transition": "dissolve"
+                              }
+                            ]
+                          }
+                        ],
+                        "width": 101
+                      }
+                    ],
+                    "reactions": [
+                      {
+                        "on": "on_click",
+                        "do": [
+                          {
+                            "nav": "navigate",
+                            "to": "40:49758",
+                            "toName": "PR01 / Solo · choose a board",
+                            "transition": "dissolve"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113630",
+                    "name": "Action / Find a room",
+                    "w": 123,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Label": "Find a room"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "width": 123
                       }
                     ]
                   }

@@ -1,0 +1,56 @@
+/* Off: a paper pill with the heart's outline; On: peach, filled, ringed coral. */
+.button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--zumpo-space-4);
+  margin: 0;
+  padding: var(--zumpo-space-4) var(--zumpo-space-10);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-paper);
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--zumpo-coral);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+.on {
+  border-color: var(--zumpo-coral);
+  background: var(--zumpo-peach);
+  color: var(--zumpo-ink);
+}
+
+.label {
+  min-width: 1ch;
+}
+
+/* Count: the filled heart and a small muted number, nothing to press. */
+.count {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--zumpo-space-4);
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+.heart {
+  display: block;
+  flex: none;
+  stroke: var(--zumpo-muted);
+}
+
+.filled {
+  fill: var(--zumpo-coral);
+}

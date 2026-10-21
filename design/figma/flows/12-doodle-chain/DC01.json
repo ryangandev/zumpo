@@ -1,0 +1,589 @@
+{
+  "format": 1,
+  "code": "DC01",
+  "title": "Game page · open, private, full and playing rooms",
+  "id": "162:101195",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC01 · The game page: rooms only, so its one way in is Create a room. The intro uses Doodle Chain’s artwork (Doodle Chain pieces) on blue, until Game intro gains a Doodle Chain variant. Room rows name the drawing time instead of rounds."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:101195",
+    "name": "DC01 / Game page · open, private, full and playing rooms",
+    "x": 40,
+    "y": 224,
+    "w": 1440,
+    "h": 1107,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:101196",
+        "name": "Zumpo/Header",
+        "w": 1312,
+        "h": 104,
+        "component": "Zumpo/Header",
+        "componentId": "4:39",
+        "overrides": [
+          {
+            "path": "Navigation / Games",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Navigation / You",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Sand"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101197",
+        "name": "Lobby actions",
+        "w": 1312,
+        "h": 48,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:101198",
+            "name": "Action / Back to games",
+            "w": 171,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=back",
+              "Show icon": true,
+              "Label": "Back to games"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "reactions": [
+                  {
+                    "on": "on_click",
+                    "do": [
+                      {
+                        "nav": "navigate",
+                        "to": "9:433",
+                        "toName": "P01 / Home",
+                        "transition": "dissolve"
+                      }
+                    ]
+                  }
+                ],
+                "width": 171
+              }
+            ],
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:101199",
+            "name": "End",
+            "w": 170,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:101200",
+                "name": "Action / Playing as",
+                "w": 170,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Quiet",
+                  "State": "Default"
+                },
+                "componentId": "4:21",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=edit",
+                  "Show icon": true,
+                  "Label": "Playing as Sam"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 170
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101201",
+        "name": "Lobby layout",
+        "w": 1312,
+        "h": 809,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:101202",
+            "name": "Main",
+            "w": 920,
+            "h": 809,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:101203",
+                "name": "Zumpo/Game intro",
+                "w": 920,
+                "h": 289,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game intro",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Desktop"
+                },
+                "componentId": "162:111790"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:101204",
+                "name": "Rooms",
+                "w": 920,
+                "h": 488,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/16",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:101205",
+                    "name": "Rooms heading",
+                    "w": 237,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Doodle Chain rooms",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101206",
+                    "name": "Zumpo/Room row",
+                    "w": 920,
+                    "h": 90,
+                    "hSize": "hug",
+                    "component": "Zumpo/Room row",
+                    "variant": {
+                      "Status": "Open",
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "9:252",
+                    "props": {
+                      "Players": "3 / 8",
+                      "Details": "Hosted by Maya · 60s to draw"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 90,
+                        "width": 920
+                      },
+                      {
+                        "path": "Action / Action / Join",
+                        "reactions": [
+                          {
+                            "on": "on_click",
+                            "do": [
+                              {
+                                "nav": "navigate",
+                                "to": "9:1431",
+                                "toName": "D03 / Guest · waiting for host"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101207",
+                    "name": "Zumpo/Room row",
+                    "w": 920,
+                    "h": 90,
+                    "hSize": "hug",
+                    "component": "Zumpo/Room row",
+                    "variant": {
+                      "Status": "Private",
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "9:264",
+                    "props": {
+                      "Players": "2 / 6",
+                      "Details": "Hosted by Leo · 90s to draw",
+                      "Room name": "Friday doodles"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 90,
+                        "width": 920
+                      },
+                      {
+                        "path": "Host",
+                        "componentProperties": {
+                          "Initials": "LE",
+                          "Tone": "Lime"
+                        }
+                      },
+                      {
+                        "path": "Action / Action / Join",
+                        "reactions": [
+                          {
+                            "on": "on_click",
+                            "do": [
+                              {
+                                "nav": "navigate",
+                                "to": "9:1176",
+                                "toName": "DL07 / Password-protected room"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101208",
+                    "name": "Zumpo/Room row",
+                    "w": 920,
+                    "h": 90,
+                    "hSize": "hug",
+                    "component": "Zumpo/Room row",
+                    "variant": {
+                      "Status": "Full",
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "9:276",
+                    "props": {
+                      "Players": "4 / 4",
+                      "Details": "Hosted by Ryan · 45s to draw",
+                      "Room name": "The full house"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 90,
+                        "width": 920
+                      },
+                      {
+                        "path": "Host",
+                        "componentProperties": {
+                          "Initials": "RG",
+                          "Tone": "Blue"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101209",
+                    "name": "Zumpo/Room row",
+                    "w": 920,
+                    "h": 90,
+                    "hSize": "hug",
+                    "component": "Zumpo/Room row",
+                    "variant": {
+                      "Status": "Playing",
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "9:288",
+                    "props": {
+                      "Players": "5 / 8",
+                      "Details": "Hosted by Sam · 60s to draw",
+                      "Room name": "Sketch club"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 90,
+                        "width": 920
+                      },
+                      {
+                        "path": "Host",
+                        "componentProperties": {
+                          "Initials": "SA",
+                          "Tone": "Sand"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:101210",
+                    "w": 126,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "4 rooms · Updates live",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:101211",
+            "name": "How to play",
+            "w": 368,
+            "h": 466,
+            "hSize": "hug",
+            "fills": [
+              "$Zumpo · UI:color/lime"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "pad": "$Zumpo · UI:space/32",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:101212",
+                "w": 304,
+                "h": 30,
+                "hSize": "hug",
+                "text": "How to play",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:101213",
+                "name": "Choose a word, draw it, and race to guess. Fast guesses earn more poin",
+                "w": 304,
+                "h": 100,
+                "hSize": "hug",
+                "text": "Everyone writes a line. The next player draws it, the next says what the drawing shows, and so on round the table. Then the host shows every chain.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:101214",
+                "name": "Play together",
+                "w": 302,
+                "h": 174,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:101215",
+                    "name": "Label",
+                    "w": 92,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Play together",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:101216",
+                    "name": "Rules at a glance",
+                    "w": 302,
+                    "h": 150,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "3–8 players\nUp to 6 steps: write, then draw and describe in turn\n30s to write · 60s to draw · 30s to describe\nThe host steps through the reveal",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:101217",
+                "name": "Action / Full rules",
+                "w": 104,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Label": "Full rules"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 104
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101218",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:101219",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:101220",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

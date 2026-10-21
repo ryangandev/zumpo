@@ -15,9 +15,11 @@ export type GameType =
   | 'make-24'
   | 'pairs'
   | 'trios'
+  | 'snap'
   | 'liars-dice'
   | 'hush'
-  | 'daily-word';
+  | 'daily-word'
+  | 'doodle-chain';
 
 export interface PlayerOptions {
   /** Browser language, independent for each player in a mixed-language room. */

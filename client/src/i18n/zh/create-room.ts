@@ -17,7 +17,7 @@ export const createRoom: typeof en = {
   nameHelper: (max) => `最多 ${max} 个字符。`,
   nameMissing: '给房间起个名字。',
   seats: '人数',
-  seatsHelper: (max) => `选择 2–${max} 个座位。`,
+  seatsHelper: (min, max) => `选择 ${min}–${max} 个座位。`,
   hushSeatsHelper: (max, twoLevels, maxLevels) =>
     `选择 2–${max} 个座位。2 人玩 ${twoLevels} 关，${max} 人玩 ${maxLevels} 关。`,
   players: (count) => `${count} 人`,
@@ -47,6 +47,9 @@ export const createRoom: typeof en = {
   words: '单词数',
   wordsHelper: '3 或 5 个单词，每个 2 分钟。',
   wordCount: (count) => `${count} 个单词`,
+  drawingTime: '画画时间',
+  drawingTimeHelper: '每幅画 45、60 或 90 秒。写和描述各 30 秒。',
+  secondCount: (count) => `${count} 秒`,
   password: '密码（可选）',
   passwordHelper: (max) => `留空即为公开房间。最多 ${max} 个字符。`,
   creating: '正在创建房间…',

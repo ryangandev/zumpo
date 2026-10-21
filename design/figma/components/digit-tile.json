@@ -1,0 +1,580 @@
+{
+  "format": 1,
+  "name": "Zumpo/Digit tile",
+  "id": "162:62565",
+  "type": "COMPONENT_SET",
+  "key": "62cb8ecfcf62ca13c47239096a0b7a3284ab2172",
+  "description": "A digit of a Code Breaker guess. Empty: not typed yet. Typed: in the row being typed. Guessed: a submitted guess. Cracked: the guess that cracked the code, 4 right. Regular in the game artwork, Compact on a desktop board, Small on a phone and in boards beside others.",
+  "properties": {
+    "Digit": {
+      "type": "text",
+      "default": "4"
+    },
+    "State": {
+      "type": "variant",
+      "default": "Empty",
+      "options": [
+        "Empty",
+        "Typed",
+        "Guessed",
+        "Cracked"
+      ]
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Compact",
+      "options": [
+        "Compact",
+        "Small",
+        "Regular"
+      ]
+    }
+  },
+  "defaultVariant": "State=Empty, Size=Compact",
+  "variants": [
+    {
+      "name": "State=Empty, Size=Compact",
+      "id": "162:62551",
+      "props": {
+        "State": "Empty",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62551",
+        "name": "State=Empty, Size=Compact",
+        "w": 48,
+        "h": 48,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "State=Typed, Size=Compact",
+      "id": "162:62552",
+      "props": {
+        "State": "Typed",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62552",
+        "name": "State=Typed, Size=Compact",
+        "w": 48,
+        "h": 48,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62553",
+            "name": "Digit",
+            "w": 15,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Guessed, Size=Compact",
+      "id": "162:62554",
+      "props": {
+        "State": "Guessed",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62554",
+        "name": "State=Guessed, Size=Compact",
+        "w": 48,
+        "h": 48,
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62555",
+            "name": "Digit",
+            "w": 15,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Size=Compact",
+      "id": "162:62556",
+      "props": {
+        "State": "Cracked",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62556",
+        "name": "State=Cracked, Size=Compact",
+        "w": 48,
+        "h": 48,
+        "fills": [
+          "$Zumpo · UI:color/green"
+        ],
+        "radius": "$Zumpo · UI:radius/8",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62557",
+            "name": "Digit",
+            "w": 15,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/paper"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Empty, Size=Small",
+      "id": "162:62558",
+      "props": {
+        "State": "Empty",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62558",
+        "name": "State=Empty, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "State=Typed, Size=Small",
+      "id": "162:62559",
+      "props": {
+        "State": "Typed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62559",
+        "name": "State=Typed, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62560",
+            "name": "Digit",
+            "w": 12,
+            "h": 24,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Number",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Guessed, Size=Small",
+      "id": "162:62561",
+      "props": {
+        "State": "Guessed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62561",
+        "name": "State=Guessed, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62562",
+            "name": "Digit",
+            "w": 12,
+            "h": 24,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Number",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Size=Small",
+      "id": "162:62563",
+      "props": {
+        "State": "Cracked",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62563",
+        "name": "State=Cracked, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/green"
+        ],
+        "radius": "$Zumpo · UI:radius/8",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:62564",
+            "name": "Digit",
+            "w": 12,
+            "h": 24,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Number",
+            "fills": [
+              "$Zumpo · UI:color/paper"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Empty, Size=Regular",
+      "id": "162:65710",
+      "props": {
+        "State": "Empty",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65710",
+        "name": "State=Empty, Size=Regular",
+        "w": 64,
+        "h": 64,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "State=Typed, Size=Regular",
+      "id": "162:65711",
+      "props": {
+        "State": "Typed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65711",
+        "name": "State=Typed, Size=Regular",
+        "w": 64,
+        "h": 64,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:65712",
+            "name": "Digit",
+            "w": 22,
+            "h": 42,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Guessed, Size=Regular",
+      "id": "162:65713",
+      "props": {
+        "State": "Guessed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65713",
+        "name": "State=Guessed, Size=Regular",
+        "w": 64,
+        "h": 64,
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:65714",
+            "name": "Digit",
+            "w": 22,
+            "h": 42,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Size=Regular",
+      "id": "162:65715",
+      "props": {
+        "State": "Cracked",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65715",
+        "name": "State=Cracked, Size=Regular",
+        "w": 64,
+        "h": 64,
+        "fills": [
+          "$Zumpo · UI:color/green"
+        ],
+        "radius": "$Zumpo · UI:radius/12",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:65716",
+            "name": "Digit",
+            "w": 22,
+            "h": 42,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Digit"
+            },
+            "text": "4",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/paper"
+            ],
+            "alignH": "center"
+          }
+        ]
+      }
+    }
+  ]
+}

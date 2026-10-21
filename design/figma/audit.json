@@ -25,7 +25,7 @@
   "missingComponents": {},
   "hiddenLayers": {
     "INSTANCE": {
-      "count": 76,
+      "count": 96,
       "samples": [
         "Zumpo/Button > Style=Primary, State=Default > Icon",
         "Zumpo/Button > Style=Primary, State=Hover > Icon",
@@ -47,14 +47,14 @@
       ]
     },
     "FRAME": {
-      "count": 30,
+      "count": 43,
       "samples": [
-        "Zumpo/Trios card > Count=1, State=Default, Size=Regular > Badge",
-        "Zumpo/Trios card > Count=2, State=Default, Size=Regular > Badge",
-        "Zumpo/Trios card > Count=3, State=Default, Size=Regular > Badge",
-        "Zumpo/Trios card > Count=1, State=Selected, Size=Regular > Badge",
-        "Zumpo/Trios card > Count=2, State=Selected, Size=Regular > Badge",
-        "Zumpo/Trios card > Count=3, State=Selected, Size=Regular > Badge"
+        "Zumpo/Snap card > State=Default, Size=Regular > Badge",
+        "Zumpo/Snap card > State=Taken, Size=Regular > Badge",
+        "Zumpo/Snap card > State=Locked, Size=Regular > Badge",
+        "Zumpo/Snap card > State=Default, Size=Compact > Badge",
+        "Zumpo/Snap card > State=Taken, Size=Compact > Badge",
+        "Zumpo/Snap card > State=Locked, Size=Compact > Badge"
       ]
     }
   },

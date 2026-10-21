@@ -17,8 +17,10 @@ import { MinesweeperRoom } from '../minesweeper/room';
 import { Make24Room } from '../make-24/room';
 import { PairsRoom } from '../pairs/room';
 import { TriosRoom } from '../trios/room';
+import { SnapRoom } from '../snap/room';
 import { LiarsDiceRoom } from '../liars-dice/room';
 import { HushRoom } from '../hush/room';
+import { DoodleChainRoom } from '../doodle-chain/room';
 import { useSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useLobby } from '../net/use-lobby';
@@ -377,6 +379,7 @@ function SeatedRoom({
             isHost: state.owner.playerId === playerId,
             chat: connection.chat,
             canvas: connection.canvas,
+            drawings: connection.drawings,
             socket,
             sendChat: (text) => socket.emit('chat:send', state.roomId, text),
             openInvite: () => setInviting(true),
@@ -402,6 +405,7 @@ function SeatedRoom({
       seat,
       connection.chat,
       connection.canvas,
+      connection.drawings,
       socket,
       navigate,
       startGame,
@@ -429,8 +433,12 @@ function SeatedRoom({
         <PairsRoom />
       ) : state.gameType === 'trios' ? (
         <TriosRoom />
+      ) : state.gameType === 'snap' ? (
+        <SnapRoom />
       ) : state.gameType === 'hush' ? (
         <HushRoom />
+      ) : state.gameType === 'doodle-chain' ? (
+        <DoodleChainRoom />
       ) : (
         <Suspense>
           <DailyWordRoom />

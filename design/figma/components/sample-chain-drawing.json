@@ -1,0 +1,432 @@
+{
+  "format": 1,
+  "name": "Sample / Chain drawing",
+  "id": "162:65802",
+  "type": "COMPONENT_SET",
+  "key": "749840b442c30cfb37723148bc43f340326225c9",
+  "properties": {
+    "Drawing": {
+      "type": "variant",
+      "default": "Turtle on skateboard",
+      "options": [
+        "Turtle on skateboard",
+        "Burger on skates"
+      ]
+    }
+  },
+  "defaultVariant": "Drawing=Turtle on skateboard",
+  "variants": [
+    {
+      "name": "Drawing=Turtle on skateboard",
+      "id": "162:65765",
+      "props": {
+        "Drawing": "Turtle on skateboard"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65765",
+        "name": "Drawing=Turtle on skateboard",
+        "w": 480,
+        "h": 320,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:65766",
+            "name": "shell",
+            "x": 110,
+            "y": 110,
+            "w": 220,
+            "h": 96,
+            "svg": "svg/shell-e3c827.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65767",
+            "name": "backLeg",
+            "x": 139.92,
+            "y": 208,
+            "w": 32.08,
+            "h": 31.02,
+            "svg": "svg/backleg-59d6d5.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65768",
+            "name": "frontLeg",
+            "x": 277.92,
+            "y": 208,
+            "w": 32.08,
+            "h": 31.02,
+            "svg": "svg/backleg-59d6d5.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65769",
+            "name": "tail",
+            "x": 80,
+            "y": 200,
+            "w": 30,
+            "h": 16,
+            "svg": "svg/tail-90e7a4.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65770",
+            "name": "neck",
+            "x": 330,
+            "y": 192,
+            "w": 16,
+            "h": 0,
+            "svg": "svg/neck-48941d.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65771",
+            "name": "head",
+            "x": 344,
+            "y": 152,
+            "w": 60,
+            "h": 60,
+            "svg": "svg/head-64c42f.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65772",
+            "name": "hex",
+            "x": 186,
+            "y": 120,
+            "w": 68,
+            "h": 72,
+            "svg": "svg/hex-d42fde.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65773",
+            "name": "spokes",
+            "x": 152,
+            "y": 124,
+            "w": 136,
+            "h": 78,
+            "svg": "svg/spokes-7c33bd.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65774",
+            "name": "smile",
+            "x": 384,
+            "y": 194,
+            "w": 16,
+            "h": 5.62,
+            "svg": "svg/smile-183240.svg"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65775",
+            "name": "eye",
+            "x": 377,
+            "y": 167,
+            "w": 10,
+            "h": 10,
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65776",
+            "name": "deck",
+            "x": 96,
+            "y": 236,
+            "w": 268,
+            "h": 16,
+            "svg": "svg/deck-bdfd75.svg"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65777",
+            "name": "wheel back",
+            "x": 150,
+            "y": 262,
+            "w": 24,
+            "h": 24,
+            "strokes": [
+              "$Zumpo · UI:color/brush/graphite"
+            ],
+            "strokeWeight": 8,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65778",
+            "name": "wheel front",
+            "x": 286,
+            "y": 262,
+            "w": 24,
+            "h": 24,
+            "strokes": [
+              "$Zumpo · UI:color/brush/graphite"
+            ],
+            "strokeWeight": 8,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65779",
+            "name": "speed 1",
+            "x": 30,
+            "y": 150,
+            "w": 50,
+            "h": 0,
+            "svg": "svg/speed-1-4b8881.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65780",
+            "name": "speed 2",
+            "x": 20,
+            "y": 186,
+            "w": 54,
+            "h": 0,
+            "svg": "svg/speed-2-baff22.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65781",
+            "name": "speed 3",
+            "x": 34,
+            "y": 222,
+            "w": 46,
+            "h": 0,
+            "svg": "svg/speed-3-f8666e.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Drawing=Burger on skates",
+      "id": "162:65782",
+      "props": {
+        "Drawing": "Burger on skates"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65782",
+        "name": "Drawing=Burger on skates",
+        "w": 480,
+        "h": 320,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:65783",
+            "name": "top bun",
+            "x": 140,
+            "y": 89,
+            "w": 200,
+            "h": 57,
+            "svg": "svg/top-bun-48fd93.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65784",
+            "name": "seed 1",
+            "x": 196,
+            "y": 98,
+            "w": 10,
+            "h": 4,
+            "svg": "svg/seed-1-e285b0.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65785",
+            "name": "seed 2",
+            "x": 276,
+            "y": 98,
+            "w": 10,
+            "h": 4,
+            "svg": "svg/seed-2-f28446.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65786",
+            "name": "seed 3",
+            "x": 238,
+            "y": 86,
+            "w": 8,
+            "h": 0,
+            "svg": "svg/seed-3-f46fb6.svg"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65787",
+            "name": "eye left",
+            "x": 204,
+            "y": 116,
+            "w": 10,
+            "h": 10,
+            "fills": [
+              "$Zumpo · UI:color/brush/ink"
+            ]
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65788",
+            "name": "eye right",
+            "x": 266,
+            "y": 116,
+            "w": 10,
+            "h": 10,
+            "fills": [
+              "$Zumpo · UI:color/brush/ink"
+            ]
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65789",
+            "name": "smile",
+            "x": 222,
+            "y": 130,
+            "w": 32,
+            "h": 6,
+            "svg": "svg/smile-f3739d.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65790",
+            "name": "lettuce",
+            "x": 132,
+            "y": 155.96,
+            "w": 216,
+            "h": 9.39,
+            "svg": "svg/lettuce-fe1665.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65791",
+            "name": "patty",
+            "x": 132.5,
+            "y": 176,
+            "w": 215,
+            "h": 24,
+            "svg": "svg/patty-31e434.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65792",
+            "name": "bottom bun",
+            "x": 140,
+            "y": 212,
+            "w": 200,
+            "h": 26,
+            "svg": "svg/bottom-bun-87b39a.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65793",
+            "name": "skate left",
+            "x": 150,
+            "y": 252,
+            "w": 76,
+            "h": 0,
+            "svg": "svg/skate-left-d9389a.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65794",
+            "name": "skate right",
+            "x": 254,
+            "y": 252,
+            "w": 76,
+            "h": 0,
+            "svg": "svg/skate-left-d9389a.svg"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65795",
+            "name": "wheel 1",
+            "x": 152,
+            "y": 264,
+            "w": 20,
+            "h": 20,
+            "strokes": [
+              "$Zumpo · UI:color/brush/ink"
+            ],
+            "strokeWeight": 7,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65796",
+            "name": "wheel 2",
+            "x": 204,
+            "y": 264,
+            "w": 20,
+            "h": 20,
+            "strokes": [
+              "$Zumpo · UI:color/brush/ink"
+            ],
+            "strokeWeight": 7,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65797",
+            "name": "wheel 3",
+            "x": 256,
+            "y": 264,
+            "w": 20,
+            "h": 20,
+            "strokes": [
+              "$Zumpo · UI:color/brush/ink"
+            ],
+            "strokeWeight": 7,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "ELLIPSE",
+            "id": "162:65798",
+            "name": "wheel 4",
+            "x": 308,
+            "y": 264,
+            "w": 20,
+            "h": 20,
+            "strokes": [
+              "$Zumpo · UI:color/brush/ink"
+            ],
+            "strokeWeight": 7,
+            "strokeAlign": "inside"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65799",
+            "name": "speed 1",
+            "x": 40,
+            "y": 130,
+            "w": 52,
+            "h": 0,
+            "svg": "svg/speed-1-e4ffd4.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65800",
+            "name": "speed 2",
+            "x": 28,
+            "y": 170,
+            "w": 58,
+            "h": 0,
+            "svg": "svg/speed-2-f97944.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "162:65801",
+            "name": "speed 3",
+            "x": 42,
+            "y": 210,
+            "w": 50,
+            "h": 0,
+            "svg": "svg/speed-1-4b8881.svg"
+          }
+        ]
+      }
+    }
+  ]
+}

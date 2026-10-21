@@ -1,5 +1,6 @@
 import { cardFeatures } from '../../../../shared/trios';
 import type { ui as en } from '../en/ui';
+import { symbols as snapSymbols } from './snap';
 
 export const ui: typeof en = {
   chat: {
@@ -25,6 +26,8 @@ export const ui: typeof en = {
     watch: '观战',
   },
   drawing: {
+    canvas: '绘画画布',
+    image: '当前画作',
     tools: '绘图工具',
     colour: '颜色',
     size: '画笔大小',
@@ -45,6 +48,13 @@ export const ui: typeof en = {
       violet: '紫色',
       brown: '棕色',
     },
+  },
+  chain: {
+    suggest: '换个点子',
+    done: '完成',
+    keepEditing: '继续修改',
+    heart: (count) => `送一颗爱心，已有 ${count} 颗`,
+    hearts: (count) => `${count} 颗爱心`,
   },
   dice: {
     title: '骰子',
@@ -119,5 +129,12 @@ export const ui: typeof en = {
     },
     states: { selected: '，已选中', found: '，已找到', wrong: '，不成一组' },
     badge: (name, badge) => `${name}，${badge}`,
+  },
+  snap: {
+    symbol: (symbol) => snapSymbols[symbol] ?? '',
+    marks: { match: '，两张牌都有', miss: '，不是这个' },
+    note: (name, note) => `${name}，${note}`,
+    takenBy: (who) => `被 ${who} 抢走`,
+    locked: '锁定中',
   },
 };

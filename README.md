@@ -7,7 +7,7 @@
 ## 🚀 About
 
 **Zumpo** is a home for little browser games, alone or together, built with React and Node.js in TypeScript.
-It hosts Draw & Guess, Minesweeper, Make 24, Pairs, Trios, Liar's Dice, Hush and Daily Word: play on your own straight away, or open a room and send your friends the link.
+It hosts Draw & Guess, Minesweeper, Make 24, Pairs, Trios, Snap, Liar's Dice, Hush, Daily Word and Doodle Chain: play on your own straight away, or open a room and send your friends the link.
 Every game is short, easy to start and easy to share, and more are on the way.
 
 Zumpo began as [**Icon**](https://github.com/ryangandev/zumpo/tree/old-version), my final project for a Web Development class at Drexel University, built in a team of three.
@@ -28,9 +28,11 @@ Zumpo began as [**Icon**](https://github.com/ryangandev/zumpo/tree/old-version),
 | [Make 24](docs/games/make-24.md)             | Solo or 2–8 | Four numbers and plus, minus, times, divide: make 24               |
 | [Pairs](docs/games/pairs.md)                 | Solo or 2–6 | Flip two cards, remember where everything is, find every pair      |
 | [Trios](docs/games/trios.md)                 | Solo or 2–8 | Twelve cards on the table: be first to spot three that make a trio |
+| [Snap](docs/games/snap.md)                   | Solo or 2–6 | Every two cards share one symbol: be first to tap it               |
 | [Liar's Dice](docs/games/liars-dice.md)      | Solo or 2–6 | Roll in secret, bid on the whole table, call the bluff             |
 | [Hush](docs/games/hush.md)                   | 2–4         | Play every card lowest first, together, without a word             |
 | [Daily Word](docs/games/daily-word.md)       | Solo or 2–8 | Six guesses for a five-letter word, one a day or a race in rooms   |
+| [Doodle Chain](docs/games/doodle-chain.md)   | 3–8         | Write a line, draw it, describe it, and watch it fall apart        |
 
 Each game is a module on a shared room layer that owns seats, ownership, the reconnect grace and the lobby.
 [`docs/README.md`](docs/README.md) routes to the architecture, the current status, known issues and the roadmap.

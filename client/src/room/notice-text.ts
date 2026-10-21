@@ -60,6 +60,10 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['trios:started'](notice);
     case 'trios:found':
       return m.notices['trios:found'](notice);
+    case 'snap:started':
+      return m.notices['snap:started'](notice);
+    case 'snap:took':
+      return m.notices['snap:took'](notice);
     case 'ld:started':
       return m.notices['ld:started'](notice);
     case 'ld:auto-bid':
@@ -90,6 +94,12 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['dw:solved'](notice);
     case 'dw:revealed':
       return m.notices['dw:revealed'](notice);
+    case 'dc:step':
+      return m.notices['dc:step'](notice);
+    case 'dc:reveal':
+      return m.notices['dc:reveal'](notice);
+    case 'dc:album':
+      return m.notices['dc:album'](notice);
   }
 }
 

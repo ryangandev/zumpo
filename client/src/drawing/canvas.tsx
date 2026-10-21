@@ -34,9 +34,9 @@ export interface DrawingCanvasProps {
 }
 
 /**
- * The Draw & Guess canvas: a white sheet in the bitmap's proportions that
- * paints the room's strokes, and takes the drawer's pointer, mouse, pen or
- * finger alike.
+ * The drawing canvas every drawing game shares: a white sheet in the bitmap's
+ * proportions that paints a stream's strokes, and takes the drawer's pointer,
+ * mouse, pen or finger alike.
  */
 export function DrawingCanvas({
   stream,
@@ -163,9 +163,7 @@ export function DrawingCanvas({
         onPointerUp={up}
         onPointerCancel={up}
         role="img"
-        aria-label={
-          brush ? m.drawAndGuess.drawingCanvas : m.drawAndGuess.drawingImage
-        }
+        aria-label={brush ? m.ui.drawing.canvas : m.ui.drawing.image}
       />
       {overlay && <div className={styles.overlay}>{overlay}</div>}
     </div>

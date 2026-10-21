@@ -25,9 +25,11 @@ Where to find the answer, without searching the repository.
 | Make 24 rules, scoring, solo runs, code                | [games/make-24.md](games/make-24.md)                                                                                            |
 | Pairs rules, turns, solo games, code                   | [games/pairs.md](games/pairs.md)                                                                                                |
 | Trios rules, claims, hints, solo runs, code            | [games/trios.md](games/trios.md)                                                                                                |
+| Snap rules, claims, lockouts, solo runs, code          | [games/snap.md](games/snap.md)                                                                                                  |
 | Liar's Dice rules, the raise, the bots, code           | [games/liars-dice.md](games/liars-dice.md)                                                                                      |
 | Hush rules, levels, lives, pauses, code                | [games/hush.md](games/hush.md)                                                                                                  |
 | Daily Word rules, word lists, scoring, code            | [games/daily-word.md](games/daily-word.md)                                                                                      |
+| Doodle Chain rules, steps, the reveal, hearts, code    | [games/doodle-chain.md](games/doodle-chain.md)                                                                                  |
 | Brand, visual direction, the Figma file                | [design.md](design.md)                                                                                                          |
 | The design system in code, reviewing it against Figma  | [design.md#in-code](design.md#in-code), then [architecture.md#client](architecture.md#client)                                   |
 | What the Figma screens do and do not promise           | [design.md#what-the-screens-are-and-are-not](design.md#what-the-screens-are-and-are-not)                                        |

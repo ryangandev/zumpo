@@ -1,0 +1,2004 @@
+{
+  "format": 1,
+  "name": "Zumpo/Snap card",
+  "id": "162:39153",
+  "type": "COMPONENT_SET",
+  "key": "ce26a645c850018ee74d7feba6efe30381c14934",
+  "description": "A Snap card: six symbols on a round card, one in the middle and five around it, Spot 1 to Spot 6 in the order a card lists them. Taken is the card just won, ringed in green with its winner’s initials; Locked dims your card while a wrong tap locks you out.",
+  "properties": {
+    "Badge": {
+      "type": "text",
+      "default": "MA"
+    },
+    "Show badge": {
+      "type": "boolean",
+      "default": false
+    },
+    "State": {
+      "type": "variant",
+      "default": "Default",
+      "options": [
+        "Default",
+        "Taken",
+        "Locked"
+      ]
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Compact",
+        "Mini"
+      ]
+    }
+  },
+  "defaultVariant": "State=Default, Size=Regular",
+  "variants": [
+    {
+      "name": "State=Default, Size=Regular",
+      "id": "162:38970",
+      "props": {
+        "State": "Default",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38970",
+        "name": "State=Default, Size=Regular",
+        "x": 24,
+        "y": 36,
+        "w": 320,
+        "h": 320,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38971",
+            "name": "Spot 1",
+            "x": 112,
+            "y": 112,
+            "w": 96,
+            "h": 96,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 96,
+                "width": 96
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38974",
+            "name": "Spot 2",
+            "x": 121.6,
+            "y": 12.8,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38977",
+            "name": "Spot 3",
+            "x": 225.07,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38980",
+            "name": "Spot 4",
+            "x": 185.55,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38983",
+            "name": "Spot 5",
+            "x": 57.65,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38986",
+            "name": "Spot 6",
+            "x": 18.13,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:38989",
+            "name": "Badge",
+            "visible": false,
+            "x": 142.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:38990",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Taken, Size=Regular",
+      "id": "162:38991",
+      "props": {
+        "State": "Taken",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38991",
+        "name": "State=Taken, Size=Regular",
+        "x": 392,
+        "y": 36,
+        "w": 320,
+        "h": 320,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38992",
+            "name": "Spot 1",
+            "x": 112,
+            "y": 112,
+            "w": 96,
+            "h": 96,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 96,
+                "width": 96
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38995",
+            "name": "Spot 2",
+            "x": 121.6,
+            "y": 12.8,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:38998",
+            "name": "Spot 3",
+            "x": 225.07,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39001",
+            "name": "Spot 4",
+            "x": 185.55,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39004",
+            "name": "Spot 5",
+            "x": 57.65,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39007",
+            "name": "Spot 6",
+            "x": 18.13,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:39010",
+            "name": "Badge",
+            "visible": false,
+            "x": 142.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/green"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:39011",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Locked, Size=Regular",
+      "id": "162:39012",
+      "props": {
+        "State": "Locked",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39012",
+        "name": "State=Locked, Size=Regular",
+        "x": 760,
+        "y": 36,
+        "w": 320,
+        "h": 320,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39013",
+            "name": "Spot 1",
+            "x": 112,
+            "y": 112,
+            "w": 96,
+            "h": 96,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 96,
+                "width": 96
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39016",
+            "name": "Spot 2",
+            "x": 121.6,
+            "y": 12.8,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39019",
+            "name": "Spot 3",
+            "x": 225.07,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39022",
+            "name": "Spot 4",
+            "x": 185.55,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39025",
+            "name": "Spot 5",
+            "x": 57.65,
+            "y": 209.62,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39028",
+            "name": "Spot 6",
+            "x": 18.13,
+            "y": 87.98,
+            "w": 76.8,
+            "h": 76.8,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": "Symbol",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:39031",
+            "name": "Badge",
+            "visible": false,
+            "x": 142.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:39032",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Default, Size=Compact",
+      "id": "162:39033",
+      "props": {
+        "State": "Default",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39033",
+        "name": "State=Default, Size=Compact",
+        "x": 24,
+        "y": 416,
+        "w": 224,
+        "h": 224,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39034",
+            "name": "Spot 1",
+            "x": 78.4,
+            "y": 78.4,
+            "w": 67.2,
+            "h": 67.2,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 67.2,
+                "width": 67.2
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39037",
+            "name": "Spot 2",
+            "x": 85.12,
+            "y": 8.96,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39040",
+            "name": "Spot 3",
+            "x": 157.55,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39043",
+            "name": "Spot 4",
+            "x": 129.89,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39046",
+            "name": "Spot 5",
+            "x": 40.35,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39049",
+            "name": "Spot 6",
+            "x": 12.69,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:39052",
+            "name": "Badge",
+            "visible": false,
+            "x": 94.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:39053",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Taken, Size=Compact",
+      "id": "162:39054",
+      "props": {
+        "State": "Taken",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39054",
+        "name": "State=Taken, Size=Compact",
+        "x": 392,
+        "y": 416,
+        "w": 224,
+        "h": 224,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39055",
+            "name": "Spot 1",
+            "x": 78.4,
+            "y": 78.4,
+            "w": 67.2,
+            "h": 67.2,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 67.2,
+                "width": 67.2
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39058",
+            "name": "Spot 2",
+            "x": 85.12,
+            "y": 8.96,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39061",
+            "name": "Spot 3",
+            "x": 157.55,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39064",
+            "name": "Spot 4",
+            "x": 129.89,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39067",
+            "name": "Spot 5",
+            "x": 40.35,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39070",
+            "name": "Spot 6",
+            "x": 12.69,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:39073",
+            "name": "Badge",
+            "visible": false,
+            "x": 94.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/green"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:39074",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Locked, Size=Compact",
+      "id": "162:39075",
+      "props": {
+        "State": "Locked",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39075",
+        "name": "State=Locked, Size=Compact",
+        "x": 760,
+        "y": 416,
+        "w": 224,
+        "h": 224,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39076",
+            "name": "Spot 1",
+            "x": 78.4,
+            "y": 78.4,
+            "w": 67.2,
+            "h": 67.2,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 67.2,
+                "width": 67.2
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39079",
+            "name": "Spot 2",
+            "x": 85.12,
+            "y": 8.96,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "opacity": 0.3,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39082",
+            "name": "Spot 3",
+            "x": 157.55,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "opacity": 0.3,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39085",
+            "name": "Spot 4",
+            "x": 129.89,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "opacity": 0.3,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39088",
+            "name": "Spot 5",
+            "x": 40.35,
+            "y": 146.73,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "opacity": 0.3,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39091",
+            "name": "Spot 6",
+            "x": 12.69,
+            "y": 61.59,
+            "w": 53.76,
+            "h": 53.76,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 53.76,
+                "width": 53.76
+              },
+              {
+                "path": "Symbol",
+                "height": 43.01,
+                "opacity": 0.3,
+                "width": 43.01
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:39094",
+            "name": "Badge",
+            "visible": false,
+            "x": 94.5,
+            "y": -10,
+            "w": 35,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "constraints": [
+              "center",
+              "min"
+            ],
+            "propRefs": {
+              "visible": "Show badge"
+            },
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "pad": [
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/8"
+              ],
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:39095",
+                "name": "Badge",
+                "w": 19,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Badge"
+                },
+                "text": "MA",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Default, Size=Mini",
+      "id": "162:39096",
+      "props": {
+        "State": "Default",
+        "Size": "Mini"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39096",
+        "name": "State=Default, Size=Mini",
+        "x": 24,
+        "y": 700,
+        "w": 72,
+        "h": 72,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39097",
+            "name": "Spot 1",
+            "x": 25.2,
+            "y": 25.2,
+            "w": 21.6,
+            "h": 21.6,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 21.6,
+                "width": 21.6
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39100",
+            "name": "Spot 2",
+            "x": 27.36,
+            "y": 2.88,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39103",
+            "name": "Spot 3",
+            "x": 50.64,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39106",
+            "name": "Spot 4",
+            "x": 41.75,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39109",
+            "name": "Spot 5",
+            "x": 12.97,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39112",
+            "name": "Spot 6",
+            "x": 4.08,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Taken, Size=Mini",
+      "id": "162:39115",
+      "props": {
+        "State": "Taken",
+        "Size": "Mini"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39115",
+        "name": "State=Taken, Size=Mini",
+        "x": 392,
+        "y": 700,
+        "w": 72,
+        "h": 72,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39116",
+            "name": "Spot 1",
+            "x": 25.2,
+            "y": 25.2,
+            "w": 21.6,
+            "h": 21.6,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 21.6,
+                "width": 21.6
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39119",
+            "name": "Spot 2",
+            "x": 27.36,
+            "y": 2.88,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39122",
+            "name": "Spot 3",
+            "x": 50.64,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39125",
+            "name": "Spot 4",
+            "x": 41.75,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39128",
+            "name": "Spot 5",
+            "x": 12.97,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39131",
+            "name": "Spot 6",
+            "x": 4.08,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "None"
+            },
+            "componentId": "162:38957",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Locked, Size=Mini",
+      "id": "162:39134",
+      "props": {
+        "State": "Locked",
+        "Size": "Mini"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:39134",
+        "name": "State=Locked, Size=Mini",
+        "x": 760,
+        "y": 700,
+        "w": 72,
+        "h": 72,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:39135",
+            "name": "Spot 1",
+            "x": 25.2,
+            "y": 25.2,
+            "w": 21.6,
+            "h": 21.6,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 21.6,
+                "width": 21.6
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39138",
+            "name": "Spot 2",
+            "x": 27.36,
+            "y": 2.88,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "opacity": 0.3,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39141",
+            "name": "Spot 3",
+            "x": 50.64,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "opacity": 0.3,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39144",
+            "name": "Spot 4",
+            "x": 41.75,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "opacity": 0.3,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39147",
+            "name": "Spot 5",
+            "x": 12.97,
+            "y": 47.16,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "opacity": 0.3,
+                "width": 13.82
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:39150",
+            "name": "Spot 6",
+            "x": 4.08,
+            "y": 19.8,
+            "w": 17.28,
+            "h": 17.28,
+            "component": "Zumpo/Snap spot",
+            "variant": {
+              "Mark": "Dim"
+            },
+            "componentId": "162:38966",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 17.28,
+                "width": 17.28
+              },
+              {
+                "path": "Symbol",
+                "height": 13.82,
+                "opacity": 0.3,
+                "width": 13.82
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
