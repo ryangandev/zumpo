@@ -145,7 +145,9 @@ export function MineGrid({
       </div>
     </div>
   );
-  if (!inPlay) return grid;
+  // Wider screens show the board as it is, its cells' focus rings reaching
+  // into the panel's padding.
+  if (!inPlay || !phone) return grid;
   // A board that pans is never scaled: it scrolls, down within the room
   // left and sideways within itself.
   return pans ? (
