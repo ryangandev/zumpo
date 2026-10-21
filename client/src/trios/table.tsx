@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useMessages } from '../i18n';
 import { TriosCard, type TriosCardState } from '../ui';
 import { cx } from '../ui/cx';
-import { Fit } from '../shell/fit';
+import { useFitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
@@ -43,9 +43,8 @@ export function TriosTable({
 }: TriosTableProps) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
-  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Holder>
+    <PlayBoard inPlay={inPlay}>
       <div className={styles.table} role="group" aria-label={m.trios.table}>
         {cards.map((card, place) => (
           <TriosCard
@@ -57,13 +56,24 @@ export function TriosTable({
           />
         ))}
       </div>
-    </Holder>
+    </PlayBoard>
   );
 }
 
 /** The paper panel the table sits on; bare on a phone. */
-export function TablePanel({ children }: { children: ReactNode }) {
-  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
+export function TablePanel({
+  children,
+  fitHeight = false,
+}: {
+  children: ReactNode;
+  fitHeight?: boolean;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  return (
+    <div ref={ref} className={cx(styles.panel, playColumn)}>
+      {children}
+    </div>
+  );
 }
 
 /** A trio in a line of mini cards: the last one taken, or one of a run. */

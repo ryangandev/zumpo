@@ -101,11 +101,12 @@ export const dailyWord = {
   anotherWord: 'Another word',
   challengeFriend: 'Challenge a friend',
   todayWord: 'Today’s word',
+  youFoundWord: (word: string) => `You found ${word}`,
+  newWordAtMidnight: 'A new word at midnight.',
   friendFewer: (guesses: number) =>
     `They get this same word and try to find it in fewer than ${guesses} guesses. They see your marks, not your letters.`,
   friendSame: 'They get this same word. They see your marks, not your letters.',
   yourMarks: 'Your marks',
-  copyChallenge: 'Copy challenge',
   onDevice: 'On this device',
   stats: {
     played: 'Played',

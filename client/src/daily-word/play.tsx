@@ -43,6 +43,7 @@ export function PlayArea({
   typing,
   keyboard,
   disabled,
+  beside = false,
   className,
 }: {
   rows: readonly (WordBoardRow & { word: string })[];
@@ -56,6 +57,11 @@ export function PlayArea({
   keyboard: boolean;
   /** A paused board: reconnecting, or a guess on its way. */
   disabled?: boolean;
+  /**
+   * The keyboard beside the board and its line, not under them: on your own
+   * on a short wide window (SHORT_WIDE), while the keyboard is up.
+   */
+  beside?: boolean;
   className?: string;
 }) {
   const m = useMessages();
@@ -74,16 +80,23 @@ export function PlayArea({
   return (
     <div
       ref={play}
-      className={cx(styles.play, keyboard && playColumn, className)}
-    >
-      {keyboard ? (
-        // In play the board gives the height the keyboard needs.
-        <PlayBoard min={0.6} current={rows.length}>
-          {board}
-        </PlayBoard>
-      ) : (
-        board
+      className={cx(
+        styles.play,
+        keyboard && playColumn,
+        beside && styles.beside,
+        className,
       )}
+    >
+      {/* In play the board gives the height the keyboard needs; done, it
+          stays where it was, as tall as it is. */}
+      <PlayBoard
+        min={0.6}
+        current={rows.length}
+        inPlay={keyboard}
+        className={styles.board}
+      >
+        {board}
+      </PlayBoard>
       {phone || !prompt ? (
         // With nothing to say under the board, or no room for it on a phone,
         // there is no line: a row turned back is said over the board, so the
@@ -106,6 +119,7 @@ export function PlayArea({
       )}
       {keyboard && (
         <Keyboard
+          className={styles.keys}
           marks={Object.fromEntries(keyMarks(rows))}
           disabled={disabled}
           onLetter={typing.onKey}

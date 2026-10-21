@@ -1,11 +1,10 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import type { PairsBoard } from '../../../../shared/wire-types';
 import { PAIRS_BOARDS } from '../../../../shared/pairs';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
   Button,
-  ButtonLink,
   Card,
   ChoiceList,
   StatList,
@@ -13,15 +12,11 @@ import {
   type Stat,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo, soloPath } from '../../games/catalog';
+import { soloPath } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
-import { FormPage } from '../../shell/form-page';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
-import {
-  ChallengeButton,
-  ChallengeCard,
-  challengeLink,
-} from '../../solo/challenge';
+import { ChangeSettings } from '../../solo/change-settings';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import {
   formatDuration,
   readStored,
@@ -57,124 +52,95 @@ const isBoard = (value: string | null): value is PairsBoard =>
 const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
 
+/** The board played last on this device, or Small on a first visit. */
+function lastBoard(): PairsBoard {
+  const last = readStored(LAST_BOARD);
+  return isBoard(last) ? last : 'Small';
+}
+
 /** "31 turns". */
 const turnsLabel = (best: PairsBest, m: Messages) =>
   m.pairs.solo.turnsCount(best.turns);
 
 /**
- * PR01-PR04, PR09: Pairs on your own. `?board=Large&seed=k3f9x2` is a
- * challenge: the same deck somebody else played. It all runs here: nothing
- * reaches the server.
+ * PR02-PR04, PR09: Pairs on your own, straight away on the board played last
+ * here. `?board=Large&seed=k3f9x2` is a challenge: the same deck somebody
+ * else played. It all runs here: nothing reaches the server.
  */
 export function PairsSolo() {
   const [params, setParams] = useSearchParams();
-  const linkedBoard = params.get('board');
-  const linkedSeed = params.get('seed');
-  const challenge =
-    isBoard(linkedBoard) && isSeed(linkedSeed)
-      ? { board: linkedBoard, seed: linkedSeed }
-      : null;
   // Each game is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{
-    board: PairsBoard;
-    seed: string;
-    game: number;
-  } | null>(null);
+  const [playing, setPlaying] = useState(() => {
+    const board = params.get('board');
+    const seed = params.get('seed');
+    return isBoard(board) && isSeed(seed)
+      ? { board, seed, challenge: true, game: 0 }
+      : { board: lastBoard(), seed: newSeed(), challenge: false, game: 0 };
+  });
+  const next = (board: PairsBoard) => {
+    // A challenge is played once; the next game is a new deck.
+    if (playing.challenge) setParams({}, { replace: true });
+    setPlaying({
+      board,
+      seed: newSeed(),
+      challenge: false,
+      game: playing.game + 1,
+    });
+  };
 
-  if (playing === null) {
-    return (
-      <BoardPicker
-        challenge={challenge?.board ?? null}
-        onStart={(board) => {
-          writeStored(LAST_BOARD, board);
-          setPlaying({
-            board,
-            seed: challenge?.seed ?? newSeed(),
-            game: 0,
-          });
-        }}
-      />
-    );
-  }
   return (
     <SoloGameView
       key={playing.game}
       board={playing.board}
       seed={playing.seed}
-      onPlayAgain={() => {
-        // A challenge is played once; the next game is a new deck.
-        if (challenge) setParams({}, { replace: true });
-        setPlaying({ ...playing, seed: newSeed(), game: playing.game + 1 });
-      }}
-      onChangeBoard={() => {
-        if (challenge) setParams({}, { replace: true });
-        setPlaying(null);
+      challenge={playing.challenge}
+      onPlayAgain={() => next(playing.board)}
+      onChangeBoard={(board) => {
+        writeStored(LAST_BOARD, board);
+        next(board);
       }}
     />
   );
 }
 
-/** PR01: the two boards, each with its best on this device. */
-function BoardPicker({
-  challenge,
-  onStart,
+/** PR01, behind Change board: the boards, each with its best. */
+function ChangeBoard({
+  board,
+  onPlay,
 }: {
-  /** The board a challenge link deals, the only one to play. */
-  challenge: PairsBoard | null;
-  onStart: (board: PairsBoard) => void;
+  board: PairsBoard;
+  onPlay: (board: PairsBoard) => void;
 }) {
   const m = useMessages();
-  const game = gameInfo('pairs');
-  const text = m.games.of[game.type];
-  const [board, setBoard] = useState<PairsBoard>(() => {
-    if (challenge) return challenge;
-    const last = readStored(LAST_BOARD);
-    return isBoard(last) ? last : 'Small';
-  });
-  const description = m.pairs.solo.description(challenge !== null);
-
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.pairs.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
+    <ChangeSettings
+      label={m.pairs.solo.changeBoard}
       title={m.pairs.solo.pickBoard}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart(board);
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.pairs.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.pairs.solo.backToGames}
-          </ButtonLink>
-        </>
-      }
+      description={m.pairs.solo.description}
+      settings={board}
+      onPlay={onPlay}
     >
-      <ChoiceList
-        label={m.pairs.solo.board}
-        options={(challenge ? [challenge] : BOARDS).map((option) => {
-          const best = readPairsBest(option);
-          return {
-            value: option,
-            label: m.pairs.boardLabel(option),
-            detail: m.pairs.solo.boardOption(
-              PAIRS_BOARDS[option].pairs,
-              best === null
-                ? m.pairs.solo.noBest
-                : m.pairs.solo.best(turnsLabel(best, m)),
-            ),
-          };
-        })}
-        value={board}
-        onValueChange={setBoard}
-      />
-    </FormPage>
+      {(picked, pick) => (
+        <ChoiceList
+          label={m.pairs.solo.board}
+          options={BOARDS.map((option) => {
+            const best = readPairsBest(option);
+            return {
+              value: option,
+              label: m.pairs.boardLabel(option),
+              detail: m.pairs.solo.boardOption(
+                PAIRS_BOARDS[option].pairs,
+                best === null
+                  ? m.pairs.solo.noBest
+                  : m.pairs.solo.best(turnsLabel(best, m)),
+              ),
+            };
+          })}
+          value={picked}
+          onValueChange={pick}
+        />
+      )}
+    </ChangeSettings>
   );
 }
 
@@ -188,13 +154,16 @@ interface Finish {
 function SoloGameView({
   board,
   seed,
+  challenge,
   onPlayAgain,
   onChangeBoard,
 }: {
   board: PairsBoard;
   seed: string;
+  /** Dealt from somebody else's link. */
+  challenge: boolean;
   onPlayAgain: () => void;
-  onChangeBoard: () => void;
+  onChangeBoard: (board: PairsBoard) => void;
 }) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
@@ -232,7 +201,6 @@ function SoloGameView({
     }
   };
 
-  const link = challengeLink(soloPath('pairs'), { board, seed });
   const { pairs, turns, timeMs, streak } = summary(game, now);
 
   const bests: Stat[] = BOARDS.map((option) => {
@@ -248,6 +216,11 @@ function SoloGameView({
             : undefined,
     };
   });
+  const bestCard = (
+    <Card kind="panel" title={m.pairs.solo.bestOnDevice}>
+      <StatList className={styles.stats} stats={bests} />
+    </Card>
+  );
 
   return (
     <SoloLayout
@@ -256,39 +229,15 @@ function SoloGameView({
       phase={
         finish
           ? { tone: 'lime', label: m.pairs.solo.boardCleared }
-          : { tone: 'blue', label: m.pairs.boardLabel(board) }
+          : {
+              tone: 'blue',
+              label: challenge ? m.solo.challenge : m.pairs.boardLabel(board),
+            }
       }
       stage={
         <>
-          {finish ? (
-            <SoloResult
-              celebrate={finish.isBest}
-              title={m.pairs.solo.finishedIn(pairs, turns)}
-              body={finishBody(board, turns, finish, m)}
-              stats={[
-                { label: m.pairs.solo.time, value: formatDuration(timeMs) },
-                { label: m.pairs.solo.turns, value: String(turns) },
-                {
-                  label: m.pairs.solo.longestStreak,
-                  value: m.pairs.solo.streak(streak),
-                },
-              ]}
-              actions={
-                <>
-                  <Button onClick={onPlayAgain}>
-                    {m.pairs.solo.playAgain}
-                  </Button>
-                  <Button variant="secondary" onClick={onChangeBoard}>
-                    {m.pairs.solo.changeBoard}
-                  </Button>
-                  <ChallengeButton link={link} />
-                </>
-              }
-            />
-          ) : (
-            <TurnBar {...turnBar(game, now, phone, m)} />
-          )}
-          <BoardPanel>
+          <TurnBar {...turnBar(game, now, phone, m)} />
+          <BoardPanel fitHeight>
             <PairsGrid
               cards={cardsOf(game)}
               onFlip={finish ? undefined : play}
@@ -297,15 +246,35 @@ function SoloGameView({
           </BoardPanel>
         </>
       }
+      result={
+        finish && (
+          <SoloResult
+            celebrate={finish.isBest}
+            title={m.pairs.solo.finishedIn(pairs, turns)}
+            body={finishBody(board, turns, finish, m)}
+            stats={[
+              { label: m.pairs.solo.time, value: formatDuration(timeMs) },
+              {
+                label: m.pairs.solo.longestStreak,
+                value: m.pairs.solo.streak(streak),
+              },
+            ]}
+            actions={
+              <>
+                <Button onClick={onPlayAgain}>{m.pairs.solo.playAgain}</Button>
+                <ChangeBoard board={board} onPlay={onChangeBoard} />
+              </>
+            }
+          />
+        )
+      }
       side={
         finish ? (
           <>
-            <Card kind="panel" title={m.pairs.solo.bestOnDevice}>
-              <StatList className={styles.stats} stats={bests} />
-            </Card>
+            {bestCard}
             <ChallengeCard
               description={m.pairs.solo.challengeDescription(turns)}
-              link={link}
+              text={challengeLink(soloPath('pairs'), { board, seed })}
             />
           </>
         ) : (
@@ -318,13 +287,10 @@ function SoloGameView({
                     label: m.pairs.solo.pairs,
                     value: m.pairs.solo.pairProgress(pairsFound(game), pairs),
                   },
-                  { label: m.pairs.solo.turns, value: String(turns) },
                 ]}
               />
             </Card>
-            <Card kind="panel" title={m.pairs.solo.bestOnDevice}>
-              <StatList className={styles.stats} stats={bests} />
-            </Card>
+            {bestCard}
           </>
         )
       }
@@ -379,6 +345,10 @@ function turnBar(
       waiting: true,
     },
   };
+  // The last pair: the board stays as it was cleared, under its last turn.
+  if (isOver(game)) {
+    return { ...base, main: m.pairs.solo.allPairs(pairs) };
+  }
   // A phone has no side cards, so the pairs found are on the turn bar.
   const progress = m.pairs.progress(pairsFound(game), pairs);
   if (flipping) {

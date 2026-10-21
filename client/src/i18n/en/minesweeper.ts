@@ -83,10 +83,7 @@ export const minesweeper = {
   picking: 'Picking',
   solo: {
     description: 'Your first click is always safe. The clock starts with it.',
-    onYourOwn: 'On your own',
     pickBoard: 'Pick a board.',
-    start: 'Start',
-    backToGames: 'Back to games',
     board: 'Board',
     noBest: 'No best yet',
     best: (time: string) => `Best: ${time}`,
@@ -94,7 +91,6 @@ export const minesweeper = {
     tryAgain: 'Try again',
     changeBoard: 'Change board',
     clearedIn: (time: string) => `Cleared in ${time}.`,
-    time: 'Time',
     mines: 'Mines',
     playAgain: 'Play again',
     click: 'A click',
@@ -119,6 +115,8 @@ export const minesweeper = {
       `${count < 0 ? `−${-count}` : count} ${Math.abs(count) === 1 ? 'mine' : 'mines'} left`,
     runTime: 'run time',
     hitMine: 'You hit a mine',
+    allClear: 'Every safe cell is open',
+    minesFlagged: (mines: number) => `All ${mines} mines are flagged for you`,
     cleared: (cleared: number, safe: number) =>
       `You cleared ${cleared} of ${plural(safe, 'safe cell')}`,
     clearBoard: 'Clear the board',

@@ -32,16 +32,10 @@ beforeEach(() => {
 });
 
 describe('Play solo', () => {
-  it('picks a board and plays with Chinese instructions', async () => {
+  it('starts at once, with Chinese instructions', async () => {
     const user = userEvent.setup();
     await renderApp('/games/minesweeper/solo', { locale: 'zh' });
-    expect(screen.getByText('选一个棋盘。')).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /小 · 9 × 9/ })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
-    expect(screen.getByText('99 颗雷。暂无最佳成绩')).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: '开始' }));
+    expect(screen.queryByRole('button', { name: '开始' })).toBeNull();
     expect(
       screen.getByRole('grid', { name: '棋盘，9 列，9 行' }),
     ).toBeInTheDocument();
@@ -62,20 +56,29 @@ describe('Play solo', () => {
     expect(screen.queryByRole('link', { name: 'Play solo' })).toBeNull();
   });
 
-  it('plays on a first visit, and remembers the board', async () => {
+  it('plays Small on a first visit, and remembers a board changed at the end', async () => {
     const user = userEvent.setup();
-    const { router } = await renderApp('/games/minesweeper/solo', {
-      firstVisit: true,
-    });
+    // Nothing stored yet: beforeEach clears this device.
+    const layout = smallBoard(7);
+    const { router } = await renderApp('/games/minesweeper/solo');
     expect(router.state.location.pathname).toBe('/games/minesweeper/solo');
-    expect(screen.getByText('Pick a board.')).toBeInTheDocument();
     expect(
-      screen.getByRole('radio', { name: /Small · 9 × 9/ }),
-    ).toHaveAttribute('aria-checked', 'true');
-    expect(screen.getByText('99 mines. No best yet')).toBeInTheDocument();
+      screen.getByRole('grid', { name: 'Board, 9 by 9' }),
+    ).toBeInTheDocument();
 
-    await user.click(screen.getByRole('radio', { name: /Large · 30 × 16/ }));
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await user.click(cell(5, 5));
+    const mine = layout.indexOf(true);
+    await user.click(cell(Math.floor(mine / 9) + 1, (mine % 9) + 1));
+    await user.click(screen.getByRole('button', { name: 'Change board' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Pick a board.' }),
+    );
+    expect(
+      dialog.getByRole('radio', { name: /Small · 9 × 9/ }),
+    ).toHaveAttribute('aria-checked', 'true');
+    expect(dialog.getByText('99 mines. No best yet')).toBeInTheDocument();
+    await user.click(dialog.getByRole('radio', { name: /Large · 30 × 16/ }));
+    await user.click(dialog.getByRole('button', { name: 'Play' }));
     expect(router.state.location.search).toBe('?board=Large');
     expect(turn().getByText('99 mines left')).toBeInTheDocument();
     expect(
@@ -87,8 +90,8 @@ describe('Play solo', () => {
     // The router renders a navigation as a transition; act sees it through.
     await act(() => router.navigate('/games/minesweeper/solo'));
     expect(
-      screen.getByRole('radio', { name: /Large · 30 × 16/ }),
-    ).toHaveAttribute('aria-checked', 'true');
+      screen.getByRole('grid', { name: 'Board, 30 by 16' }),
+    ).toBeInTheDocument();
   });
 });
 
@@ -147,6 +150,12 @@ describe('a board on your own', () => {
     expect(screen.getAllByRole('button', { name: /: hidden$/ })).toHaveLength(
       81,
     );
+    // Try again has gone with the last board; the new board has the focus.
+    expect(
+      screen
+        .getByRole('grid', { name: 'Board, 9 by 9' })
+        .contains(document.activeElement),
+    ).toBe(true);
   });
 
   it('is won by opening every safe cell, and keeps the best', async () => {

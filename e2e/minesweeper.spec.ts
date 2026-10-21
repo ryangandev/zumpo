@@ -48,9 +48,9 @@ test('two players pick until the board is done', async ({ player }) => {
 test('a player with no name plays a board on their own', async ({ player }) => {
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Minesweeper');
-  await sam.getByRole('radio', { name: /Small/ }).click();
-  await sam.getByRole('button', { name: 'Start' }).click();
-  await expect(sam).toHaveURL(/\/games\/minesweeper\/solo\?board=Small$/);
+  // A first visit plays Small at once.
+  await expect(sam).toHaveURL(/\/games\/minesweeper\/solo$/);
+  await expect(sam.getByRole('grid', { name: 'Board, 9 by 9' })).toBeVisible();
 
   // The first click opens an area; a right-click flags.
   const turn = sam.getByRole('region', { name: 'Turn' });

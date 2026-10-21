@@ -123,7 +123,8 @@ Two single-player conventions are deliberately **not** used in rooms (a game [on
 
 Classic single-player Minesweeper on the same three boards, with no name, no room and no server: it runs in the browser.
 
-1. Pick a board; the last one you played is picked for you.
+1. Play solo starts a board at once: the last one you played, or Small on a first visit.
+   **Change board**, beside Play again or Try again when a game ends, picks another (MS01).
 2. Your **first click is always safe**, and so are its eight neighbours, so it always opens an area.
    The mines are laid only after that click, which is also when the clock starts.
 3. Click a hidden cell to open it; opening a cell with no mines around it opens its neighbours too.
@@ -140,6 +141,7 @@ The mine you hit turns solid red, every other mine shows, flags with no mine und
 
 **Opening every safe cell wins**, whatever is flagged; the mines left are flagged for you.
 The time is shown and kept as the best for that board **on this device** (in `localStorage`) when it beats the last one.
+Either way the board stays as it ended, with the result beside it, or over it on one column, so Play again is in sight.
 
 There is no challenge link: the mines depend on where the first click lands, so two people could not play the same board.
 

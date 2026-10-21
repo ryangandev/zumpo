@@ -52,14 +52,8 @@ export const pairs: typeof en = {
   cards: '卡牌',
   solo: {
     turnsCount: (turns) => `${turns} 次翻牌`,
-    description: (challenge) =>
-      challenge
-        ? '好友发来了这副牌。翻牌次数越少越好，也会记录用时。'
-        : '翻牌次数越少越好，也会记录用时。',
-    onYourOwn: '单人模式',
+    description: '翻牌次数越少越好，也会记录用时。',
     pickBoard: '选一个棋盘。',
-    start: '开始',
-    backToGames: '返回游戏列表',
     board: '棋盘',
     boardOption: (total, best) => `${total} 对。${best}`,
     noBest: '暂无最佳成绩',
@@ -68,7 +62,6 @@ export const pairs: typeof en = {
     boardCleared: '配对完成',
     finishedIn: (total, turns) => `${turns} 次翻牌，找到 ${total} 对。`,
     time: '用时',
-    turns: '翻牌次数',
     longestStreak: '最长连对',
     streak: (total) => `连续 ${total} 对`,
     playAgain: '再玩一局',
@@ -89,6 +82,7 @@ export const pairs: typeof en = {
     whereSeen: '你在哪里见过它？',
     flipBackSoon: '稍后会翻回去',
     aPair: '配成一对！',
+    allPairs: (total) => `${total} 对全部找到`,
     flipAnother: '再翻一张牌',
     clockStarts: '翻第一张牌时开始计时',
     thenFindPair: '再找到它的另一张',

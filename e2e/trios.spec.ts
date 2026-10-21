@@ -77,7 +77,6 @@ test('a player with no name finds ten trios on their own', async ({
   test.setTimeout(120_000);
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Trios');
-  await sam.getByRole('button', { name: 'Start' }).click();
 
   const turn = turnOf(sam);
   await expect(turn.getByText('Trio 1 of 10')).toBeVisible();
@@ -91,12 +90,6 @@ test('a player with no name finds ten trios on their own', async ({
     await expect(turn.getByText(`Trio ${trio} of 10`)).toBeVisible();
     await readyToFind(sam);
     await pickTrio(sam);
-    // The last trio ends the run at once.
-    if (trio < 10) {
-      await expect(thisRun.getByRole('definition').first()).toHaveText(
-        String(trio),
-      );
-    }
   }
 
   await expect(
@@ -104,8 +97,8 @@ test('a player with no name finds ten trios on their own', async ({
   ).toBeVisible();
   await expect(sam.getByText('Run complete', { exact: true })).toBeVisible();
   await expect(
-    sam.getByRole('button', { name: 'Challenge a friend' }).first(),
-  ).toBeVisible();
+    sam.getByRole('button', { name: 'Copy challenge link' }),
+  ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });
 

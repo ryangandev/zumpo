@@ -1,23 +1,17 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
   Button,
-  ButtonLink,
   Card,
   StatList,
   TurnBar,
   type Stat,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo, soloPath } from '../../games/catalog';
+import { soloPath } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
-import { FormPage } from '../../shell/form-page';
-import {
-  ChallengeButton,
-  ChallengeCard,
-  challengeLink,
-} from '../../solo/challenge';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import {
   dayLabel,
   formatDuration,
@@ -26,6 +20,7 @@ import {
   recordBest,
   recordDayBest,
 } from '../../solo/device-store';
+import { Fit } from '../../shell/fit';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
@@ -74,97 +69,47 @@ const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
 
 /**
- * TS01-TS04, TS11: Trios on your own, a run of ten trios against one clock.
- * `?seed=` is a challenge: the same first table and deck somebody else
- * played. It all runs here: nothing reaches the server.
+ * TS02-TS04, TS11: Trios on your own, a run of ten trios against one clock,
+ * dealt as the page opens. `?seed=` is a challenge: the same first table and
+ * deck somebody else played. It all runs here: nothing reaches the server.
  */
 export function TriosSolo() {
   const [params, setParams] = useSearchParams();
-  const linked = params.get('seed');
   // Each run is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{ seed: string; run: number } | null>(
-    null,
-  );
-
-  if (playing === null) {
-    return (
-      <RunPicker
-        challenge={isSeed(linked)}
-        onStart={() =>
-          setPlaying({ seed: isSeed(linked) ? linked : newSeed(), run: 0 })
-        }
-      />
-    );
-  }
+  const [playing, setPlaying] = useState(() => {
+    const linked = params.get('seed');
+    return isSeed(linked)
+      ? { seed: linked, challenge: true, run: 0 }
+      : { seed: newSeed(), challenge: false, run: 0 };
+  });
   return (
     <RunView
       key={playing.run}
       seed={playing.seed}
+      challenge={playing.challenge}
       onPlayAgain={() => {
         // A challenge is played once; the next run is a new one.
-        if (linked !== null) setParams({}, { replace: true });
-        setPlaying({ seed: newSeed(), run: playing.run + 1 });
+        if (playing.challenge) setParams({}, { replace: true });
+        setPlaying({ seed: newSeed(), challenge: false, run: playing.run + 1 });
       }}
     />
   );
 }
 
-/** TS01: what a run is, a trio to learn from, and the best on this device. */
-function RunPicker({
-  challenge,
-  onStart,
-}: {
-  challenge: boolean;
-  onStart: () => void;
-}) {
-  const game = gameInfo('trios');
+/** TS01's rule and a trio to learn from, beside the table while it is played. */
+function TrioExample() {
   const m = useMessages();
-  const text = m.games.of[game.type];
-  const best = readBest(BEST_KEY);
-  const rule = m.trios.solo.rule;
-  const description = challenge
-    ? m.trios.solo.challengeDescription(rule)
-    : rule;
-
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
-      title={m.trios.solo.title}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart();
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.trios.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.shell.backToGames}
-          </ButtonLink>
-        </>
-      }
+    <Card
+      kind="panel"
+      title={m.trios.solo.whatMakesTrio}
+      description={m.trios.solo.rule}
     >
       <div className={styles.example}>
         <MiniTrio cards={EXAMPLE} />
         <span className={styles.exampleText}>{m.trios.solo.example}</span>
       </div>
-      <StatList
-        className={styles.stats}
-        stats={[
-          { label: m.trios.solo.trios, value: String(RUN_TRIOS) },
-          {
-            label: m.trios.solo.yourBest,
-            value: best === null ? m.trios.solo.notYet : formatDuration(best),
-            tone: best === null ? 'muted' : undefined,
-          },
-        ]}
-      />
-    </FormPage>
+    </Card>
   );
 }
 
@@ -179,9 +124,12 @@ interface Finish {
 /** TS02-TS04, TS11: the run, from the first table to its results. */
 function RunView({
   seed,
+  challenge,
   onPlayAgain,
 }: {
   seed: string;
+  /** Dealt from somebody else's link. */
+  challenge: boolean;
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
@@ -210,8 +158,6 @@ function RunView({
     return () => clearTimeout(timer);
   }, [flash, run, clock]);
 
-  const link = challengeLink(soloPath('trios'), { seed });
-
   if (finish) {
     const { timeMs, wrongPicks, hints, fastestMs } = summary(run);
     const time = formatDuration(timeMs);
@@ -221,38 +167,45 @@ function RunView({
         phase={{ tone: 'lime', label: m.trios.solo.complete }}
         stage={
           <>
-            <SoloResult
-              celebrate={finish.isBest}
-              title={m.trios.solo.resultTitle(RUN_TRIOS, time)}
-              body={finishBody(finish, m)}
-              stats={[
-                {
-                  label: m.trios.solo.wrongPicks,
-                  value: costOf(wrongPicks, WRONG_PENALTY_MS, m),
-                },
-                {
-                  label: m.trios.solo.hints,
-                  value: costOf(hints, HINT_PENALTY_MS, m),
-                },
-                {
-                  label: m.trios.solo.fastest,
-                  value:
-                    fastestMs === null
-                      ? m.trios.solo.none
-                      : formatDuration(fastestMs),
-                },
-              ]}
-              actions={
-                <>
-                  <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-                  <ChallengeButton link={link} />
-                </>
-              }
+            <TurnBar
+              label={m.trios.solo.progress(RUN_TRIOS, RUN_TRIOS)}
+              kind="status"
+              main={m.trios.solo.allFound(RUN_TRIOS)}
+              countdown={{
+                seconds: Math.floor(timeMs / 1000),
+                label: m.trios.solo.runTime,
+                waiting: true,
+              }}
             />
             <TablePanel>
               <EveryTrio results={run.results} />
             </TablePanel>
           </>
+        }
+        result={
+          <SoloResult
+            celebrate={finish.isBest}
+            title={m.trios.solo.resultTitle(RUN_TRIOS, time)}
+            body={finishBody(finish, m)}
+            stats={[
+              {
+                label: m.trios.solo.wrongPicks,
+                value: costOf(wrongPicks, WRONG_PENALTY_MS, m),
+              },
+              {
+                label: m.trios.solo.hints,
+                value: costOf(hints, HINT_PENALTY_MS, m),
+              },
+              {
+                label: m.trios.solo.fastest,
+                value:
+                  fastestMs === null
+                    ? m.trios.solo.none
+                    : formatDuration(fastestMs),
+              },
+            ]}
+            actions={<Button onClick={onPlayAgain}>{m.room.playAgain}</Button>}
+          />
         }
         side={
           <>
@@ -264,7 +217,7 @@ function RunView({
             </Card>
             <ChallengeCard
               description={m.trios.solo.challenge(time)}
-              link={link}
+              text={challengeLink(soloPath('trios'), { seed })}
             />
           </>
         }
@@ -279,12 +232,15 @@ function RunView({
     <SoloLayout
       gameType="trios"
       time={clock}
-      phase={{ tone: 'blue', label }}
+      phase={{
+        tone: 'blue',
+        label: challenge ? m.solo.challenge : m.trios.solo.tenTrios,
+      }}
       leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
           <TurnBar {...turnBar(run, now, label, m)} />
-          <TablePanel>
+          <TablePanel fitHeight>
             <TriosTable
               cards={run.deal.table}
               places={placesOf(run, m)}
@@ -311,10 +267,6 @@ function RunView({
               className={styles.stats}
               stats={[
                 {
-                  label: m.trios.solo.found,
-                  value: String(run.results.length),
-                },
-                {
                   label: m.trios.solo.wrongPicks,
                   value: costOf(wrongPicks, WRONG_PENALTY_MS, m),
                 },
@@ -325,6 +277,7 @@ function RunView({
               ]}
             />
           </Card>
+          <TrioExample />
           <Card kind="panel" title={m.trios.solo.best}>
             <StatList
               className={styles.stats}
@@ -467,7 +420,10 @@ function EveryTrio({ results }: { results: readonly TrioResult[] }) {
         {results.map((result, index) => (
           <li key={index} className={styles.trio}>
             <span className={styles.number}>{index + 1}</span>
-            <MiniTrio cards={result.cards} />
+            {/* A 360 px phone leaves the three cards less than they need. */}
+            <Fit align="start">
+              <MiniTrio cards={result.cards} />
+            </Fit>
             <span className={styles.note}>{trioNote(result, m)}</span>
             <span className={styles.time}>{formatDuration(result.ms)}</span>
           </li>

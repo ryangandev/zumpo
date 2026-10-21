@@ -1,4 +1,11 @@
-import { useLayoutEffect, useRef, useState, type RefObject } from 'react';
+import {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
 import { useMessages } from '../../i18n';
 import { Fit } from '../../shell/fit';
 import { SHORT_SCREEN, useMediaQuery } from '../../shell/use-media-query';
@@ -76,15 +83,24 @@ export function TurnBar({
   );
 }
 
+/**
+ * True where the page asks every turn bar in it for the compact phone row,
+ * as a game on your own does on a short window, to leave its board more of
+ * the height.
+ */
+export const CompactTurnBar = createContext(false);
+
 /** The widest a turn bar is in its Phone variant, as Figma draws it. */
 const PHONE_WIDTH = 560;
 
 /**
- * Whether the bar takes its phone row: 560 px wide or less, or on a short
- * screen. Measured before the first paint, so it never shows the other.
+ * Whether the bar takes its phone row: 560 px wide or less, on a short
+ * screen, or where the page asks for it. Measured before the first paint, so
+ * it never shows the other.
  */
 function usePhoneRow(box: RefObject<HTMLElement | null>): boolean {
   const short = useMediaQuery(SHORT_SCREEN);
+  const asked = useContext(CompactTurnBar);
   const [narrow, setNarrow] = useState(false);
   useLayoutEffect(() => {
     const element = box.current;
@@ -98,5 +114,5 @@ function usePhoneRow(box: RefObject<HTMLElement | null>): boolean {
     observer.observe(element);
     return () => observer.disconnect();
   }, [box]);
-  return short || narrow;
+  return short || asked || narrow;
 }

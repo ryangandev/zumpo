@@ -3,10 +3,13 @@
   align-self: stretch;
 }
 
-/* SN01: two mini cards that share a symbol, and what makes a deck. */
+/* SN01's two mini cards that share a symbol, then what they show, in the
+   side column's width. */
 .example {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
   gap: var(--zumpo-space-12);
 }
 

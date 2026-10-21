@@ -8,6 +8,9 @@ export const COMPARE_DIR = path.join(ROOT, 'design/compare');
 /** Screens no state of the app shows, and why. */
 const NOT_CAPTURED: Record<string, string> = {
   M06: 'A round resolves the moment the last player locks in, so "everyone locked" is never on screen.',
+  T01: 'Play solo deals the first hand at once, so there is no start screen; the frame is to go from Figma.',
+  TS01: 'Play solo deals the table at once, so there is no start screen; the frame is to go from Figma.',
+  SN01: 'Play solo deals the cards at once, so there is no start screen; the frame is to go from Figma.',
   SN14: 'Not a page: Snap’s game intro and home card side by side, which the game page and Home show in place.',
   GM21: 'Not a page: every state a Gomoku point can show, side by side, which the boards in GM03-GM19 show in place.',
 };

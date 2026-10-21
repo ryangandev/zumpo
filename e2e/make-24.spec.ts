@@ -36,7 +36,6 @@ test('a player with no name plays ten hands on their own', async ({
   test.setTimeout(120_000);
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Make 24');
-  await sam.getByRole('button', { name: 'Start' }).click();
 
   const turn = sam.getByRole('region', { name: 'Turn' });
   for (let hand = 1; hand <= 10; hand++) {
@@ -50,7 +49,7 @@ test('a player with no name plays ten hands on their own', async ({
     sam.getByRole('heading', { name: /^10 hands in / }),
   ).toBeVisible();
   await expect(
-    sam.getByRole('button', { name: 'Challenge a friend' }).first(),
-  ).toBeVisible();
+    sam.getByRole('button', { name: 'Copy challenge link' }),
+  ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });

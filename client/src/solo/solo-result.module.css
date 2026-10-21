@@ -1,42 +1,22 @@
-.result {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-24);
-  padding: var(--zumpo-space-40);
-  border: 1px solid var(--zumpo-line);
-  border-radius: var(--zumpo-radius-24);
-  background: var(--zumpo-paper);
-}
-
-.heading {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-8);
-}
-
-.title {
-  font: var(--zumpo-text-title);
-  letter-spacing: var(--zumpo-text-title-tracking);
-}
-
+/* A panel card (MS03's Try again?), the first in the side column. */
 .answer {
   display: flex;
   gap: var(--zumpo-space-4);
 }
 
+/* As a card's description. */
 .body {
   color: var(--zumpo-muted);
   font: var(--zumpo-text-body);
   letter-spacing: var(--zumpo-text-body-tracking);
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--zumpo-space-12);
+/* A panel card lines its content up at the start; the rows span it. */
+.stats {
+  align-self: stretch;
 }
 
+/* On a phone the card spans the screen, and its two actions share a line. */
 @media (max-width: 640px) {
   .result {
     padding: var(--zumpo-space-24);

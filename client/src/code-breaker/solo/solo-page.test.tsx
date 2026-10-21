@@ -91,6 +91,29 @@ describe('Code Breaker on your own', () => {
     expect(screen.getByRole('button', { name: 'Share' })).toBeInTheDocument();
   });
 
+  it('keeps the board it was played on, and its panel, through the last guess', async () => {
+    await renderApp(PAGE);
+    await turn().findByText('Crack the code');
+    const board = mine();
+    const panel =
+      board.closest('[data-play-board]')!.parentElement!.parentElement!;
+    const [miss] = strangers(TODAY);
+    await guess(miss!);
+    expect(
+      screen.getByRole('group', { name: 'Digit pad' }),
+    ).toBeInTheDocument();
+    await guess(TODAY);
+
+    expect(
+      screen.getByRole('heading', { name: 'Cracked in 2.' }),
+    ).toBeInTheDocument();
+    // The same nodes, not a finished copy: nothing moves or resizes.
+    expect(mine()).toBe(board);
+    expect(panel.isConnected).toBe(true);
+    expect(panel.contains(board)).toBe(true);
+    expect(screen.queryByRole('group', { name: 'Digit pad' })).toBeNull();
+  });
+
   it('never types a digit twice, and turns back a row it cannot use', async () => {
     await renderApp(PAGE);
     await turn().findByText('Crack the code');
@@ -154,9 +177,18 @@ describe('Code Breaker on your own', () => {
     expect(
       screen.getByText(`The code was ${code}. Practice codes keep no stats.`),
     ).toBeInTheDocument();
+    expect(turn().getByText(`You cracked ${code}`)).toBeInTheDocument();
     expect(
       screen.getByRole('group', { name: 'Your pegs' }),
     ).toBeInTheDocument();
+    // One way to challenge a friend.
+    expect(screen.getAllByRole('button', { name: /challenge/i })).toHaveLength(
+      1,
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Copy challenge link' }),
+    );
+    expect(await navigator.clipboard.readText()).toContain(`?seed=${SEED}`);
     await user.click(screen.getByRole('button', { name: 'Today’s code' }));
     expect(await turn().findByText('Crack the code')).toBeInTheDocument();
     expect(screen.getByText('Code #1')).toBeInTheDocument();
@@ -169,7 +201,7 @@ describe('Code Breaker on your own', () => {
       await turn().findByText('Green: in place. Coral: somewhere else.'),
     ).toBeInTheDocument();
     await guess(TODAY);
-    expect(turn().getByText('Cracked it in 1!')).toBeInTheDocument();
+    expect(turn().getByText(`You cracked ${TODAY}`)).toBeInTheDocument();
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });
     expect(

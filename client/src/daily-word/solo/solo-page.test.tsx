@@ -40,6 +40,10 @@ const findTurn = async () =>
 const misses = (answer: string, count: number) =>
   ANSWERS.filter((word) => word !== answer).slice(0, count);
 
+/** `b` comes after `a` on the page. */
+const follows = (a: Node, b: Node) =>
+  Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+
 async function guess(word: string) {
   await user.keyboard(`${word}{Enter}`);
 }
@@ -72,6 +76,25 @@ describe('Daily Word on your own', () => {
       .parentElement!.parentElement!;
     expect(within(device).getByText('100%')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Share' })).toBeInTheDocument();
+  });
+
+  it('keeps the board it was played on, and its panel, through the last guess', async () => {
+    await renderApp('/games/daily-word/solo');
+    await (await findTurn()).findByText('Find the word');
+    const board = screen.getByRole('group', { name: 'Your guesses' });
+    const panel =
+      board.closest('[data-play-board]')!.parentElement!.parentElement!;
+    for (const word of misses(TODAY, 5)) await guess(word);
+    expect(screen.getByRole('group', { name: 'Keyboard' })).toBeInTheDocument();
+    await guess(TODAY);
+
+    // The result says how it went, and has the focus the keyboard had.
+    expect(screen.getByRole('heading', { name: 'Found in 6.' })).toHaveFocus();
+    // The same nodes, not a finished copy: nothing moves or resizes.
+    expect(screen.getByRole('group', { name: 'Your guesses' })).toBe(board);
+    expect(panel.isConnected).toBe(true);
+    expect(panel.contains(board)).toBe(true);
+    expect(screen.queryByRole('group', { name: 'Keyboard' })).toBeNull();
   });
 
   it('turns away a word it does not know, without spending a guess', async () => {
@@ -126,23 +149,40 @@ describe('Daily Word on your own', () => {
         `The word was ${answer.toUpperCase()}. Practice words keep no stats.`,
       ),
     ).toBeInTheDocument();
+    expect(
+      (await findTurn()).getByText(`You found ${answer.toUpperCase()}`),
+    ).toBeInTheDocument();
+    // One way to challenge a friend.
+    expect(screen.getAllByRole('button', { name: /challenge/i })).toHaveLength(
+      1,
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Copy challenge link' }),
+    );
+    expect(await navigator.clipboard.readText()).toContain(`?seed=${SEED}`);
     await user.click(screen.getByRole('button', { name: 'Today’s word' }));
     expect(
       await (await findTurn()).findByText('Find the word'),
     ).toBeInTheDocument();
     expect(screen.getByText('Word #1')).toBeInTheDocument();
+    // The button pressed has gone; the focus goes to the new board's keys.
+    expect(
+      screen
+        .getByRole('group', { name: 'Keyboard' })
+        .contains(document.activeElement),
+    ).toBe(true);
   });
 
-  it('puts the cards under the board on a phone', async () => {
+  it('puts the result over the board and the cards under it on a phone', async () => {
     onPhone();
     await renderApp('/games/daily-word/solo');
     await (await findTurn()).findByText('Find the word');
     await guess(TODAY);
+    const result = screen.getByRole('heading', { name: 'Found in 1.' });
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });
-    expect(
-      board.compareDocumentPosition(device) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
+    expect(follows(result, board)).toBe(true);
+    expect(follows(board, device)).toBe(true);
   });
 });
 

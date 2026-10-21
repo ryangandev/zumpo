@@ -154,7 +154,7 @@ test('a player with no name plays today’s code, with notes, then a practice co
     }),
   ).toBeVisible();
   await expect(
-    sam.getByRole('button', { name: 'Challenge a friend' }).first(),
-  ).toBeVisible();
+    sam.getByRole('button', { name: 'Copy challenge link' }),
+  ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });

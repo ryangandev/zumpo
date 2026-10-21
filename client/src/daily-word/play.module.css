@@ -46,3 +46,35 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* On your own on a short wide window (SHORT_WIDE in use-media-query.ts):
+   the keyboard beside the board and its line, in its Phone layout where the
+   room is under 472 px, so neither shrinks far to fit the height. The line
+   wraps to the board's width rather than widen its column. When the keys go
+   at the end the board is centred, as a finished board under them is, at the
+   same size. DOM order, and so Tab, is unchanged: the board, its line, the
+   keys. */
+.beside {
+  display: grid;
+  grid-template-areas:
+    'board keys'
+    'line keys';
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  gap: var(--zumpo-space-12) var(--zumpo-space-24);
+}
+
+.beside > .board {
+  grid-area: board;
+}
+
+.beside > .line {
+  grid-area: line;
+  contain: inline-size;
+}
+
+.beside > .keys {
+  grid-area: keys;
+  align-self: center;
+}

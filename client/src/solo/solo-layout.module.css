@@ -5,11 +5,24 @@
   gap: var(--zumpo-space-24);
 }
 
+/* Nothing beside the game: a phone while it is played. Stretched, since on
+   a phone in play it is a flex column (playColumn), where `start` would
+   shrink the stage to its content's width. */
+.alone {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+}
+
 .stage {
   display: flex;
   flex-direction: column;
   gap: var(--zumpo-space-16);
   min-width: 0;
+}
+
+/* The result, first beside the board or over it: only a place for it. */
+.result {
+  display: contents;
 }
 
 /* Paused while How to play is open: the game keeps its place, unseen. */
@@ -25,8 +38,9 @@
 }
 
 /* Under 1024 px (ONE_COLUMN in use-media-query.ts) the side column would
-   leave the stage less than a board needs: one column, the side's cards
-   under the stage, side by side where two fit. */
+   leave the stage less than a board needs: one column, a result over the
+   stage, the side's cards under it, side by side where two fit, and one the
+   whole width on the narrowest phones. */
 @media (max-width: 1023px) {
   .solo {
     grid-template-columns: minmax(0, 1fr);
@@ -34,8 +48,16 @@
 
   .side {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     align-items: start;
+  }
+}
+
+/* A short window (SHORT_WINDOW in use-media-query.ts): the turn bar sits
+   closer to a board fitted to the height. */
+@media (min-width: 641px) and (max-height: 800px) {
+  .stage:has([data-fit-height]) {
+    gap: var(--zumpo-space-12);
   }
 }
 

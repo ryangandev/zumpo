@@ -79,6 +79,21 @@
   }
 }
 
+/* A board fitted to the window's height (fit-height.ts) on a short window,
+   such as a laptop's: the room around it is tighter, so the board shrinks
+   less. */
+@media (min-width: 641px) and (max-height: 800px) {
+  .page:has([data-fit-height]) {
+    gap: var(--zumpo-space-16);
+    padding-top: var(--zumpo-space-16);
+    padding-bottom: var(--zumpo-space-16);
+  }
+
+  .page:has([data-fit-height]) .main {
+    gap: var(--zumpo-space-16);
+  }
+}
+
 /* A game in play on a short screen wider than a phone, such as a phone on
    its side: tighter, so the board has the most of the height. */
 @media (min-width: 641px) and (max-height: 500px) {

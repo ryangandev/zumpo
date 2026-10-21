@@ -82,8 +82,8 @@ export const codeBreaker: typeof en = {
   practiceCode: '练习一题',
   guessesToCrack: '猜中次数分布',
   streak: (days) => (days > 1 ? `已连续猜中 ${days} 天。` : '连胜开始了。'),
-  crackedItIn: (guesses) => `${guesses} 次猜中！`,
   newCodeAtMidnight: '午夜换新题。',
+  youCrackedCode: (code) => `你破解了 ${code}`,
   challenge: '挑战',
   practice: '练习',
   friendCode: '好友的题',
@@ -99,7 +99,6 @@ export const codeBreaker: typeof en = {
     `好友会猜同一道题，试着用少于 ${guesses} 次猜中。他们只能看到你的标记，看不到数字。`,
   friendSame: '好友会猜同一道题。他们只能看到你的标记，看不到数字。',
   yourPegs: '你的标记',
-  copyChallenge: '复制挑战链接',
   onDevice: '本机记录',
   stats: {
     played: '已玩',
