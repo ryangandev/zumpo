@@ -438,3 +438,48 @@ for (const size of SIZES) {
     });
   });
 }
+
+/**
+ * Whether a tap anywhere in the 44 px around the middle of `control`, up,
+ * down, left and right as far as its own width allows, lands on it.
+ */
+const takesAThumb = (control: Locator) =>
+  control.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    const x = box.left + box.width / 2;
+    const y = box.top + box.height / 2;
+    const reach = 21;
+    const across = Math.min(reach, box.width / 2 + 3);
+    const points = [
+      [x, y - reach],
+      [x, y + reach],
+      [x - across, y],
+      [x + across, y],
+    ] as const;
+    return points.every(([px, py]) => {
+      const hit = document.elementFromPoint(px, py);
+      return hit !== null && element.contains(hit);
+    });
+  });
+
+test('the controls a phone taps often take a thumb', async ({ player }) => {
+  const maya = await player('Maya', { phone: true });
+  await maya.goto('/');
+  const controls = [
+    maya.getByRole('button', { name: 'All', exact: true }),
+    maya.getByRole('button', { name: 'Puzzles', exact: true }),
+    maya.getByRole('radio', { name: 'English' }),
+    maya.getByRole('radio', { name: '中文' }),
+    maya.getByRole('button', { name: 'Maya: your name' }),
+  ];
+  for (const control of controls) {
+    await control.scrollIntoViewIfNeeded();
+    expect(await takesAThumb(control), String(control)).toBe(true);
+  }
+  const leo = await player('Leo');
+  await joinRoom(leo, await createRoom(maya, 'pairs', { seats: 2 }));
+  for (const name of ['Board', /^Players/, /^Chat/]) {
+    const tab = maya.getByRole('tab', { name });
+    expect(await takesAThumb(tab), String(name)).toBe(true);
+  }
+});
