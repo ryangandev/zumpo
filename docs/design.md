@@ -224,10 +224,10 @@ Code differs from Figma on purpose in a few places:
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
-- The solo screens' side column keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
+- Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
 - The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
-- The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream.
+- The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
 - The drawer's word-choice clock is Running, as the Countdown's own rule says of a phase you act in; D04 and MO07 keep the Status turn bar's default Waiting tone.
 - The header marks the page you are on; Figma draws Games as current on every screen.
