@@ -35,13 +35,8 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
-import {
-  cardsAfter,
-  FinalCard,
-  HandTable,
-  StepList,
-  TablePanel,
-} from '../table';
+import { useSoloTime } from '../../solo/solo-time';
+import { cardsAfter, FinalCard, HandTable, TablePanel } from '../table';
 import {
   deal,
   isBetweenHands,
@@ -53,7 +48,6 @@ import {
   runTime,
   skip,
   SKIP_PENALTY_MS,
-  SKIPPED_PAUSE_MS,
   SOLVED_PAUSE_MS,
   startOver,
   summary,
@@ -177,22 +171,23 @@ function RunView({
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
-  const [run, setRun] = useState(() => newRun(seed, Date.now()));
+  const clock = useSoloTime();
+  const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(run.handStartedAt !== null);
+  const now = useClock(run.handStartedAt !== null && !clock.paused, clock.now);
   const between = isBetweenHands(run);
 
-  // A finished hand stays up for a moment; a skipped one a little longer, to
-  // read the way it could have gone.
+  // A solved hand stays up for a moment. A skipped one stays until Next hand,
+  // to read the way it could have gone; the clock is stopped either way.
+  const skippedUp = between && lastResult(run)!.skipped;
   useEffect(() => {
-    if (!between) return;
-    const pause = lastResult(run)!.skipped ? SKIPPED_PAUSE_MS : SOLVED_PAUSE_MS;
+    if (!between || skippedUp || clock.paused) return;
     const timer = setTimeout(
-      () => setRun((current) => nextHand(current, Date.now())),
-      pause,
+      () => setRun((current) => nextHand(current, clock.now())),
+      SOLVED_PAUSE_MS,
     );
     return () => clearTimeout(timer);
-  }, [between, run]);
+  }, [between, skippedUp, clock]);
 
   const play = (next: SoloRun) => {
     if (next === run) return;
@@ -279,6 +274,7 @@ function RunView({
   return (
     <SoloLayout
       gameType="make-24"
+      time={clock}
       phase={{ tone: 'blue', label: m.make24.hand(run.hand + 1, RUN_HANDS) }}
       stage={
         <>
@@ -290,26 +286,35 @@ function RunView({
                 formula={formatExpression(last.expression)}
                 state="made"
                 prompt={m.make24.solo.skippedPrompt}
+                action={
+                  // Next hand takes the focus the gone Skip had, so Enter
+                  // or Space moves on.
+                  <Button
+                    autoFocus
+                    onClick={() => setRun(nextHand(run, clock.now()))}
+                  >
+                    {m.make24.solo.nextHand}
+                  </Button>
+                }
               />
             ) : (
               <HandTable
                 deal={deal(run)}
                 steps={run.steps}
-                onStep={(step) => play(takeStep(run, step, Date.now()))}
+                onStep={(step) => play(takeStep(run, step, clock.now()))}
                 onUndo={() => play(undo(run))}
                 onStartOver={() => play(startOver(run))}
                 done={last ? m.make24.solo.nextHandPrompt : undefined}
                 extraTool={
                   <Button
                     variant="quiet"
-                    onClick={() => play(skip(run, Date.now()))}
+                    onClick={() => play(skip(run, clock.now()))}
                   >
                     {m.make24.solo.skip}
                   </Button>
                 }
               />
             )}
-            <StepList deal={deal(run)} steps={run.steps} />
           </TablePanel>
         </>
       }

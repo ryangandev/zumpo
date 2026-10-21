@@ -613,7 +613,7 @@
                         "id": "79:102133",
                         "name": "Race board / Ryan",
                         "w": 208,
-                        "h": 294,
+                        "h": 186,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -628,6 +628,11 @@
                           "Name": "Ryan"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 186,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -747,6 +752,18 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 4",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -755,7 +772,7 @@
                         "id": "79:102189",
                         "name": "Race board / Sam",
                         "w": 208,
-                        "h": 294,
+                        "h": 222,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -770,6 +787,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 222,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -929,6 +951,14 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -937,7 +967,7 @@
                         "id": "79:102250",
                         "name": "Race board / Maya",
                         "w": 208,
-                        "h": 294,
+                        "h": 258,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -951,6 +981,11 @@
                           "Status": "Found in 5 · +208"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 258,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -1150,6 +1185,10 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },

@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 6797,
     "w": 1440,
-    "h": 1428,
+    "h": 1126,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -78,7 +78,7 @@
         "id": "9:9911",
         "name": "Board & room",
         "w": 1312,
-        "h": 1258,
+        "h": 956,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -91,7 +91,7 @@
             "id": "27:21728",
             "name": "Board stage",
             "w": 944,
-            "h": 1258,
+            "h": 956,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -515,7 +515,7 @@
                 "id": "27:21830",
                 "name": "Minefield panel",
                 "w": 944,
-                "h": 780,
+                "h": 478,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -1415,9 +1415,9 @@
                     "type": "FRAME",
                     "id": "27:21996",
                     "name": "Round 8 results",
+                    "visible": false,
                     "w": 894,
                     "h": 278,
-                    "wSize": "fill",
                     "hSize": "hug",
                     "layout": {
                       "mode": "column",

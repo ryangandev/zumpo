@@ -20,10 +20,10 @@ export interface CountdownProps {
   className?: string;
 }
 
+/** "0:45", "1:12": as every other time on the site is written. */
 export function formatClock(seconds: number): string {
   const whole = Math.max(0, Math.ceil(seconds));
-  const minutes = Math.floor(whole / 60);
-  return `${String(minutes).padStart(2, '0')}:${String(whole % 60).padStart(2, '0')}`;
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`;
 }
 
 /** Zumpo/Countdown: the server-driven phase clock. */

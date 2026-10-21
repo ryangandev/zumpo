@@ -11,6 +11,12 @@ export type DigitNote = 'out' | 'in';
 export interface DigitPadProps {
   /** The player's notes, by digit; a digit not in it is plain. */
   notes?: Readonly<Partial<Record<string, DigitNote>>>;
+  /**
+   * Digits the game knows are out of the code, dimmed on a key the player
+   * has not noted (on your own; a room's pad has none). A note always wins:
+   * the notes stay the player's own.
+   */
+  ruledOut?: readonly string[];
   /** Whether a digit key notes its digit instead of typing it. */
   noting?: boolean;
   onNoting: () => void;
@@ -36,10 +42,12 @@ const KEY_STATE: Readonly<Record<DigitNote, LetterKeyState>> = {
 
 /**
  * Zumpo/Digit pad: the ten digits with Delete and Enter, and the Notes
- * toggle. The keys never colour themselves; only the player's notes do.
+ * toggle. The keys take the player's notes, and dim a digit the game knows
+ * is out.
  */
 export function DigitPad({
   notes = {},
+  ruledOut = [],
   noting = false,
   onNoting,
   onDigit,
@@ -53,12 +61,19 @@ export function DigitPad({
   const phone = layout === 'phone';
   const key = (digit: string) => {
     const note = notes[digit];
+    const out = !note && ruledOut.includes(digit);
     return (
       <LetterKey
         key={digit}
         letter={digit}
-        state={note ? KEY_STATE[note] : 'plain'}
-        label={note ? m.ui.code.noted(digit, note) : digit}
+        state={note ? KEY_STATE[note] : out ? 'ruledOut' : 'plain'}
+        label={
+          note
+            ? m.ui.code.noted(digit, note)
+            : out
+              ? m.ui.code.ruledOut(digit)
+              : digit
+        }
         fill={phone}
         onPress={() => onDigit(digit)}
         disabled={disabled}

@@ -3,7 +3,13 @@ import { cx } from '../cx';
 import { Icon } from './icon';
 import styles from './letter-key.module.css';
 
-export type LetterKeyState = 'plain' | 'correct' | 'present' | 'absent';
+export type LetterKeyState =
+  | 'plain'
+  | 'correct'
+  | 'present'
+  | 'absent'
+  /** A digit the game knows is out of the code: dimmed, still typeable. */
+  | 'ruledOut';
 
 export interface LetterKeyProps {
   kind?: 'letter' | 'enter' | 'delete';
@@ -50,7 +56,7 @@ export function LetterKey({
       ? m.ui.word.enter
       : kind === 'delete'
         ? m.ui.word.delete
-        : state === 'plain'
+        : state === 'plain' || state === 'ruledOut'
           ? shown
           : m.ui.word.marked(shown, m.ui.word.marks[state]));
   return (

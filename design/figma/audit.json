@@ -29,6 +29,14 @@
         "ML01 > ML01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > Play together > 2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
         "ML02 > ML02 / Game page · no rooms yet > Lobby layout > How to play > On your own > Facts"
       ]
+    },
+    "Inter Regular 12": {
+      "count": 3,
+      "samples": [
+        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Bots > Label",
+        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Dice each > Label",
+        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Dice each > Helper"
+      ]
     }
   },
   "rasterFills": {},
@@ -36,7 +44,7 @@
   "missingComponents": {},
   "hiddenLayers": {
     "INSTANCE": {
-      "count": 98,
+      "count": 99,
       "samples": [
         "Zumpo/Button > Style=Primary, State=Default > Icon",
         "Zumpo/Button > Style=Primary, State=Hover > Icon",
@@ -47,7 +55,7 @@
       ]
     },
     "FRAME": {
-      "count": 59,
+      "count": 64,
       "samples": [
         "Zumpo/How to play > Zumpo/How to play > Steps > Step 4",
         "Zumpo/Mobile tabs > View=Board > Status / Chat > Unread",

@@ -92,7 +92,7 @@ A server-wide date (UTC) was the alternative; it was rejected because the word w
 
 When the word is found or missed, the board stays, and beside it:
 
-- **The result**: found in _n_, or missed, with the word.
+- **The result**: found in _n_, or missed, with the word; a missed word is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them found, the current streak, the best streak, and how many were found in 1, 2, 3, 4, 5 and 6 guesses, with today's bar picked out.
 - **Next word in**, a countdown to local midnight.
 - **Share**, which copies a result with no letters in it, and **Practice word**.

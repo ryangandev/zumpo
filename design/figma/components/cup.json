@@ -4,7 +4,7 @@
   "id": "44:62520",
   "type": "COMPONENT_SET",
   "key": "472db539efff0331124108ec985858e0aad094fa",
-  "description": "A player at the table and their dice: their own face up, anybody else's Hidden until a call, Empty for a die already lost. Turn marks whose turn it is; Lost, outlined in danger, the player who loses a die in a reveal. Up to five dice; hide the ones a game does not have. Layout=Row lists a cup as one row, the dice at its end, for a phone's table in a 3-dice game; five dice keep Stack.",
+  "description": "A player at the table and their dice: their own face up, anybody else's Hidden until a call, Empty for a die already lost. Turn marks whose turn it is; Lost, outlined in danger, the player who loses a die in a reveal. Up to five dice; hide the ones a game does not have. Layout=Row lists a cup as one row, the dice at its end, for a phone's table in a 3-dice game; five dice keep Stack.\nMotion: when a round starts, every die still in play gives a 0.4 s shake, as if just rolled; none when the system asks for reduced motion.",
   "properties": {
     "Name": {
       "type": "text",
