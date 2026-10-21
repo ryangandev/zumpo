@@ -27,6 +27,9 @@ const finding = triosState({
 const card = (place: number, rest = '') =>
   screen.getByRole('button', { name: `${cardName(TABLE[place]!)}${rest}` });
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+/** The tone of the turn bar's clock that says `label`. */
+const toneOf = (label: string) =>
+  turn().getByText(label).closest('[data-tone]')?.getAttribute('data-tone');
 const scoreboard = () =>
   within(screen.getByRole('region', { name: /^Players/ }));
 
@@ -167,12 +170,10 @@ describe('a Trios room', () => {
 
   it('draws the hint clock as a line, and holds it as Paused like any clock', async () => {
     const { fake } = await renderSeated(finding);
-    const tone = (label: string) =>
-      turn().getByText(label).closest('[data-tone]')?.getAttribute('data-tone');
-    expect(tone('to a hint')).toBe('info');
+    expect(toneOf('to a hint')).toBe('info');
 
     act(() => fake.drop());
-    expect(tone('paused')).toBe('waiting');
+    expect(toneOf('paused')).toBe('waiting');
   });
 
   it('counts the time without a trio once both hints are given', async () => {
