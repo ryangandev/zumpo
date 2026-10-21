@@ -73,7 +73,8 @@ A game on your own needs no name, no room and no server: it runs in the browser,
 - If you lose your last die the game ends for you, with your place ("You finished 3rd of 4"); the bots' game is not played out.
 - Your **wins and games played**, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count.
-- **Leave** goes to the game's page; while a game is under way, any way out asks first, since it ends the game uncounted.
+- **Leave** goes to the game's page.
+  Once the first bid is made, until the game ends, any way out asks first, since it ends the game uncounted; the first roll alone is nothing to lose, so before it is bid on Leave just goes.
   The bots wait while it asks, and the table is put away, so staying costs nothing.
 
 There is no Challenge a friend: the bots answer what you bid, so the same dice would not make the same game for a friend.

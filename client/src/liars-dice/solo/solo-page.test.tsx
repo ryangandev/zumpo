@@ -172,8 +172,21 @@ describe('Liar’s Dice on your own', () => {
     expect(screen.queryByRole('timer')).toBeNull();
   });
 
-  it('asks before leaving a game under way, and not after it', async () => {
+  it('asks before leaving a game under way, once there is a bid', async () => {
     const { router } = await renderApp('/games/liars-dice/solo');
+    // Nothing bid yet: the dice were only rolled.
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(router.state.location.pathname).toBe('/games/liars-dice');
+
+    // The same dice as the first time.
+    reseed(7);
+    await act(() => router.navigate('/games/liars-dice/solo'));
+    for (let step = 0; step < 6; step++) {
+      if (screen.queryByRole('group', { name: 'Your bid' })) break;
+      await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    }
+    await user.click(screen.getAllByRole('button', { name: /^Bid / })[0]!);
     await user.click(screen.getByRole('button', { name: 'Leave' }));
     const dialog = within(
       screen.getByRole('dialog', { name: 'Leave this game?' }),

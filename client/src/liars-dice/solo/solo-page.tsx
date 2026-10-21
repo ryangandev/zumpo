@@ -196,7 +196,12 @@ function SoloTable({
     <SoloLayout
       gameType="liars-dice"
       time={over ? undefined : clock}
-      leaveWarning={over ? null : m.liarsDice.solo.leaveWarning}
+      // The first roll alone is nothing to lose; a bid on it is.
+      leaveWarning={
+        over || (game.round === 1 && game.bids.length === 0)
+          ? null
+          : m.liarsDice.solo.leaveWarning
+      }
       phase={
         over
           ? youWon(game)
