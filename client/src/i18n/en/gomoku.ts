@@ -117,7 +117,7 @@ export const gomoku = {
     levelHelp: {
       easy: 'Good for your first games: it misses most of your plans.',
       medium: 'Stops simple threats, so a win takes a plan.',
-      hard: 'Plans several moves ahead, and never misses a win.',
+      hard: 'Plans several moves ahead, and plays a forced win when it sees one.',
     } satisfies Record<Level, string>,
     pickTitle: 'Pick a game.',
     description: 'Play the computer at three levels, as Black or White.',

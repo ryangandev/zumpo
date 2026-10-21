@@ -97,7 +97,7 @@ export const gomoku: typeof en = {
     levelHelp: {
       easy: '适合刚上手：你的大多数布局它都看不出来。',
       medium: '会挡住简单的威胁，想赢要有计划。',
-      hard: '会往后看好几手，能赢的时候从不放过。',
+      hard: '会往后看好几手，看到必胜的走法就会走。',
     },
     pickTitle: '开一局。',
     description: '和电脑对战，三档难度，可以执黑或执白。',
