@@ -20,6 +20,8 @@ const board = () => screen.getByRole('grid', { name: 'Gomoku board' });
 const point = (name: string) =>
   within(board()).getByRole('gridcell', { name: new RegExp(`^${name},`) });
 
+const placeStone = () => screen.getByRole('button', { name: 'Place stone' });
+
 /** Points far from each other on the edges, which never make five. */
 const SCATTERED = [
   'A1',
@@ -105,8 +107,6 @@ describe('Gomoku on your own', () => {
     onTouch();
     await renderApp('/games/gomoku/solo');
     await user.click(screen.getByRole('button', { name: 'Start' }));
-    const placeStone = () =>
-      screen.getByRole('button', { name: 'Place stone' });
     const tap = (name: string) =>
       user.pointer({ keys: '[TouchA]', target: point(name) });
 
