@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { CanvasStroke, DoodleChainRoomState } from '../models/types.js';
+import { MAX_POINTS_PER_CANVAS } from '../libs/drawing/canvas.js';
 import {
   collect,
   createDoodleChainRoom,
@@ -368,6 +369,28 @@ describe('Doodle Chain', () => {
       const { state } = await syncRoom(leo, roomId);
       expect((state as DoodleChainRoomState).draft).toEqual({ text: '' });
     });
+
+    it('stops a drawing at the canvas point limit', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      const ryan = players[1];
+      scribble(ryan, roomId);
+      await settle();
+      const { canvas } = doodleChainRoom(harness, roomId).game.work.get(
+        ryan.playerId,
+      )!;
+      expect(canvas.pointCount).toBe(2);
+
+      // One point short of the limit, only one more point is taken.
+      canvas.pointCount = MAX_POINTS_PER_CANVAS - 1;
+      ryan.emit('dc:draw:move', roomId, { x: 40, y: 40 });
+      ryan.emit('dc:draw:move', roomId, { x: 50, y: 50 });
+      ryan.emit('dc:draw:start', roomId, { x: 60, y: 60 }, '#222222', 10);
+      await settle();
+      expect(canvas.pointCount).toBe(MAX_POINTS_PER_CANVAS);
+      expect(canvas.strokes.map((stroke) => stroke.points.length)).toEqual([3]);
+    });
   });
 
   describe('sitting a step out', () => {
@@ -521,6 +544,15 @@ describe('Doodle Chain', () => {
       ]);
     });
 
+    it('drops the step clock with a room everybody left mid-step', async () => {
+      const { roomId, players } = await playToWrite(harness, THREE);
+      for (const player of players) player.close();
+      // Long enough for the seats to expire, the empty room to be collected
+      // and the step's clock to have run out.
+      await settle(2500);
+      expect(harness.server.rooms.get(roomId)).toBeUndefined();
+    });
+
     it('goes straight to the reveal when fewer than two are left', async () => {
       const { roomId, players } = await playToWrite(harness, THREE);
       const [maya, ryan, leo] = players;
@@ -607,6 +639,23 @@ describe('Doodle Chain', () => {
         (s) => s.reveal?.entries[0]?.[0]?.hearts === 0,
       );
       expect(back.reveal?.hearts).toEqual({});
+    });
+
+    it('carries on with the new host when the host leaves', async () => {
+      const { roomId, players, owner } = await playToReveal(harness);
+      const [, ryan, leo] = players;
+      const handedOver = waitForDoodleChainState(
+        ryan,
+        (s) => s.owner.playerId !== owner.playerId,
+      );
+      owner.emit('room:leave', roomId);
+      const view = await handedOver;
+      expect(view.phase).toBe('reveal');
+      const host = view.owner.playerId === ryan.playerId ? ryan : leo;
+
+      const next = waitForDoodleChainState(ryan, (s) => s.reveal?.total === 2);
+      host.emit('dc:reveal:next', roomId, 1);
+      expect((await next).reveal).toMatchObject({ chain: 0, shown: 2 });
     });
 
     it('gives a spectator the drawings but no heart', async () => {
