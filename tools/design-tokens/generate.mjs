@@ -229,34 +229,44 @@ function sizeOf(value, ui) {
   return variable.resolved ?? variable.value;
 }
 
+// The attributes of the one path an exported vector holds, and the box it
+// was exported in, which is the vector's own grown by its stroke.
+function onlyPath(file) {
+  const svg = fs.readFileSync(path.join(design, file), 'utf8');
+  const width = Number(svg.match(/<svg[^>]* width="([\d.]+)"/)[1]);
+  const height = Number(svg.match(/<svg[^>]* height="([\d.]+)"/)[1]);
+  const paths = [...svg.matchAll(/<path ([^>]*)\/>/g)];
+  if (paths.length !== 1) {
+    throw new Error(`${file} has ${paths.length} paths, expected 1`);
+  }
+  const attrs = Object.fromEntries(
+    [...paths[0][1].matchAll(/([\w-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]),
+  );
+  return { width, height, attrs };
+}
+
+// One part of a sample drawing: a stroked vector, a filled ellipse or, with
+// `rings`, an ellipse stroked inside its box, placed as in the component.
+function drawingPart(child, { rings = false } = {}) {
+  if (child.type === 'ELLIPSE' && child.fills) {
+    return `{ ellipse: true, x: ${round(child.x)}, y: ${round(child.y)}, w: ${round(child.w)}, h: ${round(child.h)}, fill: '${fillOf(child.fills[0])}' }`;
+  }
+  if (child.type === 'ELLIPSE' && rings && child.strokes) {
+    return `{ ring: true, x: ${round(child.x)}, y: ${round(child.y)}, w: ${round(child.w)}, h: ${round(child.h)}, stroke: '${fillOf(child.strokes[0])}', width: ${child.strokeWeight} }`;
+  }
+  if (child.type !== 'VECTOR' || !child.svg) {
+    throw new Error(`Drawing part ${child.name} is a ${child.type}`);
+  }
+  const { width, height, attrs } = onlyPath(child.svg);
+  return `{ d: '${attrs.d}', x: ${round(child.x - (width - child.w) / 2)}, y: ${round(child.y - (height - child.h) / 2)}, stroke: '${lowerHex(attrs.stroke)}', width: ${Number(attrs['stroke-width'])} }`;
+}
+
 // The turtle sample drawing, the Draw & Guess artwork on the home and games
-// pages, one entry per Stage variant. Each part is a stroked vector or a
-// filled ellipse, placed as in the component.
+// pages, one entry per Stage variant.
 function drawingsTs() {
   const set = read('components/sample-turtle-drawing.json');
   const stages = set.variants.map(({ props, node }) => {
-    const parts = node.children.map((child) => {
-      if (child.type === 'ELLIPSE') {
-        return `{ ellipse: true, x: ${round(child.x)}, y: ${round(child.y)}, w: ${round(child.w)}, h: ${round(child.h)}, fill: '${fillOf(child.fills[0])}' }`;
-      }
-      if (child.type !== 'VECTOR' || !child.svg) {
-        throw new Error(`Turtle part ${child.name} is a ${child.type}`);
-      }
-      const svg = fs.readFileSync(path.join(design, child.svg), 'utf8');
-      const width = Number(svg.match(/<svg[^>]* width="([\d.]+)"/)[1]);
-      const height = Number(svg.match(/<svg[^>]* height="([\d.]+)"/)[1]);
-      const paths = [...svg.matchAll(/<path ([^>]*)\/>/g)];
-      if (paths.length !== 1) {
-        throw new Error(`${child.svg} has ${paths.length} paths, expected 1`);
-      }
-      const attrs = Object.fromEntries(
-        [...paths[0][1].matchAll(/([\w-]+)="([^"]*)"/g)].map((m) => [
-          m[1],
-          m[2],
-        ]),
-      );
-      return `{ d: '${attrs.d}', x: ${round(child.x - (width - child.w) / 2)}, y: ${round(child.y - (height - child.h) / 2)}, stroke: '${lowerHex(attrs.stroke)}', width: ${Number(attrs['stroke-width'])} }`;
-    });
+    const parts = node.children.map((child) => drawingPart(child));
     return `  ${props.Stage}: [\n${parts.map((part) => `    ${part},`).join('\n')}\n  ],`;
   });
   const { w, h } = set.variants[0].node;
@@ -280,6 +290,63 @@ export const TURTLE_SIZE = { width: ${w}, height: ${h} } as const;
 export const turtle = {
 ${stages.join('\n')}
 } as const satisfies Record<string, readonly DrawingPart[]>;
+`;
+}
+
+// The chain sample drawings, Doodle Chain's artwork: one entry per Drawing
+// variant, keyed by its name.
+function chainDrawingsTs() {
+  const set = read('components/sample-chain-drawing.json');
+  const drawings = set.variants.map(({ props, node }) => {
+    const parts = node.children.map((child) =>
+      drawingPart(child, { rings: true }),
+    );
+    return `  '${props.Drawing}': [\n${parts.map((part) => `    ${part},`).join('\n')}\n  ],`;
+  });
+  const { w, h } = set.variants[0].node;
+  return `// ${NOTICE}
+
+import type { DrawingPart } from './drawings';
+
+/** A part of a chain drawing: as the turtle's, or an ellipse stroked inside its box. */
+export type ChainDrawingPart =
+  | DrawingPart
+  | {
+      ring: true;
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      stroke: string;
+      width: number;
+    };
+
+/** A chain drawing's box, in canvas pixels. */
+export const CHAIN_DRAWING_SIZE = { width: ${w}, height: ${h} } as const;
+
+/** Sample / Chain drawing, by its Drawing variant. */
+export const chainDrawings = {
+${drawings.join('\n')}
+} as const satisfies Record<string, readonly ChainDrawingPart[]>;
+
+export type ChainDrawingName = keyof typeof chainDrawings;
+`;
+}
+
+// The heart on Zumpo/Heart button, as its one path in its own box.
+function heartTs() {
+  const set = read('components/heart-button.json');
+  const on = set.variants.find(({ props }) => props.State === 'On');
+  const heart = on.node.children.find((child) => child.name === 'Heart');
+  const { width, height, attrs } = onlyPath(heart.svg);
+  return `// ${NOTICE}
+
+/** The heart on Zumpo/Heart button: its box, and its outline as path data. */
+export const HEART = {
+  width: ${width},
+  height: ${height},
+  d: '${attrs.d}',
+} as const;
 `;
 }
 
@@ -407,6 +474,8 @@ const outputs = {
   'glyphs.ts': glyphsTs(),
   'brushes.ts': brushesTs(),
   'drawings.ts': drawingsTs(),
+  'chain-drawings.ts': chainDrawingsTs(),
+  'heart.ts': heartTs(),
   'pairs-symbols.ts': pairsSymbolsTs(),
 };
 
