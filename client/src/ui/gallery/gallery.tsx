@@ -132,9 +132,10 @@ function Mismatches() {
   if (phone)
     return (
       <p className={styles.summary}>
-        Nothing is compared with Figma in a window this narrow: under 641 px
-        every component takes its phone size, which Figma draws only inside its
-        390 px screens. Widen the window to compare.
+        Nothing is compared with Figma in a window 640 px wide or narrower:
+        there the mine cell, the header, the name menu and the cup take their
+        phone sizes, which Figma draws only inside its 390 px screens. Widen the
+        window to compare.
       </p>
     );
   return <MismatchCount />;
