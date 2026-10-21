@@ -21,6 +21,7 @@ const makeRoom = (roomId = 'room-1'): Room => ({
   playerList: { owner: { username: 'Owner', points: 0, isConnected: true } },
   spectators: {},
   isGameStarted: true,
+  ready: new Set(),
   phaseEndsAt: 0,
   chat: { nextId: 1, messages: [] },
   game: {},

@@ -35,6 +35,7 @@ const room = {
   playerList: players,
   spectators: {},
   isGameStarted: false,
+  ready: [] as string[],
   phaseEndsInMs: 0,
 };
 

@@ -132,6 +132,7 @@ const lobbyEventsHandler = (
       },
       spectators: {},
       isGameStarted: false,
+      ready: new Set(),
       phaseEndsAt: 0,
       chat: { nextId: 1, messages: [] },
       game: module.createState(gameSettings),

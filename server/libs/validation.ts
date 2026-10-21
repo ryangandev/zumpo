@@ -82,6 +82,9 @@ const roomSeat = z.enum(['player', 'spectator']).nullable();
 const joinRoomRequest = z.tuple([roomId, username, password, roomSeat]);
 const roomIdOnly = z.tuple([roomId]);
 const renameRequest = z.tuple([username]);
+const readyRequest = z.tuple([roomId, z.boolean()]);
+/** As in a create request, the settings are for the game's module to read. */
+const settingsRequest = z.tuple([roomId, z.unknown()]);
 /** The speaker is whoever holds the seat, so a message carries no name. */
 const chatRequest = z.tuple([roomId, trimmedString(MESSAGE_MAX)]);
 
@@ -133,6 +136,8 @@ export {
   joinRoomRequest,
   roomIdOnly,
   renameRequest,
+  readyRequest,
+  settingsRequest,
   chatRequest,
   MESSAGE_MAX,
   USERNAME_MAX,

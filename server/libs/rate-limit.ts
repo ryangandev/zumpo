@@ -77,6 +77,9 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
   'player:rename': 'room',
   'room:sync': 'room',
   'game:start': 'room',
+  // Ready and a setting for the next game are clicks between games.
+  'room:ready': 'room',
+  'room:settings': 'room',
   'dg:select-word': 'room',
   // One pick per player per round, and the engine ignores the rest.
   'ms:pick': 'room',

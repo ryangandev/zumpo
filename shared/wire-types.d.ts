@@ -157,20 +157,27 @@ interface RoomCreateRequest {
   /** '' for an open room. */
   password: string;
   /** The game's own half, which only its module can read. */
-  settings:
-    | DrawAndGuessSettings
-    | MinesweeperSettings
-    | Make24Settings
-    | PairsSettings
-    | TriosSettings
-    | SnapSettings
-    | LiarsDiceSettings
-    | HushSettings
-    | DailyWordSettings
-    | CodeBreakerSettings
-    | DoodleChainSettings
-    | GomokuSettings;
+  settings: GameSettings;
 }
+
+/**
+ * What a game lets a room choose. Each is kept in the room's snapshot and
+ * lobby row under the same names, and the starter may change it between
+ * games with `room:settings`.
+ */
+type GameSettings =
+  | DrawAndGuessSettings
+  | MinesweeperSettings
+  | Make24Settings
+  | PairsSettings
+  | TriosSettings
+  | SnapSettings
+  | LiarsDiceSettings
+  | HushSettings
+  | DailyWordSettings
+  | CodeBreakerSettings
+  | DoodleChainSettings
+  | GomokuSettings;
 
 interface DrawAndGuessSettings {
   rounds: number;
@@ -341,6 +348,12 @@ interface RoomState extends LobbyRoomInfo {
    */
   spectators: Record<string, SpectatorInfo>;
   isGameStarted: boolean;
+  /**
+   * Between games, who at the table has said Ready for the next one; empty
+   * while a game is on. Once everybody here but the starter (`starterOf` in
+   * `shared/room.ts`) has, the next game starts by itself.
+   */
+  ready: string[];
   /**
    * Time left in the current phase, relative rather than absolute so that a
    * client whose clock disagrees with the server's still counts down right.
@@ -1442,7 +1455,29 @@ interface ClientToServerEvents {
    * goes by gets a number after it there.
    */
   'player:rename': (username: string, ack: Ack<Result>) => void;
+  /**
+   * Starts the next game. Only the starter may (`starterOf` in
+   * `shared/room.ts`: the host, or while they are away whoever the crown
+   * would pass to): `notRoomOwner` for anybody else.
+   */
   'game:start': (roomId: string, ack: Ack<Result>) => void;
+  /**
+   * Between games, a player at the table says they are ready for the next
+   * one, or takes it back. `notRoomMember` from anybody not at the table,
+   * `gameAlreadyStarted` while a game is on.
+   */
+  'room:ready': (roomId: string, ready: boolean, ack: Ack<Result>) => void;
+  /**
+   * Between games, the starter changes the next game's settings, the same
+   * game's half of a create request: `notRoomOwner` from anybody else,
+   * `gameAlreadyStarted` while a game is on, `invalidRequest` for settings
+   * the game does not offer.
+   */
+  'room:settings': (
+    roomId: string,
+    settings: GameSettings,
+    ack: Ack<Result>,
+  ) => void;
 
   /** Talking, and in Draw & Guess also guessing: the game decides which. */
   'chat:send': (roomId: string, text: string) => void;
@@ -1588,6 +1623,7 @@ export type {
   RoomError,
   Result,
   RoomCreateRequest,
+  GameSettings,
   DrawAndGuessSettings,
   MinesweeperDifficulty,
   MinesweeperSettings,
