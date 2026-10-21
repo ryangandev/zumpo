@@ -1,0 +1,347 @@
+{
+  "format": 1,
+  "name": "Zumpo/Code board",
+  "id": "162:62868",
+  "type": "COMPONENT_SET",
+  "key": "fa28d54ccfb9fa5bc0b7c4fcc6e23ad332522a52",
+  "description": "Ten guesses, top to bottom. Compact on a desktop, Small on a phone and inside a Code race board.",
+  "properties": {
+    "Size": {
+      "type": "variant",
+      "default": "Compact",
+      "options": [
+        "Compact",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Size=Compact",
+  "variants": [
+    {
+      "name": "Size=Compact",
+      "id": "162:62606",
+      "props": {
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62606",
+        "name": "Size=Compact",
+        "w": 268,
+        "h": 552,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62607",
+            "name": "Guess 1",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62620",
+            "name": "Guess 2",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62633",
+            "name": "Guess 3",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62646",
+            "name": "Guess 4",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62659",
+            "name": "Guess 5",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62672",
+            "name": "Guess 6",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62685",
+            "name": "Guess 7",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62698",
+            "name": "Guess 8",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62711",
+            "name": "Guess 9",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62724",
+            "name": "Guess 10",
+            "w": 268,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62579"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Size=Small",
+      "id": "162:62737",
+      "props": {
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62737",
+        "name": "Size=Small",
+        "w": 184,
+        "h": 396,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/4",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62738",
+            "name": "Guess 1",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62751",
+            "name": "Guess 2",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62764",
+            "name": "Guess 3",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62777",
+            "name": "Guess 4",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62790",
+            "name": "Guess 5",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62803",
+            "name": "Guess 6",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62816",
+            "name": "Guess 7",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62829",
+            "name": "Guess 8",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62842",
+            "name": "Guess 9",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62855",
+            "name": "Guess 10",
+            "w": 184,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code row",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62592"
+          }
+        ]
+      }
+    }
+  ]
+}

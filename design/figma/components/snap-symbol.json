@@ -1,0 +1,1061 @@
+{
+  "format": 1,
+  "name": "Zumpo/Snap symbol",
+  "id": "162:38956",
+  "type": "COMPONENT_SET",
+  "key": "2431b472a5ab14439a3c35d6793ae1849b1543b6",
+  "description": "A Snap symbol: 31 shapes, each drawn once in its own brush, so no two symbols differ by colour alone. The first nine are the Pairs shapes; a deck is dealt from them in this order.",
+  "properties": {
+    "Symbol": {
+      "type": "variant",
+      "default": "Circle",
+      "options": [
+        "Circle",
+        "Ring",
+        "Half",
+        "Square",
+        "Diamond",
+        "Triangle",
+        "Star",
+        "Sparkle",
+        "Hexagon",
+        "Heart",
+        "Moon",
+        "Plus",
+        "Drop",
+        "Cloud",
+        "Leaf",
+        "Flower",
+        "Bolt",
+        "Arrow",
+        "House",
+        "Fish",
+        "Bow",
+        "Tree",
+        "Mushroom",
+        "Bell",
+        "Clover",
+        "Note",
+        "Eye",
+        "Crown",
+        "Pill",
+        "Ghost",
+        "Cup"
+      ]
+    }
+  },
+  "defaultVariant": "Symbol=Circle",
+  "variants": [
+    {
+      "name": "Symbol=Circle",
+      "id": "162:38795",
+      "props": {
+        "Symbol": "Circle"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38795",
+        "name": "Symbol=Circle",
+        "x": 24,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "ELLIPSE",
+            "id": "162:38794",
+            "name": "Shape",
+            "x": 3,
+            "y": 3,
+            "w": 34,
+            "h": 34,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/brush/coral"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Ring",
+      "id": "162:38797",
+      "props": {
+        "Symbol": "Ring"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38797",
+        "name": "Symbol=Ring",
+        "x": 88,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "ELLIPSE",
+            "id": "162:38796",
+            "name": "Shape",
+            "x": 3,
+            "y": 3,
+            "w": 34,
+            "h": 34,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/brush/sky"
+            ],
+            "arc": {
+              "start": 0,
+              "end": 360,
+              "inner": 0.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Half",
+      "id": "162:38799",
+      "props": {
+        "Symbol": "Half"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38799",
+        "name": "Symbol=Half",
+        "x": 152,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "ELLIPSE",
+            "id": "162:38798",
+            "name": "Shape",
+            "x": 2,
+            "y": 12,
+            "w": 36,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/brush/sun"
+            ],
+            "arc": {
+              "start": 180,
+              "end": 360,
+              "inner": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Square",
+      "id": "162:38801",
+      "props": {
+        "Symbol": "Square"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38801",
+        "name": "Symbol=Square",
+        "x": 216,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "162:38800",
+            "name": "Shape",
+            "x": 5,
+            "y": 5,
+            "w": 30,
+            "h": 30,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/brush/leaf"
+            ],
+            "radius": "$Zumpo · UI:radius/6"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Diamond",
+      "id": "162:38803",
+      "props": {
+        "Symbol": "Diamond"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38803",
+        "name": "Symbol=Diamond",
+        "x": 280,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "POLYGON",
+            "id": "162:38802",
+            "name": "Shape",
+            "x": 2,
+            "y": 2,
+            "w": 36,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-8b994c.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Triangle",
+      "id": "162:38805",
+      "props": {
+        "Symbol": "Triangle"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38805",
+        "name": "Symbol=Triangle",
+        "x": 344,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "POLYGON",
+            "id": "162:38804",
+            "name": "Shape",
+            "x": 2,
+            "y": 4,
+            "w": 36,
+            "h": 32,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-67a9b8.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Star",
+      "id": "162:38807",
+      "props": {
+        "Symbol": "Star"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38807",
+        "name": "Symbol=Star",
+        "x": 408,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "STAR",
+            "id": "162:38806",
+            "name": "Shape",
+            "x": 1,
+            "y": 2,
+            "w": 38,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-b9cfb8.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Sparkle",
+      "id": "162:38809",
+      "props": {
+        "Symbol": "Sparkle"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38809",
+        "name": "Symbol=Sparkle",
+        "x": 472,
+        "y": 24,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "STAR",
+            "id": "162:38808",
+            "name": "Shape",
+            "x": 1,
+            "y": 1,
+            "w": 38,
+            "h": 38,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-298268.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Hexagon",
+      "id": "162:38811",
+      "props": {
+        "Symbol": "Hexagon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38811",
+        "name": "Symbol=Hexagon",
+        "x": 24,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "POLYGON",
+            "id": "162:38810",
+            "name": "Shape",
+            "x": 3,
+            "y": 2,
+            "w": 34,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-688f4e.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Heart",
+      "id": "162:38815",
+      "props": {
+        "Symbol": "Heart"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38815",
+        "name": "Symbol=Heart",
+        "x": 88,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38814",
+            "name": "Shape",
+            "x": 3,
+            "y": 4,
+            "w": 34,
+            "h": 32,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-56587f.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Moon",
+      "id": "162:38821",
+      "props": {
+        "Symbol": "Moon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38821",
+        "name": "Symbol=Moon",
+        "x": 152,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38820",
+            "name": "Shape",
+            "x": 3,
+            "y": 3,
+            "w": 32.75,
+            "h": 33.84,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-e0e326.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Plus",
+      "id": "162:38827",
+      "props": {
+        "Symbol": "Plus"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38827",
+        "name": "Symbol=Plus",
+        "x": 216,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38826",
+            "name": "Shape",
+            "x": 3,
+            "y": 3,
+            "w": 34,
+            "h": 34,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-8e6ed4.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Drop",
+      "id": "162:38831",
+      "props": {
+        "Symbol": "Drop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38831",
+        "name": "Symbol=Drop",
+        "x": 280,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38830",
+            "name": "Shape",
+            "x": 7,
+            "y": 2,
+            "w": 26,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-964099.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Cloud",
+      "id": "162:38839",
+      "props": {
+        "Symbol": "Cloud"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38839",
+        "name": "Symbol=Cloud",
+        "x": 344,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38838",
+            "name": "Shape",
+            "x": 2,
+            "y": 5,
+            "w": 36,
+            "h": 28,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-406692.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Leaf",
+      "id": "162:38845",
+      "props": {
+        "Symbol": "Leaf"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38845",
+        "name": "Symbol=Leaf",
+        "x": 408,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38844",
+            "name": "Shape",
+            "x": 5,
+            "y": 5,
+            "w": 30,
+            "h": 30,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-45b378.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Flower",
+      "id": "162:38856",
+      "props": {
+        "Symbol": "Flower"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38856",
+        "name": "Symbol=Flower",
+        "x": 472,
+        "y": 88,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38855",
+            "name": "Shape",
+            "x": 2,
+            "y": 3,
+            "w": 35.97,
+            "h": 35,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-0ea8fe.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Bolt",
+      "id": "162:38860",
+      "props": {
+        "Symbol": "Bolt"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38860",
+        "name": "Symbol=Bolt",
+        "x": 24,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38859",
+            "name": "Shape",
+            "x": 7,
+            "y": 2,
+            "w": 26,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-c7a126.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Arrow",
+      "id": "162:38864",
+      "props": {
+        "Symbol": "Arrow"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38864",
+        "name": "Symbol=Arrow",
+        "x": 88,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38863",
+            "name": "Shape",
+            "x": 3,
+            "y": 5,
+            "w": 34,
+            "h": 30,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-d8f1fa.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=House",
+      "id": "162:38870",
+      "props": {
+        "Symbol": "House"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38870",
+        "name": "Symbol=House",
+        "x": 152,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38869",
+            "name": "Shape",
+            "x": 3,
+            "y": 3,
+            "w": 34,
+            "h": 33,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-809cea.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Fish",
+      "id": "162:38878",
+      "props": {
+        "Symbol": "Fish"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38878",
+        "name": "Symbol=Fish",
+        "x": 216,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38877",
+            "name": "Shape",
+            "x": 2,
+            "y": 9,
+            "w": 36,
+            "h": 22,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-51ae2d.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Bow",
+      "id": "162:38885",
+      "props": {
+        "Symbol": "Bow"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38885",
+        "name": "Symbol=Bow",
+        "x": 280,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38884",
+            "name": "Shape",
+            "x": 3,
+            "y": 8,
+            "w": 34,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-bfd600.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Tree",
+      "id": "162:38892",
+      "props": {
+        "Symbol": "Tree"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38892",
+        "name": "Symbol=Tree",
+        "x": 344,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38891",
+            "name": "Shape",
+            "x": 5,
+            "y": 2,
+            "w": 30,
+            "h": 35,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-02d21c.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Mushroom",
+      "id": "162:38901",
+      "props": {
+        "Symbol": "Mushroom"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38901",
+        "name": "Symbol=Mushroom",
+        "x": 408,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38900",
+            "name": "Shape",
+            "x": 3,
+            "y": 4,
+            "w": 34,
+            "h": 32,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-597b49.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Bell",
+      "id": "162:38907",
+      "props": {
+        "Symbol": "Bell"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38907",
+        "name": "Symbol=Bell",
+        "x": 472,
+        "y": 152,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38906",
+            "name": "Shape",
+            "x": 5,
+            "y": 3,
+            "w": 30,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-d12d67.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Clover",
+      "id": "162:38915",
+      "props": {
+        "Symbol": "Clover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38915",
+        "name": "Symbol=Clover",
+        "x": 24,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38914",
+            "name": "Shape",
+            "x": 3,
+            "y": 2,
+            "w": 34,
+            "h": 36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-9f5cdc.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Note",
+      "id": "162:38922",
+      "props": {
+        "Symbol": "Note"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38922",
+        "name": "Symbol=Note",
+        "x": 88,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38921",
+            "name": "Shape",
+            "x": 5,
+            "y": 4,
+            "w": 26.19,
+            "h": 33.27,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-73f600.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Eye",
+      "id": "162:38930",
+      "props": {
+        "Symbol": "Eye"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38930",
+        "name": "Symbol=Eye",
+        "x": 152,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38929",
+            "name": "Shape",
+            "x": 2,
+            "y": 6,
+            "w": 36,
+            "h": 28,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-fa1830.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Crown",
+      "id": "162:38934",
+      "props": {
+        "Symbol": "Crown"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38934",
+        "name": "Symbol=Crown",
+        "x": 216,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38933",
+            "name": "Shape",
+            "x": 3,
+            "y": 5,
+            "w": 34,
+            "h": 27,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-e29bcc.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Pill",
+      "id": "162:38940",
+      "props": {
+        "Symbol": "Pill"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38940",
+        "name": "Symbol=Pill",
+        "x": 280,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38939",
+            "name": "Shape",
+            "x": 2,
+            "y": 12,
+            "w": 36,
+            "h": 16,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-1bea99.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Ghost",
+      "id": "162:38947",
+      "props": {
+        "Symbol": "Ghost"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38947",
+        "name": "Symbol=Ghost",
+        "x": 344,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38946",
+            "name": "Shape",
+            "x": 7,
+            "y": 3,
+            "w": 26,
+            "h": 34,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-a437f2.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Symbol=Cup",
+      "id": "162:38955",
+      "props": {
+        "Symbol": "Cup"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38955",
+        "name": "Symbol=Cup",
+        "x": 408,
+        "y": 216,
+        "w": 40,
+        "h": 40,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:38954",
+            "name": "Shape",
+            "x": 4,
+            "y": 9,
+            "w": 32,
+            "h": 27,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/shape-82823c.svg"
+          }
+        ]
+      }
+    }
+  ]
+}

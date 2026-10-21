@@ -1,0 +1,535 @@
+{
+  "format": 1,
+  "name": "Zumpo/Chain composer",
+  "id": "162:67695",
+  "type": "COMPONENT_SET",
+  "key": "d5a80eedea71659f1bba1b66e5c76a7e7719d46b",
+  "description": "Writing a line: the first line, or a description of the drawing you were given. Suggest shows only in the write step. Done keeps the entry and waits; Keep editing takes Done back until the step ends.",
+  "properties": {
+    "Suggest": {
+      "type": "boolean",
+      "default": true
+    },
+    "State": {
+      "type": "variant",
+      "default": "Editing",
+      "options": [
+        "Editing",
+        "Done"
+      ]
+    },
+    "Layout": {
+      "type": "variant",
+      "default": "Desktop",
+      "options": [
+        "Desktop",
+        "Phone"
+      ]
+    }
+  },
+  "defaultVariant": "State=Editing, Layout=Desktop",
+  "variants": [
+    {
+      "name": "State=Editing, Layout=Desktop",
+      "id": "162:67598",
+      "props": {
+        "State": "Editing",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:67598",
+        "name": "State=Editing, Layout=Desktop",
+        "x": 24,
+        "y": 24,
+        "w": 600,
+        "h": 231,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:67599",
+            "name": "Line input",
+            "w": 600,
+            "h": 115,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Input",
+            "variant": {
+              "State": "Focus"
+            },
+            "componentId": "9:210",
+            "props": {
+              "Helper": "22 / 80 · anything drawable, in any language",
+              "Value": "A cat riding a bicycle",
+              "Label": "Your first line"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 115,
+                "width": 600
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:67606",
+            "name": "Actions",
+            "w": 600,
+            "h": 100,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:67607",
+                "name": "Suggest",
+                "w": 126,
+                "h": 48,
+                "wSize": "hug",
+                "propRefs": {
+                  "visible": "Suggest"
+                },
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=dice",
+                  "Show icon": true,
+                  "Label": "Suggest"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 126
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:67617",
+                "name": "Spacer",
+                "w": 346,
+                "h": 100,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "strokesIncluded": true
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:67618",
+                "name": "Done",
+                "w": 104,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=check",
+                  "Show icon": true,
+                  "Label": "Done"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 104
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Done, Layout=Desktop",
+      "id": "162:67626",
+      "props": {
+        "State": "Done",
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:67626",
+        "name": "State=Done, Layout=Desktop",
+        "x": 656,
+        "y": 24,
+        "w": 600,
+        "h": 181,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:67627",
+            "name": "Line input",
+            "w": 600,
+            "h": 113,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Input",
+            "variant": {
+              "State": "Disabled"
+            },
+            "componentId": "9:222",
+            "props": {
+              "Helper": "22 / 80 · anything drawable, in any language",
+              "Value": "A cat riding a bicycle",
+              "Label": "Your first line"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 113,
+                "width": 600
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:67634",
+            "name": "Actions",
+            "w": 600,
+            "h": 52,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:67635",
+                "name": "Done notice",
+                "w": 431,
+                "h": 52,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Notice",
+                "variant": {
+                  "Tone": "Success"
+                },
+                "componentId": "9:231",
+                "props": {
+                  "Message": "Done. Waiting for Leo and Sam."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 52,
+                    "width": 431
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:67640",
+                "name": "Keep editing",
+                "w": 157,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=edit",
+                  "Show icon": true,
+                  "Label": "Keep editing"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 157
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Editing, Layout=Phone",
+      "id": "162:67647",
+      "props": {
+        "State": "Editing",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:67647",
+        "name": "State=Editing, Layout=Phone",
+        "x": 1288,
+        "y": 24,
+        "w": 310,
+        "h": 179,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:67648",
+            "name": "Line input",
+            "w": 310,
+            "h": 115,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Input",
+            "variant": {
+              "State": "Focus"
+            },
+            "componentId": "9:210",
+            "props": {
+              "Helper": "22 / 80 · anything drawable, in any language",
+              "Value": "A cat riding a bicycle",
+              "Label": "Your first line"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 115,
+                "width": 310
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:67655",
+            "name": "Actions",
+            "w": 310,
+            "h": 48,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:67656",
+                "name": "Suggest",
+                "w": 150,
+                "h": 48,
+                "wSize": "fill",
+                "propRefs": {
+                  "visible": "Suggest"
+                },
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=dice",
+                  "Show icon": true,
+                  "Label": "Suggest"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 150
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:67666",
+                "name": "Done",
+                "w": 148,
+                "h": 48,
+                "wSize": "fill",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=check",
+                  "Show icon": true,
+                  "Label": "Done"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 148
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Done, Layout=Phone",
+      "id": "162:67674",
+      "props": {
+        "State": "Done",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:67674",
+        "name": "State=Done, Layout=Phone",
+        "x": 1630,
+        "y": 24,
+        "w": 310,
+        "h": 241,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:67675",
+            "name": "Line input",
+            "w": 310,
+            "h": 113,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Input",
+            "variant": {
+              "State": "Disabled"
+            },
+            "componentId": "9:222",
+            "props": {
+              "Helper": "22 / 80 · anything drawable, in any language",
+              "Value": "A cat riding a bicycle",
+              "Label": "Your first line"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 113,
+                "width": 310
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:67682",
+            "name": "Actions",
+            "w": 310,
+            "h": 112,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:67683",
+                "name": "Done notice",
+                "w": 310,
+                "h": 52,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Notice",
+                "variant": {
+                  "Tone": "Success"
+                },
+                "componentId": "9:231",
+                "props": {
+                  "Message": "Done. Waiting for Leo and Sam."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 52,
+                    "width": 310
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:67688",
+                "name": "Keep editing",
+                "w": 310,
+                "h": 48,
+                "wSize": "fill",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=edit",
+                  "Show icon": true,
+                  "Label": "Keep editing"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 310
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

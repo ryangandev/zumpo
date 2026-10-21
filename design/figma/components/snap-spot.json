@@ -1,0 +1,216 @@
+{
+  "format": 1,
+  "name": "Zumpo/Snap spot",
+  "id": "162:38969",
+  "type": "COMPONENT_SET",
+  "key": "4a5a2fabc5954c22a0b60f02137134e84e01392c",
+  "description": "One place on a Snap card: a symbol, and what a tap made of it. Match is the symbol both cards share, once found; Miss is a wrong tap; Dim is every other spot while its player is locked out. The card sizes it; the symbol scales with it.",
+  "properties": {
+    "Mark": {
+      "type": "variant",
+      "default": "None",
+      "options": [
+        "None",
+        "Match",
+        "Miss",
+        "Dim"
+      ]
+    }
+  },
+  "defaultVariant": "Mark=None",
+  "variants": [
+    {
+      "name": "Mark=None",
+      "id": "162:38957",
+      "props": {
+        "Mark": "None"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38957",
+        "name": "Mark=None",
+        "x": 24,
+        "y": 24,
+        "w": 76.8,
+        "h": 76.8,
+        "radius": "$Zumpo · UI:radius/999",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38958",
+            "name": "Symbol",
+            "x": 7.68,
+            "y": 7.68,
+            "w": 61.44,
+            "h": 61.44,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "component": "Zumpo/Snap symbol",
+            "variant": {
+              "Symbol": "Star"
+            },
+            "componentId": "162:38807",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mark=Match",
+      "id": "162:38960",
+      "props": {
+        "Mark": "Match"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38960",
+        "name": "Mark=Match",
+        "x": 124.8,
+        "y": 24,
+        "w": 76.8,
+        "h": 76.8,
+        "fills": [
+          "$Zumpo · UI:color/lime"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38961",
+            "name": "Symbol",
+            "x": 7.68,
+            "y": 7.68,
+            "w": 61.44,
+            "h": 61.44,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "component": "Zumpo/Snap symbol",
+            "variant": {
+              "Symbol": "Star"
+            },
+            "componentId": "162:38807",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mark=Miss",
+      "id": "162:38963",
+      "props": {
+        "Mark": "Miss"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38963",
+        "name": "Mark=Miss",
+        "x": 225.6,
+        "y": 24,
+        "w": 76.8,
+        "h": 76.8,
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/danger"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38964",
+            "name": "Symbol",
+            "x": 7.68,
+            "y": 7.68,
+            "w": 61.44,
+            "h": 61.44,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "component": "Zumpo/Snap symbol",
+            "variant": {
+              "Symbol": "Star"
+            },
+            "componentId": "162:38807",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 61.44,
+                "width": 61.44
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mark=Dim",
+      "id": "162:38966",
+      "props": {
+        "Mark": "Dim"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:38966",
+        "name": "Mark=Dim",
+        "x": 326.4,
+        "y": 24,
+        "w": 76.8,
+        "h": 76.8,
+        "radius": "$Zumpo · UI:radius/999",
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:38967",
+            "name": "Symbol",
+            "x": 7.68,
+            "y": 7.68,
+            "w": 61.44,
+            "h": 61.44,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "component": "Zumpo/Snap symbol",
+            "variant": {
+              "Symbol": "Star"
+            },
+            "componentId": "162:38807",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 61.44,
+                "opacity": 0.3,
+                "width": 61.44
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

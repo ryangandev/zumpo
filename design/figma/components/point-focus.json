@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "name": "Zumpo/Point focus",
+  "id": "162:62897",
+  "type": "COMPONENT_SET",
+  "key": "17dd6882c7a0a5db24ebf2ea3e645080a8d7c519",
+  "properties": {
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Size=Regular",
+  "variants": [
+    {
+      "name": "Size=Regular",
+      "id": "162:62895",
+      "props": {
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62895",
+        "name": "Size=Regular",
+        "x": 24,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "outside",
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    },
+    {
+      "name": "Size=Small",
+      "id": "162:62896",
+      "props": {
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62896",
+        "name": "Size=Small",
+        "x": 80,
+        "y": 24,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "outside",
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    }
+  ]
+}
