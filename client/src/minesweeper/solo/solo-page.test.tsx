@@ -83,7 +83,7 @@ describe('Play solo', () => {
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Leave' }));
-    expect(router.state.location.pathname).toBe('/');
+    expect(router.state.location.pathname).toBe('/games/minesweeper');
     // The router renders a navigation as a transition; act sees it through.
     await act(() => router.navigate('/games/minesweeper/solo'));
     expect(

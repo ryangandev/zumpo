@@ -74,6 +74,7 @@ export const trios: typeof en = {
     yourBest: '你的本机最佳成绩',
     notYet: '暂无',
     complete: '挑战完成',
+    leaveWarning: '这次挑战到此结束，用时不会保存。',
     resultTitle: (count, time) => `${count} 组，用时 ${time}。`,
     wrongPicks: '选错次数',
     hints: '提示次数',

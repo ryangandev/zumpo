@@ -1,8 +1,8 @@
-import { useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router';
+import { useRef, useState, type ReactNode } from 'react';
+import { useBlocker, useNavigate } from 'react-router';
 import type { GameType } from '../../../shared/wire-types';
-import { RoomBar, type TagTone } from '../ui';
-import { gameInfo } from '../games/catalog';
+import { Button, Dialog, RoomBar, type TagTone } from '../ui';
+import { gameInfo, gamePath } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
@@ -17,14 +17,26 @@ export interface SoloLayoutProps {
   stage: ReactNode;
   /** Cards beside the game on a wide screen; a phone shows only the game. */
   side?: ReactNode;
+  /**
+   * What leaving now would lose, set only while that took minutes to build
+   * (a Liar's Dice game, a Trios run under way): then any way out asks first.
+   */
+  leaveWarning?: string | null;
 }
 
 /**
  * A game on your own: a room bar with no room, the game, and its cards beside
  * it (MS02-MS05, T01-T05, PR01-PR04), or under it from 1023 px down. There is
- * no seat, so Leave just goes.
+ * no seat, so Leave goes back to the game's page, where the game can be
+ * started again with other settings; it asks first only with `leaveWarning`.
  */
-export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
+export function SoloLayout({
+  gameType,
+  phase,
+  stage,
+  side,
+  leaveWarning = null,
+}: SoloLayoutProps) {
   const game = gameInfo(gameType);
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
@@ -32,6 +44,13 @@ export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
   const navigate = useNavigate();
   const { viewer, viewerMenu } = useViewer();
   const [rules, setRules] = useState(false);
+  // The Leave button, the wordmark and the browser's back button alike.
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      leaveWarning !== null &&
+      currentLocation.pathname !== nextLocation.pathname,
+  );
+  const stay = useRef<HTMLButtonElement>(null);
 
   return (
     <Page
@@ -42,7 +61,7 @@ export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
           room={m.solo.onYourOwn}
           phase={phase}
           onHowToPlay={() => setRules(true)}
-          onLeave={() => navigate('/')}
+          onLeave={() => navigate(gamePath(gameType))}
           leaveLabel={m.solo.leave}
           viewer={viewer}
           viewerMenu={viewerMenu}
@@ -58,6 +77,33 @@ export function SoloLayout({ gameType, phase, stage, side }: SoloLayoutProps) {
         </div>
       )}
       <RulesDialog open={rules} onOpenChange={setRules} game={game} solo />
+      <Dialog
+        open={blocker.state === 'blocked'}
+        onOpenChange={(open) => {
+          if (!open) blocker.reset?.();
+        }}
+        title={m.solo.leaveTitle}
+        description={leaveWarning}
+        initialFocus={stay}
+        actions={
+          <>
+            <Button
+              variant="danger"
+              icon="leave"
+              onClick={() => blocker.proceed?.()}
+            >
+              {m.solo.leave}
+            </Button>
+            <Button
+              ref={stay}
+              variant="secondary"
+              onClick={() => blocker.reset?.()}
+            >
+              {m.solo.stay}
+            </Button>
+          </>
+        }
+      />
     </Page>
   );
 }

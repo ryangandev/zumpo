@@ -71,6 +71,7 @@ A game on your own needs no name, no room and no server: it runs in the browser,
 - If you lose your last die the game ends for you, with your place ("Out in 3rd of 4"); the bots' game is not played out.
 - Your **wins and games played**, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count.
+- **Leave** goes to the game's page; while a game is under way, any way out asks first, since it ends the game uncounted.
 
 There is no Challenge a friend: the bots answer what you bid, so the same dice would not make the same game for a friend.
 A room, made or joined from the game's page, is the way to play with friends.

@@ -76,6 +76,7 @@ export const trios = {
     yourBest: 'Your best on this device',
     notYet: 'Not yet',
     complete: 'Run complete',
+    leaveWarning: 'This run ends here, and its time is not kept.',
     resultTitle: (count: number, time: string) => `${count} trios in ${time}.`,
     wrongPicks: 'Wrong picks',
     hints: 'Hints',

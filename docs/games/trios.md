@@ -86,6 +86,7 @@ Ten is about two minutes for somebody who knows the game and four for somebody l
   A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered, though its place under the table is kept so the table never moves.
   Hints are cleared when a trio is taken.
 - After the tenth trio: the run time, the wrong picks and hints with what they cost, the fastest trio, and every trio you found with its time.
+- **Leave** goes to the game's page; once a trio is found, any way out asks first, since the run's time is not kept.
 - **The quicker run time is better.**
   The best is kept **on this device** (in `localStorage`), with the best of each of the last few days, as Make 24 keeps them.
 

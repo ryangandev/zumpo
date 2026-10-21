@@ -165,6 +165,25 @@ describe('Pairs on your own', () => {
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
   });
 
+  it('goes back to the boards from the end, and leaves without asking', async () => {
+    const { router } = await startChallenge();
+    for (const [a, b] of pairs) {
+      await flipCard(a!);
+      await flipCard(b!);
+    }
+    await user.click(screen.getByRole('button', { name: 'Change board' }));
+    expect(screen.getByText('Pick a board.')).toBeInTheDocument();
+    // A challenge is played once: every board is offered again.
+    expect(router.state.location.search).toBe('');
+    expect(screen.getByRole('radio', { name: /Large · 6 × 6/ })).toBeVisible();
+
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await flipCard(0);
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(router.state.location.pathname).toBe('/games/pairs');
+  });
+
   it('puts the pairs found on the turn bar on a phone', async () => {
     onPhone();
     await startChallenge();

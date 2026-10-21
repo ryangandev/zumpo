@@ -114,6 +114,33 @@ describe('Trios on your own', () => {
     expect(places()).toHaveLength(12);
   });
 
+  it('leaves for the game’s page, asking first once a trio is found', async () => {
+    const { router } = await startRun();
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    expect(router.state.location.pathname).toBe('/games/trios');
+
+    await act(() => router.navigate(`/games/trios/solo?seed=${SEED}`));
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await findTrio();
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Leave this game?' }),
+    );
+    expect(
+      dialog.getByText('This run ends here, and its time is not kept.'),
+    ).toBeInTheDocument();
+    expect(dialog.getByRole('button', { name: 'Stay' })).toHaveFocus();
+    await user.click(dialog.getByRole('button', { name: 'Stay' }));
+    expect(router.state.location.pathname).toBe('/games/trios/solo');
+    expect(turn().getByText('Trio 2 of 10')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'Leave' }),
+    );
+    expect(router.state.location.pathname).toBe('/games/trios');
+  });
+
   it('plays a challenge’s own deal', async () => {
     await renderApp(`/games/trios/solo?seed=${SEED}`);
     expect(

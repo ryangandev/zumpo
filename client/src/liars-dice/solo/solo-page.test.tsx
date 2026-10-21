@@ -118,4 +118,19 @@ describe('Liar’s Dice on your own', () => {
     expect(turn().getByText('Your turn')).toBeInTheDocument();
     expect(screen.queryByRole('timer')).toBeNull();
   });
+
+  it('asks before leaving a game under way, and not after it', async () => {
+    const { router } = await renderApp('/games/liars-dice/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Leave this game?' }),
+    );
+    expect(
+      dialog.getByText('This game ends here, and it is not counted.'),
+    ).toBeInTheDocument();
+    await user.click(dialog.getByRole('button', { name: 'Leave' }));
+    expect(router.state.location.pathname).toBe('/games/liars-dice');
+    expect(readRecord().games).toBe(0);
+  });
 });

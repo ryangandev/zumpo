@@ -99,6 +99,7 @@ export const liarsDice = {
     description:
       'Bid on the whole table, bluff a little, and call the bots’ bluffs.',
     pickTable: 'Pick a table.',
+    leaveWarning: 'This game ends here, and it is not counted.',
     start: 'Start',
     bots: 'Bots',
     botsHelper: (names: readonly string[]) =>

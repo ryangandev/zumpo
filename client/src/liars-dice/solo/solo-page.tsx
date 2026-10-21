@@ -214,6 +214,7 @@ function SoloTable({
   return (
     <SoloLayout
       gameType="liars-dice"
+      leaveWarning={over ? null : m.liarsDice.solo.leaveWarning}
       phase={
         over
           ? youWon(game)

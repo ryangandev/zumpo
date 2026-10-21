@@ -25,7 +25,7 @@ They are not copied here, so there is one place to change them.
 | 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone                                             |
 | 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 solo, PR05-PR08 room, PR09-PR10 phone                                       |
 | 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone                                       |
-| 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 solo, LD07-LD12 room, LD13-LD15 phone                                       |
+| 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 and LD16 solo, LD07-LD12 room, LD13-LD15 phone                              |
 | 09 / Hush / complete flow            | `43:61072`  | HU01-HU09 room, HU10-HU11 phone                                                       |
 | 10 / Daily Word / complete flow      | `43:61073`  | DW01-DW06 solo, DW07-DW11 room, DW12-DW16 phone                                       |
 | 11 / Snap / complete flow            | `162:86002` | SN01-SN04 solo, SN05-SN09 and SN13 room, SN10 create, SN11-SN12 phone, SN14 game page |
@@ -97,6 +97,9 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
   Changing your name is not a way out: it happens in place, so it never asks.
   Mid-game the dialog names the points that go (P11); between games only the seat (P16).
 - While reconnecting the bar has no Leave room; the notice under it says what is happening (P07).
+- On your own the bar says On your own in place of the room, and Leave goes to the game's page, where the game starts again with other settings.
+  It asks first only where leaving throws away minutes of play: a Liar's Dice game under way, and a Trios run once a trio is found (LD16).
+  A Pairs board, a Snap run and the puzzles leave at once: each is a minute or two to play again, and a question on every way out would cost more than it saves.
 - The room screens' hidden notice layers are gone; the visible notices, such as D10's pending one, stay.
 
 ### Names

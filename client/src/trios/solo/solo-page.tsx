@@ -276,6 +276,7 @@ function RunView({
     <SoloLayout
       gameType="trios"
       phase={{ tone: 'blue', label }}
+      leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
           <TriosTurnBar lines={1} {...turnBar(run, now, label, m)} />

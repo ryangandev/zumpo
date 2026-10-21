@@ -105,6 +105,10 @@ export function PairsSolo() {
         if (challenge) setParams({}, { replace: true });
         setPlaying({ ...playing, seed: newSeed(), game: playing.game + 1 });
       }}
+      onChangeBoard={() => {
+        if (challenge) setParams({}, { replace: true });
+        setPlaying(null);
+      }}
     />
   );
 }
@@ -184,10 +188,12 @@ function SoloGameView({
   board,
   seed,
   onPlayAgain,
+  onChangeBoard,
 }: {
   board: PairsBoard;
   seed: string;
   onPlayAgain: () => void;
+  onChangeBoard: () => void;
 }) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
@@ -263,6 +269,9 @@ function SoloGameView({
                 <>
                   <Button onClick={onPlayAgain}>
                     {m.pairs.solo.playAgain}
+                  </Button>
+                  <Button variant="secondary" onClick={onChangeBoard}>
+                    {m.pairs.solo.changeBoard}
                   </Button>
                   <ChallengeButton link={link} />
                 </>
