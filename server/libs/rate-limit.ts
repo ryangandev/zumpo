@@ -76,6 +76,7 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
   'pairs:flip': 'room',
   // A claim is three picks, so a human makes one a second at most.
   'trios:claim': 'room',
+  'snap:claim': 'room',
   // One bid or call a turn, and the engine ignores the rest.
   'ld:bid': 'room',
   'ld:call': 'room',

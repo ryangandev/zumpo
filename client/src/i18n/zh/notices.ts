@@ -34,7 +34,13 @@ export const notices: typeof en = {
   'game:ended': (_n) => '游戏结束！',
   'game:interrupted': (_n) => '剩余玩家不足，游戏已结束。',
   'game:over': (n) => {
-    const unit = { point: '分', pair: '对', trio: '组', die: '颗骰子' }[n.unit];
+    const unit = {
+      point: '分',
+      pair: '对',
+      trio: '组',
+      card: '张牌',
+      die: '颗骰子',
+    }[n.unit];
     const result =
       n.unit === 'die' ? `还剩 ${n.points} ${unit}` : `${n.points} ${unit}`;
     return `游戏结束：${list(n.names)} ${n.names.length === 1 ? '获胜' : '并列获胜'}，${result}！`;
@@ -57,6 +63,8 @@ export const notices: typeof en = {
   'pairs:found': (n) => `${who(n.name)} 找到了一对！(+1)`,
   'trios:started': (n) => `游戏开始！共 ${n.trios} 组等你找。`,
   'trios:found': (n) => `${who(n.name)} 找到了一组！(+1)`,
+  'snap:started': (n) => `游戏开始！共 ${n.cards} 张牌等你抢。`,
+  'snap:took': (n) => `${who(n.name)} 抢到了一张牌！(+1)`,
   'ld:started': (n) =>
     `游戏开始！每人 ${n.dice} 颗骰子，每回合 ${n.seconds} 秒。`,
   'ld:auto-bid': (n) =>

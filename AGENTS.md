@@ -1,6 +1,6 @@
 # Zumpo
 
-Little browser games, on your own or in real-time rooms (Draw & Guess, Minesweeper, Make 24, Pairs, Trios, Liar's Dice, Hush, Daily Word): a React SPA in `client/`, an Express + Socket.IO server in `server/`, shared wire types in `shared/`, all room state in server memory.
+Little browser games, on your own or in real-time rooms (Draw & Guess, Minesweeper, Make 24, Pairs, Trios, Snap, Liar's Dice, Hush, Daily Word): a React SPA in `client/`, an Express + Socket.IO server in `server/`, shared wire types in `shared/`, all room state in server memory.
 [docs/status.md](docs/status.md) says where the project stands and what comes next.
 
 Find anything else through [docs/README.md](docs/README.md), and read only the section it points to.

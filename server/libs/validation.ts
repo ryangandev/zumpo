@@ -37,6 +37,7 @@ const gameType = z.enum([
   'make-24',
   'pairs',
   'trios',
+  'snap',
   'liars-dice',
   'hush',
   'daily-word',

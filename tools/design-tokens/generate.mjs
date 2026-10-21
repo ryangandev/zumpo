@@ -402,12 +402,124 @@ ${symbols.join('\n')}
 `;
 }
 
+// An SVG tag's attributes, by name.
+const attrsOf = (tag) =>
+  Object.fromEntries(
+    [...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]),
+  );
+
+// The Snap symbols: one or more filled paths per Symbol variant, placed in
+// the symbol's box, all in one brush colour. A drawn vector exports as an
+// SVG cropped to its own box, so it sits where the vector does.
+function snapSymbolsTs() {
+  const set = read('components/snap-symbol.json');
+  const { collections } = read('tokens/variables.json');
+  const ui = collections.find((c) => c.name === UI_COLLECTION);
+  const brushOf = (hex) => {
+    const brush = ui.variables.find(
+      (v) =>
+        v.name.startsWith('color/brush/') &&
+        lowerHex(v.resolved ?? '') === lowerHex(hex),
+    );
+    if (!brush) throw new Error(`${hex} is not a brush colour`);
+    return `var(${cssName(brush)})`;
+  };
+
+  const symbols = set.variants.map(({ props, node }) => {
+    const name = props.Symbol;
+    if (node.children.length !== 1) {
+      throw new Error(`Symbol ${name} has ${node.children.length} shapes`);
+    }
+    const [shape] = node.children;
+    const placed = (parts, fill, x = shape.x, y = shape.y) => {
+      const list = parts
+        .map(([d, evenOdd]) => `{ d: '${d}', evenOdd: ${evenOdd} }`)
+        .join(', ');
+      return `  { name: '${name}', parts: [${list}], x: ${n(x)}, y: ${n(y)}, fill: '${fill}' },`;
+    };
+    if (shape.type === 'ELLIPSE') {
+      return placed(
+        [[ellipsePath(shape.w, shape.h, shape.arc), true]],
+        fillOf(shape.fills[0]),
+      );
+    }
+    if (shape.type === 'RECTANGLE') {
+      return placed(
+        [
+          [
+            roundedRectPath(shape.w, shape.h, sizeOf(shape.radius ?? 0, ui)),
+            false,
+          ],
+        ],
+        fillOf(shape.fills[0]),
+      );
+    }
+    if (!shape.svg) throw new Error(`Symbol ${name} is a ${shape.type}`);
+    const svg = fs.readFileSync(path.join(design, shape.svg), 'utf8');
+    if (/<(?!\/?svg\b|path\b)\w+/.test(svg)) {
+      throw new Error(`${shape.svg} holds more than paths`);
+    }
+    const paths = [...svg.matchAll(/<path ([^>]*)\/>/g)].map((m) =>
+      attrsOf(m[1]),
+    );
+    const fills = new Set(paths.map((attrs) => lowerHex(attrs.fill)));
+    if (fills.size !== 1) {
+      throw new Error(`${shape.svg} has ${fills.size} colours, expected 1`);
+    }
+    const parts = paths.map((attrs) => [
+      attrs.d,
+      attrs['fill-rule'] === 'evenodd',
+    ]);
+    const fill = brushOf(paths[0].fill);
+    if (shape.type === 'VECTOR') return placed(parts, fill);
+    // A polygon or star, as in the Pairs symbols: Figma centres it across
+    // its box with its first point on the top edge, and the export crops it
+    // to the points, so the points say where it lies.
+    const [{ d }] = paths;
+    if (paths.length !== 1 || /[^MLHVZ\d.\s-]/.test(d)) {
+      throw new Error(`${shape.svg} is not one path of straight lines`);
+    }
+    const xs = [...d.matchAll(/[ML](-?[\d.]+) |H(-?[\d.]+)/g)].map((m) =>
+      Number(m[1] ?? m[2]),
+    );
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    return placed(
+      parts,
+      fill,
+      shape.x + (shape.w - (right - left)) / 2 - left,
+      shape.y,
+    );
+  });
+  const { w } = set.variants[0].node;
+  return `// ${NOTICE}
+
+export interface SnapSymbolShape {
+  name: string;
+  /** Path data placed at (x, y) in the symbol's box, each with its fill rule. */
+  parts: readonly { d: string; evenOdd: boolean }[];
+  x: number;
+  y: number;
+  fill: string;
+}
+
+/** A symbol's square box, in pixels at its design size. */
+export const SNAP_SYMBOL_SIZE = ${w};
+
+/** Zumpo/Snap symbol, in variant order: what the Snap deck is drawn with. */
+export const snapSymbols = [
+${symbols.join('\n')}
+] as const satisfies readonly SnapSymbolShape[];
+`;
+}
+
 const outputs = {
   'tokens.css': tokensCss(),
   'glyphs.ts': glyphsTs(),
   'brushes.ts': brushesTs(),
   'drawings.ts': drawingsTs(),
   'pairs-symbols.ts': pairsSymbolsTs(),
+  'snap-symbols.ts': snapSymbolsTs(),
 };
 
 const check = process.argv.includes('--check');

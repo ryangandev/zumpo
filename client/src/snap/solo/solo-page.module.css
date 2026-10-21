@@ -1,0 +1,22 @@
+/* A card's rows span it. */
+.stats {
+  align-self: stretch;
+}
+
+/* SN01: two mini cards that share a symbol, and what makes a deck. */
+.example {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+}
+
+.exampleCards {
+  display: inline-flex;
+  gap: var(--zumpo-space-4);
+}
+
+.exampleText {
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}

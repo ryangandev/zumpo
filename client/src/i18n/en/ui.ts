@@ -1,4 +1,5 @@
 import { cardName } from '../../../../shared/trios';
+import { symbols as snapSymbols } from './snap';
 
 export const ui = {
   chat: {
@@ -122,4 +123,17 @@ export const ui = {
     states: { selected: ', picked', found: ', found', wrong: ', not a trio' },
     badge: (name: string, badge: string) => `${name}, ${badge}`,
   },
+  snap: {
+    /** A symbol's accessible name: "Heart". */
+    symbol: (symbol: number) => capital(snapSymbols[symbol] ?? ''),
+    marks: { match: ', on both cards', miss: ', not a match' },
+    /** A card's accessible name with what is on it: "Middle card, taken by Maya". */
+    note: (name: string, note: string) => `${name}, ${note}`,
+    takenBy: (name: string) => `taken by ${name}`,
+    locked: 'locked out',
+  },
 };
+
+function capital(word: string) {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}

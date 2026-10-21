@@ -56,6 +56,7 @@ export const games = {
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
     'make-24': (hands) => plural(hands, 'hand'),
     trios: (trios) => plural(trios, 'trio'),
+    snap: (cards) => plural(cards, 'card'),
     'liars-dice': (dice) => `${dice} dice each`,
     hush: (levels) => plural(levels, 'level'),
     'daily-word': (words) => plural(words, 'word'),
@@ -226,6 +227,43 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
         ],
       },
       score: (trios) => plural(trios, 'trio'),
+    },
+    snap: {
+      name: 'Snap',
+      tagline: 'Spot the symbol both cards share.',
+      facts: '2–6 players',
+      lobbySummary:
+        'Everybody has a card, and everybody looks at the same middle card. Your card and the middle card share exactly one symbol: tap it first, and the middle card is yours.',
+      lobbyFacts: [
+        '2–6 players',
+        '31 cards, six symbols each',
+        'Any two cards share exactly one symbol',
+        'A wrong tap locks you out for 2s',
+      ],
+      rules: `2–6 players · 31 cards
+
+Every card has six symbols, and any two cards share exactly one of them, never more and never less. No two symbols share a shape, so colour alone never tells them apart.
+
+Everybody is dealt one card face up, and one more is turned up in the middle. Everyone looks at the same middle card at the same time, and there are no turns. Find the one symbol your card shares with it, and tap that symbol on either card.
+
+The first right tap takes the middle card, for 1 point: everyone sees who took it, and the symbol, for a moment, and it becomes the taker’s card. Then the next card is turned. A symbol that is on only one of the two cards locks you out for 2 seconds, and never costs a point.
+
+The game ends when the pile runs out. Whoever took the most cards wins.
+
+On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds. Your best time is kept on this device, and Challenge a friend sends them the same deck.`,
+      createDescription:
+        'Everybody races to spot the symbol their card shares with the middle card. A game is about two minutes.',
+      solo: {
+        summary:
+          'Your card and the middle card share exactly one symbol. Spot it thirty times, as fast as you can.',
+        facts: [
+          'Thirty cards against one clock',
+          'Any two cards share exactly one symbol',
+          'A wrong tap adds 3 seconds',
+          'Your best time is kept on this device',
+        ],
+      },
+      score: (cards) => plural(cards, 'card'),
     },
     'liars-dice': {
       name: 'Liar’s Dice',
