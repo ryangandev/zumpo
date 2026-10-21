@@ -183,25 +183,31 @@ function SoloBoard({
   };
 
   // The computer takes half a second at least, so its stone is seen landing.
+  // A game left mid-thought, for the next one or the picks, stops its search.
   useEffect(() => {
     if (game.over || isYourTurn(game)) return;
-    let live = true;
+    const thinking = new AbortController();
     let timer: ReturnType<typeof setTimeout> | undefined;
     const started = Date.now();
-    void think(game.moves, toMove(game), game.level).then((point) => {
-      if (!live) return;
-      timer = setTimeout(
-        () => {
-          if (!live) return;
-          const next = play(game, point);
-          setGame(next);
-          if (next.over) setRecord(countGame(next));
-        },
-        Math.max(0, THINKING_MS - (Date.now() - started)),
-      );
-    });
+    void think(game.moves, toMove(game), game.level, thinking.signal).then(
+      (point) => {
+        // Worked out here, the move can land after the game was left.
+        if (thinking.signal.aborted) return;
+        timer = setTimeout(
+          () => {
+            const next = play(game, point);
+            setGame(next);
+            if (next.over) setRecord(countGame(next));
+          },
+          Math.max(0, THINKING_MS - (Date.now() - started)),
+        );
+      },
+      (error: unknown) => {
+        if (!thinking.signal.aborted) throw error;
+      },
+    );
     return () => {
-      live = false;
+      thinking.abort();
       clearTimeout(timer);
     };
   }, [game]);

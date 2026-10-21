@@ -29,8 +29,14 @@ export const isLevel = (value: unknown): value is GomokuLevel =>
 /** The least the computer takes over a move, so each stone is seen landing. */
 export const THINKING_MS = 500;
 
-/** The most Hard searches for, before it settles for Medium's move. */
+/** The most Hard searches for in its worker, before it plays what it has. */
 export const HARD_SEARCH_MS = 800;
+
+/**
+ * The same on the page's own thread, where no worker runs: a few frames, so
+ * the page stutters at most rather than freezing.
+ */
+export const PAGE_SEARCH_MS = 50;
 
 /** What a stone makes along one line through it, weakest first. */
 const enum Shape {
@@ -564,8 +570,9 @@ function hardMove(
   color: GomokuColor,
   random: () => number,
   now: () => number,
+  searchMs: number,
 ): number {
-  const deadline = now() + HARD_SEARCH_MS;
+  const deadline = now() + searchMs;
   const other = otherColor(color);
   const mine = triedWinByFours(board, color, FOURS_POSITIONS, deadline, now);
   if (mine) return mine[0]!;
@@ -640,7 +647,7 @@ function hardMove(
  * The computer's move for `color` after `moves`, at `level`. At every level
  * it plays its own five and blocks a four of yours; Easy weighs only its own
  * lines and picks among its four best, Medium plays its best, and Hard
- * searches ahead.
+ * searches ahead for `searchMs` at most.
  */
 export function chooseMove(
   moves: readonly GomokuMove[],
@@ -648,6 +655,7 @@ export function chooseMove(
   level: GomokuLevel,
   random: () => number = Math.random,
   now: () => number = performanceNow,
+  searchMs = HARD_SEARCH_MS,
 ): number {
   const board = boardOf(moves);
   const forced = forcedMove(board, color);
@@ -659,6 +667,6 @@ export function chooseMove(
     case 'medium':
       return mediumMove(board, color, random);
     case 'hard':
-      return hardMove(board, color, random, now);
+      return hardMove(board, color, random, now, searchMs);
   }
 }
