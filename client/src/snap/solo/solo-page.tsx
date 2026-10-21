@@ -179,6 +179,7 @@ function RunView({
       onTap={(symbol) => setRun(tap(run, symbol, clock.now()))}
       disabled={!canTap(run)}
       inPlay={!finish}
+      fitHeight
     />
   );
 

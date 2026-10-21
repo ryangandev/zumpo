@@ -240,7 +240,7 @@ function RunView({
       stage={
         <>
           <TurnBar {...turnBar(run, now, label, m)} />
-          <TablePanel>
+          <TablePanel fitHeight>
             <TriosTable
               cards={run.deal.table}
               places={placesOf(run, m)}

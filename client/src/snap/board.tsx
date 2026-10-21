@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import type { Card } from '../../../shared/snap';
 import { SnapCard, Tag, type SnapCardState, type SnapSpotMark } from '../ui';
+import { useFitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
@@ -32,6 +33,8 @@ export interface SnapBoardProps {
    * turn bar; false for the last card under the results.
    */
   inPlay?: boolean;
+  /** On your own: both cards kept inside the window. */
+  fitHeight?: boolean;
 }
 
 /**
@@ -45,13 +48,15 @@ export function SnapBoard({
   onTap,
   disabled,
   inPlay = true,
+  fitHeight = false,
 }: SnapBoardProps) {
   const phone = useMediaQuery(PHONE);
   const size = phone ? 'compact' : 'regular';
   const boxes = useRef<(HTMLDivElement | null)[]>([]);
   useCardMotion(boxes, middle.symbols, mine?.symbols ?? null);
+  const panel = useFitHeight<HTMLDivElement>(fitHeight);
   return (
-    <div className={cx(styles.panel, playColumn)}>
+    <div ref={panel} className={cx(styles.panel, playColumn)}>
       <PlayBoard inPlay={inPlay}>
         <div className={styles.cards}>
           {[middle, mine].map(

@@ -223,7 +223,7 @@ function RunView({
       stage={
         <>
           <TurnBar {...turnBar(run, now, last, m)} />
-          <TablePanel>
+          <TablePanel fitHeight>
             {last?.skipped ? (
               <FinalCard
                 value="24"

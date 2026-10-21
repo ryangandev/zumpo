@@ -237,7 +237,7 @@ function SoloGameView({
       stage={
         <>
           <TurnBar {...turnBar(game, now, phone, m)} />
-          <BoardPanel>
+          <BoardPanel fitHeight>
             <PairsGrid
               cards={cardsOf(game)}
               onFlip={finish ? undefined : play}

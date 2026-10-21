@@ -9,8 +9,8 @@ import { ONE_COLUMN } from './use-media-query';
 const MIN_SCALE = 0.5;
 
 /**
- * A board played on its own page, with its keys (a word, a code, a
- * minefield), scaled down with every proportion kept when the page would
+ * A board played on your own, with any keys under it (a word, a code, a
+ * minefield, a table of cards), scaled down with every proportion kept when the page would
  * otherwise end below the window, so the last row and Enter are in view
  * without scrolling. Only beside a side column, where the board's column is
  * the page's tallest; on one column the page scrolls as it is. The element
