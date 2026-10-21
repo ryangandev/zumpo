@@ -120,7 +120,7 @@ It never names who played a card that went well.
 - **The chat is locked during a level,** by the server, not only by the client: a message sent in `countdown`, `playing`, `mistake` or `paused` is dropped.
 - **Ready once per level,** only during `ready`.
 - **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
-  Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

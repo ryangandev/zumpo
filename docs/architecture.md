@@ -73,14 +73,13 @@ A module reaches the layer through the `GameContext` it is handed: the typed Soc
 | `toRoomState(room, viewerId)`             | A snapshot is sent to one player                                           |
 | `syncTo(socket, room, playerId)`          | A page syncs, after its snapshot and chat: anything streamed               |
 | `handleChat?(room, playerId, text)`       | A member sends chat; answers `chat`, `consumed`, `blocked` or `spectators` |
-| `startGame(room)`                         | The starter presses start                                                  |
+| `startGame(room)`                         | The starter presses start, or the table is all ready (see below)           |
 | `onDeparture`, `onDisconnect`, `onReturn` | A seat is given up, held, or taken back                                    |
 | `registerHandlers(socket)`                | A connection arrives: wire up the game's own events                        |
 
 The layer decides who may start, the same way for every game: only the starter, only while no game is on, and only with `minPlayers` seated.
 The starter is the host, or while the host is away the player the crown would pass to (`starterOf` in [`shared/room.ts`](../shared/room.ts)), at once rather than once the host's seat is given up: a room never waits on a host who is not there.
-Between games anybody at the table may say Ready (`room:ready`): a signal for the starter, never a trigger, so a game never begins while the starter is still choosing a setting or during a host's brief refresh ([`ready.ts`](../server/libs/rooms/ready.ts)).
-Once everybody here but the starter is ready, the starter's results say so, and the starter still presses start; a player away is not waited on, and the Readies are forgotten when a game starts.
+Between games anybody at the table may say Ready (`room:ready`), and once everybody here but the starter has, the layer starts the next game itself ([`ready.ts`](../server/libs/rooms/ready.ts)); a player away holds nothing up, and the Readies are forgotten when a game starts.
 Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21).
 Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
 

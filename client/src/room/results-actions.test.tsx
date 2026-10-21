@@ -47,12 +47,8 @@ describe('what comes after a game', () => {
       ]),
     );
 
-    update(finished({ ready: ['p2'] }));
-    expect(screen.getByText('Maya is ready.')).toBeInTheDocument();
-
-    // Everyone ready starts nothing: the host is told, and starts it.
     update(finished({ ready: ['p2', 'p3'] }));
-    expect(screen.getByText('Everyone’s ready.')).toBeInTheDocument();
+    expect(screen.getByText('Maya and Leo are ready.')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();
@@ -68,7 +64,9 @@ describe('what comes after a game', () => {
     expect(screen.queryByRole('combobox')).toBeNull();
     expect(screen.queryByRole('button', { name: 'Play again' })).toBeNull();
     expect(
-      screen.getByText('Say you’re ready, and Maya starts the next game.'),
+      screen.getByText(
+        'The next game starts once everyone is ready, or when Maya starts it.',
+      ),
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Ready' }));
@@ -76,13 +74,7 @@ describe('what comes after a game', () => {
 
     update(finished({ ...asGuest, ready: [ME] }));
     expect(
-      screen.getByText(
-        'You’re ready. Waiting for Leo, then for Maya to start.',
-      ),
-    ).toBeInTheDocument();
-    update(finished({ ...asGuest, ready: [ME, 'p3'] }));
-    expect(
-      screen.getByText('Everyone’s ready. Waiting for Maya to start.'),
+      screen.getByText('You’re ready. Waiting for Leo, or for Maya to start.'),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Not ready' }));
     expect(asked(fake, 'room:ready')).toEqual([

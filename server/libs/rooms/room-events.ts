@@ -15,7 +15,7 @@ import {
   roomIdOnly,
   settingsRequest,
 } from '../validation.js';
-import { beginGame } from './ready.js';
+import { beginGame, startIfReady } from './ready.js';
 import { nameInRoom, renamePlayer } from './names.js';
 import type { RoomMembership } from './membership.js';
 import type { RoomRegistry } from './registry.js';
@@ -228,6 +228,9 @@ const roomEventsHandler = (
       name: seat.username,
       ...(heir && { owner: room.owner.username }),
     });
+    // The one the table was waiting on may have gone to watch.
+    const module = registry.moduleOf(room);
+    if (module) startIfReady(room, module);
     registry.lookup.emitState(room);
     registry.lookup.emitLobby(room.gameType);
   });
@@ -337,7 +340,7 @@ const roomEventsHandler = (
 
   /**
    * Between games, a player at the table says they are ready for the next
-   * one, or takes it back. It only tells the starter, who still starts it.
+   * one, or takes it back. Once everybody here but the starter has, it starts.
    */
   onClientRequest(socket, 'room:ready', (args, reply) => {
     const validated = parseArgs(readyRequest, args, 'room:ready');
@@ -366,7 +369,9 @@ const roomEventsHandler = (
     if (ready) room.ready.add(playerId);
     else room.ready.delete(playerId);
     reply({ ok: true });
+    startIfReady(room, module);
     registry.lookup.emitState(room);
+    registry.lookup.emitLobby(room.gameType);
   });
 
   /**

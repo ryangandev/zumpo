@@ -97,12 +97,11 @@ export const room: typeof en = {
   nextGameIs: (setting) => `下一局：${setting}`,
   ready: '准备',
   notReady: '取消准备',
-  readyHint: (starter) => `准备好了就点准备，由 ${starter} 开始下一局。`,
+  readyHint: (starter) =>
+    `大家都准备好就开始下一局，${starter} 也可以直接开始。`,
   waitingOnReady: (names, starter) =>
-    `你已准备。还在等 ${names}，然后由 ${starter} 开始。`,
-  allReadyWaiting: (starter) => `大家都准备好了，等待 ${starter} 开始。`,
+    `你已准备。等待 ${names}，或由 ${starter} 开始。`,
   areReady: (names) => `${names} 已准备。`,
-  everyoneReady: '大家都准备好了。',
   standIn: (host) => `${host} 暂时不在，由你来开始下一局。`,
   gameOver: '游戏结束。',
   wins: (name, score) => `${name} 以 ${score}获胜。`,

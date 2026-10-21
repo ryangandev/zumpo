@@ -11,10 +11,10 @@ import {
 } from './helpers/test-server.js';
 
 /*
- * Between games anybody at the table may say Ready. It tells the starter who
- * is ready and never starts a game: only the starter does, the host or while
- * they are away the player the crown would pass to, at once (decided by Ryan
- * on 2026-10-21).
+ * Between games anybody at the table may say Ready, and once everybody here
+ * but the host has, the next game starts without them; while the host is
+ * away, the player the crown would pass to may start at once (decided by
+ * Ryan on 2026-10-21).
  */
 describe('getting ready for the next game', () => {
   let harness: TestServer;
@@ -30,7 +30,7 @@ describe('getting ready for the next game', () => {
       createSnapRoom(owner, { username }),
     );
 
-  it('lets anybody at the table say Ready, and leaves the start to the host', async () => {
+  it('lets anybody at the table say Ready, and starts once everybody but the host has', async () => {
     harness = await startTestServer();
     const {
       roomId,
@@ -43,25 +43,20 @@ describe('getting ready for the next game', () => {
     });
     const seen = await waitForState(ryan, (state) => state.ready.length === 1);
     expect(seen.ready).toEqual([maya.playerId]);
+    expect(room().isGameStarted).toBe(false);
 
     // Taking it back, and saying it again.
     await request(maya, 'room:ready', roomId, false);
     expect(room().ready.size).toBe(0);
     await request(maya, 'room:ready', roomId, true);
 
-    // Everybody but the host is ready: the host sees it, and nothing starts.
-    const all = waitForState(ryan, (state) => state.ready.length === 2);
     expect(await request(leo, 'room:ready', roomId, true)).toEqual({
       ok: true,
     });
-    expect((await all).ready).toEqual([maya.playerId, leo.playerId]);
-    await settle();
-    expect(room().isGameStarted).toBe(false);
-
+    expect(room().isGameStarted).toBe(true);
     // Whoever said Ready has had their say: the next game starts afresh.
-    const started = waitForState(ryan, (state) => state.isGameStarted);
-    expect(await request(ryan, 'game:start', roomId)).toEqual({ ok: true });
-    expect((await started).ready).toEqual([]);
+    const started = await waitForState(ryan, (state) => state.isGameStarted);
+    expect(started.ready).toEqual([]);
     expect((await request(leo, 'room:ready', roomId, true)).error?.type).toBe(
       'gameAlreadyStarted',
     );
@@ -85,29 +80,24 @@ describe('getting ready for the next game', () => {
     expect(harness.server.rooms.get(roomId)!.isGameStarted).toBe(false);
   });
 
-  it('never starts a game while the host is away, even with everybody ready', async () => {
-    // A grace long enough that the crown itself cannot have moved.
+  it('does not wait on a player who is away, nor start with nobody ready', async () => {
     harness = await startTestServer(undefined, 5);
     const {
       roomId,
-      players: [ryan, maya, leo],
+      players: [, maya, leo],
     } = await snapTable(['Ryan', 'Maya', 'Leo']);
     const room = () => harness.server.rooms.get(roomId)!;
 
-    // A host's brief refresh: everybody else is ready, and still nothing starts.
-    ryan.close();
+    leo.close();
     await settle();
-    await request(maya, 'room:ready', roomId, true);
-    await request(leo, 'room:ready', roomId, true);
-    await settle();
+    expect(room().playerList[leo.playerId]?.isConnected).toBe(false);
     expect(room().isGameStarted).toBe(false);
 
-    // Maya stands in for the host, so starting is hers to do.
-    expect(await request(maya, 'game:start', roomId)).toEqual({ ok: true });
+    await request(maya, 'room:ready', roomId, true);
     expect(room().isGameStarted).toBe(true);
   });
 
-  it('does not start when the one the table waited on leaves it', async () => {
+  it('starts when the one the table waited on leaves it', async () => {
     harness = await startTestServer();
     const {
       roomId,
@@ -116,10 +106,10 @@ describe('getting ready for the next game', () => {
     const room = () => harness.server.rooms.get(roomId)!;
 
     await request(maya, 'room:ready', roomId, true);
+    expect(room().isGameStarted).toBe(false);
     leo.emit('room:leave', roomId);
     await settle();
-    expect(room().isGameStarted).toBe(false);
-    expect([...room().ready]).toEqual([maya.playerId]);
+    expect(room().isGameStarted).toBe(true);
   });
 
   it('forgets a Ready when its player goes to watch', async () => {

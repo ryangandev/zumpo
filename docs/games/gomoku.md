@@ -148,7 +148,7 @@ They cannot place a stone, and a Notice under the board says they can take a sea
   A client never says that a game is over; it is told.
 - **Only a player at the table may resign,** and only during `playing`.
 - **Only the host may start a game**, or while they are away the player next in line, and only with both seats taken.
-  Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 - **The colours are the server's:** drawn at random for a new pair, then swapped each game.
 
 ## Leaving, dropping and coming back

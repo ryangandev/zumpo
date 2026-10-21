@@ -136,7 +136,7 @@ Everybody may chat at any time: table talk is part of bluffing.
   Liar needs a bid to call.
 - **The clock, the count and who loses a die are the server's.**
 - **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
-  Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 
