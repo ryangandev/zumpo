@@ -257,12 +257,14 @@ describe('Doodle Chain', () => {
       }
       maya.emit('dc:done', roomId, true);
       ryan.emit('dc:done', roomId, true);
+      // Two sockets, so either Done may land first: wait for both.
       const table = await waitForDoodleChainState(
         owner,
-        (s) => s.table[ryan.playerId]?.done === true,
+        (s) =>
+          s.table[ryan.playerId]?.done === true &&
+          s.table[maya.playerId]?.done === true,
       );
       expect(table.phase).toBe('write');
-      expect(table.table[maya.playerId]?.done).toBe(true);
       expect(table.table[leo.playerId]?.done).toBe(false);
 
       // Keep editing takes it back.
