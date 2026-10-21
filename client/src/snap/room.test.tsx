@@ -222,7 +222,9 @@ describe('a Snap room', () => {
     expect(
       screen.getByRole('heading', { name: 'Maya wins with 17 cards.' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('29 cards. You finished 2nd.')).toBeInTheDocument();
+    expect(
+      screen.getByText('29 cards taken. You finished 2nd.'),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('group', { name: 'Last card, taken by Maya' }),
     ).toBeInTheDocument();

@@ -221,7 +221,9 @@ describe('a Trios room', () => {
     expect(
       screen.getByRole('heading', { name: 'Maya wins with 7 trios.' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('10 trios. You finished 2nd.')).toBeInTheDocument();
+    expect(
+      screen.getByText('10 trios found. You finished 2nd.'),
+    ).toBeInTheDocument();
     expect(
       within(screen.getByRole('group', { name: 'Table' })).getAllByRole('img'),
     ).toHaveLength(12);

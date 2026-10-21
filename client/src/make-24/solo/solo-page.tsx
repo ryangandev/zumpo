@@ -166,7 +166,7 @@ function RunView({
         }
         result={
           <SoloResult
-            title={m.make24.solo.finishedIn(RUN_HANDS, time)}
+            title={m.make24.solo.runResult(solved, RUN_HANDS, time)}
             body={finishBody(finish, m)}
             stats={[
               {

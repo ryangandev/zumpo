@@ -225,7 +225,7 @@ function DailyView({
     tone: 'blue' as const,
     label: m.codeBreaker.codeNumber(puzzle),
   };
-  const title = m.codeBreaker.dailyNumber(puzzle);
+  const title = m.codeBreaker.today;
 
   const cracked = guessesToCrack(game);
   return (

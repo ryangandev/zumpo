@@ -45,6 +45,7 @@ import { FormPage } from '../shell/form-page';
 import { Page } from '../shell/page';
 import { Stage } from '../shell/stage';
 import { StatusLine } from '../shell/status-line';
+import { usePageTitle } from '../shell/use-page-title';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { LobbyHeading, lobbyHeading } from '../pages/lobby-heading';
 import { Confetti } from './confetti';
@@ -75,6 +76,12 @@ export default function RoomPage({
   );
   const connection = useRoom(roomId, invite);
   const { stage } = connection;
+  // The room's own name once seated, the game's until then.
+  usePageTitle(
+    stage.kind === 'seated'
+      ? roomNameOf(stage.snapshot.state, m)
+      : m.games.of[gameType].name,
+  );
 
   switch (stage.kind) {
     case 'connecting':

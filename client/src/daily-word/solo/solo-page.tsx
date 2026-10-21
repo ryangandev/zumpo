@@ -155,7 +155,7 @@ function DailyView({
     tone: 'blue' as const,
     label: m.dailyWord.wordNumber(puzzle),
   };
-  const title = m.dailyWord.dailyNumber(puzzle);
+  const title = m.dailyWord.today;
 
   const found = guessesToWin(game);
   const word = game.answer.toUpperCase();

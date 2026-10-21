@@ -66,7 +66,7 @@ export const dailyWord: typeof en = {
   freshPrompt: '输入一个 5 字母英文单词，按回车确认。',
   nextPrompt: '回车检查单词，退格删除字母。',
   wordNumber: (puzzle) => `单词 #${puzzle}`,
-  dailyNumber: (puzzle) => `每日单词 #${puzzle}`,
+  today: '今日单词',
   dailyFresh: '可以猜 6 次，每天一个新词。',
   readIt: '怎么看标记',
   shareDaily: (puzzle) => `每日单词 #${puzzle}`,

@@ -129,6 +129,25 @@ const tiles = () =>
     .getAllByRole('heading', { level: 3 })
     .map((heading) => heading.textContent);
 
+describe('the browser tab title', () => {
+  it('names the page: Zumpo alone on the home page, the game elsewhere', async () => {
+    const { router } = await renderApp('/');
+    expect(document.title).toBe('Zumpo');
+
+    await act(() => router.navigate('/games/daily-word'));
+    expect(document.title).toBe('Daily Word · Zumpo');
+
+    await act(() => router.navigate('/games/daily-word/solo'));
+    await waitFor(() => expect(document.title).toBe('Daily Word · Zumpo'));
+
+    await act(() => router.navigate('/games/liars-dice/new'));
+    expect(document.title).toBe('New Liar’s Dice room · Zumpo');
+
+    await act(() => router.navigate('/nowhere'));
+    expect(document.title).toBe('Lost? · Zumpo');
+  });
+});
+
 describe('the home page', () => {
   it('lists every game by kind, the kinds you can play alone first, then by name', async () => {
     await renderApp('/');
