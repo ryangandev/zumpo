@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -6,7 +7,21 @@
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-24);
   color: var(--zumpo-ink);
+}
+
+/* The name's link covers the whole card, so a click anywhere opens the game's
+   page; Solo sits above it with a link of its own. */
+.link {
+  color: inherit;
   text-decoration: none;
+  outline: none;
+}
+
+.link::after {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--zumpo-radius-24);
+  content: '';
 }
 
 /* Hover lifts the card off the page onto the paper-lift shadow (State=Hover)
@@ -53,7 +68,7 @@
   }
 }
 
-.card:focus-visible {
+.card:has(.link:focus-visible) {
   outline: 2px solid var(--zumpo-ink);
   outline-offset: 2px;
 }

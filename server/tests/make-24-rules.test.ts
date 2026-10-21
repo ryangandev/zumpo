@@ -151,6 +151,13 @@ describe('the solver', () => {
     }
   });
 
+  it('uses a 1 up outermost, never as a step in mid-sum', () => {
+    expect(formatExpression(solve([1, 9, 11, 12])!)).toMatch(
+      /^(\(11 − 9\) × 12|12 × \(11 − 9\)) [×÷] 1$/,
+    );
+    expect(formatExpression(solve([1, 2, 3, 4])!)).not.toMatch(/^1 ×/);
+  });
+
   it('solves the famous hard ones', () => {
     for (const deal of [
       [1, 5, 5, 5],

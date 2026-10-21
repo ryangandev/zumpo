@@ -178,7 +178,7 @@ describe('a Trios room', () => {
     expect(turn().getByText('Find the third card')).toBeInTheDocument();
     // The clock stays, so the turn bar keeps its height over the table.
     const clock = turn().getByRole('timer');
-    expect(clock).toHaveTextContent(/^01:15without a trio$/);
+    expect(clock).toHaveTextContent(/^1:15without a trio$/);
   });
 
   it('ranks the trios found, and keeps the finished table up', async () => {

@@ -12,7 +12,10 @@ export type RoomRowStatus = 'open' | 'private' | 'full' | 'playing';
 
 export interface RoomRowProps {
   name: string;
-  /** The host plus the game's setting: "Hosted by Maya · 3 rounds". */
+  /**
+   * The host plus the game's setting: "Hosted by Maya · 3 rounds"; empty for
+   * a room whose name says it all.
+   */
   details: string;
   host: { initials: string; tone: AvatarTone };
   players: number;
@@ -60,7 +63,7 @@ export function RoomRow({
               />
             )}
           </h3>
-          <span className={styles.details}>{details}</span>
+          {details && <span className={styles.details}>{details}</span>}
         </div>
         <span
           className={styles.players}

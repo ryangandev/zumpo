@@ -9,34 +9,22 @@ async function pickedName(page: Page): Promise<string> {
   return label!.replace(/: your name$/, '');
 }
 
-test('a first visit starts with a picked name, introduced once', async ({
+test('a first visit starts with a picked name, and nothing in the way', async ({
   player,
 }) => {
   const sam = await player('Sam', { named: false });
   await sam.goto('/');
   const name = await pickedName(sam);
   expect(name).toMatch(/^\w+ \w+$/);
-
-  const hint = sam.getByRole('dialog', { name: `You’re ${name}.` });
-  await expect(
-    hint.getByText('We picked a name so you can jump right in.', {
-      exact: false,
-    }),
-  ).toBeVisible();
-  await hint.getByRole('button', { name: 'Got it' }).click();
-  await expect(hint).toBeHidden();
+  await expect(sam.getByRole('dialog')).toHaveCount(0);
   await sam.reload();
   await expect(
     sam.getByRole('button', { name: `${name}: your name` }),
   ).toBeVisible();
-  await expect(hint).toBeHidden();
 
   // Nothing stands between the visitor and a room.
   await sam.getByRole('link', { name: 'Minesweeper', exact: true }).click();
   await expect(sam).toHaveURL(/\/games\/minesweeper$/);
-  await expect(
-    sam.getByRole('button', { name: `Playing as ${name}` }),
-  ).toBeVisible();
 });
 
 test('a player goes home and straight back into another game', async ({
@@ -81,7 +69,7 @@ test('a player changes their name in place, for good', async ({ player }) => {
   await expect(sam.getByRole('dialog', { name: 'Your name' })).toBeHidden();
   await expect(sam).toHaveURL(/\/games\/minesweeper$/);
   await expect(
-    sam.getByRole('button', { name: 'Playing as Samira' }),
+    sam.getByRole('button', { name: 'Samira: your name' }),
   ).toBeVisible();
 
   await sam.reload();

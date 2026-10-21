@@ -17,6 +17,17 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const dayIndex = ({ year, month, day }: CalendarDate) =>
   Math.round(Date.UTC(year, month - 1, day) / DAY_MS);
 
+/**
+ * Daily Word's puzzle #1 is this local date: 5 October 2026. It is here, not
+ * beside the word lists, so a page can count Daily Word's days without
+ * loading them.
+ */
+export const DAILY_WORD_FIRST_DAY: CalendarDate = {
+  year: 2026,
+  month: 10,
+  day: 5,
+};
+
 /** Puzzle numbers counted from `first`, which is puzzle #1. */
 export function puzzleDays(first: CalendarDate) {
   const firstIndex = dayIndex(first);

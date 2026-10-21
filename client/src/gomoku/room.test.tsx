@@ -93,7 +93,7 @@ describe('a Gomoku room', () => {
     expect(turn().getByText('Your turn')).toBeInTheDocument();
     expect(turn().getByText('Place a black stone')).toBeInTheDocument();
     expect(turn().getByText('Maya played E8')).toBeInTheDocument();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:24to move$/);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:24to move$/);
     expect(point('E8')).toHaveAccessibleName('E8, white stone, last placed');
     expect(scoreboard().getByText('Black · your turn')).toBeInTheDocument();
     expect(scoreboard().getByText('White')).toBeInTheDocument();

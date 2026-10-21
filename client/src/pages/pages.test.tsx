@@ -1,7 +1,17 @@
 import { act, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import {
+  ALL_CODES,
+  dailyCode,
+  puzzleNumber,
+} from '../../../shared/code-breaker';
+import {
+  dailyAnswer,
+  puzzleNumber as wordPuzzle,
+} from '../../../shared/daily-word';
 import type { MinesweeperLobbyRoomInfo } from '../../../shared/wire-types';
+import { recordGuesses } from '../daily-word/solo/records';
 import { onPhone } from '../tests/phone';
 import { renderApp } from '../tests/render-app';
 
@@ -33,37 +43,11 @@ describe('a name', () => {
     };
     expect(stored.picked).toBe(true);
     expect(avatar()).toHaveAccessibleName(`${stored.name}: your name`);
-    // The word about it waits for the front door.
-    expect(screen.queryByText(/We picked a name/)).toBeNull();
   });
 
-  it('is introduced once on the front door', async () => {
-    const user = userEvent.setup();
-    const first = await renderApp('/', { firstVisit: true });
-    const { name } = JSON.parse(localStorage.getItem('zumpo:name')!) as {
-      name: string;
-    };
-    expect(
-      screen.getByRole('dialog', { name: `You’re ${name}.` }),
-    ).toHaveTextContent(
-      'We picked a name so you can jump right in. Change it here anytime.',
-    );
-
-    await user.click(screen.getByRole('button', { name: 'Got it' }));
-    expect(screen.queryByRole('dialog')).toBeNull();
-    first.unmount();
-
-    await renderApp('/', { name, picked: true });
-    expect(screen.queryByRole('dialog')).toBeNull();
-  });
-
-  it('can be changed from the introduction', async () => {
-    const user = userEvent.setup();
+  it('is not announced on the front door: the room asks when it matters', async () => {
     await renderApp('/', { firstVisit: true });
-    await user.click(screen.getByRole('button', { name: 'Change name' }));
-    expect(screen.getByRole('dialog', { name: 'Your name' })).toBeVisible();
-    expect(screen.getByRole('textbox', { name: 'Your name' })).toHaveFocus();
-    expect(localStorage.getItem('zumpo:name-hint')).toBe('seen');
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 
   it('changes in place, from the avatar on any page', async () => {
@@ -127,10 +111,12 @@ describe('a name', () => {
     expect(field).toHaveFocus();
   });
 
-  it('is shown on a game’s page, and changed from there', async () => {
+  it('is not repeated on a game’s page: the avatar changes it there too', async () => {
     const user = userEvent.setup();
     await renderApp('/games/minesweeper');
-    await user.click(screen.getByRole('button', { name: 'Playing as Ryan' }));
+    expect(screen.queryByRole('button', { name: /^Playing as/ })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Back to games' })).toBeNull();
+    await user.click(avatar());
     expect(screen.getByRole('textbox', { name: 'Your name' })).toHaveValue(
       'Ryan',
     );
@@ -144,16 +130,12 @@ const tiles = () =>
     .map((heading) => heading.textContent);
 
 describe('the home page', () => {
-  it('lists every game by kind, then by name', async () => {
+  it('lists every game by kind, the kinds you can play alone first, then by name', async () => {
     await renderApp('/');
     expect(
       screen.getByRole('heading', { level: 2, name: 'Pick a game' }),
     ).toBeInTheDocument();
     expect(tiles()).toEqual([
-      'Doodle Chain',
-      'Draw & Guess',
-      'Hush',
-      'Liar’s Dice',
       'Code Breaker',
       'Daily Word',
       'Make 24',
@@ -162,7 +144,16 @@ describe('the home page', () => {
       'Snap',
       'Trios',
       'Gomoku',
+      'Doodle Chain',
+      'Draw & Guess',
+      'Hush',
+      'Liar’s Dice',
     ]);
+    expect(
+      within(screen.getByRole('group', { name: 'Kind of game' }))
+        .getAllByRole('button')
+        .map((filter) => filter.textContent),
+    ).toEqual(['All', 'Puzzles', 'Spot & remember', 'Strategy', 'Party']);
   });
 
   it('filters to one kind, and keeps the filter in the address', async () => {
@@ -216,9 +207,100 @@ describe('the home page', () => {
     expect(router.state.location.pathname).toBe('/games/trios');
   });
 
-  it('is where the old games page leads', async () => {
-    const { router } = await renderApp('/games');
-    expect(router.state.location.pathname).toBe('/');
+  it('goes straight to a game on your own from its Solo tag', async () => {
+    const user = userEvent.setup();
+    const { router } = await renderApp('/');
+    const solo = screen.getByRole('link', { name: 'Play Trios solo' });
+    expect(solo).toHaveAttribute('href', '/games/trios/solo');
+    expect(solo).toHaveAccessibleDescription('');
+    await user.click(solo);
+    expect(router.state.location.pathname).toBe('/games/trios/solo');
+  });
+
+  it('names the Solo tag’s link in Chinese too', async () => {
+    await renderApp('/', { locale: 'zh' });
+    expect(screen.getByRole('link', { name: '单人玩扫雷' })).toHaveAttribute(
+      'href',
+      '/games/minesweeper/solo',
+    );
+  });
+
+  it('gives Draw & Guess one tag for its players, as every game has', async () => {
+    await renderApp('/');
+    expect(
+      screen.getByRole('link', { name: 'Draw & Guess' }),
+    ).toHaveAccessibleDescription(
+      'One draws. Everyone else tries to get there first. 2–8 players',
+    );
+  });
+
+  it('shows where today’s daily code stands, on its card and its page', async () => {
+    // A day well after the first code, so there is a yesterday.
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2027, 2, 14, 12));
+    const today = puzzleNumber(new Date());
+    const misses = ALL_CODES.filter((code) => code !== dailyCode(today));
+    localStorage.setItem(
+      'zumpo:solo:code-breaker:puzzles',
+      JSON.stringify({ [today]: misses.slice(0, 2) }),
+    );
+    const { unmount } = await renderApp('/');
+    const code = screen.getByRole('link', { name: 'Play Code Breaker solo' });
+    expect(code).toHaveAccessibleDescription('Guess 3 of 10');
+    expect(code).toHaveAttribute('href', '/games/code-breaker/solo');
+    unmount();
+
+    localStorage.setItem(
+      'zumpo:solo:code-breaker:puzzles',
+      JSON.stringify({
+        [today - 1]: [dailyCode(today - 1)],
+        [today]: [dailyCode(today)],
+      }),
+    );
+    await renderApp('/games/code-breaker');
+    const intro = screen.getByRole('region', { name: 'Code Breaker' });
+    expect(
+      within(intro).getByText('Done today · 2-day streak'),
+    ).toBeInTheDocument();
+    expect(
+      within(intro).getByRole('link', { name: 'See today’s result' }),
+    ).toHaveAttribute('href', '/games/code-breaker/solo');
+    localStorage.removeItem('zumpo:solo:code-breaker:puzzles');
+    vi.useRealTimers();
+  });
+
+  it('shows where today’s daily word stands from the first render', async () => {
+    const today = wordPuzzle(new Date());
+    recordGuesses(today - 1, [dailyAnswer(today - 1)]);
+    recordGuesses(
+      today,
+      ['hatch', 'match'].filter((w) => w !== dailyAnswer(today)).slice(0, 1),
+    );
+    const { unmount } = await renderApp('/');
+    expect(
+      screen.getByRole('link', { name: 'Play Daily Word solo' }),
+    ).toHaveAccessibleDescription('Guess 2 of 6');
+    unmount();
+
+    recordGuesses(today, [dailyAnswer(today)]);
+    await renderApp('/games/daily-word');
+    const intro = screen.getByRole('region', { name: 'Daily Word' });
+    expect(
+      within(intro).getByText('Done today · 2-day streak'),
+    ).toBeInTheDocument();
+    expect(
+      within(intro).getByRole('link', { name: 'See today’s result' }),
+    ).toBeInTheDocument();
+    localStorage.removeItem('zumpo:solo:daily-word:puzzles');
+    localStorage.removeItem('zumpo:solo:daily-word:today');
+  });
+
+  it('is where the old games and How to play pages lead', async () => {
+    for (const old of ['/games', '/how-to-play']) {
+      const { router, unmount } = await renderApp(old);
+      expect(router.state.location.pathname).toBe('/');
+      unmount();
+    }
   });
 });
 
@@ -249,20 +331,41 @@ describe('a game’s page', () => {
     ).toHaveAttribute('href', '/games/hush/new');
   });
 
-  it('gives the rules in a room and on your own, and links to them all', async () => {
+  it('gives the rules on your own, then in a room, as the buttons go, and opens them all', async () => {
+    const user = userEvent.setup();
     await renderApp('/games/minesweeper');
     const howToPlay = screen.getByRole('complementary', {
       name: 'How to play',
     });
     expect(
-      within(howToPlay).getByRole('region', { name: 'Play together' }),
-    ).toHaveTextContent('15s to pick · 4s reveal');
+      within(howToPlay)
+        .getAllByRole('region')
+        .map((region) => region.getAttribute('aria-labelledby')),
+    ).toEqual(['game-rules-solo', 'game-rules-room']);
+    const together = within(howToPlay).getByRole('region', {
+      name: 'Play together',
+    });
+    expect(
+      within(together)
+        .getAllByRole('listitem')
+        .map((fact) => fact.textContent),
+    ).toContain('15s to pick · 4s reveal');
     expect(
       within(howToPlay).getByRole('region', { name: 'On your own' }),
     ).toHaveTextContent('Your first click is always safe');
+
+    const full = within(howToPlay).getByRole('button', { name: 'Full rules' });
+    expect(full).toHaveAttribute('aria-expanded', 'false');
     expect(
-      within(howToPlay).getByRole('link', { name: 'Full rules' }),
-    ).toHaveAttribute('href', '/how-to-play#rules-minesweeper');
+      within(howToPlay).queryByText(
+        /^Pick the same safe cell as someone else\?/,
+      ),
+    ).not.toBeVisible();
+    await user.click(full);
+    expect(full).toHaveAttribute('aria-expanded', 'true');
+    expect(
+      within(howToPlay).getByText(/^Pick the same safe cell as someone else\?/),
+    ).toBeVisible();
   });
 
   it('gives a game played together only its rules in a room', async () => {
@@ -288,10 +391,17 @@ describe('a game’s page', () => {
     act(() => fake.serverEmits('lobby:rooms', 'minesweeper', [lobbyRoom]));
     const row = screen.getByRole('article', { name: 'Friday table' });
     expect(within(row).getByText('房主 Maya · 小 9 × 9')).toBeInTheDocument();
-    expect(screen.getByText('1 个房间 · 实时更新')).toBeInTheDocument();
+    act(() =>
+      fake.serverEmits('lobby:rooms', 'minesweeper', [
+        { ...lobbyRoom, roomName: '' },
+      ]),
+    );
     expect(
-      screen.getByRole('button', { name: '你的名字：Ryan' }),
+      within(screen.getByRole('article', { name: 'Maya 的房间' })).getByText(
+        '小 9 × 9',
+      ),
     ).toBeInTheDocument();
+    expect(screen.getByText('1 个房间 · 实时更新')).toBeInTheDocument();
   });
 
   it('lists the rooms live and joins one', async () => {
@@ -302,6 +412,7 @@ describe('a game’s page', () => {
 
     act(() => fake.serverEmits('lobby:rooms', 'minesweeper', [lobbyRoom]));
     const row = screen.getByRole('article', { name: 'Friday table' });
+    expect(within(row).getByText('Hosted by Maya · Small 9 × 9')).toBeVisible();
     expect(screen.getByText('1 room · Updates live')).toBeInTheDocument();
 
     await user.click(within(row).getByRole('button', { name: 'Join' }));
@@ -351,6 +462,15 @@ describe('a game’s page', () => {
     ).toBeInTheDocument();
   });
 
+  it('leaves Create a room to the intro when no room is open', async () => {
+    const { fake } = await renderApp('/games/minesweeper');
+    act(() => fake.serverEmits('lobby:rooms', 'minesweeper', []));
+    expect(screen.getByText('A little quiet in here.')).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: 'Create a room' })).toHaveLength(
+      1,
+    );
+  });
+
   it('ignores another game’s rooms', async () => {
     const { fake } = await renderApp('/games/minesweeper');
     act(() => fake.serverEmits('lobby:rooms', 'draw-and-guess', []));
@@ -363,42 +483,16 @@ describe('a game’s page', () => {
   });
 });
 
-/** A game's rules on How to play, by its name. */
-const rules = (name: string) => within(screen.getByRole('region', { name }));
-
-describe('how to play', () => {
-  it('offers each game its ways in beside its rules', async () => {
-    await renderApp('/how-to-play');
-
-    expect(
-      rules('Draw & Guess').getByRole('link', { name: 'Find a room' }),
-    ).toHaveAttribute('href', '/games/draw-and-guess');
-    expect(
-      rules('Draw & Guess').queryByRole('link', { name: 'Play solo' }),
-    ).toBeNull();
-    for (const [name, type] of [
-      ['Minesweeper', 'minesweeper'],
-      ['Make 24', 'make-24'],
-      ['Pairs', 'pairs'],
-      ['Trios', 'trios'],
-      ['Snap', 'snap'],
-    ]) {
-      expect(
-        rules(name!).getByRole('link', { name: 'Play solo' }),
-      ).toHaveAttribute('href', `/games/${type}/solo`);
-      expect(
-        rules(name!).getByRole('link', { name: 'Find a room' }),
-      ).toHaveAttribute('href', `/games/${type}`);
-    }
-  });
-});
-
 describe('making a room', () => {
   it('creates a room with Chinese fields, board options and validation', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/minesweeper/new', {
       locale: 'zh',
     });
+    expect(
+      screen.getByRole('heading', { level: 1, name: '新建扫雷房间' }),
+    ).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '更多选项' }));
     const field = screen.getByLabelText('房间名称');
     expect(field).toHaveValue('Ryan 的房间');
     expect(screen.getByText('9 × 9 · 10 颗雷')).toBeInTheDocument();
@@ -423,12 +517,54 @@ describe('making a room', () => {
     );
   });
 
-  it('asks for a name before it sends anything', async () => {
+  it('keeps the game’s own setting in view, and the rest under More options', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/minesweeper/new');
-    await user.clear(screen.getByLabelText('Room name'));
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'New Minesweeper room' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'Minesweeper rooms' }),
+    ).toBeNull();
+    expect(screen.getAllByRole('combobox')).toHaveLength(1);
+    expect(screen.getByRole('combobox', { name: 'Board' })).toBeVisible();
+    expect(screen.queryByRole('textbox', { name: 'Room name' })).toBeNull();
+
+    const more = screen.getByRole('button', { name: 'More options' });
+    expect(more).toHaveAttribute('aria-expanded', 'false');
+    await user.click(more);
+    expect(more).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('textbox', { name: 'Room name' })).toHaveValue(
+      'Ryan’s room',
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Seats' }));
+    await user.click(await screen.findByRole('option', { name: '4 players' }));
+    await user.type(screen.getByLabelText('Password (optional)'), 'otters');
     await user.click(screen.getByRole('button', { name: 'Create room' }));
-    expect(screen.getByText('Give your room a name.')).toBeInTheDocument();
+    await waitFor(() =>
+      expect(fake.requests).toContainEqual({
+        event: 'room:create',
+        args: [
+          expect.objectContaining({
+            roomName: '',
+            maxPlayers: 4,
+            password: 'otters',
+          }),
+        ],
+      }),
+    );
+  });
+
+  it('asks for a name before it sends anything, opening More options to', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderApp('/games/minesweeper/new');
+    const more = screen.getByRole('button', { name: 'More options' });
+    await user.click(more);
+    await user.clear(screen.getByLabelText('Room name'));
+    await user.click(more);
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
+    expect(more).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText('Give your room a name.')).toBeVisible();
     expect(screen.getByLabelText('Room name')).toHaveFocus();
     expect(fake.requests).not.toContainEqual(
       expect.objectContaining({ event: 'room:create' }),
@@ -438,7 +574,6 @@ describe('making a room', () => {
   it('makes a Pairs room on the board picked, with up to six seats', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/pairs/new');
-    expect(screen.getByText('Choose 2–6 seats.')).toBeInTheDocument();
     expect(screen.getByText('4 × 4 · 8 pairs')).toBeInTheDocument();
 
     await user.click(screen.getByRole('combobox', { name: 'Board' }));
@@ -462,8 +597,6 @@ describe('making a room', () => {
   it('makes a Trios room of the length picked, with up to eight seats', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/trios/new');
-    expect(screen.getByText('Choose 2–8 seats.')).toBeInTheDocument();
-    expect(screen.getByText('10 or 20 trios a game.')).toBeInTheDocument();
 
     await user.click(screen.getByRole('combobox', { name: 'Trios' }));
     await user.click(await screen.findByRole('option', { name: '20 trios' }));
@@ -486,6 +619,7 @@ describe('making a room', () => {
   it('names a room after its host while the suggested name is kept', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/snap/new');
+    await user.click(screen.getByRole('button', { name: 'More options' }));
     expect(screen.getByLabelText('Room name')).toHaveValue('Ryan’s room');
     await user.click(screen.getByRole('button', { name: 'Create room' }));
     await waitFor(() =>
@@ -496,10 +630,10 @@ describe('making a room', () => {
     );
   });
 
-  it('makes a Snap room with nothing to choose but up to six seats', async () => {
+  it('makes a Snap room in one click, with up to six seats', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/snap/new');
-    expect(screen.getByText('Choose 2–6 seats.')).toBeInTheDocument();
+    expect(screen.queryAllByRole('combobox')).toHaveLength(0);
     await user.click(screen.getByRole('button', { name: 'Create room' }));
 
     await waitFor(() =>
@@ -534,13 +668,16 @@ describe('making a room', () => {
 });
 
 describe('making a Hush room', () => {
-  it('asks only for seats, and says what they mean for the game', async () => {
+  it('keeps its seats in view, and says what they mean for the game', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/hush/new');
+    expect(screen.getByRole('combobox', { name: 'Seats' })).toBeVisible();
     expect(
-      screen.getByText('Choose 2–4 seats. 2 players play 7 levels, 4 play 5.'),
+      screen.getByText('2 players play 7 levels, 4 play 5.'),
     ).toBeInTheDocument();
     expect(screen.queryByRole('combobox', { name: 'Board' })).toBeNull();
+    await user.click(screen.getByRole('button', { name: 'More options' }));
+    expect(screen.getAllByRole('combobox', { name: 'Seats' })).toHaveLength(1);
 
     await user.click(screen.getByRole('button', { name: 'Create room' }));
     await waitFor(() =>
@@ -556,26 +693,30 @@ describe('making a Hush room', () => {
       }),
     );
   });
-
-  it('offers only rooms, beside its rules', async () => {
-    await renderApp('/how-to-play');
-    expect(
-      rules('Hush').getByRole('link', { name: 'Find a room' }),
-    ).toHaveAttribute('href', '/games/hush');
-    expect(rules('Hush').queryByRole('link', { name: 'Play solo' })).toBeNull();
-  });
 });
 
 describe('making a Doodle Chain room', () => {
-  it('asks for three seats or more, and the drawing time', async () => {
+  it('asks for the drawing time, and three seats or more', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/doodle-chain/new');
-    expect(screen.getByText('Choose 3–8 seats.')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        '45, 60 or 90 seconds a drawing. Writing and describing take 30s.',
-      ),
+      screen.getByText('Writing and describing take 30s.'),
     ).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'More options' }));
+    await user.click(screen.getByRole('combobox', { name: 'Seats' }));
+    expect(
+      (await screen.findAllByRole('option')).map(
+        (option) => option.textContent,
+      ),
+    ).toEqual([
+      '3 players',
+      '4 players',
+      '5 players',
+      '6 players',
+      '7 players',
+      '8 players',
+    ]);
+    await user.keyboard('{Escape}');
 
     await user.click(screen.getByRole('combobox', { name: 'Drawing time' }));
     await user.click(await screen.findByRole('option', { name: '90 seconds' }));
@@ -592,16 +733,6 @@ describe('making a Doodle Chain room', () => {
         ],
       }),
     );
-  });
-
-  it('offers only rooms, beside its rules', async () => {
-    await renderApp('/how-to-play');
-    expect(
-      rules('Doodle Chain').getByRole('link', { name: 'Find a room' }),
-    ).toHaveAttribute('href', '/games/doodle-chain');
-    expect(
-      rules('Doodle Chain').queryByRole('link', { name: 'Play solo' }),
-    ).toBeNull();
   });
 });
 
@@ -653,12 +784,18 @@ describe('on a phone', () => {
     onPhone();
     await renderApp('/games/minesweeper/new');
     expect(
-      screen.getByRole('heading', { level: 1, name: 'A little room for you.' }),
+      screen.getByRole('heading', { level: 1, name: 'New Minesweeper room' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('Make a room')).toBeInTheDocument();
-    expect(screen.getByText('Minesweeper · room settings')).toBeInTheDocument();
     expect(
-      screen.getByRole('form', { name: 'A little room for you.' }),
+      screen.getByText(
+        'Pick a board. Small is a quick game; Large takes a while.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('form', { name: 'New Minesweeper room' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'More options' }),
     ).toBeInTheDocument();
   });
 });

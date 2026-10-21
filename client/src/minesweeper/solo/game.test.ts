@@ -5,7 +5,8 @@ import {
   chord,
   elapsed,
   minesLeft,
-  minesStillHidden,
+  clearedCells,
+  safeCells,
   newGame,
   reveal,
   toggleFlag,
@@ -78,7 +79,8 @@ describe('opening cells', () => {
     expect(cellAt(lost, flagged!)).toBe('flag');
     expect(cellAt(lost, wrong)).toBe('wrong-flag');
     for (const mine of rest) expect(cellAt(lost, mine)).toBe('mine');
-    expect(minesStillHidden(lost)).toBe(8);
+    expect(safeCells(lost)).toBe(71);
+    expect(clearedCells(lost)).toBe(game.open.filter(Boolean).length);
     expect(elapsed(lost, 9999)).toBe(3000);
     // The game is over: nothing more opens or flags.
     expect(reveal(lost, rest[0]!, 5000)).toBe(lost);

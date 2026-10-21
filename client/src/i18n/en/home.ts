@@ -7,10 +7,3 @@ export const home = {
     'Draw, guess, spot, bluff and remember. On your own, or with good company.',
   subtitlePhone: 'Good games for good company.',
 };
-
-/** P14: every game's rules on one page. */
-export const howToPlay = {
-  eyebrow: 'A little help',
-  title: 'Easy to learn. Hard to leave.',
-  subtitle: 'Pick a game. A few little rules, then you’re ready.',
-};

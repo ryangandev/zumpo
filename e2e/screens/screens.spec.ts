@@ -175,9 +175,7 @@ test.afterAll(writeReport);
 test('platform pages', async ({ player }) => {
   const visitor = await player('Sam', { ...desktop, named: false });
   await visitor.goto('/');
-  await expect(visitor.getByRole('dialog', { name: /^You’re / })).toBeVisible();
-  await shot(visitor, 'P02');
-  await visitor.getByRole('button', { name: 'Change name' }).click();
+  await visitor.getByRole('button', { name: /: your name$/ }).click();
   await visitor.getByRole('textbox', { name: 'Your name' }).fill('');
   await visitor.getByRole('button', { name: 'Save' }).click();
   await expect(
@@ -199,8 +197,6 @@ test('platform pages', async ({ player }) => {
   await shot(maya, 'P09');
   await maya.goto('/no-such-page');
   await shot(maya, 'P10');
-  await maya.goto('/how-to-play');
-  await shot(maya, 'P14');
 
   const samOnPhone = await player('Sam', phone);
   await samOnPhone.goto('/');
@@ -355,14 +351,25 @@ async function lobbyScreens(
   const maya = await player('Maya', desktop);
   await maya.goto(`/games/${game}/new`);
   await shot(maya, codes.create);
+  await maya.getByRole('button', { name: 'More options' }).click();
   await maya.getByLabel('Room name').fill('');
   await maya.getByRole('button', { name: 'Create room' }).click();
   await shot(maya, codes.invalid);
   await maya.getByLabel('Room name').fill('Maya’s room');
-  await maya.getByLabel(game === 'minesweeper' ? 'Board' : 'Seats').click();
+  // Minesweeper's menu is its board, in view; Draw & Guess's is its seats,
+  // under More options, as the name left them.
+  if (game === 'minesweeper') await maya.reload();
+  await maya
+    .getByRole('combobox', {
+      name: game === 'minesweeper' ? 'Board' : 'Seats',
+      exact: true,
+    })
+    .click();
   await expect(maya.getByRole('listbox')).toBeVisible();
   await shot(maya, codes.menu);
   await maya.keyboard.press('Escape');
+  // The request in flight leaves the form as it opens.
+  await maya.reload();
   const restore = await dropConnection(maya);
   await maya.getByRole('button', { name: 'Create room' }).click();
   await expect(maya.getByText('Creating your room…')).toBeVisible();
@@ -416,7 +423,7 @@ test('Draw & Guess rooms and their lists', async ({ player }) => {
 test('Draw & Guess rounds menu', async ({ player }) => {
   const maya = await player('Maya', desktop);
   await maya.goto('/games/draw-and-guess/new');
-  await maya.getByLabel('Rounds').click();
+  await maya.getByRole('combobox', { name: 'Rounds', exact: true }).click();
   await expect(maya.getByRole('listbox')).toBeVisible();
   await shot(maya, 'DL11');
 });
@@ -872,6 +879,9 @@ test('Make 24 on your own', async ({ player }) => {
     // One hand skipped, as Figma's run has.
     if (hand === 5) {
       await maya.getByRole('button', { name: 'Skip, +30 s' }).click();
+      await expect(turn.getByText('Skipped')).toBeVisible();
+      await shot(maya, 'T13');
+      await maya.getByRole('button', { name: 'Next hand' }).click();
       continue;
     }
     await solveHand(maya);
@@ -903,7 +913,6 @@ test('a Make 24 game', async ({ player }) => {
   const seats = [maya, sam, ryan, leo];
 
   await maya.goto('/games/make-24/new');
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'T10');
   const link = await createRoom(maya, 'make-24');
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -1008,7 +1017,6 @@ test('a Pairs game', async ({ player }) => {
 
   await maya.goto('/games/pairs/new');
   await choose(maya, 'Board', /^Large/);
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'PR08');
   const link = await createRoom(maya, 'pairs', { board: 'Large' });
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -1133,7 +1141,6 @@ test('a Trios game', async ({ player }) => {
   const seats = [maya, sam, leo, ryan];
 
   await maya.goto('/games/trios/new');
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'TS10');
   const link = await createRoom(maya, 'trios');
   for (const seat of [sam, leo, ryan]) await joinRoom(seat, link);
@@ -1260,7 +1267,6 @@ test('a Snap game', async ({ player }) => {
   const seats = [maya, sam, leo, ryan];
 
   await maya.goto('/games/snap/new');
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'SN10');
   const link = await createRoom(maya, 'snap');
   for (const seat of [sam, leo, ryan]) await joinRoom(seat, link);
@@ -1349,7 +1355,9 @@ test('Liar’s Dice on your own', async ({ player }) => {
   await maya.getByRole('button', { name: 'Start' }).click();
 
   const won = maya.getByRole('heading', { name: /^You won in \d+ rounds?\.$/ });
-  const out = maya.getByRole('heading', { name: /^Out in \d\w\w of 4\.$/ });
+  const out = maya.getByRole('heading', {
+    name: /^You finished \d\w\w of 4\.$/,
+  });
   const nextRound = maya.getByRole('button', { name: 'Next round' });
   const thinking = maya
     .getByRole('region', { name: 'Turn' })
@@ -1455,9 +1463,6 @@ test('a Liar’s Dice game', async ({ player }) => {
   };
 
   await maya.goto('/games/liars-dice/new');
-  const password = maya.getByLabel('Password (optional)');
-  await password.fill('otters');
-  await password.blur();
   await capture(maya, 'LD07');
   const link = await createRoom(maya, 'liars-dice', { dice: 3 });
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -1534,10 +1539,6 @@ test('a Hush game', async ({ player }) => {
   const seats = [maya, sam, ryan, leo];
 
   await maya.goto('/games/hush/new');
-  const password = maya.getByLabel('Password (optional)');
-  await password.fill('otters');
-  // HU09 draws the form at rest, with no field focused.
-  await password.blur();
   await shot(maya, 'HU09');
   const link = await createRoom(maya, 'hush');
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -1829,7 +1830,6 @@ test('a Daily Word game', async ({ player }) => {
   const seats = [maya, sam, ryan, leo];
 
   await maya.goto('/games/daily-word/new');
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'DW11');
   const link = await createRoom(maya, 'daily-word');
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -2014,7 +2014,7 @@ test('Code Breaker on your own', async ({ player }) => {
   const twelfth = dailyCode(12);
   const [first, second, third, fourth, fifth] = missingCode(twelfth, [
     '1234',
-    '5678',
+    '5689',
     '2149',
     '4310',
     '4170',
@@ -2125,7 +2125,6 @@ test('a Code Breaker game', async ({ player }) => {
   const seats = [maya, sam, ryan, leo];
 
   await maya.goto('/games/code-breaker/new');
-  await maya.getByLabel('Password (optional)').fill('otters');
   await shot(maya, 'CB14');
   const link = await createRoom(maya, 'code-breaker');
   for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
@@ -2312,7 +2311,7 @@ test('Gomoku on your own', async ({ player }) => {
   await choose(maya, 'Level', /^Easy/);
   await maya.getByRole('button', { name: 'Start' }).click();
   const won = maya.getByRole('heading', {
-    name: /^You won a game of \d+ moves\.$/,
+    name: /^You won on move \d+\.$/,
   });
   for (;;) {
     await expect(yourGomokuTurn(maya).or(won)).toBeVisible();
@@ -2324,7 +2323,7 @@ test('Gomoku on your own', async ({ player }) => {
   // And one lost, Maya now White, her stones kept far apart.
   await maya.getByRole('button', { name: 'Play again' }).click();
   const lost = maya.getByRole('heading', {
-    name: /^The computer won a game of \d+ moves\.$/,
+    name: /^The computer won on move \d+\.$/,
   });
   for (;;) {
     await expect(yourGomokuTurn(maya).or(lost)).toBeVisible();

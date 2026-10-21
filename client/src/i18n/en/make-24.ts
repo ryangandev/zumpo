@@ -56,14 +56,14 @@ export const make24 = {
     operator: (operator: Operator) => OPERATOR_NAMES[operator],
     not24: 'Not 24',
     cardFrom: (value: string, formula: string) => `${value}, from ${formula}`,
-    pickNumber: 'Pick a number to start.',
+    pickNumber: 'Pick a number.',
     pickSign: (value: string) => `Pick a sign for ${value}.`,
     pickSecond: (value: string, sign: string) =>
       `${value} ${sign} ?  Pick the second number.`,
     undo: 'Undo',
     startOver: 'Start over',
     signs: 'Signs',
-    yourSteps: 'Your steps',
+    keys: 'Keys: 1 to 4 pick a card, + − × ÷ a sign, Backspace undoes, Esc starts over.',
   },
   solo: {
     description: (challenge: boolean): string =>
@@ -87,7 +87,8 @@ export const make24 = {
     bestOnDevice: 'Best on this device',
     challengeDescription: (time: string) =>
       `They get these same ten hands and try to beat ${time}.`,
-    skippedPrompt: 'One way to make it. Next hand in a moment.',
+    skippedPrompt: 'One way to make it.',
+    nextHand: 'Next hand',
     nextHandPrompt: 'Next hand in a moment.',
     skip: 'Skip, +30 s',
     thisRun: 'This run',

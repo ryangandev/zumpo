@@ -3,13 +3,11 @@ import {
   Button,
   NameMenu,
   NameMenuForm,
-  NameMenuHint,
   type ButtonVariant,
   type ViewerMenu,
 } from '../ui';
 import { useLocale, useMessages } from '../i18n';
 import { useSession } from '../net/session';
-import { readNameHintSeen, writeNameHintSeen } from '../net/storage';
 import { randomName } from '../players/random-name';
 
 /**
@@ -51,52 +49,19 @@ function NameForm({ onSaved }: { onSaved: () => void }) {
   );
 }
 
-/**
- * The menu the viewer's avatar opens. With `hint`, a first visit opens it by
- * itself to say which name was picked (P02); any way of closing that, or a
- * name of their own, means it is never shown again.
- */
-export function useViewerMenu({ hint = false } = {}): ViewerMenu {
+/** The menu the viewer's avatar opens: the name, to change. */
+export function useViewerMenu(): ViewerMenu {
   const m = useMessages();
-  const { name, namePicked } = useSession();
-  const [hinting, setHinting] = useState(
-    () => hint && namePicked && !readNameHintSeen(),
-  );
-  const [open, setOpen] = useState(hinting);
-
-  const onOpenChange = (next: boolean) => {
-    if (next) {
-      // Opened from the avatar: always the form.
-      setHinting(false);
-    } else if (hinting) {
-      writeNameHintSeen();
-    }
-    setOpen(next);
-  };
-
+  const [open, setOpen] = useState(false);
   return {
     open,
-    onOpenChange,
-    label: hinting ? undefined : m.shell.name.yourName,
-    children: hinting ? (
-      <NameMenuHint
-        name={name}
-        onDismiss={() => onOpenChange(false)}
-        onChange={() => {
-          writeNameHintSeen();
-          setHinting(false);
-        }}
-      />
-    ) : (
-      <NameForm onSaved={() => setOpen(false)} />
-    ),
+    onOpenChange: setOpen,
+    label: m.shell.name.yourName,
+    children: <NameForm onSaved={() => setOpen(false)} />,
   };
 }
 
-/**
- * A button that opens the name menu under itself: Playing as in a lobby
- * (DL01, MO04), Change name in a waiting room (P19).
- */
+/** A button that opens the name menu under itself: Change name in a waiting room (P19). */
 export function NameMenuButton({
   variant = 'secondary',
   className,

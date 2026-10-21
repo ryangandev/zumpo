@@ -30,10 +30,10 @@ export interface PlayerOptions {
   phone?: boolean;
   /**
    * False for a first visit, which starts with a name picked for them;
-   * otherwise they go by `name`, chosen and introduced long ago.
+   * otherwise they go by `name`, chosen long ago.
    */
   named?: boolean;
-  /** `name` is the one picked for them, its hint seen, as after a first visit. */
+  /** `name` is the one picked for them, as after a first visit. */
   picked?: boolean;
   /** Routes the player's connection through the test, for `dropConnection`. */
   droppable?: boolean;
@@ -88,7 +88,6 @@ export const test = base.extend<Fixtures>({
                 'zumpo:name',
                 JSON.stringify({ name: given, picked: isPicked }),
               );
-              localStorage.setItem('zumpo:name-hint', 'seen');
             }
           },
           [name, picked] as const,
@@ -154,6 +153,10 @@ export async function createRoom(
   settings: RoomSettings = {},
 ): Promise<string> {
   await page.goto(`/games/${game}/new`);
+  // Only the game's own setting is in view; the rest wait under More options.
+  if (settings.name || settings.seats || settings.password) {
+    await page.getByRole('button', { name: 'More options' }).click();
+  }
   if (settings.name) await page.getByLabel('Room name').fill(settings.name);
   if (settings.seats) {
     await choose(page, 'Seats', new RegExp(`^${settings.seats} players$`));
@@ -204,7 +207,9 @@ export async function joinRoom(page: Page, link: string): Promise<void> {
  * the menu to settle, and the field has to show the choice.
  */
 export async function choose(page: Page, field: string, option: RegExp) {
-  const trigger = page.getByLabel(field);
+  // A form is named after its game ("New Trios room"), so the field is found
+  // by its role as well as its name.
+  const trigger = page.getByRole('combobox', { name: field, exact: true });
   const menu = page.getByRole('listbox');
   // The menu picked from last slides out after the pick.
   await expect(menu).toHaveCount(0);

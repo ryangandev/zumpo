@@ -39,7 +39,7 @@ The **last stone placed** carries a small coral dot, so after a glance away you 
 
 ### Nothing else to learn
 
-There are no captures, no passes you can choose, no take-backs and no draw offers.
+There are no captures, no passes you can choose and no draw offers, and a room has no take-backs; only against the computer can you take a move back.
 A player who sees the game is lost may **resign**, which asks first and gives the other player the win.
 A game is about 20 to 40 stones each, and five to ten minutes in a room.
 
@@ -50,9 +50,11 @@ A game on your own needs no room and no server: it runs in the browser, against 
 - Pick a **level**, Easy, Medium or Hard, and your **stones**, Black (you move first) or White.
   The last picks are offered first next time; a first game is Medium, playing Black.
 - **Your turn waits for you**: there is no clock on your own.
+- **Take back**, on your turn once you have a stone down, takes back your last stone and the computer's answer to it, as many times as you like, back to the start; Ryan approved it on 2026-10-21 so a newcomer can try again from the mistake.
+  A finished game stays as it ended, and a game with take-backs counts like any other.
 - The computer takes about half a second over each move, at least, so every stone can be seen landing, and the turn bar says it is thinking.
   On Black it opens on the centre point.
-- After the game the board stays as it ended, with the winning line drawn, under a result panel: who won, in how many moves, and your record at that level.
+- After the game the board stays as it ended, with the winning line drawn, under a result panel: who won and on which move, and your record at that level.
   **Play again** starts a new game at the same level, with the colours swapped, so black's head start alternates; **Change level** goes back to the picks.
 - Your **wins, losses and draws** at each level, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count, and neither does one you resign; resigning is a room's way to save a friend's time, so solo has no Resign: you leave or play on.
@@ -210,4 +212,4 @@ Whole seeded games there keep the levels in order: Medium beats Easy and Hard be
 The screens are covered by [`room.test.tsx`](../../client/src/gomoku/room.test.tsx) and [`solo-page.test.tsx`](../../client/src/gomoku/solo/solo-page.test.tsx), and two players in a browser by [`gomoku.spec.ts`](../../e2e/gomoku.spec.ts).
 The screens are GM01-GM21 in [the Figma file](../design.md), section 14: the game page (GM01, GM20), solo (GM02-GM06, GM17), a room (GM07-GM16, GM18, GM19) and every state a point can show (GM21).
 Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus` and `Zumpo/Gomoku seat`.
-Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules card is on P14 / How to play.
+Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules are in the How to play panel of its game page (GM01, GM20).

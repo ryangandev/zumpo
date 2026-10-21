@@ -60,6 +60,21 @@ export function play(game: SoloGame, point: number): SoloGame {
   return { ...game, moves, over: isFull(board) };
 }
 
+/** On your turn, once you have a stone down: there is a move to take back. */
+export const canTakeBack = (game: SoloGame): boolean =>
+  isYourTurn(game) && game.moves.some((move) => move.color === game.color);
+
+/**
+ * Takes back your last stone and the computer's answer to it, so it is your
+ * turn again where it was. Only on your turn: a finished game stays as it
+ * ended, and a room has no take-backs.
+ */
+export function takeBack(game: SoloGame): SoloGame {
+  if (!canTakeBack(game)) return game;
+  const yours = game.moves.findLastIndex((move) => move.color === game.color);
+  return { ...game, moves: game.moves.slice(0, yours) };
+}
+
 export const youWon = (game: SoloGame): boolean =>
   game.over && game.winner === game.color;
 

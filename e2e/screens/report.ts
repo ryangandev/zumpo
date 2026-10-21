@@ -18,7 +18,6 @@ const NOT_CAPTURED: Record<string, string> = {
  * a layout difference to fix or to note in docs/design.md.
  */
 const CONTENT: Record<string, string> = {
-  P02: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
   P03: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
   P13: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
   MO02: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
@@ -64,7 +63,6 @@ const CONTENT: Record<string, string> = {
   CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
   CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
   CB12: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
-  CB15: 'Code Breaker plays on your own too, so How to play lists On your own under Play together, as Daily Word’s does; Figma’s lists Play together only.',
   CB21: 'Between games a player may move to the spectator seats, a button no Figma screen has yet.',
 };
 

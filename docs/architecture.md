@@ -140,6 +140,7 @@ The server decides everything a player could gain by lying about.
 - **A game on your own is the exception, and runs in the browser.**
   With nobody else in it there is nothing to gain by lying, so solo play opens no socket, and keeps its bests in the device's `localStorage` ([`solo/`](../client/src/solo/)).
   Its rules are still one copy: anything a room plays too, such as board sizes or a deal, comes from `shared/*.ts`.
+  A solo game keeps its timestamps in its own time (`useSoloTime` in [`solo-time.ts`](../client/src/solo/solo-time.ts)), which `SoloLayout` stops while How to play is open, so reading the rules never costs a run time.
 - **Every inbound event is validated** with zod ([`validation.ts`](../server/libs/validation.ts)) before it reaches game state, and **rate-limited** before that ([`rate-limit.ts`](../server/libs/rate-limit.ts)): one token bucket per kind of event, per socket, because a drawing phase is a stream of coordinates and joining a room is a click.
 - **What a client can make the server hold is bounded, not only how fast.** A packet may be at most 16 KB (socket.io's default is 1 MB, parsed in full before zod sees it), one player holds one seat, and the server holds at most 500 rooms; past that, `room:create` is refused with `tooManyRooms` ([`app.ts`](../server/app.ts)).
 - **One address cannot hold the server.** Before a connection is let in, [`connection-gate.ts`](../server/libs/connection-gate.ts) holds each address to 30 open connections, 60 new ones a minute and 10 rooms it made, and everybody together to 2,000 connections and 10,000 identities; a returning player is always let back.
@@ -235,8 +236,7 @@ Routes live in [`app.tsx`](../client/src/app.tsx), on a data router so a room ca
 | Path                         | Page                                                        |
 | ---------------------------- | ----------------------------------------------------------- |
 | `/`                          | Home, and every game; `?kind=` filters to one kind          |
-| `/how-to-play`               | Every game's rules                                          |
-| `/games`                     | Redirects home, for old links                               |
+| `/games`, `/how-to-play`     | Redirect home, for old links                                |
 | `/games/:game`               | A game's page: its ways in, its rooms, live, and its rules  |
 | `/games/:game/new`           | Making a room                                               |
 | `/games/:game/solo`          | The game on your own; `?board=` and the like pick the setup |

@@ -130,10 +130,11 @@ test('the platform pages fit every width', async ({ player }) => {
   await fitsEveryWidth(maya, 'home');
   await maya.goto('/games/trios');
   await fitsEveryWidth(maya, 'trios lobby');
+  await maya.getByRole('button', { name: 'Full rules' }).click();
+  await fitsEveryWidth(maya, 'trios lobby, every rule open');
   await maya.goto('/games/pairs/new');
+  await maya.getByRole('button', { name: 'More options' }).click();
   await fitsEveryWidth(maya, 'create a pairs room');
-  await maya.goto('/how-to-play');
-  await fitsEveryWidth(maya, 'how to play');
 });
 
 test('a draw and guess room fits every width', async ({ player }) => {

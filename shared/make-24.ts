@@ -213,22 +213,55 @@ function awkward(expression: Expression): boolean {
 }
 
 /**
+ * How a 1 that is multiplied or divided in reads: 0 when it comes last, as
+ * in (11 − 9) × 12 × 1, or there is none; 1 elsewhere in the product, as in
+ * 12 × 1 × (11 − 9); 2 inside a sum, as in (11 − 1 × 9) × 12, where it
+ * reads as a step of its own.
+ */
+function oneScore(expression: Expression, place = 'last'): number {
+  if (typeof expression === 'number') return 0;
+  const { op, left, right } = expression;
+  const product = op === '*' || op === '/';
+  const here =
+    product && (left === 1 || right === 1)
+      ? place === 'last' && right === 1
+        ? 0
+        : place === 'sum'
+          ? 2
+          : 1
+      : 0;
+  // A product's operands are still in the product; a sum's are not.
+  const below = place === 'sum' || !product ? 'sum' : 'product';
+  return Math.max(here, oneScore(left, below), oneScore(right, below));
+}
+
+/** "12 × 2 × 1", not "1 × 12 × 2": a 1 multiplied in comes last. */
+function oneLast(expression: Expression): Expression {
+  if (typeof expression === 'number') return expression;
+  const left = oneLast(expression.left);
+  const right = oneLast(expression.right);
+  return expression.op === '*' && left === 1
+    ? { op: '*', left: right, right: left }
+    : { ...expression, left, right };
+}
+
+/**
  * One way to make 24 from the deal, or null when there is none. Of all the
  * ways, the one a person would most likely write: whole numbers all along if
- * possible, then the shortest.
+ * possible, then no 1 multiplied in mid-sum, then the shortest.
  */
 export function solve(deal: readonly number[]): Expression | null {
   let best: Expression | null = null;
-  let bestRank: [number, number] = [Infinity, Infinity];
-  for (const expression of solutions(dealtCards(deal))) {
-    const rank: [number, number] = [
+  let bestRank = [Infinity, Infinity, Infinity];
+  for (const found of solutions(dealtCards(deal))) {
+    const expression = oneLast(found);
+    const rank = [
       awkward(expression) ? 1 : 0,
+      oneScore(expression),
       formatExpression(expression).length,
     ];
-    if (
-      rank[0] < bestRank[0] ||
-      (rank[0] === bestRank[0] && rank[1] < bestRank[1])
-    ) {
+    const better = rank.findIndex((value, index) => value !== bestRank[index]);
+    if (better !== -1 && rank[better]! < bestRank[better]!) {
       best = expression;
       bestRank = rank;
     }
