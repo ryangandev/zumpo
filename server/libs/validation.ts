@@ -42,6 +42,7 @@ const gameType = z.enum([
   'hush',
   'daily-word',
   'doodle-chain',
+  'gomoku',
 ]);
 
 /**

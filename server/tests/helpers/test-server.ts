@@ -18,12 +18,14 @@ import type {
   PhaseDurationsInSeconds,
   TriosDurationsInSeconds,
   SnapDurationsInSeconds,
+  GomokuDurationsInSeconds,
 } from '../../libs/game-clock.js';
 import type { MinesweeperState } from '../../socket/minesweeper/index.js';
 import type { Make24State } from '../../socket/make-24/index.js';
 import type { PairsState } from '../../socket/pairs/index.js';
 import type { TriosState } from '../../socket/trios/index.js';
 import type { SnapState } from '../../socket/snap/index.js';
+import type { GomokuState } from '../../socket/gomoku/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
@@ -50,6 +52,7 @@ import type {
   RoomSeat,
   TriosRoomState,
   SnapRoomState,
+  GomokuRoomState,
   ServerToClientEvent,
   ServerToClientEvents,
 } from '../../models/types.js';
@@ -157,6 +160,11 @@ const FAST_DOODLE_CHAIN: DoodleChainDurationsInSeconds = {
   passing: 0.15,
 };
 
+/** A move clock long enough to place stones deliberately inside it. */
+const FAST_GOMOKU: GomokuDurationsInSeconds = {
+  turn: 2,
+};
+
 /** A client socket typed on the contract, from the client's side of it. */
 type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -219,6 +227,7 @@ const startTestServer = async (
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
     doodleChainDurations: FAST_DOODLE_CHAIN,
+    gomokuDurations: FAST_GOMOKU,
     graceInSeconds,
     // Every test client comes from this machine; the limits' own tests turn
     // them back on.
@@ -378,6 +387,13 @@ const waitForSnapState = (
   predicate: (state: SnapRoomState) => boolean = () => true,
   timeoutMs = 3000,
 ) => waitForState<SnapRoomState>(client, predicate, timeoutMs);
+
+/** And for Gomoku. */
+const waitForGomokuState = (
+  client: ClientSocket,
+  predicate: (state: GomokuRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<GomokuRoomState>(client, predicate, timeoutMs);
 
 /** And for Liar's Dice. */
 const waitForLiarsDiceState = (
@@ -591,6 +607,23 @@ const createSnapRoom = async (
     roomName: 'Spot on',
     username: options.username ?? 'Owner',
     maxPlayers: options.maxPlayers ?? 4,
+    password: '',
+    settings: {},
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/** Creates a Gomoku room, with its creator seated, and returns its id. */
+const createGomokuRoom = async (
+  client: ClientSocket,
+  options: { username?: string } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'gomoku',
+    roomName: 'Five in a row',
+    username: options.username ?? 'Owner',
+    maxPlayers: 2,
     password: '',
     settings: {},
   });
@@ -869,6 +902,10 @@ const triosRoom = (harness: TestServer, roomId: string): Room<TriosState> =>
 const snapRoom = (harness: TestServer, roomId: string): Room<SnapState> =>
   harness.server.rooms.get(roomId) as Room<SnapState>;
 
+/** The server's own Gomoku room. */
+const gomokuRoom = (harness: TestServer, roomId: string): Room<GomokuState> =>
+  harness.server.rooms.get(roomId) as Room<GomokuState>;
+
 /**
  * The server's own Liar's Dice room. Tests read and set the dice through it on
  * purpose: a call can only be played deliberately by knowing what the cups
@@ -965,6 +1002,7 @@ export {
   FAST_PAIRS,
   FAST_TRIOS,
   FAST_SNAP,
+  FAST_GOMOKU,
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
@@ -978,6 +1016,7 @@ export {
   waitForPairsState,
   waitForTriosState,
   waitForSnapState,
+  waitForGomokuState,
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
@@ -994,6 +1033,7 @@ export {
   createPairsRoom,
   createTriosRoom,
   createSnapRoom,
+  createGomokuRoom,
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
@@ -1014,6 +1054,7 @@ export {
   pairsRoom,
   triosRoom,
   snapRoom,
+  gomokuRoom,
   liarsDiceRoom,
   hushRoom,
   dailyWordRoom,

@@ -138,4 +138,27 @@ export const notices = {
     `Time for the reveal! ${who(n.host)} shows the chains.`,
   'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>
     'Every chain is in the album.',
+  'gomoku:started': (
+    n: Extract<RoomNotice, { type: 'gomoku:started' }>,
+  ): string =>
+    `Game has started! ${who(n.black)} plays Black and ${who(n.white)} plays White, ${n.seconds} seconds a move.`,
+  'gomoku:timeout': (
+    n: Extract<RoomNotice, { type: 'gomoku:timeout' }>,
+  ): string => `${who(n.name)} ran out of time.`,
+  'gomoku:over': (n: Extract<RoomNotice, { type: 'gomoku:over' }>): string => {
+    const winner = who(n.winner ?? '');
+    const loser = who(n.loser ?? '');
+    switch (n.ending) {
+      case 'five':
+        return `${winner} made five in a row.`;
+      case 'resigned':
+        return `${loser} resigned.`;
+      case 'timeout':
+        return `${loser} ran out of time twice; ${winner} wins.`;
+      case 'left':
+        return `${loser} left; ${winner} wins.`;
+      case 'draw':
+        return 'The board is full: a draw.';
+    }
+  },
 };

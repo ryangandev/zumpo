@@ -100,6 +100,9 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
   'dc:done': 'room',
   'dc:reveal:next': 'room',
   'dc:heart': 'room',
+  // One stone a turn, and the engine ignores the rest.
+  'gomoku:place': 'room',
+  'gomoku:resign': 'room',
 };
 
 /**

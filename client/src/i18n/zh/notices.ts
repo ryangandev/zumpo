@@ -102,4 +102,23 @@ export const notices: typeof en = {
         : `第 ${n.step} 步：说说收到的画是什么。`,
   'dc:reveal': (n) => `揭晓时间！${who(n.host)} 来逐条展示每条传话。`,
   'dc:album': (_n) => '所有传话都收进画册了。',
+  'gomoku:started': (n) =>
+    `游戏开始！${who(n.black)} 执黑，${who(n.white)} 执白，每步 ${n.seconds} 秒。`,
+  'gomoku:timeout': (n) => `${who(n.name)} 超时了。`,
+  'gomoku:over': (n) => {
+    const winner = who(n.winner ?? '');
+    const loser = who(n.loser ?? '');
+    switch (n.ending) {
+      case 'five':
+        return `${winner} 连成五子！`;
+      case 'resigned':
+        return `${loser} 认输了。`;
+      case 'timeout':
+        return `${loser} 连续两次超时，${winner} 获胜。`;
+      case 'left':
+        return `${loser} 离开了，${winner} 获胜。`;
+      case 'draw':
+        return '棋盘下满了，平局。';
+    }
+  },
 };

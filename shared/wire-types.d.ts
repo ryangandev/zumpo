@@ -36,7 +36,8 @@ type GameType =
   | 'liars-dice'
   | 'hush'
   | 'daily-word'
-  | 'doodle-chain';
+  | 'doodle-chain'
+  | 'gomoku';
 
 type RoomStatus = 'Open' | 'Full' | 'In Progress';
 
@@ -161,7 +162,8 @@ interface RoomCreateRequest {
     | LiarsDiceSettings
     | HushSettings
     | DailyWordSettings
-    | DoodleChainSettings;
+    | DoodleChainSettings
+    | GomokuSettings;
 }
 
 interface DrawAndGuessSettings {
@@ -206,6 +208,9 @@ type HushSettings = Record<string, never>;
 interface DoodleChainSettings {
   drawingSeconds: number;
 }
+
+/** Gomoku has nothing to choose: always two seats and one board. */
+type GomokuSettings = Record<string, never>;
 
 interface DailyWordSettings {
   /** Words a game has: 3 or 5. */
@@ -275,6 +280,10 @@ interface DoodleChainLobbyRoomInfo extends LobbyRoomInfo {
   drawingSeconds: number;
 }
 
+interface GomokuLobbyRoomInfo extends LobbyRoomInfo {
+  gameType: 'gomoku';
+}
+
 interface DailyWordLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'daily-word';
   rounds: number;
@@ -290,7 +299,8 @@ type AnyLobbyRoomInfo =
   | LiarsDiceLobbyRoomInfo
   | HushLobbyRoomInfo
   | DailyWordLobbyRoomInfo
-  | DoodleChainLobbyRoomInfo;
+  | DoodleChainLobbyRoomInfo
+  | GomokuLobbyRoomInfo;
 
 // ---------------------------------------------------------------------------
 // Rooms
@@ -1040,6 +1050,65 @@ interface DoodleChainRoomState extends RoomState {
   lastGame: DoodleChainGameSummary | null;
 }
 
+/** waiting: no game; playing: the player whose turn it is places a stone. */
+type GomokuPhase = 'waiting' | 'playing';
+
+type GomokuColor = 'black' | 'white';
+
+/** A player at the board, named, so a game's colours outlive a departure. */
+interface GomokuSide {
+  playerId: string;
+  username: string;
+}
+
+/** Who plays which colour this game, or the last game between games. */
+interface GomokuColors {
+  black: GomokuSide;
+  white: GomokuSide;
+}
+
+/** One turn: the colour whose turn it was, and its stone, or null when the clock ran out. */
+interface GomokuMove {
+  color: GomokuColor;
+  /** 0 to 224, row by row from the top left; see `shared/gomoku.ts`. */
+  point: number | null;
+}
+
+/**
+ * five: somebody made five in a row; draw: the board filled up; resigned:
+ * the loser gave up; timeout: the loser ran out of time twice in a row;
+ * left: the loser left, or their seat's grace ran out.
+ */
+type GomokuEnding = 'five' | 'draw' | 'resigned' | 'timeout' | 'left';
+
+interface GomokuGameSummary extends GameSummary {
+  ending: GomokuEnding;
+  /** The winning colour; null for a draw. */
+  winner: GomokuColor | null;
+  /** Stones on the board when it ended. */
+  stones: number;
+}
+
+/**
+ * A Gomoku room, as anybody may see it: nothing is hidden, so every viewer,
+ * spectators included, is sent the same game. Points are games won here.
+ */
+interface GomokuRoomState extends RoomState {
+  gameType: 'gomoku';
+  phase: GomokuPhase;
+  /** This game's colours, or the last game's between games; null before the first. */
+  colors: GomokuColors | null;
+  /** This game's turns in order; between games, the last game's. */
+  moves: GomokuMove[];
+  /** Whose turn it is; null between games. */
+  turnPlayerId: string | null;
+  /** Each player's lost turns in a row, 0 or 1; the next one loses. */
+  missedTurns: Record<string, number>;
+  /** When a game was won by five, each winning line's points in order along it. */
+  winLines: number[][] | null;
+  lastGame: GomokuGameSummary | null;
+}
+
 type AnyRoomState =
   | DrawAndGuessRoomState
   | MinesweeperRoomState
@@ -1050,7 +1119,8 @@ type AnyRoomState =
   | LiarsDiceRoomState
   | HushRoomState
   | DailyWordRoomState
-  | DoodleChainRoomState;
+  | DoodleChainRoomState
+  | GomokuRoomState;
 
 // ---------------------------------------------------------------------------
 // Chat and the drawing
@@ -1135,7 +1205,16 @@ type RoomNotice =
   | { type: 'dw:revealed'; word: string }
   | { type: 'dc:step'; step: number; kind: DoodleChainKind }
   | { type: 'dc:reveal'; host: string }
-  | { type: 'dc:album' };
+  | { type: 'dc:album' }
+  | { type: 'gomoku:started'; black: string; white: string; seconds: number }
+  | { type: 'gomoku:timeout'; name: string }
+  /** How a game ended; `winner` and `loser` are null for a draw. */
+  | {
+      type: 'gomoku:over';
+      ending: GomokuEnding;
+      winner: string | null;
+      loser: string | null;
+    };
 
 /** A player speaks verbatim; announcements are rendered by each viewer. */
 type ChatMessage =
@@ -1278,6 +1357,11 @@ interface ClientToServerEvents {
   'dc:reveal:next': (roomId: string, total: number) => void;
   /** Gives the chain's heart to the entry made at `step`, or takes it back. */
   'dc:heart': (roomId: string, chain: number, step: number | null) => void;
+
+  /** A stone on `point`, on your turn. */
+  'gomoku:place': (roomId: string, point: number) => void;
+  /** Giving up this game, at the table and while it is played. */
+  'gomoku:resign': (roomId: string) => void;
 }
 
 interface ServerToClientEvents {
@@ -1443,6 +1527,16 @@ export type {
   DoodleChainReveal,
   DoodleChainGameSummary,
   DoodleChainRoomState,
+  GomokuSettings,
+  GomokuLobbyRoomInfo,
+  GomokuPhase,
+  GomokuColor,
+  GomokuSide,
+  GomokuColors,
+  GomokuMove,
+  GomokuEnding,
+  GomokuGameSummary,
+  GomokuRoomState,
   AnyRoomState,
   RoomNotice,
   ChatMessageKind,

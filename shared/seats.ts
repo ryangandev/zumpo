@@ -21,4 +21,5 @@ export const SEATS: Readonly<Record<GameType, { min: number; max: number }>> = {
     min: doodleChain.MIN_PLAYERS,
     max: doodleChain.MAX_PLAYERS,
   },
+  gomoku: { min: 2, max: 2 },
 };
