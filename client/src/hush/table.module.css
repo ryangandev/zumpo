@@ -145,9 +145,11 @@
 }
 
 /* On a phone the action goes under the hand, across the panel, and the
-   hand's parts are spaced alike. */
+   hand's parts are spaced alike. The panel's parts sit closer, so a 640 px
+   tall phone still has the height to show the pile. */
 @media (max-width: 640px) {
   .panel {
+    gap: var(--zumpo-space-16);
     padding: var(--zumpo-space-16);
   }
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, type RefObject } from 'react';
+import { focusQuietly, LANDING } from './quiet-focus';
 
 /** What the keyboard can reach; text fields are left out, see below. */
 const CONTROLS = [
@@ -9,16 +10,17 @@ const CONTROLS = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
-/** Marks the start's own focus, whose ring app.css hides until a key. */
-const QUIET = 'data-start-quiet';
-
 /**
  * Hands the keyboard focus to a game as it starts: Start, Play again and the
  * like go away as they are pressed, which drops the focus to the page, so
  * the next Tab would begin again in the header. When `started` turns true,
- * or the game mounts started, and the focus has fallen to the page, it moves
- * to the first control in `scope`: the board's one tab stop, a card, or a
- * board typed into (`data-start-focus`), never its on-screen keys.
+ * or the game mounts started, and the focus has fallen to the page, or only
+ * landed on its heading (`LANDING`), it moves to the first control in
+ * `scope`: the board's one tab stop, a card, or a board typed into
+ * (`data-start-focus`), never its on-screen keys. While the
+ * game has no control for the viewer, such as a guesser's in Draw & Guess,
+ * the turn (`data-start-fallback`) holds the focus, so a screen reader reads
+ * what is happening.
  * Until the viewer's first key or touch it keeps doing so, as a game deals
  * and its first controls come. Focus the game or the viewer has put
  * anywhere else stays there.
@@ -26,10 +28,9 @@ const QUIET = 'data-start-quiet';
  * A text field is never chosen, because on a phone focusing one opens the
  * keyboard over the game; a game that wants its field focused does so itself.
  *
- * The focus it hands over draws no ring until the viewer's first key
- * (`data-start-quiet`, app.css): a browser rings a focus put there by script
- * before any click, which on a touch screen is only a frame around the board.
- * A screen reader still lands there, and the first key shows where it is.
+ * The focus it hands over draws no ring until the viewer's next key
+ * (`quiet`): a browser rings a focus put there by script before any click,
+ * which on a touch screen is only a frame around the board.
  */
 export function useStartFocus(
   started: boolean,
@@ -46,7 +47,6 @@ export function useStartFocus(
   useEffect(() => {
     const done = () => {
       waiting.current = false;
-      placed.current?.removeAttribute(QUIET);
     };
     window.addEventListener('keydown', done, true);
     window.addEventListener('pointerdown', done, true);
@@ -64,17 +64,27 @@ export function useStartFocus(
     }
     if (!waiting.current) return;
     const active = document.activeElement;
-    if (active && active !== document.body) {
+    const free =
+      !active ||
+      active === document.body ||
+      active === placed.current ||
+      active.hasAttribute(LANDING);
+    if (!free) {
       // The game put the focus somewhere of its own, such as a text field.
-      if (active !== placed.current) waiting.current = false;
+      waiting.current = false;
       return;
     }
-    const control = firstControl(scope.current);
-    if (control !== placed.current) placed.current?.removeAttribute(QUIET);
-    control?.setAttribute(QUIET, '');
-    control?.focus({ preventScroll: true });
-    placed.current = control;
+    const target = firstControl(scope.current) ?? fallback(scope.current);
+    if (!target || target === active) return;
+    focusQuietly(target);
+    placed.current = target;
   });
+}
+
+/** The turn, where a game has no control for the viewer yet. */
+function fallback(scope: HTMLElement | null): HTMLElement | null {
+  const turn = scope?.querySelector<HTMLElement>('[data-start-fallback]');
+  return turn && isReachable(turn) ? turn : null;
 }
 
 function firstControl(scope: HTMLElement | null): HTMLElement | null {

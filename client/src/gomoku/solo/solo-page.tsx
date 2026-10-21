@@ -240,7 +240,13 @@ function SoloBoard({
           phone={phone}
           fill={phone && !game.over}
           fitHeight
-          turn={<TurnBar {...turnBar(game, previewing !== null, m)} />}
+          turn={
+            // Its words fit one row, so the board keeps the height.
+            <TurnBar
+              {...turnBar(game, previewing !== null, m)}
+              stackOnPhone={false}
+            />
+          }
           board={{
             stones: boardOf(game.moves),
             last: lastStoneOf(game.moves),

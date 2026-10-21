@@ -125,7 +125,10 @@ export function GomokuRoom() {
         <>
           {playing ? null : summary ? (
             phone ? (
-              <TurnBar {...resultBar(room, summary, note, m)} />
+              <TurnBar
+                {...resultBar(room, summary, note, m)}
+                stackOnPhone={false}
+              />
             ) : (
               <Results room={room} summary={summary} />
             )
@@ -145,6 +148,8 @@ export function GomokuRoom() {
               playing && (
                 <TurnBar
                   {...turnBar(room, seconds, previewing !== null, phone, m)}
+                  // Its words fit one row, so the board keeps the height.
+                  stackOnPhone={false}
                 />
               )
             }

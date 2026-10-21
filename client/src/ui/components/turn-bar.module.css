@@ -20,6 +20,12 @@
   color: var(--zumpo-ink);
 }
 
+/* Focused only where a game starts with nothing for the viewer to do. */
+.bar:focus-visible {
+  outline: var(--zumpo-space-2) solid var(--zumpo-ink);
+  outline-offset: var(--zumpo-space-2);
+}
+
 .tag {
   grid-area: tag;
 }
@@ -104,18 +110,20 @@
   white-space: nowrap;
 }
 
-/* Phone: one compact row of fixed height. The tag, what to do and the meta
-   share the first line, cut short with an ellipsis; the main line is under
-   them at Heading size; the clock shows its time beside both. The bar takes
-   it when it is 560 px wide or less, and on a screen too short for two
-   lines, such as a phone on its side (TurnBar sets the class). */
+/* Phone: a compact bar. The tag, what to do and the meta share the first
+   line; the main line is under them at Heading size; the clock shows its
+   time beside both. The bar takes it when it is 560 px wide or less, and on
+   a screen too short for two lines, such as a phone on its side (TurnBar
+   sets the class); at a phone's width the meta moves to a line of its own,
+   below. Where what to do and the meta are too long for the first line
+   together, they share it evenly and wrap, rather than one being cut. */
 .phone .bar {
   grid-template-areas:
-    'tag label meta clock'
-    'main main main clock';
+    'tag label meta . clock'
+    'main main main main clock';
   grid-template-columns:
-    minmax(0, max-content) minmax(0, max-content) minmax(0, 1fr)
-    auto;
+    minmax(0, max-content) minmax(0, max-content) minmax(0, max-content)
+    minmax(0, 1fr) auto;
   gap: 0 var(--zumpo-space-8);
   padding: var(--zumpo-space-12) var(--zumpo-space-16);
   border-radius: var(--zumpo-radius-20);
@@ -124,22 +132,27 @@
 .phone .untagged,
 .phone .topless {
   grid-template-areas:
-    'label label meta clock'
-    'main main main clock';
+    'label label meta . clock'
+    'main main main main clock';
+}
+
+.phone .label,
+.phone .meta {
+  white-space: normal;
 }
 
 /* Without the label (labelOnPhone), the meta has the first line to itself;
    the label is said to a screen reader only, as the clock's purpose is. */
 .phone .unlabelled {
   grid-template-areas:
-    'tag meta meta clock'
-    'main main main clock';
+    'tag meta meta meta clock'
+    'main main main main clock';
 }
 
 .phone .untagged.unlabelled {
   grid-template-areas:
-    'meta meta meta clock'
-    'main main main clock';
+    'meta meta meta meta clock'
+    'main main main main clock';
 }
 
 .phone .unlabelled .label {
@@ -149,6 +162,70 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* At a phone's width the first line has no room for the meta, which is
+   often the only instruction on screen: it has a line of its own under the
+   main line, the bar's whole width, with the tag at its start, and wraps
+   rather than being cut. What to do has the first line to itself, beside
+   the clock. The meta's line is kept while there is no meta, so the bar,
+   and the board under it, keep their place from phase to phase. */
+.narrow .bar {
+  grid-template-areas:
+    'label label clock'
+    'main main clock'
+    'tag meta meta';
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr) auto;
+}
+
+.narrow .untagged {
+  grid-template-areas:
+    'label label clock'
+    'main main clock'
+    'meta meta meta';
+}
+
+/* Scaled down to its line, or wrapped where that would be too small to
+   read (TurnBar's useOneLine), never cut. */
+.narrow .label {
+  overflow: visible;
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+.narrow .label[data-wrap] {
+  white-space: normal;
+}
+
+.narrow .tag {
+  margin-top: var(--zumpo-space-2);
+}
+
+.narrow .meta {
+  min-height: var(--zumpo-text-small-line);
+  margin-top: var(--zumpo-space-2);
+  overflow: visible;
+  white-space: normal;
+}
+
+/* Without the label (labelOnPhone), the meta takes its place on the first
+   line, beside the clock, and wraps there; the label is said to a screen
+   reader only, as the clock's purpose is. */
+.narrow .unlabelled {
+  grid-template-areas:
+    'tag meta clock'
+    'main main clock';
+}
+
+.narrow .untagged.unlabelled {
+  grid-template-areas:
+    'meta meta clock'
+    'main main clock';
+}
+
+.narrow .unlabelled .meta {
+  min-height: 0;
+  margin-top: 0;
 }
 
 .phone .answer {

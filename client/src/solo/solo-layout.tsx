@@ -20,6 +20,7 @@ import {
   SHORT_WINDOW,
   useMediaQuery,
 } from '../shell/use-media-query';
+import { focusQuietly } from '../shell/quiet-focus';
 import { useStartFocus } from '../shell/use-start-focus';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
@@ -72,10 +73,10 @@ const TABBABLE = ['button:not(:disabled)', 'input:not(:disabled)', 'a[href]']
  * or the first control by it.
  */
 function focusStage(stage: HTMLElement | null) {
-  (
+  const target =
     stage?.querySelector<HTMLElement>('[data-start-focus]') ??
-    stage?.querySelector<HTMLElement>(TABBABLE)
-  )?.focus();
+    stage?.querySelector<HTMLElement>(TABBABLE);
+  if (target) focusQuietly(target);
 }
 
 /**
@@ -83,10 +84,10 @@ function focusStage(stage: HTMLElement | null) {
  * it (MS02-MS05, T02-T05, PR02-PR04), or under it from 1023 px down. A
  * finished game's result leads the cards, so the board never moves; on one
  * column it comes before the board instead, so its actions are in sight.
- * When a game ends the result's title takes the focus, and when the next
- * game starts, from Play again or a change of settings, the board's first
- * control does: the button pressed has gone. There is
- * no seat, so Leave goes back to the game's page, where the game can be
+ * When a game ends the result's title takes the focus, with no ring until a
+ * key (`focusQuietly`), and when the next game starts, from Play again or a
+ * change of settings, the board's first control does: the button pressed
+ * has gone. There is no seat, so Leave goes back to the game's page, where the game can be
  * started again with other settings; it asks first only with `leaveWarning`.
  * While How to play or that question is open the game's time stands still, and
  * the game is put away so the pause cannot be spent on it.
@@ -134,9 +135,10 @@ export function SoloLayout({
     const was = wasFinished.current;
     wasFinished.current = finished;
     if (finished && !was) {
-      resultBox.current
-        ?.querySelector<HTMLElement>('h1[tabindex="-1"], h2[tabindex="-1"]')
-        ?.focus();
+      const title = resultBox.current?.querySelector<HTMLElement>(
+        'h1[tabindex="-1"], h2[tabindex="-1"]',
+      );
+      if (title) focusQuietly(title);
     } else if (!finished && was && focusLost()) {
       focusStage(stageBox.current);
     }

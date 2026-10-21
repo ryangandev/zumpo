@@ -508,6 +508,17 @@ describe('a game’s page', () => {
 });
 
 describe('making a room', () => {
+  it('lands the focus on the page’s heading, quietly, when it is gone to', async () => {
+    const { router } = await renderApp('/games/minesweeper');
+    expect(document.body).toHaveFocus();
+
+    // The link pressed has gone with the page it was on.
+    await act(() => router.navigate('/games/minesweeper/new'));
+    const heading = screen.getByRole('heading', { level: 1 });
+    await waitFor(() => expect(heading).toHaveFocus());
+    expect(heading).toHaveAttribute('data-quiet-focus');
+  });
+
   it('creates a room with Chinese fields, board options and validation', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/minesweeper/new', {
