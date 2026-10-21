@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import {
   GomokuBoard,
   GomokuSeat,
@@ -7,6 +7,7 @@ import {
 } from '../ui';
 import { cx } from '../ui/cx';
 import { playColumn } from '../shell/play-board';
+import { SHORT_SCREEN, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
 
 export interface SeatView extends GomokuSeatProps {
@@ -31,6 +32,12 @@ export interface GomokuTableProps {
    * the actions and the seats leave it.
    */
   fill?: boolean;
+  /**
+   * The turn bar, over the table; on a short screen, such as a phone on its
+   * side, it is at the top of the seats' column instead, beside a board as
+   * tall as the window leaves it, so the whole board is in sight.
+   */
+  turn?: ReactNode;
 }
 
 /**
@@ -49,37 +56,72 @@ export function GomokuTable({
   actions,
   phone,
   fill = false,
+  turn,
 }: GomokuTableProps) {
+  const short = useMediaQuery(SHORT_SCREEN);
+  const beside = short && !phone && turn != null && turn !== false;
+  const section = useRef<HTMLElement>(null);
+  useHeightLeft(section, beside);
   return (
-    <section
-      className={cx(
-        styles.table,
-        phone ? styles.phone : styles.panel,
-        playColumn,
-      )}
-    >
-      <div className={cx(styles.game, playColumn)}>
-        <div
-          className={styles.boardBox}
-          data-play-board={fill ? '' : undefined}
-        >
-          <GomokuBoard
-            {...board}
-            size={phone ? 'small' : 'regular'}
-            className={styles.board}
-          />
-        </div>
-        <div className={styles.side}>
-          <div className={styles.seats}>
-            {seats.map(({ key, ...seat }) => (
-              <GomokuSeat key={key} {...seat} compact={phone} />
-            ))}
-            {notice}
-            {note && <p className={styles.note}>{note}</p>}
+    <>
+      {!beside && turn}
+      <section
+        ref={section}
+        className={cx(
+          styles.table,
+          phone ? styles.phone : styles.panel,
+          beside && styles.beside,
+          playColumn,
+        )}
+      >
+        <div className={cx(styles.game, playColumn)}>
+          <div
+            className={styles.boardBox}
+            data-play-board={fill || beside ? '' : undefined}
+          >
+            <GomokuBoard
+              {...board}
+              size={phone ? 'small' : 'regular'}
+              className={styles.board}
+            />
           </div>
-          {actions && <div className={styles.actions}>{actions}</div>}
+          <div className={styles.side}>
+            {beside && turn}
+            <div className={styles.seats}>
+              {seats.map(({ key, ...seat }) => (
+                <GomokuSeat key={key} {...seat} compact={phone || beside} />
+              ))}
+              {notice}
+              {note && <p className={styles.note}>{note}</p>}
+            </div>
+            {actions && <div className={styles.actions}>{actions}</div>}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
+}
+
+/**
+ * Keeps `--height-left` on the table: the window's height below the table's
+ * top, which a board beside its seats is sized to on a short screen.
+ */
+function useHeightLeft(table: { current: HTMLElement | null }, on: boolean) {
+  useLayoutEffect(() => {
+    const element = table.current;
+    if (!element || !on) return;
+    const measure = () => {
+      const top = element.getBoundingClientRect().top + window.scrollY;
+      element.style.setProperty(
+        '--height-left',
+        `${Math.max(0, window.innerHeight - top)}px`,
+      );
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('resize', measure);
+      element.style.removeProperty('--height-left');
+    };
+  }, [table, on]);
 }

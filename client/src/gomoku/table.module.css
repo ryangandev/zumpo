@@ -159,4 +159,50 @@
   .board {
     max-width: calc(100dvh - 2 * var(--zumpo-space-24));
   }
+
+  /* In play, the turn bar, the seats and the actions are a column beside
+     the board, and the board is as tall as the window below the table's
+     top leaves it, less the panel's foot and the page's. */
+  .beside.panel {
+    padding: var(--zumpo-space-12);
+  }
+
+  .beside .game {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--zumpo-space-16);
+  }
+
+  .beside .board {
+    flex: none;
+    width: calc(
+      var(--height-left, 100dvh) - 2 * var(--zumpo-space-12) -
+        var(--zumpo-space-12) - 2 * var(--zumpo-space-1)
+    );
+    max-width: none;
+  }
+
+  .beside .side {
+    flex: 1 1 0;
+    align-self: stretch;
+    justify-content: flex-start;
+    gap: var(--zumpo-space-12);
+  }
+
+  /* The two compact seats side by side, as on a phone. */
+  .beside .seats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--zumpo-space-8);
+  }
+
+  .beside .seats > :not(:nth-child(-n + 2)) {
+    grid-column: 1 / -1;
+  }
+
+  .beside .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
 }

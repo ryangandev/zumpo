@@ -21,7 +21,7 @@ import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
 type Room = RoomOf<GomokuRoomState>;
@@ -38,6 +38,8 @@ export function GomokuRoom() {
   const room = useRoomContext<GomokuRoomState>();
   const { state, playerId, socket, spectating, reconnecting } = room;
   const phone = useMediaQuery(PHONE);
+  // A tap shows the stone first wherever there is no hover to show it.
+  const tapTwice = useMediaQuery(TOUCH) || phone;
   const seconds = useSecondsLeft(
     state.phaseEndsInMs,
     room.receivedAt,
@@ -84,7 +86,7 @@ export function GomokuRoom() {
     pending: sending ?? previewing,
     disabled: !myTurn || sending !== null,
     onPlace: mine && playing ? place : undefined,
-    onPreview: phone
+    onPreview: tapTwice
       ? (point: number) => setPreview({ point, at: state.moves.length })
       : undefined,
     label: m.gomoku.board,
@@ -110,9 +112,7 @@ export function GomokuRoom() {
       }
       stage={
         <>
-          {playing ? (
-            <TurnBar {...turnBar(room, seconds, previewing !== null, m)} />
-          ) : summary ? (
+          {playing ? null : summary ? (
             phone ? (
               <TurnBar {...resultBar(room, summary, m)} />
             ) : (
@@ -130,6 +130,11 @@ export function GomokuRoom() {
           <GomokuTable
             phone={phone}
             fill={phone && (playing || summary !== null)}
+            turn={
+              playing && (
+                <TurnBar {...turnBar(room, seconds, previewing !== null, m)} />
+              )
+            }
             board={board}
             seats={seatsOf(room, phone, m)}
             notice={
@@ -140,11 +145,11 @@ export function GomokuRoom() {
             note={state.colors === null ? m.gomoku.colorsNote : undefined}
             actions={
               playing ? (
-                (phone ? mine !== null : resign) && (
+                (tapTwice ? mine !== null : resign) && (
                   <>
-                    {/* A phone's player always has it, live once a faint
-                        stone is down, so nothing moves when one is. */}
-                    {phone && mine !== null && (
+                    {/* A touch screen's player always has it, live once a
+                        faint stone is down, so nothing moves when one is. */}
+                    {tapTwice && mine !== null && (
                       <Button
                         disabled={previewing === null}
                         onClick={() => {

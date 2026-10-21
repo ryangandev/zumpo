@@ -69,7 +69,7 @@ async function heldStill(input: Locator, state: string) {
 async function onPhone(
   player: (name: string, options?: { phone?: boolean }) => Promise<Page>,
   name: string,
-  size: (typeof SIZES)[number],
+  size: { width: number; height: number },
 ) {
   const page = await player(name, { phone: true });
   await page.setViewportSize(size);
@@ -506,4 +506,23 @@ test('the controls a phone taps often take a thumb', async ({ player }) => {
     const tab = maya.getByRole('tab', { name });
     expect(await takesAThumb(tab), String(name)).toBe(true);
   }
+});
+
+test('a phone on its side shows the whole Gomoku board beside the turn', async ({
+  player,
+}) => {
+  const sam = await onPhone(player, 'Sam', { width: 844, height: 390 });
+  await sam.goto('/games/gomoku/solo');
+  await startSolo(sam);
+  const board = sam.getByRole('grid', { name: 'Gomoku board' });
+  await expect
+    .poll(async () => (await placeOf(board)).inside, { message: 'in sight' })
+    .toBe(true);
+  const turn = (await turnOf(sam).boundingBox())!;
+  const grid = (await board.boundingBox())!;
+  // The turn bar is the compact row, at the top of the column beside it.
+  expect(turn.height).toBeLessThan(80);
+  expect(turn.x).toBeGreaterThan(grid.x + grid.width);
+  // A touch screen shows the stone first; Place stone then places it.
+  await expect(placeStone(sam)).toBeDisabled();
 });

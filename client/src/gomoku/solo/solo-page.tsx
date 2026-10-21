@@ -21,7 +21,7 @@ import { useMessages, type Messages } from '../../i18n';
 import { useSession } from '../../net/session';
 import { initialsOf, toneOf } from '../../players/avatar';
 import { FormPage } from '../../shell/form-page';
-import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import { PHONE, TOUCH, useMediaQuery } from '../../shell/use-media-query';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { GomokuTable, type SeatView } from '../table';
@@ -168,9 +168,13 @@ function SoloBoard({
   const m = useMessages();
   const { name } = useSession();
   const phone = useMediaQuery(PHONE);
+  // A tap shows the stone first, and a second places it, wherever there is
+  // no hover to show it: on a phone, or a touch screen such as one on its
+  // side.
+  const tapTwice = useMediaQuery(TOUCH) || phone;
   const [game, setGame] = useState(() => newGame(picks));
   const [record, setRecord] = useState<LevelRecord | null>(null);
-  // A first tap on a phone, good only on the move it was made on.
+  // A first tap, good only on the move it was made on.
   const [preview, setPreview] = useState<{ point: number; at: number } | null>(
     null,
   );
@@ -251,7 +255,7 @@ function SoloBoard({
       }
       stage={
         <>
-          {game.over ? (
+          {game.over && (
             <SoloResult
               title={
                 youWon(game)
@@ -289,12 +293,15 @@ function SoloBoard({
                 </>
               }
             />
-          ) : (
-            <TurnBar {...turnBar(game, previewing !== null, m)} />
           )}
           <GomokuTable
             phone={phone}
             fill={phone && !game.over}
+            turn={
+              !game.over && (
+                <TurnBar {...turnBar(game, previewing !== null, m)} />
+              )
+            }
             board={{
               stones: boardOf(game.moves),
               last: lastStoneOf(game.moves),
@@ -303,14 +310,14 @@ function SoloBoard({
               pending: previewing,
               disabled: !yours,
               onPlace: place,
-              onPreview: phone
+              onPreview: tapTwice
                 ? (point) => setPreview({ point, at: game.moves.length })
                 : undefined,
               label: m.gomoku.board,
             }}
             seats={seatsOf(game, name, m)}
             actions={
-              phone
+              tapTwice
                 ? // Place stone is always there in a game, live once a faint
                   // stone is down, so nothing moves when one is; the turn bar
                   // says to tap again.
