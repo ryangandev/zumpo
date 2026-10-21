@@ -30,7 +30,7 @@ describe('the words of a reveal', () => {
     });
     expect(
       verdict({ ...ld10, matched: 0, loserId: 'sam', out: true }, asSamZh, zh),
-    ).toBe('叫点不成立，你出局了');
+    ).toBe('Leo 的叫点不成立，你出局了');
   });
 
   it('counts at a glance', () => {
@@ -44,8 +44,12 @@ describe('the words of a reveal', () => {
   });
 
   it('says who was right, to you and to everybody else', () => {
-    expect(verdict(ld10, asMaya, en)).toBe('Leo’s bid stands');
-    expect(verdict(ld10, asLeo, en)).toBe('Your bid stands');
+    expect(verdict(ld10, asMaya, en)).toBe(
+      'Leo’s bid stands, so Sam loses a die',
+    );
+    expect(verdict(ld10, asLeo, en)).toBe(
+      'Your bid stands, so Sam loses a die',
+    );
     expect(revealBar(ld10, asSam, en)).toEqual({
       label: 'You called Liar',
       main: 'Leo’s bid stands',
@@ -68,8 +72,10 @@ describe('the words of a reveal', () => {
       loserId: 'sam',
       out: true,
     };
-    expect(verdict(ld12, asMaya, en)).toBe('a lie, so Sam is out');
-    expect(verdict(ld12, asSam, en)).toBe('a lie, so you are out');
+    expect(verdict(ld12, asMaya, en)).toBe(
+      'Sam’s bid was a lie, so Sam is out',
+    );
+    expect(verdict(ld12, asSam, en)).toBe('Your bid was a lie, so you are out');
     expect(revealBar(ld12, asSam, en)).toMatchObject({
       main: 'Your bid was a lie',
       meta: 'You are out',

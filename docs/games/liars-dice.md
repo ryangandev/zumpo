@@ -104,6 +104,7 @@ Between games the room is in `waiting`.
 
 - **A raise** passes the turn to the next player still in, with a fresh 20 seconds.
 - **Liar** ends the round: the reveal shows every cup, the dice that count (wild ones marked), and who loses a die.
+  The count reads in two lines: how many of the face there were, with the wild ones and the bid ("5 × ⚄ incl. 2 wild ones · bid was five"), then the verdict ("Leo’s bid stands, so Sam loses a die").
   Then everybody rolls again and the next round starts, opened by the player who lost the die (or, if they are out, the next player still in).
 - **Out of time:** Liar is called for you on the bid in front of you; with no bid yet, the lowest bid, **one 2**, is made for you.
   A call rather than the smallest raise, because a raise would be a bet the player never chose, pushed onto whoever comes next, while a call ends the round at once with a real count: a room is never held up by somebody who is not there, and the risk stays with the player who ran out.
@@ -111,6 +112,9 @@ Between games the room is in `waiting`.
 A player who is out stays in the room, watching, and sees no more of the cups than anybody else.
 When a call leaves one player with dice the game ends at once, and the room reopens for a new one.
 That last reveal stays on the table under the results until the next game starts.
+
+Every player reads the table in one order, the turn order starting from themselves: the other cups are whoever bids after you, then the one after them, and your own cup sits below.
+The Players panel lists the same order during a game, you first, and both mark whose turn it is and who is up next; between games the panel ranks by dice left.
 
 ### Places
 
