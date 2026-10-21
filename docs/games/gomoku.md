@@ -47,15 +47,15 @@ A game is about 20 to 40 stones each, and five to ten minutes in a room.
 
 A game on your own needs no room and no server: it runs in the browser, against the computer.
 
-- Pick a **level**, Easy, Medium or Hard, and your **stones**, Black (you move first) or White.
-  The last picks are offered first next time; a first game is Medium, playing Black.
+- Play solo starts a game at once with the last picks, or Medium, playing Black, on a first visit.
+  **Change level**, beside Play again when a game ends, picks the **level**, Easy, Medium or Hard, and your **stones**, Black (you move first) or White (GM02).
 - **Your turn waits for you**: there is no clock on your own.
 - **Take back**, on your turn once you have a stone down, takes back your last stone and the computer's answer to it, as many times as you like, back to the start; Ryan approved it on 2026-10-21 so a newcomer can try again from the mistake.
   A finished game stays as it ended, and a game with take-backs counts like any other.
 - The computer takes about half a second over each move, at least, so every stone can be seen landing, and the turn bar says it is thinking.
   On Black it opens on the centre point.
-- After the game the board stays as it ended, with the winning line drawn, under a result panel: who won and on which move, and your record at that level.
-  **Play again** starts a new game at the same level, with the colours swapped, so black's head start alternates; **Change level** goes back to the picks.
+- After the game the board stays as it ended, with the winning line drawn, and beside it (under it on a phone) the result: who won and on which move, and your record at that level.
+  **Play again** starts a new game at the same level, with the colours swapped, so black's head start alternates; **Change level** opens the picks over the finished board.
 - Your **wins, losses and draws** at each level, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count, and neither does one you resign; resigning is a room's way to save a friend's time, so solo has no Resign: you leave or play on.
 

@@ -32,16 +32,17 @@ A finished hand reads as one expression with only the brackets it needs, such as
 ## On your own
 
 A **run** is ten hands, with no name, no room and no server: it runs in the browser.
+Play solo, or a challenge link, deals the first hand at once.
 
 - The **run time** counts up while a hand is in front of you, and stops for the moment between hands.
   It also stops while **How to play** is open, and the hand is put away behind it until it closes.
 - **Skip** gives up a hand: one way to solve it shows, off the clock, until you press **Next hand** (T13), and 30 seconds are added to the run time.
   The way shown is the one a person would most likely write: whole numbers all along where possible, a 1 multiplied in last rather than mid-sum, then the shortest.
 - A solved hand shows **24! Nice.** and the next one follows a moment later.
-- After the tenth hand: the run time, how many hands were solved and skipped, the fastest solved hand, and every hand with how you solved it (or, for a skipped one, a way to).
+- After the tenth hand every hand stays where the table was, with how you solved it (or, for a skipped one, a way to), and beside it (under it on a phone): the run time, how many hands were solved and skipped, and the fastest solved hand.
 - The best run time is kept **on this device** (in `localStorage`), with the best of each of the last few days.
 
-**Challenge a friend** copies a link to the same ten hands (`/games/make-24/solo?seed=k3f9x2`).
+**Challenge a friend**, beside a finished game, has one button, **Copy challenge link**, which copies a link to the same ten hands (`/games/make-24/solo?seed=k3f9x2`).
 A run is dealt from its seed alone, so whoever opens the link plays exactly those hands and can compare times.
 A run without a link gets a new seed, and Play again starts another.
 

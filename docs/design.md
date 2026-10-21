@@ -76,6 +76,11 @@ Decisions from the design review rounds (their reports are in git history):
   A room row says who hosts it only when the room has a name of its own; a default name ("Maya's room") already does.
   Its action column is 168 px on a desktop, as wide as Playing beside Watch, so the player counts of a list line up.
   A game without a solo mode never shows an empty entry: its only way in is Create a room, or a room to join.
+- Play solo starts the game: a board, a run or a table is dealt at once, with the settings last played on this device or the defaults, so a first game is one click.
+  There are no start screens (#105).
+  The settings are on the finished game instead, as Change board, Change level or Change table beside Play again, a Dialog over the board that Play closes into the next game (MS01, PR01, LD01, GM02).
+- Every game on your own ends the same way (#86): the board stays as it ended, the turn bar over it says how it ended, and the side column, or the column under the board on a phone, starts with the result, a `Zumpo/Card` Panel with the outcome, a line of detail, a few stats and the actions.
+  The side column's other cards follow: the best on this device, and Challenge a friend where the game has it, whose one button is Copy challenge link (#107); the progress during play is not repeated there.
   `Zumpo/Game artwork` is the paper panel both draw, one per game and size, so the artwork is drawn once.
 - A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.
   More options, a Quiet button, opens the room's name (the host's by default), its seats (all of them by default) and a password, so Create room is one click away; Ryan asked for this on 2026-10-21.
@@ -165,6 +170,8 @@ Figma draws every screen at 1440 px and at 390 px, and nothing between.
 Code has two breakpoints, both in [`use-media-query.ts`](../client/src/shell/use-media-query.ts): under 1024 px (`ONE_COLUMN`) a room, or a game on your own, is one column, the scoreboard and the chat under the stage and the room bar in its Phone layout, because beside the 344 px side column a narrower window leaves a board less than it needs; at 640 px (`PHONE`) the pages take their phone layouts.
 Between the widths Figma draws, a rigid piece, such as a board of fixed-size cards, the keyboard or the row of dice faces, sits in [`Fit`](../client/src/shell/fit.tsx), which scales it down to the width it is given when it would be wider, every proportion kept; at Figma's widths it is Figma's size.
 Where scaling would hurt, something else gives: a Minesweeper board wider than its panel pans sideways, the drawing toolbar takes two lines under the 898 px Desktop stage, the word choices share the sheet's width and wrap, and a tag's words end in an ellipsis.
+Beside the side column, a board played with its keys on its own page (Daily Word's and Code Breaker's, a Minesweeper board, a Gomoku table) is scaled the same way to the window's height by `useFitHeight` in [`fit-height.ts`](../client/src/shell/fit-height.ts), so the last row, Enter and the bottom of the board are in view without scrolling down to 1280 × 720, down to half size at most; on one column the page scrolls as it is (#89).
+It only ever shrinks during a game, so the board does not jump when its controls go at the end.
 [The widths spec](../e2e/widths.spec.ts) plays every game and checks, at seven widths from 1280 to 320 px, that nothing reaches out of what holds it.
 
 Figma gives each sample player an avatar tone by hand; code picks one from a hash of the player's name, so a player keeps one colour in the header, the scoreboard and the results, on every screen.
@@ -211,6 +218,11 @@ Code differs from Figma on purpose in a few places:
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game among the seats: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board and the seats stay under it exactly as GM08 draws them.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
+- Games on your own start at once and end beside the board (#105, #86, #107), which the Figma file does not draw yet: the bridge was down when the change was made, so its scripts wait to be run.
+  T01, TS01 and SN01 are start screens no state shows; MS01, PR01, LD01 and GM02 are start pages that code shows as the Change dialog over a finished game.
+  The end screens (MS04, T05, PR04, TS04, SN04, LD05, LD06, GM05, GM06, DW04 to DW06, CB06 to CB08) keep the board, with the result as the side column's first card and one Copy challenge link.
+  Trios and Snap show their start screens' example, "What makes a trio" and "What makes a match", in the side column while you play (TS02, SN02).
+- A board scaled to the window's height (#89) is smaller than Figma's in a window shorter than its frame: Figma draws each screen at one height.
 
 ## Editing the Figma file
 

@@ -123,7 +123,8 @@ After the daily word, **Practice word** starts extra words, one at a time, as ma
 
 - A practice word is dealt from a **seed**, like Make 24's runs and Pairs' decks: the seed alone picks one word from the answer list.
 - It plays exactly like the daily word, and keeps no stats and no streak: practice is practice.
-- When it ends: found in _n_ or missed, with the word; **Another word** deals a new seed; **Challenge a friend** copies the result grid with a link to the same word (`/games/daily-word/solo?seed=k3f9x2`); and **Today's word** goes back to the daily result.
+- When it ends the board stays, as the daily word's does, and beside it: found in _n_ or missed, with the word; **Another word** deals a new seed, and **Today's word** goes back to the daily result.
+  Under them, **Challenge a friend** shows the marks of each guess and one button, **Copy challenge link**, which copies the result grid with a link to the same word (`/games/daily-word/solo?seed=k3f9x2`).
 - Whoever opens a challenge link plays that word straight away, whether or not they have played today's.
   A practice word lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 

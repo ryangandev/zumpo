@@ -88,17 +88,17 @@ A **run** is **thirty cards** against one clock, with no name, no room and no se
 You start with one card; the other thirty come up as the middle card one at a time.
 Thirty is about a minute and a half for somebody quick, and three minutes for somebody learning.
 
-- The start screen shows the run and your best; the cards are dealt and the **run time** starts on Start, so nobody studies the first card before the clock runs.
+- Play solo, or a challenge link, deals the cards and starts the **run time** at once; there is no start screen, so nobody studies the first card before the clock runs.
   For the same reason the run time stops while **How to play** is open, and the cards are put away behind it until it closes.
 - **A match** shows on both cards for a moment (0.5 s, off the clock); then the middle card becomes your card, and the next card comes up.
 - **Not a match:** the symbol shows as wrong for a moment (0.6 s), and **3 seconds** go on the clock.
   Which card the symbol is on stays in the turn bar until the next tap.
   Guessing among six symbols costs about 7.5 seconds a card, so looking is always faster.
-- After the thirtieth card: the run time, the wrong taps with what they cost, the fastest card and the slowest card.
+- After the thirtieth card the last two cards stay, and beside them (under them on a phone): the run time, the wrong taps with what they cost, the fastest card and the slowest card.
 - **The quicker run time is better.**
   The best is kept **on this device** (in `localStorage`), with the best of each of the last few days, as Trios keeps them.
 
-**Challenge a friend** copies a link to the same deck (`/games/snap/solo?seed=k3f9x2`).
+**Challenge a friend**, beside a finished game, has one button, **Copy challenge link**, which copies a link to the same deck (`/games/snap/solo?seed=k3f9x2`).
 Whoever opens it gets the same cards in the same order, and can compare times.
 A run without a link gets a new seed, and Play again starts another.
 

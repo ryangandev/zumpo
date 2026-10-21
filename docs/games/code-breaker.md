@@ -139,7 +139,8 @@ After the daily code, **Practice code** starts extra codes, one at a time, as ma
 
 - A practice code is dealt from a **seed**, like Daily Word's practice words: the seed alone picks one of the 5,040 codes.
 - It plays exactly like the daily code, and keeps no stats and no streak.
-- When it ends: cracked in _n_ or missed, with the code; **Another code** deals a new seed; **Challenge a friend** copies the result grid with a link to the same code (`/games/code-breaker/solo?seed=k3f9x2`); and **Today's code** goes back to the daily result.
+- When it ends the board stays, as the daily code's does, and beside it: cracked in _n_ or missed, with the code; **Another code** deals a new seed, and **Today's code** goes back to the daily result.
+  Under them, **Challenge a friend** shows the marks of each guess and one button, **Copy challenge link**, which copies the result grid with a link to the same code (`/games/code-breaker/solo?seed=k3f9x2`).
 - Whoever opens a challenge link plays that code straight away, whether or not they have played today's.
   A practice code lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 

@@ -62,7 +62,8 @@ One die is lost a round, so a game is at most one round fewer than the dice on t
 
 A game on your own needs no name, no room and no server: it runs in the browser, against bots.
 
-- Pick how many bots (1 to 5) and how many dice each (3 or 5); the last picks are offered first next time, and a first game is 3 bots with 3 dice.
+- Play solo sits you down at once at the last table played, or 3 bots with 3 dice each on a first visit.
+  **Change table**, beside Play again when a game ends, picks how many bots (1 to 5) and how many dice each (3 or 5) (LD01).
 - The bots are **Pip, Juno, Otto, Remy and Wren**; a game with fewer takes some of them at random.
   Everybody, you included, sits in a random order, and a random player opens the first round.
 - **Your turn waits for you**: there is no clock on your own.
