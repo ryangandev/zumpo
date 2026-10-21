@@ -289,7 +289,7 @@ function CodeArtwork() {
       {[...'407'].map((digit) => (
         <DigitTile key={digit} digit={digit} state="guessed" size="regular" />
       ))}
-      <CodeMarks />
+      <CodeMarks mark={{ right: 1, moved: 2 }} decorative />
     </div>
   );
 }
