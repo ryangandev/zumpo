@@ -31,10 +31,10 @@ This is **freestyle** Gomoku: an overline of six or more wins too, and black has
 Renju's restrictions on black (no double three, no double four, no overline) and the tournament openings that balance the first move are the part a newcomer cannot see coming: a move that looks fine is suddenly illegal.
 Black's head start is real but small at this level, and rooms take turns at it instead (see [rematches](#a-rematch)).
 
-The **winning line** is drawn through the five (or more) stones that made it, and every stone in it is marked.
+The **winning line** is drawn through the five (or more) stones that made it, a coral bar from the first stone to the last, and every stone in it is ringed in coral.
 One move can finish two lines at once; then both are drawn.
 
-The **last stone placed** carries a small marker, so after a glance away you can see where the other player went.
+The **last stone placed** carries a small coral dot, so after a glance away you can see where the other player went.
 
 ### Nothing else to learn
 
@@ -199,4 +199,5 @@ Planned, before the code exists:
 | [`gomoku/room.tsx`](../../client/src/gomoku/room.tsx)         | A room's screens                                                              |
 
 The rules will be covered by `gomoku-rules.test.ts` and `gomoku-flow.test.ts` in `server/tests/`, and the computer by tests that it plays a five, blocks a four, and at Hard finds a forced win by fours.
-The screens are GM01-GM16 in [the Figma file](../design.md), section 14, with the board's pieces in Shared pieces' Gomoku pieces.
+The screens are GM01-GM21 in [the Figma file](../design.md), section 14: the game page (GM01, GM20), solo (GM02-GM06, GM17), a room (GM07-GM16, GM18, GM19) and every state a point can show (GM21).
+Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus`, `Zumpo/Gomoku seat` and `Zumpo/Gomoku artwork`.
