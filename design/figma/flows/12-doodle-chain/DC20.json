@@ -1,0 +1,482 @@
+{
+  "format": 1,
+  "code": "DC20",
+  "title": "Phone · the album after the game",
+  "id": "162:103558",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC20 · The album on a phone, a guest’s view: chains picked by whose they are, waiting for Maya to play again."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:103558",
+    "name": "DC20 / Phone · the album after the game",
+    "x": 5320,
+    "y": 4082,
+    "w": 390,
+    "h": 1246,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:103559",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Doodle Chain"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Game over",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Sand"
+            },
+            "height": 32,
+            "width": 32
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:103560",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          },
+          {
+            "path": "Status / Board",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:10340",
+                    "toName": "MO09 / Guesser · canvas & guess input"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Players · 4",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13463",
+                    "toName": "MO15 / Room · players tab"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Chat",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13517",
+                    "toName": "MO16 / Room · chat tab"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103662",
+        "name": "Album panel",
+        "w": 350,
+        "h": 1002,
+        "wSize": "fill",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:103663",
+            "name": "Result",
+            "w": 316,
+            "h": 74,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:103664",
+                "name": "Title",
+                "w": 217,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "That’s every chain.",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103665",
+                "name": "Summary",
+                "w": 316,
+                "h": 36,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Leo’s hamburger is the crowd favourite, with 3 hearts. Waiting for Maya to start another game.",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103666",
+            "name": "Chains",
+            "w": 316,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "wrap": true,
+              "crossGap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:103667",
+                "name": "Chain / Maya",
+                "w": 122,
+                "h": 38,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Filter chip",
+                "variant": {
+                  "State": "Selected"
+                },
+                "componentId": "90:107175",
+                "props": {
+                  "Label": "Maya’s chain"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 38,
+                    "width": 122
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:103669",
+                "name": "Chain / Ryan",
+                "w": 119,
+                "h": 38,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Filter chip",
+                "variant": {
+                  "State": "Default"
+                },
+                "componentId": "90:107171",
+                "props": {
+                  "Label": "Ryan’s chain"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 38,
+                    "width": 119
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:103671",
+                "name": "Chain / Leo",
+                "w": 110,
+                "h": 38,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Filter chip",
+                "variant": {
+                  "State": "Default"
+                },
+                "componentId": "90:107171",
+                "props": {
+                  "Label": "Leo’s chain"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 38,
+                    "width": 110
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:103673",
+                "name": "Chain / Sam",
+                "w": 116,
+                "h": 38,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Filter chip",
+                "variant": {
+                  "State": "Default"
+                },
+                "componentId": "90:107171",
+                "props": {
+                  "Label": "Sam’s chain"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 38,
+                    "width": 116
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103675",
+            "name": "Entry / Maya",
+            "w": 316,
+            "h": 108,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Prompt",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66111",
+            "props": {
+              "Heart": false
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 108,
+                "width": 316
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103693",
+            "name": "Entry / Ryan",
+            "w": 316,
+            "h": 251,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Drawing",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66129",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 251,
+                "width": 316
+              },
+              {
+                "path": "Body / Head / Heart",
+                "componentProperties": {
+                  "Count": "2",
+                  "State": "Count"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103729",
+            "name": "Entry / Leo",
+            "w": 316,
+            "h": 120,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Description",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66163",
+            "props": {
+              "Favourite": true
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 120,
+                "width": 316
+              },
+              {
+                "path": "Body / Head / Heart",
+                "componentProperties": {
+                  "Count": "3",
+                  "State": "Count"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103749",
+            "name": "Entry / Sam",
+            "w": 316,
+            "h": 251,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Drawing",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66129",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 251,
+                "width": 316
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "SA",
+                  "Tone": "Sand"
+                }
+              },
+              {
+                "path": "Body / Head / Who / Name",
+                "characters": "Sam"
+              },
+              {
+                "path": "Body / Head / Heart",
+                "componentProperties": {
+                  "Count": "1",
+                  "State": "Count"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103565",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:103566",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,655 @@
+{
+  "format": 1,
+  "code": "DC13",
+  "title": "Reveal · a guest gives a heart",
+  "id": "162:95749",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC13 · A guest’s view: Sam gives his one heart for this chain to Ryan’s drawing (pressing another entry moves it). His own entry shows only its count. During the reveal, scores are hearts received."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:95749",
+    "name": "DC13 / Reveal · a guest gives a heart",
+    "x": 40,
+    "y": 4082,
+    "w": 1440,
+    "h": 1339,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:95750",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Doodle Chain"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Reveal",
+              "Tone": "Lime"
+            },
+            "height": 30,
+            "width": 61
+          },
+          {
+            "path": "Action / Leave room",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:95751",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 1169,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:95752",
+            "name": "Board stage",
+            "w": 944,
+            "h": 1169,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:95753",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "4 of 4 shown",
+                  "Label": "Reveal · chain 1 of 4",
+                  "Main": "Maya’s chain",
+                  "Category": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Label": "flip back",
+                      "Time": "00:02",
+                      "Tone": "Waiting"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:95827",
+                "name": "Reveal panel",
+                "w": 944,
+                "h": 1061,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:95956",
+                    "name": "Chain",
+                    "w": 640,
+                    "h": 910,
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/20",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:95828",
+                        "name": "Entry / Maya",
+                        "w": 640,
+                        "h": 92,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/Chain entry",
+                        "variant": {
+                          "Kind": "Prompt",
+                          "Layout": "Desktop"
+                        },
+                        "componentId": "162:66025",
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 92,
+                            "width": 640
+                          },
+                          {
+                            "path": "Body / Head / Heart",
+                            "componentProperties": {
+                              "Count": "0",
+                              "State": "Off"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:95846",
+                        "name": "Entry / Ryan",
+                        "w": 640,
+                        "h": 337,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/Chain entry",
+                        "variant": {
+                          "Kind": "Drawing",
+                          "Layout": "Desktop"
+                        },
+                        "componentId": "162:66043",
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 337,
+                            "width": 640
+                          },
+                          {
+                            "path": "Body / Head / Heart",
+                            "componentProperties": {
+                              "Count": "2",
+                              "State": "On"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:95882",
+                        "name": "Entry / Leo",
+                        "w": 640,
+                        "h": 94,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/Chain entry",
+                        "variant": {
+                          "Kind": "Description",
+                          "Layout": "Desktop"
+                        },
+                        "componentId": "162:66077",
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 94,
+                            "width": 640
+                          },
+                          {
+                            "path": "Body / Head / Heart",
+                            "componentProperties": {
+                              "Count": "2",
+                              "State": "Off"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:95900",
+                        "name": "Entry / Sam",
+                        "w": 640,
+                        "h": 327,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/Chain entry",
+                        "variant": {
+                          "Kind": "Drawing",
+                          "Layout": "Desktop"
+                        },
+                        "componentId": "162:66043",
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 327,
+                            "width": 640
+                          },
+                          {
+                            "path": "Avatar",
+                            "componentProperties": {
+                              "Initials": "SA",
+                              "Tone": "Sand"
+                            }
+                          },
+                          {
+                            "path": "Body / Head / Who / Name",
+                            "characters": "Sam"
+                          },
+                          {
+                            "path": "Body / Head / Heart",
+                            "componentProperties": {
+                              "Count": "1",
+                              "State": "Count"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:95957",
+                    "name": "Divider",
+                    "w": 894,
+                    "h": 1,
+                    "wSize": "fill",
+                    "fills": [
+                      "$Zumpo · UI:color/line"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:95958",
+                    "name": "Notice",
+                    "w": 894,
+                    "h": 52,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Notice",
+                    "variant": {
+                      "Tone": "Pending"
+                    },
+                    "componentId": "9:239",
+                    "props": {
+                      "Message": "Maya is showing the chains. Ryan’s chain is next."
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 52,
+                        "width": 894
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:95770",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 604,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:95771",
+                "name": "Zumpo/Scoreboard",
+                "w": 344,
+                "h": 304,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": "Heading / Count",
+                    "characters": "4 / 8"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": true,
+                      "Status": "Showing the chains",
+                      "Host": true,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "120:116984",
+                      "Name": "Maya",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": true,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "2",
+                      "Icon": "24:5075",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": true,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "2",
+                      "Icon": "24:5075",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": true,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": true,
+                      "Score": "1",
+                      "Icon": "24:5075",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 5",
+                    "componentProperties": {
+                      "Icon": "24:5053",
+                      "Show score": false,
+                      "Status icon": true,
+                      "You": false,
+                      "Name": "Maya",
+                      "Status": "Drawing",
+                      "Host": true,
+                      "Score": "460",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 6",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "320",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 7",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "240",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 8",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "180",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:95772",
+                "name": "Zumpo/Chat",
+                "w": 344,
+                "h": 276,
+                "hSize": "hug",
+                "component": "Zumpo/Chat",
+                "componentId": "9:334",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 276,
+                    "width": 344
+                  },
+                  {
+                    "path": "Messages / Message 1",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "my drawing was perfect",
+                      "Name": "Ryan",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 2",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "A HAMBURGER",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 3",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "it was a turtle!!",
+                      "Name": "Maya",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "on a skateboard???",
+                      "Name": "Sam",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 5",
+                    "visible": false
+                  },
+                  {
+                    "path": "Messages / Message 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Chat input",
+                    "componentProperties": {
+                      "Placeholder": "Say something…",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:95773",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:95774",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:95775",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

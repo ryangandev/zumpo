@@ -1,0 +1,643 @@
+{
+  "format": 1,
+  "name": "Zumpo/Stone",
+  "id": "162:62894",
+  "type": "COMPONENT_SET",
+  "key": "d62e979e985ad2acc1026bf064d7adb1e76e6a90",
+  "properties": {
+    "Color": {
+      "type": "variant",
+      "default": "Black",
+      "options": [
+        "Black",
+        "White"
+      ]
+    },
+    "Mark": {
+      "type": "variant",
+      "default": "None",
+      "options": [
+        "None",
+        "Last",
+        "Win"
+      ]
+    },
+    "State": {
+      "type": "variant",
+      "default": "Placed",
+      "options": [
+        "Placed",
+        "Ghost"
+      ]
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Color=Black, Mark=None, State=Placed, Size=Regular",
+  "variants": [
+    {
+      "name": "Color=Black, Mark=None, State=Placed, Size=Regular",
+      "id": "162:62874",
+      "props": {
+        "Color": "Black",
+        "Mark": "None",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62874",
+        "name": "Color=Black, Mark=None, State=Placed, Size=Regular",
+        "x": 24,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=Black, Mark=Last, State=Placed, Size=Regular",
+      "id": "162:62875",
+      "props": {
+        "Color": "Black",
+        "Mark": "Last",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62875",
+        "name": "Color=Black, Mark=Last, State=Placed, Size=Regular",
+        "x": 80,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62876",
+            "name": "Last move",
+            "w": "$Zumpo · UI:space/10",
+            "h": "$Zumpo · UI:space/10",
+            "component": "Zumpo/Last move marker",
+            "variant": {
+              "Size": "Regular"
+            },
+            "componentId": "162:62871"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Color=Black, Mark=Win, State=Placed, Size=Regular",
+      "id": "162:62877",
+      "props": {
+        "Color": "Black",
+        "Mark": "Win",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62877",
+        "name": "Color=Black, Mark=Win, State=Placed, Size=Regular",
+        "x": 136,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=Black, Mark=None, State=Ghost, Size=Regular",
+      "id": "162:62878",
+      "props": {
+        "Color": "Black",
+        "Mark": "None",
+        "State": "Ghost",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62878",
+        "name": "Color=Black, Mark=None, State=Ghost, Size=Regular",
+        "x": 192,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=None, State=Placed, Size=Regular",
+      "id": "162:62879",
+      "props": {
+        "Color": "White",
+        "Mark": "None",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62879",
+        "name": "Color=White, Mark=None, State=Placed, Size=Regular",
+        "x": 248,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=Last, State=Placed, Size=Regular",
+      "id": "162:62880",
+      "props": {
+        "Color": "White",
+        "Mark": "Last",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62880",
+        "name": "Color=White, Mark=Last, State=Placed, Size=Regular",
+        "x": 304,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62881",
+            "name": "Last move",
+            "w": "$Zumpo · UI:space/10",
+            "h": "$Zumpo · UI:space/10",
+            "component": "Zumpo/Last move marker",
+            "variant": {
+              "Size": "Regular"
+            },
+            "componentId": "162:62871"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Color=White, Mark=Win, State=Placed, Size=Regular",
+      "id": "162:62882",
+      "props": {
+        "Color": "White",
+        "Mark": "Win",
+        "State": "Placed",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62882",
+        "name": "Color=White, Mark=Win, State=Placed, Size=Regular",
+        "x": 360,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "strokeWeight": 3,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=None, State=Ghost, Size=Regular",
+      "id": "162:62883",
+      "props": {
+        "Color": "White",
+        "Mark": "None",
+        "State": "Ghost",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62883",
+        "name": "Color=White, Mark=None, State=Ghost, Size=Regular",
+        "x": 416,
+        "y": 24,
+        "w": "$Zumpo · UI:space/32",
+        "h": "$Zumpo · UI:space/32",
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=Black, Mark=None, State=Placed, Size=Small",
+      "id": "162:62884",
+      "props": {
+        "Color": "Black",
+        "Mark": "None",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62884",
+        "name": "Color=Black, Mark=None, State=Placed, Size=Small",
+        "x": 24,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=Black, Mark=Last, State=Placed, Size=Small",
+      "id": "162:62885",
+      "props": {
+        "Color": "Black",
+        "Mark": "Last",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62885",
+        "name": "Color=Black, Mark=Last, State=Placed, Size=Small",
+        "x": 66,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62886",
+            "name": "Last move",
+            "w": "$Zumpo · UI:space/6",
+            "h": "$Zumpo · UI:space/6",
+            "component": "Zumpo/Last move marker",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62872"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Color=Black, Mark=Win, State=Placed, Size=Small",
+      "id": "162:62887",
+      "props": {
+        "Color": "Black",
+        "Mark": "Win",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62887",
+        "name": "Color=Black, Mark=Win, State=Placed, Size=Small",
+        "x": 108,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=Black, Mark=None, State=Ghost, Size=Small",
+      "id": "162:62888",
+      "props": {
+        "Color": "Black",
+        "Mark": "None",
+        "State": "Ghost",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62888",
+        "name": "Color=Black, Mark=None, State=Ghost, Size=Small",
+        "x": 150,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=None, State=Placed, Size=Small",
+      "id": "162:62889",
+      "props": {
+        "Color": "White",
+        "Mark": "None",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62889",
+        "name": "Color=White, Mark=None, State=Placed, Size=Small",
+        "x": 192,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=Last, State=Placed, Size=Small",
+      "id": "162:62890",
+      "props": {
+        "Color": "White",
+        "Mark": "Last",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62890",
+        "name": "Color=White, Mark=Last, State=Placed, Size=Small",
+        "x": 234,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62891",
+            "name": "Last move",
+            "w": "$Zumpo · UI:space/6",
+            "h": "$Zumpo · UI:space/6",
+            "component": "Zumpo/Last move marker",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62872"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Color=White, Mark=Win, State=Placed, Size=Small",
+      "id": "162:62892",
+      "props": {
+        "Color": "White",
+        "Mark": "Win",
+        "State": "Placed",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62892",
+        "name": "Color=White, Mark=Win, State=Placed, Size=Small",
+        "x": 276,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    },
+    {
+      "name": "Color=White, Mark=None, State=Ghost, Size=Small",
+      "id": "162:62893",
+      "props": {
+        "Color": "White",
+        "Mark": "None",
+        "State": "Ghost",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62893",
+        "name": "Color=White, Mark=None, State=Ghost, Size=Small",
+        "x": 318,
+        "y": 80,
+        "w": "$Zumpo · UI:space/18",
+        "h": "$Zumpo · UI:space/18",
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        }
+      }
+    }
+  ]
+}

@@ -17,6 +17,7 @@ import { MinesweeperRoom } from '../minesweeper/room';
 import { Make24Room } from '../make-24/room';
 import { PairsRoom } from '../pairs/room';
 import { TriosRoom } from '../trios/room';
+import { SnapRoom } from '../snap/room';
 import { LiarsDiceRoom } from '../liars-dice/room';
 import { HushRoom } from '../hush/room';
 import { useSession } from '../net/session';
@@ -429,6 +430,8 @@ function SeatedRoom({
         <PairsRoom />
       ) : state.gameType === 'trios' ? (
         <TriosRoom />
+      ) : state.gameType === 'snap' ? (
+        <SnapRoom />
       ) : state.gameType === 'hush' ? (
         <HushRoom />
       ) : (

@@ -17,7 +17,11 @@
         "Trios",
         "Liar’s Dice",
         "Hush",
-        "Daily Word"
+        "Daily Word",
+        "Snap",
+        "Doodle Chain",
+        "Gomoku",
+        "Code Breaker"
       ]
     },
     "Layout": {
@@ -3419,7 +3423,7 @@
         "type": "COMPONENT",
         "id": "124:119873",
         "name": "Game=Draw & Guess, Layout=Tile, State=Hover",
-        "x": 3096,
+        "x": 4592,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -3628,7 +3632,7 @@
         "type": "COMPONENT",
         "id": "124:119883",
         "name": "Game=Minesweeper, Layout=Tile, State=Hover",
-        "x": 3430,
+        "x": 4926,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -3861,7 +3865,7 @@
         "type": "COMPONENT",
         "id": "124:119894",
         "name": "Game=Make 24, Layout=Tile, State=Hover",
-        "x": 3764,
+        "x": 5260,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -4094,7 +4098,7 @@
         "type": "COMPONENT",
         "id": "124:119905",
         "name": "Game=Pairs, Layout=Tile, State=Hover",
-        "x": 4098,
+        "x": 5594,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -4327,7 +4331,7 @@
         "type": "COMPONENT",
         "id": "124:119916",
         "name": "Game=Trios, Layout=Tile, State=Hover",
-        "x": 4432,
+        "x": 5928,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -4560,7 +4564,7 @@
         "type": "COMPONENT",
         "id": "124:119927",
         "name": "Game=Liar’s Dice, Layout=Tile, State=Hover",
-        "x": 4766,
+        "x": 6262,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -4793,7 +4797,7 @@
         "type": "COMPONENT",
         "id": "124:119938",
         "name": "Game=Hush, Layout=Tile, State=Hover",
-        "x": 5100,
+        "x": 6596,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -5002,7 +5006,7 @@
         "type": "COMPONENT",
         "id": "124:119948",
         "name": "Game=Daily Word, Layout=Tile, State=Hover",
-        "x": 5434,
+        "x": 6930,
         "y": 24,
         "w": 310,
         "h": 294,
@@ -5235,7 +5239,7 @@
         "type": "COMPONENT",
         "id": "124:119959",
         "name": "Game=Draw & Guess, Layout=Row, State=Hover",
-        "x": 3096,
+        "x": 4592,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -5435,7 +5439,7 @@
         "type": "COMPONENT",
         "id": "124:119969",
         "name": "Game=Minesweeper, Layout=Row, State=Hover",
-        "x": 3470,
+        "x": 4966,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -5659,7 +5663,7 @@
         "type": "COMPONENT",
         "id": "124:119980",
         "name": "Game=Make 24, Layout=Row, State=Hover",
-        "x": 3844,
+        "x": 5340,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -5883,7 +5887,7 @@
         "type": "COMPONENT",
         "id": "124:119991",
         "name": "Game=Pairs, Layout=Row, State=Hover",
-        "x": 4218,
+        "x": 5714,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -6107,7 +6111,7 @@
         "type": "COMPONENT",
         "id": "124:120002",
         "name": "Game=Trios, Layout=Row, State=Hover",
-        "x": 4592,
+        "x": 6088,
         "y": 366,
         "w": 350,
         "h": 152,
@@ -6331,7 +6335,7 @@
         "type": "COMPONENT",
         "id": "124:120013",
         "name": "Game=Liar’s Dice, Layout=Row, State=Hover",
-        "x": 4966,
+        "x": 6462,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -6555,7 +6559,7 @@
         "type": "COMPONENT",
         "id": "124:120024",
         "name": "Game=Hush, Layout=Row, State=Hover",
-        "x": 5340,
+        "x": 6836,
         "y": 366,
         "w": 350,
         "h": 177,
@@ -6755,7 +6759,7 @@
         "type": "COMPONENT",
         "id": "124:120034",
         "name": "Game=Daily Word, Layout=Row, State=Hover",
-        "x": 5714,
+        "x": 7210,
         "y": 366,
         "w": 350,
         "h": 152,
@@ -6944,6 +6948,3470 @@
                   {
                     "type": "INSTANCE",
                     "id": "124:120044",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Layout=Tile, State=Default",
+      "id": "162:66340",
+      "props": {
+        "Game": "Snap",
+        "Layout": "Tile",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66340",
+        "name": "Game=Snap, Layout=Tile, State=Default",
+        "x": 2696,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66341",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Snap",
+              "Size": "Tile"
+            },
+            "componentId": "162:66216"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66342",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:66343",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Snap",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:66344",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Spot the symbol both cards share.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66345",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66346",
+                "name": "Tags",
+                "w": 148,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66347",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66348",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2–6 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66349",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66350",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Layout=Row, State=Default",
+      "id": "162:66434",
+      "props": {
+        "Game": "Snap",
+        "Layout": "Row",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66434",
+        "name": "Game=Snap, Layout=Row, State=Default",
+        "x": 3016,
+        "y": 366,
+        "w": 350,
+        "h": 152,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:66435",
+            "name": "Top",
+            "w": 316,
+            "h": 118,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:66436",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Snap",
+                  "Size": "Icon"
+                },
+                "componentId": "162:66306"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66437",
+                "name": "Copy",
+                "w": 184,
+                "h": 118,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66438",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Snap",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:66439",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 50,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Spot the symbol both cards share.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:66440",
+                    "name": "Tags",
+                    "w": 148,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66441",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66442",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2–6 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66443",
+                "name": "Go",
+                "w": 20,
+                "h": 118,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66444",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Layout=Tile, State=Hover",
+      "id": "162:66483",
+      "props": {
+        "Game": "Snap",
+        "Layout": "Tile",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66483",
+        "name": "Game=Snap, Layout=Tile, State=Hover",
+        "x": 7264,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66484",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Snap",
+              "Size": "Tile"
+            },
+            "componentId": "162:66216"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66485",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:66486",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Snap",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:66487",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Spot the symbol both cards share.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:66488",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:66489",
+                "name": "Tags",
+                "w": 148,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66490",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66491",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2–6 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66492",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66493",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Layout=Row, State=Hover",
+      "id": "162:66579",
+      "props": {
+        "Game": "Snap",
+        "Layout": "Row",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66579",
+        "name": "Game=Snap, Layout=Row, State=Hover",
+        "x": 7584,
+        "y": 366,
+        "w": 350,
+        "h": 152,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:66580",
+            "name": "Top",
+            "w": 316,
+            "h": 118,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:66581",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Snap",
+                  "Size": "Icon"
+                },
+                "componentId": "162:66306"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66582",
+                "name": "Copy",
+                "w": 184,
+                "h": 118,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:66583",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Snap",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:66584",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 50,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Spot the symbol both cards share.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:66585",
+                    "name": "Tags",
+                    "w": 148,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66586",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:66587",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2–6 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:66588",
+                "name": "Go",
+                "w": 20,
+                "h": 118,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:66589",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Layout=Tile, State=Default",
+      "id": "162:111304",
+      "props": {
+        "Game": "Doodle Chain",
+        "Layout": "Tile",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111304",
+        "name": "Game=Doodle Chain, Layout=Tile, State=Default",
+        "x": 3030,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111305",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Doodle Chain",
+              "Size": "Tile"
+            },
+            "componentId": "162:111257"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111306",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:111307",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Doodle Chain",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:111308",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Write a line, draw it, pass it on, and watch it fall apart.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111309",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:111310",
+                "name": "Tags",
+                "w": 91,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111311",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "3–8 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111312",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111313",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Layout=Row, State=Default",
+      "id": "162:111368",
+      "props": {
+        "Game": "Doodle Chain",
+        "Layout": "Row",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111368",
+        "name": "Game=Doodle Chain, Layout=Row, State=Default",
+        "x": 3390,
+        "y": 366,
+        "w": 350,
+        "h": 177,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111369",
+            "name": "Top",
+            "w": 316,
+            "h": 143,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:111370",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Size": "Icon"
+                },
+                "componentId": "162:111261"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111371",
+                "name": "Copy",
+                "w": 184,
+                "h": 143,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:111372",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Doodle Chain",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:111373",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 75,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Write a line, draw it, pass it on, and watch it fall apart.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:111374",
+                    "name": "Tags",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111375",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "3–8 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111376",
+                "name": "Go",
+                "w": 20,
+                "h": 143,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111377",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Layout=Tile, State=Hover",
+      "id": "162:111416",
+      "props": {
+        "Game": "Doodle Chain",
+        "Layout": "Tile",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111416",
+        "name": "Game=Doodle Chain, Layout=Tile, State=Hover",
+        "x": 7598,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111417",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Doodle Chain",
+              "Size": "Tile"
+            },
+            "componentId": "162:111257"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111418",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:111419",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Doodle Chain",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:111420",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Write a line, draw it, pass it on, and watch it fall apart.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111421",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:111422",
+                "name": "Tags",
+                "w": 91,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111423",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "3–8 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111424",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111425",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Layout=Row, State=Hover",
+      "id": "162:111476",
+      "props": {
+        "Game": "Doodle Chain",
+        "Layout": "Row",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111476",
+        "name": "Game=Doodle Chain, Layout=Row, State=Hover",
+        "x": 7958,
+        "y": 366,
+        "w": 350,
+        "h": 177,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111477",
+            "name": "Top",
+            "w": 316,
+            "h": 143,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:111478",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Size": "Icon"
+                },
+                "componentId": "162:111261"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111479",
+                "name": "Copy",
+                "w": 184,
+                "h": 143,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:111480",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Doodle Chain",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:111481",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 75,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Write a line, draw it, pass it on, and watch it fall apart.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:111482",
+                    "name": "Tags",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111483",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "3–8 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111484",
+                "name": "Go",
+                "w": 20,
+                "h": 143,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111485",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Layout=Tile, State=Default",
+      "id": "162:111524",
+      "props": {
+        "Game": "Gomoku",
+        "Layout": "Tile",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111524",
+        "name": "Game=Gomoku, Layout=Tile, State=Default",
+        "x": 3364,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111525",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Gomoku",
+              "Size": "Tile"
+            },
+            "componentId": "162:111224"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111526",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:111527",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Gomoku",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:111528",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Take turns placing stones. Five in a row wins.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111529",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:111530",
+                "name": "Tags",
+                "w": 133,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111531",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111532",
+                    "name": "Players",
+                    "w": 76,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 76
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111533",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111534",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Layout=Row, State=Default",
+      "id": "162:111605",
+      "props": {
+        "Game": "Gomoku",
+        "Layout": "Row",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111605",
+        "name": "Game=Gomoku, Layout=Row, State=Default",
+        "x": 3764,
+        "y": 366,
+        "w": 350,
+        "h": 177,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111606",
+            "name": "Top",
+            "w": 316,
+            "h": 143,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:111607",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Gomoku",
+                  "Size": "Icon"
+                },
+                "componentId": "162:111245"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111608",
+                "name": "Copy",
+                "w": 184,
+                "h": 143,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:111609",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Gomoku",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:111610",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 75,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Take turns placing stones. Five in a row wins.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:111611",
+                    "name": "Tags",
+                    "w": 133,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111612",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111613",
+                        "name": "Players",
+                        "w": 76,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 76
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111614",
+                "name": "Go",
+                "w": 20,
+                "h": 143,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111615",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Layout=Tile, State=Hover",
+      "id": "162:111657",
+      "props": {
+        "Game": "Gomoku",
+        "Layout": "Tile",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111657",
+        "name": "Game=Gomoku, Layout=Tile, State=Hover",
+        "x": 7932,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111658",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Gomoku",
+              "Size": "Tile"
+            },
+            "componentId": "162:111224"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111659",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:111660",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Gomoku",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:111661",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Take turns placing stones. Five in a row wins.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:111662",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:111663",
+                "name": "Tags",
+                "w": 133,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111664",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111665",
+                    "name": "Players",
+                    "w": 76,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 76
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111666",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111667",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Layout=Row, State=Hover",
+      "id": "162:111738",
+      "props": {
+        "Game": "Gomoku",
+        "Layout": "Row",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111738",
+        "name": "Game=Gomoku, Layout=Row, State=Hover",
+        "x": 8332,
+        "y": 366,
+        "w": 350,
+        "h": 177,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111739",
+            "name": "Top",
+            "w": 316,
+            "h": 143,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:111740",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Gomoku",
+                  "Size": "Icon"
+                },
+                "componentId": "162:111245"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111741",
+                "name": "Copy",
+                "w": 184,
+                "h": 143,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:111742",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Gomoku",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:111743",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 75,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Take turns placing stones. Five in a row wins.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:111744",
+                    "name": "Tags",
+                    "w": 133,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111745",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:111746",
+                        "name": "Players",
+                        "w": 76,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 76
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:111747",
+                "name": "Go",
+                "w": 20,
+                "h": 143,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:111748",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Layout=Tile, State=Default",
+      "id": "162:113181",
+      "props": {
+        "Game": "Code Breaker",
+        "Layout": "Tile",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113181",
+        "name": "Game=Code Breaker, Layout=Tile, State=Default",
+        "x": 3698,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:113182",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Code Breaker",
+              "Size": "Tile"
+            },
+            "componentId": "162:113170"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113183",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:113184",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Code Breaker",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:113185",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Four digits, ten guesses. A new code every day.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113186",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:113187",
+                "name": "Tags",
+                "w": 148,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113188",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113189",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2–8 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113190",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113191",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Layout=Row, State=Default",
+      "id": "162:113235",
+      "props": {
+        "Game": "Code Breaker",
+        "Layout": "Row",
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113235",
+        "name": "Game=Code Breaker, Layout=Row, State=Default",
+        "x": 4138,
+        "y": 366,
+        "w": 350,
+        "h": 152,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:113236",
+            "name": "Top",
+            "w": 316,
+            "h": 118,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:113237",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Code Breaker",
+                  "Size": "Icon"
+                },
+                "componentId": "162:113175"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113238",
+                "name": "Copy",
+                "w": 184,
+                "h": 118,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:113239",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Code Breaker",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:113240",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 50,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Four digits, ten guesses. A new code every day.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:113241",
+                    "name": "Tags",
+                    "w": 148,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:113242",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:113243",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2–8 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113244",
+                "name": "Go",
+                "w": 20,
+                "h": 118,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113245",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Layout=Tile, State=Hover",
+      "id": "162:113274",
+      "props": {
+        "Game": "Code Breaker",
+        "Layout": "Tile",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113274",
+        "name": "Game=Code Breaker, Layout=Tile, State=Hover",
+        "x": 8266,
+        "y": 24,
+        "w": 310,
+        "h": 294,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:113275",
+            "name": "Artwork",
+            "w": 276,
+            "h": 112,
+            "wSize": "fill",
+            "component": "Zumpo/Game artwork",
+            "variant": {
+              "Game": "Code Breaker",
+              "Size": "Tile"
+            },
+            "componentId": "162:113170"
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113276",
+            "name": "Copy",
+            "w": 276,
+            "h": 84,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:113277",
+                "name": "Name",
+                "w": 276,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Code Breaker",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:113278",
+                "name": "Tagline",
+                "w": 276,
+                "h": 50,
+                "wSize": "fill",
+                "text": "Four digits, ten guesses. A new code every day.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "none"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113279",
+            "name": "Footer",
+            "w": 276,
+            "h": 40,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:113280",
+                "name": "Tags",
+                "w": 148,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113281",
+                    "name": "Solo",
+                    "w": 49,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "Solo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 49
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113282",
+                    "name": "Players",
+                    "w": 91,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Tag",
+                    "variant": {
+                      "Tone": "Paper"
+                    },
+                    "componentId": "24:6531",
+                    "props": {
+                      "Label": "2–8 players"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 30,
+                        "width": 91
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113283",
+                "name": "Go",
+                "w": 40,
+                "h": 40,
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/999",
+                "layout": {
+                  "mode": "row",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113284",
+                    "name": "Icon / forward",
+                    "w": 20,
+                    "h": 20,
+                    "component": "Zumpo/Icon",
+                    "variant": {
+                      "Glyph": "forward"
+                    },
+                    "componentId": "120:116984",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 20,
+                        "width": 20
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Layout=Row, State=Hover",
+      "id": "162:113315",
+      "props": {
+        "Game": "Code Breaker",
+        "Layout": "Row",
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113315",
+        "name": "Game=Code Breaker, Layout=Row, State=Hover",
+        "x": 8706,
+        "y": 366,
+        "w": 350,
+        "h": 152,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B2514",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Paper lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:113316",
+            "name": "Top",
+            "w": 316,
+            "h": 118,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:113317",
+                "name": "Icon",
+                "w": 80,
+                "h": 80,
+                "component": "Zumpo/Game artwork",
+                "variant": {
+                  "Game": "Code Breaker",
+                  "Size": "Icon"
+                },
+                "componentId": "162:113175"
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113318",
+                "name": "Copy",
+                "w": 184,
+                "h": 118,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:113319",
+                    "name": "Name",
+                    "w": 184,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Code Breaker",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:113320",
+                    "name": "Tagline",
+                    "w": 184,
+                    "h": 50,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Four digits, ten guesses. A new code every day.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:113321",
+                    "name": "Tags",
+                    "w": 148,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:113322",
+                        "name": "Solo",
+                        "w": 49,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "Solo"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 49
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:113323",
+                        "name": "Players",
+                        "w": 91,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Paper"
+                        },
+                        "componentId": "24:6531",
+                        "props": {
+                          "Label": "2–8 players"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 91
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:113324",
+                "name": "Go",
+                "w": 20,
+                "h": 118,
+                "wSize": "hug",
+                "hSize": "fill",
+                "layout": {
+                  "mode": "row",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:113325",
                     "name": "Icon / forward",
                     "w": 20,
                     "h": 20,

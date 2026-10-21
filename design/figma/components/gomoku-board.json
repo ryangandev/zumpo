@@ -1,0 +1,956 @@
+{
+  "format": 1,
+  "name": "Zumpo/Gomoku board",
+  "id": "162:62975",
+  "type": "COMPONENT_SET",
+  "key": "635b5af35325b87b459660cfb4a06d4f985bbad7",
+  "properties": {
+    "Layout": {
+      "type": "variant",
+      "default": "Desktop",
+      "options": [
+        "Desktop",
+        "Phone"
+      ]
+    }
+  },
+  "defaultVariant": "Layout=Desktop",
+  "variants": [
+    {
+      "name": "Layout=Desktop",
+      "id": "162:62901",
+      "props": {
+        "Layout": "Desktop"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62901",
+        "name": "Layout=Desktop",
+        "x": 24,
+        "y": 24,
+        "w": 564,
+        "h": 564,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "layout": {
+          "mode": "column",
+          "pad": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:62902",
+            "name": "Grid",
+            "w": 540,
+            "h": 540,
+            "children": [
+              {
+                "type": "RECTANGLE",
+                "id": "162:62903",
+                "name": "Row 15",
+                "x": 18,
+                "y": 17.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62904",
+                "name": "Column A",
+                "x": 17.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62905",
+                "name": "Row 14",
+                "x": 18,
+                "y": 53.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62906",
+                "name": "Column B",
+                "x": 53.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62907",
+                "name": "Row 13",
+                "x": 18,
+                "y": 89.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62908",
+                "name": "Column C",
+                "x": 89.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62909",
+                "name": "Row 12",
+                "x": 18,
+                "y": 125.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62910",
+                "name": "Column D",
+                "x": 125.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62911",
+                "name": "Row 11",
+                "x": 18,
+                "y": 161.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62912",
+                "name": "Column E",
+                "x": 161.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62913",
+                "name": "Row 10",
+                "x": 18,
+                "y": 197.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62914",
+                "name": "Column F",
+                "x": 197.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62915",
+                "name": "Row 9",
+                "x": 18,
+                "y": 233.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62916",
+                "name": "Column G",
+                "x": 233.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62917",
+                "name": "Row 8",
+                "x": 18,
+                "y": 269.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62918",
+                "name": "Column H",
+                "x": 269.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62919",
+                "name": "Row 7",
+                "x": 18,
+                "y": 305.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62920",
+                "name": "Column I",
+                "x": 305.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62921",
+                "name": "Row 6",
+                "x": 18,
+                "y": 341.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62922",
+                "name": "Column J",
+                "x": 341.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62923",
+                "name": "Row 5",
+                "x": 18,
+                "y": 377.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62924",
+                "name": "Column K",
+                "x": 377.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62925",
+                "name": "Row 4",
+                "x": 18,
+                "y": 413.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62926",
+                "name": "Column L",
+                "x": 413.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62927",
+                "name": "Row 3",
+                "x": 18,
+                "y": 449.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62928",
+                "name": "Column M",
+                "x": 449.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62929",
+                "name": "Row 2",
+                "x": 18,
+                "y": 485.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62930",
+                "name": "Column N",
+                "x": 485.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62931",
+                "name": "Row 1",
+                "x": 18,
+                "y": 521.5,
+                "w": 504,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62932",
+                "name": "Column O",
+                "x": 521.5,
+                "y": 18,
+                "w": "$Zumpo · UI:space/1",
+                "h": 504,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62933",
+                "name": "Star D12",
+                "x": 123,
+                "y": 123,
+                "w": "$Zumpo · UI:space/6",
+                "h": "$Zumpo · UI:space/6",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62934",
+                "name": "Star L12",
+                "x": 411,
+                "y": 123,
+                "w": "$Zumpo · UI:space/6",
+                "h": "$Zumpo · UI:space/6",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62935",
+                "name": "Star H8",
+                "x": 267,
+                "y": 267,
+                "w": "$Zumpo · UI:space/6",
+                "h": "$Zumpo · UI:space/6",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62936",
+                "name": "Star D4",
+                "x": 123,
+                "y": 411,
+                "w": "$Zumpo · UI:space/6",
+                "h": "$Zumpo · UI:space/6",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62937",
+                "name": "Star L4",
+                "x": 411,
+                "y": 411,
+                "w": "$Zumpo · UI:space/6",
+                "h": "$Zumpo · UI:space/6",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Layout=Phone",
+      "id": "162:62938",
+      "props": {
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62938",
+        "name": "Layout=Phone",
+        "x": 636,
+        "y": 24,
+        "w": 350,
+        "h": 350,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "pad": "$Zumpo · UI:space/10",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:62939",
+            "name": "Grid",
+            "w": 330,
+            "h": 330,
+            "children": [
+              {
+                "type": "RECTANGLE",
+                "id": "162:62940",
+                "name": "Row 15",
+                "x": 11,
+                "y": 10.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62941",
+                "name": "Column A",
+                "x": 10.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62942",
+                "name": "Row 14",
+                "x": 11,
+                "y": 32.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62943",
+                "name": "Column B",
+                "x": 32.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62944",
+                "name": "Row 13",
+                "x": 11,
+                "y": 54.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62945",
+                "name": "Column C",
+                "x": 54.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62946",
+                "name": "Row 12",
+                "x": 11,
+                "y": 76.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62947",
+                "name": "Column D",
+                "x": 76.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62948",
+                "name": "Row 11",
+                "x": 11,
+                "y": 98.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62949",
+                "name": "Column E",
+                "x": 98.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62950",
+                "name": "Row 10",
+                "x": 11,
+                "y": 120.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62951",
+                "name": "Column F",
+                "x": 120.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62952",
+                "name": "Row 9",
+                "x": 11,
+                "y": 142.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62953",
+                "name": "Column G",
+                "x": 142.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62954",
+                "name": "Row 8",
+                "x": 11,
+                "y": 164.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62955",
+                "name": "Column H",
+                "x": 164.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62956",
+                "name": "Row 7",
+                "x": 11,
+                "y": 186.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62957",
+                "name": "Column I",
+                "x": 186.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62958",
+                "name": "Row 6",
+                "x": 11,
+                "y": 208.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62959",
+                "name": "Column J",
+                "x": 208.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62960",
+                "name": "Row 5",
+                "x": 11,
+                "y": 230.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62961",
+                "name": "Column K",
+                "x": 230.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62962",
+                "name": "Row 4",
+                "x": 11,
+                "y": 252.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62963",
+                "name": "Column L",
+                "x": 252.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62964",
+                "name": "Row 3",
+                "x": 11,
+                "y": 274.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62965",
+                "name": "Column M",
+                "x": 274.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62966",
+                "name": "Row 2",
+                "x": 11,
+                "y": 296.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62967",
+                "name": "Column N",
+                "x": 296.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62968",
+                "name": "Row 1",
+                "x": 11,
+                "y": 318.5,
+                "w": 308,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:62969",
+                "name": "Column O",
+                "x": 318.5,
+                "y": 11,
+                "w": "$Zumpo · UI:space/1",
+                "h": 308,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62970",
+                "name": "Star D12",
+                "x": 75,
+                "y": 75,
+                "w": "$Zumpo · UI:space/4",
+                "h": "$Zumpo · UI:space/4",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62971",
+                "name": "Star L12",
+                "x": 251,
+                "y": 75,
+                "w": "$Zumpo · UI:space/4",
+                "h": "$Zumpo · UI:space/4",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62972",
+                "name": "Star H8",
+                "x": 163,
+                "y": 163,
+                "w": "$Zumpo · UI:space/4",
+                "h": "$Zumpo · UI:space/4",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62973",
+                "name": "Star D4",
+                "x": 75,
+                "y": 251,
+                "w": "$Zumpo · UI:space/4",
+                "h": "$Zumpo · UI:space/4",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              },
+              {
+                "type": "FRAME",
+                "id": "162:62974",
+                "name": "Star L4",
+                "x": 251,
+                "y": 251,
+                "w": "$Zumpo · UI:space/4",
+                "h": "$Zumpo · UI:space/4",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

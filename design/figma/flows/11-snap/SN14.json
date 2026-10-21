@@ -1,0 +1,106 @@
+{
+  "format": 1,
+  "code": "SN14",
+  "title": "Game page · intro and cards",
+  "id": "162:91307",
+  "section": "11 / Snap / complete flow",
+  "reviewNotes": [
+    "SN14 · The game page’s intro at desktop and phone width, and the game card as a tile on the home page and a row on a phone. Kind: Spot & remember; blue."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:91307",
+    "name": "SN14 / Game page · intro and cards",
+    "x": 5590,
+    "y": 3050,
+    "w": 1780,
+    "h": 550,
+    "wSize": "hug",
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "layout": {
+      "mode": "row",
+      "gap": "$Zumpo · UI:space/40",
+      "pad": "$Zumpo · UI:space/40",
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:91308",
+        "name": "Zumpo/Game intro",
+        "w": 920,
+        "h": 289,
+        "hSize": "hug",
+        "component": "Zumpo/Game intro",
+        "variant": {
+          "Game": "Snap",
+          "Layout": "Desktop"
+        },
+        "componentId": "162:66626"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:91382",
+        "name": "Zumpo/Game intro",
+        "w": 350,
+        "h": 385,
+        "hSize": "hug",
+        "component": "Zumpo/Game intro",
+        "variant": {
+          "Game": "Snap",
+          "Layout": "Phone"
+        },
+        "componentId": "162:66730"
+      },
+      {
+        "type": "FRAME",
+        "id": "162:91456",
+        "name": "Game cards",
+        "w": 350,
+        "h": 470,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:91457",
+            "name": "Zumpo/Game card",
+            "w": 310,
+            "h": 294,
+            "hSize": "hug",
+            "component": "Zumpo/Game card",
+            "variant": {
+              "Game": "Snap",
+              "Layout": "Tile",
+              "State": "Default"
+            },
+            "componentId": "162:66340"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:91517",
+            "name": "Zumpo/Game card",
+            "w": 350,
+            "h": 152,
+            "hSize": "hug",
+            "component": "Zumpo/Game card",
+            "variant": {
+              "Game": "Snap",
+              "Layout": "Row",
+              "State": "Default"
+            },
+            "componentId": "162:66434"
+          }
+        ]
+      }
+    ]
+  }
+}

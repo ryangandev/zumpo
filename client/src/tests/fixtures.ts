@@ -7,6 +7,7 @@ import type {
   MinesweeperRoomState,
   PairsRoomState,
   PlayerInfo,
+  SnapRoomState,
   TriosRoomState,
 } from '../../../shared/wire-types';
 
@@ -133,6 +134,27 @@ export function triosState(
     searchingMs: 0,
     lockedOutMs: 0,
     myMiss: [],
+    lastGame: null,
+    ...overrides,
+  };
+}
+
+export function snapState(
+  overrides: Partial<SnapRoomState> = {},
+): SnapRoomState {
+  return {
+    ...room,
+    maxPlayers: 6,
+    gameType: 'snap',
+    phase: 'waiting',
+    cards: 0,
+    taken: 0,
+    middle: null,
+    myCard: null,
+    lastTake: null,
+    cardMs: 0,
+    lockedOutMs: 0,
+    myMiss: null,
     lastGame: null,
     ...overrides,
   };

@@ -15,6 +15,7 @@ export type GameType =
   | 'make-24'
   | 'pairs'
   | 'trios'
+  | 'snap'
   | 'liars-dice'
   | 'hush'
   | 'daily-word';

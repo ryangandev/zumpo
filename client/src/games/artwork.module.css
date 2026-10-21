@@ -84,3 +84,10 @@
   display: flex;
   zoom: 0.8;
 }
+
+/* Two mini cards, 16 px apart. */
+.snap {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
