@@ -55,8 +55,11 @@ Decisions from the design review rounds (their reports are in git history):
 
 - One page lists every game: the home page (P01, MO01) is also the games page, so there is no separate games hub and the hero has no buttons to it; Ryan chose this on 2026-10-05.
   Each game is a `Zumpo/Game card`, a tile four across on a desktop and a row on a phone, whose icon is the game's signature piece.
-  Games are sorted by kind, not by player count, because eight of the eleven play both on your own and in a room and every game has rooms: Party, Puzzles and Spot & remember, each kind and its games in alphabetical order.
+  Games are sorted by kind, not by player count, because most games play both on your own and in a room and every game has rooms.
+  The kinds whose every game can be played on your own come first (Puzzles, Spot & remember, Strategy), then Party, each kind and its games in alphabetical order; Ryan chose this on 2026-10-21, because most first visits are one person who wants to play now.
   How a game can be played stays on its card as paper tags: Solo, where it has a game on your own, then the player count ("2–8 players"); Ryan asked on 2026-10-08 for the two to be separate tags.
+  Solo is a link straight to the game on your own, and turns Ink under the pointer, since a tag drawn like a pill reads as something to press.
+  Daily Word and Code Breaker put today's state in Solo's place once today's puzzle is started, from the records on the device: "Guess 2 of 10" while it is under way, "Done today" once it is over; their game page says the same, with the streak, and its Play solo becomes Continue or See today's result (P01).
   The page ends with the games: no notice under them on how solo and rooms start, since each game's page says how to play it; Ryan removed it on 2026-10-08.
   A row of `Zumpo/Filter chip`s above the games shows one kind; on a phone each kind also has a heading, because the list is long.
   Past about sixteen games, a desktop should give each kind its own shelf too.
@@ -66,9 +69,19 @@ Decisions from the design review rounds (their reports are in git history):
   Under the pointer the card lifts 4 px onto the Paper lift shadow and its arrow leads 3 px on, easing out over 180 ms (`State=Hover`); Ryan found an ink border that came at once too hard for the cards, so it was redesigned in Claude Design among four (lift, sticker, tilt, brighten) on 2026-10-08.
   With reduced motion only the shadow comes.
   The page (DL01-DL03, ML01-ML03, MO04) opens with one `Zumpo/Game intro`: the game's artwork, kind, name and tagline, and its ways in, Play solo first where the game has it, because one click starts it with nobody to wait for, then Create a room.
-  The open rooms to join are listed under it, and the How to play panel beside it gives the rules in a room and on your own at a glance, with a link to the full rules on How to play (P14); a phone shows the panel too, after the rooms.
+  The open rooms to join are listed under it, and the How to play panel beside it gives the rules at a glance in the buttons' order, on your own first where the game has it, then in a room, as bulleted points; Full rules opens the whole of them in the panel, so each game's rules are on its own page and in the dialog over its room, and nowhere else; Ryan removed the page of every game's rules (P14) and its header link on 2026-10-21.
+  A phone shows the panel too, after the rooms.
+  The header and the wordmark are the ways home, so the page has no Back to games, and the avatar is the name, so no Playing as either.
+  An empty room list says so, with no button of its own: Create a room is in the intro.
+  A room row says who hosts it only when the room has a name of its own; a default name ("Maya's room") already does.
+  Its action column is 168 px on a desktop, as wide as Playing beside Watch, so the player counts of a list line up.
   A game without a solo mode never shows an empty entry: its only way in is Create a room, or a room to join.
   `Zumpo/Game artwork` is the paper panel both draw, one per game and size, so the artwork is drawn once.
+- A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.
+  More options, a Quiet button, opens the room's name (the host's by default), its seats (all of them by default) and a password, so Create room is one click away; Ryan asked for this on 2026-10-21.
+  Hush keeps its seats in view, because they set how long its game is.
+  A blank name opens More options to say so, and a room being made hides the button with the other actions (DL06, ML06).
+  A helper says only what the options do not ("60 seconds a hand."), never the options again; a page heading over the card would say the game's name twice, so a wide screen has none, and a phone puts the card's title and description on the page.
 - A game screen states the turn in one `Zumpo/Turn bar` above the canvas or board: what is happening, whose turn, and the server's countdown.
 - In Draw & Guess the guess is the chat input; it is locked for the drawer and for anyone who has scored this turn, as the server already enforces.
 - Brush colours are `color/brush/*` tokens, and the drawer's controls are one `Zumpo/Drawing toolbar`.
@@ -106,8 +119,8 @@ Nobody is asked for a name any more.
 
 - A first visit picks a random name, an adjective and an animal such as Sleepy Otter, and this browser remembers it.
 - `Zumpo/Name menu` is the one place to change it: State=Edit is the field, Save and Roll a name, which fills in another random name (P13, MO02); State=Error is an empty name (P03).
-- It opens from the viewer's avatar on every page and in every room, and from Playing as in a game page's actions (DL01-DL03, ML01-ML03, MO04).
-- State=Hint opens once from the avatar on a first visit (P02); Got it, Change name or any rename closes it for good.
+- It opens from the viewer's avatar on every page and in every room.
+- Nothing announces the picked name on a first visit: Ryan removed the hint that opened by itself on the home page on 2026-10-21, because it covered the hero and was gone at the first click; the waiting room says it when it matters (P19).
 - A rename reaches every seat at once and the room's chat says so, as Brave Noodle becoming Leo does in P20; nothing is lost, so it never asks first.
 - While the name is still the picked one, a room's waiting card says so beside a Change name button (P19), because a friend who came from an invite link should be recognisable.
 
@@ -180,7 +193,7 @@ Code differs from Figma on purpose in a few places:
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
 - The footer carries a language switch, English and 中文 in the footer's small text, which the Figma file does not draw: the design is English, and the switch is the one control that lets a reader choose otherwise ([languages](architecture.md#languages)).
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.
-- Spectator seats are not in Figma yet, so their pieces are made of existing families: the lobby row's Watch is a small secondary Button beside the Playing or Full tag, the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat or Watch instead is a secondary Button among a panel's actions.
+- Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat or Watch instead is a secondary Button among a panel's actions.
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
 - Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
