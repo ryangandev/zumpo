@@ -69,7 +69,7 @@ The finished board stays on the table under the results until the next game is d
 **The winner is whoever found the most pairs.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody finds a pair ("Maya found a pair! (+1)"), as a quiet score line, and who won.
+The chat says when somebody finds a pair ("Maya found a pair, +1."), as a quiet score line, and who won.
 
 ## Rules the server enforces
 

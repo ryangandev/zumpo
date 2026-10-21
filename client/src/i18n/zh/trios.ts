@@ -1,7 +1,7 @@
 import type { trios as en } from '../en/trios';
 import type { CardFeatures, Feature } from '../../../../shared/trios';
 
-const colours = { coral: '珊瑚色', blue: '蓝色', ink: '墨色' };
+const colours = { coral: '珊瑚色', blue: '蓝色', ink: '黑色' };
 const shapes = { circle: '圆形', triangle: '三角形', square: '方形' };
 const fills = { solid: '实心', striped: '条纹', outline: '空心' };
 const value = (feature: Feature, f: CardFeatures) => {
@@ -32,7 +32,7 @@ export const trios: typeof en = {
   you: '你',
   by: (name) => (name === trios.you ? '你找到的' : `${name} 找到的`),
   resultDetail: (count) => `${count} 组。`,
-  alone: '叫上朋友更好玩。',
+  alone: '叫上好友更好玩。',
   setup: (players, count) =>
     `${players} 人，${count} 组。大家看着同样的 12 张牌，最先选中一组的人拿走它。`,
   guestSetup: (players, count) => `${players} 人，${count} 组。`,
@@ -66,25 +66,25 @@ export const trios: typeof en = {
   looking: '寻找中',
   solo: {
     rule: '一组牌的颜色、形状、数量和填充方式，都必须在 3 张牌上完全相同或完全不同。选错一次加 5 秒。',
-    challengeDescription: (rule) => `朋友发来了这副牌。${rule}`,
+    challengeDescription: (rule) => `好友发来了这副牌。${rule}`,
     title: '找 10 组，看你多快。',
     start: '开始',
     example: '这是一组：颜色相同；形状、数量和填充都不同。',
     trios: '组数',
     yourBest: '你的本机最佳成绩',
     notYet: '暂无',
-    complete: '挑战完成',
-    leaveWarning: '这次挑战到此结束，用时不会保存。',
+    complete: '本轮完成',
+    leaveWarning: '这一轮到此结束，用时不会保存。',
     resultTitle: (count, time) => `${count} 组，用时 ${time}。`,
     wrongPicks: '选错次数',
     hints: '提示次数',
     fastest: '最快一组',
     none: '无',
     best: '本机最佳成绩',
-    challenge: (time) => `朋友会拿到同一副牌，试着打破 ${time} 的成绩。`,
+    challenge: (time) => `好友会拿到同一副牌，试着打破 ${time} 的成绩。`,
     progress: (count, total) => `第 ${count} / ${total} 组`,
     hintButton: '提示，+10 秒',
-    thisRun: '本次挑战',
+    thisRun: '本轮',
     found: '已找到',
     tenTrios: '10 组',
     runTime: '用时',
@@ -92,7 +92,7 @@ export const trios: typeof en = {
     foundIn: (time) => `用时 ${time}`,
     wrong: '不成一组，+5 秒',
     features: '每个特征都要完全相同或完全不同',
-    firstRun: '你在本机首次完成挑战。',
+    firstRun: '这是你在本机的第一轮。',
     newBest: (time) => `刷新本机纪录！上次最佳成绩是 ${time}。`,
     previousBest: (time) => `你的本机最佳成绩是 ${time}。`,
     note: (wrong, hints) =>

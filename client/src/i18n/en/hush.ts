@@ -12,7 +12,7 @@ export const hush = {
   level: (level: number) => `Level ${level}`,
   allCards: (count: number) => `All ${plural(count, 'card')}`,
   asEnded: 'As it ended',
-  alone: 'A little better with company.',
+  alone: 'Better with company.',
   setup: (players: number, levels: number) =>
     `${plural(players, 'player')}, ${plural(levels, 'level')}. Play every card in order, together, without a word.`,
   guestSetup: (players: number, levels: number) =>

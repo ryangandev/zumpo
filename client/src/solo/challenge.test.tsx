@@ -18,7 +18,7 @@ describe('a solo challenge in Chinese', () => {
         <ChallengeButton link={link} />
       </LocaleProvider>,
     );
-    await user.click(screen.getByRole('button', { name: '挑战朋友' }));
+    await user.click(screen.getByRole('button', { name: '挑战好友' }));
     expect(await navigator.clipboard.readText()).toBe(link);
     expect(
       screen.getByRole('button', { name: '链接已复制' }),
@@ -28,12 +28,12 @@ describe('a solo challenge in Chinese', () => {
   it('labels the challenge card and copy action in Chinese', () => {
     render(
       <LocaleProvider>
-        <ChallengeCard description="朋友会拿到相同的棋盘。" link={link} />
+        <ChallengeCard description="好友会拿到相同的棋盘。" link={link} />
       </LocaleProvider>,
     );
-    const card = screen.getByRole('region', { name: '挑战朋友' });
+    const card = screen.getByRole('region', { name: '挑战好友' });
     expect(
-      within(card).getByText('朋友会拿到相同的棋盘。'),
+      within(card).getByText('好友会拿到相同的棋盘。'),
     ).toBeInTheDocument();
     expect(
       within(card).getByRole('button', { name: '复制挑战链接' }),

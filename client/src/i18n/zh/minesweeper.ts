@@ -34,7 +34,7 @@ export const minesweeper: typeof en = {
   messagePlaceholder: '说点什么…',
   resultsDetail: (difficulty, rounds) =>
     `${SIZES[difficulty]}棋盘，${rounds} 轮。`,
-  aloneTitle: '叫上朋友更好玩。',
+  aloneTitle: '叫上好友更好玩。',
   setup: (players, difficulty) => {
     const { width, height, mines } = BOARD_SIZES[difficulty];
     return `${players} 人，${SIZES[difficulty]}棋盘：${width} × ${height}，${mines} 颗雷。每轮所有人同时选一个格子。`;
@@ -115,9 +115,10 @@ export const minesweeper: typeof en = {
     hitMine: '你踩到雷了',
     cleared: (cleared, safe) => `${safe} 个安全格里你翻开了 ${cleared} 个`,
     clearBoard: '扫清棋盘',
-    flagMode: (phone) => (phone ? '插旗模式：轻点插旗' : '插旗模式：点击插旗'),
+    flagMode: (phone) =>
+      phone ? '插旗已开启：轻点插旗' : '插旗已开启：点击插旗',
     firstClickSafe: '第一次点击一定安全',
-    longPressFlag: '长按插旗',
+    longPressFlag: '长按，或开启“插旗”后轻点',
     rightClickFlag: '右键或长按插旗',
   },
 };

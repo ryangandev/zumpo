@@ -64,7 +64,7 @@ describe('Snap on your own', () => {
   it('runs in Chinese, symbols and all', async () => {
     await renderApp(`/games/snap/solo?seed=${SEED}`, { locale: 'zh' });
     expect(screen.getByText('30 张牌，看你多快。')).toBeInTheDocument();
-    expect(screen.getByText(/^朋友发来了这副牌。/)).toBeInTheDocument();
+    expect(screen.getByText(/^好友发来了这副牌。/)).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '开始' }));
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 1 / 30 张')).toBeInTheDocument();

@@ -68,7 +68,7 @@ describe('Trios on your own', () => {
   it('runs in Chinese with localized cards, hints and penalty explanations', async () => {
     await renderApp(`/games/trios/solo?seed=${SEED}`, { locale: 'zh' });
     expect(screen.getByText('找 10 组，看你多快。')).toBeInTheDocument();
-    expect(screen.getByText(/^朋友发来了这副牌。/)).toBeInTheDocument();
+    expect(screen.getByText(/^好友发来了这副牌。/)).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '开始' }));
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 1 / 10 组')).toBeInTheDocument();

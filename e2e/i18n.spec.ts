@@ -23,9 +23,9 @@ test('Chinese and English players share a room and render notices in their own l
     host.getByRole('button', { name: '开始游戏', exact: true }),
   ).toBeVisible();
   await host.getByRole('button', { name: '开始游戏', exact: true }).click();
-  await expect(host.getByText(/^游戏开始！共 \d+ 对/)).toBeVisible();
+  await expect(host.getByText(/^游戏开始：共 \d+ 对/)).toBeVisible();
   await expect(
-    guest.getByText(/^Game has started! \d+ pairs to find/),
+    guest.getByText(/^Game started: \d+ pairs to find/),
   ).toBeVisible();
 
   // Already received history is rendered again, and a reload retains the choice.

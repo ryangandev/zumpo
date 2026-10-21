@@ -891,7 +891,7 @@ describe('a room page', () => {
       ),
     );
     const alone = within(
-      screen.getByRole('region', { name: 'A little better with company.' }),
+      screen.getByRole('region', { name: 'Better with company.' }),
     );
     expect(alone.getByRole('heading', { name: 'How to play' })).toBeVisible();
     expect(

@@ -16,7 +16,7 @@ export const make24 = {
   waitingRoom: 'Waiting room',
   messagePlaceholder: 'Say something…',
   resultsDetail: (hands: number) => `${plural(hands, 'hand')}.`,
-  aloneTitle: 'A little better with company.',
+  aloneTitle: 'Better with company.',
   setup: (players: number, hands: number) =>
     `${plural(players, 'player')}, ${plural(hands, 'hand')}. Every hand, everyone gets the same four numbers at once, and quicker answers score more.`,
   guestSetup: (players: number, hands: number) =>

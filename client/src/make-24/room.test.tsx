@@ -65,7 +65,7 @@ describe('a Make 24 room', () => {
     fake.answer('room:sync', () => ({ ok: true as const }));
     await renderApp(roomPath('make-24', 'r1'), { locale: 'zh', fake });
     act(() => fake.serverEmits('room:state', solving));
-    expect(screen.getAllByText('第 1 手，共 5 手')).toHaveLength(2);
+    expect(screen.getAllByText('第 1 题，共 5 题')).toHaveLength(2);
     expect(screen.getByText('每个数字用一次')).toBeInTheDocument();
     await step(user, '3', '加', '9');
     expect(
@@ -84,7 +84,7 @@ describe('a Make 24 room', () => {
     expect(screen.getByText('算出来了！+117')).toBeInTheDocument();
     expect(screen.getByText('等待 Maya')).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText('算出来了！本手结束后才能聊天。'),
+      screen.getByPlaceholderText('算出来了！本题结束后才能聊天。'),
     ).toBeDisabled();
   });
 

@@ -179,7 +179,7 @@ describe('a round', () => {
     expect(board.points).toBeGreaterThan(500);
     expect(board.points).toBeLessThanOrEqual(550);
     expect(state.playerList[alice.playerId]!.points).toBe(board.points);
-    expect(textOf(message)).toBe(`Alice got it in 2! (+${board.points})`);
+    expect(textOf(message)).toBe(`Alice got it in 2, +${board.points}.`);
     expect(JSON.stringify(state)).not.toContain(`"${word}"`);
   });
 

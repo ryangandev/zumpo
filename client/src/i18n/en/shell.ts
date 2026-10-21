@@ -36,7 +36,7 @@ export const shell = {
   },
   backToGames: 'Back to games',
   notFound: {
-    title: 'A little lost?',
+    title: 'Lost?',
     description:
       'We couldn’t find this page. There are still good games waiting for you.',
     backHome: 'Back home',

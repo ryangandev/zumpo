@@ -188,7 +188,7 @@ A code not cracked is worth nothing, and nothing is ever taken away.
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 The results also say how many of the codes each player cracked.
 
-The chat says when somebody cracks the code ("Maya cracked it in 5! (+633)"), as a quiet score line, what the code was at each reveal, and who won.
+The chat says when somebody cracks the code ("Maya cracked it in 5, +633."), as a quiet score line, what the code was at each reveal, and who won.
 
 ## Rules the server enforces
 

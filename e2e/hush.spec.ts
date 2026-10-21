@@ -43,7 +43,7 @@ test('two players play every card in order, together, without a word', async ({
   ).toBeVisible();
 
   // Level 1 is cleared, not cleanly; the chat opens between levels.
-  await expect(maya.getByText('Level 1 cleared!')).toBeVisible();
+  await expect(maya.getByText('Level 1 cleared.')).toBeVisible();
   await expect(chat(maya)).toBeEnabled();
 
   // Every other level is played clean; the first wins the life back.
@@ -56,7 +56,7 @@ test('two players play every card in order, together, without a word', async ({
     }
     if (level === 2) {
       await expect(
-        maya.getByText('Level 2 cleared without a slip: a life back!'),
+        maya.getByText('Level 2 cleared without a slip: a life back.'),
       ).toBeVisible();
       await expect(maya.getByRole('img', { name: '3 lives' })).toBeVisible();
     }
@@ -117,5 +117,5 @@ test('a level waits for a player who dropped, and goes on when they are back', a
     timeout: 20_000,
   });
   for (const { page, card } of held) await play(page, card, [maya, leo]);
-  await expect(maya.getByText('Level 1 cleared without a slip!')).toBeVisible();
+  await expect(maya.getByText('Level 1 cleared without a slip.')).toBeVisible();
 });

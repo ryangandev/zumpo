@@ -18,7 +18,7 @@ export const drawAndGuess = {
     `${name} lost connection. Their turn is skipped if they are not back within ${plural(seconds, 'second')}.`,
   resultsDetail: (rounds: number, category: WordCategory, turns: number) =>
     `${plural(rounds, 'round')} of ${category}, ${plural(turns, 'turn')}.`,
-  aloneTitle: 'A little better with two.',
+  aloneTitle: 'Better with two.',
   setup: (players: number, rounds: number) =>
     `${plural(players, 'player')}, ${plural(rounds, 'round')}. The word category is drawn at random when the game starts.`,
   guestSetup: (players: number, rounds: number) =>
