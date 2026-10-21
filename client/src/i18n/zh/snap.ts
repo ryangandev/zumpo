@@ -78,7 +78,7 @@ export const snap: typeof en = {
   looking: '寻找中',
   solo: {
     rule: '点出两张牌上都有的图案，中间的牌就归你。点错一次加 3 秒。',
-    spotTheMatch: '找相同',
+    whatMakesMatch: '怎样算相同',
     example: '任意两张牌都恰好有一个相同图案。',
     notYet: '暂无',
     complete: '挑战完成',

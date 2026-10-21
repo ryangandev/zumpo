@@ -46,23 +46,14 @@ async function flipCard(index: number) {
   await user.click(card(index));
 }
 
-/** Starts the challenge deck `SEED` deals on a Small board. */
-async function startChallenge() {
-  const view = await renderApp(`/games/pairs/solo?board=Small&seed=${SEED}`);
-  await user.click(screen.getByRole('button', { name: 'Start' }));
-  return view;
-}
+/** Plays the challenge deck `SEED` deals on a Small board. */
+const startChallenge = () =>
+  renderApp(`/games/pairs/solo?board=Small&seed=${SEED}`);
 
 describe('Pairs on your own', () => {
-  it('picks a board and flips cards with Chinese instructions', async () => {
+  it('deals at once, with Chinese instructions', async () => {
     await renderApp('/games/pairs/solo', { locale: 'zh' });
-    expect(screen.getByText('选一个棋盘。')).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: /小 · 4 × 4/ })).toHaveAttribute(
-      'aria-checked',
-      'true',
-    );
-    expect(screen.getByText('18 对。暂无最佳成绩')).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: '开始' }));
+    expect(screen.queryByRole('button', { name: '开始' })).toBeNull();
     expect(screen.getByRole('grid', { name: '卡牌' })).toBeInTheDocument();
     expect(screen.getByText('第 1 次翻牌')).toBeInTheDocument();
     expect(screen.getByText('翻一张牌')).toBeInTheDocument();
@@ -79,31 +70,19 @@ describe('Pairs on your own', () => {
     );
   });
 
-  it('offers both boards on a first visit', async () => {
+  it('deals a Small board on a first visit', async () => {
     const { router } = await renderApp('/games/pairs/solo', {
       firstVisit: true,
     });
     expect(router.state.location.pathname).toBe('/games/pairs/solo');
-    expect(screen.getByText('Pick a board.')).toBeInTheDocument();
-    expect(
-      screen.getByRole('radio', { name: /Small · 4 × 4/ }),
-    ).toHaveAttribute('aria-checked', 'true');
-    expect(screen.getByText('18 pairs. No best yet')).toBeInTheDocument();
-
-    await user.click(screen.getByRole('radio', { name: /Large · 6 × 6/ }));
-    await user.click(screen.getByRole('button', { name: 'Start' }));
-    expect(screen.getAllByRole('gridcell')).toHaveLength(36);
+    expect(screen.getAllByRole('gridcell')).toHaveLength(16);
     expect(turn().getByText('Turn 1')).toBeInTheDocument();
     expect(turn().getByText('Flip a card')).toBeInTheDocument();
   });
 
   it('plays a challenge’s own deck, on its own board', async () => {
-    await renderApp(`/games/pairs/solo?board=Small&seed=${SEED}`);
-    expect(
-      screen.getByText(/^A friend sent you this deck\./),
-    ).toBeInTheDocument();
-    expect(screen.queryByRole('radio', { name: /Large/ })).toBeNull();
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await startChallenge();
+    expect(screen.getByText('Challenge')).toBeInTheDocument();
     await flipCard(pairs[0]![0]!);
     expect(card(pairs[0]![0]!)).toHaveAccessibleName(
       /: (Circle|Ring|Half|Square|Diamond|Triangle|Star|Sparkle|Hexagon) /,
@@ -169,8 +148,11 @@ describe('Pairs on your own', () => {
     });
     expect(screen.getByText('9 turns')).toBeInTheDocument();
 
+    expect(
+      screen.getByRole('heading', { name: 'Challenge a friend' }),
+    ).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Challenge a friend' }),
+      screen.getByRole('button', { name: 'Copy challenge link' }),
     );
     expect(await navigator.clipboard.readText()).toBe(
       `${window.location.origin}/games/pairs/solo?board=Small&seed=${SEED}`,
@@ -210,23 +192,32 @@ describe('Pairs on your own', () => {
     expect(document.querySelector('canvas')).toBeNull();
   });
 
-  it('goes back to the boards from the end, and leaves without asking', async () => {
+  it('changes the board at the end, keeps it, and leaves without asking', async () => {
     const { router } = await startChallenge();
     for (const [a, b] of pairs) {
       await flipCard(a!);
       await flipCard(b!);
     }
     await user.click(screen.getByRole('button', { name: 'Change board' }));
-    expect(screen.getByText('Pick a board.')).toBeInTheDocument();
-    // A challenge is played once: every board is offered again.
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Pick a board.' }),
+    );
+    expect(
+      dialog.getByRole('radio', { name: /Small · 4 × 4/ }),
+    ).toHaveAttribute('aria-checked', 'true');
+    await user.click(dialog.getByRole('radio', { name: /Large · 6 × 6/ }));
+    await user.click(dialog.getByRole('button', { name: 'Play' }));
+    // A challenge is played once: the next deck is a new one.
     expect(router.state.location.search).toBe('');
-    expect(screen.getByRole('radio', { name: /Large · 6 × 6/ })).toBeVisible();
+    expect(screen.getAllByRole('gridcell')).toHaveLength(36);
 
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     await flipCard(0);
     await user.click(screen.getByRole('button', { name: 'Leave' }));
     expect(screen.queryByRole('dialog')).toBeNull();
     expect(router.state.location.pathname).toBe('/games/pairs');
+    // The router renders a navigation as a transition; act sees it through.
+    await act(() => router.navigate('/games/pairs/solo'));
+    expect(screen.getAllByRole('gridcell')).toHaveLength(36);
   });
 
   it('puts the pairs found on the turn bar on a phone', async () => {

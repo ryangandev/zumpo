@@ -91,9 +91,9 @@ export const codeBreaker = {
   guessesToCrack: 'Guesses to crack it',
   streak: (days: number) =>
     days > 1 ? `That makes ${days} days in a row.` : 'That starts a streak.',
-  /** A phone's turn bar over a finished board. */
-  crackedItIn: (guesses: number) => `Cracked it in ${guesses}!`,
+  /** The turn bar over a finished board. */
   newCodeAtMidnight: 'A new code at midnight.',
+  youCrackedCode: (code: string) => `You cracked ${code}`,
   challenge: 'Challenge',
   practice: 'Practice',
   friendCode: 'A friend’s code',
@@ -110,7 +110,6 @@ export const codeBreaker = {
     `They get this same code and try to crack it in fewer than ${guesses} guesses. They see your pegs, not your digits.`,
   friendSame: 'They get this same code. They see your pegs, not your digits.',
   yourPegs: 'Your pegs',
-  copyChallenge: 'Copy challenge link',
   onDevice: 'On this device',
   stats: {
     played: 'Played',

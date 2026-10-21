@@ -62,20 +62,15 @@ describe('Gomoku on your own', () => {
     );
   });
 
-  it('offers Medium, playing Black, to a first game', async () => {
-    await renderApp('/games/gomoku/solo');
-    expect(screen.getByText('Pick a game.')).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Level' })).toHaveTextContent(
-      'Medium',
-    );
-    expect(
-      screen.getByRole('combobox', { name: 'Your stones' }),
-    ).toHaveTextContent('Black, you move first');
+  it('starts at once at Medium, playing Black, on a first game', async () => {
+    await renderApp('/games/gomoku/solo', { firstVisit: true });
+    expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
+    expect(screen.getByText('White · Medium')).toBeInTheDocument();
+    expect(turn().getByText('Place a black stone')).toBeInTheDocument();
   });
 
   it('waits for your stone, then lets the computer think before it answers', async () => {
     await renderApp('/games/gomoku/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
 
     expect(screen.getByText('Move 1')).toBeInTheDocument();
     expect(turn().getByText('Your turn')).toBeInTheDocument();
@@ -102,7 +97,6 @@ describe('Gomoku on your own', () => {
 
   it('takes back your last stone and the computer’s answer', async () => {
     await renderApp('/games/gomoku/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     // Nothing to take back before your first stone.
     expect(screen.queryByRole('button', { name: 'Take back' })).toBeNull();
 
@@ -127,7 +121,6 @@ describe('Gomoku on your own', () => {
 
   it('keeps the focus on the point you played from the keyboard', async () => {
     await renderApp('/games/gomoku/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     while (!board().contains(document.activeElement)) await user.tab();
     expect(point('H8')).toHaveFocus();
 
@@ -140,7 +133,6 @@ describe('Gomoku on your own', () => {
   it('opens on the centre when you play White', async () => {
     writePicks({ level: 'easy', color: 'white' });
     await renderApp('/games/gomoku/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(turn().getByText('Computer’s turn')).toBeInTheDocument();
     await computerMoves();
     expect(point('H8')).toHaveAccessibleName('H8, black stone, last placed');
@@ -149,7 +141,6 @@ describe('Gomoku on your own', () => {
 
   it('ends on the computer’s five, counts the game, and swaps colours to play again', async () => {
     await renderApp('/games/gomoku/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
 
     for (const name of SCATTERED) {
       if (screen.queryByText('Computer won')) break;
@@ -163,9 +154,11 @@ describe('Gomoku on your own', () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        /^Five in a row, from [A-O]\d+ to [A-O]\d+\. Play again and you take White\.$/,
-      ),
+      turn().getByText('The computer made five in a row'),
+    ).toBeInTheDocument();
+    expect(turn().getByText(/^From [A-O]\d+ to [A-O]\d+$/)).toBeInTheDocument();
+    expect(
+      screen.getByText('Play again and you take White.'),
     ).toBeInTheDocument();
     expect(screen.getByText('White · five in a row')).toBeInTheDocument();
     expect(
@@ -180,18 +173,29 @@ describe('Gomoku on your own', () => {
       run: 0,
     });
 
+    // Change level offers the game just played, and Cancel changes nothing.
+    await user.click(screen.getByRole('button', { name: 'Change level' }));
+    const dialog = within(screen.getByRole('dialog', { name: 'Pick a game.' }));
+    expect(dialog.getByRole('radio', { name: 'Medium' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    expect(dialog.getByRole('radio', { name: 'Black' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await user.click(dialog.getByRole('radio', { name: 'Hard' }));
+    await user.click(dialog.getByRole('button', { name: 'Cancel' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(readPicks()).toEqual({ level: 'medium', color: 'white' });
     expect(turn().getByText('Computer’s turn')).toBeInTheDocument();
   });
 
-  it('offers the last picks first', async () => {
+  it('plays at the last picks', async () => {
     writePicks({ level: 'hard', color: 'black' });
     await renderApp('/games/gomoku/solo');
-    expect(screen.getByRole('combobox', { name: 'Level' })).toHaveTextContent(
-      'Hard',
-    );
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(screen.getByText('White · Hard')).toBeInTheDocument();
   });
 });

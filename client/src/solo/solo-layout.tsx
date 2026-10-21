@@ -22,7 +22,8 @@ export interface SoloLayoutProps {
   stage: ReactNode;
   /**
    * A finished game's `SoloResult`: first in the column beside the board, or
-   * under the board where there is one column.
+   * under the board where there is one column. Nothing, or false, while the
+   * game is played.
    */
   result?: ReactNode;
   /**
@@ -98,7 +99,7 @@ export function SoloLayout({
         />
       }
     >
-      {(phone && result == null) || (side == null && result == null) ? (
+      {!result && (phone || !side) ? (
         <div className={stageClass}>{stage}</div>
       ) : (
         <div className={styles.solo}>

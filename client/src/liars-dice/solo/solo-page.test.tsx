@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { seededRandom } from '../../../../shared/seed';
 import { renderApp } from '../../tests/render-app';
 import { BOT_TURN_MS } from './game';
-import { readRecord, writePicks } from './record';
+import { readPicks, readRecord, writePicks } from './record';
 
 // The same dice and the same bots every run.
 vi.mock('./random', () => {
@@ -21,7 +21,7 @@ const { reseed } = (await import('./random')) as unknown as {
 };
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
-/** The chip picked in a group of the table picker, by its name. */
+/** The chip picked in a group of Change table, by its name. */
 const picked = (group: string) => {
   const chip = within(
     screen.getByRole('radiogroup', { name: group }),
@@ -42,6 +42,25 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+/** The bots' cups at the table. */
+const botCups = () =>
+  screen.getAllByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ });
+
+/** Plays to the end: Liar whenever you can, and as low an opening as you may. */
+async function playToEnd() {
+  for (let step = 0; step < 400; step++) {
+    if (screen.queryByRole('heading', { name: /^(You won|You finished)/ }))
+      return;
+    const next = screen.queryByRole('button', { name: 'Next round' });
+    const liar = screen.queryByRole('button', { name: 'Call Liar' });
+    const open = screen.queryByRole('button', { name: /^Bid / });
+    if (next) await user.click(next);
+    else if (liar) await user.click(liar);
+    else if (open) await user.click(open);
+    else await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+  }
+}
+
 describe('Liar’s Dice on your own', () => {
   it('is offered on the game’s page', async () => {
     await renderApp('/games/liars-dice');
@@ -56,16 +75,9 @@ describe('Liar’s Dice on your own', () => {
       firstVisit: true,
     });
     expect(router.state.location.pathname).toBe('/games/liars-dice/solo');
-    expect(screen.getByText('Pick a table.')).toBeInTheDocument();
-    expect(picked('Bots')).toBe('3 bots');
-    expect(picked('Dice each')).toBe('3 dice');
-    expect(screen.queryByText(/^Taken from/)).toBeNull();
-
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
     expect(screen.getByText('Round 1')).toBeInTheDocument();
-    const cups = screen.getAllByRole('region', {
-      name: /^(Pip|Juno|Otto|Remy|Wren)$/,
-    });
+    const cups = botCups();
     expect(cups).toHaveLength(3);
     const { name } = JSON.parse(localStorage.getItem('zumpo:name')!) as {
       name: string;
@@ -81,48 +93,19 @@ describe('Liar’s Dice on your own', () => {
     }
   });
 
-  it('offers the last table picked first', async () => {
+  it('sits at the last table picked', async () => {
     writePicks({ bots: 5, dicePerPlayer: 5 });
-    await renderApp('/games/liars-dice/solo');
-    expect(picked('Bots')).toBe('5 bots');
-    expect(picked('Dice each')).toBe('5 dice');
-    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
-  });
-
-  it('picks a table with one tap each', async () => {
-    await renderApp('/games/liars-dice/solo', { firstVisit: true });
-    await user.click(screen.getByRole('radio', { name: '1 bot' }));
-    await user.click(screen.getByRole('radio', { name: '5 dice' }));
-    expect(picked('Bots')).toBe('1 bot');
-    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
-    await user.click(screen.getByRole('radio', { name: '1 bot' }));
-    await user.keyboard('{ArrowRight}');
-    expect(picked('Bots')).toBe('2 bots');
-    expect(screen.getByRole('radio', { name: '2 bots' })).toHaveFocus();
-    await user.keyboard('{ArrowLeft}');
-    expect(picked('Bots')).toBe('1 bot');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
-    expect(
-      screen.getAllByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ }),
-    ).toHaveLength(1);
-  });
-
-  it('plays a game to its end, and keeps it on this device', async () => {
     await renderApp('/games/liars-dice/solo', { name: 'Maya' });
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    expect(botCups()).toHaveLength(5);
+    const yours = within(screen.getByRole('region', { name: 'Maya (you)' }));
+    expect(
+      yours.getAllByRole('img', { name: /^[1-6](, wild)?$/ }),
+    ).toHaveLength(5);
+  });
 
-    // You call Liar whenever you can, and open as low as you may.
-    for (let step = 0; step < 400; step++) {
-      if (screen.queryByRole('heading', { name: /^(You won|You finished)/ }))
-        break;
-      const next = screen.queryByRole('button', { name: 'Next round' });
-      const liar = screen.queryByRole('button', { name: 'Call Liar' });
-      const open = screen.queryByRole('button', { name: /^Bid / });
-      if (next) await user.click(next);
-      else if (liar) await user.click(liar);
-      else if (open) await user.click(open);
-      else await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
-    }
+  it('plays a game to its end, keeps it, and changes the table with one tap each', async () => {
+    await renderApp('/games/liars-dice/solo', { name: 'Maya' });
+    await playToEnd();
 
     expect(
       screen.getByRole('heading', { name: /^(You won in|You finished)/ }),
@@ -135,11 +118,35 @@ describe('Liar’s Dice on your own', () => {
     );
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(screen.getByText('Round 1')).toBeInTheDocument();
+    expect(botCups()).toHaveLength(3);
+
+    await playToEnd();
+    await user.click(screen.getByRole('button', { name: 'Change table' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Pick a table.' }),
+    );
+    expect(
+      dialog.getByText(/^You have won [0-2] of 2 games here/),
+    ).toBeInTheDocument();
+    expect(picked('Bots')).toBe('3 bots');
+    expect(picked('Dice each')).toBe('3 dice');
+    await user.click(dialog.getByRole('radio', { name: '1 bot' }));
+    await user.click(dialog.getByRole('radio', { name: '5 dice' }));
+    expect(picked('Bots')).toBe('1 bot');
+    expect(dialog.getByText('The classic: a longer game.')).toBeInTheDocument();
+    await user.click(dialog.getByRole('radio', { name: '1 bot' }));
+    await user.keyboard('{ArrowRight}');
+    expect(picked('Bots')).toBe('2 bots');
+    expect(dialog.getByRole('radio', { name: '2 bots' })).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(picked('Bots')).toBe('1 bot');
+    await user.click(dialog.getByRole('button', { name: 'Play' }));
+    expect(botCups()).toHaveLength(1);
+    expect(readPicks()).toEqual({ bots: 1, dicePerPlayer: 5 });
   });
 
   it('waits for you, and says what a bot bid', async () => {
     await renderApp('/games/liars-dice/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     for (let step = 0; step < 6; step++) {
       if (screen.queryByRole('group', { name: 'Your bid' })) break;
       await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
@@ -150,7 +157,6 @@ describe('Liar’s Dice on your own', () => {
 
   it('asks before leaving a game under way, and not after it', async () => {
     const { router } = await renderApp('/games/liars-dice/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     await user.click(screen.getByRole('button', { name: 'Leave' }));
     const dialog = within(
       screen.getByRole('dialog', { name: 'Leave this game?' }),
@@ -165,7 +171,6 @@ describe('Liar’s Dice on your own', () => {
 
   it('holds the bots while it asks before leaving, so staying costs nothing', async () => {
     await renderApp('/games/liars-dice/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     for (let step = 0; step < 6; step++) {
       if (screen.queryByRole('group', { name: 'Your bid' })) break;
       await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
@@ -189,7 +194,6 @@ describe('Liar’s Dice on your own', () => {
 
   it('holds the bots while How to play is open', async () => {
     await renderApp('/games/liars-dice/solo');
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     for (let step = 0; step < 6; step++) {
       if (screen.queryByRole('group', { name: 'Your bid' })) break;
       await act(() => vi.advanceTimersByTime(BOT_TURN_MS));

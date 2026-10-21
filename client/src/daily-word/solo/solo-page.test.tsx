@@ -126,6 +126,17 @@ describe('Daily Word on your own', () => {
         `The word was ${answer.toUpperCase()}. Practice words keep no stats.`,
       ),
     ).toBeInTheDocument();
+    expect(
+      (await findTurn()).getByText(`You found ${answer.toUpperCase()}`),
+    ).toBeInTheDocument();
+    // One way to challenge a friend.
+    expect(screen.getAllByRole('button', { name: /challenge/i })).toHaveLength(
+      1,
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Copy challenge link' }),
+    );
+    expect(await navigator.clipboard.readText()).toContain(`?seed=${SEED}`);
     await user.click(screen.getByRole('button', { name: 'Today’s word' }));
     expect(
       await (await findTurn()).findByText('Find the word'),

@@ -91,11 +91,12 @@ export const dailyWord: typeof en = {
   anotherWord: '再来一个词',
   challengeFriend: '挑战朋友',
   todayWord: '今日单词',
+  youFoundWord: (word) => `你猜出了 ${word}`,
+  newWordAtMidnight: '午夜换新词。',
   friendFewer: (guesses) =>
     `朋友会猜同一个词，试着用少于 ${guesses} 次猜中。他们只能看到你的标记，看不到字母。`,
   friendSame: '朋友会猜同一个词。他们只能看到你的标记，看不到字母。',
   yourMarks: '你的标记',
-  copyChallenge: '复制挑战',
   onDevice: '本机记录',
   stats: {
     played: '已玩',

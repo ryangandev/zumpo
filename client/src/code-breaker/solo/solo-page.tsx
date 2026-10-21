@@ -24,7 +24,7 @@ import {
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
-import { challengeLink } from '../../solo/challenge';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
@@ -240,15 +240,7 @@ function DailyView({
   return (
     <FinishedLayout
       phase={phase}
-      // A phone has no column for the stats, so a bar says how it went first.
-      bar={{
-        label: title,
-        kind: 'status',
-        main: cracked
-          ? m.codeBreaker.crackedItIn(cracked)
-          : m.codeBreaker.outOfGuesses,
-        meta: m.codeBreaker.newCodeAtMidnight,
-      }}
+      bar={endBar(game, title, m.codeBreaker.newCodeAtMidnight, m)}
       result={
         <SoloResult
           title={
@@ -266,10 +258,6 @@ function DailyView({
               : m.codeBreaker.dailyMissed
           }
           stats={[
-            {
-              label: m.codeBreaker.guesses,
-              value: m.codeBreaker.guessesOf(game.guesses.length, MAX_GUESSES),
-            },
             {
               label: m.codeBreaker.nextCodeIn,
               value: formatWait(msUntilNextPuzzle(new Date(now))),
@@ -389,6 +377,12 @@ function PracticeView({
   return (
     <FinishedLayout
       phase={phase}
+      bar={endBar(
+        game,
+        challenge ? m.codeBreaker.friendCode : m.codeBreaker.practiceCode,
+        undefined,
+        m,
+      )}
       result={
         <SoloResult
           title={
@@ -405,12 +399,6 @@ function PracticeView({
           actions={
             <>
               <Button onClick={onAnother}>{m.codeBreaker.anotherCode}</Button>
-              <CopyButton
-                text={share}
-                label={m.codeBreaker.challengeFriend}
-                copiedLabel={m.codeBreaker.copied}
-                icon="link"
-              />
               <Button variant="quiet" icon="back" onClick={onToday}>
                 {m.codeBreaker.todayCode}
               </Button>
@@ -420,32 +408,24 @@ function PracticeView({
       }
       game={game}
       side={
-        <Card
-          kind="panel"
-          title={m.codeBreaker.challengeFriend}
+        <ChallengeCard
           description={
             cracked
               ? m.codeBreaker.friendFewer(cracked)
               : m.codeBreaker.friendSame
           }
+          text={share}
         >
           <CodeMarksBoard marks={marks} label={m.codeBreaker.yourPegs} />
-          <CopyButton
-            text={share}
-            label={m.codeBreaker.copyChallenge}
-            copiedLabel={m.codeBreaker.copied}
-            icon="link"
-            className={styles.copy}
-          />
-        </Card>
+        </ChallengeCard>
       }
     />
   );
 }
 
 /**
- * CB06-CB08, CB17: the result over the finished board, and cards beside it;
- * on a phone, a turn bar over them all when there is one.
+ * CB06-CB08, CB17: the finished board where it was played, under a bar that
+ * says how it ended, and how it went first in the column beside it.
  */
 function FinishedLayout({
   phase,
@@ -455,36 +435,24 @@ function FinishedLayout({
   side,
 }: {
   phase: { tone: 'blue'; label: string };
-  bar?: TurnBarProps;
+  bar: TurnBarProps;
   result: ReactNode;
   game: SoloGame;
   side: ReactNode;
 }) {
-  const phone = useMediaQuery(PHONE);
   return (
     <SoloLayout
       gameType="code-breaker"
       phase={phase}
       stage={
-        phone ? (
-          // CB17: the board first, under the bar, then how it went.
-          <>
-            {bar && <TurnBar {...bar} />}
-            <BoardPanel>
-              <FinishedBoard game={game} />
-            </BoardPanel>
-            {result}
-            {side}
-          </>
-        ) : (
-          <>
-            {result}
-            <BoardPanel>
-              <FinishedBoard game={game} />
-            </BoardPanel>
-          </>
-        )
+        <>
+          <TurnBar {...bar} />
+          <BoardPanel>
+            <FinishedBoard game={game} />
+          </BoardPanel>
+        </>
       }
+      result={result}
       side={side}
     />
   );
@@ -562,6 +530,24 @@ function playingBar(
       : phone
         ? m.codeBreaker.legendLine
         : known(game, m),
+  };
+}
+
+/** The turn bar over a finished code: cracked or not, and what comes next. */
+function endBar(
+  game: SoloGame,
+  label: string,
+  meta: string | undefined,
+  m: Messages,
+): TurnBarProps {
+  return {
+    label,
+    kind: 'status',
+    main:
+      guessesToCrack(game) === null
+        ? m.codeBreaker.outOfGuesses
+        : m.codeBreaker.youCrackedCode(game.code),
+    meta,
   };
 }
 

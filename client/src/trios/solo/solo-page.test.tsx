@@ -57,19 +57,14 @@ async function findTrio() {
   model = afterFlash(model, 0);
 }
 
-/** Starts the run `SEED` deals. */
-async function startRun() {
-  const view = await renderApp(`/games/trios/solo?seed=${SEED}`);
-  await user.click(screen.getByRole('button', { name: 'Start' }));
-  return view;
-}
+/** Plays the run `SEED` deals. */
+const startRun = () => renderApp(`/games/trios/solo?seed=${SEED}`);
 
 describe('Trios on your own', () => {
   it('runs in Chinese with localized cards, hints and penalty explanations', async () => {
     await renderApp(`/games/trios/solo?seed=${SEED}`, { locale: 'zh' });
-    expect(screen.getByText('找 10 组，看你多快。')).toBeInTheDocument();
-    expect(screen.getByText(/^朋友发来了这副牌。/)).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: '开始' }));
+    expect(screen.getByText('挑战')).toBeInTheDocument();
+    expect(screen.getByText('怎样算一组')).toBeInTheDocument();
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 1 / 10 组')).toBeInTheDocument();
     expect(bar.getByText('找出一组')).toBeInTheDocument();
@@ -99,16 +94,14 @@ describe('Trios on your own', () => {
     );
   });
 
-  it('deals on a first visit when asked', async () => {
+  it('deals at once on a first visit, with a trio to learn from', async () => {
     const { router } = await renderApp('/games/trios/solo', {
       firstVisit: true,
     });
     expect(router.state.location.pathname).toBe('/games/trios/solo');
-    expect(screen.getByText('Ten trios, one clock.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
     expect(screen.getByText('Not yet')).toBeInTheDocument();
-    expect(screen.queryByRole('group', { name: 'Table' })).toBeNull();
-
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.getByText('What makes a trio')).toBeInTheDocument();
     expect(turn().getByText('Trio 1 of 10')).toBeInTheDocument();
     expect(turn().getByText('Find a trio')).toBeInTheDocument();
     expect(places()).toHaveLength(12);
@@ -120,7 +113,6 @@ describe('Trios on your own', () => {
     expect(router.state.location.pathname).toBe('/games/trios');
 
     await act(() => router.navigate(`/games/trios/solo?seed=${SEED}`));
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     await findTrio();
     await user.click(screen.getByRole('button', { name: 'Leave' }));
     const dialog = within(
@@ -142,11 +134,8 @@ describe('Trios on your own', () => {
   });
 
   it('plays a challenge’s own deal', async () => {
-    await renderApp(`/games/trios/solo?seed=${SEED}`);
-    expect(
-      screen.getByText(/^A friend sent you this deal\./),
-    ).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await startRun();
+    expect(screen.getByText('Challenge')).toBeInTheDocument();
     expect(places().map((card) => card.getAttribute('aria-label'))).toEqual(
       model.deal.table.map(cardName),
     );
@@ -252,8 +241,11 @@ describe('Trios on your own', () => {
     );
     expect(screen.getByText('Today')).toBeInTheDocument();
 
+    expect(
+      screen.getByRole('heading', { name: 'Challenge a friend' }),
+    ).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Challenge a friend' }),
+      screen.getByRole('button', { name: 'Copy challenge link' }),
     );
     expect(await navigator.clipboard.readText()).toBe(
       `${window.location.origin}/games/trios/solo?seed=${SEED}`,
@@ -269,5 +261,6 @@ describe('Trios on your own', () => {
     await startRun();
     expect(places()).toHaveLength(12);
     expect(screen.queryByText('This run')).toBeNull();
+    expect(screen.queryByText('What makes a trio')).toBeNull();
   });
 });

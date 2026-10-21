@@ -154,9 +154,18 @@ describe('Code Breaker on your own', () => {
     expect(
       screen.getByText(`The code was ${code}. Practice codes keep no stats.`),
     ).toBeInTheDocument();
+    expect(turn().getByText(`You cracked ${code}`)).toBeInTheDocument();
     expect(
       screen.getByRole('group', { name: 'Your pegs' }),
     ).toBeInTheDocument();
+    // One way to challenge a friend.
+    expect(screen.getAllByRole('button', { name: /challenge/i })).toHaveLength(
+      1,
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Copy challenge link' }),
+    );
+    expect(await navigator.clipboard.readText()).toContain(`?seed=${SEED}`);
     await user.click(screen.getByRole('button', { name: 'Today’s code' }));
     expect(await turn().findByText('Crack the code')).toBeInTheDocument();
     expect(screen.getByText('Code #1')).toBeInTheDocument();
@@ -169,7 +178,7 @@ describe('Code Breaker on your own', () => {
       await turn().findByText('Green: in place. Coral: somewhere else.'),
     ).toBeInTheDocument();
     await guess(TODAY);
-    expect(turn().getByText('Cracked it in 1!')).toBeInTheDocument();
+    expect(turn().getByText(`You cracked ${TODAY}`)).toBeInTheDocument();
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });
     expect(

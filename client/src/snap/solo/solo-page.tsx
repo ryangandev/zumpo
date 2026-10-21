@@ -98,7 +98,7 @@ function SnapExample() {
   return (
     <Card
       kind="panel"
-      title={m.snap.solo.spotTheMatch}
+      title={m.snap.solo.whatMakesMatch}
       description={m.snap.solo.rule}
     >
       <div className={styles.example}>

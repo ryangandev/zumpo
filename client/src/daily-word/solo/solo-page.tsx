@@ -23,7 +23,7 @@ import {
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
-import { challengeLink } from '../../solo/challenge';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
@@ -198,6 +198,7 @@ function DailyView({
   return (
     <FinishedLayout
       phase={phase}
+      bar={endBar(game, title, m.dailyWord.newWordAtMidnight, m)}
       result={
         <SoloResult
           title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
@@ -211,10 +212,6 @@ function DailyView({
               : m.dailyWord.dailyMissed
           }
           stats={[
-            {
-              label: m.dailyWord.guesses,
-              value: m.dailyWord.guessesOf(game.guesses.length, MAX_GUESSES),
-            },
             {
               label: m.dailyWord.nextWordIn,
               value: formatWait(msUntilNextPuzzle(new Date(now))),
@@ -324,6 +321,12 @@ function PracticeView({
   return (
     <FinishedLayout
       phase={phase}
+      bar={endBar(
+        game,
+        challenge ? m.dailyWord.friendWord : m.dailyWord.practiceWord,
+        undefined,
+        m,
+      )}
       result={
         <SoloResult
           title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
@@ -336,12 +339,6 @@ function PracticeView({
           actions={
             <>
               <Button onClick={onAnother}>{m.dailyWord.anotherWord}</Button>
-              <CopyButton
-                text={share}
-                label={m.dailyWord.challengeFriend}
-                copiedLabel={m.dailyWord.copied}
-                icon="link"
-              />
               <Button variant="quiet" icon="back" onClick={onToday}>
                 {m.dailyWord.todayWord}
               </Button>
@@ -351,42 +348,36 @@ function PracticeView({
       }
       game={game}
       side={
-        <Card
-          kind="panel"
-          title={m.dailyWord.challengeFriend}
+        <ChallengeCard
           description={
             found ? m.dailyWord.friendFewer(found) : m.dailyWord.friendSame
           }
+          text={share}
         >
           <WordBoard
-            rows={rowsOf(game).map(({ marks: rowMarks }) => ({
-              word: null,
-              marks: rowMarks,
-            }))}
+            rows={marks.map((rowMarks) => ({ word: null, marks: rowMarks }))}
             size="mini"
             label={m.dailyWord.yourMarks}
           />
-          <CopyButton
-            text={share}
-            label={m.dailyWord.copyChallenge}
-            copiedLabel={m.dailyWord.copied}
-            icon="link"
-            className={styles.copy}
-          />
-        </Card>
+        </ChallengeCard>
       }
     />
   );
 }
 
-/** DW04-DW06: the result over the finished board, and cards beside it. */
+/**
+ * DW04-DW06: the finished board where it was played, under a bar that says
+ * how it ended, and how it went first in the column beside it.
+ */
 function FinishedLayout({
   phase,
+  bar,
   result,
   game,
   side,
 }: {
   phase: { tone: 'blue'; label: string };
+  bar: TurnBarProps;
   result: ReactNode;
   game: SoloGame;
   side: ReactNode;
@@ -399,7 +390,7 @@ function FinishedLayout({
       phase={phase}
       stage={
         <>
-          {result}
+          <TurnBar {...bar} />
           <BoardPanel>
             <WordBoard
               rows={rowsOf(game)}
@@ -407,10 +398,9 @@ function FinishedLayout({
               label={m.dailyWord.yourGuesses}
             />
           </BoardPanel>
-          {/* A phone has no column beside the board, so the cards follow it. */}
-          {phone && side}
         </>
       }
+      result={result}
       side={side}
     />
   );
@@ -454,6 +444,24 @@ function playingBar(
     kind: 'status',
     main: m.dailyWord.guessNumber(game.guesses.length + 1, MAX_GUESSES),
     meta: game.problem ? m.dailyWord.fixRow : known(game, m),
+  };
+}
+
+/** The turn bar over a finished word: found or not, and what comes next. */
+function endBar(
+  game: SoloGame,
+  label: string,
+  meta: string | undefined,
+  m: Messages,
+): TurnBarProps {
+  return {
+    label,
+    kind: 'status',
+    main:
+      guessesToWin(game) === null
+        ? m.dailyWord.outOfGuesses
+        : m.dailyWord.youFoundWord(game.answer.toUpperCase()),
+    meta,
   };
 }
 

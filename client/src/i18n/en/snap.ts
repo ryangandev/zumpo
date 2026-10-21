@@ -81,7 +81,7 @@ export const snap = {
   looking: 'Looking',
   solo: {
     rule: 'Tap the symbol on both cards, and the middle card becomes yours. A wrong tap adds 3 seconds.',
-    spotTheMatch: 'Spot the match',
+    whatMakesMatch: 'What makes a match',
     example: 'Every two cards share exactly one symbol.',
     notYet: 'Not yet',
     complete: 'Run complete',
