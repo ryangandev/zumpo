@@ -572,6 +572,50 @@ describe('a room page', () => {
     ).toBeInTheDocument();
   });
 
+  it('says how to play to a host still alone, and to a spectator', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+          },
+        }),
+      ),
+    );
+    const alone = within(
+      screen.getByRole('region', { name: 'A little better with company.' }),
+    );
+    expect(alone.getByRole('heading', { name: 'How to play' })).toBeVisible();
+    expect(
+      alone.getByText('Share one board, and pick safe cells in secret.'),
+    ).toBeInTheDocument();
+
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          owner: { username: 'Maya', playerId: 'p2' },
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+          },
+          spectators: { p1: { username: 'Ryan', isConnected: true } },
+        }),
+      ),
+    );
+    const watching = within(
+      screen.getByRole('region', { name: 'You’re watching.' }),
+    );
+    expect(
+      watching.getByRole('heading', { name: 'How to play' }),
+    ).toBeVisible();
+    expect(
+      watching.getByText('Share one board, and pick safe cells in secret.'),
+    ).toBeInTheDocument();
+  });
+
   it('shows how to play over the room, which stays', async () => {
     const user = userEvent.setup();
     const fake = server();
