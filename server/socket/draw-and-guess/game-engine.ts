@@ -393,7 +393,8 @@ const createDrawAndGuessGameEngine = (
     game.wordCategory = '';
 
     emitState(room);
-    announce(room.roomId, 'system', { type: 'game:ended' });
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) announce(room.roomId, 'system', { type: 'game:ended' });
     emitLobbyRoomList();
   };
 

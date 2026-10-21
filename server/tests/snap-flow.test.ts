@@ -15,6 +15,7 @@ import {
   waitForChat,
   waitForSnapState,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 
 /** The symbol a player's card shares with the middle card. */
@@ -380,9 +381,13 @@ describe('a Snap game', () => {
     players[1].emit('snap:claim', roomId, 0, matchFor(firsts[1]!));
     await taken;
 
+    const endChat = collectChat(owner);
     const over = waitForSnapState(owner, (s) => s.lastGame !== null);
     players[1].emit('room:leave', roomId);
     expect((await over).lastGame).toMatchObject({ endedEarly: true, taken: 1 });
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
     expect(snapRoom(harness, roomId).game.hands.has(players[1].playerId)).toBe(
       false,
     );

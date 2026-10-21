@@ -144,11 +144,14 @@ const createPairsGameEngine = (
     game.turnPlayerId = null;
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(
-      room.roomId,
-      'system',
-      gameOverNotice(standings, 'pair'),
-    );
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) {
+      ctx.rooms.announce(
+        room.roomId,
+        'system',
+        gameOverNotice(standings, 'pair'),
+      );
+    }
     ctx.rooms.emitLobby('pairs');
   };
 

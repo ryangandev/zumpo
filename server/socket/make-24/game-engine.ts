@@ -201,7 +201,10 @@ const createMake24GameEngine = (
     game.solves.clear();
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) {
+      ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+    }
     ctx.rooms.emitLobby('make-24');
   };
 

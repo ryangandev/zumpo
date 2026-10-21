@@ -482,6 +482,17 @@ const collectChat = (socket: ClientSocket): ChatMessage[] => {
   return received;
 };
 
+/**
+ * The notices among `chat` that say a game ended: an early end posts only
+ * `game:interrupted`, a finished game its result.
+ */
+const endNotices = (chat: readonly ChatMessage[]): string[] =>
+  chat
+    .map((message) => message.notice?.type ?? '')
+    .filter((type) =>
+      ['game:interrupted', 'game:over', 'game:ended'].includes(type),
+    );
+
 /** Every snapshot this client is sent from now on. */
 const collectStates = <T extends AnyRoomState = DrawAndGuessRoomState>(
   socket: ClientSocket,
@@ -1107,6 +1118,7 @@ export {
   waitForChat,
   collect,
   collectChat,
+  endNotices,
   collectStates,
   settle,
   request,

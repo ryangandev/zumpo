@@ -204,11 +204,14 @@ const createTriosGameEngine = (
     game.hintPlan = null;
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(
-      room.roomId,
-      'system',
-      gameOverNotice(standings, 'trio'),
-    );
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) {
+      ctx.rooms.announce(
+        room.roomId,
+        'system',
+        gameOverNotice(standings, 'trio'),
+      );
+    }
     ctx.rooms.emitLobby('trios');
   };
 

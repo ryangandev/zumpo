@@ -278,7 +278,8 @@ const createLiarsDiceGameEngine = (
 
     ctx.rooms.emitState(room);
     const [winner] = standings;
-    if (winner && winner.points > 0) {
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly && winner && winner.points > 0) {
       ctx.rooms.announce(room.roomId, 'system', {
         type: 'game:over',
         names: [winner.username],
