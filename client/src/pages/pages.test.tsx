@@ -6,7 +6,12 @@ import {
   dailyCode,
   puzzleNumber,
 } from '../../../shared/code-breaker';
+import {
+  dailyAnswer,
+  puzzleNumber as wordPuzzle,
+} from '../../../shared/daily-word';
 import type { MinesweeperLobbyRoomInfo } from '../../../shared/wire-types';
+import { recordGuesses } from '../daily-word/solo/records';
 import { onPhone } from '../tests/phone';
 import { renderApp } from '../tests/render-app';
 
@@ -256,6 +261,33 @@ describe('the home page', () => {
     ).toHaveAttribute('href', '/games/code-breaker/solo');
     localStorage.removeItem('zumpo:solo:code-breaker:puzzles');
     vi.useRealTimers();
+  });
+
+  it('shows where today’s daily word stands from the first render', async () => {
+    const today = wordPuzzle(new Date());
+    recordGuesses(today - 1, [dailyAnswer(today - 1)]);
+    recordGuesses(
+      today,
+      ['hatch', 'match'].filter((w) => w !== dailyAnswer(today)).slice(0, 1),
+    );
+    const { unmount } = await renderApp('/');
+    expect(screen.getByRole('link', { name: 'Guess 2 of 6' })).toHaveAttribute(
+      'href',
+      '/games/daily-word/solo',
+    );
+    unmount();
+
+    recordGuesses(today, [dailyAnswer(today)]);
+    await renderApp('/games/daily-word');
+    const intro = screen.getByRole('region', { name: 'Daily Word' });
+    expect(
+      within(intro).getByText('Done today · 2-day streak'),
+    ).toBeInTheDocument();
+    expect(
+      within(intro).getByRole('link', { name: 'See today’s result' }),
+    ).toBeInTheDocument();
+    localStorage.removeItem('zumpo:solo:daily-word:puzzles');
+    localStorage.removeItem('zumpo:solo:daily-word:today');
   });
 
   it('is where the old games and How to play pages lead', async () => {

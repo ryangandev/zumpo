@@ -5,7 +5,11 @@ import {
   MAX_GUESSES,
 } from '../../../../shared/daily-word';
 import { readStored, writeStored } from '../../solo/device-store';
-import { DAILY_WORD_RECORDS, type DailyToday } from '../../games/today';
+import {
+  DAILY_WORD_RECORDS,
+  writeDailyWordToday,
+  type DailyToday,
+} from '../../games/today';
 
 /**
  * The daily words played on this device: the guesses made at each puzzle, by
@@ -39,7 +43,10 @@ export function readRecords(): PuzzleRecords {
   }
 }
 
-/** Keeps a puzzle's guesses so far, as each is made. */
+/**
+ * Keeps a puzzle's guesses so far, as each is made, and where the puzzle
+ * stands, for the card and the game page.
+ */
 export function recordGuesses(
   puzzle: number,
   guesses: readonly string[],
@@ -47,6 +54,7 @@ export function recordGuesses(
   const records = new Map(readRecords());
   records.set(puzzle, guesses);
   writeStored(KEY, JSON.stringify(Object.fromEntries(records)));
+  writeDailyWordToday(puzzle, guesses.length, todayOf(records, puzzle));
   return records;
 }
 
