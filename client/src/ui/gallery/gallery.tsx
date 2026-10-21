@@ -2026,10 +2026,7 @@ export default function Gallery() {
       <Family name="Header and wordmark" file="header">
         <Specimen family="header" width={1312}>
           <Header
-            links={[
-              { label: 'Games', to: '/design', current: true },
-              { label: 'How to play', to: '/design' },
-            ]}
+            links={[{ label: 'Games', to: '/design', current: true }]}
             viewer={{ ...PLAYERS.maya, label: 'You are Maya' }}
           />
         </Specimen>
@@ -2119,7 +2116,6 @@ export default function Gallery() {
             kind="panel"
             title="A little quiet in here."
             description="Be the first to make a room. Bring a friend and get playing."
-            actions={<Button>Create the first room</Button>}
           />
         </Specimen>
         <Specimen label="Kind=Panel: stats beside a game" width={344}>

@@ -13,7 +13,6 @@ import { isLocale, type Locale } from '../i18n/locale';
 
 const IDENTITY_KEY = 'zumpo:identity';
 const NAME_KEY = 'zumpo:name';
-const NAME_HINT_KEY = 'zumpo:name-hint';
 const LOCALE_KEY = 'zumpo:locale';
 
 type Store = 'sessionStorage' | 'localStorage';
@@ -93,15 +92,6 @@ export function readName(): StoredName | null {
 
 export function writeName({ name, picked }: StoredName): void {
   write('localStorage', NAME_KEY, JSON.stringify({ name, picked }));
-}
-
-/** Whether the first visit's hint about the picked name has been seen. */
-export function readNameHintSeen(): boolean {
-  return read('localStorage', NAME_HINT_KEY) === 'seen';
-}
-
-export function writeNameHintSeen(): void {
-  write('localStorage', NAME_HINT_KEY, 'seen');
 }
 
 /** The language the player chose from the switch, if they ever did. */

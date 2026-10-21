@@ -8,8 +8,8 @@ import { FakeSocket } from './fake-socket';
 
 /**
  * The whole app at `path`, talking to a fake server, with a player who has
- * chosen `name` themselves. `picked` makes it the name picked for them, with
- * the hint about it already seen; `firstVisit` stores nothing at all.
+ * chosen `name` themselves. `picked` makes it the name picked for them;
+ * `firstVisit` stores nothing at all.
  */
 export async function renderApp(
   path: string,
@@ -31,13 +31,8 @@ export async function renderApp(
   sessionStorage.clear();
   if (locale) localStorage.setItem('zumpo:locale', locale);
   else localStorage.removeItem('zumpo:locale');
-  if (firstVisit) {
-    localStorage.removeItem('zumpo:name');
-    localStorage.removeItem('zumpo:name-hint');
-  } else {
-    localStorage.setItem('zumpo:name', JSON.stringify({ name, picked }));
-    localStorage.setItem('zumpo:name-hint', 'seen');
-  }
+  if (firstVisit) localStorage.removeItem('zumpo:name');
+  else localStorage.setItem('zumpo:name', JSON.stringify({ name, picked }));
   fake.session = { playerId: ME, token: 't1', reconnectGraceMs: 30_000 };
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   const view = render(
