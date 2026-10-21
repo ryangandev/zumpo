@@ -32,17 +32,46 @@
   height: var(--zumpo-text-label-line);
 }
 
-.system {
+.system,
+.score,
+.divider {
   color: var(--zumpo-muted);
 }
 
-.system .text {
+.system .text,
+.score .text,
+.divider .text {
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
 }
 
-.system .iconSlot {
+.system .iconSlot,
+.score .iconSlot {
   height: var(--zumpo-text-small-line);
+}
+
+/* A quiet line, as System, whose check says somebody scored. */
+.score .iconSlot {
+  color: var(--zumpo-green);
+}
+
+/* A thin rule either side of a short label: a new turn or step begins. */
+.divider {
+  align-items: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1 1 var(--zumpo-space-16);
+  min-width: var(--zumpo-space-16);
+  height: var(--zumpo-space-1);
+  background: var(--zumpo-line);
+}
+
+.divider .text {
+  flex: 0 1 auto;
+  text-align: center;
 }
 
 .success,
@@ -63,4 +92,35 @@
 
 .alert {
   background: var(--zumpo-peach);
+}
+
+.truncate .text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The viewer's own line, just sent, lights up once and fades: a guess always
+   gets an answer, even a wrong one. The glow is a shadow, so nothing moves. */
+.flash {
+  border-radius: var(--zumpo-radius-8);
+  animation: flash 1.6s ease-out;
+}
+
+@keyframes flash {
+  from {
+    background: var(--zumpo-sand);
+    box-shadow: 0 0 0 var(--zumpo-space-4) var(--zumpo-sand);
+  }
+
+  to {
+    background: transparent;
+    box-shadow: 0 0 0 var(--zumpo-space-4) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash {
+    animation: none;
+  }
 }

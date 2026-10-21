@@ -264,7 +264,7 @@ const createHushGameEngine = (
       return;
     }
 
-    ctx.rooms.announce(room.roomId, 'success', {
+    ctx.rooms.announce(room.roomId, 'score', {
       type: 'hush:cleared',
       level: game.level,
       clean,

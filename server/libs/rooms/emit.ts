@@ -107,6 +107,17 @@ const emitToPlayer = <E extends ServerToClientEvent>(
   io.to(playerChannel(playerId)).emit(event, ...args);
 };
 
+/** Sends to each of these players, whichever socket each is using. */
+const emitToPlayers = <E extends ServerToClientEvent>(
+  io: IoServer,
+  playerIds: readonly string[],
+  event: E,
+  ...args: ServerArgs<E>
+): void => {
+  if (playerIds.length === 0) return;
+  io.to(playerIds.map(playerChannel)).emit(event, ...args);
+};
+
 /** Names an event for the log: who sent it, and the room it names, if any. */
 const describeEvent = (
   socket: IoSocket,
@@ -203,6 +214,7 @@ export {
   emitToLobby,
   emitToSocket,
   emitToPlayer,
+  emitToPlayers,
   broadcastToRoom,
   onClientEvent,
   onClientRequest,
