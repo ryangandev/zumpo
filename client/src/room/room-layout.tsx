@@ -15,7 +15,12 @@ import { gameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
-import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import {
+  ONE_COLUMN,
+  PHONE,
+  TOUCH,
+  useMediaQuery,
+} from '../shell/use-media-query';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
@@ -42,6 +47,11 @@ export interface RoomLayoutProps {
     lockedReason?: string;
     /** The game's own Alert icon in the chat, as Chat message allows. */
     alertIcon?: GlyphName;
+    /**
+     * Each new value takes the keyboard to the chat box, as a guessing turn
+     * starts; never under a finger, whose keyboard would cover the board.
+     */
+    focusKey?: string;
   };
   /**
    * On a phone, the chat input repeated under the board, so a guess needs no
@@ -91,6 +101,7 @@ export function RoomLayout({
   const game = gameInfo(state.gameType);
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
+  const touch = useMediaQuery(TOUCH);
   const oneColumn = useMediaQuery(ONE_COLUMN);
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
@@ -157,7 +168,12 @@ export function RoomLayout({
       </Scoreboard>
     ) : null;
 
-  const chatPanel = <RoomChat input={input} alertIcon={chat.alertIcon} />;
+  const chatPanel = (
+    <RoomChat
+      input={{ ...input, focusKey: touch ? undefined : chat.focusKey }}
+      alertIcon={chat.alertIcon}
+    />
+  );
   // The chat is read wherever it shows: always beside a desktop room, on a
   // phone in its tab or in the lines under the board.
   const unread = useUnreadChat(

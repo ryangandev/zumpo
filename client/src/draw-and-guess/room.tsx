@@ -71,6 +71,11 @@ export function DrawAndGuessRoom() {
               ? m.drawAndGuess.guessPlaceholder
               : m.drawAndGuess.messagePlaceholder,
         lockedReason: chatLock(state, isDrawer, scored, m),
+        // A guesser's turn starts with the keyboard in the guess box.
+        focusKey:
+          drawing && !isDrawer && !scored && !room.spectating
+            ? `${state.currentRound}.${state.turn}`
+            : undefined,
       }}
       boardInput={
         inGame && !isDrawer && state.phase !== 'choosing'

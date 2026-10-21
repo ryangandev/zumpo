@@ -97,6 +97,22 @@ describe('a Draw & Guess room', () => {
     );
   });
 
+  it('puts the keyboard in the guess box as a guessing turn starts', async () => {
+    const { update } = await renderSeated(
+      drawAndGuessState({ ...turn, phase: 'choosing', currentDrawer: 'p2' }),
+    );
+    expect(screen.getByRole('textbox')).not.toHaveFocus();
+    update(
+      drawAndGuessState({
+        ...turn,
+        phase: 'drawing',
+        currentDrawer: 'p2',
+        hint: '_ _ _ _ _ _',
+      }),
+    );
+    expect(screen.getByPlaceholderText('Type your guess…')).toHaveFocus();
+  });
+
   it('sends a guess through the chat', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(
