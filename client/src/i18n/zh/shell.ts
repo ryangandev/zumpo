@@ -3,7 +3,6 @@ import type { shell as en } from '../en/shell';
 export const shell: typeof en = {
   nav: {
     games: '游戏',
-    howToPlay: '玩法',
     main: '主导航',
     home: 'Zumpo 首页',
   },
@@ -17,9 +16,6 @@ export const shell: typeof en = {
   name: {
     yourName: '你的名字',
     viewer: (name) => `${name}：你的名字`,
-    hintTitle: (name) => `你是 ${name}。`,
-    hintDescription: '我们先给你起了个名字，马上就能开玩。随时可以在这里改。',
-    gotIt: '知道了',
     changeName: '改名字',
     helper: '你房间里的所有人都会看到。',
     save: '保存',

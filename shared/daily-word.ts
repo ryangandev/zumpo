@@ -1,7 +1,7 @@
 import type { DailyWordMark } from './wire-types.js';
 import { ANSWERS } from './daily-word-answers.js';
 import { GUESSES } from './daily-word-guesses.js';
-import { msUntilMidnight, puzzleDays } from './daily.js';
+import { DAILY_WORD_FIRST_DAY, msUntilMidnight, puzzleDays } from './daily.js';
 import { seededRandom, seedNumber } from './seed.js';
 import { charAt, itemAt, pickFrom } from './list.js';
 
@@ -94,8 +94,7 @@ export function keyMarks(
 // ---------------------------------------------------------------------------
 // The daily word
 
-/** Puzzle #1 is this local date: 5 October 2026. */
-const DAYS = puzzleDays({ year: 2026, month: 10, day: 5 });
+const DAYS = puzzleDays(DAILY_WORD_FIRST_DAY);
 
 /**
  * The daily puzzle for the device's own date, from 1. A clock set before the

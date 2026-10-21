@@ -4,8 +4,8 @@ import { cx } from '../ui/cx';
 import styles from './page-heading.module.css';
 
 export interface PageHeadingProps {
-  /** The sand tag above the title, in capitals. */
-  eyebrow: string;
+  /** The sand tag above the title, in capitals, if any. */
+  eyebrow?: string;
   title: ReactNode;
   subtitle?: ReactNode;
   /** The home page's large two-line title. */
@@ -14,7 +14,7 @@ export interface PageHeadingProps {
   titleId?: string;
 }
 
-/** A page's sand eyebrow tag, title and muted subtitle. */
+/** A page's sand eyebrow tag, if any, title and muted subtitle. */
 export function PageHeading({
   eyebrow,
   title,
@@ -24,7 +24,7 @@ export function PageHeading({
 }: PageHeadingProps) {
   return (
     <div className={styles.heading}>
-      <Tag className={styles.eyebrow}>{eyebrow}</Tag>
+      {eyebrow != null && <Tag className={styles.eyebrow}>{eyebrow}</Tag>}
       <h1 id={titleId} className={cx(styles.title, hero && styles.hero)}>
         {title}
       </h1>

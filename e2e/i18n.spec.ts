@@ -7,6 +7,7 @@ test('Chinese and English players share a room and render notices in their own l
   const guest = await player('Bob', { locale: 'en' });
   await host.goto('/games/pairs/new');
   await expect(host.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await host.getByRole('button', { name: '更多选项', exact: true }).click();
   await host.getByRole('textbox', { name: '房间名称' }).fill('双语房间');
   await host.getByRole('button', { name: '创建房间', exact: true }).click();
   await expect(host).toHaveURL(/\/games\/pairs\/rooms\//);
@@ -67,6 +68,7 @@ test('a Chinese phone visitor can change language with the keyboard and create a
   await expect(phone.locator('html')).toHaveAttribute('lang', 'zh-CN');
   await phone.goto('/games/minesweeper');
   await phone.getByRole('link', { name: '创建房间', exact: true }).click();
+  await phone.getByRole('button', { name: '更多选项', exact: true }).click();
   await phone.getByRole('textbox', { name: '房间名称' }).fill('手机扫雷');
   await phone.getByRole('button', { name: '创建房间', exact: true }).click();
   await expect(phone).toHaveURL(/\/games\/minesweeper\/rooms\//);

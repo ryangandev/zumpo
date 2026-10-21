@@ -6,6 +6,7 @@ import {
   recordGuesses,
   recordNotes,
   statsOf,
+  todayOf,
 } from './records';
 
 /** Codes that are not `puzzle`'s, to miss it with. */
@@ -95,6 +96,30 @@ describe('the stats', () => {
       played: 0,
       crackedPercent: 0,
       currentStreak: 0,
+    });
+  });
+});
+
+describe('today, for the card and the game page', () => {
+  it('is nothing before the first guess, then the guess it is on', () => {
+    expect(todayOf(new Map(), 5)).toBeNull();
+    expect(todayOf(new Map([[5, []]]), 5)).toBeNull();
+    expect(todayOf(new Map([[5, misses(5, 2)]]), 5)).toEqual({
+      state: 'playing',
+      guess: 3,
+      of: 10,
+    });
+  });
+
+  it('is done once cracked or missed, with the streak it leaves', () => {
+    const cracked = new Map([
+      [4, crackedIn(4, 2)],
+      [5, crackedIn(5, 3)],
+    ]);
+    expect(todayOf(cracked, 5)).toEqual({ state: 'done', streak: 2 });
+    expect(todayOf(new Map([[5, misses(5, 10)]]), 5)).toEqual({
+      state: 'done',
+      streak: 0,
     });
   });
 });

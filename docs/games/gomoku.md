@@ -213,4 +213,4 @@ Whole seeded games there keep the levels in order: Medium beats Easy and Hard be
 The screens are covered by [`room.test.tsx`](../../client/src/gomoku/room.test.tsx) and [`solo-page.test.tsx`](../../client/src/gomoku/solo/solo-page.test.tsx), and two players in a browser by [`gomoku.spec.ts`](../../e2e/gomoku.spec.ts).
 The screens are GM01-GM21 in [the Figma file](../design.md), section 14: the game page (GM01, GM20), solo (GM02-GM06, GM17), a room (GM07-GM16, GM18, GM19) and every state a point can show (GM21).
 Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus` and `Zumpo/Gomoku seat`.
-Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules card is on P14 / How to play.
+Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules are in the How to play panel of its game page (GM01, GM20).

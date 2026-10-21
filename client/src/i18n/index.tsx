@@ -22,6 +22,14 @@ export type { Messages } from './en';
  */
 const MESSAGES: Readonly<Record<Locale, Messages>> = { en, zh };
 
+/**
+ * The names a room gets when its host keeps the one offered, in every
+ * language, since the host may read another than the viewer.
+ */
+export function defaultRoomNames(host: string): string[] {
+  return Object.values(MESSAGES).map((m) => m.createRoom.defaultName(host));
+}
+
 interface LocaleState {
   locale: Locale;
   messages: Messages;

@@ -5,6 +5,11 @@ import {
   MAX_GUESSES,
 } from '../../../../shared/daily-word';
 import { readStored, writeStored } from '../../solo/device-store';
+import {
+  DAILY_WORD_RECORDS,
+  writeDailyWordToday,
+  type DailyToday,
+} from '../../games/today';
 
 /**
  * The daily words played on this device: the guesses made at each puzzle, by
@@ -13,7 +18,7 @@ import { readStored, writeStored } from '../../solo/device-store';
  */
 export type PuzzleRecords = ReadonlyMap<number, readonly string[]>;
 
-const KEY = 'daily-word:puzzles';
+const KEY = DAILY_WORD_RECORDS;
 
 export function readRecords(): PuzzleRecords {
   try {
@@ -38,7 +43,10 @@ export function readRecords(): PuzzleRecords {
   }
 }
 
-/** Keeps a puzzle's guesses so far, as each is made. */
+/**
+ * Keeps a puzzle's guesses so far, as each is made, and where the puzzle
+ * stands, for the card and the game page.
+ */
 export function recordGuesses(
   puzzle: number,
   guesses: readonly string[],
@@ -46,6 +54,7 @@ export function recordGuesses(
   const records = new Map(readRecords());
   records.set(puzzle, guesses);
   writeStored(KEY, JSON.stringify(Object.fromEntries(records)));
+  writeDailyWordToday(puzzle, guesses.length, todayOf(records, puzzle));
   return records;
 }
 
@@ -113,4 +122,20 @@ export function statsOf(records: PuzzleRecords, today: number): DailyStats {
     bestStreak,
     distribution,
   };
+}
+
+/**
+ * Where today's puzzle stands, for the game's card and page: nothing before
+ * its first guess, then the guess it is on, then done with the streak.
+ */
+export function todayOf(
+  records: PuzzleRecords,
+  today: number,
+): DailyToday | null {
+  const guesses = records.get(today);
+  if (!guesses?.length) return null;
+  if (outcomeOf(today, guesses) === 'playing') {
+    return { state: 'playing', guess: guesses.length + 1, of: MAX_GUESSES };
+  }
+  return { state: 'done', streak: statsOf(records, today).currentStreak };
 }
