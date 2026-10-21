@@ -69,9 +69,9 @@ export function SnapBoard({ middle, mine, onTap }: SnapBoardProps) {
 }
 
 /**
- * The turn bar over the cards. Stacked on a phone it keeps room for a line
- * of what it says and its meta, so a phase that says less never pulls the
- * cards up under a finger.
+ * The turn bar over the cards. It keeps room for the most it says at its
+ * width, a long name and the meta under it, so a phase that says less never
+ * pulls the cards up under a finger.
  */
 export function SnapTurnBar(props: TurnBarProps) {
   return <TurnBar {...props} className={styles.turnBar} />;

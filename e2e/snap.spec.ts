@@ -117,7 +117,7 @@ test('a player with no name races through thirty cards on their own', async ({
   expect(sent()).toEqual([]);
 });
 
-test('on a phone, the cards stay put through every phase', async ({
+test('the cards stay put through every phase, on a phone and beside the side column', async ({
   player,
 }) => {
   test.setTimeout(120_000);
@@ -125,7 +125,8 @@ test('on a phone, the cards stay put through every phase', async ({
   const server = await startServer(0, { SNAP_TAKEN_SECONDS: '2' });
   try {
     const own = { server: server.url };
-    const maya = await player('Maya', own);
+    // As long as a name can be: "… took it" takes two lines on a phone.
+    const maya = await player('Bartholomew Wilder', own);
     const leo = await player('Leo', { ...own, phone: true });
     await joinRoom(leo, await createRoom(maya, 'snap', { seats: 2 }));
     await maya.getByRole('button', { name: 'Start game' }).click();
@@ -134,7 +135,9 @@ test('on a phone, the cards stay put through every phase', async ({
     // The turn bar stacks above the cards on a phone; whatever it says, the
     // cards must not move, or a tap meant for one symbol lands on another.
     const middle = cardOf(leo, 'Middle card');
-    const top = async () => (await middle.boundingBox())!.y;
+    // On the page, not in the window: a tap scrolls a card below into view.
+    const top = () =>
+      middle.evaluate((card) => card.getBoundingClientRect().top + scrollY);
     const at = await top();
     const turn = turnOf(leo);
 
@@ -145,11 +148,25 @@ test('on a phone, the cards stay put through every phase', async ({
 
     await readyToTap(maya);
     await tapMatch(maya);
-    await expect(turn.getByText('Maya took it')).toBeVisible();
+    await expect(turn.getByText('Bartholomew Wilder took it')).toBeVisible();
     expect(await top()).toBe(at);
     await expect(turn.getByText('on this card')).toBeVisible();
     await expect(leo.getByText('1 of 29 cards')).toBeVisible();
     expect(await top()).toBe(at);
+
+    // Beside the side column at this width, "Spot the match" and its meta
+    // fit one line and the meta goes under a long name.
+    await leo.setViewportSize({ width: 1240, height: 900 });
+    await readyToTap(leo);
+    await expect(leo.getByRole('region', { name: /^Players/ })).toBeVisible();
+    const wide = await top();
+    await readyToTap(maya);
+    await tapMatch(maya);
+    await expect(turn.getByText('Bartholomew Wilder took it')).toBeVisible();
+    expect(await top()).toBe(wide);
+    await expect(leo.getByText('2 of 29 cards')).toBeVisible();
+    await expect(turn.getByText('on this card')).toBeVisible();
+    expect(await top()).toBe(wide);
   } finally {
     server.process.kill('SIGKILL');
   }
