@@ -13,7 +13,7 @@ Its Chinese name is 传话画画.
 The working name was Telephone, after the children's game.
 On its own that word reads as a phone call, and it says nothing about drawing, which is what this game adds to the whispers.
 **Doodle Chain** says both halves, the doodles and the chain they are passed along, in two short words that sit beside Draw & Guess and Daily Word.
-Its wire id is `doodle-chain`, its events start with `dc:`, and its Figma screens are DC01-DC19.
+Its wire id is `doodle-chain`, its events start with `dc:`, and its Figma screens are DC01-DC20.
 
 ## Chains and steps
 
@@ -160,7 +160,7 @@ The light competition is a **heart**, given during the reveal:
 
 - Every player may give **one heart per chain**, to any shown entry that is not their own.
   Giving it to another entry of the same chain moves it, and pressing it again takes it back.
-- Everybody sees each entry's hearts as they are given.
+- Everybody sees each entry's hearts as they are given; on your own entry the count is all there is, and nothing shows while it is 0.
 - Spectators watch, but do not give hearts: they are not in the game.
 - A heart scores nothing in the game, but a player's **score** is the hearts their entries received this game, which the scoreboard shows during the reveal and the album ranks.
 - The album names the **crowd favourite**, the entry with the most hearts; entries that tie share it, and a game nobody hearted has none.
@@ -308,4 +308,5 @@ Doodle Chain is not built yet; this is the plan, after [adding a game](../archit
 
 The canvas and the drawing toolbar are Draw & Guess's, moved from `client/src/draw-and-guess/` to a shared `client/src/drawing/` when this game first needs them.
 The rules will be covered by `doodle-chain-rules.test.ts` and `doodle-chain-flow.test.ts` in `server/tests/`.
-The screens are DC01-DC19 in [the Figma file](../design.md), and its new pieces are in Shared pieces under Doodle Chain pieces.
+The screens are DC01-DC14 (game page, create room and room, desktop) and DC15-DC20 (phone) in [the Figma file](../design.md), section 12.
+Its new pieces are in Shared pieces under Doodle Chain pieces: `Zumpo/Chain entry` (one entry of a chain, by kind and layout), `Zumpo/Chain composer` (writing a line, and Done), `Zumpo/Heart button`, `Zumpo/Doodle Chain artwork` (to become Game artwork's Doodle Chain variant), and `Sample / Chain drawing`, the example drawings.

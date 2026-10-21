@@ -15,21 +15,22 @@ They are not copied here, so there is one place to change them.
 
 [Zumpo · Paper Pop flows](https://www.figma.com/design/pd5Hgp7zbT2cMqQNan35uY?node-id=9-14702), file key `pd5Hgp7zbT2cMqQNan35uY`, one page.
 
-| Section                              | Id         | Contents                                              |
-| ------------------------------------ | ---------- | ----------------------------------------------------- |
-| 00 / Review guide & flow map         | `9:14700`  | Review order, the real rules, which UX is new         |
-| 01 / Platform & shared flows         | `9:431`    | P01-P20 without P04, desktop                          |
-| 02 / Draw & Guess / complete flow    | `9:866`    | DL01-DL11 game page, D01-D15 room, desktop            |
-| 03 / Minesweeper / complete flow     | `9:2526`   | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo     |
-| 04 / Mobile / 390px flow adaptations | `9:10060`  | MO01-MO19 without MO03, the main flows at 390 px      |
-| 05 / Make 24 / complete flow         | `40:60741` | T01-T05 solo, T06-T10 room, T11-T12 phone             |
-| 06 / Pairs / complete flow           | `40:60743` | PR01-PR04 solo, PR05-PR08 room, PR09-PR10 phone       |
-| 07 / Trios / complete flow           | `43:61070` | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone       |
-| 08 / Liar's Dice / complete flow     | `43:61071` | LD01-LD06 solo, LD07-LD12 room, LD13-LD15 phone       |
-| 09 / Hush / complete flow            | `43:61072` | HU01-HU09 room, HU10-HU11 phone                       |
-| 10 / Daily Word / complete flow      | `43:61073` | DW01-DW06 solo, DW07-DW11 room, DW12-DW16 phone       |
-| Shared pieces                        | `9:198`    | Component families, all named `Zumpo/…`               |
-| Archive                              | `9:197`    | Club Circuit and Pocket Studio, with their components |
+| Section                              | Id          | Contents                                              |
+| ------------------------------------ | ----------- | ----------------------------------------------------- |
+| 00 / Review guide & flow map         | `9:14700`   | Review order, the real rules, which UX is new         |
+| 01 / Platform & shared flows         | `9:431`     | P01-P20 without P04, desktop                          |
+| 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D15 room, desktop            |
+| 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo     |
+| 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px      |
+| 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone             |
+| 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 solo, PR05-PR08 room, PR09-PR10 phone       |
+| 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone       |
+| 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 solo, LD07-LD12 room, LD13-LD15 phone       |
+| 09 / Hush / complete flow            | `43:61072`  | HU01-HU09 room, HU10-HU11 phone                       |
+| 10 / Daily Word / complete flow      | `43:61073`  | DW01-DW06 solo, DW07-DW11 room, DW12-DW16 phone       |
+| 12 / Doodle Chain / complete flow    | `162:65089` | DC01-DC14 game page and room, DC15-DC20 phone         |
+| Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`               |
+| Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components |
 
 Screens are 1440 px wide on desktop and 390 px on mobile, and each is named `<code> / <title>`.
 Review notes sit as loose text above each screen, outside the product UI.
