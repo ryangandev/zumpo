@@ -111,6 +111,38 @@ describe('a Daily Word room', () => {
     expect(screen.getByText('1 guess')).toBeInTheDocument();
   });
 
+  it('says how to read the marks beside the board', async () => {
+    await renderSeated(start);
+    const legend = await screen.findByRole('region', {
+      name: 'How to read it',
+    });
+    expect(
+      within(legend).getByText('Right letter, right place'),
+    ).toBeInTheDocument();
+    expect(within(legend).getByText('Not in the word')).toBeInTheDocument();
+  });
+
+  it('says how to read the marks in a phone’s turn bar until someone finds it', async () => {
+    onPhone();
+    const { update } = await renderSeated(start);
+    await screen.findByRole('group', { name: 'Your guesses' });
+    expect(
+      turn().getByText('Green: right place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'How to read it' })).toBeNull();
+
+    update(
+      guessing([
+        board(ME, 'Ryan'),
+        board('p2', 'Maya', {
+          rows: [{ word: null, marks: Array(5).fill('correct') }],
+          status: 'found',
+        }),
+      ]),
+    );
+    expect(turn().getByText('Maya found it')).toBeInTheDocument();
+  });
+
   it('quiets a finder’s chat until the reveal', async () => {
     await renderSeated(
       guessing([

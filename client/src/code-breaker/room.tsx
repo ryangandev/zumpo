@@ -20,7 +20,7 @@ import {
   type Draft,
   type Notes,
 } from './draft';
-import { BoardPanel } from './panel';
+import { BoardPanel, PegLegend } from './panel';
 import { describeRow, PlayArea } from './play';
 import styles from './room.module.css';
 
@@ -157,9 +157,9 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, m)} />
+        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
         <BoardPanel>
-          <Others room={room} />
+          <Side room={room} />
         </BoardPanel>
       </>
     );
@@ -167,7 +167,7 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, m)} />
+        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
         <RoundResults state={state} />
       </>
     );
@@ -237,25 +237,48 @@ function Round({
       className={done ? styles.mine : undefined}
     >
       {/* CB09: the others beside your board, the pad under both. */}
-      {!done && !phone && <Others room={room} />}
+      {!done && !phone && <Side room={room} />}
     </PlayArea>
   );
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, m)} />
+      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
       <BoardPanel>
         {done ? (
           // CB10, CB11: the pad gone, your board and the others side by side.
           <div className={styles.table}>
             {play}
-            {!phone && <Others room={room} />}
+            {!phone && <Side room={room} />}
           </div>
         ) : (
           play
         )}
       </BoardPanel>
     </>
+  );
+}
+
+/**
+ * CB09-CB11: beside your board, the others' and how to read the pegs, for a
+ * friend who meets them here before ever playing on their own. A phone has
+ * no room beside the board; its turn bar says how to read them (CB18).
+ */
+function Side({ room }: { room: Room }) {
+  const m = useMessages();
+  const phone = useMediaQuery(PHONE);
+  return (
+    <div className={styles.side}>
+      <Others room={room} />
+      {!phone && (
+        <section className={styles.legend} aria-labelledby="read-the-pegs">
+          <h2 id="read-the-pegs" className={styles.title}>
+            {m.codeBreaker.readIt}
+          </h2>
+          <PegLegend />
+        </section>
+      )}
+    </div>
   );
 }
 
@@ -350,6 +373,7 @@ function turnBar(
   room: Room,
   seconds: number,
   mine: CodeBreakerBoard | undefined,
+  phone: boolean,
   m: Messages,
 ): TurnBarProps {
   const { state, playerId, reconnecting } = room;
@@ -424,9 +448,13 @@ function turnBar(
     main: room.spectating
       ? m.codeBreaker.everyoneGuessing
       : m.codeBreaker.crackCode,
+    // Until somebody cracks it, a phone, with no legend beside the board,
+    // says how to read the pegs (CB18).
     meta: crackers.length
       ? m.codeBreaker.namesCracked(listNames(crackers, m))
-      : m.codeBreaker.fewerScore,
+      : phone
+        ? m.codeBreaker.legendLine
+        : m.codeBreaker.fewerScore,
     countdown: clock(m.codeBreaker.toGuess, room.spectating),
   };
 }
