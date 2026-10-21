@@ -26,6 +26,11 @@ export interface CodeBoardProps {
   played?: boolean;
   /** The board's accessible name: "Your guesses", "Maya’s board". */
   label: string;
+  /**
+   * The board a real keyboard types into: a game takes the focus here as it
+   * starts, rather than on a key, where Enter or Space would press it.
+   */
+  typingTarget?: boolean;
   /** Each guess's accessible name: "4 1 7 0: 2 in place, 2 elsewhere". */
   describe: (row: CodeBoardRow) => string;
   className?: string;
@@ -42,6 +47,7 @@ export function CodeBoard({
   size = 'compact',
   played = false,
   label,
+  typingTarget = false,
   describe,
   className,
 }: CodeBoardProps) {
@@ -49,6 +55,8 @@ export function CodeBoard({
     <div
       role="group"
       aria-label={label}
+      tabIndex={typingTarget ? -1 : undefined}
+      data-start-focus={typingTarget ? '' : undefined}
       className={cx(styles.board, styles[size], className)}
     >
       {Array.from(

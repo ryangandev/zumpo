@@ -26,6 +26,11 @@ export const games: typeof en = {
     continue: '继续',
     seeResult: '查看今日结果',
   },
+  artwork: {
+    drawn: 'turtle',
+    chainLine: '乌龟',
+    chainGuess: '汉堡？',
+  },
   counts: {
     'draw-and-guess': (rounds) => `${rounds} 轮`,
     'make-24': (hands) => `${hands} 题`,
@@ -40,10 +45,10 @@ export const games: typeof en = {
   of: {
     'draw-and-guess': {
       name: '你画我猜',
-      tagline: '一人画，其他人抢着猜。',
+      tagline: '一人画，其他人抢着猜。词语都是英文。',
       facts: '2–8 人',
       howToPlay: {
-        goal: '画一个词让大家猜，也去猜别人画的词。',
+        goal: '画一个英文单词让大家猜，也去猜别人画的词。',
         steps: [
           '轮到你时，从三个词里选一个画出来。',
           '其他人在聊天框里猜，随着时间流逝，字母会逐个揭开。',
@@ -53,7 +58,7 @@ export const games: typeof en = {
       },
       rules: `2–8 人 · 1–4 轮
 
-每人轮流作画。整局只用一个词语类别，所有人都能看到。
+每人轮流作画。词语都是英文单词，猜的时候也要输入英文。整局只用一个词语类别，所有人都能看到。
 画画的人有 15 秒从 3 个词里选一个。超时就自动选第一个。
 
 其他人有 90 秒在聊天框里输入这个词。随着时间流逝，字母会逐个揭开。猜中之后，你的聊天框会锁定到下一回合。

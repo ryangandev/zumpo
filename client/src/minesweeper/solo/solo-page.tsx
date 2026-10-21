@@ -348,7 +348,7 @@ function turnBar(
   const countdown = {
     seconds: Math.floor(elapsed(game, now) / 1000),
     label: m.minesweeper.solo.runTime,
-    waiting: true,
+    deadline: false,
   };
   if (game.status === 'lost') {
     return {

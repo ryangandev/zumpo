@@ -91,6 +91,7 @@ Decisions from the design review rounds (their reports are in git history):
   A blank name opens More options to say so, and a room being made hides the button with the other actions (DL06, ML06).
   A helper says only what the options do not ("60 seconds a hand."), never the options again; a page heading over the card would say the game's name twice, so a wide screen has none, and a phone puts the card's title and description on the page.
 - A game screen states the turn in one `Zumpo/Turn bar` above the canvas or board: what is happening, whose turn, and the server's countdown.
+  Only a deadline, a clock whose end ends what you are doing, is a filled `Zumpo/Countdown` pill that can turn urgent; a clock that ends nothing, the time to a Trios hint, the time a Snap card has been out and a run's time on your own, is its Info tone, a line with no fill, so it never reads as time running out.
 - In Draw & Guess the guess is the chat input; it is locked for the drawer and for anyone who has scored this turn, as the server already enforces.
 - Brush colours are `color/brush/*` tokens, and the drawer's controls are one `Zumpo/Drawing toolbar`.
 - Minesweeper shows each round's outcome as `Zumpo/Pick result` rows: who picked how risky a cell, and what it paid.
@@ -261,6 +262,7 @@ Code differs from Figma on purpose in a few places:
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
 - A Draw & Guess sheet on a desktop keeps its 798 × 598 proportions in the height the window leaves below its top, never narrower than half its column, and stands centred in it, so the whole sheet and the chat's input are in sight at 1280 × 720 and 1440 × 900; D01 to D06 draw it the column's full width, taller than such a window.
 - A short screen wider than a phone, 500 px tall or less, as a phone turned on its side is, takes the Turn bar's Phone row, which Figma draws only at phone widths, and a game in play sits 12 px from the header.
+  The home page's hero takes MO01's shorter copy and Title-size heading there too, so the whole of it and the game filters are in the first screen.
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A game on your own on a window 800 px tall or less takes the Turn bar's Phone row too, with 16 px around the page and 12 px between the turn bar and the board, and Daily Word's keyboard and Code Breaker's pad stand beside the board from 1240 px wide; Figma draws no window that short yet, and the frames for it wait on the bridge.
 - A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
@@ -278,6 +280,14 @@ Code differs from Figma on purpose in a few places:
 - Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.
 - A Doodle Chain album's Play again, or Ready, is never below every chain: on a phone it sits under the album's title, where DC20 says how the next game starts, and on a wider screen it stays at the foot, as DC14 draws it, but held on screen on the panel's paper while the chains scroll by.
   Each entry the reveal shows scrolls into view with Next under it, at once when the system asks for reduced motion; Figma draws still screens.
+- Until the bridge script `j-fig-1-countdown-info.js` runs, Figma has no Countdown Info tone: its Trios hint clocks, Snap card clocks and run times are still drawn Running or Waiting.
+- Until `j-fig-2-no-word-categories.js` runs, DL04 to DL06, DL10, DL11, D16 and MO05 still draw a Word categories field; the app has none, since a Draw & Guess game draws its one category at random.
+- Until `j-fig-4-standing-mark.js` runs, `Zumpo/Standing` has no Mark: code puts the Icon check (green) or close (danger red) before a finished race's guesses on a phone's strip, where it used to type ✓ and ✗.
+- Until `j-fig-5-chat-byline.js` runs and the tokens are exported, a chat line's sender is in Label, 14 px beside the 16 px message; the script adds the Zumpo/Body strong text style for it, which `chat-message.module.css` already asks for and takes once `--zumpo-text-body-strong` exists.
+- Until `j-fig-3-artwork-words.js` runs, `Zumpo/Game artwork`'s words are fixed text; code takes them from the catalog, so a Chinese page shows Doodle Chain's 乌龟 and 汉堡？.
+- Until `j-fig-6-mines-phone-turn.js` runs, MO11 and MO12 draw the board's tag in the Minesweeper turn bar; on a phone code leaves it out and says the mines short ("10 mines · 1 hit"), since the tag, the round and the mines do not fit one row at 360 px. The phone board also sits under the turn bar rather than centred in the height left, so the spare height is under it, where a round's results lie.
+- A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
+  On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 
 ## Editing the Figma file
 

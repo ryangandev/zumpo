@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { cardName } from '../../../shared/trios';
@@ -27,6 +27,9 @@ const finding = triosState({
 const card = (place: number, rest = '') =>
   screen.getByRole('button', { name: `${cardName(TABLE[place]!)}${rest}` });
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+/** The tone of the turn bar's clock that says `label`. */
+const toneOf = (label: string) =>
+  turn().getByText(label).closest('[data-tone]')?.getAttribute('data-tone');
 const scoreboard = () =>
   within(screen.getByRole('region', { name: /^Players/ }));
 
@@ -163,6 +166,14 @@ describe('a Trios room', () => {
     ).toBeInTheDocument();
     expect(turn().getByText('to a second hint')).toBeInTheDocument();
     expect(card(9, ', hint')).toBeInTheDocument();
+  });
+
+  it('draws the hint clock as a line, and holds it as Paused like any clock', async () => {
+    const { fake } = await renderSeated(finding);
+    expect(toneOf('to a hint')).toBe('info');
+
+    act(() => fake.drop());
+    expect(toneOf('paused')).toBe('waiting');
   });
 
   it('counts the time without a trio once both hints are given', async () => {

@@ -29,8 +29,9 @@ export const drawAndGuess: typeof en = {
     `${rounds} 轮，类别：${CATEGORIES[category]}，共 ${turns} 个回合。`,
   aloneTitle: '两个人更好玩。',
   setup: (players, rounds) =>
-    `${players} 人，${rounds} 轮。游戏开始时会随机选择词语类别。`,
-  guestSetup: (players, rounds) => `${players} 人，${rounds} 轮。`,
+    `${players} 人，${rounds} 轮。词语都是英文单词，游戏开始时会随机选择词语类别。`,
+  guestSetup: (players, rounds) =>
+    `${players} 人，${rounds} 轮。词语都是英文单词。`,
   away: '暂离',
   waiting: '等待中',
   choosing: '正在选词',

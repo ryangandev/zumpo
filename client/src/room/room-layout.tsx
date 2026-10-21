@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import type { PlayerInfo, SpectatorInfo } from '../../../shared/wire-types';
 import {
@@ -24,11 +24,12 @@ import {
   TOUCH,
   useMediaQuery,
 } from '../shell/use-media-query';
+import { useStartFocus } from '../shell/use-start-focus';
 import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
-import { roomNameOf, type Seat } from './players';
+import { roomNameOf, type RaceStanding, type Seat } from './players';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -40,7 +41,7 @@ export interface PlayerLine {
    * What a phone's standings strip shows for them instead of their points:
    * a race's progress, where nobody scores until somebody solves it.
    */
-  standing?: string;
+  standing?: RaceStanding;
 }
 
 export interface RoomLayoutProps {
@@ -211,6 +212,16 @@ export function RoomLayout({
 
   const seconds = Math.round(reconnectGraceMs / 1000);
 
+  // Start game and Play again go as they are pressed: the game takes the
+  // keyboard. Only the game itself, not a phone's standings strip over it.
+  const stageRef = useRef<HTMLDivElement>(null);
+  useStartFocus(state.isGameStarted, stageRef);
+  const gameView = (
+    <div ref={stageRef} className={styles.game}>
+      {stage}
+    </div>
+  );
+
   return (
     <Page
       header={
@@ -255,14 +266,15 @@ export function RoomLayout({
                         name: seat.username,
                         initials: initialsOf(seat.username),
                         tone: toneOf(seat.username),
-                        value: standing ?? String(seat.points),
+                        value: standing?.value ?? String(seat.points),
+                        mark: standing?.mark,
                         you: seat.playerId === room.playerId,
                         away: !seat.isConnected,
                       }))}
                       onOpen={() => setView('players')}
                     />
                   )}
-                  {stage}
+                  {gameView}
                   {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
                   {newHost ? (
@@ -308,7 +320,7 @@ export function RoomLayout({
         />
       ) : (
         <div className={styles.room}>
-          <div className={styles.stage}>{stage}</div>
+          <div className={styles.stage}>{gameView}</div>
           <div className={styles.side}>
             {scoreboard}
             {watching}

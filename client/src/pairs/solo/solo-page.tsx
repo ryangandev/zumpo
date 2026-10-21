@@ -342,7 +342,7 @@ function turnBar(
     countdown: {
       seconds: Math.floor(elapsed(game, now) / 1000),
       label: m.pairs.solo.runTime,
-      waiting: true,
+      deadline: false,
     },
   };
   // The last pair: the board stays as it was cleared, under its last turn.

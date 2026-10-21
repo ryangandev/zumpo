@@ -75,6 +75,7 @@ export function PlayArea({
       typed={typed.slice(0, WORD_LENGTH)}
       size={phone ? 'compact' : 'regular'}
       label={m.dailyWord.yourGuesses}
+      typingTarget={keyboard}
     />
   );
   return (

@@ -45,22 +45,16 @@
   }
 }
 
-.hit {
-  position: absolute;
+.actionable {
   /* A long-press flags; the page must not select text or open a callout. */
   -webkit-touch-callout: none;
   user-select: none;
   touch-action: manipulation;
-  inset: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: inherit;
-  background: transparent;
   cursor: pointer;
 }
 
-.hit:focus-visible {
+/* Keyboard focus: 2 px of ink, 2 px outside the cell. */
+.cell:focus-visible {
   z-index: 1;
   outline: 2px solid var(--zumpo-ink);
   outline-offset: 2px;

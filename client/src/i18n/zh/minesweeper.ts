@@ -70,6 +70,8 @@ export const minesweeper: typeof en = {
   pickCell: '选一个格子',
   everyonePicking: '大家正在选格子',
   minesFound: (total, found) => `${total} 颗雷 · 已踩中 ${found} 颗`,
+  minesShort: (total, found) =>
+    found > 0 ? `${total} 颗雷 · 踩中 ${found}` : `${total} 颗雷`,
   pickLocks: (total) => `${total} 颗雷 · 点击即确定选择`,
   away: '暂离',
   waiting: '等待中',

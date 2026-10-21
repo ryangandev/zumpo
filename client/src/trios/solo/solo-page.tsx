@@ -174,7 +174,7 @@ function RunView({
               countdown={{
                 seconds: Math.floor(timeMs / 1000),
                 label: m.trios.solo.runTime,
-                waiting: true,
+                deadline: false,
               }}
             />
             <TablePanel>
@@ -337,7 +337,7 @@ function turnBar(
     countdown: {
       seconds: Math.floor(runTime(run, now) / 1000),
       label: m.trios.solo.runTime,
-      waiting: true,
+      deadline: false,
     },
   };
   const flash = run.flash;

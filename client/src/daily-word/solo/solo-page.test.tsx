@@ -165,12 +165,9 @@ describe('Daily Word on your own', () => {
       await (await findTurn()).findByText('Find the word'),
     ).toBeInTheDocument();
     expect(screen.getByText('Word #1')).toBeInTheDocument();
-    // The button pressed has gone; the focus goes to the new board's keys.
-    expect(
-      screen
-        .getByRole('group', { name: 'Keyboard' })
-        .contains(document.activeElement),
-    ).toBe(true);
+    // The button pressed has gone; the focus goes to the new board, typed
+    // into, not to a key that Space or Enter would press.
+    expect(screen.getByRole('group', { name: 'Your guesses' })).toHaveFocus();
   });
 
   it('puts the result over the board and the cards under it on a phone', async () => {

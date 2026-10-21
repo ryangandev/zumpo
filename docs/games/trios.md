@@ -143,7 +143,7 @@ A table nobody can crack would stall the room, so the server breaks a long silen
 
 The turn bar counts down to the next hint, so a room's clock means something without ending anything.
 After the second hint it counts up instead: how long the table has gone without a trio.
-A hint is help, not a deadline, so neither clock ever turns urgent.
+A hint is help, not a deadline, so neither clock ever turns urgent, and both are drawn as a line rather than a filled pill, unlike a clock that ends something.
 A hint is the same for everybody, so it changes nobody's chances; hints are cleared when a trio is taken.
 
 ### The end

@@ -21,9 +21,12 @@ function smallBoard(seed: number) {
 }
 
 const cell = (row: number, column: number) =>
-  screen.getByRole('button', {
+  screen.getByRole('gridcell', {
     name: new RegExp(`^Row ${row}, column ${column}:`),
   });
+
+/** Every cell of the board, row by row; a cell never remounts in a game. */
+const allCells = () => screen.getAllByRole('gridcell');
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 
@@ -106,7 +109,7 @@ describe('a board on your own', () => {
     expect(
       screen.getByRole('gridcell', { name: 'Row 5, column 5: empty' }),
     ).toBeInTheDocument();
-    const hidden = screen.getAllByRole('button', { name: /: hidden$/ });
+    const hidden = screen.getAllByRole('gridcell', { name: /: hidden$/ });
 
     // Right-click flags and lifts a flag; a plain click leaves a flag alone.
     fireEvent.contextMenu(hidden[0]!);
@@ -143,11 +146,13 @@ describe('a board on your own', () => {
     expect(
       screen.getAllByRole('gridcell', { name: /: the mine you hit$/ }),
     ).toHaveLength(1);
-    expect(screen.queryByRole('button', { name: /^Row / })).toBeNull();
+    for (const each of allCells()) {
+      expect(each).toHaveAttribute('aria-disabled', 'true');
+    }
 
     await user.click(screen.getByRole('button', { name: 'Try again' }));
     expect(turn().getByText('10 mines left')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /: hidden$/ })).toHaveLength(
+    expect(screen.getAllByRole('gridcell', { name: /: hidden$/ })).toHaveLength(
       81,
     );
     // Try again has gone with the last board; the new board has the focus.
@@ -163,11 +168,14 @@ describe('a board on your own', () => {
     const layout = smallBoard(7);
     await renderApp('/games/minesweeper/solo?board=Small');
     await user.click(cell(5, 5));
+    // The cells are found once: a role query per cell would work out every
+    // cell's name again each time, which is slow enough to time out under load.
+    const cells = allCells();
     layout.forEach((isMine, index) => {
-      const target = screen.queryByRole('button', {
-        name: `Row ${Math.floor(index / 9) + 1}, column ${(index % 9) + 1}: hidden`,
-      });
-      if (!isMine && target) fireEvent.click(target);
+      const target = cells[index]!;
+      if (!isMine && target.getAttribute('aria-label')?.endsWith(': hidden')) {
+        fireEvent.click(target);
+      }
     });
 
     expect(
@@ -186,6 +194,46 @@ describe('a board on your own', () => {
 
     await user.click(screen.getByRole('button', { name: 'Change board' }));
     expect(screen.getByText(/^10 mines\. Best: \d:\d\d$/)).toBeInTheDocument();
+  });
+
+  it('plays with the keyboard, one tab stop and the arrow keys', async () => {
+    const user = userEvent.setup();
+    smallBoard(7);
+    await renderApp('/games/minesweeper/solo?board=Small');
+
+    // The game starts as it opens; the board takes the focus, not the page.
+    expect(cell(1, 1)).toHaveFocus();
+    expect(
+      allCells().filter((each) => each.getAttribute('tabindex') === '0'),
+    ).toHaveLength(1);
+
+    await user.keyboard('{ArrowDown>4/}{ArrowRight>4/}');
+    expect(cell(5, 5)).toHaveFocus();
+    await user.keyboard('{ArrowUp}{ArrowLeft}{ArrowDown}{ArrowRight}');
+    expect(cell(5, 5)).toHaveFocus();
+
+    // The first reveal lays the board, and the focus stays where it was.
+    await user.keyboard('{Enter}');
+    expect(cell(5, 5)).toHaveAccessibleName('Row 5, column 5: empty');
+    expect(cell(5, 5)).toHaveFocus();
+
+    // F flags the hidden cell under the focus, and lifts the flag again.
+    const hidden = screen.getAllByRole('gridcell', { name: /: hidden$/ })[0]!;
+    act(() => hidden.focus());
+    await user.keyboard('f');
+    expect(hidden).toHaveAccessibleName(/: flagged$/);
+    expect(turn().getByText('9 mines left')).toBeInTheDocument();
+    await user.keyboard('f');
+    expect(hidden).toHaveAccessibleName(/: hidden$/);
+
+    // Tab leaves the board in one step, and comes back to the same cell.
+    await user.tab();
+    expect(hidden).not.toHaveFocus();
+    expect(screen.getByRole('grid')).not.toContainElement(
+      document.activeElement as HTMLElement,
+    );
+    await user.tab({ shift: true });
+    expect(hidden).toHaveFocus();
   });
 
   it('turns Flag on to flag with a tap on a phone', async () => {

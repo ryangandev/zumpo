@@ -30,7 +30,9 @@ test('a spectator watches a game and takes a seat once it ends', async ({
     ),
   ).toBeVisible();
   await expect(sam.getByText('Everyone is picking')).toBeVisible();
-  await expect(sam.getByRole('button', { name: /: hidden$/ })).toHaveCount(0);
+  await expect(
+    sam.getByRole('gridcell', { name: /: hidden$/, disabled: false }),
+  ).toHaveCount(0);
 
   // Somebody arriving at the game under way watches it, from the lobby.
   const ana = await player('Ana');

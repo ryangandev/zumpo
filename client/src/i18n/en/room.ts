@@ -124,6 +124,16 @@ export const room = {
     `You’re ready. Waiting for ${names}, or for ${starter} to start.`,
   areReady: (names: string, count: number) =>
     `${names} ${count === 1 ? 'is' : 'are'} ready.`,
+  /**
+   * The same lines, short, for a phone's results turn bar, whose one row
+   * keeps the board under it the same size as in play.
+   */
+  short: {
+    ready: 'Ready for the next game?',
+    waitingFor: (names: string) => `Waiting for ${names}`,
+    areReady: (names: string) => `${names} ready`,
+    standIn: (host: string) => `${host} is away: you start`,
+  },
   /** For the player the right to start passed to while the host is away or watching. */
   standIn: (host: string) =>
     `${host} isn’t at the table, so you can start the next game.`,

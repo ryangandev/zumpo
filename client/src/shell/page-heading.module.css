@@ -27,8 +27,9 @@
   letter-spacing: var(--zumpo-text-body-tracking);
 }
 
-/* The phone home page sets its title at Title size. */
-@media (max-width: 640px) {
+/* The phone home page sets its title at Title size, and so does a short
+   screen, such as a phone on its side, so the games show under it. */
+@media (max-width: 640px), (min-width: 641px) and (max-height: 500px) {
   .hero {
     font: var(--zumpo-text-title);
     letter-spacing: var(--zumpo-text-title-tracking);

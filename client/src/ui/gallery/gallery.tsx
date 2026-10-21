@@ -78,7 +78,7 @@ import {
   HeartButton,
   HowToPlay,
 } from '..';
-import { GAMES } from '../../games/catalog';
+import { GAMES, scoreOf } from '../../games/catalog';
 import { ChainDrawing, GameArtwork } from '../../games/artwork';
 import { GameCard } from '../../games/game-card';
 import { GameIntro } from '../../games/game-intro';
@@ -408,7 +408,7 @@ export default function Gallery() {
       <Family
         name="Countdown"
         file="countdown"
-        note="Urgent is automatic in the last 5 seconds of a phase you act in."
+        note="Urgent is automatic in the last 5 seconds of a phase you act in. Info is a clock that ends nothing: a hint, a card, a run."
       >
         <Specimen
           family="countdown"
@@ -430,6 +430,13 @@ export default function Gallery() {
           deviation={CLOCK_CELLS}
         >
           <Countdown seconds={4} label="to pick" />
+        </Specimen>
+        <Specimen
+          family="countdown"
+          variant="Tone=Info"
+          deviation={CLOCK_CELLS}
+        >
+          <Countdown seconds={28} label="to a hint" deadline={false} />
         </Specimen>
       </Family>
 
@@ -2205,8 +2212,12 @@ export default function Gallery() {
           open={dialog}
           onOpenChange={setDialog}
           initialFocus={stay}
-          title="Leave Maya’s room?"
-          description="The game carries on without you, and your seat and your 180 points go with you. You can join again while a seat is open."
+          // The room's own words, as a host leaving a Make 24 game reads them.
+          title={m.room.leaveTitle(m.createRoom.defaultName('Maya'))}
+          description={m.room.both(
+            m.room.leaveInGame(scoreOf(m, 'make-24', 180)),
+            m.room.leaveNextHost('Sam'),
+          )}
           actions={
             <>
               <Button
@@ -2214,12 +2225,12 @@ export default function Gallery() {
                 icon="leave"
                 onClick={() => setDialog(false)}
               >
-                Leave room
+                {m.room.leave}
               </Button>
               <DialogClose
                 render={
                   <Button ref={stay} variant="secondary">
-                    Stay
+                    {m.room.stay}
                   </Button>
                 }
               />

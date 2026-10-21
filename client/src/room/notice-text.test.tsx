@@ -39,12 +39,12 @@ describe('room announcements', () => {
     [
       { type: 'dg:started', category: 'Animals' },
       'Game started: category Animals.',
-      '游戏开始：词语类别“动物”。',
+      '游戏开始：词语类别“动物”。词语都是英文单词，请用英文猜。',
     ],
     [
       { type: 'dg:started', category: 'League of Legends' },
       'Game started: category League of Legends.',
-      '游戏开始：词语类别“League of Legends”。',
+      '游戏开始：词语类别“League of Legends”。词语都是英文单词，请用英文猜。',
     ],
     [
       { type: 'game:over', names: ['Ada', 'Bob'], points: 1, unit: 'pair' },

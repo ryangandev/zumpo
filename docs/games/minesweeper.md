@@ -102,6 +102,10 @@ A player who is disconnected sits the round out entirely.
 You are scored by the solver, not played for by it: working out which cells are safe is the game.
 What you see afterwards is what your pick was actually worth.
 
+**With a keyboard** the board is one Tab stop, in a room and on your own: the arrow keys move between cells, Home and End go to the ends of a row, and Enter or Space does what a click does.
+On your own, F plants or lifts a flag, as a right-click does.
+The focus stays on its cell through a pick or a reveal, and comes to the board when a game starts.
+
 ## Board sizes
 
 | Size       | Board   | Mines | Density | Roughly    |

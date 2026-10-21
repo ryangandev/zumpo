@@ -1,5 +1,13 @@
 import { useMessages, type Messages } from '../../i18n';
-import { useRef, type PointerEvent, type ReactNode } from 'react';
+import {
+  useRef,
+  type FocusEventHandler,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
+  type PointerEvent,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import { cx } from '../cx';
 import { Icon } from './icon';
 import styles from './mine-cell.module.css';
@@ -35,6 +43,15 @@ export interface MineCellProps {
   column: number;
   /** A Pick marker laid over the cell during the reveal. */
   marker?: ReactNode;
+  /**
+   * A board's roving tab stop: 0 on the one cell the Tab key reaches, -1 on
+   * the rest, which the arrow keys reach. Without it the cell is not focusable.
+   */
+  tabIndex?: number;
+  /** Keys the cell does not use itself, such as the arrows that move on. */
+  onKeyDown?: KeyboardEventHandler<HTMLSpanElement>;
+  onFocus?: FocusEventHandler<HTMLSpanElement>;
+  ref?: Ref<HTMLSpanElement>;
 }
 
 /** How long a touch is held before it flags instead of opening. */
@@ -61,7 +78,11 @@ function describe(state: MineCellState, m: Messages): string {
   }
 }
 
-/** Zumpo/Mine cell. Rooms have no flags and no separate lock button. */
+/**
+ * Zumpo/Mine cell. Rooms have no flags and no separate lock button. The cell
+ * is itself the control, so it keeps the focus when a pick or a reveal takes
+ * its action away: Enter or Space picks, F flags.
+ */
 export function MineCell({
   state,
   size = 'regular',
@@ -70,6 +91,10 @@ export function MineCell({
   row,
   column,
   marker,
+  tabIndex,
+  onKeyDown,
+  onFocus,
+  ref,
 }: MineCellProps) {
   const m = useMessages();
   const compact = size === 'compact';
@@ -85,6 +110,7 @@ export function MineCell({
     state.kind === 'mine' && styles.mine,
     state.kind === 'hit' && styles.hitMine,
     state.kind === 'open' && state.adjacent > 0 && styles[`n${state.adjacent}`],
+    actionable && styles.actionable,
     actionable &&
       (state.kind === 'hidden' || state.kind === 'flag') &&
       styles.pickable,
@@ -92,13 +118,48 @@ export function MineCell({
   const label = m.ui.position(row + 1, column + 1, describe(state, m));
   const press = useLongPress(onMark);
 
-  // A grid cell of the board's role="grid"; an actionable one holds a button
-  // that covers it, so the whole cell is the target.
+  const keyDown = (event: KeyboardEvent<HTMLSpanElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onPick?.();
+    } else if (event.key.toLowerCase() === 'f' && !hasModifier(event)) {
+      event.preventDefault();
+      onMark?.();
+    } else {
+      onKeyDown?.(event);
+    }
+  };
+
+  // A grid cell of the board's role="grid", and the whole cell is the target.
   return (
     <span
+      ref={ref}
       className={className}
       role="gridcell"
-      aria-label={actionable ? undefined : label}
+      aria-label={label}
+      tabIndex={tabIndex}
+      // On a board you can reach, a cell with nothing to do says so.
+      aria-disabled={tabIndex !== undefined && !actionable ? true : undefined}
+      onKeyDown={keyDown}
+      onFocus={onFocus}
+      onClick={
+        actionable
+          ? () => {
+              if (press.consumed()) return;
+              onPick?.();
+            }
+          : undefined
+      }
+      onContextMenu={
+        onMark
+          ? (event) => {
+              event.preventDefault();
+              // A long touch fires contextmenu on some browsers; it already flagged.
+              if (!press.consumed()) onMark();
+            }
+          : undefined
+      }
+      {...press.handlers}
     >
       {state.kind === 'picked' && <Icon glyph="lock" size={iconSize.picked} />}
       {(state.kind === 'mine' || state.kind === 'hit') && (
@@ -130,27 +191,13 @@ export function MineCell({
       {state.kind === 'open' && state.adjacent > 0 && (
         <span aria-hidden="true">{state.adjacent}</span>
       )}
-      {actionable && (
-        <button
-          type="button"
-          className={styles.hit}
-          aria-label={label}
-          onClick={() => {
-            if (press.consumed()) return;
-            onPick?.();
-          }}
-          onContextMenu={(event) => {
-            if (!onMark) return;
-            event.preventDefault();
-            // A long touch fires contextmenu on some browsers; it already flagged.
-            if (!press.consumed()) onMark();
-          }}
-          {...press.handlers}
-        />
-      )}
       {marker}
     </span>
   );
+}
+
+function hasModifier(event: KeyboardEvent): boolean {
+  return event.ctrlKey || event.metaKey || event.altKey;
 }
 
 /**

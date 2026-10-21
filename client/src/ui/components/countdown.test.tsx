@@ -26,22 +26,28 @@ describe('Countdown', () => {
   });
 });
 
-/** The timer's classes, for comparing its tones. */
-const classOf = (props: { deadline?: boolean; seconds: number }) => {
+/** The tone the timer takes. */
+const toneOf = (props: {
+  deadline?: boolean;
+  waiting?: boolean;
+  seconds: number;
+}) => {
   const { unmount } = render(<Countdown label="to a hint" {...props} />);
-  const name = screen.getByRole('timer').className;
+  const tone = screen.getByRole('timer').dataset['tone'];
   unmount();
-  return name;
+  return tone;
 };
 
 describe('Countdown tones', () => {
   it('turns urgent in the last seconds of a deadline', () => {
-    expect(classOf({ seconds: 3 })).not.toBe(classOf({ seconds: 12 }));
+    expect(toneOf({ seconds: 12 })).toBe('running');
+    expect(toneOf({ seconds: 3 })).toBe('urgent');
+    expect(toneOf({ seconds: 12, waiting: true })).toBe('waiting');
   });
 
-  it('keeps a clock that is no deadline running to the end', () => {
-    expect(classOf({ seconds: 3, deadline: false })).toBe(
-      classOf({ seconds: 12 }),
-    );
+  it('draws a clock that is no deadline apart, and never urgent', () => {
+    expect(toneOf({ seconds: 12, deadline: false })).toBe('info');
+    expect(toneOf({ seconds: 3, deadline: false })).toBe('info');
+    expect(toneOf({ seconds: 3, deadline: false, waiting: true })).toBe('info');
   });
 });

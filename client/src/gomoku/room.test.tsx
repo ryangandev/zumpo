@@ -292,6 +292,43 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
   });
 
+  it('on a phone, says the next game’s colour and what it waits on in the turn bar, with only buttons under the board', async () => {
+    onPhone();
+    const results = gomokuState({
+      owner: { username: 'Maya', playerId: 'p2' },
+      colors,
+      gameNumber: 2,
+      samePair: true,
+      moves: [{ color: 'white', point: E8 }],
+      lastGame: {
+        endedEarly: false,
+        ending: 'resigned',
+        winner: 'black',
+        stones: 1,
+        standings: [
+          { playerId: ME, username: 'Ryan', points: 1 },
+          { playerId: 'p2', username: 'Maya', points: 0 },
+        ],
+      },
+    });
+    const { update } = await renderSeated(results);
+
+    // The same pair swaps colours: Ryan played Black, so White is next.
+    expect(turn().getByText('You play White next. Ready?')).toBeInTheDocument();
+    expect(screen.queryByText(/^The next game starts once/)).toBeNull();
+    expect(screen.getByRole('button', { name: 'Ready' })).toBeInTheDocument();
+
+    update({ ...results, ready: [ME] });
+    expect(
+      turn().getByText('Waiting for Maya · you play White'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/^You’re ready\./)).toBeNull();
+
+    // A new pair's colours are drawn when the game starts.
+    update({ ...results, samePair: false });
+    expect(turn().getByText('Ready for the next game?')).toBeInTheDocument();
+  });
+
   it('frees the seat of a player who left, and counts only the stones placed', async () => {
     await renderSeated(
       gomokuState({

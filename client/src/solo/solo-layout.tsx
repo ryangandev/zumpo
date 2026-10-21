@@ -20,6 +20,7 @@ import {
   SHORT_WINDOW,
   useMediaQuery,
 } from '../shell/use-media-query';
+import { useStartFocus } from '../shell/use-start-focus';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
 import styles from './solo-layout.module.css';
@@ -57,13 +58,6 @@ export interface SoloLayoutProps {
   leaveWarning?: string | null;
 }
 
-/**
- * A solo game was just put away, in this same commit: the next one mounting
- * now replaces it, from Play again or a change of settings, rather than
- * opening on a page of its own.
- */
-let replacing = false;
-
 const focusLost = () =>
   document.activeElement === null || document.activeElement === document.body;
 
@@ -73,9 +67,15 @@ const TABBABLE = ['button:not(:disabled)', 'input:not(:disabled)', 'a[href]']
   .concat('[tabindex="0"]')
   .join(', ');
 
-/** The stage's first stop for Tab: the board's, or the first control by it. */
+/**
+ * The stage's first stop for Tab: a board typed into, the board's own stop,
+ * or the first control by it.
+ */
 function focusStage(stage: HTMLElement | null) {
-  stage?.querySelector<HTMLElement>(TABBABLE)?.focus();
+  (
+    stage?.querySelector<HTMLElement>('[data-start-focus]') ??
+    stage?.querySelector<HTMLElement>(TABBABLE)
+  )?.focus();
 }
 
 /**
@@ -141,22 +141,9 @@ export function SoloLayout({
       focusStage(stageBox.current);
     }
   }, [finished]);
-  // Play again mounts the next game afresh, and the button pressed goes with
-  // the last one. A game opened on its own page leaves the focus to the page,
-  // as any page does. Counted once, as a development build runs it twice.
-  const counted = useRef(false);
-  useEffect(() => {
-    if (!counted.current) {
-      counted.current = true;
-      if (replacing && focusLost()) focusStage(stageBox.current);
-    }
-    return () => {
-      replacing = true;
-      setTimeout(() => {
-        replacing = false;
-      });
-    };
-  }, []);
+  // A game on your own starts as it mounts, from Start, Play again or a
+  // change of settings alike: the button pressed has gone with the page.
+  useStartFocus(true, stageBox);
 
   // A game opens at the top of the page, as a new page does, not where the
   // form it was started from had been scrolled to. A block body: browsers

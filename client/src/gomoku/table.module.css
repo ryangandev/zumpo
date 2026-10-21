@@ -126,6 +126,13 @@
   align-items: stretch;
 }
 
+/* Under a board in play or just played, one row of buttons, as tall while a
+   game is starting and its buttons are gone: the results say their words
+   in the turn bar, so the board keeps its size and place. */
+.phone:has([data-play-board]) .actions {
+  min-height: var(--zumpo-space-48);
+}
+
 /* The buttons share a row; a line of words, such as how the next game
    starts or what it will be, takes a row of its own above them. */
 .phone .actions > * {

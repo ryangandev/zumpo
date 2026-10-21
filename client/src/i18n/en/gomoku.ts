@@ -98,6 +98,13 @@ export const gomoku = {
   moves: (count: number) => `A game of ${plural(count, 'move')}.`,
   drawDetail: (stones: number) => `${stones} stones and nobody made five.`,
   nextBlack: (name: string) => `Next game, ${name} plays Black.`,
+  /** A phone's results turn bar: the viewer's colour next. */
+  nextYou: (color: GomokuColor) => `You play ${COLOR[color]} next.`,
+  /** The same, with Ready. */
+  nextAsk: (color: GomokuColor) => `You play ${COLOR[color]} next. Ready?`,
+  /** A phone's results turn bar: who the next game waits on, and the colour. */
+  nextWait: (note: string, color: GomokuColor) =>
+    `${note} · you play ${COLOR[color]}`,
   seatFree: (name: string) => `${name}’s seat is free for anybody to take.`,
   fiveFrom: (from: string, to: string) => `Five in a row, ${from} to ${to}`,
   drawStatus: 'Draw',

@@ -34,6 +34,12 @@
   background: var(--zumpo-sand);
 }
 
+/* Info: a clock that ends nothing, drawn as a line on the bar's paper. */
+.info {
+  box-shadow: inset 0 0 0 1px var(--zumpo-line);
+  background: transparent;
+}
+
 .urgent {
   background: var(--zumpo-peach);
   color: var(--zumpo-danger);

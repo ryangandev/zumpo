@@ -143,7 +143,7 @@ Everybody's card changes only when they take the middle card, so the one you are
 ### The clock
 
 The turn bar counts up how long the middle card has been out ("00:04 on this card").
-It is not a deadline, so it never turns urgent; a lockout's 2 seconds count down instead.
+It is not a deadline, so it never turns urgent and is drawn as a line rather than a filled pill; a lockout's 2 seconds count down instead, as a deadline.
 
 ### The end
 

@@ -24,6 +24,11 @@ export interface WordBoardProps {
   played?: boolean;
   /** The board's accessible name: "Your guesses", "Maya’s board". */
   label: string;
+  /**
+   * The board a real keyboard types into: a game takes the focus here as it
+   * starts, rather than on a key, where Enter or Space would press it.
+   */
+  typingTarget?: boolean;
   className?: string;
 }
 
@@ -37,12 +42,15 @@ export function WordBoard({
   size = 'regular',
   played = false,
   label,
+  typingTarget = false,
   className,
 }: WordBoardProps) {
   return (
     <div
       role="group"
       aria-label={label}
+      tabIndex={typingTarget ? -1 : undefined}
+      data-start-focus={typingTarget ? '' : undefined}
       className={cx(styles.board, styles[size], className)}
     >
       {Array.from(

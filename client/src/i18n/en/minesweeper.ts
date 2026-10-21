@@ -73,6 +73,9 @@ export const minesweeper = {
   everyonePicking: 'Everyone is picking',
   minesFound: (total: number, found: number) =>
     `${total} mines · ${found} hit so far`,
+  /** A phone's turn bar: "10 mines", "10 mines · 2 hit". */
+  minesShort: (total: number, found: number) =>
+    found > 0 ? `${total} mines · ${found} hit` : `${total} mines`,
   pickLocks: (total: number) =>
     `${total} mines · your pick locks when you click`,
   away: 'Away',

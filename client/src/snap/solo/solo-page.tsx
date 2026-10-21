@@ -201,7 +201,7 @@ function RunView({
               countdown={{
                 seconds: Math.floor(timeMs / 1000),
                 label: m.snap.solo.runTime,
-                waiting: true,
+                deadline: false,
               }}
             />
             {board}
@@ -336,7 +336,7 @@ function turnBar(
     countdown: {
       seconds: Math.floor(runTime(run, now) / 1000),
       label: m.snap.solo.runTime,
-      waiting: true,
+      deadline: false,
     },
   };
   const flash = run.flash;

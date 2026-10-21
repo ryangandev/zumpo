@@ -21,6 +21,11 @@ export interface PlayBoardProps {
   /** Changes when the element to keep in view may have moved. */
   current?: unknown;
   /**
+   * Centred in the height left, or at its top, for a board whose spare
+   * height is better under it, where a round's results lie over its foot.
+   */
+  align?: 'center' | 'start';
+  /**
    * False once the game is over: the board stays where it is, mounted, but
    * no longer takes the height left, and is only scaled to the width, as
    * `Fit` does, so a finished board and what follows it scroll as a page.
@@ -47,6 +52,7 @@ export function PlayBoard({
   min = 0.5,
   fitWidth = true,
   current,
+  align = 'center',
   inPlay = true,
   className,
 }: PlayBoardProps) {
@@ -93,7 +99,7 @@ export function PlayBoard({
   return (
     <div
       ref={box}
-      className={cx(styles.box, className)}
+      className={cx(styles.box, align === 'start' && styles.start, className)}
       data-play-board={inPlay ? '' : undefined}
     >
       <div ref={piece} className={cx(styles.piece, !fitWidth && styles.wide)}>

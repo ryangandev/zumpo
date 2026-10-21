@@ -721,7 +721,7 @@ test('a seat released while away', async ({ player }) => {
 const HIDDEN = /: hidden$/;
 
 function cell(page: Page, row: number, column: number) {
-  return page.getByRole('button', {
+  return page.getByRole('gridcell', {
     name: new RegExp(`^Row ${row}, column ${column}: hidden$`),
   });
 }
@@ -785,7 +785,10 @@ test('a Minesweeper game', async ({ player }) => {
   await shot(maya!.page, 'M11');
   await countHit();
   for (const seat of [maya, ryan, leo]) {
-    await seat!.page.getByRole('button', { name: HIDDEN }).first().click();
+    await seat!.page
+      .getByRole('gridcell', { name: HIDDEN, disabled: false })
+      .first()
+      .click();
   }
   await expect(
     sam!.page.getByText('The safest cell was picked for you', { exact: false }),
@@ -803,7 +806,10 @@ test('a Minesweeper game', async ({ player }) => {
     if (await over.isVisible()) break;
     await countHit();
     for (const [index, seat] of seats.entries()) {
-      const hidden = seat.page.getByRole('button', { name: HIDDEN });
+      const hidden = seat.page.getByRole('gridcell', {
+        name: HIDDEN,
+        disabled: false,
+      });
       const count = await hidden.count();
       if (count) await hidden.nth((index * 7 + round) % count).click();
     }

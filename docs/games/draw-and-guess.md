@@ -13,6 +13,7 @@ A **game** is a number of **rounds**, chosen when the room is created.
 In each round every player draws exactly once, in a random order, so a 2-round game with 4 players is 8 turns.
 
 One word category (Fruits, Animals, League of Legends, Electronics, Sports or Food) is drawn at random for the whole game and shown to everyone.
+The words are English in every language, and a guess is matched in English, ignoring case and the spaces around it.
 
 Each **turn** has three phases, and the server decides when each one ends:
 

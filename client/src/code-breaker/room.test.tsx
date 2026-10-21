@@ -71,7 +71,9 @@ describe('a Code Breaker room', () => {
     );
     expect(
       await screen.findByRole('button', { name: /^Standings:/ }),
-    ).toHaveAccessibleName('Standings: You 3/10, Maya ✗/10. Show the players');
+    ).toHaveAccessibleName(
+      'Standings: You 3/10, Maya missed 10/10. Show the players',
+    );
   });
 
   it('lets the host start once two players are in', async () => {
@@ -84,6 +86,23 @@ describe('a Code Breaker room', () => {
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Start game' }));
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
+  });
+
+  it('starts with the focus on the board, not on a key Enter would press', async () => {
+    const user = userEvent.setup();
+    const { update } = await renderSeated(codeBreakerState());
+
+    update(start);
+    expect(
+      await screen.findByRole('group', { name: 'Your guesses' }),
+    ).toHaveFocus();
+    await user.keyboard(' {Enter}');
+    expect(screen.getByRole('button', { name: 'Notes' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+    await user.keyboard('1');
+    expect(rows()).toEqual(['1']);
   });
 
   it('types from the keyboard and sends a guess only once it can count', async () => {

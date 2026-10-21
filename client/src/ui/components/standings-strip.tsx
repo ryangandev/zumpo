@@ -1,6 +1,7 @@
 import { useMessages } from '../../i18n';
 import { cx } from '../cx';
 import { Avatar, type AvatarTone } from './avatar';
+import { Icon } from './icon';
 import styles from './standings-strip.module.css';
 
 export interface Standing {
@@ -8,8 +9,10 @@ export interface Standing {
   name: string;
   initials: string;
   tone: AvatarTone;
-  /** The score, or what stands for one: "295". */
+  /** The score, or what stands for one: "295", "3/6". */
   value: string;
+  /** A race that is over for them: a check once solved, a cross once missed. */
+  mark?: 'solved' | 'missed';
   /** The viewer's own chip, marked. */
   you?: boolean;
   /** The player's connection dropped: the chip says so instead. */
@@ -36,10 +39,14 @@ export function StandingsStrip({
   className,
 }: StandingsStripProps) {
   const m = useMessages();
-  const said = standings.map(({ name, value, you, away }) =>
+  const said = standings.map(({ name, value, mark, you, away }) =>
     m.ui.standings.entry(
       you ? m.ui.you : name,
-      away ? m.ui.standings.away : value,
+      away
+        ? m.ui.standings.away
+        : mark
+          ? `${m.ui.standings.mark[mark]} ${value}`
+          : value,
     ),
   );
   return (
@@ -49,7 +56,7 @@ export function StandingsStrip({
       onClick={onOpen}
       aria-label={m.ui.standings.label(said)}
     >
-      {standings.map(({ key, initials, tone, value, you, away }) => (
+      {standings.map(({ key, initials, tone, value, mark, you, away }) => (
         <span
           key={key}
           className={cx(
@@ -59,6 +66,13 @@ export function StandingsStrip({
           )}
         >
           <Avatar initials={initials} tone={tone} size="small" />
+          {mark && !away && (
+            <Icon
+              glyph={mark === 'solved' ? 'check' : 'close'}
+              size={16}
+              className={styles[mark]}
+            />
+          )}
           <span className={styles.value}>
             {away ? m.ui.standings.away : value}
           </span>

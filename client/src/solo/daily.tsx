@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Button } from '../ui';
 import { cx } from '../ui/cx';
+import { SwapLabel } from '../shell/swap-label';
 import { useCopy } from '../shell/use-copy';
 import styles from './daily.module.css';
 
@@ -84,7 +85,7 @@ export function CopyButton({
       onClick={copy}
       className={className}
     >
-      {copied ? copiedLabel : label}
+      <SwapLabel second={copied} labels={[label, copiedLabel]} />
     </Button>
   );
 }

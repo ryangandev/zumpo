@@ -125,10 +125,10 @@ function pick(board: Board, better: (a: number, b: number) => boolean) {
   );
 }
 
-function cellButton(page: Page, board: Board, index: number) {
+function hiddenAt(page: Page, board: Board, index: number) {
   const row = Math.floor(index / board.width) + 1;
   const column = (index % board.width) + 1;
-  return page.getByRole('button', {
+  return page.getByRole('gridcell', {
     name: `Row ${row}, column ${column}: hidden`,
     exact: true,
   });
@@ -136,7 +136,7 @@ function cellButton(page: Page, board: Board, index: number) {
 
 /** Opens a cell, unless the last one opened it already. */
 async function open(page: Page, board: Board, index: number) {
-  const button = cellButton(page, board, index);
+  const button = hiddenAt(page, board, index);
   if (await button.count()) await button.click();
 }
 
@@ -165,7 +165,7 @@ export async function playSure(
     const { safe, mines } = deduce(board);
     if (!safe.size && !mines.size) return played;
     for (const mine of mines) {
-      await cellButton(page, board, mine).click({ button: 'right' });
+      await hiddenAt(page, board, mine).click({ button: 'right' });
     }
     for (const cell of safe) await open(page, board, cell);
     played = true;
@@ -178,9 +178,9 @@ export async function provenMines(page: Page): Promise<number[]> {
   return [...deduce(await boardOf(page)).mines];
 }
 
-/** The button of a hidden cell, by its place. */
+/** A hidden cell, by its place. */
 export async function hiddenCell(page: Page, index: number) {
-  return cellButton(page, await boardOf(page), index);
+  return hiddenAt(page, await boardOf(page), index);
 }
 
 /** Opens the hidden cell least likely to hold a mine. */

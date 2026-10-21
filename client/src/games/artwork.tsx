@@ -27,6 +27,7 @@ import {
 import { SYMBOLS, type SymbolName } from '../../../shared/snap';
 import type { GameType } from '../../../shared/wire-types';
 import { cx } from '../ui/cx';
+import { useMessages } from '../i18n';
 import styles from './artwork.module.css';
 
 /**
@@ -53,11 +54,12 @@ export function GameArtwork({
 
 /** The finished turtle at 0.26 of its size, and the word it was. */
 function DrawingArtwork() {
+  const m = useMessages();
   return (
     <>
       <TurtleDrawing className={styles.turtle} />
       <Tag tone="lime" icon="check">
-        turtle
+        <span lang="en">{m.games.artwork.drawn}</span>
       </Tag>
     </>
   );
@@ -299,14 +301,15 @@ function CodeArtwork() {
 
 /** A chain's first line, its drawing, and what the drawing became. */
 function ChainArtwork() {
+  const m = useMessages();
   return (
     <div className={styles.chain}>
-      <Tag tone="lime">turtle</Tag>
+      <Tag tone="lime">{m.games.artwork.chainLine}</Tag>
       <ChainDrawing
         name="Turtle on skateboard"
         className={styles.chainDrawing}
       />
-      <Tag tone="peach">burger?</Tag>
+      <Tag tone="peach">{m.games.artwork.chainGuess}</Tag>
     </div>
   );
 }

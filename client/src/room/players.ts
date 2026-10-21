@@ -1,5 +1,9 @@
 import type { AnyRoomState, PlayerInfo } from '../../../shared/wire-types';
 import type { Messages } from '../i18n';
+import type { Standing } from '../ui';
+
+/** What a race shows on a phone's standings strip in place of points. */
+export type RaceStanding = Pick<Standing, 'value' | 'mark'>;
 
 export interface Seat extends PlayerInfo {
   playerId: string;
@@ -37,20 +41,22 @@ export function roomNameOf(
 }
 
 /**
- * A race board's place in the phone's standings strip, Daily Word's or Code
- * Breaker's: guesses used so far, solved in so many, or out of guesses.
+ * A race's standing on a phone's strip, where nobody scores until somebody
+ * solves it: the guesses used of the most, checked once solved and crossed
+ * once every guess is used.
  */
 export function raceStanding(
   board: { rows: readonly unknown[]; status: string } | undefined,
   most: number,
   m: Messages,
-): string {
+): RaceStanding {
   const used = board?.rows.length ?? 0;
+  const value = m.ui.standings.guesses(used, most);
   if (board?.status === 'found' || board?.status === 'cracked') {
-    return m.ui.standings.solved(used, most);
+    return { value, mark: 'solved' };
   }
-  if (board?.status === 'out') return m.ui.standings.missed(most);
-  return m.ui.standings.guesses(used, most);
+  if (board?.status === 'out') return { value, mark: 'missed' };
+  return { value };
 }
 
 /** "Ryan", "Ryan and Maya", "Ryan, Maya and Sam". */

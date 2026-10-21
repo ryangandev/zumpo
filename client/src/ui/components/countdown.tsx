@@ -13,8 +13,10 @@ export interface CountdownProps {
   /** Someone else is acting, or a reveal is on. */
   waiting?: boolean;
   /**
-   * False for a clock that ends nothing you are doing, such as the time to a
-   * hint: it keeps its running tone to the end and never turns urgent.
+   * False for a clock that ends nothing you are doing: the time to a hint,
+   * the time on this card, a run's time. It takes the quiet Info tone, a
+   * line and no fill, so it never reads as time running out, and it never
+   * turns urgent.
    */
   deadline?: boolean;
   className?: string;
@@ -26,7 +28,11 @@ export function formatClock(seconds: number): string {
   return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`;
 }
 
-/** Zumpo/Countdown: the server-driven phase clock. */
+/**
+ * Zumpo/Countdown: the server-driven phase clock, or on your own the run's.
+ * A deadline is a filled pill, lime while you act, sand while you wait and
+ * peach at the end; any other clock is the Info outline.
+ */
 export function Countdown({
   seconds,
   label,
@@ -34,14 +40,17 @@ export function Countdown({
   deadline = true,
   className,
 }: CountdownProps) {
-  const tone = waiting
-    ? 'waiting'
-    : deadline && seconds <= URGENT_SECONDS
-      ? 'urgent'
-      : 'running';
+  const tone = !deadline
+    ? 'info'
+    : waiting
+      ? 'waiting'
+      : seconds <= URGENT_SECONDS
+        ? 'urgent'
+        : 'running';
   return (
     <span
       role="timer"
+      data-tone={tone}
       className={cx(
         styles.countdown,
         tone !== 'running' && styles[tone],

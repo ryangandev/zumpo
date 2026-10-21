@@ -34,7 +34,9 @@ export function HeroArt({ className }: { className?: string }) {
       <span className={styles.piece} style={at(330, 36, -7)}>
         <TriosCard card={6} state="found" size="compact" />
       </span>
-      <span className={styles.word} style={at(236, 196, 3)}>
+      {/* A Daily Word row, whose words are English in every language, and
+          the brand's "FUN", as the footer keeps "play a little". */}
+      <span className={styles.word} style={at(236, 196, 3)} lang="en">
         <LetterTile letter="F" state="correct" />
         <LetterTile letter="U" state="present" />
         <LetterTile letter="N" state="correct" />

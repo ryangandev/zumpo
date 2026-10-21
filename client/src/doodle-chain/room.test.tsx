@@ -6,7 +6,7 @@ import type {
   DoodleChainRoomState,
 } from '../../../shared/wire-types';
 import { doodleChainState, ME } from '../tests/fixtures';
-import { narrowable, onPhone } from '../tests/phone';
+import { narrowable, onPhone, onTouch } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 const RYAN = { playerId: ME, username: 'Ryan' };
@@ -131,6 +131,18 @@ describe('a Doodle Chain room', () => {
 
     expect(screen.getByText('One more to start.')).toBeInTheDocument();
     expect(screen.getByText(/Invite one more\.$/)).toBeInTheDocument();
+  });
+
+  it('starts a touch screen with the focus off the line, so its keyboard stays down', async () => {
+    // A touch screen's line is not focused for it, as a desktop's is, and
+    // the start's own focus passes over it too.
+    onTouch();
+    const { update } = await renderSeated(doodleChainState());
+
+    update(writing);
+    const field = screen.getByRole('textbox', { name: 'Your first line' });
+    expect(field).not.toHaveFocus();
+    expect(document.activeElement).not.toBe(document.body);
   });
 
   it('writes the first line, sends it as it is typed, and is done with it', async () => {
