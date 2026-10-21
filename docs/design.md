@@ -230,7 +230,7 @@ Code differs from Figma on purpose in a few places:
 - Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat is a secondary Button among a panel's actions.
   Watch instead is a Quiet Button after Invite friends, offered only to a guest: for the host it would hand the crown on for good.
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
-  Beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat keeps its height; a phone's Players tab keeps it open.
+  In the side column beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat under it keeps its height; in one column, under 1024 px, and in a phone's Players tab it stays open.
 - Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
   It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
   The drawer does not see it while choosing the next word: the word choices take the sheet, and the panel over them would hide them; the guessers keep it until a word is chosen.

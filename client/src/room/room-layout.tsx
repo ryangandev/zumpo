@@ -153,8 +153,9 @@ export function RoomLayout({
   );
 
   const spectators = Object.entries(state.spectators);
-  // Folded to one line beside a desktop room, where the chat needs the
-  // height; a phone's Players tab is about who is here, so it is open.
+  // Folded to one line in the side column beside a desktop room, where the
+  // chat under it needs the height. In one column nothing sits under it, and
+  // a phone's Players tab is about who is here, so there it is open.
   const watching =
     spectators.length > 0 ? (
       <Scoreboard
@@ -162,7 +163,7 @@ export function RoomLayout({
         players={spectators.length}
         seats={MAX_SPECTATORS}
         folded={
-          phone
+          oneColumn
             ? undefined
             : m.room.listNames(spectators.map(([, s]) => s.username))
         }
