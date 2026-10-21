@@ -13,6 +13,7 @@ import {
   recordBest,
   recordDayBest,
 } from '../../solo/device-store';
+import { Fit } from '../../shell/fit';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
@@ -414,7 +415,10 @@ function EveryTrio({ results }: { results: readonly TrioResult[] }) {
         {results.map((result, index) => (
           <li key={index} className={styles.trio}>
             <span className={styles.number}>{index + 1}</span>
-            <MiniTrio cards={result.cards} />
+            {/* A 360 px phone leaves the three cards less than they need. */}
+            <Fit align="start">
+              <MiniTrio cards={result.cards} />
+            </Fit>
             <span className={styles.note}>{trioNote(result, m)}</span>
             <span className={styles.time}>{formatDuration(result.ms)}</span>
           </li>
