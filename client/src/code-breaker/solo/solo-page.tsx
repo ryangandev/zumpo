@@ -154,6 +154,7 @@ function OpenBoard({
         typing={typing}
         notes={notes}
         onNotes={onNotes}
+        ruledOut={settledDigits(rowsOf(game)).out}
         pad
       />
     </BoardPanel>

@@ -89,6 +89,14 @@
   background: var(--zumpo-line);
 }
 
+/* Out of the code for certain, which the game worked out, not the player:
+   flat on the cream, its digit muted, still a key to press. */
+.ruledOut {
+  box-shadow: inset 0 0 0 1px var(--zumpo-line);
+  background: var(--zumpo-cream);
+  color: var(--zumpo-muted);
+}
+
 @media (hover: hover) {
   .plain:hover:not([aria-disabled='true']) {
     box-shadow:

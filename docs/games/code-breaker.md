@@ -70,8 +70,8 @@ The note sits where Daily Word's does: under the board on your own on a wide scr
 
 ### Notes
 
-The pad's keys never colour themselves, unlike Daily Word's keyboard: a mark counts digits without naming them, so there is nothing certain to show, and working that out is the game.
-Instead the player keeps their own **notes** on the pad.
+A mark counts digits without naming them, so the pad shows little the game knows: on your own it dims a digit that is certainly out (below), and the rest is the player's to work out.
+The player keeps their own **notes** on the pad.
 
 - **Notes** is a toggle beside the pad.
   While it is on, a digit key, clicked, tapped or pressed, marks that digit instead of typing it, cycling **plain → out → in → plain**.
@@ -82,6 +82,8 @@ Instead the player keeps their own **notes** on the pad.
 - The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6 and 8 are out." (CB03).
   A row with no pegs rules its four digits out; a row with four pegs, or six digits ruled out, settles every digit as in or out.
   Anything less than certain, which is most of the game, stays the player's to work out, and a phone's turn bar shows the peg legend instead.
+- On your own, the pad also **dims** each digit certainly out: a flat cream key with its digit muted, apart from a note's flat grey, and still typeable; Ryan approved it on 2026-10-21 (#93).
+  A note wins over it, since the notes are the player's own, and a room's pad dims nothing, because there the turn bar settles nothing.
 - They are kept with the guesses for the daily code (on the device, so a refresh keeps them), and live only in the page for practice and in a room, where a new code clears them.
 
 ## On your own

@@ -64,6 +64,14 @@ describe('Code Breaker on your own', () => {
         `One guess in. ${[...miss!].join(', ').replace(/, (?=\d$)/, ' and ')} are out.`,
       ),
     ).toBeInTheDocument();
+    // The pad dims them, and they still type.
+    for (const digit of miss!) {
+      expect(
+        screen.getByRole('button', { name: `${digit}, not in the code` }),
+      ).toBeInTheDocument();
+    }
+    const kept = [...'0123456789'].find((digit) => !miss!.includes(digit))!;
+    expect(screen.getByRole('button', { name: kept })).toBeInTheDocument();
 
     // A refresh keeps the guesses.
     first.unmount();

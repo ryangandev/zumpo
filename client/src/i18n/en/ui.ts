@@ -94,6 +94,7 @@ export const ui = {
     delete: 'Delete digit',
     noted: (digit: string, note: 'out' | 'in') =>
       `${digit}, noted ${note === 'out' ? 'out of the code' : 'in the code'}`,
+    ruledOut: (digit: string) => `${digit}, not in the code`,
     mark: (right: number, moved: number) =>
       `${right} in place, ${moved} elsewhere`,
     board: (name: string) => `${name}’s board`,
