@@ -35,16 +35,17 @@
   letter-spacing: var(--zumpo-text-small-tracking);
 }
 
+/* The top card, and the cards under it beside it, wrapping. */
 .pile {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--zumpo-space-16);
 }
 
 .empty {
   display: flex;
   box-sizing: border-box;
+  flex: none;
   align-items: center;
   justify-content: center;
   width: 168px;
@@ -62,7 +63,6 @@
 .trail,
 .cards {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   margin: 0;
   padding: 0;
@@ -70,17 +70,60 @@
 }
 
 .trail {
-  justify-content: center;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  align-content: flex-start;
   gap: var(--zumpo-space-8);
+  min-width: 0;
 }
 
-.cards {
-  gap: var(--zumpo-space-12);
+/* In play the pile is as high as the top card, whatever lies under it, so
+   the table never grows as a level goes on: the cards under the top one
+   scroll in the room beside it, the newest kept in view (Pile). Before the
+   first play the empty place takes the whole row. */
+.live {
+  align-items: stretch;
+}
+
+.live .trail {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  contain: size;
+}
+
+.live .empty {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+/* The pile is scaled to the room it has; its words keep their size. */
+.live .emptyText {
+  zoom: calc(1 / var(--play-scale, 1));
 }
 
 .trail li,
 .cards li {
   display: flex;
+}
+
+/* The hand is one row, scaled down to the width when it would be wider. */
+.cards {
+  gap: var(--zumpo-space-12);
+}
+
+/* A card already played keeps its room, so the row's scale holds for the
+   level (HandRow). */
+.gone {
+  visibility: hidden;
+}
+
+/* The cards or the message, in one room in every phase: as high as a
+   Regular Hush card, the hand's size. */
+.slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 128px;
 }
 
 .divider {
@@ -144,16 +187,6 @@
   letter-spacing: var(--zumpo-text-small-tracking);
 }
 
-/* A card already played keeps its room on a phone only (HandRow). */
-.gone {
-  display: none;
-}
-
-/* The cards or the message; a phone gives them one room in every phase. */
-.slot {
-  display: contents;
-}
-
 /* On a phone the table is one screen (HU10, HU11): the head is two fixed
    lines, the pile takes the height left, and the hand, its button and its
    line keep one size in every phase, so nothing moves while a level is
@@ -171,31 +204,10 @@
     gap: 0;
   }
 
-  /* In play the cards under the top one fold into the room beside it, as
-     high as the top card, and scroll; the newest stay in view (Pile). */
-  .live {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  .live .trail {
-    flex: 1 1 0;
-    align-content: flex-start;
-    justify-content: flex-start;
-    min-width: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    contain: size;
-  }
-
-  .live .empty {
-    flex: 1 1 auto;
-    width: auto;
-  }
-
-  /* The pile is scaled to the room it has; its words keep their size. */
-  .live .emptyText {
-    zoom: calc(1 / var(--play-scale, 1));
+  /* The last pile, under a game's results, at the scale a 360 px phone
+     plays it, so the results and it are not a long scroll. */
+  .pile:not(.live) {
+    zoom: 0.5;
   }
 
   .hand {
@@ -204,20 +216,11 @@
 
   /* As high as a Small Hush card, the hand's size on a phone. */
   .slot {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     min-height: 80px;
   }
 
   .cards {
-    flex-wrap: nowrap;
     gap: var(--zumpo-space-8);
-  }
-
-  .gone {
-    display: flex;
-    visibility: hidden;
   }
 
   .message {

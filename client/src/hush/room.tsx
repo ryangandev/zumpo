@@ -14,6 +14,7 @@ import {
 } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
+import { Fit } from '../shell/fit';
 import { initialsOf, toneOf } from '../players/avatar';
 import { EndedEarlyPanel, ResultsFrame, WaitingPanel } from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
@@ -232,16 +233,19 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
                   />
                   <span className={styles.name}>{username}</span>
                   {cards.length > 0 ? (
-                    <ol
-                      className={styles.heldCards}
-                      aria-label={m.hush.playerHeld(username)}
-                    >
-                      {cards.map((card) => (
-                        <li key={card}>
-                          <HushCard value={card} size="small" />
-                        </li>
-                      ))}
-                    </ol>
+                    // One row, as a hand is, scaled down when it is wider.
+                    <Fit align="start" className={styles.heldRow}>
+                      <ol
+                        className={styles.heldCards}
+                        aria-label={m.hush.playerHeld(username)}
+                      >
+                        {cards.map((card) => (
+                          <li key={card}>
+                            <HushCard value={card} size="small" />
+                          </li>
+                        ))}
+                      </ol>
+                    </Fit>
                   ) : (
                     <span className={styles.nothing}>{m.hush.nothingLeft}</span>
                   )}
@@ -263,7 +267,7 @@ function Level({ room }: { room: Room }) {
   return (
     <>
       <TurnBar {...turnBar(room, seconds, m)} />
-      <TablePanel>
+      <TablePanel fitHeight>
         <TableHead {...tableHead(state, m)} />
         <Pile
           pile={state.pile}

@@ -4,13 +4,29 @@ import type { HushDiscard, HushPlay } from '../../../shared/wire-types';
 import { HushCard, Lives } from '../ui';
 import { cx } from '../ui/cx';
 import { Fit } from '../shell/fit';
+import { useFitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
 
-/** The paper panel a level is played on, and the last pile is left on. */
-export function TablePanel({ children }: { children: ReactNode }) {
-  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
+/**
+ * The paper panel a level is played on, and the last pile is left on. In
+ * play, `fitHeight` keeps it inside a short window beside the side column,
+ * such as a 1280 × 720 laptop's, so Play is in view without scrolling.
+ */
+export function TablePanel({
+  children,
+  fitHeight = false,
+}: {
+  children: ReactNode;
+  fitHeight?: boolean;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  return (
+    <div ref={ref} className={cx(styles.panel, playColumn)}>
+      {children}
+    </div>
+  );
 }
 
 /**
@@ -41,12 +57,12 @@ export function TableHead({
 
 /**
  * The pile: its top card large, and every card below it, played or
- * discarded, lowest first. Before the first play, a place for it.
+ * discarded, lowest first, beside it. Before the first play, a place for it.
  *
- * In play a phone gives the pile the room left above your hand, scaled to
- * fit, and folds the cards under the top one into the room beside it: the
- * newest in view, the older ones a scroll away. The pile is as tall as the
- * top card whatever lies under it, so nothing moves as it grows.
+ * In play the pile is as tall as the top card whatever lies under it, so
+ * nothing moves as it grows: the cards under the top one fold into the room
+ * beside it, the newest in view, the older ones a scroll away. A phone gives
+ * the pile the room left above your hand, scaled to fit.
  */
 export function Pile({
   pile,
@@ -117,9 +133,9 @@ export function Pile({
  * The viewer's side of the table: their cards or a message, and what they
  * can do, or what happens next.
  *
- * On a phone the cards are Small, in one row scaled down to the width when
- * a level deals more than fit, and the cards or the message take the same
- * room in every phase, so the pile above keeps its size.
+ * The cards are one row, scaled down to the width when a level deals more
+ * than fit, Small on a phone, and the cards or the message take the same
+ * room in every phase, so the pile above keeps its place.
  */
 export function HandRow({
   label,
@@ -134,7 +150,7 @@ export function HandRow({
   /** Lowest first; the first is the next to play. */
   cards?: readonly number[];
   /**
-   * How many cards the level dealt: on a phone the row keeps the room of
+   * How many cards the level dealt: the row keeps the room of
    * those already played, so its scale holds for the whole level.
    */
   dealt?: number;
@@ -169,7 +185,7 @@ export function HandRow({
                 ))}
                 {Array.from({ length: played }, (_, index) => (
                   <li key={`gone-${index}`} className={styles.gone} aria-hidden>
-                    <HushCard value={0} size="small" />
+                    <HushCard value={0} size={phone ? 'small' : 'regular'} />
                   </li>
                 ))}
               </ol>
