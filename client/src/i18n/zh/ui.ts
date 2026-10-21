@@ -125,7 +125,7 @@ export const ui: typeof en = {
     symbol: (symbol) => snapSymbols[symbol] ?? '',
     marks: { match: '，两张牌都有', miss: '，不是这个' },
     note: (name, note) => `${name}，${note}`,
-    takenBy: (who) => `被 ${who} 拿走`,
+    takenBy: (who) => `被 ${who} 抢走`,
     locked: '锁定中',
   },
 };

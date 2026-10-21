@@ -111,7 +111,7 @@ describe('public components in Chinese', () => {
           symbols={[9, 0, 1, 2, 3, 4]}
           label="中间的牌"
           state="taken"
-          badgeLabel="被 小美 拿走"
+          badgeLabel="被 小美 抢走"
           marks={{ 9: 'match' }}
         />
         <WordChoice word="turtle" onChoose={noop} />
@@ -134,7 +134,7 @@ describe('public components in Chinese', () => {
       screen.getByRole('img', { name: '1 个珊瑚色实心圆形，已选中' }),
     ).toBeVisible();
     expect(
-      screen.getByRole('group', { name: '中间的牌，被 小美 拿走' }),
+      screen.getByRole('group', { name: '中间的牌，被 小美 抢走' }),
     ).toBeVisible();
     expect(screen.getByRole('img', { name: '爱心，两张牌都有' })).toBeVisible();
     expect(
