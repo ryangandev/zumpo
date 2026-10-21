@@ -18,6 +18,11 @@ export interface GomokuSeatProps {
   color?: StoneColor | null;
   state?: GomokuSeatState;
   you?: boolean;
+  /**
+   * A phone's seat, one of two side by side under the board: the stone
+   * before the name, and no avatar.
+   */
+  compact?: boolean;
   className?: string;
 }
 
@@ -29,6 +34,7 @@ export function GomokuSeat({
   color = null,
   state = 'default',
   you = false,
+  compact = false,
   className,
 }: GomokuSeatProps) {
   const m = useMessages();
@@ -37,11 +43,14 @@ export function GomokuSeat({
       className={cx(
         styles.seat,
         state !== 'default' && styles[state],
+        compact && styles.compact,
         className,
       )}
     >
       <div className={styles.player}>
-        {avatar && <Avatar initials={avatar.initials} tone={avatar.tone} />}
+        {avatar && !compact && (
+          <Avatar initials={avatar.initials} tone={avatar.tone} />
+        )}
         <div className={styles.details}>
           <div className={styles.nameLine}>
             <span className={styles.name}>{name}</span>
@@ -50,7 +59,7 @@ export function GomokuSeat({
           <span className={styles.detail}>{detail}</span>
         </div>
       </div>
-      {color && <Stone color={color} />}
+      {color && <Stone color={color} size={compact ? 'small' : undefined} />}
     </div>
   );
 }

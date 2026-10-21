@@ -21,3 +21,56 @@
   padding: 0;
   list-style: none;
 }
+
+/* Folded: one line, the heading, who is in it, the count and a chevron; the
+   whole line opens it. */
+.fold {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-4);
+}
+
+.summary {
+  gap: var(--zumpo-space-8);
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:focus-visible {
+  border-radius: var(--zumpo-radius-8);
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+details[open] > .summary {
+  padding-bottom: var(--zumpo-space-8);
+}
+
+.title {
+  flex: none;
+  margin: 0;
+}
+
+.names {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  flex: none;
+  color: var(--zumpo-muted);
+}
+
+details[open] .chevron {
+  transform: rotate(180deg);
+}

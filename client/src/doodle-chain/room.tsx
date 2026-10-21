@@ -11,6 +11,8 @@ import { ResultsActions, WaitingPanel } from '../room/panels';
 import { ordinal, placesOf, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { PlayBoard, playColumn } from '../shell/play-board';
+import { cx } from '../ui/cx';
 import { Chain } from './chain';
 import { NEW_DESK, Step, type Desk } from './task';
 import styles from './room.module.css';
@@ -33,6 +35,8 @@ export function DoodleChainRoom() {
   if (inGame && picked !== 0) setPicked(0);
   return (
     <RoomLayout
+      // No standings over the board: scores only come with the reveal.
+      standings={false}
       phase={
         revealing
           ? { tone: 'lime', label: m.doodleChain.reveal }
@@ -213,12 +217,15 @@ function Reveal({ room }: { room: Room }) {
         main={m.doodleChain.chainOf(owner)}
         meta={m.doodleChain.shownOf(shown, length)}
       />
-      <section className={styles.panel}>
-        <Chain
-          entries={reveal.entries[chain] ?? []}
-          heartOf={heartOf}
-          announce
-        />
+      {/* On a phone the chain scrolls above Next, its newest entry in view. */}
+      <section className={cx(styles.panel, playColumn)}>
+        <PlayBoard min={1} fitWidth={false} current={shown}>
+          <Chain
+            entries={reveal.entries[chain] ?? []}
+            heartOf={heartOf}
+            announce
+          />
+        </PlayBoard>
         <hr className={styles.divider} />
         {canStart ? (
           <div className={styles.reveal}>

@@ -174,14 +174,18 @@ describe('a Doodle Chain room', () => {
     // Done sends the latest words first, then says it is done.
     expect(fake.sentArgs('dc:text').at(-1)?.[1]).toHaveProperty('suggestion');
     expect(fake.sentArgs('dc:done')).toEqual([['r1', true]]);
+    // Until then the notice's words only hold the row's height, unsaid.
+    const said = 'Done. Waiting for Maya and Leo.';
+    expect(screen.getByText(said)).toHaveAttribute('aria-hidden', 'true');
 
     update({
       ...writing,
       table: { ...writing.table, p1: { done: true, sitsOut: false } },
     });
-    expect(
-      screen.getByText('Done. Waiting for Maya and Leo.'),
-    ).toBeInTheDocument();
+    // They arrive in the status as it shows, so a screen reader says them.
+    const notice = screen.getByText(said);
+    expect(notice.closest('[aria-hidden="true"]')).toBeNull();
+    expect(notice.closest('[role="status"]')).not.toBeNull();
     expect(scoreboard().getByText('Done')).toBeInTheDocument();
     // Done takes the field and itself away, so Keep editing has the focus.
     const keepEditing = screen.getByRole('button', { name: 'Keep editing' });

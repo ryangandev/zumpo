@@ -13,6 +13,7 @@ import {
 } from '../ui';
 import { initialsOf, toneOf } from '../players/avatar';
 import { cx } from '../ui/cx';
+import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { countDetail, diceWord, verdict, type Naming } from './words';
 import styles from './table.module.css';
@@ -46,6 +47,13 @@ export interface TableProps {
   countLabel?: string;
   /** Beside your cup: the bid picker, a note, Next round. */
   beside?: ReactNode;
+  /**
+   * A round being played, which a phone plays on one screen: everybody
+   * else and the bids scroll in the room left above your cup and what you
+   * can do, which keep to the foot of the screen. False for the last call
+   * under a game's results.
+   */
+  inPlay?: boolean;
 }
 
 /** How each of a cup's dice shows, with a slot for every die it started with. */
@@ -174,6 +182,7 @@ export function Table(props: TableProps) {
     who,
     countLabel = m.liarsDice.count,
     beside,
+    inPlay = true,
   } = props;
   // Everybody else in the order they bid after you, as the Players panel lists them.
   const others = fromViewer(seats, (seat) => seat.id, youId).filter(
@@ -185,8 +194,8 @@ export function Table(props: TableProps) {
   // A phone's row has room for a player and three dice whatever the cup
   // says, but not for five, so five-dice cups keep their dice underneath.
   const fiveDice = props.dicePerPlayer > 3;
-  return (
-    <div className={styles.table}>
+  const table = (
+    <div className={styles.ahead}>
       {others.length > 0 && (
         <div className={cx(styles.others, fiveDice && styles.fiveDice)}>
           {others.map((seat) => (
@@ -208,7 +217,10 @@ export function Table(props: TableProps) {
             </h3>
             <ol className={styles.bidList}>
               {bids.map((bid, index) => (
-                <li key={index}>
+                <li
+                  key={index}
+                  data-play-current={index === bids.length - 1 ? '' : undefined}
+                >
                   <Bid
                     name={
                       who(bid.playerId).you
@@ -225,9 +237,25 @@ export function Table(props: TableProps) {
           </section>
         )
       )}
+    </div>
+  );
+  return (
+    <div className={cx(styles.table, playColumn)}>
+      {inPlay ? (
+        // The latest bid stays in sight when the bids outgrow the room.
+        <PlayBoard min={1} fitWidth={false} current={bids.length}>
+          {table}
+        </PlayBoard>
+      ) : (
+        table
+      )}
       {you && (
         <div className={styles.yours}>
-          <Cup {...cupProps(you, props, 'regular', m)} />
+          {/* A phone's own cup is compact, so the picker fits under it. */}
+          <Cup
+            layout={phone && !fiveDice ? 'row' : 'stack'}
+            {...cupProps(you, props, phone ? 'compact' : 'regular', m)}
+          />
           {beside}
         </div>
       )}

@@ -39,12 +39,12 @@ export const gomoku: typeof en = {
   passed: (name) => `${name} 超时，跳过一手`,
   yourTurnPassed: '你超时了，跳过一手',
   firstMove: '黑方先走，可以下在任何位置',
+  tapAgain: '再点一次落子',
   toMove: '落子',
   paused: '暂停',
 
   placeStone: '落子',
   hoverHint: '鼠标移到点上会显示你的棋子，点击落子。',
-  tapHint: '再点一次淡色棋子，或点“落子”。点别的位置可以换地方。',
   colorsNote: '黑方先走。这局之后交换颜色，你们轮流先手。',
   missedNotice: '你超时了，这一手跳过。下一手再超时，这局就判负。',
   away: '暂离',

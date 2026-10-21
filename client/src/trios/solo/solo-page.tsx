@@ -6,6 +6,7 @@ import {
   ButtonLink,
   Card,
   StatList,
+  TurnBar,
   type Stat,
   type TurnBarProps,
 } from '../../ui';
@@ -34,7 +35,6 @@ import {
   TablePanel,
   TableTools,
   TriosTable,
-  TriosTurnBar,
   type PlaceView,
 } from '../table';
 import { whyNotATrio } from '../words';
@@ -283,7 +283,7 @@ function RunView({
       leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
-          <TriosTurnBar lines={1} {...turnBar(run, now, label, m)} />
+          <TurnBar {...turnBar(run, now, label, m)} />
           <TablePanel>
             <TriosTable
               cards={run.deal.table}

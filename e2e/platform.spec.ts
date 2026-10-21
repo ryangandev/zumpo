@@ -290,7 +290,8 @@ test('a latecomer to a game in progress watches it', async ({ player }) => {
       'You’re watching this game. You can take a seat once it ends.',
     ),
   ).toBeVisible();
+  // Beside a desktop room the list is folded to one line that names him.
   await expect(
-    maya.getByRole('region', { name: 'Watching' }).getByText('Sam'),
-  ).toBeVisible();
+    maya.getByRole('region', { name: 'Watching' }).locator('summary'),
+  ).toContainText('Sam');
 });

@@ -67,6 +67,23 @@ async function expectScored(watcher: Page, guesser: Seat) {
   ).toBeVisible();
 }
 
+/**
+ * On a desktop the whole sheet and the chat's input are in sight without a
+ * scroll, and the spectators beside it are folded to one line.
+ */
+async function expectAllInSight(page: Page) {
+  await expect(page.getByRole('textbox', { name: 'Message' })).toBeInViewport({
+    ratio: 1,
+  });
+  await expect(page.locator('canvas')).toBeInViewport({ ratio: 1 });
+  const watching = page.getByRole('region', { name: 'Watching' });
+  await expect(
+    watching.getByText('Sam', { exact: true }).first(),
+  ).toBeVisible();
+  await expect(watching.locator('li')).toHaveCount(1);
+  await expect(watching.locator('li')).toBeHidden();
+}
+
 test('two players play a whole game', async ({ player }) => {
   const maya = { name: 'Maya', page: await player('Maya') };
   const leo = { name: 'Leo', page: await player('Leo') };
@@ -116,6 +133,7 @@ test('a spectator watches the drawing, talks only to the stands, cannot guess, a
     const [drawer, guesser] = await whoDraws(maya, leo);
     const word = await drawAWord(drawer.page);
     await expect.poll(() => painted(sam)).toBe(true);
+    if (turn === 1) await expectAllInSight(drawer.page);
 
     // The word from a spectator is swallowed: it neither shows nor scores.
     // Anything else they say while it is drawn stays among the spectators;

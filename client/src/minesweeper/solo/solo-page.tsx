@@ -15,7 +15,9 @@ import {
 import { gameInfo } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
 import { FormPage } from '../../shell/form-page';
+import { playColumn } from '../../shell/play-board';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import { cx } from '../../ui/cx';
 import {
   formatDuration,
   readBest,
@@ -234,8 +236,13 @@ function SoloGameView({
       ) : (
         <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
       )}
-      <div className={styles.boardPanel}>
-        <MineGrid width={game.width} height={game.height} cell={cell} />
+      <div className={cx(styles.boardPanel, playColumn)}>
+        <MineGrid
+          width={game.width}
+          height={game.height}
+          cell={cell}
+          inPlay={!finish}
+        />
         {!over && (
           <div
             className={styles.mode}

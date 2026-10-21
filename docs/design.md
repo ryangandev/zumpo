@@ -32,6 +32,7 @@ They are not copied here, so there is one place to change them.
 | 12 / Doodle Chain / complete flow    | `162:65089` | DC01-DC14 desktop, DC15-DC20 phone                                                    |
 | 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
 | 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
+| 15 / Phone in play                   | `163:63239` | PH01-PH06, the one phone layout every game plays in                                   |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
 
@@ -90,6 +91,8 @@ Decisions from the design review rounds (their reports are in git history):
 - Daily Word's reveal lists every board as a `Zumpo/Race board` with its letters, best first; on a phone each is the Row layout, the name beside the board, one under another (DW15, DW16), since two Small boards do not fit across.
   A revealed board, Daily Word's or Code Breaker's, draws only the rows played, so a word found in 3 is three rows, not six with three empty.
 - No disabled primary buttons: a request in flight is a status line, and an action you cannot take is not shown.
+  The one exception is a phone's Gomoku Place stone, under the board throughout a game and live once a faint stone is down (PH04), because a button that came and went would move the board under the thumb.
+  Elsewhere in play a button that cannot be pressed yet keeps its room out of sight, as Hush's Ready and Play do, so nothing around it moves.
 - Dialogs (leave, invite) sit over the screen they come from, behind a scrim.
 - Example data follows one story with four players (Maya, Ryan, Leo, Sam), each with a fixed avatar colour, and every score is computed with the real formula.
 - Text on a tinted surface (peach, blue, lime) is ink; muted text is only for cream, paper and sand, where it passes WCAG AA.
@@ -102,7 +105,7 @@ Decisions from the design review rounds (their reports are in git history):
 
 Ryan approved the room bar on 2026-10-04, after a proposal round in Figma.
 A seated room has one `Zumpo/Room bar` in place of the header and the room heading: the wordmark, the game, the room and phase tags, How to play, Leave room and the viewer.
-On a phone it drops the wordmark, puts the tags under the game and keeps the two actions to their icons.
+On a phone it is one row 48 px tall: no wordmark, the game over one line saying the room and its phase ("Maya's room · Round 2 of 3"), and the two actions as their icons, so it never wraps and never moves the game under it.
 Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16), and it is 160 px shorter than the old pair on a desktop and 80 px on a phone.
 
 - A room has no links out but the wordmark: How to play opens over the room (P15), so a game is never lost to a rules check.
@@ -175,6 +178,15 @@ Between the widths Figma draws, a rigid piece, such as a board of fixed-size car
 Where scaling would hurt, something else gives: a Minesweeper board wider than its panel pans sideways, the drawing toolbar takes two lines under the 898 px Desktop stage, the word choices share the sheet's width and wrap, and a tag's words end in an ellipsis.
 [The widths spec](../e2e/widths.spec.ts) plays every game and checks, at seven widths from 1280 to 320 px, that nothing reaches out of what holds it.
 
+On a phone a game in play is one screen tall, as section 15 draws it: no footer, the Phone room bar, a turn bar of fixed height whose main line is scaled down rather than wrapped, the board, and at the foot what the player touches.
+The board sits in [`PlayBoard`](../client/src/shell/play-board.tsx), which scales it to the height the rest leaves it, or, below a least scale, keeps that scale and scrolls, keeping the row in play in view.
+So the keypad, the keyboard, the picker or the button that acts now is on screen from the first move and never moves during a game.
+A row that comes and goes, such as Trios's last trio or Make 24's signs, keeps its room out of sight while it is not there.
+A window 500 px tall or less and wider than a phone, such as a phone turned sideways, keeps the one-column layout and scrolls, but caps the board and the canvas at the window's height.
+There the turn bar takes its compact Phone row, and Gomoku sets its board beside the turn, so the whole board is in sight.
+Wider and taller, a Draw & Guess sheet is no taller than the window leaves below its top, so the sheet and the chat's input are in sight together.
+[The phone spec](../e2e/phone-play.spec.ts) plays every game at 360 by 640 and 390 by 844 and checks that the input is on screen, the page does not scroll, and the input stays where it was through a game.
+
 Figma gives each sample player an avatar tone by hand; code picks one from a hash of the player's name, so a player keeps one colour in the header, the scoreboard and the results, on every screen.
 
 ### Comparing with Figma
@@ -193,6 +205,7 @@ Code differs from Figma on purpose in a few places:
 - The countdown is up to 7 px wider: DM Sans has no tabular figures, so each digit has a fixed cell and the clock keeps its width as it ticks.
 - The chat input's text is 16 px on touch screens, where Figma's 12 px would make iOS zoom the page on focus.
 - The chat's send button and the brush swatches keep Figma's drawn size, but take a tap from an invisible area 44 px tall around them, the size a thumb needs; on a phone the swatches sit 8 px apart, so there the area grows only up and down.
+  So do the room tabs, the filter chips, the footer's languages and the viewer's avatar.
 - Hover and focus never change a control's size; Figma's hover variants are wider only because strokes count in its auto layout.
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
@@ -217,7 +230,14 @@ Code differs from Figma on purpose in a few places:
 - Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat is a secondary Button among a panel's actions.
   Watch instead is a Quiet Button after Invite friends, offered only to a guest: for the host it would hand the crown on for good.
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
-- Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
+  In the side column beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat under it keeps its height; in one column, under 1024 px, and in a phone's Players tab it stays open.
+- Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
+  It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
+  The drawer does not see it while choosing the next word: the word choices take the sheet, and the panel over them would hide them; the guessers keep it until a word is chosen.
+- A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
+- PH04 and PH06 predate two phone pieces code has: Gomoku's seats side by side drop the avatar and put the stone before the name, and Liar's Dice's own cup is one row unless it holds five dice.
+- Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
+  On a phone the Chain composer's done row is the Notice beside a Keep editing that shows only its pencil, not the Phone variant's Notice over a full-width Keep editing, which made the row 84 px taller than Done's and moved the drawing above it.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - A Code Breaker or Daily Word room's phone turn bar says how to read the marks while you still guess or watch as a spectator, even after somebody else has solved it; CB18 and DW13 show Maya's name there instead.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
@@ -226,6 +246,10 @@ Code differs from Figma on purpose in a few places:
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
   In a game's final standings it wraps to a second line instead, since there the detail is what the row is for.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
+- A Draw & Guess sheet on a desktop keeps its 798 × 598 proportions in the height the window leaves below its top, never narrower than half its column, and stands centred in it, so the whole sheet and the chat's input are in sight at 1280 × 720 and 1440 × 900; D01 to D06 draw it the column's full width, taller than such a window.
+- A short screen wider than a phone, 500 px tall or less, as a phone turned on its side is, takes the Turn bar's Phone row, which Figma draws only at phone widths, and a game in play sits 12 px from the header.
+  There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
+- A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - Between games every room's results end the same way: the starter gets a Next game select (an Input with no helper, 320 px wide), and everyone else gets a muted line saying the setting, a muted line saying how the next game starts, and Ready.
   Figma draws this on M14 for the host and on LD12 for a guest; the other results screens still show the host with Play again alone and a guest with "Waiting for … to start another game."

@@ -33,8 +33,10 @@
 
 /* A phone's filters scroll sideways, out to the screen's edges. */
 .strip {
-  margin: 0 calc(-1 * var(--zumpo-space-20));
-  padding: 0 var(--zumpo-space-20);
+  /* Room above and below the chips for their tap areas, which the
+     scroller would otherwise cut. */
+  margin: calc(-1 * var(--zumpo-space-3)) calc(-1 * var(--zumpo-space-20));
+  padding: var(--zumpo-space-3) var(--zumpo-space-20);
   overflow-x: auto;
   scrollbar-width: none;
 }

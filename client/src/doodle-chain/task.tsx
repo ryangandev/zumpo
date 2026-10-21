@@ -33,12 +33,13 @@ import {
 } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
-import { DrawingCanvas, type Brush } from '../drawing/canvas';
+import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
+import { playColumn } from '../shell/play-board';
+import { cx } from '../ui/cx';
 import { Picture } from '../drawing/picture';
 import { listNames } from '../room/players';
 import { TOUCH, useMediaQuery } from '../shell/use-media-query';
 import type { Room as RoomOf } from '../room/room-context';
-import { cx } from '../ui/cx';
 import { EntryDrawing, textOf } from './chain';
 import styles from './task.module.css';
 
@@ -128,7 +129,7 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
       {state.phase === 'draw' && task && !task.sitsOut ? (
         <Drawing room={room} desk={desk} onDesk={onDesk} />
       ) : (
-        <section className={styles.panel}>
+        <section className={cx(styles.panel, playColumn)}>
           {!task ? (
             <Watching room={room} />
           ) : state.phase === 'passing' ? (
@@ -384,12 +385,14 @@ function Writing({
   return (
     <>
       {task.given?.content.type === 'drawing' && (
-        <div className={styles.frame}>
-          <EntryDrawing
-            drawing={task.given.content.drawing}
-            label={m.doodleChain.givenDrawing}
-          />
-        </div>
+        <PlaySheet>
+          <div className={styles.frame}>
+            <EntryDrawing
+              drawing={task.given.content.drawing}
+              label={m.doodleChain.givenDrawing}
+            />
+          </div>
+        </PlaySheet>
       )}
       <ChainComposer
         className={styles.composer}
@@ -471,7 +474,12 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
 
   return (
     <>
-      {canDraw && (
+      {/* Out of reach once Done, and kept for its room, so the sheet stays
+          where it is. */}
+      <div
+        className={cx(styles.toolbar, !canDraw && styles.held)}
+        aria-hidden={canDraw ? undefined : true}
+      >
         <DrawingToolbar
           colour={colour}
           onColourChange={(next) => onDesk({ colour: next })}
@@ -486,52 +494,69 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
             socket.emit('dc:draw:clear', roomId);
           }}
         />
-      )}
-      <DrawingCanvas
-        stream={canvas}
-        brush={brush}
-        onStart={start}
-        onMove={move}
-        onEnd={end}
-      />
-      <div ref={actions} className={styles.actions}>
-        {done ? (
-          <>
-            <Notice tone="success" className={styles.grow}>
-              {doneMessage(room, m)}
-            </Notice>
-            <Button
-              ref={keepEditing}
-              variant="secondary"
-              icon="edit"
-              onClick={() => socket.emit('dc:done', roomId, false)}
-            >
-              {m.ui.chain.keepEditing}
-            </Button>
-          </>
-        ) : (
-          <>
-            <p
-              className={cx(styles.hint, triedBlank && styles.hintError)}
-              role="status"
-            >
-              {triedBlank ? m.doodleChain.drawFirst : m.doodleChain.asItIs}
-            </p>
-            {!reconnecting && (
-              <Button
-                ref={doneButton}
-                icon="check"
-                onClick={() =>
-                  blank
-                    ? setTriedBlank(true)
-                    : socket.emit('dc:done', roomId, true)
-                }
-              >
-                {m.ui.chain.done}
-              </Button>
+      </div>
+      <PlaySheet>
+        <DrawingCanvas
+          stream={canvas}
+          brush={brush}
+          onStart={start}
+          onMove={move}
+          onEnd={end}
+        />
+      </PlaySheet>
+      {/* Both rows share one place and the taller one's height, so Done and
+          Keep editing never move the sheet above them. */}
+      <div ref={actions} className={styles.swap}>
+        <div
+          className={cx(styles.actions, !done && styles.held)}
+          aria-hidden={done ? undefined : true}
+        >
+          <Notice tone="success" className={styles.grow}>
+            {/* Its words arrive with Done, so the status is announced; until
+                then they only hold the row's height, out of sight. */}
+            {done ? (
+              doneMessage(room, m)
+            ) : (
+              <span aria-hidden="true">{doneMessage(room, m)}</span>
             )}
-          </>
-        )}
+          </Notice>
+          <Button
+            ref={keepEditing}
+            variant="secondary"
+            icon="edit"
+            disabled={!done}
+            onClick={() => socket.emit('dc:done', roomId, false)}
+          >
+            {m.ui.chain.keepEditing}
+          </Button>
+        </div>
+        <div
+          className={cx(styles.actions, done && styles.held)}
+          aria-hidden={done ? true : undefined}
+        >
+          {/* Done stays pressable: on a blank canvas it says why it sent
+              nothing, in this live row only, never in the held copy. */}
+          <p
+            className={cx(styles.hint, triedBlank && styles.hintError)}
+            role="status"
+          >
+            {triedBlank ? m.doodleChain.drawFirst : m.doodleChain.asItIs}
+          </p>
+          {!reconnecting && (
+            <Button
+              ref={doneButton}
+              icon="check"
+              disabled={done}
+              onClick={() =>
+                blank
+                  ? setTriedBlank(true)
+                  : socket.emit('dc:done', roomId, true)
+              }
+            >
+              {m.ui.chain.done}
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );

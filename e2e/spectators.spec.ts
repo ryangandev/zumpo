@@ -18,7 +18,7 @@ test('a spectator watches a game and takes a seat once it ends', async ({
     sam.getByRole('heading', { name: 'You’re watching.' }),
   ).toBeVisible();
   const watching = maya.getByRole('region', { name: 'Watching' });
-  await expect(watching.getByText('Sam')).toBeVisible();
+  await expect(watching).toContainText('Sam');
   await expect(maya.getByRole('region', { name: 'Players' })).not.toContainText(
     'Sam',
   );
@@ -43,7 +43,7 @@ test('a spectator watches a game and takes a seat once it ends', async ({
       'You’re watching this game. You can take a seat once it ends.',
     ),
   ).toBeVisible();
-  await expect(watching.getByText('Ana')).toBeVisible();
+  await expect(watching).toContainText('Ana');
 
   // A spectator's word reaches the table.
   await sam.getByRole('textbox', { name: 'Message' }).fill('go left');
@@ -62,6 +62,6 @@ test('a spectator watches a game and takes a seat once it ends', async ({
   await expect(maya.getByRole('region', { name: 'Players' })).toContainText(
     'Sam',
   );
-  await expect(watching.getByText('Ana')).toBeVisible();
+  await expect(watching).toContainText('Ana');
   await expect(watching).not.toContainText('Sam');
 });

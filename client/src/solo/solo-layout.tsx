@@ -6,6 +6,7 @@ import { gameInfo, gamePath } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
+import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
@@ -69,13 +70,20 @@ export function SoloLayout({
   }, [time, away]);
   const stageClass = cx(styles.stage, time?.paused && styles.away);
 
+  // A game opens at the top of the page, as a new page does, not where the
+  // form it was started from had been scrolled to. A block body: browsers
+  // that return a promise from scrollTo would have React call it as cleanup.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Page
       header={
         <RoomBar
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[gameType].name}
-          room={m.solo.onYourOwn}
+          room={oneColumn ? undefined : m.solo.onYourOwn}
           phase={phase}
           onHowToPlay={() => setRules(true)}
           onLeave={() => navigate(gamePath(gameType))}
@@ -86,7 +94,7 @@ export function SoloLayout({
       }
     >
       {phone || side == null ? (
-        <div className={stageClass}>{stage}</div>
+        <div className={cx(stageClass, playColumn)}>{stage}</div>
       ) : (
         <div className={styles.solo}>
           <div className={stageClass}>{stage}</div>

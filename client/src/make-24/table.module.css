@@ -31,6 +31,19 @@
   gap: var(--zumpo-space-12);
 }
 
+/* The prompt over the signs, spaced as the table spaces its rows. */
+.picking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: inherit;
+}
+
+/* Kept for the room it takes, out of sight. */
+.held {
+  visibility: hidden;
+}
+
 .prompt {
   margin: 0;
   color: var(--zumpo-muted);

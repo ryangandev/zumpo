@@ -8,6 +8,7 @@ import {
   Card,
   SnapCard,
   StatList,
+  TurnBar,
   type SnapSpotMark,
   type Stat,
   type TurnBarProps,
@@ -32,7 +33,7 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
-import { SnapBoard, SnapTurnBar } from '../board';
+import { SnapBoard } from '../board';
 import {
   afterFlash,
   canTap,
@@ -271,7 +272,7 @@ function RunView({
       phase={{ tone: 'blue', label }}
       stage={
         <>
-          <SnapTurnBar {...turnBar(run, now, label, m)} />
+          <TurnBar {...turnBar(run, now, label, m)} />
           <SnapBoard
             middle={{
               symbols: middleOf(run),

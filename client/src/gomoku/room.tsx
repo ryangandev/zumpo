@@ -21,7 +21,7 @@ import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
 type Room = RoomOf<GomokuRoomState>;
@@ -38,6 +38,8 @@ export function GomokuRoom() {
   const room = useRoomContext<GomokuRoomState>();
   const { state, playerId, socket, spectating, reconnecting } = room;
   const phone = useMediaQuery(PHONE);
+  // A tap shows the stone first wherever there is no hover to show it.
+  const tapTwice = useMediaQuery(TOUCH) || phone;
   const seconds = useSecondsLeft(
     state.phaseEndsInMs,
     room.receivedAt,
@@ -87,7 +89,7 @@ export function GomokuRoom() {
     pending: sending ?? previewing,
     disabled: !myTurn || sending !== null,
     onPlace: mine && playing ? place : undefined,
-    onPreview: phone
+    onPreview: tapTwice
       ? (point: number) => setPreview({ point, at: state.moves.length })
       : undefined,
     label: m.gomoku.board,
@@ -102,6 +104,8 @@ export function GomokuRoom() {
 
   return (
     <RoomLayout
+      // No standings over the board: the seats under the board say who is who.
+      standings={false}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }
@@ -111,9 +115,7 @@ export function GomokuRoom() {
       }
       stage={
         <>
-          {playing ? (
-            <TurnBar {...turnBar(room, seconds, m)} />
-          ) : summary ? (
+          {playing ? null : summary ? (
             phone ? (
               <TurnBar {...resultBar(room, summary, m)} />
             ) : (
@@ -130,6 +132,12 @@ export function GomokuRoom() {
           )}
           <GomokuTable
             phone={phone}
+            fill={phone && (playing || summary !== null)}
+            turn={
+              playing && (
+                <TurnBar {...turnBar(room, seconds, previewing !== null, m)} />
+              )
+            }
             board={board}
             seats={seatsOf(room, phone, m)}
             notice={
@@ -140,10 +148,17 @@ export function GomokuRoom() {
             note={!playing && !summary ? m.gomoku.colorsNote : undefined}
             actions={
               playing ? (
-                (previewing !== null || resign) && (
+                (tapTwice ? mine !== null : resign) && (
                   <>
-                    {previewing !== null && (
-                      <Button onClick={() => place(previewing)}>
+                    {/* A touch screen's player always has it, live once a
+                        faint stone is down, so nothing moves when one is. */}
+                    {tapTwice && mine !== null && (
+                      <Button
+                        disabled={previewing === null}
+                        onClick={() => {
+                          if (previewing !== null) place(previewing);
+                        }}
+                      >
                         {m.gomoku.placeStone}
                       </Button>
                     )}
@@ -272,7 +287,12 @@ function playingNote(
 }
 
 /** GM09-GM11: whose turn, what was played last, and the clock. */
-function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
+function turnBar(
+  room: Room,
+  seconds: number,
+  previewing: boolean,
+  m: Messages,
+): TurnBarProps {
   const { state, playerId, reconnecting } = room;
   const toMove = colorToMove(state.moves);
   const name = sideName(state, toMove);
@@ -295,13 +315,15 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     label: mine ? m.gomoku.yourTurn : m.gomoku.turn(name),
     kind: 'status',
     main: passed ?? now,
-    meta: passed
-      ? now
-      : !last || last.point === null
-        ? m.gomoku.firstMove
-        : lastMine
-          ? m.gomoku.youPlayed(pointName(last.point))
-          : m.gomoku.played(lastName, pointName(last.point)),
+    meta: previewing
+      ? m.gomoku.tapAgain
+      : passed
+        ? now
+        : !last || last.point === null
+          ? m.gomoku.firstMove
+          : lastMine
+            ? m.gomoku.youPlayed(pointName(last.point))
+            : m.gomoku.played(lastName, pointName(last.point)),
     // While reconnecting the server's clock cannot be known: it holds.
     countdown: reconnecting
       ? { seconds, label: m.gomoku.paused, waiting: true }
