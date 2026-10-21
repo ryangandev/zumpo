@@ -1,5 +1,6 @@
 import { Button, Card } from '../ui';
 import { useMessages } from '../i18n';
+import { SwapLabel } from '../shell/swap-label';
 import { useCopy } from '../shell/use-copy';
 import styles from './challenge.module.css';
 
@@ -16,7 +17,10 @@ export function ChallengeButton({ link }: { link: string }) {
   const { copied, copy } = useCopy(link);
   return (
     <Button variant="secondary" icon={copied ? 'check' : 'link'} onClick={copy}>
-      {copied ? m.solo.linkCopied : m.solo.challengeFriend}
+      <SwapLabel
+        second={copied}
+        labels={[m.solo.challengeFriend, m.solo.linkCopied]}
+      />
     </Button>
   );
 }
@@ -40,7 +44,10 @@ export function ChallengeCard({
         icon={copied ? 'check' : 'link'}
         onClick={copy}
       >
-        {copied ? m.solo.linkCopied : m.solo.copyChallengeLink}
+        <SwapLabel
+          second={copied}
+          labels={[m.solo.copyChallengeLink, m.solo.linkCopied]}
+        />
       </Button>
     </Card>
   );
