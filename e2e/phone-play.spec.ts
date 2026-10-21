@@ -6,7 +6,7 @@ import { blackOf, pointOf } from './play/gomoku';
 import { deal, play, readyUp } from './play/hush';
 import { move, yourTurn } from './play/liars-dice';
 import { missHand, solveHand, startHand } from './play/make-24';
-import { openMiddle } from './play/minesweeper';
+import { hitAMine, openMiddle } from './play/minesweeper';
 import { playTurn, type Memory } from './play/pairs';
 import { readyToTap, tapMatch, tapMiss } from './play/snap';
 import { pickMiss, pickTrio, readyToFind } from './play/trios';
@@ -104,6 +104,18 @@ const currentInBoard = (page: Page) =>
     const room = board.getBoundingClientRect();
     const rect = current.getBoundingClientRect();
     return rect.top >= room.top - 1 && rect.bottom <= room.bottom + 1;
+  });
+
+/** Whether a board is whole in the window, its own scroller still. */
+const fitsItsScroller = (board: Locator) =>
+  board.evaluate((grid) => {
+    const box = grid.getBoundingClientRect();
+    const scroller = grid.parentElement!;
+    return (
+      box.left >= -0.5 &&
+      box.right <= innerWidth + 0.5 &&
+      scroller.scrollWidth <= scroller.clientWidth + 1
+    );
   });
 
 /** Writes `text` in a Doodle Chain step's field and presses Done. */
@@ -252,6 +264,12 @@ for (const size of SIZES) {
       await still('the first cells open');
       await sam.getByRole('button', { name: 'Flag' }).click();
       await still('flagging');
+      await sam.getByRole('button', { name: 'Reveal' }).click();
+      // A finished board is as wide as the one in play: it never pans.
+      await hitAMine(sam);
+      await expect
+        .poll(() => fitsItsScroller(board), { message: 'a finished board' })
+        .toBe(true);
     });
 
     test("liar's dice keeps the bid picker still", async ({ player }) => {
