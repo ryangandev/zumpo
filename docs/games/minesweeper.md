@@ -136,7 +136,7 @@ Classic single-player Minesweeper on the same three boards, with no name, no roo
    The run time stops while **How to play** is open, and the board is put away behind it until it closes.
 
 **Opening a mine loses.**
-The mine you hit turns solid red, every other mine shows, flags with no mine under them are crossed out, and Try again starts a new board of the same size.
+The mine you hit turns solid red, every other mine shows, flags with no mine under them are crossed out, the turn bar says how many of the safe cells you cleared, and Try again starts a new board of the same size.
 
 **Opening every safe cell wins**, whatever is flagged; the mines left are flagged for you.
 The time is shown and kept as the best for that board **on this device** (in `localStorage`) when it beats the last one.

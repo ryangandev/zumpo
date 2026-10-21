@@ -111,7 +111,7 @@ test('a player with no name plays a table of bots to the end', async ({
   ).toHaveCount(3);
 
   const result = sam.getByRole('heading', {
-    name: /^(You won in \d+ rounds|Out in \d\w\w of 4)\.$/,
+    name: /^(You won in \d+ rounds|You finished \d\w\w of 4)\.$/,
   });
   const nextRound = sam.getByRole('button', { name: 'Next round' });
   while (!(await result.isVisible())) {

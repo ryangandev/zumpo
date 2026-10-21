@@ -33,7 +33,8 @@ import {
   chord,
   elapsed,
   minesLeft,
-  minesStillHidden,
+  clearedCells,
+  safeCells,
   newGame,
   reveal,
   toggleFlag,
@@ -300,11 +301,7 @@ function SoloGameView({
                     },
                     {
                       label: m.minesweeper.solo.safeCellsLeft,
-                      value: String(
-                        game.width * game.height -
-                          game.mines -
-                          game.open.filter(Boolean).length,
-                      ),
+                      value: String(safeCells(game) - clearedCells(game)),
                     },
                   ]}
                 />
@@ -373,12 +370,11 @@ function turnBar(
     waiting: true,
   };
   if (game.status === 'lost') {
-    const hidden = minesStillHidden(game);
     return {
       label: m.minesweeper.gameOver,
       kind: 'status',
       main: m.minesweeper.solo.hitMine,
-      meta: m.minesweeper.solo.hiddenMines(hidden),
+      meta: m.minesweeper.solo.cleared(clearedCells(game), safeCells(game)),
       countdown,
     };
   }

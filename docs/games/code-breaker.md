@@ -103,7 +103,7 @@ The day is the device's **local date**, as in [Daily Word](daily-word.md#the-dai
 
 When the code is cracked or missed, the board stays, and beside it:
 
-- **The result**: cracked in _n_, or missed, with the code.
+- **The result**: cracked in _n_, or missed, with the code; a missed code is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them cracked, the current streak, the best streak, and how many were cracked in each number of guesses, with today's bar picked out.
   The bars are **1–4, 5, 6, 7, 8, 9 and 10**: four or fewer is rare enough to share one bar, and ten bars would be mostly empty.
 - **Next code in**, a countdown to local midnight.

@@ -95,9 +95,9 @@ export const gomoku: typeof en = {
     computer: '电脑',
     levels: { easy: '简单', medium: '中等', hard: '困难' },
     levelHelp: {
-      easy: '大多数活三都不挡：做出一个，你就快赢了。',
-      medium: '会挡住你的活三，但看不出两步之后的威胁。',
-      hard: '会往后看六手，有必胜的连续冲四就一定走出来。',
+      easy: '适合刚上手：你的大多数布局它都看不出来。',
+      medium: '会挡住简单的威胁，想赢要有计划。',
+      hard: '会往后看好几手，能赢的时候从不放过。',
     },
     pickTitle: '开一局。',
     description: '和电脑对战，三档难度，可以执黑或执白。',
@@ -118,8 +118,8 @@ export const gomoku: typeof en = {
     computerThinking: '电脑正在思考',
     computerPlayed: (point) => `电脑下在 ${point}`,
     thinking: '思考中',
-    wonIn: (moves) => `共 ${moves} 手，你赢了。`,
-    lostIn: (moves) => `共 ${moves} 手，电脑赢了。`,
+    wonOn: (move) => `第 ${move} 手，你赢了。`,
+    lostOn: (move) => `第 ${move} 手，电脑赢了。`,
     draw: '平局：棋盘下满了。',
     five: (from, to, next) =>
       `五子连珠，从 ${from} 到 ${to}。再来一局你执${COLOR[next]}。`,

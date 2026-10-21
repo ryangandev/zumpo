@@ -241,9 +241,9 @@ function SoloBoard({
             <SoloResult
               title={
                 youWon(game)
-                  ? m.gomoku.solo.wonIn(game.moves.length)
+                  ? m.gomoku.solo.wonOn(game.moves.length)
                   : computerWon(game)
-                    ? m.gomoku.solo.lostIn(game.moves.length)
+                    ? m.gomoku.solo.lostOn(game.moves.length)
                     : m.gomoku.solo.draw
               }
               body={

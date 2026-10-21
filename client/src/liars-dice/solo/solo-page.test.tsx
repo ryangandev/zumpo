@@ -89,7 +89,8 @@ describe('Liar’s Dice on your own', () => {
 
     // You call Liar whenever you can, and open as low as you may.
     for (let step = 0; step < 400; step++) {
-      if (screen.queryByRole('heading', { name: /^(You won|Out in)/ })) break;
+      if (screen.queryByRole('heading', { name: /^(You won|You finished)/ }))
+        break;
       const next = screen.queryByRole('button', { name: 'Next round' });
       const liar = screen.queryByRole('button', { name: 'Call Liar' });
       const open = screen.queryByRole('button', { name: /^Bid / });
@@ -100,7 +101,7 @@ describe('Liar’s Dice on your own', () => {
     }
 
     expect(
-      screen.getByRole('heading', { name: /^(You won in|Out in)/ }),
+      screen.getByRole('heading', { name: /^(You won in|You finished)/ }),
     ).toBeInTheDocument();
     expect(screen.getByText('The last call')).toBeInTheDocument();
     expect(readRecord().games).toBe(1);
