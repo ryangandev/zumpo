@@ -97,6 +97,19 @@ function chainsOf(harness: TestServer, roomId: string) {
   );
 }
 
+/** Plays a game of three to its reveal, every entry made. */
+async function playToReveal(harness: TestServer) {
+  const seated = await playToWrite(harness, THREE);
+  const { roomId, players, owner } = seated;
+  writeAll(players, roomId, ['one', 'two', 'three']);
+  await at(owner, 'draw', 2);
+  drawAll(players, roomId, [true, true, true]);
+  await at(owner, 'describe', 3);
+  const reveal = at(owner, 'reveal');
+  writeAll(players, roomId, ['eins', 'zwei', 'drei']);
+  return { ...seated, first: await reveal };
+}
+
 describe('Doodle Chain', () => {
   let harness: TestServer;
 
@@ -198,9 +211,9 @@ describe('Doodle Chain', () => {
       await at(owner, 'draw', 2);
 
       const received = players.map((player) => collect(player, 'dc:drawing'));
-      const describe = Promise.all(players.map((p) => at(p, 'describe', 3)));
+      const describing = Promise.all(players.map((p) => at(p, 'describe', 3)));
       drawAll(players, roomId, [true, true, true]);
-      const views = await describe;
+      const views = await describing;
       await settle();
 
       // At step 3 Leo describes Ryan's drawing of Maya's line.
@@ -296,7 +309,7 @@ describe('Doodle Chain', () => {
       maya.emit('dc:text', roomId, { text: 'not a drawing' });
       scribble(ryan, roomId);
       drawAll([maya, ryan, leo], roomId, [false, false, true]);
-      const describe = await at(maya, 'describe', 3);
+      const describing = await at(maya, 'describe', 3);
       // Maya's chain at step 2 was Leo's; she sent words, which a drawing
       // step ignores, so her drawing is empty.
       const chains = chainsOf(harness, roomId);
@@ -304,7 +317,7 @@ describe('Doodle Chain', () => {
         author: 'Maya',
         content: { type: 'empty', reason: 'time' },
       });
-      expect(describe.step).toBe(3);
+      expect(describing.step).toBe(3);
 
       // Ryan sits Leo's chain out; Leo describes Ryan's drawing, in words.
       leo.emit('dc:text', roomId, { suggestion: 3 });
@@ -328,18 +341,18 @@ describe('Doodle Chain', () => {
       ]);
       await at(owner, 'draw', 2);
       drawAll(players, roomId, [true, true, false, true]);
-      const describe = await Promise.all(
+      const describing = await Promise.all(
         players.map((p) => at(p, 'describe', 3)),
       );
 
-      const samView = describe[3]!;
+      const samView = describing[3]!;
       expect(samView.task).toMatchObject({ chain: 1, sitsOut: true });
       expect(samView.task?.given).toBeUndefined();
       expect(samView.task?.skipped).toMatchObject({
         author: { username: 'Leo' },
         content: { type: 'empty', reason: 'time' },
       });
-      expect(describe[0]!.table[sam.playerId]).toEqual({
+      expect(describing[0]!.table[sam.playerId]).toEqual({
         done: false,
         sitsOut: true,
       });
@@ -367,9 +380,9 @@ describe('Doodle Chain', () => {
       scribble(leo, roomId);
       await settle();
       leo.emit('room:leave', roomId);
-      const describe = at(owner, 'describe', 3);
+      const describing = at(owner, 'describe', 3);
       drawAll([maya, ryan, sam], roomId, [true, true, true]);
-      await describe;
+      await describing;
       const chains = chainsOf(harness, roomId);
       expect(chains[1]![1]).toMatchObject({
         author: 'Leo',
@@ -429,21 +442,8 @@ describe('Doodle Chain', () => {
   });
 
   describe('the reveal', () => {
-    /** Plays a game of three to its reveal, every entry made. */
-    async function playToReveal() {
-      const seated = await playToWrite(harness, THREE);
-      const { roomId, players, owner } = seated;
-      writeAll(players, roomId, ['one', 'two', 'three']);
-      await at(owner, 'draw', 2);
-      drawAll(players, roomId, [true, true, true]);
-      await at(owner, 'describe', 3);
-      const reveal = at(owner, 'reveal');
-      writeAll(players, roomId, ['eins', 'zwei', 'drei']);
-      return { ...seated, first: await reveal };
-    }
-
     it('shows one entry at a time, only for the host, only the one it names', async () => {
-      const { roomId, players, owner, first } = await playToReveal();
+      const { roomId, players, owner, first } = await playToReveal(harness);
       const [, ryan] = players;
       expect(first.reveal).toMatchObject({ chain: 0, shown: 1, total: 1 });
       expect(first.reveal?.entries).toHaveLength(1);
@@ -472,7 +472,7 @@ describe('Doodle Chain', () => {
     });
 
     it('takes one heart per chain, never on your own entry, and counts them', async () => {
-      const { roomId, players, owner } = await playToReveal();
+      const { roomId, players, owner } = await playToReveal(harness);
       const [maya, ryan, leo] = players;
       // Show the whole of Maya's chain: her line, Ryan's drawing, Leo's words.
       for (const total of [1, 2]) owner.emit('dc:reveal:next', roomId, total);
@@ -510,7 +510,7 @@ describe('Doodle Chain', () => {
     });
 
     it('gives a spectator the drawings but no heart', async () => {
-      const { roomId, owner } = await playToReveal();
+      const { roomId, owner } = await playToReveal(harness);
       const spectator = await harness.connect();
       await joinRoom(spectator, roomId, 'Noor', '', 'spectator');
       owner.emit('dc:reveal:next', roomId, 1);
@@ -525,10 +525,12 @@ describe('Doodle Chain', () => {
     });
 
     it('ends in the album, with the crowd favourite and the hearts ranked', async () => {
-      const { roomId, players, owner } = await playToReveal();
+      const { roomId, players, owner } = await playToReveal(harness);
       const [, ryan, leo] = players;
-      // Every chain has three entries; show all nine.
+      // Every chain has three entries; show all nine, at a host's pace, as
+      // the host's clicks share the room budget of four a second.
       for (let total = 1; total < 9; total += 1) {
+        await settle(250);
         const next = waitForDoodleChainState(
           owner,
           (s) => s.reveal?.total === total + 1,
@@ -539,6 +541,7 @@ describe('Doodle Chain', () => {
         if (total === 2) owner.emit('dc:heart', roomId, 0, 2);
       }
       const album = at(ryan, 'waiting');
+      await settle(250);
       owner.emit('dc:reveal:next', roomId, 9);
       const state = await album;
       expect(state.isGameStarted).toBe(false);

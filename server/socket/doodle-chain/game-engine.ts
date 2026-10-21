@@ -48,6 +48,42 @@ type DoodleChainRoom = Room<DoodleChainState>;
 /** Below this many players a game stops playing steps and shows what was made. */
 const FEWEST_TO_PLAY_ON = 2;
 
+/** A drawing's id: unique in the room, since `game` counts its games. */
+const drawingId = (game: DoodleChainState, chain: number, step: number) =>
+  `${game.game}.${chain}.${step}`;
+
+/** Seated players with something to do this step: only they can end it early. */
+const workers = (room: DoodleChainRoom) =>
+  Object.keys(room.playerList).filter((playerId) => {
+    const task = room.game.tasks.get(playerId);
+    return task !== undefined && !task.sitsOut;
+  });
+
+/** A step in play, and `playerId` at the table with something to do in it. */
+const workOf = (room: DoodleChainRoom, playerId: string) => {
+  const game = room.game;
+  if (!room.isGameStarted || !IN_STEP.has(game.phase)) return null;
+  if (!room.playerList[playerId]) return null;
+  const task = game.tasks.get(playerId);
+  if (!task || task.sitsOut) return null;
+  const work = game.work.get(playerId);
+  return work ? { task, work } : null;
+};
+
+/** Every player's points: the hearts their entries were given. */
+const countHearts = (room: DoodleChainRoom) => {
+  const game = room.game;
+  for (const [playerId, player] of Object.entries(room.playerList)) {
+    player.points = game.chains
+      .flat()
+      .filter((entry) => entry.author.playerId === playerId)
+      .reduce(
+        (sum, entry) => sum + heartsFor(game, entry.chain, entry.step),
+        0,
+      );
+  }
+};
+
 /**
  * Owns the steps and the reveal. Everybody plays every step at once, each on
  * a different chain, on the room's one clock; the reveal has no clock, since
@@ -61,9 +97,6 @@ const createDoodleChainGameEngine = (
   const roomOf = (roomId: string): DoodleChainRoom | undefined =>
     ctx.rooms.ofType<DoodleChainState>(roomId, 'doodle-chain');
 
-  const drawingId = (game: DoodleChainState, chain: number, step: number) =>
-    `${game.game}.${chain}.${step}`;
-
   const secondsFor = (room: DoodleChainRoom) => {
     switch (room.game.phase) {
       case 'write':
@@ -73,24 +106,6 @@ const createDoodleChainGameEngine = (
       default:
         return durations.draw ?? room.game.drawingSeconds;
     }
-  };
-
-  /** Seated players with something to do this step: only they can end it early. */
-  const workers = (room: DoodleChainRoom) =>
-    Object.keys(room.playerList).filter((playerId) => {
-      const task = room.game.tasks.get(playerId);
-      return task !== undefined && !task.sitsOut;
-    });
-
-  /** A step in play, and `playerId` at the table with something to do in it. */
-  const workOf = (room: DoodleChainRoom, playerId: string) => {
-    const game = room.game;
-    if (!room.isGameStarted || !IN_STEP.has(game.phase)) return null;
-    if (!room.playerList[playerId]) return null;
-    const task = game.tasks.get(playerId);
-    if (!task || task.sitsOut) return null;
-    const work = game.work.get(playerId);
-    return work ? { task, work } : null;
   };
 
   const startGame = (room: DoodleChainRoom) => {
@@ -303,19 +318,6 @@ const createDoodleChainGameEngine = (
   };
 
   /** A player's score is the hearts their entries were given this game. */
-  const countHearts = (room: DoodleChainRoom) => {
-    const game = room.game;
-    for (const [playerId, player] of Object.entries(room.playerList)) {
-      player.points = game.chains
-        .flat()
-        .filter((entry) => entry.author.playerId === playerId)
-        .reduce(
-          (sum, entry) => sum + heartsFor(game, entry.chain, entry.step),
-          0,
-        );
-    }
-  };
-
   /**
    * `playerId` gives the chain's one heart to the entry made at `step`, which
    * moves it from any other, or takes it back with null.
