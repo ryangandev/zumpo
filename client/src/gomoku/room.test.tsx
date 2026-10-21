@@ -206,12 +206,45 @@ describe('a Gomoku room', () => {
     expect(fake.sentArgs('gomoku:resign')).toEqual([['r1']]);
   });
 
+  it('starts the next game clean of a stone sent and a Resign opened in the last', async () => {
+    const user = userEvent.setup();
+    const { update } = await renderSeated(myTurn);
+    await user.click(point('F8'));
+    await user.click(screen.getByRole('button', { name: 'Resign' }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    // Maya resigns first, and the next game reaches the same move.
+    update({
+      ...myTurn,
+      isGameStarted: false,
+      phase: 'waiting',
+      turnPlayerId: null,
+      lastGame: {
+        endedEarly: true,
+        ending: 'resigned',
+        winner: 'black',
+        stones: 2,
+        standings: [
+          { playerId: ME, username: 'Ryan', points: 1 },
+          { playerId: 'p2', username: 'Maya', points: 1 },
+        ],
+      },
+    });
+    expect(screen.queryByRole('dialog')).toBeNull();
+    update(myTurn);
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(point('F8')).toHaveAccessibleName('F8, empty');
+    expect(point('F8')).not.toHaveAttribute('aria-disabled', 'true');
+  });
+
   it('shows the result over the finished board, with the next game to start', async () => {
     const line = [0, 1, 2, 3, 4].map((step) => pointAt(2 + step, 11 - step));
     await renderSeated(
       gomokuState({
         colors,
         gameNumber: 2,
+        samePair: true,
         moves: Array.from({ length: 21 }, (_, index) => ({
           color: index % 2 === 0 ? ('black' as const) : ('white' as const),
           point: index % 2 === 0 ? (line[index / 2] ?? index) : 200 + index,

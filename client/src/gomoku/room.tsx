@@ -57,6 +57,16 @@ export function GomokuRoom() {
   const previewing = myTurn && sending === null ? current(preview) : null;
   const [resigning, setResigning] = useState(false);
 
+  // A game that ends, or a page that drops and comes back, forgets what was
+  // picked or asked: the next game may reach the same move.
+  const [seen, setSeen] = useState({ playing, reconnecting });
+  if (seen.playing !== playing || seen.reconnecting !== reconnecting) {
+    setSeen({ playing, reconnecting });
+    setSent(null);
+    setPreview(null);
+    if (seen.playing !== playing) setResigning(false);
+  }
+
   const place = (point: number) => {
     if (!myTurn || sending !== null) return;
     setSent({ point, at: state.moves.length });
@@ -175,19 +185,9 @@ function sideName(state: GomokuRoomState, color: GomokuColor): string {
   return state.colors?.[color].username ?? '';
 }
 
-/** Whether the last game's two players are both still at the table. */
-function samePair(state: GomokuRoomState): boolean {
-  const { colors } = state;
-  return (
-    colors !== null &&
-    colors.black.playerId in state.playerList &&
-    colors.white.playerId in state.playerList
-  );
-}
-
 /** The next game's number: one on for the same pair, else their first. */
 const nextGameNumber = (state: GomokuRoomState) =>
-  samePair(state) ? state.gameNumber + 1 : 1;
+  state.samePair ? state.gameNumber + 1 : 1;
 
 /** A seat's avatar, as the scoreboard draws the same player's. */
 const avatar = (name: string) => ({
@@ -345,7 +345,7 @@ function resultNext(
     return m.gomoku.seatFree(sideName(state, otherColor(summary.winner)));
   }
   // The colours swap for the same pair; a new pair's are drawn.
-  return samePair(state) ? m.gomoku.nextBlack(sideName(state, 'white')) : null;
+  return state.samePair ? m.gomoku.nextBlack(sideName(state, 'white')) : null;
 }
 
 /** GM13-GM15: the result over the finished board. */
