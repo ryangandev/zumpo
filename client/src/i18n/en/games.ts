@@ -329,7 +329,7 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
       howToPlay: {
         goal: 'Bid on what the whole table rolled, call the bluffs, and keep your dice.',
         steps: [
-          'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face.',
+          'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face, so a bid names a face from 2 to 6.',
           'On your turn, raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
           'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does.',
         ],
@@ -352,7 +352,7 @@ On your own, play 1 to 5 bots with no clock, and go on to the next round when yo
         howToPlay: {
           goal: 'Bid on what the whole table rolled, call the bots’ bluffs, and keep your dice.',
           steps: [
-            'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face.',
+            'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face, so a bid names a face from 2 to 6.',
             'On your turn, raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
             'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does.',
           ],
