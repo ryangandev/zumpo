@@ -108,7 +108,8 @@ describe('Liar’s Dice on your own', () => {
 
     // You call Liar whenever you can, and open as low as you may.
     for (let step = 0; step < 400; step++) {
-      if (screen.queryByRole('heading', { name: /^(You won|Out in)/ })) break;
+      if (screen.queryByRole('heading', { name: /^(You won|You finished)/ }))
+        break;
       const next = screen.queryByRole('button', { name: 'Next round' });
       const liar = screen.queryByRole('button', { name: 'Call Liar' });
       const open = screen.queryByRole('button', { name: /^Bid / });
@@ -119,7 +120,7 @@ describe('Liar’s Dice on your own', () => {
     }
 
     expect(
-      screen.getByRole('heading', { name: /^(You won in|Out in)/ }),
+      screen.getByRole('heading', { name: /^(You won in|You finished)/ }),
     ).toBeInTheDocument();
     expect(screen.getByText('The last call')).toBeInTheDocument();
     expect(readRecord().games).toBe(1);
@@ -155,5 +156,29 @@ describe('Liar’s Dice on your own', () => {
     await user.click(dialog.getByRole('button', { name: 'Leave' }));
     expect(router.state.location.pathname).toBe('/games/liars-dice');
     expect(readRecord().games).toBe(0);
+  });
+
+  it('holds the bots while How to play is open', async () => {
+    await renderApp('/games/liars-dice/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    for (let step = 0; step < 6; step++) {
+      if (screen.queryByRole('group', { name: 'Your bid' })) break;
+      await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    }
+    await user.click(screen.getAllByRole('button', { name: /^Bid / })[0]!);
+    const botsTurn = screen.getByRole('region', { name: 'Turn' }).textContent;
+    expect(botsTurn).not.toMatch(/Your turn/);
+
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS * 3));
+    await user.click(screen.getByRole('button', { name: 'Back to the game' }));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).toBe(
+      botsTurn,
+    );
+
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).not.toBe(
+      botsTurn,
+    );
   });
 });

@@ -19,6 +19,7 @@ import { useSession } from '../../net/session';
 import { listNames, ordinal } from '../../room/players';
 import { FormPage } from '../../shell/form-page';
 import { SoloLayout } from '../../solo/solo-layout';
+import { useSoloTime } from '../../solo/solo-time';
 import { SoloResult } from '../../solo/solo-result';
 import { useBidChoice } from '../bid-choice';
 import { Table, type TableSeat } from '../table';
@@ -181,6 +182,8 @@ function SoloTable({
   const [game, setGame] = useState(() => newGame(picks, soloRandom));
   const [record, setRecord] = useState<LiarsDiceRecord | null>(null);
   const over = game.phase === 'over';
+  // The bots wait while How to play is open.
+  const clock = useSoloTime();
 
   /** Moves the game on, counting it on this device once it is over. */
   const advance = (next: SoloGame) => {
@@ -192,14 +195,14 @@ function SoloTable({
 
   // A bot takes about a second over its turn, so every bid can be read.
   useEffect(() => {
-    if (!isBotTurn(game)) return;
+    if (!isBotTurn(game) || clock.paused) return;
     const timer = setTimeout(() => {
       const next = playBot(game, soloRandom);
       setGame(next);
       if (next.phase === 'over') setRecord(recordGame(youWon(next)));
     }, BOT_TURN_MS);
     return () => clearTimeout(timer);
-  }, [game]);
+  }, [game, clock.paused]);
 
   const you = game.seats.find((seat) => seat.id === YOU)!;
   const { place, of } = placeOf(game);
@@ -211,6 +214,7 @@ function SoloTable({
   return (
     <SoloLayout
       gameType="liars-dice"
+      time={over ? undefined : clock}
       leaveWarning={over ? null : m.liarsDice.solo.leaveWarning}
       phase={
         over

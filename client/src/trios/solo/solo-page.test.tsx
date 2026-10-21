@@ -162,7 +162,7 @@ describe('Trios on your own', () => {
 
     expect(turn().getByText('Not a trio, +5 s')).toBeInTheDocument();
     expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:0[5-6]/);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:0[5-6]/);
     expect(
       table().getByRole('img', { name: `${cardName(t[0]!)}, not a trio` }),
     ).toBeInTheDocument();
@@ -217,7 +217,7 @@ describe('Trios on your own', () => {
     ).toBeInTheDocument();
     expect(turn().getByText('Find the third card')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Hint, +10 s' })).toBeNull();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:2[0-1]/);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:2[0-1]/);
   });
 
   it('ends after ten trios with every one, keeps the best and copies a challenge', async () => {

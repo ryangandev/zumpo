@@ -446,9 +446,12 @@ On your own, play the computer at Easy, Medium or Hard, as Black or White. Your 
       createDescription:
         'Two players take turns, black first, and five in a row wins. Up to five more can watch.',
       solo: {
-        summary: 'Take turns placing stones. Five in a row wins.',
+        summary:
+          'Take turns placing stones. Five in a row, across, down or diagonally, wins.',
         facts: [
           'Against the computer: Easy, Medium or Hard',
+          'Make two threats at once: the computer can block only one',
+          'Take back your last move whenever it is your turn',
           'No clock: your turn waits for you',
         ],
       },

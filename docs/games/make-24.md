@@ -22,6 +22,9 @@ You make 24 one step at a time:
 
 Results can be fractions (`8/3`) or below zero, and are kept exact, so `(5 − 1 ÷ 5) × 5` is 24.
 A division by zero is not allowed: a card worth 0 cannot be picked after ÷.
+
+A keyboard plays a hand too, on your own and in a room, unless the chat has the focus: **1 to 4** pick a card by its place from the left, **+ − \* x /** pick a sign, **Backspace** undoes a step and **Esc** starts over.
+A wide screen with a pointer says so in one line under the hand.
 There is no wrong answer to be punished for, only a hand that is not solved yet: Undo and Start over are free.
 
 A finished hand reads as one expression with only the brackets it needs, such as `(8 − 4) × (7 − 1)`.
@@ -31,7 +34,9 @@ A finished hand reads as one expression with only the brackets it needs, such as
 A **run** is ten hands, with no name, no room and no server: it runs in the browser.
 
 - The **run time** counts up while a hand is in front of you, and stops for the moment between hands.
-- **Skip** gives up a hand: one way to solve it shows for 2 seconds, and 30 seconds are added to the run time.
+  It also stops while **How to play** is open, and the hand is put away behind it until it closes.
+- **Skip** gives up a hand: one way to solve it shows, off the clock, until you press **Next hand** (T13), and 30 seconds are added to the run time.
+  The way shown is the one a person would most likely write: whole numbers all along where possible, a 1 multiplied in last rather than mid-sum, then the shortest.
 - A solved hand shows **24! Nice.** and the next one follows a moment later.
 - After the tenth hand: the run time, how many hands were solved and skipped, the fastest solved hand, and every hand with how you solved it (or, for a skipped one, a way to).
 - The best run time is kept **on this device** (in `localStorage`), with the best of each of the last few days.
@@ -127,4 +132,4 @@ Make 24's one event of its own is `t24:solve`, with the room and the steps.
 | [`make-24/solo/`](../../client/src/make-24/solo/)              | A run on your own                                                   |
 
 The rules are covered by [`make-24-rules.test.ts`](../../server/tests/make-24-rules.test.ts) and [`make-24-flow.test.ts`](../../server/tests/make-24-flow.test.ts).
-The screens are T01-T12 in [the Figma file](../design.md).
+The screens are T01-T13 in [the Figma file](../design.md).

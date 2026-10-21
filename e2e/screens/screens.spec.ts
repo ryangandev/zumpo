@@ -867,6 +867,9 @@ test('Make 24 on your own', async ({ player }) => {
     // One hand skipped, as Figma's run has.
     if (hand === 5) {
       await maya.getByRole('button', { name: 'Skip, +30 s' }).click();
+      await expect(turn.getByText('Skipped')).toBeVisible();
+      await shot(maya, 'T13');
+      await maya.getByRole('button', { name: 'Next hand' }).click();
       continue;
     }
     await solveHand(maya);
@@ -1344,7 +1347,9 @@ test('Liar’s Dice on your own', async ({ player }) => {
   await maya.getByRole('button', { name: 'Start' }).click();
 
   const won = maya.getByRole('heading', { name: /^You won in \d+ rounds?\.$/ });
-  const out = maya.getByRole('heading', { name: /^Out in \d\w\w of 4\.$/ });
+  const out = maya.getByRole('heading', {
+    name: /^You finished \d\w\w of 4\.$/,
+  });
   const nextRound = maya.getByRole('button', { name: 'Next round' });
   const thinking = maya
     .getByRole('region', { name: 'Turn' })
@@ -2009,7 +2014,7 @@ test('Code Breaker on your own', async ({ player }) => {
   const twelfth = dailyCode(12);
   const [first, second, third, fourth, fifth] = missingCode(twelfth, [
     '1234',
-    '5678',
+    '5689',
     '2149',
     '4310',
     '4170',
@@ -2307,7 +2312,7 @@ test('Gomoku on your own', async ({ player }) => {
   await choose(maya, 'Level', /^Easy/);
   await maya.getByRole('button', { name: 'Start' }).click();
   const won = maya.getByRole('heading', {
-    name: /^You won a game of \d+ moves\.$/,
+    name: /^You won on move \d+\.$/,
   });
   for (;;) {
     await expect(yourGomokuTurn(maya).or(won)).toBeVisible();
@@ -2319,7 +2324,7 @@ test('Gomoku on your own', async ({ player }) => {
   // And one lost, Maya now White, her stones kept far apart.
   await maya.getByRole('button', { name: 'Play again' }).click();
   const lost = maya.getByRole('heading', {
-    name: /^The computer won a game of \d+ moves\.$/,
+    name: /^The computer won on move \d+\.$/,
   });
   for (;;) {
     await expect(yourGomokuTurn(maya).or(lost)).toBeVisible();

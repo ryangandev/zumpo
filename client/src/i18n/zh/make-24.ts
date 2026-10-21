@@ -52,13 +52,13 @@ export const make24: typeof en = {
     operator: (operator) => OPERATOR_NAMES[operator],
     not24: '不是 24',
     cardFrom: (value, formula) => `${value}，来自 ${formula}`,
-    pickNumber: '先选一个数字。',
+    pickNumber: '选一个数字。',
     pickSign: (value) => `为 ${value} 选一个运算符。`,
     pickSecond: (value, sign) => `${value} ${sign} ？选第二个数字。`,
     undo: '撤销',
     startOver: '重新开始',
     signs: '运算符',
-    yourSteps: '你的步骤',
+    keys: '键盘：1 到 4 选牌，+ − × ÷ 选运算符，退格键撤销，Esc 重新开始。',
   },
   solo: {
     description: (challenge) =>
@@ -82,7 +82,8 @@ export const make24: typeof en = {
     bestOnDevice: '本机最佳成绩',
     challengeDescription: (time) =>
       `朋友拿到相同的十手牌，挑战你的 ${time} 成绩。`,
-    skippedPrompt: '这是一种解法，马上开始下一手。',
+    skippedPrompt: '这是一种解法。',
+    nextHand: '下一手',
     nextHandPrompt: '马上开始下一手。',
     skip: '跳过，+30 秒',
     thisRun: '本次挑战',

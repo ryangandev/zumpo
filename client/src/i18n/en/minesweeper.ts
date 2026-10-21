@@ -118,8 +118,8 @@ export const minesweeper = {
       `${count < 0 ? `−${-count}` : count} ${Math.abs(count) === 1 ? 'mine' : 'mines'} left`,
     runTime: 'run time',
     hitMine: 'You hit a mine',
-    hiddenMines: (hidden: number) =>
-      `${plural(hidden, 'mine')} ${hidden === 1 ? 'was' : 'were'} still hidden`,
+    cleared: (cleared: number, safe: number) =>
+      `You cleared ${cleared} of ${plural(safe, 'safe cell')}`,
     clearBoard: 'Clear the board',
     flagMode: (phone: boolean) =>
       `Flag mode: a ${phone ? 'tap' : 'click'} flags`,

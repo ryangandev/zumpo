@@ -134,7 +134,9 @@ describe('a board on your own', () => {
     const mine = layout.indexOf(true);
     await user.click(cell(Math.floor(mine / 9) + 1, (mine % 9) + 1));
     expect(turn().getByText('You hit a mine')).toBeInTheDocument();
-    expect(turn().getByText('9 mines were still hidden')).toBeInTheDocument();
+    expect(
+      turn().getByText(/^You cleared [1-9]\d* of 71 safe cells$/),
+    ).toBeInTheDocument();
     expect(
       screen.getAllByRole('gridcell', { name: /: the mine you hit$/ }),
     ).toHaveLength(1);

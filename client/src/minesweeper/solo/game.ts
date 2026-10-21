@@ -186,12 +186,13 @@ export function minesLeft(game: SoloGame): number {
   return game.mines - game.flags.filter(Boolean).length;
 }
 
-/** Mines nobody flagged, besides the one that was hit: for a lost game. */
-export function minesStillHidden(game: SoloGame): number {
-  return game.layout.filter(
-    (mine, index) => mine && index !== game.hit && !game.flags[index],
-  ).length;
-}
+/** The cells without a mine: what clearing the board means. */
+export const safeCells = (game: SoloGame): number =>
+  game.width * game.height - game.mines;
+
+/** The safe cells opened so far; a mine is never opened, even the one hit. */
+export const clearedCells = (game: SoloGame): number =>
+  game.open.filter(Boolean).length;
 
 /** Milliseconds on the clock at `now`. */
 export function elapsed(game: SoloGame, now: number): number {

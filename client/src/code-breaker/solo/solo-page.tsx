@@ -16,6 +16,7 @@ import {
   Card,
   CodeBoard,
   CodeMarksBoard,
+  DigitTile,
   StatList,
   TurnBar,
   type TurnBarProps,
@@ -25,7 +26,7 @@ import { listNames } from '../../room/players';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
-import { SoloResult } from '../../solo/solo-result';
+import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { CopyButton, Distribution, formatWait } from '../../solo/daily';
 import { BoardPanel, PegLegend } from '../panel';
@@ -153,6 +154,7 @@ function OpenBoard({
         typing={typing}
         notes={notes}
         onNotes={onNotes}
+        ruledOut={settledDigits(rowsOf(game)).out}
         pad
       />
     </BoardPanel>
@@ -254,13 +256,14 @@ function DailyView({
               ? m.codeBreaker.crackedIn(cracked)
               : m.codeBreaker.notThisTime
           }
+          answer={!cracked && <CodeAnswer code={game.code} />}
           body={
             cracked
               ? m.codeBreaker.dailyCracked(
                   game.code,
                   m.codeBreaker.streak(stats.currentStreak),
                 )
-              : m.codeBreaker.dailyMissed(game.code)
+              : m.codeBreaker.dailyMissed
           }
           stats={[
             {
@@ -393,7 +396,12 @@ function PracticeView({
               ? m.codeBreaker.crackedIn(cracked)
               : m.codeBreaker.notThisTime
           }
-          body={m.codeBreaker.practiceResult(game.code)}
+          answer={!cracked && <CodeAnswer code={game.code} />}
+          body={
+            cracked
+              ? m.codeBreaker.practiceResult(game.code)
+              : m.codeBreaker.practiceMissed
+          }
           actions={
             <>
               <Button onClick={onAnother}>{m.codeBreaker.anotherCode}</Button>
@@ -572,4 +580,16 @@ export function known(game: SoloGame, m: Messages): string {
     );
   }
   return m.codeBreaker.known(game.guesses.length, parts);
+}
+
+/** CB07: a missed code, spelled out in tiles under the result. */
+function CodeAnswer({ code }: { code: string }) {
+  const m = useMessages();
+  return (
+    <SoloAnswer label={m.codeBreaker.codeWas(code)}>
+      {[...code].map((digit, index) => (
+        <DigitTile key={index} digit={digit} state="cracked" size="small" />
+      ))}
+    </SoloAnswer>
+  );
 }

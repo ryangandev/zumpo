@@ -100,6 +100,31 @@ describe('Gomoku on your own', () => {
     ).toBeInTheDocument();
   });
 
+  it('takes back your last stone and the computer’s answer', async () => {
+    await renderApp('/games/gomoku/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    // Nothing to take back before your first stone.
+    expect(screen.queryByRole('button', { name: 'Take back' })).toBeNull();
+
+    await user.click(point('H8'));
+    expect(screen.queryByRole('button', { name: 'Take back' })).toBeNull();
+    await computerMoves();
+    await user.click(point('A1'));
+    await computerMoves();
+    expect(screen.getByText('Move 5')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Take back' }));
+    expect(screen.getByText('Move 3')).toBeInTheDocument();
+    expect(point('A1')).toHaveAccessibleName(/^A1, empty/);
+    expect(turn().getByText('Your turn')).toBeInTheDocument();
+    expect(turn().getByText(/^The computer played [A-O]\d+$/)).toBeVisible();
+
+    await user.click(screen.getByRole('button', { name: 'Take back' }));
+    expect(screen.getByText('Move 1')).toBeInTheDocument();
+    expect(point('H8')).toHaveAccessibleName(/^H8, empty/);
+    expect(screen.queryByRole('button', { name: 'Take back' })).toBeNull();
+  });
+
   it('keeps the focus on the point you played from the keyboard', async () => {
     await renderApp('/games/gomoku/solo');
     await user.click(screen.getByRole('button', { name: 'Start' }));
@@ -134,7 +159,7 @@ describe('Gomoku on your own', () => {
     expect(screen.getByText('Computer won')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {
-        name: /^The computer won a game of \d+ moves\.$/,
+        name: /^The computer won on move \d+\.$/,
       }),
     ).toBeInTheDocument();
     expect(

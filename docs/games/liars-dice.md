@@ -67,8 +67,9 @@ A game on your own needs no name, no room and no server: it runs in the browser,
   Everybody, you included, sits in a random order, and a random player opens the first round.
 - **Your turn waits for you**: there is no clock on your own.
   A bot takes about a second over its turn, so every bid can be read as it is made.
+  While **How to play** is open the bots wait, and the table is put away behind it until it closes.
 - After a call the reveal stays up until you press **Next round**.
-- If you lose your last die the game ends for you, with your place ("Out in 3rd of 4"); the bots' game is not played out.
+- If you lose your last die the game ends for you, with your place ("You finished 3rd of 4"); the bots' game is not played out.
 - Your **wins and games played**, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count.
 - **Leave** goes to the game's page; while a game is under way, any way out asks first, since it ends the game uncounted.

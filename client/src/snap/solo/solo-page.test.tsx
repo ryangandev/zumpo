@@ -118,7 +118,7 @@ describe('Snap on your own', () => {
     expect(
       turn().getByText(en.snap.onlyOn(wrong, 'middle')),
     ).toBeInTheDocument();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:0[3-4]/);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:0[3-4]/);
     expect(
       card('Middle card').getByRole('button', {
         name: `${nameOf(wrong)}, not a match`,

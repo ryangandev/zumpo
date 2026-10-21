@@ -91,7 +91,7 @@ export const liarsDice: typeof en = {
     diceCount: (count) => `${count} 颗骰子`,
     youWon: '你赢了',
     wonIn: (rounds) => `你在 ${rounds} 轮后获胜。`,
-    outIn: (place, of) => `你出局了，在 ${of} 人中获得${place}。`,
+    outIn: (place, of) => `你在 ${of} 人中获得${place}。`,
     lastAtTable: (dice) => `你坚持到了最后，还剩 ${dice} 颗骰子。`,
     stillIn: (names, _count, round) => `第 ${round} 轮时，${names} 还在场上。`,
     place: '名次',

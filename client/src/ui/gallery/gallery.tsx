@@ -1487,6 +1487,7 @@ export default function Gallery() {
                 ['Correct', 'correct'],
                 ['Present', 'present'],
                 ['Absent', 'absent'],
+                ['Ruled out', 'ruledOut'],
               ] as const
             ).map(([stateName, state]) => (
               <Specimen

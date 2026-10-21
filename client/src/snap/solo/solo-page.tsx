@@ -31,6 +31,7 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloTime } from '../../solo/solo-time';
 import { SnapBoard, SnapTurnBar } from '../board';
 import {
   afterFlash,
@@ -187,16 +188,17 @@ function RunView({
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
-  const [run, setRun] = useState(() => newRun(seed, Date.now()));
+  const clock = useSoloTime();
+  const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(run.cardStartedAt !== null);
+  const now = useClock(run.cardStartedAt !== null && !clock.paused, clock.now);
 
   // A tap just judged stays up for a moment, then the run goes on.
   const flash = run.flash;
   useEffect(() => {
-    if (!flash) return;
+    if (!flash || clock.paused) return;
     const timer = setTimeout(() => {
-      const next = afterFlash(run, Date.now());
+      const next = afterFlash(run, clock.now());
       setRun(next);
       if (isOver(next)) {
         const { timeMs } = summary(next);
@@ -209,7 +211,7 @@ function RunView({
       }
     }, flashMs(flash));
     return () => clearTimeout(timer);
-  }, [flash, run]);
+  }, [flash, run, clock]);
 
   const link = challengeLink(soloPath('snap'), { seed });
 
@@ -265,6 +267,7 @@ function RunView({
   return (
     <SoloLayout
       gameType="snap"
+      time={clock}
       phase={{ tone: 'blue', label }}
       stage={
         <>
@@ -277,7 +280,7 @@ function RunView({
               marks: middleMarks,
             }}
             mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
-            onTap={(symbol) => setRun(tap(run, symbol, Date.now()))}
+            onTap={(symbol) => setRun(tap(run, symbol, clock.now()))}
             disabled={!canTap(run)}
           />
         </>

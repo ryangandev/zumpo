@@ -89,6 +89,7 @@ You start with one card; the other thirty come up as the middle card one at a ti
 Thirty is about a minute and a half for somebody quick, and three minutes for somebody learning.
 
 - The start screen shows the run and your best; the cards are dealt and the **run time** starts on Start, so nobody studies the first card before the clock runs.
+  For the same reason the run time stops while **How to play** is open, and the cards are put away behind it until it closes.
 - **A match** shows on both cards for a moment (0.5 s, off the clock); then the middle card becomes your card, and the next card comes up.
 - **Not a match:** the symbol shows as wrong for a moment (0.6 s), and **3 seconds** go on the clock.
   Which card the symbol is on stays in the turn bar until the next tap.

@@ -14,6 +14,7 @@ import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
   Button,
   Card,
+  LetterTile,
   StatList,
   TurnBar,
   WordBoard,
@@ -24,7 +25,7 @@ import { listNames } from '../../room/players';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
-import { SoloResult } from '../../solo/solo-result';
+import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { BoardPanel, MarkLegend } from '../panel';
 import { PlayArea } from '../play';
@@ -200,13 +201,14 @@ function DailyView({
       result={
         <SoloResult
           title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
+          answer={!found && <WordAnswer word={word} />}
           body={
             found
               ? m.dailyWord.dailyFound(
                   word,
                   m.dailyWord.streak(stats.currentStreak),
                 )
-              : m.dailyWord.dailyMissed(word)
+              : m.dailyWord.dailyMissed
           }
           stats={[
             {
@@ -325,7 +327,12 @@ function PracticeView({
       result={
         <SoloResult
           title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
-          body={m.dailyWord.practiceResult(game.answer.toUpperCase())}
+          answer={!found && <WordAnswer word={game.answer.toUpperCase()} />}
+          body={
+            found
+              ? m.dailyWord.practiceResult(game.answer.toUpperCase())
+              : m.dailyWord.practiceMissed
+          }
           actions={
             <>
               <Button onClick={onAnother}>{m.dailyWord.anotherWord}</Button>
@@ -477,4 +484,22 @@ export function known(game: SoloGame, m: Messages): string {
       m.dailyWord.lettersElsewhere(listLetters(elsewhere, m), elsewhere.size),
     );
   return m.dailyWord.known(parts);
+}
+
+/** DW05: a missed word, spelled out in tiles under the result. */
+function WordAnswer({ word }: { word: string }) {
+  const m = useMessages();
+  return (
+    <SoloAnswer label={m.dailyWord.wordWas(word)}>
+      {[...word].map((letter, index) => (
+        <LetterTile
+          key={index}
+          letter={letter}
+          state="correct"
+          size="small"
+          decorative
+        />
+      ))}
+    </SoloAnswer>
+  );
 }
