@@ -33,6 +33,19 @@ const chatBox = () => screen.getByRole('textbox', { name: 'Message' });
 /** The celebration's canvas; the room has no other. */
 const confetti = () => document.querySelector('canvas[aria-hidden]');
 
+/** Both seats getting ready for the given level. */
+function readyAt(level: number) {
+  return hushState({
+    isGameStarted: true,
+    phase: 'ready',
+    level,
+    table: {
+      p1: { held: 0, ready: false },
+      p2: { held: 0, ready: false },
+    },
+  });
+}
+
 describe('a Hush room', () => {
   it('lets the host start, and says how long the game is', async () => {
     const user = userEvent.setup();
@@ -87,22 +100,12 @@ describe('a Hush room', () => {
   });
 
   it('says the rule before the first deal, and only then', async () => {
-    const ready = (level: number) =>
-      hushState({
-        isGameStarted: true,
-        phase: 'ready',
-        level,
-        table: {
-          p1: { held: 0, ready: false },
-          p2: { held: 0, ready: false },
-        },
-      });
-    const { update } = await renderSeated(ready(1));
+    const { update } = await renderSeated(readyAt(1));
     expect(
       screen.getByText(/^No turns, no talking: play your lowest card/),
     ).toBeInTheDocument();
 
-    update(ready(2));
+    update(readyAt(2));
     expect(screen.queryByText(/^No turns, no talking/)).toBeNull();
     expect(
       screen.getByText(
