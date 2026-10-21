@@ -27,11 +27,13 @@ import { SoloResult } from '../../solo/solo-result';
 import { GomokuTable, type SeatView } from '../table';
 import { LEVELS, THINKING_MS } from './computer';
 import {
+  canTakeBack,
   computerWon,
   isYourTurn,
   newGame,
   play,
   stonesOn,
+  takeBack,
   toMove,
   youWon,
   type SoloGame,
@@ -241,9 +243,9 @@ function SoloBoard({
             <SoloResult
               title={
                 youWon(game)
-                  ? m.gomoku.solo.wonIn(game.moves.length)
+                  ? m.gomoku.solo.wonOn(game.moves.length)
                   : computerWon(game)
-                    ? m.gomoku.solo.lostIn(game.moves.length)
+                    ? m.gomoku.solo.lostOn(game.moves.length)
                     : m.gomoku.solo.draw
               }
               body={
@@ -300,6 +302,18 @@ function SoloBoard({
                   {previewing !== null && (
                     <Button onClick={() => place(previewing)}>
                       {m.gomoku.placeStone}
+                    </Button>
+                  )}
+                  {canTakeBack(game) && (
+                    <Button
+                      variant="secondary"
+                      icon="undo"
+                      onClick={() => {
+                        setPreview(null);
+                        setGame(takeBack(game));
+                      }}
+                    >
+                      {m.gomoku.solo.takeBack}
                     </Button>
                   )}
                   <p className={styles.hint}>

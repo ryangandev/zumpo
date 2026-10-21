@@ -4,7 +4,7 @@
   "id": "40:22031",
   "type": "COMPONENT_SET",
   "key": "38d6fe2592cdfb72e3bb23f18e40d57be4b74ca8",
-  "description": "One card of a Pairs board. Regular, 80 px, is the default; Compact, 52 px, fits a 6 × 6 board on a phone; Large, 124 px, is a 4 × 4 board on a desktop, as wide as 6 × 6 at Regular (520 px). Turning a card over is a 0.3 s flip, off when the system asks for reduced motion.",
+  "description": "One card of a Pairs board. Regular, 80 px, is the default; Compact, 52 px, fits a 6 × 6 board on a phone; Large, 124 px, is a 4 × 4 board on a desktop, as wide as 6 × 6 at Regular (520 px). Turning a card over is a 0.25 s flip, off when the system asks for reduced motion.",
   "properties": {
     "Symbol": {
       "type": "instance_swap",

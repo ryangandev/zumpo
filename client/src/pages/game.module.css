@@ -1,11 +1,3 @@
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--zumpo-space-8) var(--zumpo-space-16);
-}
-
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 368px;
@@ -75,10 +67,44 @@
   letter-spacing: var(--zumpo-text-label-tracking);
 }
 
-.rulesText {
+.rulesText,
+.facts {
   font: var(--zumpo-text-body);
   letter-spacing: var(--zumpo-text-body-tracking);
   white-space: pre-line;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-4);
+  margin: 0;
+  padding-left: var(--zumpo-space-24);
+}
+
+.fullRules svg {
+  transition: transform 120ms ease-out;
+}
+
+.fullRules[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+/* Every rule, one paragraph after another, under Full rules once open. */
+.full {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-12);
+}
+
+.full[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fullRules svg {
+    transition: none;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -89,11 +115,6 @@
 
 /* A phone packs the rooms tighter, and its rules panel takes less padding. */
 @media (max-width: 640px) {
-  /* Back to games and Playing as share one row on a phone, as in MO04. */
-  .actions {
-    gap: var(--zumpo-space-8);
-  }
-
   .main {
     gap: var(--zumpo-space-24);
   }

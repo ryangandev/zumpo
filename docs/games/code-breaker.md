@@ -70,8 +70,8 @@ The note sits where Daily Word's does: under the board on your own on a wide scr
 
 ### Notes
 
-The pad's keys never colour themselves, unlike Daily Word's keyboard: a mark counts digits without naming them, so there is nothing certain to show, and working that out is the game.
-Instead the player keeps their own **notes** on the pad.
+A mark counts digits without naming them, so the pad shows little the game knows: on your own it dims a digit that is certainly out (below), and the rest is the player's to work out.
+The player keeps their own **notes** on the pad.
 
 - **Notes** is a toggle beside the pad.
   While it is on, a digit key, clicked, tapped or pressed, marks that digit instead of typing it, cycling **plain → out → in → plain**.
@@ -79,9 +79,11 @@ Instead the player keeps their own **notes** on the pad.
 - An **out** digit's key is a flat grey key, as an absent letter is in Daily Word; an **in** digit's key is green.
   The notes show whether Notes is on or off, so they help while typing too, and a noted digit can still be typed.
 - Notes are the player's own: the game never fills them in, checks them or corrects them.
-- The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6 and 8 are out." (CB03).
+- The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6, 8 and 9 are out." (CB03).
   A row with no pegs rules its four digits out; a row with four pegs, or six digits ruled out, settles every digit as in or out.
   Anything less than certain, which is most of the game, stays the player's to work out, and a phone's turn bar shows the peg legend instead.
+- On your own, the pad also **dims** each digit certainly out: a flat cream key with its digit muted, apart from a note's flat grey, and still typeable; Ryan approved it on 2026-10-21 (#93).
+  A note wins over it, since the notes are the player's own, and a room's pad dims nothing, because there the turn bar settles nothing.
 - They are kept with the guesses for the daily code (on the device, so a refresh keeps them), and live only in the page for practice and in a room, where a new code clears them.
 
 ## On your own
@@ -103,7 +105,7 @@ The day is the device's **local date**, as in [Daily Word](daily-word.md#the-dai
 
 When the code is cracked or missed, the board stays, and beside it:
 
-- **The result**: cracked in _n_, or missed, with the code.
+- **The result**: cracked in _n_, or missed, with the code; a missed code is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them cracked, the current streak, the best streak, and how many were cracked in each number of guesses, with today's bar picked out.
   The bars are **1–4, 5, 6, 7, 8, 9 and 10**: four or fewer is rare enough to share one bar, and ten bars would be mostly empty.
 - **Next code in**, a countdown to local midnight.
@@ -186,7 +188,7 @@ A code not cracked is worth nothing, and nothing is ever taken away.
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 The results also say how many of the codes each player cracked.
 
-The chat says when somebody cracks the code ("Maya cracked it in 5! (+633)"), what the code was at each reveal, and who won.
+The chat says when somebody cracks the code ("Maya cracked it in 5! (+633)"), as a quiet score line, what the code was at each reveal, and who won.
 
 ## Rules the server enforces
 

@@ -131,7 +131,7 @@ const createDailyWordGameEngine = (
       game.found.set(playerId, (game.found.get(playerId) ?? 0) + 1);
 
       ctx.rooms.emitState(room);
-      ctx.rooms.announce(room.roomId, 'success', {
+      ctx.rooms.announce(room.roomId, 'score', {
         type: 'dw:solved',
         name: player.username,
         guesses: board.guesses.length,
@@ -226,7 +226,7 @@ const createDailyWordGameEngine = (
     game.boards.clear();
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+    ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
     ctx.rooms.emitLobby('daily-word');
   };
 

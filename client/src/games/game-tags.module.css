@@ -11,3 +11,40 @@
 .tags > * {
   min-width: 0;
 }
+
+/* Solo on a card goes straight to the game on your own: above the card's own
+   link, and Ink under the pointer, as a pressed tag would be. */
+.link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--zumpo-radius-999);
+  color: var(--zumpo-ink);
+  text-decoration: none;
+}
+
+.link > * {
+  transition:
+    background-color 120ms ease-out,
+    color 120ms ease-out;
+}
+
+@media (hover: hover) {
+  .link:hover > * {
+    background: var(--zumpo-ink);
+    color: var(--zumpo-paper);
+  }
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link > * {
+    transition: none;
+  }
+}

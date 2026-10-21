@@ -5,7 +5,7 @@ import type { Step } from '../../../../shared/make-24';
 import { stepsToSolve } from '../../tests/make-24';
 import { onPhone } from '../../tests/phone';
 import { renderApp } from '../../tests/render-app';
-import { newRun, RUN_HANDS, SKIPPED_PAUSE_MS, SOLVED_PAUSE_MS } from './run';
+import { newRun, RUN_HANDS, SOLVED_PAUSE_MS } from './run';
 
 const SEED = 'k3f9x2';
 const deals = newRun(SEED, 0).deals;
@@ -107,7 +107,6 @@ describe('Make 24 on your own', () => {
     expect(turn().getByText('24! Nice.')).toBeInTheDocument();
     expect(turn().getByText(/^Solved in 0:0\d$/)).toBeInTheDocument();
     expect(screen.getByText('Next hand in a moment.')).toBeInTheDocument();
-    expect(screen.getByText('Your steps')).toBeInTheDocument();
 
     await pause(SOLVED_PAUSE_MS);
     expect(turn().getByText('Hand 2 of 10')).toBeInTheDocument();
@@ -116,18 +115,60 @@ describe('Make 24 on your own', () => {
     );
   });
 
-  it('shows one way through a skipped hand, for 30 seconds', async () => {
+  it('shows one way through a skipped hand until Next hand, for 30 seconds', async () => {
     await startRun();
     await user.click(screen.getByRole('button', { name: 'Skip, +30 s' }));
 
     expect(turn().getByText('Skipped')).toBeInTheDocument();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:30/);
-    expect(
-      screen.getByText('One way to make it. Next hand in a moment.'),
-    ).toBeInTheDocument();
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:30/);
+    expect(screen.getByText('One way to make it.')).toBeInTheDocument();
 
-    await pause(SKIPPED_PAUSE_MS);
+    // It stays up, off the clock, until the player moves on.
+    await pause(10_000);
+    expect(turn().getByText('Skipped')).toBeInTheDocument();
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:30/);
+    const next = screen.getByRole('button', { name: 'Next hand' });
+    expect(next).toHaveFocus();
+    await user.keyboard('{Enter}');
     expect(turn().getByText('Hand 2 of 10')).toBeInTheDocument();
+  });
+
+  it('plays from the keyboard', async () => {
+    await startRun();
+    const [first, ...rest] = stepsToSolve(deals[0]!);
+    const keyOf = { '+': '+', '-': '-', '*': 'x', '/': '/' } as const;
+    // A wrong first step, undone with Backspace.
+    await user.keyboard('1+2');
+    expect(cards()).toHaveLength(3);
+    await user.keyboard('{Backspace}');
+    expect(cards()).toHaveLength(4);
+    await user.keyboard('1+2');
+    await user.keyboard('{Escape}');
+    expect(cards()).toHaveLength(4);
+    for (const { left, op, right } of [first!, ...rest]) {
+      await user.keyboard(`${left + 1}${keyOf[op]}${right + 1}`);
+    }
+    expect(turn().getByText('24! Nice.')).toBeInTheDocument();
+  });
+
+  it('leaves Enter to a focused button after keys are typed', async () => {
+    await startRun();
+    act(() => screen.getByRole('button', { name: 'Skip, +30 s' }).focus());
+    await user.keyboard('1');
+    await user.keyboard('{Enter}');
+    expect(turn().getByText('Skipped')).toBeInTheDocument();
+  });
+
+  it('stops the clock while How to play is open', async () => {
+    await startRun();
+    await pause(1000);
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await pause(4000);
+    await user.click(screen.getByRole('button', { name: 'Back to the game' }));
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:01/);
+    await pause(1000);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:02/);
   });
 
   it('ends with every hand, keeps the best and copies a challenge', async () => {
@@ -137,8 +178,9 @@ describe('Make 24 on your own', () => {
       else {
         await user.click(screen.getByRole('button', { name: 'Skip, +30 s' }));
       }
-      if (hand < RUN_HANDS - 1) {
-        await pause(hand === 0 ? SOLVED_PAUSE_MS : SKIPPED_PAUSE_MS);
+      if (hand === 0) await pause(SOLVED_PAUSE_MS);
+      else if (hand < RUN_HANDS - 1) {
+        await user.click(screen.getByRole('button', { name: 'Next hand' }));
       }
     }
 
@@ -181,7 +223,7 @@ describe('Make 24 on your own', () => {
     onPhone();
     await startRun();
     await take(stepsToSolve(deals[0]!)[0]!);
-    expect(screen.queryByText('Your steps')).toBeNull();
     expect(screen.queryByText('This run')).toBeNull();
+    expect(screen.queryByText(/^Keys:/)).toBeNull();
   });
 });

@@ -9,28 +9,24 @@ import { plural } from './plural';
 
 export const createRoom = {
   defaultName: (name: string) => `${name}’s room`,
-  subtitle: 'Make a little space for your next game.',
-  eyebrow: 'Make a room',
-  title: 'A little room for you.',
-  titleLines: ['A little room', 'for you.'],
-  settings: (game: string) => `${game} · room settings`,
+  /** The create-room page's title, and its card's on a wide screen. */
+  title: (game: string) => `New ${game} room`,
+  /** Opens the room's name, seats and password. */
+  moreOptions: 'More options',
   create: 'Create room',
   cancel: 'Cancel',
   full: 'Zumpo is full right now. Join a room, or try again in a little while.',
   failed: 'We couldn’t create the room. Please try again.',
   roomName: 'Room name',
-  nameHelper: (max: number) => `Up to ${max} characters.`,
   nameMissing: 'Give your room a name.',
   seats: 'Seats',
-  seatsHelper: (min: number, max: number) => `Choose ${min}–${max} seats.`,
   hushSeatsHelper: (max: number, twoLevels: number, maxLevels: number) =>
-    `Choose 2–${max} seats. 2 players play ${twoLevels} levels, ${max} play ${maxLevels}.`,
+    `2 players play ${twoLevels} levels, ${max} play ${maxLevels}.`,
   players: (count: number) => plural(count, 'player'),
   rounds: 'Rounds',
-  roundsHelper: '1, 2, 3 or 4 rounds.',
   roundCount: (count: number) => plural(count, 'round'),
   hands: 'Hands',
-  handsHelper: '5 or 10 hands, 60 seconds each.',
+  handsHelper: '60 seconds a hand.',
   handCount: (count: number) => plural(count, 'hand'),
   diceEach: 'Dice each',
   diceCount: (count: number) => `${count} dice`,
@@ -49,20 +45,16 @@ export const createRoom = {
     return `${side} × ${side} · ${pairs} pairs`;
   },
   trios: 'Trios',
-  triosHelper: '10 or 20 trios a game.',
   trioCount: (count: number) => plural(count, 'trio'),
   words: 'Words',
-  wordsHelper: '3 or 5 words, 2 minutes each.',
+  wordsHelper: '2 minutes a word.',
   wordCount: (count: number) => plural(count, 'word'),
   codes: 'Codes',
-  codesHelper: '1 or 3 codes, 3 minutes each.',
+  codesHelper: '3 minutes a code.',
   codeCount: (count: number) => plural(count, 'code'),
   drawingTime: 'Drawing time',
-  drawingTimeHelper:
-    '45, 60 or 90 seconds a drawing. Writing and describing take 30s.',
+  drawingTimeHelper: 'Writing and describing take 30s.',
   secondCount: (count: number) => `${count} seconds`,
   password: 'Password (optional)',
-  passwordHelper: (max: number) =>
-    `Leave blank for an open room. Up to ${max} characters.`,
   creating: 'Creating your room…',
 };

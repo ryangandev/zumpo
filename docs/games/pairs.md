@@ -34,6 +34,7 @@ A game on your own needs no name, no room and no server: it runs in the browser.
 
 - Pick a board; the last one picked is offered first next time.
 - The **run time** starts with the first card turned and stops with the last pair.
+  It also stops while **How to play** is open, and the cards are put away behind it until it closes; a miss stays up until then too.
 - Two cards that do not match turn back after **1 second**, or at once when you turn over another card.
 - **Turns** count every two cards turned over, pairs included.
 - After the last pair: the turns, the time, the longest streak of pairs found in a row, and the best on this device for each board.
@@ -66,7 +67,7 @@ The finished board stays on the table under the results until the next game is d
 **The winner is whoever found the most pairs.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody finds a pair ("Maya found a pair! (+1)") and who won.
+The chat says when somebody finds a pair ("Maya found a pair! (+1)"), as a quiet score line, and who won.
 
 ## Rules the server enforces
 

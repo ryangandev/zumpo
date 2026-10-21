@@ -19,6 +19,11 @@
   letter-spacing: var(--zumpo-text-title-tracking);
 }
 
+.answer {
+  display: flex;
+  gap: var(--zumpo-space-4);
+}
+
 .body {
   color: var(--zumpo-muted);
   font: var(--zumpo-text-body);

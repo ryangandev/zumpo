@@ -23,15 +23,14 @@ export interface NameMenuProps {
   align?: 'start' | 'end';
   /** The popup's name when its content has no title of its own. */
   label?: string;
-  /** NameMenuHint or NameMenuForm. */
+  /** NameMenuForm. */
   children: ReactNode;
 }
 
 /**
  * Zumpo/Name menu: a 320 px paper card, lifted, under whatever opened it, the
- * width of the screen less its margins on a phone (P02, P03, P13, MO02).
- * Focus is the content's business: the hint opens by itself and leaves it
- * where it is, and the form puts it in the field.
+ * width of the screen less its margins on a phone (P03, P13, MO02).
+ * Focus is the content's business: the form puts it in the field.
  */
 export function NameMenu({
   trigger,
@@ -62,33 +61,6 @@ export function NameMenu({
         </Popover.Positioner>
       </Popover.Portal>
     </Popover.Root>
-  );
-}
-
-export interface NameMenuHintProps {
-  name: string;
-  onDismiss: () => void;
-  onChange: () => void;
-}
-
-/** State=Hint: the first visit's word about the name picked for them (P02). */
-export function NameMenuHint({ name, onDismiss, onChange }: NameMenuHintProps) {
-  const m = useMessages().shell.name;
-  return (
-    <>
-      <Popover.Title className={styles.title}>
-        {m.hintTitle(name)}
-      </Popover.Title>
-      <Popover.Description className={styles.description}>
-        {m.hintDescription}
-      </Popover.Description>
-      <div className={styles.actions}>
-        <Button onClick={onDismiss}>{m.gotIt}</Button>
-        <Button variant="secondary" icon="edit" onClick={onChange}>
-          {m.changeName}
-        </Button>
-      </div>
-    </>
   );
 }
 

@@ -112,7 +112,7 @@ export const minesweeper: typeof en = {
     minesLeft: (count) => `剩余 ${count < 0 ? `−${-count}` : count} 颗雷`,
     runTime: '用时',
     hitMine: '你踩到雷了',
-    hiddenMines: (hidden) => `还有 ${hidden} 颗雷未发现`,
+    cleared: (cleared, safe) => `${safe} 个安全格里你翻开了 ${cleared} 个`,
     clearBoard: '扫清棋盘',
     flagMode: (phone) => (phone ? '插旗模式：轻点插旗' : '插旗模式：点击插旗'),
     firstClickSafe: '第一次点击一定安全',

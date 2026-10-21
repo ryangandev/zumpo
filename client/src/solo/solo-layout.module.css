@@ -12,6 +12,11 @@
   min-width: 0;
 }
 
+/* Paused while How to play is open: the game keeps its place, unseen. */
+.away {
+  visibility: hidden;
+}
+
 .side {
   display: flex;
   flex-direction: column;

@@ -499,25 +499,27 @@ export default function Gallery() {
             </ChatMessage>
           </ul>
         </Specimen>
-        {(['system', 'success', 'alert'] as const).map((kind) => (
-          <Specimen
-            key={kind}
-            family="chat-message"
-            variant={`Kind=${cap(kind)}`}
-            width={296}
-          >
-            <ul
-              style={{
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-                width: '100%',
-              }}
+        {(['system', 'score', 'divider', 'success', 'alert'] as const).map(
+          (kind) => (
+            <Specimen
+              key={kind}
+              family="chat-message"
+              variant={`Kind=${cap(kind)}`}
+              width={296}
             >
-              <ChatMessage kind={kind}>a turtle?</ChatMessage>
-            </ul>
-          </Specimen>
-        ))}
+              <ul
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  listStyle: 'none',
+                  width: '100%',
+                }}
+              >
+                <ChatMessage kind={kind}>a turtle?</ChatMessage>
+              </ul>
+            </Specimen>
+          ),
+        )}
         <Specimen family="chat-message" label="Wrapped" width={296}>
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
@@ -1497,6 +1499,7 @@ export default function Gallery() {
                 ['Correct', 'correct'],
                 ['Present', 'present'],
                 ['Absent', 'absent'],
+                ['Ruled out', 'ruledOut'],
               ] as const
             ).map(([stateName, state]) => (
               <Specimen
@@ -1976,6 +1979,17 @@ export default function Gallery() {
             ]}
           />
         </Specimen>
+        <Specimen family="mobile-tabs" label="Chat unread" width={480}>
+          <MobileTabs
+            value="board"
+            onValueChange={noop}
+            tabs={[
+              { value: 'board', label: 'Board', panel: null },
+              { value: 'players', label: 'Players · 4', panel: null },
+              { value: 'chat', label: 'Chat', panel: null, unread: 3 },
+            ]}
+          />
+        </Specimen>
       </Family>
 
       <Family name="Game card" file="game-card">
@@ -2049,10 +2063,7 @@ export default function Gallery() {
       <Family name="Header and wordmark" file="header">
         <Specimen family="header" width={1312}>
           <Header
-            links={[
-              { label: 'Games', to: '/design', current: true },
-              { label: 'How to play', to: '/design' },
-            ]}
+            links={[{ label: 'Games', to: '/design', current: true }]}
             viewer={{ ...PLAYERS.maya, label: 'You are Maya' }}
           />
         </Specimen>
@@ -2142,7 +2153,6 @@ export default function Gallery() {
             kind="panel"
             title="A little quiet in here."
             description="Be the first to make a room. Bring a friend and get playing."
-            actions={<Button>Create the first room</Button>}
           />
         </Specimen>
         <Specimen label="Kind=Panel: stats beside a game" width={344}>

@@ -7,6 +7,7 @@ import {
   MAX_GUESSES,
 } from '../../../../shared/code-breaker';
 import { readStored, writeStored } from '../../solo/device-store';
+import type { DailyToday } from '../../games/today';
 import type { Notes } from '../draft';
 
 /**
@@ -150,4 +151,20 @@ export function statsOf(records: PuzzleRecords, today: number): DailyStats {
     bestStreak,
     distribution,
   };
+}
+
+/**
+ * Where today's puzzle stands, for the game's card and page: nothing before
+ * its first guess, then the guess it is on, then done with the streak.
+ */
+export function todayOf(
+  records: PuzzleRecords,
+  today: number,
+): DailyToday | null {
+  const guesses = records.get(today);
+  if (!guesses?.length) return null;
+  if (outcomeOf(today, guesses) === 'playing') {
+    return { state: 'playing', guess: guesses.length + 1, of: MAX_GUESSES };
+  }
+  return { state: 'done', streak: statsOf(records, today).currentStreak };
 }

@@ -34,8 +34,8 @@ export interface GameText {
   /** How to play in a room. */
   howToPlay: HowToPlay;
   /**
-   * The full rules, in a room and on your own, which the How to play dialog
-   * opens under its short version; blank lines separate paragraphs.
+   * Every rule, in a room and on your own, under Full rules in the How to
+   * play dialog and on the game's page; blank lines separate paragraphs.
    */
   rules: string;
   /** The create-room card's description. */
@@ -70,7 +70,17 @@ export const games = {
   solo: 'Solo',
   /** The ways into a game. */
   playSolo: 'Play solo',
-  findRoom: 'Find a room',
+  /** A card's Solo tag, a link straight to the game on your own. */
+  playGameSolo: (game: string) => `Play ${game} solo`,
+  /** Where today's puzzle of a daily game stands, in place of Solo. */
+  today: {
+    guess: (guess: number, of: number) => `Guess ${guess} of ${of}`,
+    done: 'Done today',
+    /** On the game's page, beside its Continue or See today's result. */
+    doneStreak: (days: number) => `Done today · ${days}-day streak`,
+    continue: 'Continue',
+    seeResult: 'See today’s result',
+  },
   /** The setting a room was made with, counted: "2 rounds", "10 hands". */
   counts: <Record<CountedGame, (count: number) => string>>{
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
@@ -87,7 +97,7 @@ export const games = {
     'draw-and-guess': {
       name: 'Draw & Guess',
       tagline: 'One draws. Everyone else tries to get there first.',
-      facts: '2–8 players · 1–4 rounds',
+      facts: '2–8 players',
       lobbySummary:
         'Take turns drawing a word while everyone else races to guess it in the chat. Faster guesses score more.',
       lobbyFacts: [
@@ -654,9 +664,12 @@ On your own, play the computer at Easy, Medium or Hard, as Black or White. Your 
       createDescription:
         'Two players take turns, black first, and five in a row wins. Up to five more can watch.',
       solo: {
-        summary: 'Take turns placing stones. Five in a row wins.',
+        summary:
+          'Take turns placing stones. Five in a row, across, down or diagonally, wins.',
         facts: [
           'Against the computer: Easy, Medium or Hard',
+          'Make two threats at once: the computer can block only one',
+          'Take back your last move whenever it is your turn',
           'No clock: your turn waits for you',
         ],
         howToPlay: {
@@ -664,7 +677,7 @@ On your own, play the computer at Easy, Medium or Hard, as Black or White. Your 
           steps: [
             'Black moves first, then you take turns placing one stone on any empty point.',
             'Five or more in a row wins: across, down or diagonally.',
-            'There is no clock: your turn waits for you.',
+            'There is no clock, and on your turn you can take back your last move.',
           ],
           score: 'A full board is a draw. Your wins are kept on this device.',
         },

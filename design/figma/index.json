@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-21T18:01:14.002Z",
+  "exportedAt": "2026-10-21T18:18:13.319Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -18,8 +18,8 @@
     "outsideComponents": 0,
     "svgs": 127,
     "seconds": 11,
-    "nodes": 14356,
-    "instances": 7311,
+    "nodes": 14360,
+    "instances": 7315,
     "grids": 84,
     "gridCells": 2733
   },
@@ -3483,7 +3483,7 @@
     }
   ],
   "warnings": [
-    "Expected 75 component families, found 77",
-    "Expected 248 flow frames, found 250"
+    "Expected 74 component families, found 77",
+    "Expected 247 flow frames, found 250"
   ]
 }

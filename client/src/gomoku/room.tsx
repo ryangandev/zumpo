@@ -19,6 +19,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import { ResultsActions, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
+import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
@@ -46,6 +47,7 @@ export function GomokuRoom() {
   const summary = playing ? null : state.lastGame;
   const mine = colorOf(state, playerId);
   const myTurn = playing && state.turnPlayerId === playerId && !reconnecting;
+  useTurnTitle(myTurn);
 
   // A first tap on a phone, and a stone sent and not yet answered: each holds
   // only while the game is still at the move it was picked on.

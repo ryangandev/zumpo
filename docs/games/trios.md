@@ -76,6 +76,7 @@ A **run** is **ten trios** against one clock, with no name, no room and no serve
 Ten is about two minutes for somebody who knows the game and four for somebody learning it, about the length of a Make 24 run.
 
 - The start screen shows the run and your best; the table is dealt and the **run time** starts on Start, so nobody studies the table before the clock runs.
+  For the same reason the run time stops while **How to play** is open, and the table is put away behind it until it closes.
 - **A trio** shows as found for a moment (0.6 s, off the clock), then three new cards are dealt into its places, and the next trio begins.
 - **Not a trio:** the three cards show as wrong for a moment (0.6 s) and are put back, and **5 seconds** go on the clock.
   A wrong pick costs time, never a trio, so a run always ends at ten.
@@ -143,7 +144,7 @@ The finished table stays under the results until the next game is dealt.
 **The winner is whoever found the most trios.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody finds a trio ("Maya found a trio! (+1)") and who won.
+The chat says when somebody finds a trio ("Maya found a trio! (+1)"), as a quiet score line, and who won.
 
 ## Rules the server enforces
 

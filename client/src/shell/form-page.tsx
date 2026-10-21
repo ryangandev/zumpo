@@ -7,14 +7,18 @@ import { PHONE, useMediaQuery } from './use-media-query';
 import styles from './form-page.module.css';
 
 export interface FormPageProps {
-  /** Over the card on a wide screen. */
-  heading: PageHeadingProps;
+  /**
+   * Over the card on a wide screen; without one, the card's title is the
+   * page's, as on the create-room page.
+   */
+  heading?: PageHeadingProps;
   /**
    * On a phone the card folds into the page: its title becomes the page's,
-   * under this eyebrow and subtitle, and its description gives way. `title`
-   * sets the phone's line breaks, where Figma sets them by hand.
+   * under this eyebrow, if any, and over this subtitle, and its description
+   * gives way. `title` sets the phone's line breaks, where Figma sets them
+   * by hand.
    */
-  phone: { eyebrow: string; subtitle: ReactNode; title?: ReactNode };
+  phone: { eyebrow?: string; subtitle: ReactNode; title?: ReactNode };
   title: string;
   description?: ReactNode;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -25,7 +29,7 @@ export interface FormPageProps {
 
 /**
  * A page that asks one thing: a name, a new room, a password. A wide screen
- * centres it in a card under the page heading (P02, DL04, DL07); a phone lays
+ * centres it in a card, under the page heading if it has one (DL04, DL07); a phone lays
  * the form straight on the page (MO02, MO05, MO06).
  */
 export function FormPage({
@@ -62,7 +66,7 @@ export function FormPage({
   }
   return (
     <Page>
-      <PageHeading {...heading} />
+      {heading && <PageHeading {...heading} />}
       <Stage>
         <Card
           title={title}

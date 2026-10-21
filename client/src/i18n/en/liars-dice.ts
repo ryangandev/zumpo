@@ -100,7 +100,7 @@ export const liarsDice = {
     diceCount: (count: number) => `${count} dice`,
     youWon: 'You won',
     wonIn: (rounds: number) => `You won in ${plural(rounds, 'round')}.`,
-    outIn: (place: string, of: number) => `Out in ${place} of ${of}.`,
+    outIn: (place: string, of: number) => `You finished ${place} of ${of}.`,
     lastAtTable: (dice: number) =>
       `Last at the table, with ${plural(dice, 'die', 'dice')} left.`,
     stillIn: (names: string, count: number, round: number) =>

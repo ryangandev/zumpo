@@ -18,7 +18,14 @@ export const games: typeof en = {
   pickAGame: '选个游戏',
   solo: '单人',
   playSolo: '单人玩',
-  findRoom: '找房间',
+  playGameSolo: (game) => `单人玩${game}`,
+  today: {
+    guess: (guess, of) => `第 ${guess} / ${of} 次`,
+    done: '今日已完成',
+    doneStreak: (days) => `今日已完成 · 连续 ${days} 天`,
+    continue: '继续',
+    seeResult: '查看今日结果',
+  },
   counts: {
     'draw-and-guess': (rounds) => `${rounds} 轮`,
     'make-24': (hands) => `${hands} 手`,
@@ -34,7 +41,7 @@ export const games: typeof en = {
     'draw-and-guess': {
       name: '你画我猜',
       tagline: '一人画，其他人抢着猜。',
-      facts: '2–8 人 · 1–4 轮',
+      facts: '2–8 人',
       lobbySummary: '轮流画一个词，其他人在聊天框里抢答。猜得越快，得分越高。',
       lobbyFacts: [
         '2–8 人',
@@ -580,14 +587,19 @@ export const games: typeof en = {
       createDescription:
         '两人轮流落子，黑方先走，连成五子获胜。最多还能有五人观战。',
       solo: {
-        summary: '轮流落子，连成五子就赢。',
-        facts: ['和电脑对战：简单、中等或困难', '没有计时：轮到你时会等你'],
+        summary: '轮流落子，横、竖或斜连成五子就赢。',
+        facts: [
+          '和电脑对战：简单、中等或困难',
+          '同时做出两个威胁：电脑只能挡住一个',
+          '轮到你时，可以悔掉上一步',
+          '没有计时：轮到你时会等你',
+        ],
         howToPlay: {
           goal: '比电脑先把五颗子连成一线。',
           steps: [
             '黑方先走，之后双方轮流在任意空点上落一颗子。',
             '五颗或更多连成一线就赢：横、竖、斜都算。',
-            '没有计时：轮到你时会等你。',
+            '没有计时，轮到你时还可以悔掉上一步。',
           ],
           score: '棋盘下满算平局。胜场保存在这台设备上。',
         },

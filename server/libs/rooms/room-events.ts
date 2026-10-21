@@ -146,7 +146,12 @@ const roomEventsHandler = (
     reply({ ok: true });
 
     emitToSocket(socket, 'room:state', module.toRoomState(room, playerId));
-    emitToSocket(socket, 'chat:history', roomId, [...room.chat.messages]);
+    emitToSocket(
+      socket,
+      'chat:history',
+      roomId,
+      registry.chatFor(room, playerId),
+    );
 
     // Whatever else this one socket needs and the snapshot cannot carry, such
     // as a drawing. A joiner, a player returning from a reload and a drawer

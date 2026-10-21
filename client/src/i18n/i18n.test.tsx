@@ -81,7 +81,7 @@ describe('the language', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /A little play/ }),
     ).toBeVisible();
-    expect(screen.getByRole('link', { name: 'How to play' })).toBeVisible();
+    expect(screen.getByRole('link', { name: 'Games' })).toBeVisible();
   });
 });
 
@@ -109,26 +109,24 @@ describe('the language switch', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /玩一会儿/ }),
     ).toBeVisible();
-    expect(screen.getByRole('link', { name: '玩法' })).toBeVisible();
+    expect(screen.getByRole('link', { name: '游戏' })).toBeVisible();
     expect(screen.getByRole('heading', { name: '你画我猜' })).toBeVisible();
 
     // The choice outlives the page, and so does the English the test began in.
-    await user.click(screen.getByRole('link', { name: '玩法' }));
-    expect(router.state.location.pathname).toBe('/how-to-play');
-    expect(
-      screen.getByRole('heading', { level: 1, name: /一学就会/ }),
-    ).toBeVisible();
+    await user.click(screen.getByRole('link', { name: '扫雷' }));
+    expect(router.state.location.pathname).toBe('/games/minesweeper');
+    expect(screen.getByRole('complementary', { name: '玩法' })).toBeVisible();
     await user.click(screen.getByRole('radio', { name: 'English' }));
     expect(localStorage.getItem('zumpo:locale')).toBe('en');
     expect(
-      screen.getByRole('heading', { level: 1, name: /Easy to learn/ }),
+      screen.getByRole('complementary', { name: 'How to play' }),
     ).toBeVisible();
   });
 
   it('opens Chinese for a visitor who chose it', async () => {
-    await renderApp('/how-to-play', { locale: 'zh' });
+    await renderApp('/games/minesweeper', { locale: 'zh' });
     expect(document.documentElement.lang).toBe('zh-CN');
     expect(screen.getByRole('heading', { name: '扫雷' })).toBeVisible();
-    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(12);
+    expect(screen.getByRole('button', { name: '完整规则' })).toBeVisible();
   });
 });

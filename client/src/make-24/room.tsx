@@ -22,7 +22,6 @@ import {
   DealtCards,
   FinalCard,
   HandTable,
-  StepList,
   TablePanel,
 } from './table';
 import styles from './room.module.css';
@@ -164,7 +163,6 @@ function Hand({ room }: { room: Room }) {
             done={madeIt ? donePrompt : undefined}
           />
         )}
-        <StepList deal={state.deal} steps={steps} />
       </TablePanel>
     </>
   );

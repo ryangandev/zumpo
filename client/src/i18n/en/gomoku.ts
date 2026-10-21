@@ -115,10 +115,9 @@ export const gomoku = {
       hard: 'Hard',
     } satisfies Record<Level, string>,
     levelHelp: {
-      easy: 'Lets most open threes through: make one and you are on your way.',
-      medium:
-        'Blocks your open threes, but not a threat built two moves ahead.',
-      hard: 'Looks six moves ahead, and plays a forced win when it has one.',
+      easy: 'Good for your first games: it misses most of your plans.',
+      medium: 'Stops simple threats, so a win takes a plan.',
+      hard: 'Plans several moves ahead, and plays a forced win when it sees one.',
     } satisfies Record<Level, string>,
     pickTitle: 'Pick a game.',
     description: 'Play the computer at three levels, as Black or White.',
@@ -142,15 +141,15 @@ export const gomoku = {
     computerThinking: 'The computer is thinking',
     computerPlayed: (point: string) => `The computer played ${point}`,
     thinking: 'thinking',
-    wonIn: (moves: number) => `You won a game of ${plural(moves, 'move')}.`,
-    lostIn: (moves: number) =>
-      `The computer won a game of ${plural(moves, 'move')}.`,
+    wonOn: (move: number) => `You won on move ${move}.`,
+    lostOn: (move: number) => `The computer won on move ${move}.`,
     draw: 'A draw: the board is full.',
     five: (from: string, to: string, next: GomokuColor) =>
       `Five in a row, from ${from} to ${to}. Play again and you take ${COLOR[next]}.`,
     drawBody: (next: GomokuColor) =>
       `Nobody made five. Play again and you take ${COLOR[next]}.`,
     changeLevel: 'Change level',
+    takeBack: 'Take back',
     thisGame: 'This game',
     youPlay: 'You play',
     stonesOnBoard: 'Stones on the board',

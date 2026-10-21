@@ -9,10 +9,7 @@ import { useViewerMenu } from './name-menu';
 import styles from './page.module.css';
 
 // Games is the home page, and stays current on every game's own pages.
-const LINKS = [
-  { label: 'games', to: '/', section: '/games' },
-  { label: 'howToPlay', to: '/how-to-play', section: '/how-to-play' },
-] as const;
+const LINKS = [{ label: 'games', to: '/', section: '/games' }] as const;
 
 /**
  * Every screen's frame: the header, the page's own content, and the footer.
@@ -20,20 +17,14 @@ const LINKS = [
  */
 export function Page({
   header,
-  nameHint = false,
   children,
 }: {
   header?: ReactNode;
-  /**
-   * Where a first visit lands: the name menu opens by itself once to say
-   * which name was picked (P02).
-   */
-  nameHint?: boolean;
   children: ReactNode;
 }) {
   const m = useMessages();
   const { pathname } = useLocation();
-  const { viewer, viewerMenu } = useViewer({ hint: nameHint });
+  const { viewer, viewerMenu } = useViewer();
 
   const links = LINKS.map(({ label, to, section }) => ({
     label: m.shell.nav[label],
@@ -70,17 +61,14 @@ export function Page({
  * room gave them, numbered when somebody else there has theirs, so the avatar
  * matches their row.
  */
-export function useViewer({
-  hint = false,
-  seatName,
-}: { hint?: boolean; seatName?: string } = {}): {
+export function useViewer({ seatName }: { seatName?: string } = {}): {
   viewer: Viewer;
   viewerMenu: ViewerMenu;
 } {
   const m = useMessages();
   const session = useSession();
   const name = seatName ?? session.name;
-  const viewerMenu = useViewerMenu({ hint });
+  const viewerMenu = useViewerMenu();
   return {
     viewer: {
       initials: initialsOf(name),
