@@ -29,6 +29,12 @@ const finding = snapState({
 const card = (name: string) =>
   within(screen.getByRole('group', { name: new RegExp(`^${name}`) }));
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+/** The spots that would claim a symbol if tapped now. */
+const enabledSpots = () =>
+  screen
+    .getAllByRole('group', { name: /card/ })
+    .flatMap((group) => within(group).queryAllByRole('button'))
+    .filter((spot) => spot.getAttribute('aria-disabled') !== 'true');
 const scoreboard = () =>
   within(screen.getByRole('region', { name: /^Players/ }));
 
@@ -63,6 +69,40 @@ describe('a Snap room', () => {
     ]);
   });
 
+  it('keeps the focus on the spot tapped, through the take and the next card', async () => {
+    const user = userEvent.setup();
+    const { fake, update } = await renderSeated(finding);
+    const note = card('Your card').getByRole('button', { name: 'Note' });
+    await user.click(note);
+    expect(note).toHaveFocus();
+
+    update({
+      ...finding,
+      phase: 'taken',
+      phaseEndsInMs: 1_500,
+      taken: 12,
+      lastTake: { playerId: 'p2', username: 'Maya', number: 11, symbol: 25 },
+    });
+    expect(note).toHaveFocus();
+    expect(note).toHaveAttribute('aria-disabled', 'true');
+    // A key on a spot that taps nothing claims nothing.
+    await user.keyboard('{Enter}');
+    expect(fake.sentArgs('snap:claim')).toEqual([['r1', 11, 25]]);
+
+    update({
+      ...finding,
+      taken: 12,
+      middle: { number: 12, symbols: [...PLANE[2]!] },
+    });
+    expect(note).toHaveFocus();
+    expect(note).not.toHaveAttribute('aria-disabled');
+    await user.keyboard('{Enter}');
+    expect(fake.sentArgs('snap:claim')).toEqual([
+      ['r1', 11, 25],
+      ['r1', 12, 25],
+    ]);
+  });
+
   it('marks the card somebody took with who took it and the match', async () => {
     await renderSeated({
       ...finding,
@@ -79,11 +119,13 @@ describe('a Snap room', () => {
       screen.getByRole('group', { name: 'Middle card, taken by Maya' }),
     ).toBeInTheDocument();
     expect(
-      card('Middle card').getByRole('img', { name: 'Note, on both cards' }),
+      card('Middle card').getByRole('button', { name: 'Note, on both cards' }),
     ).toBeInTheDocument();
     // Your card stays as it was, and nothing can be tapped.
-    expect(card('Your card').getByRole('img', { name: 'Note' })).toBeVisible();
-    expect(screen.queryAllByRole('button', { name: 'Note' })).toEqual([]);
+    expect(
+      card('Your card').getByRole('button', { name: 'Note' }),
+    ).toBeVisible();
+    expect(enabledSpots()).toEqual([]);
     expect(scoreboard().getByText('Took the card')).toBeInTheDocument();
   });
 
@@ -100,7 +142,7 @@ describe('a Snap room', () => {
       screen.getByRole('group', { name: 'Middle card, taken by You' }),
     ).toBeInTheDocument();
     expect(
-      card('Your card').getByRole('img', { name: 'Note, on both cards' }),
+      card('Your card').getByRole('button', { name: 'Note, on both cards' }),
     ).toBeInTheDocument();
   });
 
@@ -119,9 +161,9 @@ describe('a Snap room', () => {
       screen.getByRole('group', { name: 'Your card, locked out' }),
     ).toBeInTheDocument();
     expect(
-      card('Your card').getByRole('img', { name: 'Circle, not a match' }),
+      card('Your card').getByRole('button', { name: 'Circle, not a match' }),
     ).toBeInTheDocument();
-    expect(screen.queryAllByRole('button', { name: 'Note' })).toEqual([]);
+    expect(enabledSpots()).toEqual([]);
   });
 
   it('keeps you locked out once a new card is up, without the old miss', async () => {
@@ -132,9 +174,9 @@ describe('a Snap room', () => {
     ).toBeInTheDocument();
     expect(turn().queryByText('Not a match')).toBeNull();
     expect(
-      card('Your card').queryByRole('img', { name: /not a match$/ }),
+      card('Your card').queryByRole('button', { name: /not a match$/ }),
     ).toBeNull();
-    expect(screen.queryAllByRole('button', { name: 'Note' })).toEqual([]);
+    expect(enabledSpots()).toEqual([]);
   });
 
   it('shows a spectator the middle card alone, with nothing to tap', async () => {

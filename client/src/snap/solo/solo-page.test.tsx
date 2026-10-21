@@ -117,7 +117,7 @@ describe('Snap on your own', () => {
     ).toBeInTheDocument();
     expect(turn().getByRole('timer')).toHaveTextContent(/^00:0[3-4]/);
     expect(
-      card('Middle card').getByRole('img', {
+      card('Middle card').getByRole('button', {
         name: `${nameOf(wrong)}, not a match`,
       }),
     ).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe('Snap on your own', () => {
     );
     expect(turn().getByText('A match!')).toBeInTheDocument();
     expect(
-      card('Middle card').getByRole('img', {
+      card('Middle card').getByRole('button', {
         name: `${nameOf(match)}, on both cards`,
       }),
     ).toBeInTheDocument();

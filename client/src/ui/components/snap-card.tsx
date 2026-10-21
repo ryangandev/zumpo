@@ -32,6 +32,11 @@ export interface SnapCardProps {
   label?: string;
   /** Makes every spot a button that taps its symbol. */
   onTap?: (symbol: number) => void;
+  /**
+   * Keeps the buttons but taps nothing, while a card is taken or you are
+   * locked out; a button that went away would take the keyboard focus too.
+   */
+  disabled?: boolean;
 }
 
 /** Zumpo/Snap card: a round card of six symbols in its spots. */
@@ -44,6 +49,7 @@ export function SnapCard({
   badgeLabel,
   label,
   onTap,
+  disabled = false,
 }: SnapCardProps) {
   const m = useMessages();
   const words = m.ui.snap;
@@ -80,20 +86,23 @@ export function SnapCard({
           height: `${layout.size * 100}%`,
         };
         const face = <SnapSymbol symbol={symbol} className={styles.symbol} />;
+        // Keyed by spot, not symbol, so the focused spot stays as the next
+        // card comes up.
         return onTap ? (
           <button
-            key={symbol}
+            key={spot}
             type="button"
             className={className}
             style={place}
             aria-label={spotName}
-            onClick={() => onTap(symbol)}
+            aria-disabled={disabled || undefined}
+            onClick={disabled ? undefined : () => onTap(symbol)}
           >
             {face}
           </button>
         ) : (
           <span
-            key={symbol}
+            key={spot}
             className={className}
             style={place}
             role="img"

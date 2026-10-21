@@ -28,8 +28,10 @@ export interface SnapBoardProps {
   middle: CardView;
   /** Yours; a spectator has none. */
   mine?: CardView | null;
-  /** Set while a symbol may be tapped, on either card. */
+  /** Set for a player who taps, on either card; a spectator has none. */
   onTap?: (symbol: number) => void;
+  /** Taps nothing for now, keeping the buttons and their focus. */
+  disabled?: boolean;
 }
 
 /**
@@ -37,7 +39,7 @@ export interface SnapBoardProps {
  * yours on a phone, so yours is nearer the thumb. Either card's spots tap
  * the same symbol, so it does not matter which one you find it on.
  */
-export function SnapBoard({ middle, mine, onTap }: SnapBoardProps) {
+export function SnapBoard({ middle, mine, onTap, disabled }: SnapBoardProps) {
   const phone = useMediaQuery(PHONE);
   const size = phone ? 'compact' : 'regular';
   return (
@@ -60,6 +62,7 @@ export function SnapBoard({ middle, mine, onTap }: SnapBoardProps) {
                   badgeLabel={view.badgeLabel}
                   label={view.label}
                   onTap={onTap}
+                  disabled={disabled}
                 />
               </section>
             ),

@@ -38,9 +38,13 @@ test('two players race for the middle card while a third watches', async ({
   const miss = await tapMiss(leo);
   await expect(turnOf(leo).getByText('Not a match')).toBeVisible();
   await expect(
-    cardOf(leo, 'Your card').getByRole('img', { name: `${miss}, not a match` }),
-  ).toBeVisible();
-  await expect(cardOf(leo, 'Middle card').getByRole('button')).toHaveCount(0);
+    cardOf(leo, 'Your card').getByRole('button', {
+      name: `${miss}, not a match`,
+    }),
+  ).toBeDisabled();
+  await expect(
+    cardOf(leo, 'Middle card').getByRole('button', { disabled: false }),
+  ).toHaveCount(0);
   await expect(turnOf(maya).getByText('Spot the match')).toBeVisible();
   await expect(maya.getByLabel(/, not a match$/)).toHaveCount(0);
 

@@ -276,11 +276,8 @@ function RunView({
               marks: middleMarks,
             }}
             mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
-            onTap={
-              canTap(run)
-                ? (symbol) => setRun(tap(run, symbol, Date.now()))
-                : undefined
-            }
+            onTap={(symbol) => setRun(tap(run, symbol, Date.now()))}
+            disabled={!canTap(run)}
           />
         </>
       }

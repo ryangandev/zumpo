@@ -49,7 +49,9 @@ export async function tapMiss(page: Page): Promise<string> {
 export const turnOf = (page: Page) =>
   page.getByRole('region', { name: 'Turn' });
 
-/** Waits until the player can tap: every spot on the middle card is a button. */
+/** Waits until the player can tap: every spot on the middle card is enabled. */
 export async function readyToTap(page: Page) {
-  await expect(cardOf(page, 'Middle card').getByRole('button')).toHaveCount(6);
+  await expect(
+    cardOf(page, 'Middle card').getByRole('button', { disabled: false }),
+  ).toHaveCount(6);
 }

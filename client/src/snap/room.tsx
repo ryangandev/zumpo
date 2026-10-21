@@ -137,12 +137,8 @@ function Play({ room }: { room: Room }) {
   if (!middle) return null;
 
   const locked = state.lockedOutMs > 0;
-  const canTap =
-    state.phase === 'finding' &&
-    !locked &&
-    !reconnecting &&
-    !room.spectating &&
-    state.myCard !== null;
+  const taps = !room.spectating && state.myCard !== null;
+  const canTap = taps && state.phase === 'finding' && !locked && !reconnecting;
 
   const middleMarks: Marks = {};
   const myMarks: Marks = {};
@@ -183,11 +179,12 @@ function Play({ room }: { room: Room }) {
           state: locked ? 'locked' : 'default',
         })}
         onTap={
-          canTap
+          taps
             ? (symbol) =>
                 socket.emit('snap:claim', state.roomId, middle.number, symbol)
             : undefined
         }
+        disabled={!canTap}
       />
     </>
   );
