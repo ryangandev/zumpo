@@ -202,15 +202,15 @@ Snap's one event of its own is `snap:claim`, with the room, the middle card's nu
 
 ## Where the code lives
 
-| File                                                        | Responsibility                                                                  |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`shared/snap.ts`](../../shared/snap.ts)                    | The plane, the symbols, the deal from a seed and the match: what both sides run |
-| [`module.ts`](../../server/socket/snap/module.ts)           | What the room layer calls, and all it calls                                     |
-| [`game-engine.ts`](../../server/socket/snap/game-engine.ts) | Claims, lockouts, taking a card, turning the next and the score                 |
-| [`state.ts`](../../server/socket/snap/state.ts)             | The game's state, and the snapshot each player is sent                          |
-| [`snap/solo/`](../../client/src/snap/solo/)                 | A run on your own                                                               |
-| [`snap/room.tsx`](../../client/src/snap/room.tsx)           | A room's screens                                                                |
-| [`ui/snap-card.tsx`](../../client/src/ui/snap-card.tsx)     | `Zumpo/Snap card`, its spots and symbols                                        |
+| File                                                                          | Responsibility                                                                  |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`shared/snap.ts`](../../shared/snap.ts)                                      | The plane, the symbols, the deal from a seed and the match: what both sides run |
+| [`module.ts`](../../server/socket/snap/module.ts)                             | What the room layer calls, and all it calls                                     |
+| [`game-engine.ts`](../../server/socket/snap/game-engine.ts)                   | Claims, lockouts, taking a card, turning the next and the score                 |
+| [`state.ts`](../../server/socket/snap/state.ts)                               | The game's state, and the snapshot each player is sent                          |
+| [`snap/solo/`](../../client/src/snap/solo/)                                   | A run on your own                                                               |
+| [`snap/room.tsx`](../../client/src/snap/room.tsx)                             | A room's screens                                                                |
+| [`ui/components/snap-card.tsx`](../../client/src/ui/components/snap-card.tsx) | `Zumpo/Snap card`, its spots and symbols                                        |
 
 The rules are covered by [`snap-rules.test.ts`](../../server/tests/snap-rules.test.ts) and [`snap-flow.test.ts`](../../server/tests/snap-flow.test.ts), and a room's race and a run on your own by [`e2e/snap.spec.ts`](../../e2e/snap.spec.ts).
 The screens are SN01-SN14 in [the Figma file](../design.md).
