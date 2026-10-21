@@ -1,0 +1,771 @@
+{
+  "format": 1,
+  "code": "SN03",
+  "title": "Solo · not a match",
+  "id": "162:86302",
+  "section": "11 / Snap / complete flow",
+  "reviewNotes": [
+    "SN03 · Maya tapped the cup, which is only on her card: it shows as wrong for 0.6 s, and 3 seconds go on the clock. A wrong tap costs time, never a card, so a run always ends at thirty."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:86302",
+    "name": "SN03 / Solo · not a match",
+    "x": 3120,
+    "y": 150,
+    "w": 1440,
+    "h": 690,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:86303",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Snap"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Card 12 of 30",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86304",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 520,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:86305",
+            "name": "Board stage",
+            "w": 944,
+            "h": 520,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:86306",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "The cup is only on your card",
+                  "Label": "Card 12 of 30",
+                  "Main": "Not a match, +3 s",
+                  "Category": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Label": "run time",
+                      "Time": "00:44",
+                      "Tone": "Waiting"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:86307",
+                "name": "Board panel",
+                "w": 944,
+                "h": 412,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/20",
+                  "pad": "$Zumpo · UI:space/24",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:90889",
+                    "name": "Cards",
+                    "w": 688,
+                    "h": 362,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/48",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:90849",
+                        "name": "Middle card",
+                        "w": 320,
+                        "h": 362,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "column",
+                          "gap": "$Zumpo · UI:space/12",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:90850",
+                            "name": "Label",
+                            "w": 148,
+                            "h": 30,
+                            "wSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "162:90851",
+                                "w": 82,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Middle card",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:90852",
+                                "name": "Tag / 19 left",
+                                "w": 58,
+                                "h": 30,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "component": "Zumpo/Tag",
+                                "variant": {
+                                  "Tone": "Sand"
+                                },
+                                "componentId": "24:6511",
+                                "props": {
+                                  "Label": "19 left"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 30,
+                                    "width": 58
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:90822",
+                            "name": "Snap card / Default / Triangle, Clover, Fish, Arrow, Drop, Note",
+                            "w": 320,
+                            "h": 320,
+                            "component": "Zumpo/Snap card",
+                            "variant": {
+                              "State": "Default",
+                              "Size": "Regular"
+                            },
+                            "componentId": "162:38970",
+                            "overrides": [
+                              {
+                                "path": "Spot 1 / Symbol",
+                                "height": 76.8,
+                                "width": 76.8
+                              },
+                              {
+                                "path": "Spot 2 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 3 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 4 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 5 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 6 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:90886",
+                        "name": "Your card",
+                        "w": 320,
+                        "h": 362,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "column",
+                          "gap": "$Zumpo · UI:space/12",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:90887",
+                            "name": "Label",
+                            "w": 66,
+                            "h": 30,
+                            "wSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "162:90888",
+                                "w": 66,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Your card",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:90857",
+                            "name": "Snap card / Default / Circle, Star, Half, Square, Cup, Clover",
+                            "w": 320,
+                            "h": 320,
+                            "component": "Zumpo/Snap card",
+                            "variant": {
+                              "State": "Default",
+                              "Size": "Regular"
+                            },
+                            "componentId": "162:38970",
+                            "overrides": [
+                              {
+                                "path": "Spot 1 / Symbol",
+                                "height": 76.8,
+                                "width": 76.8
+                              },
+                              {
+                                "path": "Spot 2 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 3 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 4 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 5 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 6 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:86326",
+            "name": "Run sidebar",
+            "w": 344,
+            "h": 412,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:86327",
+                "name": "This run",
+                "w": 344,
+                "h": 235,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "This run"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 235,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:86327;35:13441;162:86517",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 123,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I162:86327;35:13441;162:86518",
+                          "name": "Stat / Taken",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86519",
+                              "name": "Hand",
+                              "w": 43,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Taken",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86520",
+                              "name": "3 of 10",
+                              "w": 13,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "11",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:86327;35:13441;162:86521",
+                          "name": "Stat / Wrong taps",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86522",
+                              "name": "Solved",
+                              "w": 86,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Wrong taps",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86523",
+                              "name": "2",
+                              "w": 71,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "2, +0:06",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:86327;35:13441;162:86524",
+                          "name": "Stat / Fastest card",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86525",
+                              "name": "Skipped",
+                              "w": 92,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Fastest card",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86327;35:13441;162:86526",
+                              "name": "0",
+                              "w": 37,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "0:01",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:86328",
+                "name": "Best on this device",
+                "w": 344,
+                "h": 153,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "Best on this device"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 153,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:86328;35:13441;162:86528",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 41,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I162:86328;35:13441;162:86529",
+                          "name": "Stat / Thirty cards",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86328;35:13441;162:86530",
+                              "name": "Ten hands",
+                              "w": 89,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Thirty cards",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:86328;35:13441;162:86531",
+                              "name": "3:05",
+                              "w": 33,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "1:52",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86329",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:86330",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:86331",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

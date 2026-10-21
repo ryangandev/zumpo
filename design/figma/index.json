@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-21T04:08:55.368Z",
+  "exportedAt": "2026-10-21T05:37:42.386Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,15 +13,15 @@
     "previews": true
   },
   "counts": {
-    "flows": 171,
-    "componentFamilies": 54,
+    "flows": 247,
+    "componentFamilies": 74,
     "outsideComponents": 0,
-    "svgs": 86,
-    "seconds": 30,
-    "nodes": 10738,
-    "instances": 5847,
-    "grids": 69,
-    "gridCells": 2252
+    "svgs": 126,
+    "seconds": 42,
+    "nodes": 14251,
+    "instances": 7297,
+    "grids": 84,
+    "gridCells": 2733
   },
   "tokens": {
     "collections": [
@@ -67,6 +67,13 @@
       "variants": 4
     },
     {
+      "name": "Sample / Chain drawing",
+      "id": "162:65802",
+      "file": "components/sample-chain-drawing.json",
+      "preview": "previews/components/sample-chain-drawing.png",
+      "variants": 2
+    },
+    {
       "name": "Sample / Turtle drawing",
       "id": "27:17578",
       "file": "components/sample-turtle-drawing.json",
@@ -109,6 +116,20 @@
       "variants": 3
     },
     {
+      "name": "Zumpo/Chain composer",
+      "id": "162:67695",
+      "file": "components/chain-composer.json",
+      "preview": "previews/components/chain-composer.png",
+      "variants": 4
+    },
+    {
+      "name": "Zumpo/Chain entry",
+      "id": "162:66197",
+      "file": "components/chain-entry.json",
+      "preview": "previews/components/chain-entry.png",
+      "variants": 8
+    },
+    {
       "name": "Zumpo/Chat",
       "id": "9:334",
       "file": "components/chat.json",
@@ -137,6 +158,41 @@
       "variants": 2
     },
     {
+      "name": "Zumpo/Code board",
+      "id": "162:62868",
+      "file": "components/code-board.json",
+      "preview": "previews/components/code-board.png",
+      "variants": 2
+    },
+    {
+      "name": "Zumpo/Code marks",
+      "id": "162:62578",
+      "file": "components/code-marks.json",
+      "preview": "previews/components/code-marks.png",
+      "variants": 2
+    },
+    {
+      "name": "Zumpo/Code marks board",
+      "id": "162:69758",
+      "file": "components/code-marks-board.json",
+      "preview": "previews/components/code-marks-board.png",
+      "variants": 1
+    },
+    {
+      "name": "Zumpo/Code race board",
+      "id": "162:64470",
+      "file": "components/code-race-board.json",
+      "preview": "previews/components/code-race-board.png",
+      "variants": 9
+    },
+    {
+      "name": "Zumpo/Code row",
+      "id": "162:62605",
+      "file": "components/code-row.json",
+      "preview": "previews/components/code-row.png",
+      "variants": 2
+    },
+    {
       "name": "Zumpo/Countdown",
       "id": "24:5284",
       "file": "components/countdown.json",
@@ -158,6 +214,20 @@
       "variants": 40
     },
     {
+      "name": "Zumpo/Digit pad",
+      "id": "162:63044",
+      "file": "components/digit-pad.json",
+      "preview": "previews/components/digit-pad.png",
+      "variants": 2
+    },
+    {
+      "name": "Zumpo/Digit tile",
+      "id": "162:62565",
+      "file": "components/digit-tile.json",
+      "preview": "previews/components/digit-tile.png",
+      "variants": 12
+    },
+    {
       "name": "Zumpo/Drawing toolbar",
       "id": "26:16591",
       "file": "components/drawing-toolbar.json",
@@ -176,21 +246,35 @@
       "id": "120:117076",
       "file": "components/game-artwork.json",
       "preview": "previews/components/game-artwork.png",
-      "variants": 16
+      "variants": 24
     },
     {
       "name": "Zumpo/Game card",
       "id": "90:105409",
       "file": "components/game-card.json",
       "preview": "previews/components/game-card.png",
-      "variants": 32
+      "variants": 48
     },
     {
       "name": "Zumpo/Game intro",
       "id": "120:119324",
       "file": "components/game-intro.json",
       "preview": "previews/components/game-intro.png",
-      "variants": 16
+      "variants": 24
+    },
+    {
+      "name": "Zumpo/Gomoku board",
+      "id": "162:62975",
+      "file": "components/gomoku-board.json",
+      "preview": "previews/components/gomoku-board.png",
+      "variants": 2
+    },
+    {
+      "name": "Zumpo/Gomoku seat",
+      "id": "162:63129",
+      "file": "components/gomoku-seat.json",
+      "preview": "previews/components/gomoku-seat.png",
+      "variants": 6
     },
     {
       "name": "Zumpo/Header",
@@ -198,6 +282,13 @@
       "file": "components/header.json",
       "preview": "previews/components/header.png",
       "variants": 1
+    },
+    {
+      "name": "Zumpo/Heart button",
+      "id": "162:65812",
+      "file": "components/heart-button.json",
+      "preview": "previews/components/heart-button.png",
+      "variants": 3
     },
     {
       "name": "Zumpo/Hush card",
@@ -225,6 +316,13 @@
       "id": "44:62351",
       "file": "components/keyboard.json",
       "preview": "previews/components/keyboard.png",
+      "variants": 2
+    },
+    {
+      "name": "Zumpo/Last move marker",
+      "id": "162:62873",
+      "file": "components/last-move-marker.json",
+      "preview": "previews/components/last-move-marker.png",
       "variants": 2
     },
     {
@@ -326,6 +424,13 @@
       "variants": 4
     },
     {
+      "name": "Zumpo/Point focus",
+      "id": "162:62897",
+      "file": "components/point-focus.json",
+      "preview": "previews/components/point-focus.png",
+      "variants": 2
+    },
+    {
       "name": "Zumpo/Race board",
       "id": "44:63737",
       "file": "components/race-board.json",
@@ -382,6 +487,34 @@
       "variants": 2
     },
     {
+      "name": "Zumpo/Snap card",
+      "id": "162:39153",
+      "file": "components/snap-card.json",
+      "preview": "previews/components/snap-card.png",
+      "variants": 9
+    },
+    {
+      "name": "Zumpo/Snap spot",
+      "id": "162:38969",
+      "file": "components/snap-spot.json",
+      "preview": "previews/components/snap-spot.png",
+      "variants": 4
+    },
+    {
+      "name": "Zumpo/Snap symbol",
+      "id": "162:38956",
+      "file": "components/snap-symbol.json",
+      "preview": "previews/components/snap-symbol.png",
+      "variants": 31
+    },
+    {
+      "name": "Zumpo/Stone",
+      "id": "162:62894",
+      "file": "components/stone.json",
+      "preview": "previews/components/stone.png",
+      "variants": 16
+    },
+    {
       "name": "Zumpo/Tag",
       "id": "24:6541",
       "file": "components/tag.json",
@@ -415,6 +548,13 @@
       "file": "components/turn-bar.json",
       "preview": "previews/components/turn-bar.png",
       "variants": 6
+    },
+    {
+      "name": "Zumpo/Win line",
+      "id": "162:62900",
+      "file": "components/win-line.json",
+      "preview": "previews/components/win-line.png",
+      "variants": 2
     },
     {
       "name": "Zumpo/Word board",
@@ -471,7 +611,7 @@
           "id": "9:433",
           "size": [
             1440,
-            1224
+            1542
           ],
           "file": "flows/01-platform/P01.json",
           "preview": "previews/01-platform/P01.png",
@@ -615,7 +755,7 @@
           "id": "9:16004",
           "size": [
             1440,
-            3200
+            4559
           ],
           "file": "flows/01-platform/P14.json",
           "preview": "previews/01-platform/P14.png",
@@ -646,18 +786,6 @@
           "isFlow": true
         },
         {
-          "code": "P17",
-          "title": "Tab taken over",
-          "id": "79:104767",
-          "size": [
-            1440,
-            580
-          ],
-          "file": "flows/01-platform/P17.json",
-          "preview": "previews/01-platform/P17.png",
-          "isFlow": true
-        },
-        {
           "code": "P18",
           "title": "Room closed by a restart",
           "id": "79:104852",
@@ -667,6 +795,18 @@
           ],
           "file": "flows/01-platform/P18.json",
           "preview": "previews/01-platform/P18.png",
+          "isFlow": true
+        },
+        {
+          "code": "P17",
+          "title": "Tab taken over",
+          "id": "79:104767",
+          "size": [
+            1440,
+            580
+          ],
+          "file": "flows/01-platform/P17.json",
+          "preview": "previews/01-platform/P17.png",
           "isFlow": true
         },
         {
@@ -1419,7 +1559,7 @@
           "id": "9:10062",
           "size": [
             390,
-            2123
+            2912
           ],
           "file": "flows/04-mobile/MO01.json",
           "preview": "previews/04-mobile/MO01.png",
@@ -2671,6 +2811,952 @@
         "DW15 · 390 px room, the reveal, as DW09 from Leo’s phone: the word and his score, then every board with its letters, best first. Each is the Race board’s Row layout, name and status beside the board, since two Small boards do not fit the width.",
         "DW16 · 390 px room, game over, as DW10 from Leo’s phone: the ranking with how many words each found, then the last word’s boards in the Row layout. Totals: Maya 325 + 431 + 208, Sam 314 + 322 + 319, Ryan 417 + 0 + 434, Leo 205 + 208 + 101."
       ]
+    },
+    {
+      "name": "11 / Snap / complete flow",
+      "id": "162:86002",
+      "dir": "11-snap",
+      "flows": [
+        {
+          "code": "SN01",
+          "title": "Solo · ready to start",
+          "id": "162:86146",
+          "size": [
+            1440,
+            927
+          ],
+          "file": "flows/11-snap/SN01.json",
+          "preview": "previews/11-snap/SN01.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN02",
+          "title": "Solo · find the match",
+          "id": "162:86271",
+          "size": [
+            1440,
+            690
+          ],
+          "file": "flows/11-snap/SN02.json",
+          "preview": "previews/11-snap/SN02.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN03",
+          "title": "Solo · not a match",
+          "id": "162:86302",
+          "size": [
+            1440,
+            690
+          ],
+          "file": "flows/11-snap/SN03.json",
+          "preview": "previews/11-snap/SN03.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN04",
+          "title": "Solo · run complete",
+          "id": "162:86157",
+          "size": [
+            1440,
+            655
+          ],
+          "file": "flows/11-snap/SN04.json",
+          "preview": "previews/11-snap/SN04.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN05",
+          "title": "Room · finding the match",
+          "id": "162:86006",
+          "size": [
+            1440,
+            785
+          ],
+          "file": "flows/11-snap/SN05.json",
+          "preview": "previews/11-snap/SN05.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN06",
+          "title": "Room · Maya takes the card",
+          "id": "162:86041",
+          "size": [
+            1440,
+            796
+          ],
+          "file": "flows/11-snap/SN06.json",
+          "preview": "previews/11-snap/SN06.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN07",
+          "title": "Room · not a match, locked out",
+          "id": "162:86076",
+          "size": [
+            1440,
+            785
+          ],
+          "file": "flows/11-snap/SN07.json",
+          "preview": "previews/11-snap/SN07.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN08",
+          "title": "Room · you take the card",
+          "id": "162:86111",
+          "size": [
+            1440,
+            785
+          ],
+          "file": "flows/11-snap/SN08.json",
+          "preview": "previews/11-snap/SN08.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN09",
+          "title": "Room · final scores",
+          "id": "162:86333",
+          "size": [
+            1440,
+            1060
+          ],
+          "file": "flows/11-snap/SN09.json",
+          "preview": "previews/11-snap/SN09.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN10",
+          "title": "Create room · Snap settings",
+          "id": "162:86387",
+          "size": [
+            1440,
+            1248
+          ],
+          "file": "flows/11-snap/SN10.json",
+          "preview": "previews/11-snap/SN10.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN11",
+          "title": "Phone · solo, find the match",
+          "id": "162:86399",
+          "size": [
+            390,
+            924
+          ],
+          "file": "flows/11-snap/SN11.json",
+          "preview": "previews/11-snap/SN11.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN12",
+          "title": "Phone · room, finding the match",
+          "id": "162:86426",
+          "size": [
+            390,
+            1012
+          ],
+          "file": "flows/11-snap/SN12.json",
+          "preview": "previews/11-snap/SN12.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN13",
+          "title": "Room · watching",
+          "id": "162:91032",
+          "size": [
+            1440,
+            785
+          ],
+          "file": "flows/11-snap/SN13.json",
+          "preview": "previews/11-snap/SN13.png",
+          "isFlow": true
+        },
+        {
+          "code": "SN14",
+          "title": "Game page · intro and cards",
+          "id": "162:91307",
+          "size": [
+            1780,
+            550
+          ],
+          "file": "flows/11-snap/SN14.json",
+          "preview": "previews/11-snap/SN14.png",
+          "isFlow": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "12 / Doodle Chain / complete flow",
+      "id": "162:65089",
+      "dir": "12-doodle-chain",
+      "flows": [
+        {
+          "code": "DC01",
+          "title": "Game page · open, private, full and playing rooms",
+          "id": "162:101195",
+          "size": [
+            1440,
+            1107
+          ],
+          "file": "flows/12-doodle-chain/DC01.json",
+          "preview": "previews/12-doodle-chain/DC01.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC02",
+          "title": "Create room · Doodle Chain settings",
+          "id": "162:101560",
+          "size": [
+            1440,
+            1248
+          ],
+          "file": "flows/12-doodle-chain/DC02.json",
+          "preview": "previews/12-doodle-chain/DC02.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC03",
+          "title": "Host · waiting for a third player",
+          "id": "162:97720",
+          "size": [
+            1440,
+            581
+          ],
+          "file": "flows/12-doodle-chain/DC03.json",
+          "preview": "previews/12-doodle-chain/DC03.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC04",
+          "title": "Host · ready to start",
+          "id": "162:97983",
+          "size": [
+            1440,
+            730
+          ],
+          "file": "flows/12-doodle-chain/DC04.json",
+          "preview": "previews/12-doodle-chain/DC04.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC05",
+          "title": "Write · the first line",
+          "id": "162:84935",
+          "size": [
+            1440,
+            767
+          ],
+          "file": "flows/12-doodle-chain/DC05.json",
+          "preview": "previews/12-doodle-chain/DC05.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC06",
+          "title": "Write · done, waiting for the others",
+          "id": "162:85285",
+          "size": [
+            1440,
+            804
+          ],
+          "file": "flows/12-doodle-chain/DC06.json",
+          "preview": "previews/12-doodle-chain/DC06.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC07",
+          "title": "Draw · the words you were given",
+          "id": "162:81138",
+          "size": [
+            1440,
+            1152
+          ],
+          "file": "flows/12-doodle-chain/DC07.json",
+          "preview": "previews/12-doodle-chain/DC07.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC08",
+          "title": "Describe · the drawing you were given",
+          "id": "162:85630",
+          "size": [
+            1440,
+            1033
+          ],
+          "file": "flows/12-doodle-chain/DC08.json",
+          "preview": "previews/12-doodle-chain/DC08.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC09",
+          "title": "Passing · time is up",
+          "id": "162:91584",
+          "size": [
+            1440,
+            854
+          ],
+          "file": "flows/12-doodle-chain/DC09.json",
+          "preview": "previews/12-doodle-chain/DC09.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC10",
+          "title": "Sitting a step out · the drawing came back empty",
+          "id": "162:91932",
+          "size": [
+            1440,
+            778
+          ],
+          "file": "flows/12-doodle-chain/DC10.json",
+          "preview": "previews/12-doodle-chain/DC10.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC11",
+          "title": "Spectator · a step under way",
+          "id": "162:92276",
+          "size": [
+            1440,
+            897
+          ],
+          "file": "flows/12-doodle-chain/DC11.json",
+          "preview": "previews/12-doodle-chain/DC11.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC12",
+          "title": "Reveal · the host steps through a chain",
+          "id": "162:95329",
+          "size": [
+            1440,
+            978
+          ],
+          "file": "flows/12-doodle-chain/DC12.json",
+          "preview": "previews/12-doodle-chain/DC12.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC13",
+          "title": "Reveal · a guest gives a heart",
+          "id": "162:95749",
+          "size": [
+            1440,
+            1339
+          ],
+          "file": "flows/12-doodle-chain/DC13.json",
+          "preview": "previews/12-doodle-chain/DC13.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC14",
+          "title": "Album · after the game, host can play again",
+          "id": "162:96212",
+          "size": [
+            1440,
+            1368
+          ],
+          "file": "flows/12-doodle-chain/DC14.json",
+          "preview": "previews/12-doodle-chain/DC14.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC15",
+          "title": "Phone · game page",
+          "id": "162:101381",
+          "size": [
+            390,
+            1650
+          ],
+          "file": "flows/12-doodle-chain/DC15.json",
+          "preview": "previews/12-doodle-chain/DC15.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC16",
+          "title": "Phone · write the first line",
+          "id": "162:102928",
+          "size": [
+            390,
+            625
+          ],
+          "file": "flows/12-doodle-chain/DC16.json",
+          "preview": "previews/12-doodle-chain/DC16.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC17",
+          "title": "Phone · draw the words you were given",
+          "id": "162:103072",
+          "size": [
+            390,
+            958
+          ],
+          "file": "flows/12-doodle-chain/DC17.json",
+          "preview": "previews/12-doodle-chain/DC17.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC18",
+          "title": "Phone · describe the drawing you were given",
+          "id": "162:103193",
+          "size": [
+            390,
+            909
+          ],
+          "file": "flows/12-doodle-chain/DC18.json",
+          "preview": "previews/12-doodle-chain/DC18.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC19",
+          "title": "Phone · the host steps through the reveal",
+          "id": "162:103355",
+          "size": [
+            390,
+            1026
+          ],
+          "file": "flows/12-doodle-chain/DC19.json",
+          "preview": "previews/12-doodle-chain/DC19.png",
+          "isFlow": true
+        },
+        {
+          "code": "DC20",
+          "title": "Phone · the album after the game",
+          "id": "162:103558",
+          "size": [
+            390,
+            1246
+          ],
+          "file": "flows/12-doodle-chain/DC20.json",
+          "preview": "previews/12-doodle-chain/DC20.png",
+          "isFlow": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "13 / Code Breaker / complete flow",
+      "id": "162:65717",
+      "dir": "13-code-breaker",
+      "flows": [
+        {
+          "code": "CB01",
+          "title": "Game page · open, private, full and playing rooms",
+          "id": "162:107053",
+          "size": [
+            1440,
+            1107
+          ],
+          "file": "flows/13-code-breaker/CB01.json",
+          "preview": "previews/13-code-breaker/CB01.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB02",
+          "title": "Solo · today’s code",
+          "id": "162:67215",
+          "size": [
+            1440,
+            1001
+          ],
+          "file": "flows/13-code-breaker/CB02.json",
+          "preview": "previews/13-code-breaker/CB02.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB03",
+          "title": "Solo · typing a guess",
+          "id": "162:68146",
+          "size": [
+            1440,
+            1001
+          ],
+          "file": "flows/13-code-breaker/CB03.json",
+          "preview": "previews/13-code-breaker/CB03.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB04",
+          "title": "Solo · taking notes",
+          "id": "162:68445",
+          "size": [
+            1440,
+            1001
+          ],
+          "file": "flows/13-code-breaker/CB04.json",
+          "preview": "previews/13-code-breaker/CB04.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB05",
+          "title": "Solo · already guessed",
+          "id": "162:68750",
+          "size": [
+            1440,
+            1028
+          ],
+          "file": "flows/13-code-breaker/CB05.json",
+          "preview": "previews/13-code-breaker/CB05.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB06",
+          "title": "Solo · cracked it",
+          "id": "162:81487",
+          "size": [
+            1440,
+            1123
+          ],
+          "file": "flows/13-code-breaker/CB06.json",
+          "preview": "previews/13-code-breaker/CB06.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB07",
+          "title": "Solo · missed",
+          "id": "162:81855",
+          "size": [
+            1440,
+            1123
+          ],
+          "file": "flows/13-code-breaker/CB07.json",
+          "preview": "previews/13-code-breaker/CB07.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB08",
+          "title": "Solo · practice code cracked",
+          "id": "162:82249",
+          "size": [
+            1440,
+            1017
+          ],
+          "file": "flows/13-code-breaker/CB08.json",
+          "preview": "previews/13-code-breaker/CB08.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB09",
+          "title": "Room · code in play",
+          "id": "162:98302",
+          "size": [
+            1440,
+            968
+          ],
+          "file": "flows/13-code-breaker/CB09.json",
+          "preview": "previews/13-code-breaker/CB09.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB10",
+          "title": "Room · you cracked it",
+          "id": "162:99160",
+          "size": [
+            1440,
+            925
+          ],
+          "file": "flows/13-code-breaker/CB10.json",
+          "preview": "previews/13-code-breaker/CB10.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB11",
+          "title": "Room · out of guesses",
+          "id": "162:99929",
+          "size": [
+            1440,
+            925
+          ],
+          "file": "flows/13-code-breaker/CB11.json",
+          "preview": "previews/13-code-breaker/CB11.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB12",
+          "title": "Room · the reveal",
+          "id": "162:104038",
+          "size": [
+            1440,
+            856
+          ],
+          "file": "flows/13-code-breaker/CB12.json",
+          "preview": "previews/13-code-breaker/CB12.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB13",
+          "title": "Room · final scores",
+          "id": "162:105310",
+          "size": [
+            1440,
+            1278
+          ],
+          "file": "flows/13-code-breaker/CB13.json",
+          "preview": "previews/13-code-breaker/CB13.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB14",
+          "title": "Create room · Code Breaker settings",
+          "id": "162:106716",
+          "size": [
+            1440,
+            1248
+          ],
+          "file": "flows/13-code-breaker/CB14.json",
+          "preview": "previews/13-code-breaker/CB14.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB15",
+          "title": "Phone · game page",
+          "id": "162:107310",
+          "size": [
+            390,
+            1575
+          ],
+          "file": "flows/13-code-breaker/CB15.json",
+          "preview": "previews/13-code-breaker/CB15.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB16",
+          "title": "Phone · today’s code",
+          "id": "162:107560",
+          "size": [
+            390,
+            1074
+          ],
+          "file": "flows/13-code-breaker/CB16.json",
+          "preview": "previews/13-code-breaker/CB16.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB17",
+          "title": "Phone · cracked it",
+          "id": "162:107917",
+          "size": [
+            390,
+            1880
+          ],
+          "file": "flows/13-code-breaker/CB17.json",
+          "preview": "previews/13-code-breaker/CB17.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB18",
+          "title": "Phone · room board",
+          "id": "162:108356",
+          "size": [
+            390,
+            1166
+          ],
+          "file": "flows/13-code-breaker/CB18.json",
+          "preview": "previews/13-code-breaker/CB18.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB19",
+          "title": "Phone · room players",
+          "id": "162:108715",
+          "size": [
+            390,
+            1226
+          ],
+          "file": "flows/13-code-breaker/CB19.json",
+          "preview": "previews/13-code-breaker/CB19.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB20",
+          "title": "Phone · the reveal",
+          "id": "162:109211",
+          "size": [
+            390,
+            2210
+          ],
+          "file": "flows/13-code-breaker/CB20.json",
+          "preview": "previews/13-code-breaker/CB20.png",
+          "isFlow": true
+        },
+        {
+          "code": "CB21",
+          "title": "Phone · final scores",
+          "id": "162:110183",
+          "size": [
+            390,
+            2567
+          ],
+          "file": "flows/13-code-breaker/CB21.json",
+          "preview": "previews/13-code-breaker/CB21.png",
+          "isFlow": true
+        }
+      ],
+      "notes": [
+        "Artwork · Card copy for the game card and Game intro (kind Puzzles, sand, tags Solo and 2–8 players). The artwork is Game artwork’s Game=Code Breaker variant; CB01 and CB15 use Game intro Game=Code Breaker."
+      ]
+    },
+    {
+      "name": "14 / Gomoku / complete flow",
+      "id": "162:67746",
+      "dir": "14-gomoku",
+      "flows": [
+        {
+          "code": "GM01",
+          "title": "Game page",
+          "id": "162:97488",
+          "size": [
+            1440,
+            1107
+          ],
+          "file": "flows/14-gomoku/GM01.json",
+          "preview": "previews/14-gomoku/GM01.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM02",
+          "title": "Solo · pick a level",
+          "id": "162:96819",
+          "size": [
+            1440,
+            974
+          ],
+          "file": "flows/14-gomoku/GM02.json",
+          "preview": "previews/14-gomoku/GM02.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM03",
+          "title": "Solo · your turn",
+          "id": "162:67747",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM03.json",
+          "preview": "previews/14-gomoku/GM03.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM04",
+          "title": "Solo · the computer is thinking",
+          "id": "162:69057",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM04.json",
+          "preview": "previews/14-gomoku/GM04.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM05",
+          "title": "Solo · you won",
+          "id": "162:69258",
+          "size": [
+            1440,
+            1176
+          ],
+          "file": "flows/14-gomoku/GM05.json",
+          "preview": "previews/14-gomoku/GM05.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM06",
+          "title": "Solo · the computer won",
+          "id": "162:69506",
+          "size": [
+            1440,
+            1176
+          ],
+          "file": "flows/14-gomoku/GM06.json",
+          "preview": "previews/14-gomoku/GM06.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM07",
+          "title": "Create room · Gomoku",
+          "id": "162:96878",
+          "size": [
+            1440,
+            999
+          ],
+          "file": "flows/14-gomoku/GM07.json",
+          "preview": "previews/14-gomoku/GM07.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM08",
+          "title": "Room · ready to start",
+          "id": "162:96954",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM08.json",
+          "preview": "previews/14-gomoku/GM08.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM09",
+          "title": "Room · your turn",
+          "id": "162:82612",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM09.json",
+          "preview": "previews/14-gomoku/GM09.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM10",
+          "title": "Room · Leo’s turn",
+          "id": "162:83196",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM10.json",
+          "preview": "previews/14-gomoku/GM10.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM11",
+          "title": "Room · you ran out of time",
+          "id": "162:83759",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM11.json",
+          "preview": "previews/14-gomoku/GM11.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM12",
+          "title": "Room · resign?",
+          "id": "162:92781",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM12.json",
+          "preview": "previews/14-gomoku/GM12.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM13",
+          "title": "Room · you won",
+          "id": "162:93373",
+          "size": [
+            1440,
+            1165
+          ],
+          "file": "flows/14-gomoku/GM13.json",
+          "preview": "previews/14-gomoku/GM13.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM14",
+          "title": "Room · Leo left",
+          "id": "162:93965",
+          "size": [
+            1440,
+            1082
+          ],
+          "file": "flows/14-gomoku/GM14.json",
+          "preview": "previews/14-gomoku/GM14.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM15",
+          "title": "Room · a draw",
+          "id": "162:94526",
+          "size": [
+            1440,
+            1142
+          ],
+          "file": "flows/14-gomoku/GM15.json",
+          "preview": "previews/14-gomoku/GM15.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM16",
+          "title": "Room · watching",
+          "id": "162:84374",
+          "size": [
+            1440,
+            892
+          ],
+          "file": "flows/14-gomoku/GM16.json",
+          "preview": "previews/14-gomoku/GM16.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM17",
+          "title": "Phone · solo, your turn",
+          "id": "162:101867",
+          "size": [
+            390,
+            966
+          ],
+          "file": "flows/14-gomoku/GM17.json",
+          "preview": "previews/14-gomoku/GM17.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM18",
+          "title": "Phone · room, your turn",
+          "id": "162:102025",
+          "size": [
+            390,
+            1070
+          ],
+          "file": "flows/14-gomoku/GM18.json",
+          "preview": "previews/14-gomoku/GM18.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM19",
+          "title": "Phone · room, you won",
+          "id": "162:102362",
+          "size": [
+            390,
+            976
+          ],
+          "file": "flows/14-gomoku/GM19.json",
+          "preview": "previews/14-gomoku/GM19.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM20",
+          "title": "Phone · game page",
+          "id": "162:102701",
+          "size": [
+            390,
+            1740
+          ],
+          "file": "flows/14-gomoku/GM20.json",
+          "preview": "previews/14-gomoku/GM20.png",
+          "isFlow": true
+        },
+        {
+          "code": "GM21",
+          "title": "Board · point states",
+          "id": "162:103805",
+          "size": [
+            1368,
+            576
+          ],
+          "file": "flows/14-gomoku/GM21.json",
+          "preview": "previews/14-gomoku/GM21.png",
+          "isFlow": true
+        }
+      ],
+      "notes": []
     }
   ],
   "warnings": []

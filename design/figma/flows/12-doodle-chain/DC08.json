@@ -1,0 +1,573 @@
+{
+  "format": 1,
+  "code": "DC08",
+  "title": "Describe · the drawing you were given",
+  "id": "162:85630",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC08 · A describing step: Leo sees only the drawing before his turn, never the line it came from. No Suggest here. The drawing keeps the canvas ratio (798 × 598)."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:85630",
+    "name": "DC08 / Describe · the drawing you were given",
+    "x": 4660,
+    "y": 1626,
+    "w": 1440,
+    "h": 1033,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:85631",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Doodle Chain"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Step 3 of 4",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Lime"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:85632",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 863,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:85633",
+            "name": "Board stage",
+            "w": 944,
+            "h": 863,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:85634",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "Sam draws your words next.",
+                  "Label": "Step 3 of 4",
+                  "Main": "What does this drawing show?",
+                  "Category": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Label": "left",
+                      "Time": "00:18",
+                      "Tone": "Running"
+                    },
+                    "height": 44,
+                    "width": 140
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:85710",
+                "name": "Step panel",
+                "w": 944,
+                "h": 755,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:85711",
+                    "name": "Drawing",
+                    "w": 600,
+                    "h": 450,
+                    "fills": [
+                      "$Zumpo · UI:color/white"
+                    ],
+                    "strokes": [
+                      "$Zumpo · UI:color/line"
+                    ],
+                    "strokeAlign": "inside",
+                    "radius": "$Zumpo · UI:radius/16",
+                    "clip": true,
+                    "layout": {
+                      "mode": "column",
+                      "justify": "center",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:85712",
+                        "name": "Sample drawing",
+                        "w": 552,
+                        "h": 368,
+                        "component": "Sample / Chain drawing",
+                        "variant": {
+                          "Drawing": "Turtle on skateboard"
+                        },
+                        "componentId": "162:65765"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:85729",
+                    "name": "Chain composer",
+                    "w": 894,
+                    "h": 231,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Chain composer",
+                    "variant": {
+                      "State": "Editing",
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "162:67598",
+                    "props": {
+                      "Suggest": false
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 231,
+                        "width": 894
+                      },
+                      {
+                        "path": "Line input",
+                        "componentProperties": {
+                          "Show helper": true,
+                          "Helper": "28 / 80",
+                          "Select": false,
+                          "Value": "A hamburger on roller skates",
+                          "Label": "Your description",
+                          "State": "Focus"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:85651",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 634,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:85652",
+                "name": "Zumpo/Scoreboard",
+                "w": 344,
+                "h": 304,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": "Heading / Count",
+                    "characters": "4 / 8"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": true,
+                      "Status": "Describing",
+                      "Host": true,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:5085",
+                      "Name": "Maya",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": true,
+                      "Status": "Done",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:4994",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": true,
+                      "Status": "Describing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "",
+                      "Icon": "24:5085",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": true,
+                      "Status": "Describing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:5085",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 5",
+                    "componentProperties": {
+                      "Icon": "24:5053",
+                      "Show score": false,
+                      "Status icon": true,
+                      "You": false,
+                      "Name": "Maya",
+                      "Status": "Drawing",
+                      "Host": true,
+                      "Score": "460",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 6",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "320",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 7",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "240",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 8",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "180",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:85653",
+                "name": "Zumpo/Chat",
+                "w": 344,
+                "h": 306,
+                "hSize": "hug",
+                "component": "Zumpo/Chat",
+                "componentId": "9:334",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 306,
+                    "width": 344
+                  },
+                  {
+                    "path": "Messages / Message 1",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "done already, sorry",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 2",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "no hints!",
+                      "Name": "Maya",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 3",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Name": "Ryan",
+                      "Message": "Step 3: describe the drawing you were given.",
+                      "Kind": "System"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "I am an artist",
+                      "Name": "Ryan",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 5",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "you are something",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    },
+                    "visible": true
+                  },
+                  {
+                    "path": "Messages / Message 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Chat input",
+                    "componentProperties": {
+                      "Placeholder": "Say something…",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:85654",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:85655",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:85656",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

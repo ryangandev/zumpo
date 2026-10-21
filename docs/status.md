@@ -51,7 +51,10 @@ Decided by Ryan, and the frame for every design and implementation choice:
 
 ## Next
 
-Nothing is queued; the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
+Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
+Gomoku brings a fourth kind of game, Strategy.
+Each game's behaviour contract lands in `docs/games/` with its implementation.
+After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
 
 ## Open decisions
 

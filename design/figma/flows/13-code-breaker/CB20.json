@@ -1,0 +1,1243 @@
+{
+  "format": 1,
+  "code": "CB20",
+  "title": "Phone · the reveal",
+  "id": "162:109211",
+  "section": "13 / Code Breaker / complete flow",
+  "reviewNotes": [
+    "CB20 · CB12 at 390 px: the code in the turn bar, then every board with its digits, one per row, best score first."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:109211",
+    "name": "CB20 / Phone · the reveal",
+    "x": 5570,
+    "y": 4350,
+    "w": 390,
+    "h": 2210,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:109212",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Code Breaker"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Code 2 of 3",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Sand"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:109213",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:109214",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 144,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Main": "7302",
+          "Category": false,
+          "Meta": "You cracked it in 6 for +518",
+          "Label": "The code was"
+        },
+        "overrides": [
+          {
+            "path": "Top / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Label": "next code",
+              "Time": "00:06",
+              "Tone": "Waiting"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:109215",
+        "name": "Code results",
+        "w": 350,
+        "h": 1798,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/20",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:109216",
+            "name": "Heading space",
+            "w": 167,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:109217",
+                "w": 167,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "Code 2 results",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:109218",
+            "name": "Boards",
+            "w": 350,
+            "h": 1748,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:109527",
+                "name": "Race board / Maya",
+                "w": 350,
+                "h": 428,
+                "hSize": "hug",
+                "component": "Zumpo/Code race board",
+                "variant": {
+                  "State": "Cracked",
+                  "Board": "Digits",
+                  "Layout": "Row"
+                },
+                "componentId": "162:64126",
+                "props": {
+                  "Status": "Cracked in 5 · +633"
+                },
+                "overrides": [
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:109682",
+                "name": "Race board / Sam",
+                "w": 350,
+                "h": 428,
+                "hSize": "hug",
+                "component": "Zumpo/Code race board",
+                "variant": {
+                  "State": "Cracked",
+                  "Board": "Digits",
+                  "Layout": "Row"
+                },
+                "componentId": "162:64126",
+                "props": {
+                  "Status": "Cracked in 6 · +518",
+                  "Name": "Sam"
+                },
+                "overrides": [
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:109841",
+                "name": "Race board / Leo",
+                "w": 350,
+                "h": 428,
+                "hSize": "hug",
+                "component": "Zumpo/Code race board",
+                "variant": {
+                  "State": "Cracked",
+                  "Board": "Digits",
+                  "Layout": "Row"
+                },
+                "componentId": "162:64126",
+                "props": {
+                  "Status": "Cracked in 8 · +306",
+                  "Name": "Leo"
+                },
+                "overrides": [
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Cracked",
+                      "Size": "Small"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:110008",
+                "name": "Race board / Ryan",
+                "w": 350,
+                "h": 428,
+                "hSize": "hug",
+                "component": "Zumpo/Code race board",
+                "variant": {
+                  "State": "Out",
+                  "Board": "Digits",
+                  "Layout": "Row"
+                },
+                "componentId": "162:64298",
+                "props": {
+                  "Status": "Missed",
+                  "Name": "Ryan"
+                },
+                "overrides": [
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 1 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 2 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 3 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "5",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 4 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 5 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "0",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 6 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 7 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "2",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "3",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 8 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 9 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "8",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 9 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 9 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "4",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 9 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 10 / Digits / Digit 1",
+                    "componentProperties": {
+                      "Digit": "9",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 10 / Digits / Digit 2",
+                    "componentProperties": {
+                      "Digit": "1",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 10 / Digits / Digit 3",
+                    "componentProperties": {
+                      "Digit": "6",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  },
+                  {
+                    "path": "Board / Guess 10 / Digits / Digit 4",
+                    "componentProperties": {
+                      "Digit": "7",
+                      "State": "Guessed",
+                      "Size": "Small"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:109223",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:109224",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}

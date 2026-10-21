@@ -1,0 +1,1432 @@
+{
+  "format": 1,
+  "code": "CB06",
+  "title": "Solo · cracked it",
+  "id": "162:81487",
+  "section": "13 / Code Breaker / complete flow",
+  "reviewNotes": [
+    "CB06 · Cracked in 6: the cracked row turns green. Share copies the pegs without the digits (Code Breaker #12 6/10). Stats on this device; the bars are 1–4, 5, 6, 7, 8, 9 and 10 guesses, with today’s picked out."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:81487",
+    "name": "CB06 / Solo · cracked it",
+    "x": 1580,
+    "y": 1550,
+    "w": 1440,
+    "h": 1123,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:81488",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Code Breaker"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Code #12",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:81489",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 953,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:81490",
+            "name": "Board stage",
+            "w": 944,
+            "h": 953,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:81491",
+                "name": "Final scores",
+                "w": 944,
+                "h": 335,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/40",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:81492",
+                    "name": "Result heading",
+                    "w": 350,
+                    "h": 75,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/8",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:81493",
+                        "w": 225,
+                        "h": 42,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Cracked in 6.",
+                        "textStyle": "Zumpo/Title",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:81494",
+                        "w": 350,
+                        "h": 25,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "The code was 4071. That makes 5 days in a row.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:81495",
+                    "name": "Ranking",
+                    "w": 862,
+                    "h": 82,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:81496",
+                        "name": "Stat / Guesses",
+                        "w": 862,
+                        "h": 41,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "pad": [
+                            "$Zumpo · UI:space/8",
+                            0
+                          ],
+                          "justify": "space_between",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:81497",
+                            "w": 64,
+                            "h": 25,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "Guesses",
+                            "textStyle": "Zumpo/Body",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ]
+                          },
+                          {
+                            "type": "TEXT",
+                            "id": "162:81498",
+                            "w": 57,
+                            "h": 24,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "6 of 10",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/ink"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:81499",
+                        "name": "Stat / Next word in",
+                        "w": 862,
+                        "h": 41,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "pad": [
+                            "$Zumpo · UI:space/8",
+                            0
+                          ],
+                          "justify": "space_between",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:81500",
+                            "w": 94,
+                            "h": 25,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "Next code in",
+                            "textStyle": "Zumpo/Body",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ]
+                          },
+                          {
+                            "type": "TEXT",
+                            "id": "162:81501",
+                            "w": 70,
+                            "h": 24,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "09:41:18",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/ink"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:81502",
+                    "name": "Actions",
+                    "w": 258,
+                    "h": 48,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:81503",
+                        "name": "Action / Share",
+                        "w": 108,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:15",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=copy",
+                          "Show icon": true,
+                          "Label": "Share"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 108
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:81504",
+                        "name": "Action / Practice word",
+                        "w": 138,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Secondary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:18",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=link",
+                          "Label": "Practice code"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 138
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:81505",
+                "name": "Table panel",
+                "w": 944,
+                "h": 602,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:81692",
+                    "name": "Your board",
+                    "w": 268,
+                    "h": 552,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Code board",
+                    "variant": {
+                      "Size": "Compact"
+                    },
+                    "componentId": "162:62606",
+                    "overrides": [
+                      {
+                        "path": "Guess 1 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "2",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "3",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "5",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "6",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "7",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "8",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "2",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "9",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "3",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "0",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "7",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "0",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 6 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 6 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "0",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 6 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "7",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 6 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:81507",
+            "name": "Run sidebar",
+            "w": 344,
+            "h": 628,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:81508",
+                "name": "Best on this device",
+                "w": 344,
+                "h": 276,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "On this device"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 276,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:81508;35:13441;162:81514",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 164,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81508;35:13441;162:81515",
+                          "name": "Stat / Played",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81516",
+                              "name": "Today",
+                              "w": 49,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Played",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81517",
+                              "name": "2:41",
+                              "w": 17,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "12",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81508;35:13441;162:81518",
+                          "name": "Stat / Cracked",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81519",
+                              "name": "Yesterday",
+                              "w": 62,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Cracked",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81520",
+                              "name": "3:05",
+                              "w": 38,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "92%",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81508;35:13441;162:81521",
+                          "name": "Stat / Current streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81522",
+                              "name": "Oct 1",
+                              "w": 107,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Current streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81523",
+                              "name": "3:40",
+                              "w": 12,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "5",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81508;35:13441;162:81524",
+                          "name": "Stat / Best streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81525",
+                              "name": "Today",
+                              "w": 83,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Best streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81508;35:13441;162:81526",
+                              "name": "2:41",
+                              "w": 12,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "6",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:81509",
+                "name": "Challenge a friend",
+                "w": 344,
+                "h": 328,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Description": "They get these same ten hands and try to beat 2:41.",
+                  "Title": "Guesses to crack it"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 328,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:81509;35:13441;162:81528",
+                      "name": "Distribution",
+                      "w": 278,
+                      "h": 216,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "gap": "$Zumpo · UI:space/8",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81529",
+                          "name": "Guesses / 1–4",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81530",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "1–4",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81531",
+                              "name": "Bar",
+                              "w": 84,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81532",
+                                  "name": "Count",
+                                  "w": 6,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "1",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81533",
+                          "name": "Guesses / 5",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81534",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "5",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81535",
+                              "name": "Bar",
+                              "w": 135,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81536",
+                                  "name": "Count",
+                                  "w": 9,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "2",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81537",
+                          "name": "Guesses / 6",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81538",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "6",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81539",
+                              "name": "Bar",
+                              "w": 238,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/green"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81540",
+                                  "name": "Count",
+                                  "w": 10,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "4",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/paper"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81541",
+                          "name": "Guesses / 7",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81542",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "7",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81543",
+                              "name": "Bar",
+                              "w": 135,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81544",
+                                  "name": "Count",
+                                  "w": 9,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "2",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81545",
+                          "name": "Guesses / 8",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81546",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "8",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81547",
+                              "name": "Bar",
+                              "w": 84,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81548",
+                                  "name": "Count",
+                                  "w": 6,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "1",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I162:81509;35:13441;162:81549",
+                          "name": "Guesses / 9",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81550",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "9",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81551",
+                              "name": "Bar",
+                              "w": 84,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81552",
+                                  "name": "Count",
+                                  "w": 6,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "1",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "162:81847",
+                          "name": "Guesses / 10",
+                          "w": 278,
+                          "h": 24,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I162:81509;35:13441;162:81852",
+                              "name": "Guesses",
+                              "w": 28,
+                              "h": 20,
+                              "hSize": "hug",
+                              "text": "10",
+                              "textStyle": "Zumpo/Label",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ],
+                              "autoResize": "height"
+                            },
+                            {
+                              "type": "FRAME",
+                              "id": "I162:81509;35:13441;162:81853",
+                              "name": "Bar",
+                              "w": 32,
+                              "h": 24,
+                              "fills": [
+                                "$Zumpo · UI:color/line"
+                              ],
+                              "radius": "$Zumpo · UI:radius/8",
+                              "layout": {
+                                "mode": "row",
+                                "pad": [
+                                  0,
+                                  "$Zumpo · UI:space/8"
+                                ],
+                                "justify": "max",
+                                "align": "center",
+                                "strokesIncluded": true
+                              },
+                              "children": [
+                                {
+                                  "type": "TEXT",
+                                  "id": "I162:81509;35:13441;162:81854",
+                                  "name": "Count",
+                                  "w": 10,
+                                  "h": 20,
+                                  "wSize": "hug",
+                                  "hSize": "hug",
+                                  "text": "0",
+                                  "textStyle": "Zumpo/Label",
+                                  "fills": [
+                                    "$Zumpo · UI:color/ink"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:81510",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:81511",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:81512",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+<svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_162_65804" fill="white">
+<path d="M8 14C8 14 0 9 0 4.2C0 1.8 1.8 0 4.2 0C5.8 0 7.2 0.9 8 2.2C8.8 0.9 10.2 0 11.8 0C14.2 0 16 1.8 16 4.2C16 9 8 14 8 14Z"/>
+</mask>
+<path d="M8 14C8 14 0 9 0 4.2C0 1.8 1.8 0 4.2 0C5.8 0 7.2 0.9 8 2.2C8.8 0.9 10.2 0 11.8 0C14.2 0 16 1.8 16 4.2C16 9 8 14 8 14Z" stroke-width="3" stroke-linejoin="round" stroke="#616458" mask="url(#stroke0_162_65804)"/>
+</svg>

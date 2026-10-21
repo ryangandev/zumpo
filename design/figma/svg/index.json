@@ -75,14 +75,24 @@
     "name": "backLeg",
     "w": 32.08,
     "h": 31.02,
-    "uses": 6,
+    "uses": 8,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > backLeg",
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > frontLeg",
       "Sample / Turtle drawing > Stage=Outline > backLeg",
       "Sample / Turtle drawing > Stage=Outline > frontLeg",
       "Sample / Turtle drawing > Stage=Head > backLeg",
-      "Sample / Turtle drawing > Stage=Head > frontLeg",
-      "Sample / Turtle drawing > Stage=Done > backLeg",
-      "Sample / Turtle drawing > Stage=Done > frontLeg"
+      "Sample / Turtle drawing > Stage=Head > frontLeg"
+    ]
+  },
+  {
+    "file": "svg/bottom-bun-87b39a.svg",
+    "name": "bottom bun",
+    "w": 200,
+    "h": 26,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > bottom bun"
     ]
   },
   {
@@ -227,6 +237,16 @@
     ]
   },
   {
+    "file": "svg/deck-bdfd75.svg",
+    "name": "deck",
+    "w": 268,
+    "h": 16,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > deck"
+    ]
+  },
+  {
     "file": "svg/dice-00e5c9.svg",
     "name": "dice",
     "w": 1,
@@ -313,8 +333,9 @@
     "name": "head",
     "w": 60,
     "h": 60,
-    "uses": 2,
+    "uses": 3,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > head",
       "Sample / Turtle drawing > Stage=Head > head",
       "Sample / Turtle drawing > Stage=Done > head"
     ]
@@ -335,6 +356,16 @@
     ]
   },
   {
+    "file": "svg/heart-237151.svg",
+    "name": "Heart",
+    "w": 16,
+    "h": 14,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Heart button > State=Off > Heart"
+    ]
+  },
+  {
     "file": "svg/heart-3-lost-7bdcd1.svg",
     "name": "Heart 3 / Lost",
     "w": 20,
@@ -350,12 +381,24 @@
     ]
   },
   {
+    "file": "svg/heart-ff16c9.svg",
+    "name": "Heart",
+    "w": 16,
+    "h": 14,
+    "uses": 2,
+    "samples": [
+      "Zumpo/Heart button > State=On > Heart",
+      "Zumpo/Heart button > State=Count > Heart"
+    ]
+  },
+  {
     "file": "svg/hex-d42fde.svg",
     "name": "hex",
     "w": 68,
     "h": 72,
-    "uses": 1,
+    "uses": 2,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > hex",
       "Sample / Turtle drawing > Stage=Done > hex"
     ]
   },
@@ -422,6 +465,16 @@
     "uses": 1,
     "samples": [
       "Zumpo/Icon > Glyph=leave > leave"
+    ]
+  },
+  {
+    "file": "svg/lettuce-fe1665.svg",
+    "name": "lettuce",
+    "w": 216,
+    "h": 9.39,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > lettuce"
     ]
   },
   {
@@ -523,10 +576,21 @@
     "name": "neck",
     "w": 16,
     "h": 0,
-    "uses": 2,
+    "uses": 3,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > neck",
       "Sample / Turtle drawing > Stage=Head > neck",
       "Sample / Turtle drawing > Stage=Done > neck"
+    ]
+  },
+  {
+    "file": "svg/patty-31e434.svg",
+    "name": "patty",
+    "w": 215,
+    "h": 24,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > patty"
     ]
   },
   {
@@ -560,6 +624,46 @@
     ]
   },
   {
+    "file": "svg/seed-1-e285b0.svg",
+    "name": "seed 1",
+    "w": 10,
+    "h": 4,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > seed 1"
+    ]
+  },
+  {
+    "file": "svg/seed-2-f28446.svg",
+    "name": "seed 2",
+    "w": 10,
+    "h": 4,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > seed 2"
+    ]
+  },
+  {
+    "file": "svg/seed-3-f46fb6.svg",
+    "name": "seed 3",
+    "w": 8,
+    "h": 0,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > seed 3"
+    ]
+  },
+  {
+    "file": "svg/shape-02d21c.svg",
+    "name": "Shape",
+    "w": 30,
+    "h": 35,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Tree > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-0e12a8.svg",
     "name": "Shape",
     "w": 37,
@@ -567,6 +671,16 @@
     "uses": 1,
     "samples": [
       "Zumpo/Trios shape > Shape=Triangle, Fill=Solid, Colour=Blue, Stripes=Fine > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-0ea8fe.svg",
+    "name": "Shape",
+    "w": 35.97,
+    "h": 35,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Flower > Shape"
     ]
   },
   {
@@ -582,13 +696,74 @@
     ]
   },
   {
+    "file": "svg/shape-1bea99.svg",
+    "name": "Shape",
+    "w": 36,
+    "h": 16,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Pill > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-298268.svg",
     "name": "Shape",
     "w": 38,
     "h": 38,
+    "uses": 2,
+    "samples": [
+      "Zumpo/Pairs symbol > Symbol=Sparkle Red > Shape",
+      "Zumpo/Snap symbol > Symbol=Sparkle > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-406692.svg",
+    "name": "Shape",
+    "w": 36,
+    "h": 28,
     "uses": 1,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Sparkle Red > Shape"
+      "Zumpo/Snap symbol > Symbol=Cloud > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-45b378.svg",
+    "name": "Shape",
+    "w": 30,
+    "h": 30,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Leaf > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-51ae2d.svg",
+    "name": "Shape",
+    "w": 36,
+    "h": 22,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Fish > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-56587f.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 32,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Heart > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-597b49.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 32,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Mushroom > Shape"
     ]
   },
   {
@@ -608,9 +783,10 @@
     "name": "Shape",
     "w": 36,
     "h": 32,
-    "uses": 1,
+    "uses": 2,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Triangle Green > Shape"
+      "Zumpo/Pairs symbol > Symbol=Triangle Green > Shape",
+      "Zumpo/Snap symbol > Symbol=Triangle > Shape"
     ]
   },
   {
@@ -618,9 +794,10 @@
     "name": "Shape",
     "w": 34,
     "h": 36,
-    "uses": 1,
+    "uses": 2,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Hexagon Brown > Shape"
+      "Zumpo/Pairs symbol > Symbol=Hexagon Brown > Shape",
+      "Zumpo/Snap symbol > Symbol=Hexagon > Shape"
     ]
   },
   {
@@ -634,6 +811,16 @@
     ]
   },
   {
+    "file": "svg/shape-73f600.svg",
+    "name": "Shape",
+    "w": 26.19,
+    "h": 33.27,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Note > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-7e213a.svg",
     "name": "Shape",
     "w": 38,
@@ -641,6 +828,26 @@
     "uses": 1,
     "samples": [
       "Zumpo/Pairs symbol > Symbol=Sparkle Sun > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-809cea.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 33,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=House > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-82823c.svg",
+    "name": "Shape",
+    "w": 32,
+    "h": 27,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Cup > Shape"
     ]
   },
   {
@@ -660,9 +867,50 @@
     "name": "Shape",
     "w": 36,
     "h": 36,
+    "uses": 2,
+    "samples": [
+      "Zumpo/Pairs symbol > Symbol=Diamond Violet > Shape",
+      "Zumpo/Snap symbol > Symbol=Diamond > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-8e6ed4.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 34,
     "uses": 1,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Diamond Violet > Shape"
+      "Zumpo/Snap symbol > Symbol=Plus > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-964099.svg",
+    "name": "Shape",
+    "w": 26,
+    "h": 36,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Drop > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-9f5cdc.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 36,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Clover > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-a437f2.svg",
+    "name": "Shape",
+    "w": 26,
+    "h": 34,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Ghost > Shape"
     ]
   },
   {
@@ -680,9 +928,20 @@
     "name": "Shape",
     "w": 38,
     "h": 36,
+    "uses": 2,
+    "samples": [
+      "Zumpo/Pairs symbol > Symbol=Star Orange > Shape",
+      "Zumpo/Snap symbol > Symbol=Star > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-bfd600.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 24,
     "uses": 1,
     "samples": [
-      "Zumpo/Pairs symbol > Symbol=Star Orange > Shape"
+      "Zumpo/Snap symbol > Symbol=Bow > Shape"
     ]
   },
   {
@@ -696,6 +955,16 @@
     ]
   },
   {
+    "file": "svg/shape-c7a126.svg",
+    "name": "Shape",
+    "w": 26,
+    "h": 36,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Bolt > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-cf2be9.svg",
     "name": "Shape",
     "w": 34,
@@ -706,6 +975,46 @@
     ]
   },
   {
+    "file": "svg/shape-d12d67.svg",
+    "name": "Shape",
+    "w": 30,
+    "h": 36,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Bell > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-d8f1fa.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 30,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Arrow > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-e0e326.svg",
+    "name": "Shape",
+    "w": 32.75,
+    "h": 33.84,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Moon > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-e29bcc.svg",
+    "name": "Shape",
+    "w": 34,
+    "h": 27,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Crown > Shape"
+    ]
+  },
+  {
     "file": "svg/shape-edfcd8.svg",
     "name": "Shape",
     "w": 38,
@@ -713,6 +1022,16 @@
     "uses": 1,
     "samples": [
       "Zumpo/Pairs symbol > Symbol=Star Sky > Shape"
+    ]
+  },
+  {
+    "file": "svg/shape-fa1830.svg",
+    "name": "Shape",
+    "w": 36,
+    "h": 28,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Snap symbol > Symbol=Eye > Shape"
     ]
   },
   {
@@ -730,11 +1049,33 @@
     "name": "shell",
     "w": 220,
     "h": 96,
-    "uses": 3,
+    "uses": 4,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > shell",
       "Sample / Turtle drawing > Stage=Outline > shell",
       "Sample / Turtle drawing > Stage=Head > shell",
       "Sample / Turtle drawing > Stage=Done > shell"
+    ]
+  },
+  {
+    "file": "svg/skate-left-d9389a.svg",
+    "name": "skate left",
+    "w": 76,
+    "h": 0,
+    "uses": 2,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > skate left",
+      "Sample / Chain drawing > Drawing=Burger on skates > skate right"
+    ]
+  },
+  {
+    "file": "svg/smile-183240.svg",
+    "name": "smile",
+    "w": 16,
+    "h": 5.62,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > smile"
     ]
   },
   {
@@ -748,12 +1089,74 @@
     ]
   },
   {
+    "file": "svg/smile-f3739d.svg",
+    "name": "smile",
+    "w": 32,
+    "h": 6,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > smile"
+    ]
+  },
+  {
+    "file": "svg/speed-1-4b8881.svg",
+    "name": "speed 1",
+    "w": 50,
+    "h": 0,
+    "uses": 2,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > speed 1",
+      "Sample / Chain drawing > Drawing=Burger on skates > speed 3"
+    ]
+  },
+  {
+    "file": "svg/speed-1-e4ffd4.svg",
+    "name": "speed 1",
+    "w": 52,
+    "h": 0,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > speed 1"
+    ]
+  },
+  {
+    "file": "svg/speed-2-baff22.svg",
+    "name": "speed 2",
+    "w": 54,
+    "h": 0,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > speed 2"
+    ]
+  },
+  {
+    "file": "svg/speed-2-f97944.svg",
+    "name": "speed 2",
+    "w": 58,
+    "h": 0,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Burger on skates > speed 2"
+    ]
+  },
+  {
+    "file": "svg/speed-3-f8666e.svg",
+    "name": "speed 3",
+    "w": 46,
+    "h": 0,
+    "uses": 1,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > speed 3"
+    ]
+  },
+  {
     "file": "svg/spokes-7c33bd.svg",
     "name": "spokes",
     "w": 136,
     "h": 78,
-    "uses": 1,
+    "uses": 2,
     "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > spokes",
       "Sample / Turtle drawing > Stage=Done > spokes"
     ]
   },
@@ -822,9 +1225,20 @@
     "name": "tail",
     "w": 30,
     "h": 16,
+    "uses": 2,
+    "samples": [
+      "Sample / Chain drawing > Drawing=Turtle on skateboard > tail",
+      "Sample / Turtle drawing > Stage=Done > tail"
+    ]
+  },
+  {
+    "file": "svg/top-bun-48fd93.svg",
+    "name": "top bun",
+    "w": 200,
+    "h": 57,
     "uses": 1,
     "samples": [
-      "Sample / Turtle drawing > Stage=Done > tail"
+      "Sample / Chain drawing > Drawing=Burger on skates > top bun"
     ]
   },
   {
