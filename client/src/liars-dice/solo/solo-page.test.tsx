@@ -119,4 +119,28 @@ describe('Liar’s Dice on your own', () => {
     expect(turn().getByText('Your turn')).toBeInTheDocument();
     expect(screen.queryByRole('timer')).toBeNull();
   });
+
+  it('holds the bots while How to play is open', async () => {
+    await renderApp('/games/liars-dice/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    for (let step = 0; step < 6; step++) {
+      if (screen.queryByRole('group', { name: 'Your bid' })) break;
+      await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    }
+    await user.click(screen.getAllByRole('button', { name: /^Bid / })[0]!);
+    const botsTurn = screen.getByRole('region', { name: 'Turn' }).textContent;
+    expect(botsTurn).not.toMatch(/Your turn/);
+
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS * 3));
+    await user.click(screen.getByRole('button', { name: 'Back to the game' }));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).toBe(
+      botsTurn,
+    );
+
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).not.toBe(
+      botsTurn,
+    );
+  });
 });
