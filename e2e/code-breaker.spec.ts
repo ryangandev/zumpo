@@ -132,9 +132,13 @@ test('a player with no name plays today’s code, with notes, then a practice co
   ).toBeVisible();
   await expect(sam.getByText('Next code in')).toBeVisible();
   await expect(sam.getByRole('button', { name: 'Share' })).toBeVisible();
-  await expect(
-    sam.getByRole('heading', { name: 'Guesses to crack it' }),
-  ).toBeVisible();
+  // The only code cracked so far is the longest bar, so it fills its column.
+  const guesses = sam.getByRole('region', { name: 'Guesses to crack it' });
+  const list = await guesses.getByRole('list').boundingBox();
+  const longest = await guesses.getByLabel(/^1 cracked in/).boundingBox();
+  const card = await guesses.boundingBox();
+  expect(list!.width).toBeGreaterThan(card!.width / 2);
+  expect(longest!.x + longest!.width).toBeCloseTo(list!.x + list!.width, 0);
 
   // Today's code stays played after a reload.
   await sam.reload();

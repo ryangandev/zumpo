@@ -1,7 +1,9 @@
 /* Guesses to solve it (DW04, DW05, CB06): a column of bucket names as wide
-   as the widest, and the bars beside them. */
+   as the widest, and the bars beside them. A panel card lines its children
+   up at the start, so the list stretches itself to the card's width. */
 .list {
   display: grid;
+  align-self: stretch;
   grid-template-columns: auto 1fr;
   gap: var(--zumpo-space-8) var(--zumpo-space-12);
   margin: 0;
