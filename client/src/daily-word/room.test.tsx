@@ -88,6 +88,24 @@ describe('a Daily Word room', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
+  it('starts with the focus on the board, not on a key Enter would press', async () => {
+    const user = userEvent.setup();
+    const { update } = await renderSeated(dailyWordState());
+
+    update(start);
+    expect(
+      await screen.findByRole('group', { name: 'Your guesses' }),
+    ).toHaveFocus();
+    await user.keyboard(' {Enter}');
+    expect(within(mine()).queryAllByRole('img')).toEqual([]);
+    await user.keyboard('s');
+    expect(
+      within(mine())
+        .getAllByRole('img')
+        .map((tile) => tile.getAttribute('aria-label')),
+    ).toEqual(['S']);
+  });
+
   it('types from the keyboard and sends a word only once it can count', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(start);

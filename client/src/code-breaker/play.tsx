@@ -75,6 +75,7 @@ export function PlayArea({
       nudge={draft.nudge}
       size="compact"
       label={m.codeBreaker.yourGuesses}
+      typingTarget={pad}
       describe={(row) => describeRow(row, m)}
     />
   );

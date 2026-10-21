@@ -88,6 +88,23 @@ describe('a Code Breaker room', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
+  it('starts with the focus on the board, not on a key Enter would press', async () => {
+    const user = userEvent.setup();
+    const { update } = await renderSeated(codeBreakerState());
+
+    update(start);
+    expect(
+      await screen.findByRole('group', { name: 'Your guesses' }),
+    ).toHaveFocus();
+    await user.keyboard(' {Enter}');
+    expect(screen.getByRole('button', { name: 'Notes' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+    await user.keyboard('1');
+    expect(rows()).toEqual(['1']);
+  });
+
   it('types from the keyboard and sends a guess only once it can count', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(start);

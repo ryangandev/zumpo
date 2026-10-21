@@ -14,7 +14,8 @@ const CONTROLS = [
  * like go away as they are pressed, which drops the focus to the page, so
  * the next Tab would begin again in the header. When `started` turns true,
  * or the game mounts started, and the focus has fallen to the page, it moves
- * to the first control in `scope`: the board's one tab stop, a card, a key.
+ * to the first control in `scope`: the board's one tab stop, a card, or a
+ * board typed into (`data-start-focus`), never its on-screen keys.
  * Until the viewer's first key or touch it keeps doing so, as a game deals
  * and its first controls come. Focus the game or the viewer has put
  * anywhere else stays there.
@@ -67,6 +68,9 @@ export function useStartFocus(
 
 function firstControl(scope: HTMLElement | null): HTMLElement | null {
   if (!scope) return null;
+  // A board typed into takes the focus over its on-screen keys.
+  const typed = scope.querySelector<HTMLElement>('[data-start-focus]');
+  if (typed && isReachable(typed)) return typed;
   for (const element of scope.querySelectorAll<HTMLElement>(CONTROLS)) {
     if (isReachable(element)) return element;
   }
