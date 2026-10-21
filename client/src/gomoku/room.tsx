@@ -361,7 +361,7 @@ function Results({
   const first =
     summary.ending === 'draw'
       ? m.gomoku.drawDetail(summary.stones)
-      : m.gomoku.moves(state.moves.length);
+      : m.gomoku.moves(summary.stones);
   const next = resultNext(state, summary, m);
   const line = state.winLines?.[0];
   return (
@@ -404,7 +404,7 @@ function resultBar(
     meta:
       summary.ending === 'draw'
         ? m.gomoku.drawDetail(summary.stones)
-        : (next ?? m.gomoku.moves(room.state.moves.length)),
+        : (next ?? m.gomoku.moves(summary.stones)),
   };
 }
 

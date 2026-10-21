@@ -9,6 +9,7 @@ import { renderSeated } from '../tests/seated';
 
 const E8 = pointAt(4, 8);
 const E9 = pointAt(4, 9);
+const E10 = pointAt(4, 10);
 const F8 = pointAt(5, 8);
 
 const colors = {
@@ -252,13 +253,15 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
   });
 
-  it('frees the seat of a player who left, and the winner waits for another', async () => {
+  it('frees the seat of a player who left, and counts only the stones placed', async () => {
     await renderSeated(
       gomokuState({
         colors,
         gameNumber: 2,
         moves: [
           { color: 'black', point: E9 },
+          { color: 'white', point: null },
+          { color: 'black', point: E10 },
           { color: 'white', point: E8 },
         ],
         playerList: { p1: { username: 'Ryan', points: 1, isConnected: true } },
@@ -266,7 +269,7 @@ describe('a Gomoku room', () => {
           endedEarly: true,
           ending: 'left',
           winner: 'black',
-          stones: 2,
+          stones: 3,
           standings: [{ playerId: ME, username: 'Ryan', points: 1 }],
         },
       }),
@@ -275,7 +278,7 @@ describe('a Gomoku room', () => {
       screen.getByRole('heading', { name: 'You win: Maya left the room.' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('2 moves. Maya’s seat is free for anybody to take.'),
+      screen.getByText('3 moves. Maya’s seat is free for anybody to take.'),
     ).toBeInTheDocument();
     expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^Start game/ })).toBeNull();
