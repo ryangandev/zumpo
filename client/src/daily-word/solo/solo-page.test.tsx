@@ -40,6 +40,10 @@ const findTurn = async () =>
 const misses = (answer: string, count: number) =>
   ANSWERS.filter((word) => word !== answer).slice(0, count);
 
+/** `b` comes after `a` on the page. */
+const follows = (a: Node, b: Node) =>
+  Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+
 async function guess(word: string) {
   await user.keyboard(`${word}{Enter}`);
 }
@@ -177,8 +181,6 @@ describe('Daily Word on your own', () => {
     const result = screen.getByRole('heading', { name: 'Found in 1.' });
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });
-    const follows = (a: Node, b: Node) =>
-      Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
     expect(follows(result, board)).toBe(true);
     expect(follows(board, device)).toBe(true);
   });
