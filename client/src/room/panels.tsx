@@ -2,7 +2,7 @@ import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
-import { Button, ButtonLink, Notice, PlayerRow } from '../ui';
+import { Button, ButtonLink, HowToPlay, Notice, PlayerRow } from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
@@ -19,12 +19,15 @@ export function RoomPanel({
   children,
   notice,
   actions,
+  footer,
 }: {
   title: ReactNode;
   children: ReactNode;
   /** Something for the viewer alone, between the text and the actions. */
   notice?: ReactNode;
   actions?: ReactNode;
+  /** Under the actions, past a line: how to play, while waiting. */
+  footer?: ReactNode;
 }) {
   const { refusal } = useRoomContext();
   return (
@@ -40,6 +43,7 @@ export function RoomPanel({
       )}
       {notice && <Notice className={styles.notice}>{notice}</Notice>}
       {actions && <div className={styles.actions}>{actions}</div>}
+      {footer}
     </section>
   );
 }
@@ -88,13 +92,14 @@ function SeatMove({ primary = false }: { primary?: boolean }) {
  * A spectator who is not the host, between games: they are watching, and can
  * take a seat for the next game while one is free.
  */
-function SpectatorPanel() {
+function SpectatorPanel({ footer }: { footer?: ReactNode }) {
   const m = useMessages();
   const { state } = useRoomContext();
   const seatFree = Object.keys(state.playerList).length < state.maxPlayers;
   return (
     <RoomPanel
       title={m.room.spectatingTitle}
+      footer={footer}
       actions={
         <>
           <SeatMove primary />
@@ -125,8 +130,27 @@ function usePickedName(): { notice?: string; change?: ReactNode } {
 }
 
 /**
+ * Before a game, on the waiting card, the same for the host and everyone
+ * else: what the game is and how to play it, for a friend who came from an
+ * invite link and meets the game here first.
+ */
+function WaitingHowTo() {
+  const m = useMessages();
+  const { state } = useRoomContext();
+  const { goal, steps } = m.games.of[state.gameType].howToPlay;
+  return (
+    <HowToPlay
+      heading={m.ui.room.howToPlay}
+      goal={goal}
+      steps={steps}
+      className={styles.howTo}
+    />
+  );
+}
+
+/**
  * D01-D03, M01-M03: before a game. The host starts once there are two; a
- * guest waits for the host.
+ * guest waits for the host. Each says how to play under its actions.
  */
 export function WaitingPanel({
   aloneTitle,
@@ -153,13 +177,15 @@ export function WaitingPanel({
   const { minPlayers } = gameInfo(state.gameType);
   const count = Object.keys(state.playerList).length;
   const picked = usePickedName();
+  const howTo = <WaitingHowTo />;
 
-  if (spectating && !isHost) return <SpectatorPanel />;
+  if (spectating && !isHost) return <SpectatorPanel footer={howTo} />;
   if (!isHost) {
     return (
       <RoomPanel
         title={m.room.waitingForHost(state.owner.username)}
         notice={picked.notice}
+        footer={howTo}
         actions={
           <>
             <InviteButton />
@@ -177,6 +203,7 @@ export function WaitingPanel({
       <RoomPanel
         title={aloneTitle}
         notice={picked.notice}
+        footer={howTo}
         actions={
           <>
             <InviteButton primary />
@@ -193,6 +220,7 @@ export function WaitingPanel({
     <RoomPanel
       title={m.room.everyoneHere}
       notice={picked.notice}
+      footer={howTo}
       actions={
         starting ? (
           <StatusLine>{m.room.starting}</StatusLine>
@@ -217,7 +245,8 @@ export function EndedEarlyPanel() {
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   // Its words are for the player left at the table.
-  if (spectating && !isHost) return <SpectatorPanel />;
+  if (spectating && !isHost)
+    return <SpectatorPanel footer={<WaitingHowTo />} />;
   return (
     <RoomPanel
       title={m.room.everyoneLeft}

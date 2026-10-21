@@ -8,12 +8,3 @@
   overflow-wrap: anywhere;
   field-sizing: content;
 }
-
-/* P15's facts: one to a line, in ink under the muted summary. */
-.facts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font: var(--zumpo-text-body);
-  letter-spacing: var(--zumpo-text-body-tracking);
-}

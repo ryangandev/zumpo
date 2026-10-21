@@ -26,6 +26,11 @@ export {
   type ChainEntryKind,
   type ChainEntryProps,
 } from './components/chain-entry';
+export {
+  ChipField,
+  type ChipFieldProps,
+  type ChipOption,
+} from './components/chip-field';
 export { ChoiceList, type ChoiceListProps } from './components/choice-list';
 export { Chat, type ChatProps } from './components/chat';
 export {
@@ -99,6 +104,7 @@ export {
   type ViewerMenu,
 } from './components/header';
 export { HeartButton, type HeartButtonProps } from './components/heart-button';
+export { HowToPlay, type HowToPlayProps } from './components/how-to-play';
 export {
   HushCard,
   type HushCardProps,
@@ -145,6 +151,7 @@ export { OperatorKey, type OperatorKeyProps } from './components/operator-key';
 export {
   PairsCard,
   type PairsCardProps,
+  type PairsCardSize,
   type PairsCardState,
 } from './components/pairs-card';
 export {

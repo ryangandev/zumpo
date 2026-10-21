@@ -29,6 +29,14 @@
   min-width: 0;
 }
 
+/* Holds a card for its motion, as narrow as the column lets it be. */
+.cardBox {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .label {
   display: flex;
   align-items: center;

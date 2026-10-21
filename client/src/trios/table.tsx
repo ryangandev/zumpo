@@ -101,20 +101,21 @@ export function LastTrio({
 }
 
 /**
- * The row under the table, for Hint. Held, it keeps its room with nothing
- * in sight, so the table does not move when it has nothing to offer.
+ * The row under the table, for Hint. Hidden, it keeps its height, so the
+ * table panel does not change size when Hint is no longer offered.
  */
 export function TableTools({
-  held = false,
+  hidden = false,
   children,
 }: {
-  held?: boolean;
+  hidden?: boolean;
   children: ReactNode;
 }) {
   return (
     <div
-      className={cx(styles.tools, held && styles.held)}
-      aria-hidden={held || undefined}
+      className={cx(styles.tools, hidden && styles.held)}
+      inert={hidden}
+      aria-hidden={hidden || undefined}
     >
       {children}
     </div>

@@ -41,7 +41,8 @@
   gap: var(--zumpo-space-12);
 }
 
-/* Kept for the line it takes, out of sight. */
+/* Kept for the room it takes: out of sight, and for the table tools out of
+   the tab order and the accessibility tree too. */
 .held {
   visibility: hidden;
 }

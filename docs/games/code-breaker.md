@@ -169,6 +169,7 @@ While a round runs, every player sees everybody else's board as marks only: each
 This goes a step past a guess count on purpose: a mark without its digits tells nobody anything about the code, and watching a friend reach three greens is the race.
 Your own board has your digits, your notes and the pad.
 Once you have cracked the code or used your ten guesses, you watch the others' boards until the round ends.
+On a desktop, How to read it sits under the others' boards, the same legend of pegs as on your own (CB09-CB11); a phone has no room beside the board, so while you are still guessing, and while you watch as a spectator, its turn bar says how to read the pegs instead; who has cracked it is on the Players tab, or on the boards a spectator watches (CB18).
 
 ### Scoring
 

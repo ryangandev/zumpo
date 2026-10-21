@@ -99,8 +99,10 @@
   gap: var(--zumpo-space-24);
 }
 
+/* A long message wraps beside the button rather than pushing it under. */
 .hand {
   display: flex;
+  flex: 1 1 320px;
   flex-direction: column;
   gap: var(--zumpo-space-12);
   min-width: 0;

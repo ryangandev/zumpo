@@ -50,7 +50,10 @@ export async function ownDice(page: Page): Promise<number[]> {
     page.getByRole('region', { name: /\(you\)$/ }),
     '[role="img"]',
   );
-  return labels.filter((label) => /^[1-6]$/.test(label)).map(Number);
+  // A one shows as wild while bidding: "1, wild".
+  return labels
+    .filter((label) => /^[1-6](, wild)?$/.test(label))
+    .map((label) => Number(label[0]));
 }
 
 /** How many of the player's own dice count towards `face`, ones being wild. */

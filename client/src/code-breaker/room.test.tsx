@@ -100,6 +100,79 @@ describe('a Code Breaker room', () => {
     expect(screen.getByText('1 guess')).toBeInTheDocument();
   });
 
+  it('says how to read the pegs beside the board', async () => {
+    await renderSeated(start);
+    const legend = await screen.findByRole('region', {
+      name: 'How to read it',
+    });
+    expect(
+      within(legend).getByText('Right digit, right place'),
+    ).toBeInTheDocument();
+    expect(within(legend).getByText('Not in the code')).toBeInTheDocument();
+    expect(turn().getByText('Fewer guesses score more')).toBeInTheDocument();
+  });
+
+  it('says how to read the pegs in a phone’s turn bar until your board is done', async () => {
+    onPhone();
+    const { update } = await renderSeated(start);
+    await screen.findByRole('group', { name: 'Your guesses' });
+    expect(
+      turn().getByText('Green: in place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'How to read it' })).toBeNull();
+
+    update(
+      guessing([
+        board(ME, 'Ryan'),
+        board('p2', 'Maya', {
+          rows: [{ guess: null, mark: CRACKED }],
+          status: 'cracked',
+        }),
+      ]),
+    );
+    // Somebody else cracking it does not take the legend away.
+    expect(
+      turn().getByText('Green: in place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+
+    update(
+      guessing([
+        board(ME, 'Ryan', {
+          rows: [{ guess: '4071', mark: CRACKED }],
+          status: 'cracked',
+          points: 1018,
+        }),
+        board('p2', 'Maya'),
+      ]),
+    );
+    expect(
+      turn().queryByText('Green: in place. Coral: somewhere else.'),
+    ).toBeNull();
+  });
+
+  it('says how to read the pegs in a phone spectator’s turn bar too', async () => {
+    onPhone();
+    await renderSeated({
+      ...guessing([
+        board('p2', 'Maya', {
+          rows: [{ guess: null, mark: CRACKED }],
+          status: 'cracked',
+        }),
+        board('p3', 'Leo'),
+      ]),
+      playerList: {
+        p2: { username: 'Maya', points: 0, isConnected: true },
+        p3: { username: 'Leo', points: 0, isConnected: true },
+      },
+      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+    });
+    await screen.findByRole('region', { name: 'Turn' });
+    // A spectator reads boards of marks alone too, even once one is cracked.
+    expect(
+      turn().getByText('Green: in place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+  });
+
   it('quiets a cracker’s chat until the reveal', async () => {
     await renderSeated(
       guessing([

@@ -21,6 +21,8 @@ export const ui: typeof en = {
     label: (entries) => `排名：${entries.join('，')}。查看玩家`,
     away: '暂离',
   },
+  fullRules: '完整规则',
+  hideFullRules: '收起完整规则',
   room: {
     leave: '离开房间',
     howToPlay: '玩法',
@@ -144,7 +146,11 @@ export const ui: typeof en = {
       const { colour, shape, count, fill } = cardFeatures(card);
       return `${count} 个${{ coral: '珊瑚色', blue: '蓝色', ink: '墨色' }[colour]}${{ solid: '实心', striped: '条纹', outline: '空心' }[fill]}${{ circle: '圆形', triangle: '三角形', square: '方形' }[shape]}`;
     },
-    states: { selected: '，已选中', found: '，已找到', wrong: '，不成一组' },
+    states: {
+      selected: '，已选中',
+      found: '，已找到',
+      wrong: '，不成一组',
+    },
     badge: (name, badge) => `${name}，${badge}`,
   },
   snap: {

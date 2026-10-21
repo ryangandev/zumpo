@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useMessages, type Messages } from '../i18n';
-import { counts, type Bid as BidOf } from '../../../shared/liars-dice';
+import { counts, WILD, type Bid as BidOf } from '../../../shared/liars-dice';
 import type { LiarsDiceReveal } from '../../../shared/wire-types';
 import {
   Bid,
@@ -31,6 +31,8 @@ export interface TableSeat {
 export interface TableProps {
   /** Everybody, in turn order; the viewer among them. */
   seats: readonly TableSeat[];
+  /** The round, whose start rolls everybody's dice; none for a last call kept under results. */
+  round?: number;
   youId: string;
   dicePerPlayer: number;
   /** Whose turn it is, and whose comes next; null outside bidding. */
@@ -63,8 +65,12 @@ function diceOf(
   const shown: Pick<DieProps, 'face' | 'state'>[] = seat.dice
     ? seat.dice.map((face) => ({
         face: face as DieFace,
+        // While bidding, a one in your cup shows as wild, as it counts for
+        // whatever face is bid.
         state: !reveal
-          ? 'default'
+          ? face === WILD
+            ? 'wild'
+            : 'default'
           : counts(face, reveal.bid.face)
             ? face === reveal.bid.face
               ? 'counted'
@@ -138,6 +144,7 @@ function cupProps(
     you: seat.id === props.youId,
     size,
     dice: diceOf(seat, props.dicePerPlayer, props.reveal),
+    roll: props.round,
     ...line,
   };
 }

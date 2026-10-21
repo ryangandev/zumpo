@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { PairsCard, type PairsCardState } from '../ui';
+import { PairsCard, type PairsCardSize, type PairsCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
@@ -21,13 +21,15 @@ export interface PairsGridProps {
 
 /**
  * A Pairs board, in a room or on your own. On a phone a 6 × 6 board uses
- * compact cards, so it fits without panning.
+ * compact cards, so it fits without panning; on a wider screen a 4 × 4 board
+ * uses large ones, as wide as a 6 × 6 board (PR11).
  */
 export function PairsGrid({ cards, onFlip, inPlay = true }: PairsGridProps) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
   const side = Math.round(Math.sqrt(cards.length));
-  const size = phone && side > 4 ? 'compact' : 'regular';
+  const size: PairsCardSize =
+    side > 4 ? (phone ? 'compact' : 'regular') : phone ? 'regular' : 'large';
   const rows = Array.from({ length: side }, (_, row) =>
     cards.slice(row * side, (row + 1) * side),
   );

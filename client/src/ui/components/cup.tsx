@@ -22,6 +22,8 @@ export interface CupProps {
   layout?: 'stack' | 'row';
   /** Every die the player started with: their own face up, others Hidden until a call, lost ones Empty. */
   dice: readonly Pick<DieProps, 'face' | 'state'>[];
+  /** Changes when the dice are rolled, which gives them a shake. */
+  roll?: number;
   className?: string;
 }
 
@@ -36,6 +38,7 @@ export function Cup({
   size = 'compact',
   layout = 'stack',
   dice,
+  roll,
   className,
 }: CupProps) {
   const m = useMessages();
@@ -64,12 +67,20 @@ export function Cup({
         </div>
       </div>
       <div
+        key={roll}
         className={cx(styles.dice, size === 'regular' && styles.regular)}
         role="list"
         aria-label={m.ui.dice.title}
       >
         {dice.map((die, index) => (
-          <span key={index} role="listitem" className={styles.slot}>
+          <span
+            key={index}
+            role="listitem"
+            className={cx(
+              styles.slot,
+              roll !== undefined && die.face !== 'empty' && styles.rolled,
+            )}
+          >
             <Die face={die.face} state={die.state} size={size} />
           </span>
         ))}

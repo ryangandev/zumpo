@@ -1,4 +1,3 @@
-import { itemAt } from '../../../../shared/list';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
@@ -64,6 +63,12 @@ import styles from './solo-page.module.css';
 const BEST_KEY = 'trios:ten-trios';
 /** How many days of bests a finished run lists. */
 const DAYS_SHOWN = 3;
+/**
+ * TS01's example: one coral circle, two striped coral triangles, three
+ * outlined coral squares. One colour and everything else different, so a
+ * trio is not only "all different".
+ */
+const EXAMPLE = [0, 13, 26];
 
 const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
@@ -145,7 +150,7 @@ function RunPicker({
       }
     >
       <div className={styles.example}>
-        <MiniTrio cards={[0, 40, 80]} />
+        <MiniTrio cards={EXAMPLE} />
         <span className={styles.exampleText}>{m.trios.solo.example}</span>
       </div>
       <StatList
@@ -217,6 +222,7 @@ function RunView({
         stage={
           <>
             <SoloResult
+              celebrate={finish.isBest}
               title={m.trios.solo.resultTitle(RUN_TRIOS, time)}
               body={finishBody(finish, m)}
               stats={[
@@ -274,6 +280,7 @@ function RunView({
       gameType="trios"
       time={clock}
       phase={{ tone: 'blue', label }}
+      leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
           <TurnBar {...turnBar(run, now, label, m)} />
@@ -287,9 +294,9 @@ function RunView({
                   : undefined
               }
             />
-            {/* Offered until a trio's two hints are given, then held out
-                of sight, so the table does not move. */}
-            <TableTools held={run.hints >= MAX_HINTS}>
+            {/* Offered until a trio's two hints are given; then it keeps
+                its place, so the table panel never changes height. */}
+            <TableTools hidden={run.hints >= MAX_HINTS}>
               <Button variant="quiet" onClick={() => setRun(hint(run))}>
                 {m.trios.solo.hintButton}
               </Button>
@@ -309,13 +316,12 @@ function RunView({
                 },
                 {
                   label: m.trios.solo.wrongPicks,
-                  value: costOf(
-                    wrongPicks + run.wrongPicks,
-                    WRONG_PENALTY_MS,
-                    m,
-                  ),
+                  value: costOf(wrongPicks, WRONG_PENALTY_MS, m),
                 },
-                { label: m.trios.solo.hints, value: String(hints + run.hints) },
+                {
+                  label: m.trios.solo.hints,
+                  value: costOf(hints, HINT_PENALTY_MS, m),
+                },
               ]}
             />
           </Card>
@@ -346,7 +352,11 @@ const costOf = (count: number, each: number, m: Messages) =>
 function placesOf(run: SoloRun, m: Messages): Record<number, PlaceView> {
   const places: Record<number, PlaceView> = {};
   for (const place of hintedPlaces(run)) {
-    places[place] = { badge: m.trios.hint, badgeLabel: m.trios.hintBadge };
+    places[place] = {
+      state: 'hinted',
+      badge: m.trios.hint,
+      badgeLabel: m.trios.hintBadge,
+    };
   }
   for (const place of run.picked) {
     places[place] = { ...places[place], state: 'selected' };
@@ -386,17 +396,16 @@ function turnBar(
       meta: m.trios.solo.foundIn(formatDuration(last.ms)),
     };
   }
-  if (flash) {
+  // Why three were not a trio stays until the next pick, long after they
+  // go back, so it can be read.
+  if (run.miss) {
     return {
       ...base,
       main: m.trios.solo.wrong,
-      meta:
-        whyNotATrio(
-          flash.places.map((place) => itemAt(run.deal.table, place)),
-          m,
-        ) ?? undefined,
+      meta: whyNotATrio(run.miss, m) ?? undefined,
     };
   }
+  // As in a room: what the hints marked, and what is left to find.
   return {
     ...base,
     main:
@@ -404,8 +413,17 @@ function turnBar(
         ? m.trios.pickThird
         : run.picked.length === 1
           ? m.trios.pickTwo
-          : m.trios.findTrio,
-    meta: m.trios.solo.features,
+          : run.hints === 1
+            ? m.trios.oneMarked
+            : run.hints === 2
+              ? m.trios.twoMarked
+              : m.trios.findTrio,
+    meta:
+      run.hints === 1
+        ? m.trios.findTwo
+        : run.hints === 2
+          ? m.trios.findThird
+          : m.trios.solo.features,
   };
 }
 

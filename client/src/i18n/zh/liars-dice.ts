@@ -1,4 +1,5 @@
 import type { liarsDice as en } from '../en/liars-dice';
+import { HIGHEST_FACE } from '../../../../shared/liars-dice';
 import type { LiarsDiceReveal } from '../../../../shared/wire-types';
 import type { Naming, Who } from '../../liars-dice/words';
 
@@ -18,6 +19,10 @@ export const liarsDice: typeof en = {
   bid: (bid) => `${bid.count} 个 ${bid.face}`,
   bidLabel: (bid) => `叫 ${bid.count} 个 ${bid.face}`,
   bidLine: (who, bid) => `${subject(who)}叫了 ${bid.count} 个 ${bid.face}`,
+  beat: (bid) =>
+    bid.face < HIGHEST_FACE
+      ? `要大过 ${bid.count} 个 ${bid.face}：多叫几个，或叫更大的点数`
+      : `要大过 ${bid.count} 个 ${bid.face}：多叫几个`,
   countDetail: (reveal) =>
     `${reveal.wild === 0 ? '不含百搭' : `含 ${reveal.wild} 颗百搭`} · 叫了 ${reveal.bid.count} 个`,
   lossLine: loss,
@@ -74,12 +79,11 @@ export const liarsDice: typeof en = {
   solo: {
     record: (wins, games, run) =>
       `你在这里玩了 ${games} 局，赢了 ${wins} 局。${run > 1 ? `目前连胜 ${run} 局。` : ''}`,
-    description: '对全桌叫点，偶尔吹个牛，也拆穿电脑对手的谎话。',
+    description: '叫点是说全桌有几颗骰子是某个点数，1 点算任意点数。',
     pickTable: '选一桌。',
+    leaveWarning: '这局到此结束，不计入战绩。',
     start: '开始',
     bots: '电脑对手',
-    botsHelper: (names) =>
-      `从 ${names.slice(0, -1).join('、')} 和 ${names.at(-1)} 中选取。`,
     botCount: (count) => `${count} 个电脑对手`,
     diceEach: '每人骰子数',
     quick: '快速局。',

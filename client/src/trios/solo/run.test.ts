@@ -102,6 +102,10 @@ describe('a run on your own', () => {
     run = afterFlash(run, 4600);
     expect(run.flash).toBeNull();
     expect(canPick(run)).toBe(true);
+    // The miss is kept until the next pick, so its reason can be read.
+    expect(run.miss).toEqual(wrong.map((p) => run.deal.table[p]));
+    expect(pick(run, 0, 5000).miss).toBeNull();
+    expect(hint(run).miss).toBeNull();
 
     run = findOne(run, 10_000);
     expect(run.results[0]).toMatchObject({
@@ -129,6 +133,18 @@ describe('a run on your own', () => {
     run = findOne(run, 3000);
     expect(hintedPlaces(run)).toEqual([]);
     expect(run.results[0]!.hints).toBe(2);
+  });
+
+  it('counts the open trio’s wrong picks and hints once, also while a found trio is up', () => {
+    let run = newRun('k3f9x2', 0);
+    run = afterFlash(pickAll(run, notATrio(run), 1000), 1600);
+    run = hint(hint(run));
+    expect(summary(run)).toMatchObject({ wrongPicks: 1, hints: 2 });
+    run = pickAll(run, findTrios(run.deal.table)[0]!, 3000);
+    expect(run.flash?.found).toBe(true);
+    expect(summary(run)).toMatchObject({ wrongPicks: 1, hints: 2 });
+    run = afterFlash(run, 3600);
+    expect(summary(run)).toMatchObject({ wrongPicks: 1, hints: 2 });
   });
 
   it('ends after ten trios with its time, and plays the same from the same picks', () => {

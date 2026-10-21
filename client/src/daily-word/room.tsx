@@ -15,7 +15,7 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
-import { BoardPanel } from './panel';
+import { BoardPanel, MarkLegend } from './panel';
 import { PlayArea } from './play';
 import styles from './room.module.css';
 
@@ -155,9 +155,9 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, m)} />
+        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
         <BoardPanel>
-          <Others room={room} />
+          <Side room={room} />
         </BoardPanel>
       </>
     );
@@ -165,7 +165,7 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, m)} />
+        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
         <RoundResults state={state} />
       </>
     );
@@ -217,7 +217,7 @@ function Round({
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, m)} />
+      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
       <BoardPanel>
         <div className={cx(styles.table, !done && playColumn)}>
           <PlayArea
@@ -244,10 +244,33 @@ function Round({
             disabled={reconnecting || sending}
             className={styles.mine}
           />
-          {!phone && <Others room={room} />}
+          {!phone && <Side room={room} />}
         </div>
       </BoardPanel>
     </>
+  );
+}
+
+/**
+ * DW07, DW08: beside your board, the others' and how to read the marks, for
+ * a friend who meets them here before ever playing on their own. A phone has
+ * no room beside the board; its turn bar says how to read them (DW13).
+ */
+function Side({ room }: { room: Room }) {
+  const m = useMessages();
+  const phone = useMediaQuery(PHONE);
+  return (
+    <div className={styles.side}>
+      <Others room={room} />
+      {!phone && (
+        <section className={styles.legend} aria-labelledby="read-the-marks">
+          <h2 id="read-the-marks" className={styles.title}>
+            {m.dailyWord.readIt}
+          </h2>
+          <MarkLegend />
+        </section>
+      )}
+    </div>
   );
 }
 
@@ -341,6 +364,7 @@ function turnBar(
   room: Room,
   seconds: number,
   mine: DailyWordBoard | undefined,
+  phone: boolean,
   m: Messages,
 ): TurnBarProps {
   const { state, playerId, reconnecting } = room;
@@ -414,9 +438,14 @@ function turnBar(
     kind: 'status',
     // The board counts the guesses; the bar keeps to the race (DW07, DW13).
     main: room.spectating ? m.dailyWord.everyoneGuessing : m.dailyWord.findWord,
-    meta: finders.length
-      ? m.dailyWord.namesFound(listNames(finders, m))
-      : m.dailyWord.fewerScore,
+    // A phone has no legend beside the boards, so while you still guess, or
+    // watch, it says how to read the marks (DW13); the race is on the Players
+    // tab, or on the boards a spectator watches.
+    meta: phone
+      ? m.dailyWord.legendLine
+      : finders.length
+        ? m.dailyWord.namesFound(listNames(finders, m))
+        : m.dailyWord.fewerScore,
     countdown: clock(m.dailyWord.toGuess, room.spectating),
   };
 }

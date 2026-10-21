@@ -1,0 +1,44 @@
+.howTo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+  min-width: 0;
+}
+
+.heading {
+  margin: 0;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+}
+
+.goal,
+.steps {
+  margin: 0;
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+  padding: 0;
+  list-style: none;
+}
+
+/* The dot sits in a slot one line tall, so it stays level with a wrapped
+   step's first line. */
+.step {
+  display: flex;
+  gap: var(--zumpo-space-12);
+}
+
+.step::before {
+  content: '';
+  flex: none;
+  width: var(--zumpo-space-6);
+  height: var(--zumpo-space-6);
+  margin-block: calc((var(--zumpo-text-body-line) - var(--zumpo-space-6)) / 2);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-coral);
+}
