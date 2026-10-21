@@ -212,6 +212,8 @@ Code differs from Figma on purpose in a few places:
   It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
 - A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
 - PH04 and PH06 predate two phone pieces code has: Gomoku's seats side by side drop the avatar and put the stone before the name, and Liar's Dice's own cup is one row unless it holds five dice.
+- Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
+  On a phone the Chain composer's done row is the Notice beside a Keep editing that shows only its pencil, not the Phone variant's Notice over a full-width Keep editing, which made the row 84 px taller than Done's and moved the drawing above it.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.

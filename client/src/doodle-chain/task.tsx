@@ -465,37 +465,43 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
           onEnd={end}
         />
       </PlaySheet>
-      <div ref={actions} className={styles.actions}>
-        {done ? (
-          <>
-            <Notice tone="success" className={styles.grow}>
-              {doneMessage(room, m)}
-            </Notice>
+      {/* Both rows share one place and the taller one's height, so Done and
+          Keep editing never move the sheet above them. */}
+      <div ref={actions} className={styles.swap}>
+        <div
+          className={cx(styles.actions, !done && styles.held)}
+          aria-hidden={done ? undefined : true}
+        >
+          <Notice tone="success" className={styles.grow}>
+            {doneMessage(room, m)}
+          </Notice>
+          <Button
+            ref={keepEditing}
+            variant="secondary"
+            icon="edit"
+            disabled={!done}
+            onClick={() => socket.emit('dc:done', roomId, false)}
+          >
+            {m.ui.chain.keepEditing}
+          </Button>
+        </div>
+        <div
+          className={cx(styles.actions, done && styles.held)}
+          aria-hidden={done ? true : undefined}
+        >
+          <p className={styles.hint}>{m.doodleChain.asItIs}</p>
+          {!reconnecting && (
             <Button
-              ref={keepEditing}
-              variant="secondary"
-              icon="edit"
-              onClick={() => socket.emit('dc:done', roomId, false)}
+              ref={doneButton}
+              icon="check"
+              disabled={done || blank}
+              focusableWhenDisabled={!done}
+              onClick={() => socket.emit('dc:done', roomId, true)}
             >
-              {m.ui.chain.keepEditing}
+              {m.ui.chain.done}
             </Button>
-          </>
-        ) : (
-          <>
-            <p className={styles.hint}>{m.doodleChain.asItIs}</p>
-            {!reconnecting && (
-              <Button
-                ref={doneButton}
-                icon="check"
-                disabled={blank}
-                focusableWhenDisabled
-                onClick={() => socket.emit('dc:done', roomId, true)}
-              >
-                {m.ui.chain.done}
-              </Button>
-            )}
-          </>
-        )}
+          )}
+        </div>
       </div>
     </>
   );

@@ -413,7 +413,10 @@ for (const size of SIZES) {
       }
 
       await expect(turnOf(maya).getByText('Draw this')).toBeVisible();
-      const canvas = maya.getByLabel('Drawing canvas');
+      // Once Done, the canvas is only a picture, and says so.
+      const canvas = maya.getByRole('img', {
+        name: /^(Drawing canvas|The drawing)$/,
+      });
       const sheet = await heldStill(canvas, 'drawing');
       const doneStill = await heldStill(done, 'drawing');
       await scribble(maya);
@@ -430,12 +433,17 @@ for (const size of SIZES) {
       await expect(
         turnOf(maya).getByText('What does this drawing show?'),
       ).toBeVisible();
-      await heldStill(
+      const field = await heldStill(
         maya.getByRole('textbox', { name: 'Your description' }),
         'describing',
       );
       await heldStill(done, 'describing');
-      for (const page of [maya, ...others]) {
+      await write(maya, 'Your description', 'A cat, I think');
+      await expect(
+        maya.getByRole('button', { name: 'Keep editing' }),
+      ).toBeVisible();
+      await field('described, waiting for the others');
+      for (const page of others) {
         await write(page, 'Your description', 'A cat, I think');
       }
 

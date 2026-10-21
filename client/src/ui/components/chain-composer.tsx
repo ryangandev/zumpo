@@ -74,8 +74,17 @@ export function ChainComposer({
           autoComplete="off"
           name="line"
         />
-        {done ? (
-          <div className={cx(styles.actions, styles.doneActions)}>
+        {/* Both rows share one place and the taller one's height, so Done and
+            Keep editing never move what is above them. */}
+        <div className={styles.swap}>
+          <div
+            className={cx(
+              styles.actions,
+              styles.doneActions,
+              !done && styles.held,
+            )}
+            aria-hidden={done ? undefined : true}
+          >
             <Notice tone="success" className={styles.notice}>
               {doneMessage}
             </Notice>
@@ -84,20 +93,24 @@ export function ChainComposer({
               type="button"
               variant="secondary"
               icon="edit"
-              className={styles.wide}
+              iconOnlyWhenNarrow
+              disabled={!done}
               onClick={onKeepEditing}
             >
               {m.ui.chain.keepEditing}
             </Button>
           </div>
-        ) : (
-          <div className={styles.actions}>
+          <div
+            className={cx(styles.actions, done && styles.held)}
+            aria-hidden={done ? true : undefined}
+          >
             {onSuggest && (
               <Button
                 type="button"
                 variant="secondary"
                 icon="dice"
                 className={styles.half}
+                disabled={done}
                 onClick={onSuggest}
               >
                 {m.ui.chain.suggest}
@@ -107,13 +120,13 @@ export function ChainComposer({
               type="submit"
               icon="check"
               className={styles.done}
-              disabled={blank}
-              focusableWhenDisabled
+              disabled={done || blank}
+              focusableWhenDisabled={!done}
             >
               {m.ui.chain.done}
             </Button>
           </div>
-        )}
+        </div>
       </div>
     </form>
   );

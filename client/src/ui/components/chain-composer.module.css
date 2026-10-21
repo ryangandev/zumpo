@@ -8,6 +8,20 @@
   gap: var(--zumpo-space-16);
 }
 
+/* Suggest and Done, or the notice and Keep editing, one over the other in
+   the same place. */
+.swap {
+  display: grid;
+}
+
+.swap > .actions {
+  grid-area: 1 / 1;
+}
+
+.held {
+  visibility: hidden;
+}
+
 /* Suggest on the left, Done on the right. */
 .actions {
   display: flex;
@@ -25,8 +39,8 @@
 }
 
 /* On a phone the two buttons share the row, each on a line of its own where
-   even that is too narrow; done, the notice sits above a full-width Keep
-   editing. */
+   even that is too narrow; done, the notice keeps beside Keep editing, as
+   under a drawing, with only its pencil, so the row stays as low as it can. */
 @container (max-width: 560px) {
   .actions {
     flex-wrap: wrap;
@@ -39,11 +53,6 @@
   }
 
   .doneActions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .wide {
-    width: 100%;
+    flex-wrap: nowrap;
   }
 }

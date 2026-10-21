@@ -62,7 +62,16 @@
   visibility: hidden;
 }
 
-/* Under the canvas: what the clock does, and Done. */
+/* Under the canvas: what the clock does and Done, or the note and Keep
+   editing, one over the other in the same place. */
+.swap {
+  display: grid;
+}
+
+.swap > .actions {
+  grid-area: 1 / 1;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
