@@ -113,10 +113,13 @@ export function FinalCard({
   action?: ReactNode;
 }) {
   return (
-    <div className={styles.table}>
-      {/* One card fits a phone at full size, with room for its formula. */}
+    <div className={cx(styles.table, playColumn)}>
+      {/* One card fits a phone at full size, with room for its formula. It
+          is still the hand in play, so a phone keeps its one screen and the
+          turn bar stays where it was. */}
       <CardRow
         compact={false}
+        inPlay
         cards={[{ key: 'final', value, formula, state }]}
       />
       <p className={styles.prompt}>{prompt}</p>

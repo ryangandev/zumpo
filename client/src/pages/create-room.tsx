@@ -132,6 +132,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
       phone={{ title, subtitle: text.createDescription }}
       title={title}
       description={text.createDescription}
+      grows
       onSubmit={submit}
       actions={
         pending ? undefined : (

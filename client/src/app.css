@@ -5,6 +5,25 @@ body {
   background: var(--zumpo-cream);
 }
 
+/* Room for a scrollbar is always kept, so a page that grows past the window
+   mid-game does not shift sideways. On a page that never scrolls the gutter
+   is cream, the same as the margin. Overlay scrollbars (phones, macOS) take
+   no room, so nothing changes there; a window narrower than a phone's layout
+   keeps its width for the content instead. */
+@media (min-width: 641px) {
+  html {
+    scrollbar-gutter: stable;
+    transition: background-color 150ms ease-out;
+  }
+
+  /* The dialog's backdrop covers the window but not the gutter, so while a
+     dialog is open the gutter is dimmed to match: cream under the
+     backdrop's 40 % ink (dialog.module.css). */
+  html:has([data-dialog-backdrop][data-open]) {
+    background: color-mix(in srgb, var(--zumpo-ink) 40%, var(--zumpo-cream));
+  }
+}
+
 /* The focus a game takes as it starts (useStartFocus) is not ringed until
    the first key, so a touch screen shows no frame around its board. */
 :root [data-start-quiet]:focus-visible {
