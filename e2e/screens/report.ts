@@ -9,6 +9,7 @@ export const COMPARE_DIR = path.join(ROOT, 'design/compare');
 const NOT_CAPTURED: Record<string, string> = {
   M06: 'A round resolves the moment the last player locks in, so "everyone locked" is never on screen.',
   SN14: 'Not a page: Snap’s game intro and home card side by side, which the game page and Home show in place.',
+  GM21: 'Not a page: every state a Gomoku point can show, side by side, which the boards in GM03-GM19 show in place.',
 };
 
 /**
