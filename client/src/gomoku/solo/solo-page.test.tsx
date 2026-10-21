@@ -1,6 +1,7 @@
 import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { onTouch } from '../../tests/phone';
 import { renderApp } from '../../tests/render-app';
 import { THINKING_MS } from './computer';
 import { readPicks, readRecord, writePicks } from './record';
@@ -98,6 +99,24 @@ describe('Gomoku on your own', () => {
         name: /white stone, last placed$/,
       }),
     ).toBeInTheDocument();
+  });
+
+  it('on a touch screen wider than a phone, places a stone on a second tap or Place stone', async () => {
+    onTouch();
+    await renderApp('/games/gomoku/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    const placeStone = () =>
+      screen.getByRole('button', { name: 'Place stone' });
+    const tap = (name: string) =>
+      user.pointer({ keys: '[TouchA]', target: point(name) });
+
+    expect(placeStone()).toBeDisabled();
+    await tap('H8');
+    expect(point('H8')).toHaveAccessibleName(/^H8, empty/);
+    expect(placeStone()).toBeEnabled();
+    await user.click(placeStone());
+    expect(point('H8')).toHaveAccessibleName(/^H8, black stone/);
+    expect(placeStone()).toBeDisabled();
   });
 
   it('takes back your last stone and the computer’s answer', async () => {

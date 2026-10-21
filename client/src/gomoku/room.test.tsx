@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { pointAt } from '../../../shared/gomoku';
 import type { GomokuMove, GomokuRoomState } from '../../../shared/wire-types';
 import { gomokuState, ME } from '../tests/fixtures';
-import { onPhone } from '../tests/phone';
+import { onPhone, onTouch } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 const E8 = pointAt(4, 8);
@@ -392,6 +392,21 @@ describe('a Gomoku room', () => {
     expect(placeStone()).toBeEnabled();
     expect(turn().getByText('Tap again to place')).toBeInTheDocument();
     await tap('F8');
+    expect(fake.sentArgs('gomoku:place')).toEqual([['r1', F8]]);
+  });
+
+  it('on a touch screen wider than a phone, puts a faint stone down first too', async () => {
+    onTouch();
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(myTurn);
+    const tap = (name: string) =>
+      user.pointer({ keys: '[TouchA]', target: point(name) });
+
+    expect(placeStone()).toBeDisabled();
+    await tap('F8');
+    expect(fake.sentArgs('gomoku:place')).toEqual([]);
+    expect(placeStone()).toBeEnabled();
+    await user.click(placeStone());
     expect(fake.sentArgs('gomoku:place')).toEqual([['r1', F8]]);
   });
 

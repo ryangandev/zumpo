@@ -11,6 +11,18 @@ export function onPhone() {
 }
 
 /**
+ * A touch screen wider than a phone, a tablet's: the desktop layout, played
+ * by finger, until the mocks are restored.
+ */
+export function onTouch() {
+  const desktop = window.matchMedia;
+  vi.spyOn(window, 'matchMedia').mockImplementation((query: string) => ({
+    ...desktop(query),
+    matches: query === TOUCH,
+  }));
+}
+
+/**
  * Starts the app on a desktop and returns how to turn it into a phone, as a
  * window narrowed past the breakpoint does, until the mocks are restored.
  */
