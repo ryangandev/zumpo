@@ -50,7 +50,7 @@ Six steps is also as far as a line travels before it is unrecognisable, which is
 | ------------ | ---------- | ---------------------------------- | --------------------------------------------------------------------------------- |
 | **Write**    | `write`    | 30s                                | Everybody writes a prompt, up to 80 characters.                                   |
 | **Draw**     | `draw`     | The room's drawing time, 60s first | Everybody draws the words they were given.                                        |
-| **Describe** | `describe` | 30s                                | Everybody writes what the drawing they were given shows, up to 80 characters.     |
+| **Describe** | `describe` | 45s                                | Everybody writes what the drawing they were given shows, up to 80 characters.     |
 | **Passing**  | `passing`  | 3s                                 | Time is up: what everybody made is kept, the inputs close and the chains move on. |
 | **Reveal**   | `reveal`   | No clock: the host steps through   | The chains are shown to the whole room, one entry at a time.                      |
 
@@ -111,10 +111,10 @@ At the default 60 seconds of drawing, with nobody finishing early:
 
 | Players | Write | Draw    | Describe | Passing | Steps in all | Reveal        |
 | ------- | ----- | ------- | -------- | ------- | ------------ | ------------- |
-| 3       | 30s   | 1 × 60s | 1 × 30s  | 3 × 3s  | about 2 min  | 9 entries     |
-| 4       | 30s   | 2 × 60s | 1 × 30s  | 4 × 3s  | about 3 min  | 16 entries    |
-| 5       | 30s   | 2 × 60s | 2 × 30s  | 5 × 3s  | about 4 min  | 25 entries    |
-| 6–8     | 30s   | 3 × 60s | 2 × 30s  | 6 × 3s  | about 5 min  | 36-48 entries |
+| 3       | 30s   | 1 × 60s | 1 × 45s  | 3 × 3s  | about 2 min  | 9 entries     |
+| 4       | 30s   | 2 × 60s | 1 × 45s  | 4 × 3s  | about 3 min  | 16 entries    |
+| 5       | 30s   | 2 × 60s | 2 × 45s  | 5 × 3s  | about 4 min  | 25 entries    |
+| 6–8     | 30s   | 3 × 60s | 2 × 45s  | 6 × 3s  | about 5 min  | 36-48 entries |
 
 A revealed entry takes a few seconds to read and laugh at, so a reveal takes one to three minutes, and a whole game 5–8 minutes for four players and more.
 A game of three is shorter, which suits it: the room plays again.
@@ -202,7 +202,8 @@ The album is the game's result, so a game that ended early has one too.
 | Drawing time | 45s, 60s, 90s | 60s     | Groups differ: friends who only scribble, and friends who draw shading.       |
 | Password     | Optional      |         | As in every room.                                                             |
 
-Writing and describing stay at 30 seconds, because a line takes about as long for anybody.
+Writing takes 30 seconds and describing 45, because a line takes about as long for anybody, and putting somebody else's drawing into words takes longer than a first line.
+Describing had 30 seconds until 2026-10-21, when a three-player room ran out of time on every description and so sat out the whole next drawing step.
 There is no setting for the number of steps: the players are the length, as in Hush.
 
 ## Rules the server enforces
@@ -290,7 +291,7 @@ Doodle Chain's events of its own:
 | Variable                  | Default | Purpose                                                                              |
 | ------------------------- | ------- | ------------------------------------------------------------------------------------ |
 | `DC_WRITE_SECONDS`        | `30`    | Length of the write step                                                             |
-| `DC_DESCRIBE_SECONDS`     | `30`    | Length of a describing step                                                          |
+| `DC_DESCRIBE_SECONDS`     | `45`    | Length of a describing step                                                          |
 | `DC_PASSING_SECONDS`      | `3`     | The pause between steps                                                              |
 | `DC_DRAW_SECONDS`         | unset   | When set, every room's drawing time, to play a game through quickly while developing |
 | `RECONNECT_GRACE_SECONDS` | `30`    | How long a dropped player keeps their seat                                           |
