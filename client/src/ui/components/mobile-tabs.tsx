@@ -32,6 +32,7 @@ export function MobileTabs<View extends string>({
   className,
 }: MobileTabsProps<View>) {
   const m = useMessages();
+  const turn = tabs.find((tab) => tab.turn);
   return (
     <Tabs.Root
       className={styles.root}
@@ -66,6 +67,11 @@ export function MobileTabs<View extends string>({
           </Tabs.Tab>
         ))}
       </Tabs.List>
+      {/* Said once as the mark appears, and again only on the next turn: the
+          words stay put while it is your go and go when the mark does. */}
+      <span className={styles.announce} role="status">
+        {turn ? m.ui.turnTab(turn.label) : ''}
+      </span>
       {tabs.map((tab) => (
         <Tabs.Panel key={tab.value} value={tab.value} className={styles.panel}>
           {tab.panel}
