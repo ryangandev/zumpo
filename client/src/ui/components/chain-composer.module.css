@@ -24,9 +24,14 @@
   min-width: 0;
 }
 
-/* On a phone the two buttons share the row; done, the notice sits above
-   a full-width Keep editing. */
+/* On a phone the two buttons share the row, each on a line of its own where
+   even that is too narrow; done, the notice sits above a full-width Keep
+   editing. */
 @container (max-width: 560px) {
+  .actions {
+    flex-wrap: wrap;
+  }
+
   .half,
   .done {
     flex: 1;
