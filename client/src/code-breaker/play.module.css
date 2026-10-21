@@ -1,0 +1,65 @@
+/* Your board, a line under it and the pad (CB02-CB05, CB09). */
+/* As wide as its panel, so the pad takes its full width when it fits. */
+.play {
+  position: relative;
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--zumpo-space-20);
+}
+
+/* A room's board with the others beside it, the pad under both (CB09). */
+.boards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--zumpo-space-48);
+}
+
+.boards + .pad {
+  margin-top: calc(var(--zumpo-space-32) - var(--zumpo-space-20));
+}
+
+.pad {
+  align-self: stretch;
+}
+
+.prompt {
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+  text-align: center;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steady {
+  min-height: calc(2 * var(--zumpo-space-16) + var(--zumpo-text-label-line));
+}
+
+/* A row turned back where there is no line, over the board beside the row
+   being fixed; its top is that row's middle. */
+.over {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+
+/* Said to a screen reader, not shown. */
+.announce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

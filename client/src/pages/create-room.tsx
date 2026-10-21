@@ -32,6 +32,7 @@ const PASSWORD_MAX_LENGTH = 20;
 const ROUNDS = [1, 2, 3, 4] as const;
 const HANDS = [5, 10] as const;
 const WORDS = [3, 5] as const;
+const CODES = [1, 3] as const;
 
 /**
  * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, HU09, DW11: a
@@ -59,6 +60,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const [trios, setTrios] = useState<number>(TRIOS_LENGTHS[0]);
   const [dicePerPlayer, setDicePerPlayer] = useState<DicePerPlayer>(3);
   const [words, setWords] = useState(3);
+  const [codes, setCodes] = useState(3);
   const [password, setPassword] = useState('');
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState<'error' | 'full' | null>(null);
@@ -93,7 +95,9 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
                     ? { dicePerPlayer }
                     : gameType === 'daily-word'
                       ? { rounds: words }
-                      : {},
+                      : gameType === 'code-breaker'
+                        ? { rounds: codes }
+                        : {},
     };
     setPending(true);
     setFailed(null);
@@ -262,6 +266,18 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
           value={words}
           onValueChange={setWords}
           name="words"
+        />
+      ) : gameType === 'code-breaker' ? (
+        <SelectField
+          label={m.createRoom.codes}
+          helper={m.createRoom.codesHelper}
+          options={CODES.map((count) => ({
+            value: count,
+            label: m.createRoom.codeCount(count),
+          }))}
+          value={codes}
+          onValueChange={setCodes}
+          name="codes"
         />
       ) : gameType === 'minesweeper' ? (
         <SelectField

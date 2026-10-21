@@ -78,6 +78,12 @@ const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
     tone: 'blue',
     solo: true,
   },
+  {
+    type: 'code-breaker',
+    kind: 'puzzles',
+    tone: 'sand',
+    solo: true,
+  },
 ];
 
 export const GAMES: readonly GameInfo[] = ENTRIES.map((game) => ({

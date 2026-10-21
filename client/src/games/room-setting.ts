@@ -4,7 +4,7 @@ import { DECK_SIZE as SNAP_DECK } from '../../../shared/snap';
 import type { Messages } from '../i18n';
 
 /** The setting a room was made with: "2 rounds", "Small 9 × 9", "10 hands",
- * "Large 6 × 6", "20 trios", "31 cards", "3 dice each", "7 levels", "3 words". */
+ * "Large 6 × 6", "20 trios", "31 cards", "3 dice each", "7 levels", "3 words", "3 codes". */
 export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
   switch (room.gameType) {
     case 'draw-and-guess':
@@ -27,5 +27,7 @@ export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
       return m.games.counts.hush(levelsFor(room.currentPlayerCount));
     case 'daily-word':
       return m.games.counts['daily-word'](room.rounds);
+    case 'code-breaker':
+      return m.games.counts['code-breaker'](room.rounds);
   }
 }

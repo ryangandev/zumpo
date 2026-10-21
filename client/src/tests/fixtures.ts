@@ -1,4 +1,5 @@
 import type {
+  CodeBreakerRoomState,
   DailyWordRoomState,
   DrawAndGuessRoomState,
   LiarsDiceRoomState,
@@ -211,6 +212,22 @@ export function dailyWordState(
   return {
     ...room,
     gameType: 'daily-word',
+    rounds: 3,
+    phase: 'waiting',
+    round: 0,
+    boards: [],
+    lastRound: null,
+    lastGame: null,
+    ...overrides,
+  };
+}
+
+export function codeBreakerState(
+  overrides: Partial<CodeBreakerRoomState> = {},
+): CodeBreakerRoomState {
+  return {
+    ...room,
+    gameType: 'code-breaker',
     rounds: 3,
     phase: 'waiting',
     round: 0,

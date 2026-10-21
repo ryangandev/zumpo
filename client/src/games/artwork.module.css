@@ -48,7 +48,8 @@
 .pairs,
 .trios,
 .pile,
-.word {
+.word,
+.code {
   display: flex;
   align-items: center;
   gap: var(--zumpo-space-8);

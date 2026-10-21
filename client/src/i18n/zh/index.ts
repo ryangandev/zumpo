@@ -1,6 +1,7 @@
 import type { Messages } from '../en';
 import { chat } from './chat';
 import { createRoom } from './create-room';
+import { codeBreaker } from './code-breaker';
 import { dailyWord } from './daily-word';
 import { drawAndGuess } from './draw-and-guess';
 import { games } from './games';
@@ -41,4 +42,5 @@ export const zh: Messages = {
   liarsDice,
   hush,
   dailyWord,
+  codeBreaker,
 };
