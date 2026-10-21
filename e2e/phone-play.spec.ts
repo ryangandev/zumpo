@@ -604,3 +604,37 @@ test('a Gomoku board keeps its size and place from a game to its results', async
   const after = await Promise.all([tableLayout(black), tableLayout(white)]);
   expect(after).toEqual(before);
 });
+
+/** A Minesweeper cell the player may still pick. */
+const hiddenCell = (page: Page) =>
+  page.getByRole('gridcell', { name: /: hidden$/, disabled: false });
+
+test('a finished Minesweeper room board fits a phone', async ({ player }) => {
+  test.setTimeout(180_000);
+  const size = { width: 360, height: 640 };
+  const maya = await onPhone(player, 'Maya', size);
+  const leo = await onPhone(player, 'Leo', size);
+  await joinRoom(leo, await createRoom(maya, 'minesweeper'));
+  await maya.getByRole('button', { name: 'Start game' }).click();
+  // Both always pick, so no round waits out its clock.
+  const over = maya.getByText('Game over', { exact: true });
+  while (!(await over.isVisible())) {
+    await expect(
+      turnOf(maya).getByText('Pick a cell').or(over).first(),
+    ).toBeVisible();
+    if (await over.isVisible()) break;
+    await hiddenCell(maya).first().click();
+    await hiddenCell(leo).last().click();
+    await expect(turnOf(maya).getByText('Pick a cell')).toBeHidden();
+  }
+  for (const page of [maya, leo]) {
+    await expect
+      .poll(
+        () => fitsItsScroller(page.getByRole('grid', { name: /^Board, / })),
+        {
+          message: 'a finished board',
+        },
+      )
+      .toBe(true);
+  }
+});
