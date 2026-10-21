@@ -22,10 +22,11 @@ import { seededRandom, seedNumber } from '../../../../shared/seed';
 export const RUN_HANDS = 10;
 /** What a skip adds to the run time. */
 export const SKIP_PENALTY_MS = 30_000;
-/** How long a solved hand stays up before the next one. */
+/**
+ * How long a solved hand stays up before the next one. A skipped hand's
+ * solution stays up until the player moves on.
+ */
 export const SOLVED_PAUSE_MS = 1500;
-/** How long a skipped hand's solution stays up. */
-export const SKIPPED_PAUSE_MS = 2000;
 
 export interface HandResult {
   deal: readonly number[];
@@ -133,7 +134,7 @@ export function skip(run: SoloRun, now: number): SoloRun {
   );
 }
 
-/** Deals the next hand after a pause, unless that was the last. */
+/** Deals the next hand after a pause or Next hand, unless that was the last. */
 export function nextHand(run: SoloRun, now: number): SoloRun {
   if (!isBetweenHands(run)) return run;
   if (run.results.length === RUN_HANDS) return run;

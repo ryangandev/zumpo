@@ -867,6 +867,9 @@ test('Make 24 on your own', async ({ player }) => {
     // One hand skipped, as Figma's run has.
     if (hand === 5) {
       await maya.getByRole('button', { name: 'Skip, +30 s' }).click();
+      await expect(turn.getByText('Skipped')).toBeVisible();
+      await shot(maya, 'T13');
+      await maya.getByRole('button', { name: 'Next hand' }).click();
       continue;
     }
     await solveHand(maya);

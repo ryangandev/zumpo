@@ -36,13 +36,7 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
-import {
-  cardsAfter,
-  FinalCard,
-  HandTable,
-  StepList,
-  TablePanel,
-} from '../table';
+import { cardsAfter, FinalCard, HandTable, TablePanel } from '../table';
 import {
   deal,
   isBetweenHands,
@@ -54,7 +48,6 @@ import {
   runTime,
   skip,
   SKIP_PENALTY_MS,
-  SKIPPED_PAUSE_MS,
   SOLVED_PAUSE_MS,
   startOver,
   summary,
@@ -184,17 +177,17 @@ function RunView({
   const now = useClock(run.handStartedAt !== null && !clock.paused, clock.now);
   const between = isBetweenHands(run);
 
-  // A finished hand stays up for a moment; a skipped one a little longer, to
-  // read the way it could have gone.
+  // A solved hand stays up for a moment. A skipped one stays until Next hand,
+  // to read the way it could have gone; the clock is stopped either way.
+  const skippedUp = between && lastResult(run)!.skipped;
   useEffect(() => {
-    if (!between || clock.paused) return;
-    const pause = lastResult(run)!.skipped ? SKIPPED_PAUSE_MS : SOLVED_PAUSE_MS;
+    if (!between || skippedUp || clock.paused) return;
     const timer = setTimeout(
       () => setRun((current) => nextHand(current, clock.now())),
-      pause,
+      SOLVED_PAUSE_MS,
     );
     return () => clearTimeout(timer);
-  }, [between, run, clock]);
+  }, [between, skippedUp, clock]);
 
   const play = (next: SoloRun) => {
     if (next === run) return;
@@ -293,6 +286,16 @@ function RunView({
                 formula={formatExpression(last.expression)}
                 state="made"
                 prompt={m.make24.solo.skippedPrompt}
+                action={
+                  // Next hand takes the focus the gone Skip had, so Enter
+                  // or Space moves on.
+                  <Button
+                    autoFocus
+                    onClick={() => setRun(nextHand(run, clock.now()))}
+                  >
+                    {m.make24.solo.nextHand}
+                  </Button>
+                }
               />
             ) : (
               <HandTable
@@ -312,7 +315,6 @@ function RunView({
                 }
               />
             )}
-            <StepList deal={deal(run)} steps={run.steps} />
           </TablePanel>
         </>
       }

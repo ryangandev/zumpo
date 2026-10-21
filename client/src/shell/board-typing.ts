@@ -5,12 +5,15 @@ export interface Typing {
   onKey: (key: string) => void;
   onDelete: () => void;
   onEnter: () => void;
+  /** Escape, for a board that has a way back to its start. */
+  onEscape?: () => void;
 }
 
 /**
  * A real keyboard types into a board too: the keys `accepts` takes (letters
- * for Daily Word, digits for Code Breaker), Backspace and Enter, unless a
- * text field has the focus (the chat) or a key comes with Ctrl, Alt or Cmd.
+ * for Daily Word, digits for Code Breaker), Backspace, Enter and Escape,
+ * unless a text field has the focus (the chat) or a key comes with Ctrl, Alt
+ * or Cmd.
  * Enter on a focused button presses that button, unless something was typed
  * since the focus came to it: a tab just tapped keeps the focus, and the row
  * typed after it is what Enter is for.
@@ -46,6 +49,8 @@ export function useTypingKeys(
         if (onButton && !typedSinceFocus) return;
         event.preventDefault();
         latest.current.onEnter();
+      } else if (event.key === 'Escape') {
+        latest.current.onEscape?.();
       } else if (event.key === 'Backspace') {
         event.preventDefault();
         typedSinceFocus = true;
