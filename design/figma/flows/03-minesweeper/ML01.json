@@ -14,7 +14,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 1107,
+    "h": 1035,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -62,119 +62,6 @@
               "Initials": "SA",
               "Tone": "Sand"
             }
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "9:2544",
-        "name": "Lobby actions",
-        "w": 1312,
-        "h": 48,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/16",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "9:2545",
-            "name": "Action / Back to games",
-            "w": 171,
-            "h": 48,
-            "wSize": "hug",
-            "component": "Zumpo/Button",
-            "variant": {
-              "Style": "Secondary",
-              "State": "Default"
-            },
-            "componentId": "4:18",
-            "props": {
-              "Icon": "Zumpo/Icon / Glyph=back",
-              "Show icon": true,
-              "Label": "Back to games"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 48,
-                "reactions": [
-                  {
-                    "on": "on_click",
-                    "do": [
-                      {
-                        "nav": "navigate",
-                        "to": "9:433",
-                        "toName": "P01 / Home",
-                        "transition": "dissolve"
-                      }
-                    ]
-                  }
-                ],
-                "width": 171
-              }
-            ],
-            "reactions": [
-              {
-                "on": "on_click",
-                "do": [
-                  {
-                    "nav": "navigate",
-                    "to": "9:433",
-                    "toName": "P01 / Home",
-                    "transition": "dissolve"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "90:112573",
-            "name": "End",
-            "w": 170,
-            "h": 48,
-            "wSize": "hug",
-            "hSize": "hug",
-            "clip": true,
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "align": "center",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "90:112566",
-                "name": "Action / Playing as",
-                "w": 170,
-                "h": 48,
-                "wSize": "hug",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Quiet",
-                  "State": "Default"
-                },
-                "componentId": "4:21",
-                "props": {
-                  "Icon": "Zumpo/Icon / Glyph=edit",
-                  "Show icon": true,
-                  "Label": "Playing as Sam"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "width": 170
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -270,7 +157,7 @@
                     "componentId": "9:252",
                     "props": {
                       "Players": "3 / 8",
-                      "Details": "Hosted by Maya · Small 9 × 9"
+                      "Details": "Small 9 × 9"
                     },
                     "overrides": [
                       {
@@ -430,7 +317,7 @@
             "id": "9:2596",
             "name": "How to play",
             "w": 368,
-            "h": 606,
+            "h": 630,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -476,55 +363,10 @@
               },
               {
                 "type": "FRAME",
-                "id": "120:119528",
-                "name": "Play together",
-                "w": 302,
-                "h": 124,
-                "wSize": "fill",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "TEXT",
-                    "id": "120:119529",
-                    "name": "Label",
-                    "w": 92,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "Play together",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "9:2599",
-                    "name": "2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
-                    "w": 302,
-                    "h": 100,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "2–8 players\nSmall, Medium or Large board\n15s to pick · 4s reveal\nSame safe cell? The points are split.",
-                    "textStyle": "Zumpo/Body",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
                 "id": "120:119530",
                 "name": "On your own",
                 "w": 302,
-                "h": 199,
+                "h": 211,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -552,11 +394,60 @@
                     "id": "120:119532",
                     "name": "Facts",
                     "w": 302,
-                    "h": 175,
+                    "h": 187,
                     "wSize": "fill",
                     "hSize": "hug",
                     "text": "Your first click is always safe\nRight-click or long-press to flag; Flag mode makes a tap flag\nClick a number whose flags are placed to open the rest around it\nYour best time on each board is kept on this device",
-                    "textStyle": "Zumpo/Body",
+                    "font": "DM Sans Regular",
+                    "size": 16,
+                    "lineHeight": "25px",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "120:119528",
+                "name": "Play together",
+                "w": 302,
+                "h": 136,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "120:119529",
+                    "name": "Label",
+                    "w": 92,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Play together",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "9:2599",
+                    "name": "2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
+                    "w": 302,
+                    "h": 112,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "2–8 players\nSmall, Medium or Large board\n15s to pick · 4s reveal\nSame safe cell? The points are split.",
+                    "font": "DM Sans Regular",
+                    "size": 16,
+                    "lineHeight": "25px",
                     "fills": [
                       "$Zumpo · UI:color/ink"
                     ],
@@ -568,7 +459,7 @@
                 "type": "INSTANCE",
                 "id": "120:119533",
                 "name": "Action / Full rules",
-                "w": 104,
+                "w": 132,
                 "h": 48,
                 "wSize": "hug",
                 "component": "Zumpo/Button",
@@ -578,13 +469,15 @@
                 },
                 "componentId": "4:18",
                 "props": {
+                  "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                  "Show icon": true,
                   "Label": "Full rules"
                 },
                 "overrides": [
                   {
                     "path": ".",
                     "height": 48,
-                    "width": 104
+                    "width": 132
                   }
                 ]
               }

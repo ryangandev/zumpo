@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Sam bid three 4s",
-                  "Label": "Maya’s turn",
                   "Main": "Maya is deciding",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Maya’s turn"
                 },
                 "overrides": [
                   {
@@ -156,12 +156,11 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
-                      "Time": "00:09",
+                      "Time": "0:09",
                       "Tone": "Waiting"
-                    },
-                    "height": 44,
-                    "width": 163
+                    }
                   }
                 ]
               },
@@ -503,6 +502,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:4994",
                       "Status icon": false,
@@ -536,6 +536,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Up next",
@@ -569,6 +570,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Bid three 4s",
@@ -644,6 +646,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Out",

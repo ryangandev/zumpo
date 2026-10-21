@@ -73,6 +73,45 @@ describe('room announcements', () => {
       '答案是 APPLE。',
     ],
     [
+      { type: 'dg:turn', round: 2, drawer: 'Ana' },
+      'Round 2 · Ana draws',
+      '第 2 轮 · Ana 来画',
+    ],
+    [
+      { type: 'ms:mines', round: 4, hits: [{ name: 'Ana', points: -20 }] },
+      'Round 4: Ana hit a mine (−20).',
+      '第 4 轮：Ana 踩到了雷（−20）。',
+    ],
+    [
+      {
+        type: 'ms:mines',
+        round: 4,
+        hits: [
+          { name: 'Ana', points: -20 },
+          { name: 'Ben', points: -15 },
+        ],
+      },
+      'Round 4: Ana (−20) and Ben (−15) hit mines.',
+      '第 4 轮：Ana（−20） 和 Ben（−15） 踩到了雷。',
+    ],
+    [
+      {
+        type: 'make24:hand',
+        hand: 2,
+        solved: [
+          { name: 'Ana', points: 148 },
+          { name: 'Ben', points: 120 },
+        ],
+      },
+      'Hand 2: Ana +148, Ben +120',
+      '第 2 手：Ana +148、Ben +120',
+    ],
+    [
+      { type: 'dc:step', step: 1, kind: 'prompt' },
+      'Step 1 · Write',
+      '第 1 步 · 写',
+    ],
+    [
       { type: 'room:disconnected', name: '' },
       'A player lost connection.',
       '某位玩家 的连接中断了。',

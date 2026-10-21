@@ -1,16 +1,27 @@
 import type { ChatMessage, GameType } from '../../../shared/wire-types.js';
-import { memberOf } from './seats.js';
+import { isSpectator, memberOf } from './seats.js';
 import { createRoomTimers, type RoomTimerSet } from './timers.js';
 import type { GameContext, GameModule, Room, RoomLookup } from './types.js';
 import {
   emitToLobby,
   emitToPlayer,
+  emitToPlayers,
   emitToRoom,
   type IoServer,
 } from './emit.js';
 
 /** How many messages a room remembers for a page that arrives late. */
 const CHAT_HISTORY_LIMIT = 100;
+
+/**
+ * A room's chat as this member may read it: a line meant only for the
+ * spectators is left out for anybody at the table.
+ */
+const chatFor = (room: Room, playerId: string): ChatMessage[] =>
+  room.chat.messages.filter(
+    (message) =>
+      message.audience !== 'spectators' || isSpectator(room, playerId),
+  );
 
 /**
  * Every room on the server, and which module speaks for each.
@@ -79,7 +90,10 @@ const createRoomRegistry = (io: IoServer) => {
     }
   };
 
-  /** Appends to a room's chat, keeps it bounded, and sends it to the room. */
+  /**
+   * Appends to a room's chat, keeps it bounded, and sends it to the room, or
+   * to its spectators alone for a line meant only for them.
+   */
   type NewMessage = ChatMessage extends infer M
     ? M extends ChatMessage
       ? Omit<M, 'id'>
@@ -94,6 +108,16 @@ const createRoomRegistry = (io: IoServer) => {
         0,
         room.chat.messages.length - CHAT_HISTORY_LIMIT,
       );
+    }
+    if (posted.audience === 'spectators') {
+      emitToPlayers(
+        io,
+        Object.keys(room.spectators),
+        'chat:message',
+        room.roomId,
+        posted,
+      );
+      return;
     }
     emitToRoom(io, room.roomId, 'chat:message', room.roomId, posted);
   };
@@ -141,10 +165,21 @@ const createRoomRegistry = (io: IoServer) => {
    * theirs. The name comes from their place, never from the payload, so
    * nobody can speak as somebody else.
    */
-  const say = (room: Room, playerId: string, text: string): void => {
+  const say = (
+    room: Room,
+    playerId: string,
+    text: string,
+    audience?: 'spectators',
+  ): void => {
     const member = memberOf(room, playerId);
     if (!member) return;
-    post(room, { kind: 'player', playerId, username: member.username, text });
+    post(room, {
+      kind: 'player',
+      playerId,
+      username: member.username,
+      text,
+      ...(audience && { audience }),
+    });
   };
 
   const context: GameContext = { io, rooms: lookup };
@@ -201,6 +236,7 @@ const createRoomRegistry = (io: IoServer) => {
     lookup,
     context,
     say,
+    chatFor,
     register,
     moduleFor,
     moduleOf,

@@ -4,7 +4,7 @@
   "id": "90:105409",
   "type": "COMPONENT_SET",
   "key": "9036cbff3ea48b9060488f6e006e93e047cf511e",
-  "description": "A game on the home page: what it is and who can play it, the whole card a link to the game’s page. Tile sits four across on a desktop; Row is the phone list, with the game’s signature piece as its icon. Solo and the player count are two tags. Hover lifts the card 4 px onto Paper lift and moves the arrow 3 px on, over 180 ms easing out; with reduced motion only the shadow comes.",
+  "description": "A game on the home page: what it is and who can play it, the whole card a link to the game’s page. Tile sits four across on a desktop; Row is the phone list, with the game’s signature piece as its icon. Solo and the player count are two tags; Solo is a link straight to the game on your own, and under the pointer it turns Ink. For Daily Word and Code Breaker, Solo gives way to today’s state once it is started: Ink “Guess 2 of 10” while it is under way, Lime “Done today” with a check once it is over (P01). Hover lifts the card 4 px onto Paper lift and moves the arrow 3 px on, over 180 ms easing out; with reduced motion only the shadow comes.",
   "properties": {
     "Game": {
       "type": "variant",
@@ -154,7 +154,7 @@
                 "type": "FRAME",
                 "id": "124:119721",
                 "name": "Tags",
-                "w": 162,
+                "w": 91,
                 "h": 30,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -171,7 +171,7 @@
                     "type": "INSTANCE",
                     "id": "90:104962",
                     "name": "Players",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -181,13 +181,13 @@
                     },
                     "componentId": "24:6531",
                     "props": {
-                      "Label": "2–8 players · 1–4 rounds"
+                      "Label": "2–8 players"
                     },
                     "overrides": [
                       {
                         "path": ".",
                         "height": 30,
-                        "width": 162
+                        "width": 91
                       }
                     ]
                   }
@@ -1870,7 +1870,7 @@
                     "type": "FRAME",
                     "id": "124:119759",
                     "name": "Tags",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -1887,7 +1887,7 @@
                         "type": "INSTANCE",
                         "id": "90:104991",
                         "name": "Players",
-                        "w": 162,
+                        "w": 91,
                         "h": 30,
                         "wSize": "hug",
                         "hSize": "hug",
@@ -1897,13 +1897,13 @@
                         },
                         "componentId": "24:6531",
                         "props": {
-                          "Label": "2–8 players · 1–4 rounds"
+                          "Label": "2–8 players"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 30,
-                            "width": 162
+                            "width": 91
                           }
                         ]
                       }
@@ -3534,7 +3534,7 @@
                 "type": "FRAME",
                 "id": "124:119879",
                 "name": "Tags",
-                "w": 162,
+                "w": 91,
                 "h": 30,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -3551,7 +3551,7 @@
                     "type": "INSTANCE",
                     "id": "124:119880",
                     "name": "Players",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -3561,13 +3561,13 @@
                     },
                     "componentId": "24:6531",
                     "props": {
-                      "Label": "2–8 players · 1–4 rounds"
+                      "Label": "2–8 players"
                     },
                     "overrides": [
                       {
                         "path": ".",
                         "height": 30,
-                        "width": 162
+                        "width": 91
                       }
                     ]
                   }
@@ -5346,7 +5346,7 @@
                     "type": "FRAME",
                     "id": "124:119965",
                     "name": "Tags",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -5363,7 +5363,7 @@
                         "type": "INSTANCE",
                         "id": "124:119966",
                         "name": "Players",
-                        "w": 162,
+                        "w": 91,
                         "h": 30,
                         "wSize": "hug",
                         "hSize": "hug",
@@ -5373,13 +5373,13 @@
                         },
                         "componentId": "24:6531",
                         "props": {
-                          "Label": "2–8 players · 1–4 rounds"
+                          "Label": "2–8 players"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 30,
-                            "width": 162
+                            "width": 91
                           }
                         ]
                       }

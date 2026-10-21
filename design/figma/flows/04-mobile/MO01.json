@@ -216,30 +216,6 @@
                   },
                   {
                     "type": "INSTANCE",
-                    "id": "90:110376",
-                    "name": "Filter / Party",
-                    "w": 71,
-                    "h": 38,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "component": "Zumpo/Filter chip",
-                    "variant": {
-                      "State": "Default"
-                    },
-                    "componentId": "90:107171",
-                    "props": {
-                      "Label": "Party"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 38,
-                        "width": 71
-                      }
-                    ]
-                  },
-                  {
-                    "type": "INSTANCE",
                     "id": "90:110378",
                     "name": "Filter / Puzzles",
                     "w": 85,
@@ -299,150 +275,30 @@
                         "width": 94
                       }
                     ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "90:110382",
-            "name": "Kind / Party",
-            "w": 350,
-            "h": 815,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/12",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "FRAME",
-                "id": "90:110383",
-                "name": "Kind heading",
-                "w": 350,
-                "h": 59,
-                "wSize": "fill",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "TEXT",
-                    "id": "90:110384",
-                    "w": 64,
-                    "h": 30,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "Party",
-                    "textStyle": "Zumpo/Heading",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
                   },
                   {
-                    "type": "TEXT",
-                    "id": "90:110385",
-                    "w": 350,
-                    "h": 25,
-                    "wSize": "fill",
+                    "type": "INSTANCE",
+                    "id": "90:110376",
+                    "name": "Filter / Party",
+                    "w": 71,
+                    "h": 38,
+                    "wSize": "hug",
                     "hSize": "hug",
-                    "text": "Draw, bluff and read the room.",
-                    "textStyle": "Zumpo/Body",
-                    "fills": [
-                      "$Zumpo · UI:color/muted"
-                    ],
-                    "autoResize": "height"
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "162:112979",
-                "name": "Zumpo/Game card",
-                "w": 350,
-                "h": 177,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Doodle Chain",
-                  "Layout": "Row",
-                  "State": "Default"
-                },
-                "componentId": "162:111368"
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:110386",
-                "name": "Zumpo/Game card",
-                "w": 350,
-                "h": 177,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Draw & Guess",
-                  "Layout": "Row",
-                  "State": "Default"
-                },
-                "componentId": "90:104973",
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 177,
-                    "width": 350
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:110415",
-                "name": "Zumpo/Game card",
-                "w": 350,
-                "h": 177,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Hush",
-                  "Layout": "Row",
-                  "State": "Default"
-                },
-                "componentId": "90:105330",
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 177,
-                    "width": 350
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:110434",
-                "name": "Zumpo/Game card",
-                "w": 350,
-                "h": 177,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Game card",
-                "variant": {
-                  "Game": "Liar’s Dice",
-                  "Layout": "Row",
-                  "State": "Default"
-                },
-                "componentId": "90:105270",
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 177,
-                    "width": 350
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Party"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 71
+                      }
+                    ]
                   }
                 ]
               }
@@ -792,6 +648,150 @@
                   "State": "Default"
                 },
                 "componentId": "162:111605"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "90:110382",
+            "name": "Kind / Party",
+            "w": 350,
+            "h": 815,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "90:110383",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 59,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "90:110384",
+                    "w": 64,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Party",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "90:110385",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Draw, bluff and read the room.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:112979",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:111368"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:110386",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Draw & Guess",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:104973",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:110415",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Hush",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105330",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "90:110434",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Liar’s Dice",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105270",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
               }
             ]
           }

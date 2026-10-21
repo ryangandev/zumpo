@@ -118,15 +118,16 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Get ready to guess",
-                  "Label": "Next up",
-                  "Main": "Leo is choosing a word"
+                  "Main": "Leo is choosing a word",
+                  "Label": "Next up"
                 },
                 "overrides": [
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to choose",
-                      "Time": "00:14",
+                      "Time": "0:14",
                       "Tone": "Waiting"
                     }
                   }
@@ -250,6 +251,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -271,6 +273,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5053",
                       "Status icon": true,
@@ -292,6 +295,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",

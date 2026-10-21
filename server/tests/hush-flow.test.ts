@@ -310,7 +310,7 @@ describe('a level', () => {
 
   it('is cleared when every card is played, without a slip', async () => {
     const { roomId, players, owner } = await playToLevel(harness);
-    const chat = waitForChat(owner, (m) => m.kind === 'success');
+    const chat = waitForChat(owner, (m) => m.kind === 'score');
     const cleared = waitForHushState(owner, (s) => s.phase === 'cleared');
     await playClean(harness, roomId, players);
 
@@ -443,7 +443,7 @@ describe('a mistake', () => {
     await waitForHushState(owner, (s) => s.phase === 'ready' && s.level === 2);
 
     await readyAll(players, roomId);
-    const chat = waitForChat(owner, (m) => m.kind === 'success');
+    const chat = waitForChat(owner, (m) => m.kind === 'score');
     const cleared = waitForHushState(owner, (s) => s.phase === 'cleared');
     await playClean(harness, roomId, players);
     const view = await cleared;
@@ -726,7 +726,9 @@ describe('a Hush game', () => {
     expect(view.lastGame!.standings.map((s) => s.points)).toEqual([5, 5, 5, 5]);
     await settle();
     expect(textOf(chat.at(-1)!)).toBe('All 5 levels cleared. Well played!');
-    expect(chat.filter((m) => m.kind === 'success')).toHaveLength(5);
+    // Four quiet level lines, then the one that matters.
+    expect(chat.filter((m) => m.kind === 'score')).toHaveLength(4);
+    expect(chat.at(-1)!.kind).toBe('success');
   });
 
   it('is lost with the last life, and shows every card still held', async () => {

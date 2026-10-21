@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 1567,
     "w": 1440,
-    "h": 999,
+    "h": 652,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -67,76 +67,10 @@
       },
       {
         "type": "FRAME",
-        "id": "162:96880",
-        "name": "Page heading",
-        "w": 1312,
-        "h": 121,
-        "hSize": "hug",
-        "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "162:96881",
-            "name": "Tag / PLAY TOGETHER",
-            "w": 117,
-            "h": 30,
-            "wSize": "hug",
-            "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
-            },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "PLAY TOGETHER"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 30,
-                "width": 117
-              }
-            ]
-          },
-          {
-            "type": "TEXT",
-            "id": "162:96882",
-            "name": "Minesweeper rooms",
-            "w": 1312,
-            "h": 42,
-            "hSize": "hug",
-            "text": "Gomoku rooms",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "162:96883",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Make a little space for your next game.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
         "id": "162:96884",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 628,
+        "h": 426,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -152,9 +86,9 @@
           {
             "type": "INSTANCE",
             "id": "162:96885",
-            "name": "A little room for you.",
+            "name": "New Gomoku room",
             "w": 560,
-            "h": 516,
+            "h": 314,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -162,52 +96,59 @@
             },
             "componentId": "9:400",
             "props": {
-              "Description": "Two players take turns, black first, and five in a row wins. Up to five more can watch."
+              "Description": "Two players take turns, black first, and five in a row wins. Up to five more can watch.",
+              "Title": "New Gomoku room"
             },
             "overrides": [
               {
                 "path": ".",
-                "height": 516,
+                "height": 314,
                 "width": 560
               }
             ],
             "slots": {
               "Content": [
                 {
-                  "type": "INSTANCE",
-                  "id": "I162:96885;35:13433;162:96890",
-                  "name": "Zumpo/Input",
+                  "type": "FRAME",
+                  "id": "163:63115",
+                  "name": "More options",
                   "w": 496,
-                  "h": 113,
+                  "h": 48,
                   "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
                   },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Up to 40 characters.",
-                    "Value": "Maya’s room",
-                    "Label": "Room name"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I162:96885;35:13433;162:96893",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Leave blank for an open room. Up to 20 characters.",
-                    "Value": "••••••",
-                    "Label": "Password (optional)"
-                  }
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "163:63117",
+                      "name": "Action / More options",
+                      "w": 159,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Quiet",
+                        "State": "Default"
+                      },
+                      "componentId": "4:21",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                        "Show icon": true,
+                        "Label": "More options"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 48,
+                          "width": 159
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "FRAME",

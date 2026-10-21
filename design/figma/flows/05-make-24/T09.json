@@ -881,7 +881,7 @@
             "id": "40:43666",
             "name": "Room sidebar",
             "w": 344,
-            "h": 608,
+            "h": 628,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -902,6 +902,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -923,6 +924,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -944,6 +946,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -965,6 +968,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -990,14 +994,14 @@
                 "id": "40:43668",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 280,
+                "h": 300,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 280,
+                    "height": 300,
                     "width": 344
                   },
                   {
@@ -1005,8 +1009,8 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan solved it! (+118)",
-                      "Kind": "Success"
+                      "Message": "Hand 5: Ryan +118",
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1015,7 +1019,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 611 points!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

@@ -1601,7 +1601,7 @@
             "id": "9:9926",
             "name": "Room sidebar",
             "w": 344,
-            "h": 645,
+            "h": 665,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1622,6 +1622,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1643,6 +1644,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1664,6 +1666,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1685,6 +1688,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1710,14 +1714,14 @@
                 "id": "9:9957",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 317,
+                "h": 337,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 317,
+                    "height": 337,
                     "width": 344
                   },
                   {
@@ -1725,8 +1729,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Ryan hit a mine (50% risk): −70",
-                      "Kind": "Alert"
+                      "Message": "Round 9: Ryan hit a mine (−70).",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1744,7 +1748,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Sam wins with 130 points!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

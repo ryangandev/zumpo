@@ -476,25 +476,27 @@ export default function Gallery() {
             </ChatMessage>
           </ul>
         </Specimen>
-        {(['system', 'success', 'alert'] as const).map((kind) => (
-          <Specimen
-            key={kind}
-            family="chat-message"
-            variant={`Kind=${cap(kind)}`}
-            width={296}
-          >
-            <ul
-              style={{
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-                width: '100%',
-              }}
+        {(['system', 'score', 'divider', 'success', 'alert'] as const).map(
+          (kind) => (
+            <Specimen
+              key={kind}
+              family="chat-message"
+              variant={`Kind=${cap(kind)}`}
+              width={296}
             >
-              <ChatMessage kind={kind}>a turtle?</ChatMessage>
-            </ul>
-          </Specimen>
-        ))}
+              <ul
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  listStyle: 'none',
+                  width: '100%',
+                }}
+              >
+                <ChatMessage kind={kind}>a turtle?</ChatMessage>
+              </ul>
+            </Specimen>
+          ),
+        )}
         <Specimen family="chat-message" label="Wrapped" width={296}>
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
@@ -1950,6 +1952,17 @@ export default function Gallery() {
               { value: 'board', label: 'Board', panel: null },
               { value: 'players', label: 'Players · 4', panel: null },
               { value: 'chat', label: 'Chat', panel: null },
+            ]}
+          />
+        </Specimen>
+        <Specimen family="mobile-tabs" label="Chat unread" width={480}>
+          <MobileTabs
+            value="board"
+            onValueChange={noop}
+            tabs={[
+              { value: 'board', label: 'Board', panel: null },
+              { value: 'players', label: 'Players · 4', panel: null },
+              { value: 'chat', label: 'Chat', panel: null, unread: 3 },
             ]}
           />
         </Specimen>

@@ -1538,7 +1538,7 @@
             "id": "162:105343",
             "name": "Room sidebar",
             "w": 344,
-            "h": 656,
+            "h": 638,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1565,6 +1565,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "1683",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +628",
                       "State": "Scored"
@@ -1586,6 +1587,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "1651",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +620",
                       "State": "Scored"
@@ -1607,6 +1609,7 @@
                       "Host": false,
                       "Name": "Ryan",
                       "Score": "1124",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +516",
                       "State": "Scored"
@@ -1622,6 +1625,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Missed",
@@ -1647,14 +1651,14 @@
                 "id": "162:105345",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 328,
+                "h": 310,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 328,
+                    "height": 310,
                     "width": 344
                   },
                   {
@@ -1663,7 +1667,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan cracked it in 6! (+516)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
