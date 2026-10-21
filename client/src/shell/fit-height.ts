@@ -52,6 +52,29 @@ export function useFitHeight<T extends HTMLElement>(enabled = true) {
 }
 
 /**
+ * How much of the page follows the element in its own column: what comes
+ * after it there, and the page's foot. A column beside it, such as a side
+ * column of cards longer than the board (a finished game's result, its
+ * stats), is not the element's to make room for: the page scrolls for it.
+ */
+function belowOf(element: HTMLElement, rect: DOMRect): number {
+  const pageBottom = document.documentElement.scrollHeight - window.scrollY;
+  let column: HTMLElement = element;
+  for (
+    let parent = element.parentElement;
+    parent;
+    column = parent, parent = parent.parentElement
+  ) {
+    const tracks = getComputedStyle(parent).gridTemplateColumns;
+    if (tracks && tracks !== 'none' && tracks.trim().split(/\s+/).length > 1) {
+      const after = column.getBoundingClientRect().bottom - rect.bottom;
+      return after + pageBottom - parent.getBoundingClientRect().bottom;
+    }
+  }
+  return pageBottom - rect.bottom;
+}
+
+/**
  * The largest scale, at most 1, at which the element and what follows it end
  * inside the window, found by trying scales: scaled, the element lays its
  * content out wider, which can make it shorter still (a Gomoku table puts
@@ -61,8 +84,7 @@ function heightScale(element: HTMLElement): number {
   const rect = element.getBoundingClientRect();
   if (rect.height === 0) return 1;
   const top = rect.top + window.scrollY;
-  const below =
-    document.documentElement.scrollHeight - (rect.bottom + window.scrollY);
+  const below = belowOf(element, rect);
   if (top + rect.height + below <= window.innerHeight) return 1;
   // A pixel spare, so rounding never leaves the page a pixel too tall.
   const room = window.innerHeight - top - below - 1;

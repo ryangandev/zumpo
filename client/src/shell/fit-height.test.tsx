@@ -9,6 +9,8 @@ const BELOW = 40;
 
 /** The board's height unscaled: 1000 px of rows and keys, as laid out. */
 let natural = 1000;
+/** The column of cards beside the board, when there is one. */
+let side = 0;
 let observed: ResizeObserverCallback[] = [];
 
 const zoomOf = (element: HTMLElement) =>
@@ -26,23 +28,44 @@ function Board() {
   return <div ref={ref} data-testid="board" />;
 }
 
+/** The board in its column, and a column of cards beside it. */
+function BesideCards() {
+  return (
+    <div
+      data-testid="row"
+      style={{ display: 'grid', gridTemplateColumns: '600px 344px' }}
+    >
+      <div data-testid="column">
+        <Board />
+      </div>
+      <div data-testid="side" />
+    </div>
+  );
+}
+
 const board = () => screen.getByTestId('board');
 
 beforeEach(() => {
   natural = 1000;
+  side = 0;
   observed = [];
   setWindowHeight(720);
   // jsdom lays nothing out: the board is as tall as its zoom makes it, and
   // the page ends a footer below it.
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     function (this: HTMLElement) {
-      const height =
-        this.dataset.testid === 'board' ? natural * zoomOf(this) : 0;
-      return new DOMRect(0, TOP, 600, height);
+      const played = natural * zoomOf(board());
+      const height = {
+        board: played,
+        column: played,
+        side,
+        row: Math.max(played, side),
+      }[this.dataset.testid ?? ''];
+      return new DOMRect(0, TOP, 600, height ?? 0);
     },
   );
   vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(
-    () => TOP + natural * zoomOf(board()) + BELOW,
+    () => TOP + Math.max(natural * zoomOf(board()), side) + BELOW,
   );
   vi.stubGlobal(
     'ResizeObserver',
@@ -74,6 +97,17 @@ describe('useFitHeight', () => {
     // As large as fits, to the search's step: (720 - 100 - 40 - 1) / 1000.
     expect(zoom).toBeGreaterThan(0.575);
     expect(zoom).toBeLessThanOrEqual(0.579);
+  });
+
+  it('makes no room for a longer column of cards beside it, which scrolls', () => {
+    render(<BesideCards />);
+    const zoom = zoomOf(board());
+    expect(zoom).toBeGreaterThan(0.575);
+
+    // A finished game's result and stats, longer than the window.
+    side = 1400;
+    act(() => observed.forEach((callback) => callback([], {} as never)));
+    expect(zoomOf(board())).toBe(zoom);
   });
 
   it('leaves a board that fits as it is', () => {
