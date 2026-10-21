@@ -1361,7 +1361,9 @@ test('Liar’s Dice on your own', async ({ player }) => {
     .getByText(/ is thinking$/);
   const shown = new Set<string>();
   let calledToLose = false;
-  for (let games = 1; !(shown.has('LD05') && shown.has('LD06')); games++) {
+  const LD_SOLO = ['LD01', 'LD02', 'LD03', 'LD04', 'LD05', 'LD06'];
+  // Until every screen is captured: a mistaken call (LD04) is a chance too.
+  for (let games = 1; !LD_SOLO.every((code) => shown.has(code)); games++) {
     // Last of four is a long shot for a player this plain: a game takes a
     // second or two on the fast clock, so it can afford many tries.
     expect(games, 'a game won and a game lost').toBeLessThanOrEqual(100);
@@ -1417,9 +1419,7 @@ test('Liar’s Dice on your own', async ({ player }) => {
     }, LIARS_DICE_RECORD);
     await maya.getByRole('button', { name: 'Play again' }).click();
   }
-  expect(shown).toEqual(
-    new Set(['LD01', 'LD02', 'LD03', 'LD04', 'LD05', 'LD06']),
-  );
+  expect(shown).toEqual(new Set(LD_SOLO));
 
   const onPhone = await player('Maya', phone);
   await onPhone.clock.install();
