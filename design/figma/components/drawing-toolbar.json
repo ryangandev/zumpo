@@ -838,7 +838,7 @@
                 "type": "FRAME",
                 "id": "26:16570",
                 "name": "Actions",
-                "w": 132,
+                "w": 100,
                 "h": 48,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -853,7 +853,7 @@
                     "type": "INSTANCE",
                     "id": "26:16571",
                     "name": "Action / Undo",
-                    "w": 62,
+                    "w": 46,
                     "h": 48,
                     "wSize": "hug",
                     "component": "Zumpo/Button",
@@ -871,9 +871,9 @@
                       {
                         "path": ".",
                         "height": 48,
-                        "paddingLeft": "$Zumpo · UI:space/20",
-                        "paddingRight": "$Zumpo · UI:space/20",
-                        "width": 62
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "width": 46
                       },
                       {
                         "path": "Let’s play",
@@ -885,7 +885,7 @@
                     "type": "INSTANCE",
                     "id": "26:16579",
                     "name": "Action / Clear",
-                    "w": 62,
+                    "w": 46,
                     "h": 48,
                     "wSize": "hug",
                     "component": "Zumpo/Button",
@@ -903,9 +903,9 @@
                       {
                         "path": ".",
                         "height": 48,
-                        "paddingLeft": "$Zumpo · UI:space/20",
-                        "paddingRight": "$Zumpo · UI:space/20",
-                        "width": 62
+                        "paddingLeft": "$Zumpo · UI:space/12",
+                        "paddingRight": "$Zumpo · UI:space/12",
+                        "width": 46
                       },
                       {
                         "path": "Let’s play",

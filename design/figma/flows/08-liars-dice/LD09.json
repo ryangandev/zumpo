@@ -103,7 +103,7 @@
             "id": "72:78709",
             "name": "Board stage",
             "w": 944,
-            "h": 554,
+            "h": 552,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -161,7 +161,7 @@
                 "id": "72:78711",
                 "name": "Table panel",
                 "w": 944,
-                "h": 446,
+                "h": 444,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -483,7 +483,7 @@
                     "id": "72:79232",
                     "name": "Your cup",
                     "w": 894,
-                    "h": 154,
+                    "h": 152,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -498,7 +498,7 @@
                         "id": "72:79233",
                         "name": "Cup / Sam",
                         "w": 220,
-                        "h": 154,
+                        "h": 144,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Cup",
@@ -516,7 +516,7 @@
                         "overrides": [
                           {
                             "path": ".",
-                            "height": 154,
+                            "height": 144,
                             "width": 220
                           },
                           {

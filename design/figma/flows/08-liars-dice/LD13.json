@@ -14,7 +14,7 @@
     "x": 40,
     "y": 4350,
     "w": 390,
-    "h": 1108,
+    "h": 1098,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -128,7 +128,7 @@
         "id": "79:89591",
         "name": "Table",
         "w": 350,
-        "h": 810,
+        "h": 800,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -370,7 +370,7 @@
             "id": "79:89802",
             "name": "Your cup",
             "w": 350,
-            "h": 418,
+            "h": 408,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -385,7 +385,7 @@
                 "id": "79:89803",
                 "name": "Cup / Maya",
                 "w": 350,
-                "h": 154,
+                "h": 144,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Cup",
@@ -404,7 +404,7 @@
                   {
                     "path": ".",
                     "counterAxisSizingMode": "FIXED",
-                    "height": 154,
+                    "height": 144,
                     "width": 350
                   },
                   {

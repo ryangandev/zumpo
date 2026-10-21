@@ -343,14 +343,14 @@
                   "y": 365,
                   "absolute": true,
                   "w": 496,
-                  "h": 198,
+                  "h": 186,
                   "hSize": "hug",
                   "component": "Zumpo/Select menu / Board",
                   "componentId": "9:427",
                   "overrides": [
                     {
                       "path": ".",
-                      "height": 198,
+                      "height": 186,
                       "layoutPositioning": "ABSOLUTE",
                       "width": 496
                     }

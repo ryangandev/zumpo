@@ -14,7 +14,7 @@
     "x": 40,
     "y": 1550,
     "w": 1440,
-    "h": 1016,
+    "h": 1006,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -104,7 +104,7 @@
         "id": "77:82483",
         "name": "Board & room",
         "w": 1312,
-        "h": 846,
+        "h": 836,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "77:82484",
             "name": "Board stage",
             "w": 944,
-            "h": 846,
+            "h": 836,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -421,7 +421,7 @@
                 "id": "77:82502",
                 "name": "Table panel",
                 "w": 944,
-                "h": 454,
+                "h": 444,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -630,7 +630,7 @@
                     "id": "78:82715",
                     "name": "Your cup",
                     "w": 894,
-                    "h": 152,
+                    "h": 142,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -645,7 +645,7 @@
                         "id": "78:82716",
                         "name": "Cup / Maya",
                         "w": 218,
-                        "h": 152,
+                        "h": 142,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Cup",
@@ -663,7 +663,7 @@
                         "overrides": [
                           {
                             "path": ".",
-                            "height": 152,
+                            "height": 142,
                             "width": 218
                           },
                           {

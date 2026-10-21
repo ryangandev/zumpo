@@ -12,7 +12,7 @@
     "x": 2692,
     "y": 478,
     "w": 496,
-    "h": 198,
+    "h": 186,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/paper"
@@ -45,7 +45,7 @@
         "id": "24:6263",
         "name": "Option / Small",
         "w": 478,
-        "h": 60,
+        "h": 56,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Select option",
@@ -61,9 +61,9 @@
         "overrides": [
           {
             "path": ".",
-            "height": 60,
-            "paddingBottom": "$Zumpo · UI:space/10",
-            "paddingTop": "$Zumpo · UI:space/10",
+            "height": 56,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]
@@ -73,7 +73,7 @@
         "id": "24:6270",
         "name": "Option / Medium",
         "w": 478,
-        "h": 60,
+        "h": 56,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Select option",
@@ -88,9 +88,9 @@
         "overrides": [
           {
             "path": ".",
-            "height": 60,
-            "paddingBottom": "$Zumpo · UI:space/10",
-            "paddingTop": "$Zumpo · UI:space/10",
+            "height": 56,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]
@@ -100,7 +100,7 @@
         "id": "24:6277",
         "name": "Option / Large",
         "w": 478,
-        "h": 60,
+        "h": 56,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Select option",
@@ -116,9 +116,9 @@
         "overrides": [
           {
             "path": ".",
-            "height": 60,
-            "paddingBottom": "$Zumpo · UI:space/10",
-            "paddingTop": "$Zumpo · UI:space/10",
+            "height": 56,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]
