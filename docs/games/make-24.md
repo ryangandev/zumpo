@@ -75,6 +75,7 @@ Players who share the top score share the win, and the results rank a shared sco
 - **What somebody else did is not shown while the hand is open.**
   Everybody can see who has solved it and for how many points, never how; an expression would give the hand away.
 - **A player who has solved the hand cannot chat until it ends,** for the same reason.
+- **The chat hears of a hand once, when it ends:** one quiet line, `Hand <n>: <name> +<points>, <name> +<points>`, best first, and none for a hand nobody solved.
 - **One solve per player per hand**, and only while the hand is open.
 - **Only the room owner may start a game**, and only with two or more players.
 
