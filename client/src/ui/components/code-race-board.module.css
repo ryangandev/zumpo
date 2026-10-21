@@ -1,0 +1,67 @@
+/* Zumpo/Code race board. The outline is an inset shadow, so a crack never
+   moves the boards beside it. */
+.race {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+  padding: var(--zumpo-space-12);
+  border-radius: var(--zumpo-radius-12);
+  box-shadow: inset 0 0 0 1px var(--zumpo-line);
+  background: var(--zumpo-paper);
+}
+
+.digits {
+  gap: var(--zumpo-space-12);
+  padding: var(--zumpo-space-16);
+}
+
+/* Row: the name and status beside the board, taking the width the board
+   leaves. */
+.row {
+  flex: 1 1 auto;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--zumpo-space-16);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+}
+
+.row .head {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.name {
+  /* A long name is cut short rather than widening the board; the status
+     may, as a crack's points do on a board of pegs. */
+  contain: inline-size;
+  overflow: hidden;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status {
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  white-space: nowrap;
+}
+
+.cracked {
+  box-shadow: inset 0 0 0 2px var(--zumpo-green);
+}
+
+.cracked .status {
+  color: var(--zumpo-green);
+}
+
+.out {
+  background: var(--zumpo-cream);
+}

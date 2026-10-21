@@ -1,0 +1,7 @@
+/* Zumpo/Code marks board. */
+.board {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--zumpo-space-4);
+}

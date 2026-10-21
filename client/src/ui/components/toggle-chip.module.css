@@ -1,0 +1,36 @@
+/* Zumpo/Toggle chip. The border is 1 px in every state, so hovering or
+   turning a chip on never moves what is beside it. */
+.chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  margin: 0;
+  padding: var(--zumpo-space-8) var(--zumpo-space-16) var(--zumpo-space-8)
+    var(--zumpo-space-12);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-paper);
+  color: var(--zumpo-ink);
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    border-color: var(--zumpo-ink);
+  }
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--zumpo-lime);
+  background: var(--zumpo-lime);
+}

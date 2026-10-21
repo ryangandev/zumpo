@@ -1,0 +1,30 @@
+/* Zumpo/Code board and its Code rows. */
+.board {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+.digits {
+  display: flex;
+  gap: var(--zumpo-space-8);
+}
+
+.small {
+  gap: var(--zumpo-space-4);
+}
+
+.small .row {
+  gap: var(--zumpo-space-8);
+}
+
+.small .digits {
+  gap: var(--zumpo-space-4);
+}
