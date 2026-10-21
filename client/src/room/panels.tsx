@@ -245,7 +245,8 @@ export function EndedEarlyPanel() {
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   // Its words are for the player left at the table.
-  if (spectating && !isHost) return <SpectatorPanel />;
+  if (spectating && !isHost)
+    return <SpectatorPanel footer={<WaitingHowTo />} />;
   return (
     <RoomPanel
       title={m.room.everyoneLeft}

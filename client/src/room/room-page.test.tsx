@@ -614,6 +614,31 @@ describe('a room page', () => {
     expect(
       watching.getByText('Share one board, and pick safe cells in secret.'),
     ).toBeInTheDocument();
+
+    // A game everyone left early leaves the spectator the same card.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          owner: { username: 'Maya', playerId: 'p2' },
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+          },
+          spectators: { p1: { username: 'Ryan', isConnected: true } },
+          lastGame: {
+            endedEarly: true,
+            difficulty: 'Small',
+            rounds: 2,
+            standings: [{ playerId: 'p2', username: 'Maya', points: 40 }],
+          },
+        }),
+      ),
+    );
+    expect(
+      within(
+        screen.getByRole('region', { name: 'You’re watching.' }),
+      ).getByRole('heading', { name: 'How to play' }),
+    ).toBeVisible();
   });
 
   it('shows how to play over the room, which stays', async () => {
