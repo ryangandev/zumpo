@@ -62,6 +62,9 @@ The steps run `write`, then `draw` and `describe` in turn, with `passing` after 
 ### Done
 
 You press **Done** when your entry is finished, and **Keep editing** takes it back, at any time until the step ends.
+**Done is unavailable while your entry is empty**: a blank line, or a canvas with no strokes.
+The button stays where it is and keeps the keyboard focus, and the server refuses a Done for an empty entry too.
+So an empty entry in a chain always means the time ran out or its player left, and the reveal can say which.
 **A step ends early once every player who has something to do in it has pressed Done**, because the rest of the clock would be dead time, as in Draw & Guess.
 A player who is away and has not pressed Done keeps the step running to its clock; a drop never shortens anybody's time.
 

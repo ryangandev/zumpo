@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import {
   DESCRIBE_SECONDS,
   kindOf,
@@ -355,6 +361,15 @@ function Writing({
   );
 }
 
+/** Whether the drawing in progress has no strokes, kept current as it changes. */
+function useBlankCanvas(canvas: Room['canvas']): boolean {
+  const subscribe = useCallback(
+    (onChange: () => void) => canvas.subscribe(onChange),
+    [canvas],
+  );
+  return useSyncExternalStore(subscribe, () => canvas.snapshot().length === 0);
+}
+
 /** DC07: drawing the words given, on Draw & Guess's canvas and toolbar. */
 function Drawing({ room }: { room: Room }) {
   const m = useMessages();
@@ -364,6 +379,8 @@ function Drawing({ room }: { room: Room }) {
   const [size, setSize] = useState<BrushSize>(DEFAULT_SIZE);
   const done = state.table[playerId]?.done ?? false;
   const canDraw = !done && !reconnecting;
+  // An empty drawing is never Done; the button keeps its focus meanwhile.
+  const blank = useBlankCanvas(canvas);
   const actions = useRef<HTMLDivElement>(null);
   const doneButton = useRef<HTMLButtonElement>(null);
   const keepEditing = useRef<HTMLButtonElement>(null);
@@ -443,6 +460,8 @@ function Drawing({ room }: { room: Room }) {
               <Button
                 ref={doneButton}
                 icon="check"
+                disabled={blank}
+                focusableWhenDisabled
                 onClick={() => socket.emit('dc:done', roomId, true)}
               >
                 {m.ui.chain.done}

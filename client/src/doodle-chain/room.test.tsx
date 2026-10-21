@@ -45,6 +45,16 @@ const drawing = doodleChainState({
   task: { kind: 'drawing', chain: 2, sitsOut: false, given: leosLine },
 });
 
+/** One stroke, as a drawing so far. */
+const stroke = {
+  color: '#000',
+  size: 10,
+  points: [
+    { x: 10, y: 10 },
+    { x: 50, y: 40 },
+  ],
+};
+
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const scoreboard = () =>
   within(screen.getByRole('region', { name: /^Players/ }));
@@ -133,8 +143,16 @@ describe('a Doodle Chain room', () => {
     // Nobody has a heart until the reveal.
     expect(scoreboard().queryByText(/^\d+$/)).toBeNull();
 
+    // A blank line cannot be Done, by the button or by Enter.
     const field = screen.getByRole('textbox', { name: 'Your first line' });
+    const done = screen.getByRole('button', { name: 'Done' });
+    expect(done).toHaveAttribute('aria-disabled', 'true');
+    await user.click(done);
+    await user.type(field, '{Enter}');
+    expect(fake.sentArgs('dc:done')).toEqual([]);
+
     await user.type(field, 'A');
+    expect(done).not.toHaveAttribute('aria-disabled', 'true');
     expect(fake.sentArgs('dc:text')[0]).toEqual(['r1', { text: 'A' }]);
     expect(
       screen.getByText('1 / 80 · anything drawable, in any language'),
@@ -162,6 +180,19 @@ describe('a Doodle Chain room', () => {
     expect(fake.sentArgs('dc:done').at(-1)).toEqual(['r1', false]);
     update(writing);
     expect(field).toHaveFocus();
+  });
+
+  it('cannot be done with a line of only spaces', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(writing);
+    const field = screen.getByRole('textbox', { name: 'Your first line' });
+
+    await user.type(field, '   {Enter}');
+    expect(screen.getByRole('button', { name: 'Done' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+    expect(fake.sentArgs('dc:done')).toEqual([]);
   });
 
   it('names nobody next when the next player has left', async () => {
@@ -201,7 +232,14 @@ describe('a Doodle Chain room', () => {
     ).toBeInTheDocument();
     expect(scoreboard().getAllByText('Drawing')).toHaveLength(3);
 
-    await user.click(screen.getByRole('button', { name: 'Done' }));
+    // An empty drawing cannot be Done.
+    const done = screen.getByRole('button', { name: 'Done' });
+    expect(done).toHaveAttribute('aria-disabled', 'true');
+    await user.click(done);
+    expect(fake.sentArgs('dc:done')).toEqual([]);
+    act(() => fake.serverEmits('dc:canvas:sync', 'r1', [stroke]));
+    expect(done).not.toHaveAttribute('aria-disabled', 'true');
+    await user.click(done);
     expect(fake.sentArgs('dc:done')).toEqual([['r1', true]]);
   });
 
@@ -213,6 +251,7 @@ describe('a Doodle Chain room', () => {
       table: { ...drawing.table, p1: { done: true, sitsOut: false } },
     };
 
+    act(() => fake.serverEmits('dc:canvas:sync', 'r1', [stroke]));
     await user.click(screen.getByRole('button', { name: 'Done' }));
     update(finished);
     expect(screen.getByRole('button', { name: 'Keep editing' })).toHaveFocus();

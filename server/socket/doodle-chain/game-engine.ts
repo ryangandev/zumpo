@@ -34,6 +34,7 @@ import {
   createWork,
   heartsFor,
   IN_STEP,
+  isBlank,
   isEmpty,
   isShown,
   lastMade,
@@ -447,9 +448,13 @@ const createDoodleChainGameEngine = (
 
   const setDone = (roomId: string, playerId: string, done: boolean) => {
     const room = roomOf(roomId);
-    if (!room || !workOf(room, playerId)) return;
+    const mine = room && workOf(room, playerId);
+    if (!room || !mine) return;
     const game = room.game;
     if (game.done.has(playerId) === done) return;
+    // An empty entry is never Done, so an empty one in a chain always means
+    // its time ran out or its player left.
+    if (done && isBlank(mine.work, kindOf(game.step))) return;
     if (done) game.done.add(playerId);
     else game.done.delete(playerId);
     ctx.rooms.emitState(room);

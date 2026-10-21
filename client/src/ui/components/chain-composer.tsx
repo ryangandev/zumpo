@@ -14,7 +14,10 @@ export interface ChainComposerProps {
   helper: string;
   value: string;
   onValueChange: (value: string) => void;
-  /** Done: the line is kept and waits; the field is read-only until Keep editing. */
+  /**
+   * Done: the line is kept and waits; the field is read-only until Keep
+   * editing. A blank line cannot be Done.
+   */
   done: boolean;
   /** Beside Keep editing once done: "Done. Waiting for Leo and Sam." */
   doneMessage: string;
@@ -47,10 +50,12 @@ export function ChainComposer({
   const keepEditing = useRef<HTMLButtonElement>(null);
   // Done takes the field and itself away, and Keep editing gives them back.
   useFocusFollows(done, form, keepEditing, field);
+  // A blank line is never Done; the button keeps its focus meanwhile.
+  const blank = value.trim() === '';
   // Enter is Done, as a form's submit.
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!done) onDone();
+    if (!done && !blank) onDone();
   };
   return (
     <form
@@ -98,7 +103,13 @@ export function ChainComposer({
                 {m.ui.chain.suggest}
               </Button>
             )}
-            <Button type="submit" icon="check" className={styles.done}>
+            <Button
+              type="submit"
+              icon="check"
+              className={styles.done}
+              disabled={blank}
+              focusableWhenDisabled
+            >
               {m.ui.chain.done}
             </Button>
           </div>

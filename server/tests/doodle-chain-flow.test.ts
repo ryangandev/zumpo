@@ -54,7 +54,10 @@ async function playToWrite<const Names extends readonly [string, ...string[]]>(
   return { ...seated, first: await write };
 }
 
-/** Each player writes their line, or nothing for null, and presses Done. */
+/**
+ * Each player writes their line and presses Done, or for null leaves it
+ * empty, which Done refuses, for the clock to take.
+ */
 function writeAll(
   players: readonly TestClient[],
   roomId: string,
@@ -62,7 +65,8 @@ function writeAll(
 ) {
   players.forEach((player, index) => {
     const line = lines[index];
-    if (line) player.emit('dc:text', roomId, { text: line });
+    if (!line) return;
+    player.emit('dc:text', roomId, { text: line });
     player.emit('dc:done', roomId, true);
   });
 }
@@ -74,14 +78,18 @@ function scribble(player: TestClient, roomId: string, x = 10) {
   player.emit('dc:draw:end', roomId);
 }
 
-/** Each player draws a scribble, or nothing for false, and presses Done. */
+/**
+ * Each player draws a scribble and presses Done, or for false leaves the
+ * canvas empty, for the clock to take.
+ */
 function drawAll(
   players: readonly TestClient[],
   roomId: string,
   draws: readonly boolean[],
 ) {
   players.forEach((player, index) => {
-    if (draws[index]) scribble(player, roomId, 10 + index);
+    if (!draws[index]) return;
+    scribble(player, roomId, 10 + index);
     player.emit('dc:done', roomId, true);
   });
 }
@@ -240,6 +248,9 @@ describe('Doodle Chain', () => {
     it('ends early once everybody with something to do is done', async () => {
       const { roomId, players, owner } = await playToWrite(harness, THREE);
       const [maya, ryan, leo] = players;
+      for (const player of players) {
+        player.emit('dc:text', roomId, { text: 'a line' });
+      }
       maya.emit('dc:done', roomId, true);
       ryan.emit('dc:done', roomId, true);
       const table = await waitForDoodleChainState(
@@ -260,6 +271,38 @@ describe('Doodle Chain', () => {
       for (const player of [maya, leo]) player.emit('dc:done', roomId, true);
       const done = await passing;
       expect(done.phaseEndsInMs).toBeLessThanOrEqual(150);
+    });
+
+    it('refuses Done on an empty entry, so empty means the time ran out', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const [maya, ryan, leo] = players;
+      maya.emit('dc:text', roomId, { text: '   ' });
+      maya.emit('dc:done', roomId, true);
+      ryan.emit('dc:done', roomId, true);
+      leo.emit('dc:text', roomId, { suggestion: 4 });
+      leo.emit('dc:done', roomId, true);
+      const table = await waitForDoodleChainState(
+        owner,
+        (s) => s.table[leo.playerId]?.done === true,
+      );
+      expect(table.table[maya.playerId]?.done).toBe(false);
+      expect(table.table[ryan.playerId]?.done).toBe(false);
+
+      writeAll([maya, ryan], roomId, ['one', 'two']);
+      await at(owner, 'draw', 2);
+      // A blank canvas cannot be Done, and nor can one cleared after a stroke.
+      maya.emit('dc:done', roomId, true);
+      scribble(ryan, roomId);
+      ryan.emit('dc:draw:clear', roomId);
+      ryan.emit('dc:done', roomId, true);
+      scribble(leo, roomId);
+      leo.emit('dc:done', roomId, true);
+      const drawing = await waitForDoodleChainState(
+        owner,
+        (s) => s.table[leo.playerId]?.done === true,
+      );
+      expect(drawing.table[maya.playerId]?.done).toBe(false);
+      expect(drawing.table[ryan.playerId]?.done).toBe(false);
     });
 
     it('keeps whatever is there when the clock runs out, and fills an empty prompt', async () => {

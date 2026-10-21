@@ -104,6 +104,12 @@ const createWork = (): Work => ({
   canvas: { strokes: [], pointCount: 0 },
 });
 
+/** Whether `work` holds nothing yet for a step of `kind`. */
+const isBlank = (work: Work, kind: DoodleChainKind) =>
+  kind === 'drawing'
+    ? work.canvas.strokes.length === 0
+    : work.suggestion === null && !work.text;
+
 /** The phases a step is being played in, when every player has a task. */
 const IN_STEP: ReadonlySet<DoodleChainPhase> = new Set([
   'write',
@@ -270,6 +276,7 @@ export {
   createWork,
   heartsFor,
   IN_STEP,
+  isBlank,
   isEmpty,
   isShown,
   lastMade,
