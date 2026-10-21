@@ -98,11 +98,10 @@ export function RulesDialog({
       <div className={styles.full}>
         <Button
           variant="quiet"
-          icon="chevron-down"
+          icon={full ? 'chevron-up' : 'chevron-down'}
           aria-expanded={full}
           aria-controls={rulesId}
           onClick={() => setFull(!full)}
-          className={styles.toggle}
         >
           {full ? m.room.hideFullRules : m.room.fullRules}
         </Button>

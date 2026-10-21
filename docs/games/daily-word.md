@@ -149,6 +149,7 @@ Each round's word is drawn at random from the answer list, never twice in a game
 While a round runs, every player sees everybody else's board as marks only: the colours and shapes of each row, how many guesses they have made, and whether they have found the word or are out of guesses, never a letter.
 Your own board has your letters and the keyboard.
 Once you have found the word or used your six guesses, you watch the others' boards until the round ends.
+On a desktop, How to read it sits under the others' boards, the same legend of marks as on your own (DW07, DW08); a phone has no room beside the board, so until somebody finds the word its turn bar says how to read the marks instead (DW13).
 
 ### Scoring
 

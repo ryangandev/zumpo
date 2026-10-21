@@ -18,7 +18,7 @@ They are not copied here, so there is one place to change them.
 | Section                              | Id          | Contents                                                                              |
 | ------------------------------------ | ----------- | ------------------------------------------------------------------------------------- |
 | 00 / Review guide & flow map         | `9:14700`   | Review order, the real rules, which UX is new                                         |
-| 01 / Platform & shared flows         | `9:431`     | P01-P20 without P04, desktop                                                          |
+| 01 / Platform & shared flows         | `9:431`     | P01-P21 without P04, desktop                                                          |
 | 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D15 room, desktop                                            |
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
 | 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px                                      |
@@ -92,6 +92,8 @@ On a phone it drops the wordmark, puts the tags under the game and keeps the two
 Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16), and it is 160 px shorter than the old pair on a desktop and 80 px on a phone.
 
 - A room has no links out but the wordmark: How to play opens over the room (P15), so a game is never lost to a rules check.
+  It says how to play, not how the room is set: the goal, then `Zumpo/How to play`'s steps with the score last, and Full rules opens the game's whole rules under them (P21).
+- A waiting card ends with the game in half a minute, `Zumpo/How to play` with its heading and goal, under a line (D01-D03, M01-M03, DC03, DC04, P19, P20), so a friend who came from an invite link knows the game before it starts.
 - Leave room between games leaves at once; nothing is at stake and the click says what it means.
 - Every other way out asks first, mid-game and between games: Leave room mid-game, the wordmark and the browser's back button.
   Changing your name is not a way out: it happens in place, so it never asks.
@@ -184,6 +186,8 @@ Code differs from Figma on purpose in a few places:
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
 - Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
+- A Code Breaker or Daily Word room's phone turn bar reads how to read the marks until somebody cracks the code or finds the word; CB18 and DW13 draw it after Maya has, so they show her name there.
+- Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
