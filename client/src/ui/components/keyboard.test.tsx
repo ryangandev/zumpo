@@ -2,6 +2,7 @@ import { LocaleProvider } from '../../i18n';
 import { render as renderRaw, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
+import { DigitPad } from './digit-pad';
 import { Keyboard } from './keyboard';
 import { WordBoard } from './word-board';
 
@@ -38,6 +39,33 @@ describe('Keyboard', () => {
     expect(onLetter).toHaveBeenCalledWith('q');
     expect(onEnter).toHaveBeenCalledOnce();
     expect(onDelete).toHaveBeenCalledOnce();
+  });
+});
+
+describe('DigitPad', () => {
+  it('keeps the focus on a key while a guess is in flight, and ignores it', async () => {
+    const user = userEvent.setup();
+    const onEnter = vi.fn<() => void>();
+    const pad = (disabled: boolean) => (
+      <DigitPad
+        onNoting={() => {}}
+        onDigit={() => {}}
+        onEnter={onEnter}
+        onDelete={() => {}}
+        disabled={disabled}
+      />
+    );
+    const { rerender } = render(pad(false));
+    const enter = screen.getByRole('button', { name: 'Enter' });
+    enter.focus();
+    await user.keyboard('{Enter}');
+    expect(onEnter).toHaveBeenCalledOnce();
+
+    rerender(pad(true));
+    expect(enter).toHaveFocus();
+    expect(enter).toHaveAttribute('aria-disabled', 'true');
+    await user.keyboard('{Enter}');
+    expect(onEnter).toHaveBeenCalledOnce();
   });
 });
 

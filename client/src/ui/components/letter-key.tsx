@@ -64,11 +64,13 @@ export function LetterKey({
         kind !== 'letter' && styles.wide,
         styles[state],
       )}
-      disabled={disabled}
+      // A key stays focusable while it waits, so a keyboard user on Enter
+      // keeps their place when a guess is in flight.
+      aria-disabled={disabled || undefined}
       // A click keeps the focus where it was, so a real keyboard's Enter
       // submits the row rather than pressing this key again.
       onMouseDown={(event) => event.preventDefault()}
-      onClick={onPress}
+      onClick={disabled ? undefined : onPress}
     >
       {kind === 'delete' ? (
         <Icon glyph="back" size={20} />
