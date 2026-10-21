@@ -418,7 +418,7 @@ describe('Doodle Chain', () => {
       await at(owner, 'draw', 2);
       const skipped = await at(owner, 'passing', 3, 6000);
       expect(skipped.stepEnd).toBe('skipped');
-      expect(Object.values(skipped.table).every((seat) => seat.sitsOut)).toBe(
+      expect(Object.values(skipped.table).every((place) => place.sitsOut)).toBe(
         true,
       );
       // No clock runs for the step itself: only the pause after it.
