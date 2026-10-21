@@ -697,6 +697,29 @@ describe('a Doodle Chain room', () => {
     ).toBeTruthy();
   });
 
+  it('stops what scrolls into view above the album’s held foot, and only while it is there', async () => {
+    const root = document.documentElement;
+    const { unmount } = await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+          ],
+          chains: [{ owner: RYAN, entries: ryansChain }],
+          favourites: [],
+        },
+      }),
+    );
+
+    expect(root.style.getPropertyValue('scroll-padding-bottom')).toMatch(
+      /^\d+px$/,
+    );
+    unmount();
+    expect(root.style.getPropertyValue('scroll-padding-bottom')).toBe('');
+  });
+
   it('gives nobody a place when nobody gave a heart', async () => {
     await renderSeated(
       doodleChainState({

@@ -287,6 +287,23 @@ function Reveal({ room }: { room: Room }) {
   );
 }
 
+/**
+ * The album's foot is held over the bottom of the window, so whatever the
+ * keyboard or a scroll brings into view stops above it, never under it.
+ */
+function holdOverFoot(foot: HTMLDivElement) {
+  const root = document.documentElement;
+  const hold = () =>
+    root.style.setProperty('scroll-padding-bottom', `${foot.offsetHeight}px`);
+  hold();
+  const observer = new ResizeObserver(hold);
+  observer.observe(foot);
+  return () => {
+    observer.disconnect();
+    root.style.removeProperty('scroll-padding-bottom');
+  };
+}
+
 /** DC14, DC20: every chain to read again, and the hearts they were given. */
 function Album({
   room,
@@ -375,7 +392,7 @@ function Album({
         />
       )}
       {!phone && (
-        <div className={styles.albumFoot}>
+        <div ref={holdOverFoot} className={styles.albumFoot}>
           <hr className={styles.divider} />
           {actions}
         </div>
