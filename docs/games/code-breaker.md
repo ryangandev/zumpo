@@ -238,22 +238,24 @@ The client checks the digits before sending, so only a stale or modified client 
 | `RECONNECT_GRACE_SECONDS`     | `30`    | How long a dropped player keeps their seat |
 
 `CODE_BREAKER_SEED` is for test runs, never production: `npm run design:compare` sets it so a room plays Figma's story on codes it knows.
-The codes are still drawn by the rules above, never twice in a game and never a daily code; only the randomness is fixed.
+The codes are still drawn by the rules above, never twice in a game and never a daily code near today; only the randomness is fixed.
 
 ## Where the code lives
 
-Planned; the game is designed and not built yet.
+| File                                                                                        | Responsibility                                                                               |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [`shared/code-breaker.ts`](../../shared/code-breaker.ts)                                    | Marks, guess checks, puzzle numbers, the code calendar, the practice deal and the share grid |
+| [`module.ts`](../../server/socket/code-breaker/module.ts)                                   | What the room layer calls, and all it calls                                                  |
+| [`game-engine.ts`](../../server/socket/code-breaker/game-engine.ts)                         | The round loop, guesses and scores                                                           |
+| [`state.ts`](../../server/socket/code-breaker/state.ts)                                     | The game's state, and the snapshot each player is sent                                       |
+| [`code-breaker/draft.ts`](../../client/src/code-breaker/draft.ts)                           | The row being typed and the notes, as both modes keep them                                   |
+| [`code-breaker/play.tsx`](../../client/src/code-breaker/play.tsx)                           | Your board, the line under it, the pad with its notes, and typing on a real keyboard         |
+| [`code-breaker/panel.tsx`](../../client/src/code-breaker/panel.tsx)                         | The board's paper panel and the legend of the pegs                                           |
+| [`code-breaker/solo/`](../../client/src/code-breaker/solo/)                                 | The daily code and practice codes on your own, and the records kept on the device            |
+| [`code-breaker/room.tsx`](../../client/src/code-breaker/room.tsx)                           | A room's screens                                                                             |
+| [`ui/components/code-board.tsx`](../../client/src/ui/components/code-board.tsx)             | `Zumpo/Code board`, drawn from Digit tiles and Code marks                                    |
+| [`ui/components/code-race-board.tsx`](../../client/src/ui/components/code-race-board.tsx)   | `Zumpo/Code race board`, a board in a round's results                                        |
+| [`ui/components/code-marks-board.tsx`](../../client/src/ui/components/code-marks-board.tsx) | `Zumpo/Code marks board`, another player's pegs while a code is open                         |
 
-| File                                                                | Responsibility                                                                               |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [`shared/code-breaker.ts`](../../shared/code-breaker.ts)            | Marks, guess checks, puzzle numbers, the code calendar, the practice deal and the share grid |
-| [`module.ts`](../../server/socket/code-breaker/module.ts)           | What the room layer calls, and all it calls                                                  |
-| [`game-engine.ts`](../../server/socket/code-breaker/game-engine.ts) | The round loop, guesses and scores                                                           |
-| [`state.ts`](../../server/socket/code-breaker/state.ts)             | The game's state, and the snapshot each player is sent                                       |
-| [`code-breaker/solo/`](../../client/src/code-breaker/solo/)         | The daily code and practice codes on your own                                                |
-| [`code-breaker/play.tsx`](../../client/src/code-breaker/play.tsx)   | Your board, the line under it, the pad with its notes, and typing on a real keyboard         |
-| [`code-breaker/room.tsx`](../../client/src/code-breaker/room.tsx)   | A room's screens                                                                             |
-
-The rules are to be covered by `code-breaker-rules.test.ts` and `code-breaker-flow.test.ts` in `server/tests/`.
-`e2e/code-breaker.spec.ts` is to play a two-player game and a solo day in a browser, guessing as a player would, from the marks.
+The rules are covered by [`code-breaker-rules.test.ts`](../../server/tests/code-breaker-rules.test.ts) and [`code-breaker-flow.test.ts`](../../server/tests/code-breaker-flow.test.ts), and a two-player game and a solo day by [`e2e/code-breaker.spec.ts`](../../e2e/code-breaker.spec.ts), guessing as a player would, from the marks.
 The screens are CB01-CB21 in [the Figma file](../design.md).

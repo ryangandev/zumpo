@@ -47,7 +47,7 @@ Three early Paper Pop concepts (`3:53`, `3:54`, `3:55`) sit above the flows for 
 - The shared canvas keeps the 798 × 598 bitmap's ratio; the Large Minesweeper board on mobile pans horizontally.
 - Some screens are UX the old app never had: the final results panel, the leave confirmation, the invite sheet, mobile tabs and the rules dialog; Ryan approved them with the rest of the file.
 - Mobile covers the main flows, not a mobile version of every desktop state.
-  Make 24, Pairs, Trios, Liar's Dice, Hush, Daily Word and Snap keep their phone screens in their own sections, and Minesweeper solo's (MS05) in 03.
+  Make 24, Pairs, Trios, Liar's Dice, Hush, Daily Word, Snap and Code Breaker keep their phone screens in their own sections, and Minesweeper solo's (MS05) in 03.
 - Every visitor has a name from the first page on, so every screen shows the viewer's avatar, solo screens included.
 - Prototype links are partial; this is a design, not a clickable spec of every control.
 
@@ -55,7 +55,7 @@ Decisions from the design review rounds (their reports are in git history):
 
 - One page lists every game: the home page (P01, MO01) is also the games page, so there is no separate games hub and the hero has no buttons to it; Ryan chose this on 2026-10-05.
   Each game is a `Zumpo/Game card`, a tile four across on a desktop and a row on a phone, whose icon is the game's signature piece.
-  Games are sorted by kind, not by player count, because seven of the nine play both on your own and in a room and every game has rooms: Party, Puzzles and Spot & remember, each kind and its games in alphabetical order.
+  Games are sorted by kind, not by player count, because eight of the ten play both on your own and in a room and every game has rooms: Party, Puzzles and Spot & remember, each kind and its games in alphabetical order.
   How a game can be played stays on its card as paper tags: Solo, where it has a game on your own, then the player count ("2–8 players"); Ryan asked on 2026-10-08 for the two to be separate tags.
   The page ends with the games: no notice under them on how solo and rooms start, since each game's page says how to play it; Ryan removed it on 2026-10-08.
   A row of `Zumpo/Filter chip`s above the games shows one kind; on a phone each kind also has a heading, because the list is long.
