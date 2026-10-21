@@ -8,6 +8,7 @@ import {
   type TurnBarProps,
 } from '../ui';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import styles from './board.module.css';
 
 /** One card on the board, with the label over it. */
@@ -70,9 +71,15 @@ export function SnapBoard({ middle, mine, onTap }: SnapBoardProps) {
 
 /**
  * The turn bar over the cards. It keeps room for the most it says at its
- * width, a long name and the meta under it, so a phase that says less never
- * pulls the cards up under a finger.
+ * width, the meta under what it says, so a phase that says less never pulls
+ * the cards up under a finger. A room's says who took a card, and a long
+ * name takes two lines on a phone.
  */
-export function SnapTurnBar(props: TurnBarProps) {
-  return <TurnBar {...props} className={styles.turnBar} />;
+export function SnapTurnBar({
+  names = false,
+  ...props
+}: TurnBarProps & { names?: boolean }) {
+  return (
+    <TurnBar {...props} className={cx(styles.turnBar, names && styles.names)} />
+  );
 }

@@ -160,6 +160,7 @@ function Play({ room }: { room: Room }) {
   return (
     <>
       <SnapTurnBar
+        names
         {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)}
       />
       <SnapBoard
