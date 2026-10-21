@@ -82,6 +82,18 @@ export const games = {
     seeResult: 'See today’s result',
   },
   /** The setting a room was made with, counted: "2 rounds", "10 hands". */
+  /** The words in the games' artwork, which show a game being played. */
+  artwork: {
+    /**
+     * Draw & Guess: the word the turtle was guessed as. Its words are
+     * English in every language, so the artwork says it as players type it.
+     */
+    drawn: 'turtle',
+    /** Doodle Chain: the line the chain starts from, in any language. */
+    chainLine: 'turtle',
+    /** Doodle Chain: what the next player made of the drawing. */
+    chainGuess: 'burger?',
+  },
   counts: <Record<CountedGame, (count: number) => string>>{
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
     'make-24': (hands) => plural(hands, 'hand'),

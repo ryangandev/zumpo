@@ -51,7 +51,8 @@ export const notices: typeof en = {
       n.unit === 'die' ? `还剩 ${n.points} ${unit}` : `${n.points} ${unit}`;
     return `游戏结束：${list(n.names)} ${n.names.length === 1 ? '获胜' : '并列获胜'}，${result}！`;
   },
-  'dg:started': (n) => `游戏开始！本局词语类别是“${category(n.category)}”！`,
+  'dg:started': (n) =>
+    `游戏开始！本局词语类别是“${category(n.category)}”，词语都是英文单词，请用英文猜！`,
   'dg:drawer-left': (_n) => '画画的玩家离开了房间，进入下一回合。',
   'dg:drawer-lost': (_n) => '画画的玩家连接中断，进入下一回合。',
   'dg:drawer-timeout': (_n) => '画画的玩家未能回来，进入下一回合。',

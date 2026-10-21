@@ -290,7 +290,9 @@ There is no runtime library: `useMessages()` returns the current language's cata
 Code outside React takes the catalog as a parameter rather than importing a language.
 English grammar helpers (`plural`, `countWord`) live in `en/` because they are English, and `zh/` writes its own.
 
-What stays English on purpose: the wordmark, the footer's `zumpo. / play a little`, and the games' own content, because the Draw & Guess word bank and Daily Word's words are gameplay content; a Chinese word bank would be its own feature.
+What stays English on purpose: the wordmark, the footer's `zumpo. / play a little`, the home hero's FUN tiles, and the games' own content, because the Draw & Guess word bank and Daily Word's words are gameplay content; a Chinese word bank would be its own feature.
+So the Chinese pages say up front that Draw & Guess's words are English, in its tagline, goal, rules, waiting card and the notice as a game starts, and its artwork's word stays the English one a player would type.
+The other words in the games' artwork are the reader's, from `games.artwork` in the catalog: Doodle Chain's lines are in any language.
 A player's name is theirs, in any script; a first visit's random name is picked in the visitor's language, so a Chinese visitor starts as 活泼水獭 rather than Sleepy Otter.
 
 Pages switch at once when the language changes: `LocaleProvider` wraps the app above the session, holds the locale, and sets `<html lang>` so fonts and screen readers follow.
