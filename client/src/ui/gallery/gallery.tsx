@@ -1670,15 +1670,16 @@ export default function Gallery() {
         <div className={styles.cellRow}>
           {(
             [
-              ['regular', 'Desktop'],
-              ['small', 'Phone'],
+              ['regular', 'Desktop', 564],
+              ['small', 'Phone', 350],
             ] as const
-          ).map(([boardSize, layout]) => (
+          ).map(([boardSize, layout, width]) => (
             <Specimen
               key={layout}
               family="gomoku-board"
               variant={`Layout=${layout}`}
               label={`${layout}, won`}
+              width={width}
             >
               <GomokuBoard
                 stones={GOMOKU_STONES}
@@ -1689,8 +1690,9 @@ export default function Gallery() {
               />
             </Specimen>
           ))}
-          <Specimen label="Your turn, Black">
+          <Specimen label="Your turn, Black" width={350}>
             <GomokuBoard
+              size="small"
               stones={GOMOKU_STONES.map((stone, point) =>
                 point === GOMOKU_LINE[4] ? null : stone,
               )}
@@ -1739,7 +1741,6 @@ export default function Gallery() {
                     }
                     color={color}
                     state={seatState}
-                    you={color === 'black'}
                   />
                 </Specimen>
               );
