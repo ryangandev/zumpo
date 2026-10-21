@@ -24,10 +24,12 @@ export function Page({
   children: ReactNode;
 }) {
   const m = useMessages();
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
   const { viewer, viewerMenu } = useViewer();
   const box = useRef<HTMLDivElement>(null);
-  useLandingFocus(box);
+  // The page the browser loaded is the browser's to focus; the router keys
+  // it 'default'.
+  useLandingFocus(box, key !== 'default');
 
   const links = LINKS.map(({ label, to, section }) => ({
     label: m.shell.nav[label],
@@ -59,9 +61,6 @@ export function Page({
   );
 }
 
-/** Whether a page has been shown yet: the first one is the browser's to focus. */
-let shown = false;
-
 /** How long a page may take to bring its heading, as a room connects. */
 const LANDING_MS = 5000;
 
@@ -78,12 +77,10 @@ const HEADINGS = ['main h1', 'main h2', 'h1'];
  * as a game's board or a password field, stays there, and a game starting
  * takes the focus from the heading (`LANDING`, useStartFocus).
  */
-function useLandingFocus(page: RefObject<HTMLElement | null>) {
+function useLandingFocus(page: RefObject<HTMLElement | null>, goneTo: boolean) {
   useEffect(() => {
-    const first = !shown;
-    shown = true;
     const element = page.current;
-    if (first || !element) return;
+    if (!goneTo || !element) return;
     const land = () => {
       const active = document.activeElement;
       if (active && active !== document.body) return true;
@@ -119,7 +116,7 @@ function useLandingFocus(page: RefObject<HTMLElement | null>) {
     window.addEventListener('keydown', stop, true);
     window.addEventListener('pointerdown', stop, true);
     return stop;
-  }, [page]);
+  }, [page, goneTo]);
 }
 
 /**
