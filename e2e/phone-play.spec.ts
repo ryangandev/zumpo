@@ -435,6 +435,22 @@ for (const size of SIZES) {
         'describing',
       );
       await heldStill(done, 'describing');
+      for (const page of [maya, ...others]) {
+        await write(page, 'Your description', 'A cat, I think');
+      }
+
+      // The host shows the chains an entry at a time, from the same place.
+      const next = maya.getByRole('button', {
+        name: /^(Next|Next chain|See the album)$/,
+      });
+      const showing = await heldStill(next, 'the first entry');
+      for (let shown = 2; shown <= 4; shown++) {
+        await next.click();
+        await expect(
+          turnOf(maya).getByText(`${((shown - 1) % 3) + 1} of 3 shown`),
+        ).toBeVisible();
+        await showing(`entry ${shown}`);
+      }
     });
   });
 }
