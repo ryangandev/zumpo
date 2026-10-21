@@ -123,19 +123,7 @@
 .phone .actions {
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: flex-end;
   align-items: stretch;
-}
-
-/* Under a board in play or just played, the actions keep the room for two
-   lines of words over a row of buttons, the buttons at its foot: so the
-   board keeps its size and place from a game to its results and on to the
-   next, and Place stone and Ready are in one place. */
-.phone:has([data-play-board]) .actions {
-  min-height: calc(
-    2 * var(--zumpo-text-body-line) + var(--zumpo-space-12) +
-      var(--zumpo-space-48)
-  );
 }
 
 /* The buttons share a row; a line of words, such as how the next game
