@@ -46,6 +46,22 @@ function readyAt(level: number) {
   });
 }
 
+/** Two players getting ready for the given level, and the viewer watching. */
+function watchingAt(level: number) {
+  return {
+    ...readyAt(level),
+    table: {
+      p2: { held: 0, ready: false },
+      p3: { held: 0, ready: false },
+    },
+    playerList: {
+      p2: { username: 'Maya', points: 0, isConnected: true },
+      p3: { username: 'Sam', points: 0, isConnected: true },
+    },
+    spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+  };
+}
+
 describe('a Hush room', () => {
   it('lets the host start, and says how long the game is', async () => {
     const user = userEvent.setup();
@@ -115,24 +131,12 @@ describe('a Hush room', () => {
   });
 
   it('says the rule to a spectator before the first deal too', async () => {
-    const watching = (level: number) => ({
-      ...readyAt(level),
-      table: {
-        p2: { held: 0, ready: false },
-        p3: { held: 0, ready: false },
-      },
-      playerList: {
-        p2: { username: 'Maya', points: 0, isConnected: true },
-        p3: { username: 'Sam', points: 0, isConnected: true },
-      },
-      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
-    });
-    const { update } = await renderSeated(watching(1));
+    const { update } = await renderSeated(watchingAt(1));
     expect(
       screen.getByText(/^No turns, no talking: play your lowest card/),
     ).toBeInTheDocument();
 
-    update(watching(2));
+    update(watchingAt(2));
     expect(
       screen.getByText('You’re watching. The team plays without a word.'),
     ).toBeInTheDocument();
