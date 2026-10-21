@@ -25,7 +25,6 @@ import {
 } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
-import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
@@ -58,7 +57,6 @@ export function GomokuRoom() {
   const summary = last && sameSeats(state) ? last : null;
   const mine = colorOf(state, playerId);
   const myTurn = playing && state.turnPlayerId === playerId && !reconnecting;
-  useTurnTitle(myTurn);
   // A phone's results say what the next game waits on in the turn bar.
   const note = useResultsNote(room.starting);
 
@@ -114,6 +112,7 @@ export function GomokuRoom() {
     <RoomLayout
       // No standings over the board: the seats under the board say who is who.
       standings={false}
+      yourTurn={myTurn}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }
@@ -275,7 +274,10 @@ function seatsOf(room: Room, phone: boolean, m: Messages): SeatView[] {
     return {
       key: side.playerId,
       name: seat.username,
-      detail: m.gomoku.seat(color, notes || undefined),
+      // A phone's seat is one line: its stone shows the colour.
+      detail: phone
+        ? m.gomoku.phoneSeat(notes)
+        : m.gomoku.seat(color, notes || undefined),
       avatar: avatar(seat.username),
       color,
       state: turn ? 'turn' : won ? 'won' : 'default',

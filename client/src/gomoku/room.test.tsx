@@ -100,6 +100,14 @@ describe('a Gomoku room', () => {
     expect(scoreboard().getByText('White')).toBeInTheDocument();
   });
 
+  it('on a phone, gives each seat one line, its stone showing the colour', async () => {
+    onPhone();
+    await renderSeated(myTurn);
+    // The turn bar's label, and Ryan's seat.
+    expect(screen.getAllByText('Your turn')).toHaveLength(2);
+    expect(screen.queryByText(/^(Black|White)\b/)).toBeNull();
+  });
+
   it('places a stone with a click, holding it faint until the server answers', async () => {
     const user = userEvent.setup();
     const { fake, update } = await renderSeated(myTurn);

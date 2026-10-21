@@ -18,6 +18,11 @@ export const gomoku = {
   /** A seat's line under the name: "Black · your turn", or just "White". */
   seat: (color: GomokuColor, note?: string) =>
     note ? `${COLOR[color]} · ${note}` : COLOR[color],
+  /**
+   * A phone's one-line seat says only the note, "Your turn", after the name:
+   * the stone before the name shows the colour.
+   */
+  phoneSeat: (note: string) => note.charAt(0).toUpperCase() + note.slice(1),
   notes: {
     yourTurn: 'your turn',
     thinking: 'thinking',

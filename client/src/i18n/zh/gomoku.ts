@@ -14,6 +14,7 @@ export const gomoku: typeof en = {
   color: (color) => `${COLOR[color]}方`,
   seat: (color, note) =>
     note ? `执${COLOR[color]} · ${note}` : `执${COLOR[color]}`,
+  phoneSeat: (note) => note,
   notes: {
     yourTurn: '轮到你',
     thinking: '思考中',

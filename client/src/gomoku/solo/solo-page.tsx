@@ -254,7 +254,7 @@ function SoloBoard({
               : undefined,
             label: m.gomoku.board,
           }}
-          seats={seatsOf(game, name, m)}
+          seats={seatsOf(game, name, phone, m)}
           actions={
             tapTwice
               ? // Place stone is always there in a game, live once a faint
@@ -355,15 +355,23 @@ function deviceStats(
 }
 
 /** You and the computer, Black's seat first. */
-function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
+function seatsOf(
+  game: SoloGame,
+  yourName: string,
+  phone: boolean,
+  m: Messages,
+): SeatView[] {
   const turn = game.over ? null : toMove(game);
   const computer = m.gomoku.solo.computer;
+  // A phone's seat is one line: its stone shows the colour.
+  const detail = (color: GomokuColor, note?: string) =>
+    phone ? m.gomoku.phoneSeat(note ?? '') : m.gomoku.seat(color, note);
   const you: SeatView = {
     key: 'you',
     name: yourName,
     avatar: { initials: initialsOf(yourName), tone: toneOf(yourName) },
     color: game.color,
-    detail: m.gomoku.seat(
+    detail: detail(
       game.color,
       turn === game.color
         ? m.gomoku.notes.yourTurn
@@ -380,7 +388,7 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
     name: computer,
     avatar: { initials: initialsOf(computer), tone: 'coral' },
     color: theirs,
-    detail: m.gomoku.seat(
+    detail: detail(
       theirs,
       turn === theirs
         ? m.gomoku.solo.thinking

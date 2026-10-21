@@ -10,7 +10,10 @@ export type GomokuSeatState = 'default' | 'turn' | 'won';
 
 export interface GomokuSeatProps {
   name: string;
-  /** Under the name: "Black · your turn", "White · Medium", "Here". */
+  /**
+   * Under the name: "Black · your turn", "White · Medium", "Here"; after it
+   * in a compact seat, where the stone says the colour: "Your turn".
+   */
   detail: string;
   /** The player's avatar; a free seat has none. */
   avatar?: { initials: string; tone: AvatarTone };
@@ -19,8 +22,8 @@ export interface GomokuSeatProps {
   state?: GomokuSeatState;
   you?: boolean;
   /**
-   * A phone's seat, one of two side by side under the board: the stone
-   * before the name, and no avatar.
+   * A phone's seat, one of two one under the other below the board: one
+   * line, the stone before the name, no avatar, and the detail at its end.
    */
   compact?: boolean;
   className?: string;
@@ -56,7 +59,7 @@ export function GomokuSeat({
             <span className={styles.name}>{name}</span>
             {you && <Tag>{m.ui.you}</Tag>}
           </div>
-          <span className={styles.detail}>{detail}</span>
+          {detail && <span className={styles.detail}>{detail}</span>}
         </div>
       </div>
       {color && <Stone color={color} size={compact ? 'small' : undefined} />}

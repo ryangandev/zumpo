@@ -70,8 +70,9 @@
   color: var(--zumpo-ink);
 }
 
-/* A phone's seat beside the other: the stone first, then the name and the
-   detail, each on one line. */
+/* A phone's seat, one line: the stone first, then the name, and the detail
+   at the line's end. The name gives way first; a detail with no room left
+   beside it takes a line of its own rather than an ellipsis. */
 .compact {
   flex-direction: row-reverse;
   justify-content: flex-end;
@@ -79,7 +80,25 @@
   padding: var(--zumpo-space-8) var(--zumpo-space-12);
 }
 
+.compact .player {
+  flex: 1 1 0;
+}
+
+.compact .details {
+  flex: 1 1 0;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--zumpo-space-2) var(--zumpo-space-12);
+}
+
+.compact .nameLine {
+  flex: 0 1 auto;
+}
+
 .compact .detail {
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
