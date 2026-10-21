@@ -1,6 +1,6 @@
 import type { RoomNotice } from '../../../../shared/wire-types.js';
 import { bidWords, foundWords } from '../../../../shared/liars-dice.js';
-import { duration } from './plural';
+import { duration } from './plural.js';
 
 const who = (name: string): string => name || 'A player';
 
