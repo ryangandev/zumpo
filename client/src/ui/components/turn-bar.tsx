@@ -136,7 +136,8 @@ function useOneLine(
       element.style.removeProperty('transform');
       element.removeAttribute('data-wrap');
     };
-    if (!enabled) {
+    // Measured again for each new label; an empty one has nothing to fit.
+    if (!enabled || !text) {
       reset();
       return;
     }

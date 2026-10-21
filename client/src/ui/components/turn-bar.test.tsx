@@ -32,6 +32,9 @@ const bar = (props: { labelOnPhone?: boolean; category?: string } = {}) => (
 
 const section = () => screen.getByRole('region', { name: 'Turn' });
 
+/** The bar's meta line. */
+const line = () => section().querySelector('[class*="meta"]');
+
 describe('TurnBar', () => {
   it('shows its label on a phone unless the page already names it', () => {
     barWidth(328);
@@ -64,7 +67,6 @@ describe('TurnBar', () => {
     barWidth(328);
     const { container, rerender } = render(bar());
     expect(container.firstElementChild!.className).toMatch(/narrow/);
-    const line = () => section().querySelector('[class*="meta"]');
     expect(line()).toHaveTextContent('Six guesses. Practice keeps no stats.');
 
     // Without a meta the line stays, so the board under the bar keeps its place.
