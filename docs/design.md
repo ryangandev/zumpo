@@ -105,6 +105,8 @@ Decisions from the design review rounds (their reports are in git history):
 - Example data follows one story with four players (Maya, Ryan, Leo, Sam), each with a fixed avatar colour, and every score is computed with the real formula.
 - Text on a tinted surface (peach, blue, lime) is ink; muted text is only for cream, paper and sand, where it passes WCAG AA.
 - Keyboard focus is a 2 px ink ring 2 px outside the control, distinct from hover's border.
+  A focus moved by script, as a game starts, a result comes, a page is gone to or How to play opens on its title, draws no ring until the next key (`focusQuietly`), so a touch or a click never leaves a frame nobody asked for.
+  A control handed the focus right after a key, as the word choices after Enter on Start game, keeps its ring; a heading or a region is quiet either way.
 - A line of metadata has at most one middle dot.
 - An icon beside text is centred on the text's first line, never top-aligned: a leading icon sits in a slot one line-height tall (`height: 1lh` in code), so a wrapped message keeps it level with line one.
   Trailing indicators, like the check on a selected option, centre on the whole row.
@@ -193,6 +195,7 @@ On such a window 1240 px wide or more (`SHORT_WIDE`), Daily Word's keyboard and 
 [The widths spec](../e2e/widths.spec.ts) plays every game and checks, at seven widths from 1280 to 320 px, that nothing reaches out of what holds it.
 
 On a phone a game in play is one screen tall, as section 15 draws it: no footer, the Phone room bar, a turn bar of fixed height whose main line is scaled down rather than wrapped, the board, and at the foot what the player touches.
+The turn bar's meta, often the only instruction on screen, has a line of its own there, wrapped rather than cut, and kept while there is no meta.
 The board sits in [`PlayBoard`](../client/src/shell/play-board.tsx), which scales it to the height the rest leaves it, or, below a least scale, keeps that scale and scrolls, keeping the row in play in view.
 So the keypad, the keyboard, the picker or the button that acts now is on screen from the first move and never moves during a game.
 A row that comes and goes, such as Trios's last trio or Make 24's signs, keeps its room out of sight while it is not there.
@@ -228,7 +231,7 @@ Code differs from Figma on purpose in a few places:
 - The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
 - On a phone Hush's table is one screen (#149): the pile is scaled to the height between the head and the hand, down to 0.3, so on a 360 by 640 phone the top card is about 70 by 90 px; Figma's HU10 and HU11 are tall frames that draw it at full size.
   The cards under the top one scroll beside it, the newest kept in view, and a level dealing more cards than fit in one row scales the hand down to the width, keeping the room of cards already played for the whole level; Figma draws neither.
-  Until `s-fig-1-hush-phone-table.js` runs, HU10 and HU11 still draw the old phone table: the pile as a column, the hand in Regular cards and the hearts with their words.
+  Until `s-fig-1-hush-phone-table.js` runs, HU10 and HU11 still draw the old phone table: the pile as a column, the hand in Regular cards and the hearts with their words; code sets the parts 12 apart, not 24.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
 - The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
@@ -296,6 +299,11 @@ Code differs from Figma on purpose in a few places:
 - A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 - Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
+- Until `j-fig-8-phone-turn-meta-line.js` runs, the Phone turn bar sets the tag, the label and the meta on one first line; at 560 px or narrower code gives the tag and the meta a line of their own under the main line, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
+  Gomoku, whose words fit the one row, keeps it (TurnBar `stackOnPhone={false}`), so its board keeps that height.
+  The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
+  On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
+- The Phone room bar's line under the game is one text in Figma; code keeps its phase whole and ends only a room's name too long for the rest of the line in an ellipsis, so "Game over" is never cut to "Game ov…" at 360 px.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file

@@ -88,8 +88,11 @@ describe('Daily Word on your own', () => {
     expect(screen.getByRole('group', { name: 'Keyboard' })).toBeInTheDocument();
     await guess(TODAY);
 
-    // The result says how it went, and has the focus the keyboard had.
-    expect(screen.getByRole('heading', { name: 'Found in 6.' })).toHaveFocus();
+    // The result says how it went, and has the focus the keyboard had, with
+    // no ring round it until the next key.
+    const title = screen.getByRole('heading', { name: 'Found in 6.' });
+    expect(title).toHaveFocus();
+    expect(title).toHaveAttribute('data-quiet-focus');
     // The same nodes, not a finished copy: nothing moves or resizes.
     expect(screen.getByRole('group', { name: 'Your guesses' })).toBe(board);
     expect(panel.isConnected).toBe(true);
