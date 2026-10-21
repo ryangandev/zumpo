@@ -342,14 +342,14 @@ describe('a game’s page', () => {
         .getAllByRole('region')
         .map((region) => region.querySelector('h3')?.textContent),
     ).toEqual(['On your own', 'Play together']);
-    // The steps both share are said once, on your own.
+    // Each stands on its own, so a step the two share is said in both.
     const together = within(howToPlay).getByRole('region', {
       name: 'Play together',
     });
     expect(together).toHaveTextContent(
       'Share one board, and pick safe cells in secret.',
     );
-    expect(together).not.toHaveTextContent('A number counts the mines');
+    expect(together).toHaveTextContent('A number counts the mines');
     expect(
       within(howToPlay).getByRole('region', { name: 'On your own' }),
     ).toHaveTextContent('your first click is always safe');

@@ -329,9 +329,9 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
       howToPlay: {
         goal: 'Bid on what the whole table rolled, call the bluffs, and keep your dice.',
         steps: [
-          'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face, so a bid names a face from 2 to 6.',
-          'On your turn, raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
-          'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does.',
+          'Everybody rolls in secret, then you bid in turn round the table. A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild, so a bid names a face from 2 to 6.',
+          'You have 20 seconds to raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
+          'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does. Whoever lost it opens the next round.',
         ],
         score:
           'Lose your last die and you are out. The last player with dice wins.',
@@ -504,7 +504,7 @@ On your own, there is one code a day, the same for everybody, and a new one at y
       howToPlay: {
         goal: 'Be the first to make five in a row.',
         steps: [
-          'Black moves first, then you take turns placing one stone on any empty point.',
+          'Colours are drawn for the first game, and Black moves first. Then you take turns placing one stone on any empty point.',
           'Five or more in a row wins: across, down or diagonally.',
           'You have 30 seconds a move. Miss two turns in a row and you lose.',
         ],

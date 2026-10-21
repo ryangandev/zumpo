@@ -134,8 +134,8 @@ function Loading() {
 
 /**
  * How to play, in the order of the intro's buttons: on your own first, for a
- * game that has it, then in a room, which leaves out the steps the two
- * share. Full rules opens every rule in place.
+ * game that has it, then in a room, each whole on its own. Full rules opens
+ * every rule in place.
  */
 function Rules({ game }: { game: GameInfo }) {
   const m = useMessages();
@@ -157,10 +157,7 @@ function Rules({ game }: { game: GameInfo }) {
       <HowToPlay
         heading={m.lobby.playTogether}
         goal={room.goal}
-        steps={[
-          ...room.steps.filter((step) => !solo?.steps.includes(step)),
-          room.score,
-        ]}
+        steps={[...room.steps, room.score]}
       />
       <FullRules game={game.type} />
     </aside>
