@@ -64,25 +64,24 @@
   }
 }
 
-/* The lines: 1 px through the middle of every point. */
+/* The lines: 1 px through the middle of every point, drawn from the same
+   --cell as the points, so they meet the stones at any size and offset. */
 .lines {
   position: absolute;
-  top: calc(var(--pad) + var(--cell) / 2 - 0.5px);
-  left: calc(var(--pad) + var(--cell) / 2 - 0.5px);
-  width: calc(14 * var(--cell) + 1px);
-  height: calc(14 * var(--cell) + 1px);
-  background:
-    repeating-linear-gradient(
-      to right,
-      var(--zumpo-muted) 0 1px,
-      transparent 1px var(--cell)
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      var(--zumpo-muted) 0 1px,
-      transparent 1px var(--cell)
-    );
+  top: calc(var(--pad) + var(--cell) / 2);
+  left: calc(var(--pad) + var(--cell) / 2);
+  width: calc(14 * var(--cell));
+  height: calc(14 * var(--cell));
+  overflow: visible;
   pointer-events: none;
+  shape-rendering: crispEdges;
+}
+
+.lines path {
+  fill: none;
+  stroke: var(--zumpo-muted);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
 }
 
 .row {

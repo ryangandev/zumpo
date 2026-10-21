@@ -52,6 +52,11 @@ const STARS = new Set(STAR_POINTS);
 /** 0 to 14: the rows down the board, and the columns across it. */
 const LINES = Array.from({ length: SIZE }, (_, index) => index);
 
+/** The 15 lines down and 15 across, one unit apart, through every point. */
+const GRID = LINES.map(
+  (line) => `M${line} 0V${SIZE - 1}M0 ${line}H${SIZE - 1}`,
+).join('');
+
 /** A step of the arrow keys, in columns and in rows up the board. */
 const STEPS: Readonly<Record<string, readonly [number, number]>> = {
   ArrowLeft: [-1, 0],
@@ -149,7 +154,14 @@ export function GomokuBoard({
           }
         }}
       >
-        <span className={styles.lines} aria-hidden="true" />
+        <svg
+          className={styles.lines}
+          viewBox={`0 0 ${SIZE - 1} ${SIZE - 1}`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d={GRID} />
+        </svg>
         {LINES.map((row) => (
           <div key={row} role="row" className={styles.row}>
             {LINES.map((column) => {
