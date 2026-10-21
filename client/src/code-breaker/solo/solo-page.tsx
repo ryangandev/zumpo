@@ -141,7 +141,7 @@ function OpenBoard({
   const m = useMessages();
   const { problem } = game.draft;
   return (
-    <BoardPanel>
+    <BoardPanel fitHeight>
       <PlayArea
         rows={rowsOf(game)}
         draft={game.draft}

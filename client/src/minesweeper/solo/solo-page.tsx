@@ -12,6 +12,7 @@ import {
   type TurnBarProps,
 } from '../../ui';
 import { useMessages, type Messages } from '../../i18n';
+import { useFitHeight } from '../../shell/fit-height';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { ChangeSettings } from '../../solo/change-settings';
 import {
@@ -141,6 +142,8 @@ function SoloGameView({
   const clock = useSoloTime();
   const now = useClock(game.status === 'playing' && !clock.paused, clock.now);
   const over = game.status === 'won' || game.status === 'lost';
+  // A Medium board's 44 px cells would run past a laptop's window.
+  const panel = useFitHeight<HTMLDivElement>();
 
   const play = (next: SoloGame) => {
     if (next === game) return;
@@ -190,7 +193,7 @@ function SoloGameView({
       stage={
         <>
           <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
-          <div className={styles.boardPanel}>
+          <div ref={panel} className={styles.boardPanel}>
             <MineGrid width={game.width} height={game.height} cell={cell} />
             {!over && (
               <div

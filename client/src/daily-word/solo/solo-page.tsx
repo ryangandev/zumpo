@@ -164,7 +164,7 @@ function DailyView({
         stage={
           <>
             <TurnBar {...playingBar(game, title, m.dailyWord.dailyFresh, m)} />
-            <BoardPanel>
+            <BoardPanel fitHeight>
               <PlayArea
                 rows={rowsOf(game)}
                 typed={game.typed}
@@ -290,7 +290,7 @@ function PracticeView({
                 m,
               )}
             />
-            <BoardPanel>
+            <BoardPanel fitHeight>
               <PlayArea
                 rows={rowsOf(game)}
                 typed={game.typed}

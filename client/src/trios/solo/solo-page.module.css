@@ -3,10 +3,13 @@
   align-self: stretch;
 }
 
-/* TS01: three mini cards that make a trio, and what makes them one. */
+/* TS01's three mini cards that make a trio, then what makes them one, in the
+   side column's width. */
 .example {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
   gap: var(--zumpo-space-12);
 }
 

@@ -1,11 +1,26 @@
 import { useMessages } from '../i18n';
 import type { ReactNode } from 'react';
 import { LetterTile } from '../ui';
+import { useFitHeight } from '../shell/fit-height';
 import styles from './panel.module.css';
 
-/** The paper panel a board is played on (DW01-DW10); bare on a phone. */
-export function BoardPanel({ children }: { children: ReactNode }) {
-  return <div className={styles.panel}>{children}</div>;
+/**
+ * The paper panel a board is played on (DW01-DW10); bare on a phone. On your
+ * own, `fitHeight` keeps the board and its keys inside the window.
+ */
+export function BoardPanel({
+  children,
+  fitHeight = false,
+}: {
+  children: ReactNode;
+  fitHeight?: boolean;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  return (
+    <div ref={ref} className={styles.panel}>
+      {children}
+    </div>
+  );
 }
 
 /** DW01-DW03: what the three marks mean, beside a board on your own. */
