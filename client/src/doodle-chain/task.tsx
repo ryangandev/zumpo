@@ -272,7 +272,8 @@ const kindNow = (state: DoodleChainRoomState) => kindOf(state.step);
 
 /**
  * Why the step before the passing ended: its clock ran out, everybody was
- * done early, or nobody had anything to do in it.
+ * done early, or nobody had anything to do in it. A step everybody playing
+ * left ends plainly, neither done nor out of time.
  */
 function stepEndLine(state: DoodleChainRoomState, m: Messages): string {
   switch (state.stepEnd) {
@@ -280,6 +281,8 @@ function stepEndLine(state: DoodleChainRoomState, m: Messages): string {
       return m.doodleChain.everyoneDone;
     case 'skipped':
       return m.doodleChain.stepSkipped;
+    case 'left':
+      return m.doodleChain.stepOver;
     default:
       return m.doodleChain.timesUp;
   }

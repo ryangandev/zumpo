@@ -106,6 +106,8 @@ export const doodleChain = {
   timesUp: 'Time’s up!',
   everyoneDone: 'Everyone’s done!',
   stepSkipped: 'Nothing to play this step',
+  /** A step whose players all left before it ended. */
+  stepOver: 'This step is over',
   /** Why a step nobody could play was skipped, by what it asked for. */
   skippedWhy: {
     prompt: 'Every chain moves one place on.',

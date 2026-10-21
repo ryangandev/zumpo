@@ -433,6 +433,19 @@ describe('a Doodle Chain room', () => {
     expect(turn().getByText('Your line goes to Maya.')).toBeInTheDocument();
   });
 
+  it('ends a step plainly when everybody playing it left', async () => {
+    await renderSeated({
+      ...writing,
+      phase: 'passing',
+      phaseEndsInMs: 3_000,
+      stepEnd: 'left',
+    });
+
+    expect(turn().getByText('This step is over')).toBeInTheDocument();
+    expect(turn().queryByText('Everyone’s done!')).toBeNull();
+    expect(turn().queryByText('Time’s up!')).toBeNull();
+  });
+
   it('says why a step nobody could play was skipped', async () => {
     const empty = {
       ...leosLine,

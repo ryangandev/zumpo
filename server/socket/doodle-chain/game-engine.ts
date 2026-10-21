@@ -199,11 +199,17 @@ const createDoodleChainGameEngine = (
     else emitToPlayer(ctx.io, playerId, 'dc:drawing', room.roomId, id, strokes);
   };
 
-  /** Everybody with something to do has pressed Done: the rest is dead time. */
+  /**
+   * Everybody with something to do has pressed Done, or has left: the rest is
+   * dead time. A step whose players all left was not finished by anybody, so
+   * it is not told as "Everyone's done!".
+   */
   const endIfAllDone = (room: DoodleChainRoom) => {
     const game = room.game;
     if (!room.isGameStarted || !IN_STEP.has(game.phase)) return;
-    if (workers(room).every((playerId) => game.done.has(playerId))) {
+    const here = workers(room);
+    if (here.length === 0) finishStep(room, 'left');
+    else if (here.every((playerId) => game.done.has(playerId))) {
       finishStep(room, 'done');
     }
   };

@@ -292,6 +292,34 @@ describe('Doodle Chain', () => {
       expect(describing.stepEnd).toBeUndefined();
     });
 
+    it('ends a step plainly when everybody with something to do leaves it', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, [
+        'Maya',
+        'Ryan',
+        'Leo',
+        'Sam',
+        'Ada',
+      ]);
+      writeAll(players, roomId, ['one', 'two', 'three', 'four', 'five']);
+      await at(owner, 'draw', 2);
+      // Three drawings come back empty, so three sit the describing out.
+      drawAll(players, roomId, [true, true, false, false, false]);
+      const describing = await Promise.all(
+        players.map((p) => at(p, 'describe', 3, 6000)),
+      );
+      const working = players.filter(
+        (_, index) => describing[index]!.task?.sitsOut === false,
+      );
+      const staying = players.filter((p) => !working.includes(p));
+      expect(working).toHaveLength(2);
+
+      const passing = at(staying[0]!, 'passing', 3);
+      for (const player of working) player.emit('room:leave', roomId);
+      const ended = await passing;
+      expect(ended.stepEnd).toBe('left');
+      expect(ended.phaseEndsInMs).toBeGreaterThan(0);
+    });
+
     it('refuses Done on an empty entry, so empty means the time ran out', async () => {
       const { roomId, players, owner } = await playToWrite(harness, THREE);
       const [maya, ryan, leo] = players;

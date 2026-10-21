@@ -1041,10 +1041,11 @@ type DoodleChainKind = 'prompt' | 'drawing' | 'description';
  */
 /**
  * Why a step ended, shown while the chains pass on: its clock ran out,
- * everybody with something to do pressed Done, or nobody had anything to do,
- * because every entry it would follow came back empty.
+ * everybody with something to do pressed Done, nobody had anything to do,
+ * because every entry it would follow came back empty, or everybody with
+ * something to do left the table mid-step.
  */
-type DoodleChainStepEnd = 'time' | 'done' | 'skipped';
+type DoodleChainStepEnd = 'time' | 'done' | 'skipped' | 'left';
 
 type DoodleChainPhase =
   'waiting' | 'write' | 'draw' | 'describe' | 'passing' | 'reveal';

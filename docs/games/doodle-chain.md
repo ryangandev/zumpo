@@ -59,6 +59,7 @@ The steps run `write`, then `draw` and `describe` in turn, with `passing` after 
 
 `passing` is there so the change of step is something you see rather than a jolt: your drawing stops, the screen says why the step ended and whom your entry goes to, and three seconds later the next thing to draw or describe arrives.
 It says "Time's up!" only when the clock ran out, "Everyone's done!" when everybody finished early, and that there was nothing to play when the step was skipped (see [Sitting a step out](#sitting-a-step-out)).
+A step that ends because everybody with something to do left the table says only "This step is over", since nobody finished it.
 
 ### Done
 

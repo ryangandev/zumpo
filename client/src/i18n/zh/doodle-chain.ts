@@ -86,6 +86,7 @@ export const doodleChain: typeof en = {
   timesUp: '时间到！',
   everyoneDone: '大家都完成了！',
   stepSkipped: '这一步没有可做的',
+  stepOver: '这一步结束了',
   skippedWhy: {
     prompt: '每条传话都往下传一位。',
     drawing: '上一步的描述都是空的，没人有字可画。',
