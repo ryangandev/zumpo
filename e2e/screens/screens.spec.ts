@@ -592,6 +592,8 @@ test('a Draw & Guess game', async ({ player }) => {
       await watcher.page.getByRole('button', { name: 'Stay' }).click();
       await watcher.page.getByRole('button', { name: 'How to play' }).click();
       await shot(watcher.page, 'P15');
+      await watcher.page.getByRole('button', { name: 'Full rules' }).click();
+      await shot(watcher.page, 'P21');
       await watcher.page
         .getByRole('button', { name: 'Back to the game' })
         .click();

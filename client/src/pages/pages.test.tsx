@@ -340,19 +340,20 @@ describe('a game’s page', () => {
     expect(
       within(howToPlay)
         .getAllByRole('region')
-        .map((region) => region.getAttribute('aria-labelledby')),
-    ).toEqual(['game-rules-solo', 'game-rules-room']);
+        .map((region) => region.querySelector('h3')?.textContent),
+    ).toEqual(['On your own', 'Play together']);
+    // Each stands on its own, so a step the two share is said in both.
     const together = within(howToPlay).getByRole('region', {
       name: 'Play together',
     });
-    expect(
-      within(together)
-        .getAllByRole('listitem')
-        .map((fact) => fact.textContent),
-    ).toContain('15s to pick · 4s reveal');
+    expect(together).toHaveTextContent(
+      'Share one board, and pick safe cells in secret.',
+    );
+    expect(together).toHaveTextContent('A number counts the mines');
     expect(
       within(howToPlay).getByRole('region', { name: 'On your own' }),
-    ).toHaveTextContent('Your first click is always safe');
+    ).toHaveTextContent('your first click is always safe');
+    expect(howToPlay).not.toHaveTextContent('15s to pick');
 
     const full = within(howToPlay).getByRole('button', { name: 'Full rules' });
     expect(full).toHaveAttribute('aria-expanded', 'false');

@@ -18,6 +18,9 @@ export const ui = {
   seatsTaken: (players: number, seats: number) =>
     `${players} of ${seats} seats taken`,
   turn: 'Turn',
+  /** Opens every rule of a game under its short version, and closes them again. */
+  fullRules: 'Full rules',
+  hideFullRules: 'Hide the full rules',
   room: {
     leave: 'Leave room',
     howToPlay: 'How to play',

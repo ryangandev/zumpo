@@ -67,6 +67,8 @@ export const dailyWord = {
     present: 'In the word, somewhere else',
     absent: 'Not in the word',
   },
+  /** A phone's legend, in the turn bar: it has no column beside the board. */
+  legendLine: 'Green: right place. Coral: somewhere else.',
   freshPrompt: 'Type a five-letter word, then press Enter.',
   nextPrompt: 'Enter checks the word. Backspace takes a letter back.',
   wordNumber: (puzzle: number) => `Word #${puzzle}`,

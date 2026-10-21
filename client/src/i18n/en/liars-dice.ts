@@ -97,7 +97,7 @@ export const liarsDice = {
     record: (wins: number, games: number, run: number) =>
       `You have won ${wins} of ${plural(games, 'game')} here.${run > 1 ? ` You are on a run of ${run} wins.` : ''}`,
     description:
-      'Bid on the whole table, bluff a little, and call the bots’ bluffs.',
+      'A bid says how many dice on the whole table show one face, and ones count as any face.',
     pickTable: 'Pick a table.',
     leaveWarning: 'This game ends here, and it is not counted.',
     start: 'Start',

@@ -48,63 +48,11 @@
 .rules {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: var(--zumpo-space-16);
   padding: var(--zumpo-space-32);
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-24);
   background: var(--zumpo-lime);
-}
-
-.mode {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-4);
-}
-
-.modeTitle {
-  font: var(--zumpo-text-label);
-  letter-spacing: var(--zumpo-text-label-tracking);
-}
-
-.rulesText,
-.facts {
-  font: var(--zumpo-text-body);
-  letter-spacing: var(--zumpo-text-body-tracking);
-  white-space: pre-line;
-}
-
-.facts {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-4);
-  margin: 0;
-  padding-left: var(--zumpo-space-24);
-}
-
-.fullRules svg {
-  transition: transform 120ms ease-out;
-}
-
-.fullRules[aria-expanded='true'] svg {
-  transform: rotate(180deg);
-}
-
-/* Every rule, one paragraph after another, under Full rules once open. */
-.full {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-12);
-}
-
-.full[hidden] {
-  display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fullRules svg {
-    transition: none;
-  }
 }
 
 @media (max-width: 1100px) {

@@ -62,6 +62,7 @@ export const dailyWord: typeof en = {
     present: '在单词中，但位置不对',
     absent: '不在单词中',
   },
+  legendLine: '绿色：位置正确。珊瑚色：在别处。',
   freshPrompt: '输入一个 5 字母英文单词，按回车确认。',
   nextPrompt: '回车检查单词，退格删除字母。',
   wordNumber: (puzzle) => `单词 #${puzzle}`,

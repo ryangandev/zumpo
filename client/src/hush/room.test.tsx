@@ -33,6 +33,35 @@ const chatBox = () => screen.getByRole('textbox', { name: 'Message' });
 /** The celebration's canvas; the room has no other. */
 const confetti = () => document.querySelector('canvas[aria-hidden]');
 
+/** Both seats getting ready for the given level. */
+function readyAt(level: number) {
+  return hushState({
+    isGameStarted: true,
+    phase: 'ready',
+    level,
+    table: {
+      p1: { held: 0, ready: false },
+      p2: { held: 0, ready: false },
+    },
+  });
+}
+
+/** Two players getting ready for the given level, and the viewer watching. */
+function watchingAt(level: number) {
+  return {
+    ...readyAt(level),
+    table: {
+      p2: { held: 0, ready: false },
+      p3: { held: 0, ready: false },
+    },
+    playerList: {
+      p2: { username: 'Maya', points: 0, isConnected: true },
+      p3: { username: 'Sam', points: 0, isConnected: true },
+    },
+    spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+  };
+}
+
 describe('a Hush room', () => {
   it('lets the host start, and says how long the game is', async () => {
     const user = userEvent.setup();
@@ -84,6 +113,33 @@ describe('a Hush room', () => {
     );
     expect(turn().getByText('Waiting for Maya.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'I’m ready' })).toBeNull();
+  });
+
+  it('says the rule before the first deal, and only then', async () => {
+    const { update } = await renderSeated(readyAt(1));
+    expect(
+      screen.getByText(/^No turns, no talking: play your lowest card/),
+    ).toBeInTheDocument();
+
+    update(readyAt(2));
+    expect(screen.queryByText(/^No turns, no talking/)).toBeNull();
+    expect(
+      screen.getByText(
+        'The chat locks when the level starts, and opens when it ends.',
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('says the rule to a spectator before the first deal too', async () => {
+    const { update } = await renderSeated(watchingAt(1));
+    expect(
+      screen.getByText(/^No turns, no talking: play your lowest card/),
+    ).toBeInTheDocument();
+
+    update(watchingAt(2));
+    expect(
+      screen.getByText('You’re watching. The team plays without a word.'),
+    ).toBeInTheDocument();
   });
 
   it('counts down with the hands dealt and the chat locked', async () => {

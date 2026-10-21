@@ -9,7 +9,6 @@ export const lobby: typeof en = {
     setting ? `房主 ${name} · ${setting}` : `房主 ${name}`,
   watching: (count) => `${count} 人观战`,
   howToPlay: '玩法',
-  fullRules: '完整规则',
   createRoom: '创建房间',
   emptyTitle: '这里还很安静。',
   emptyDescription: '创建第一个房间，叫上朋友一起玩。',

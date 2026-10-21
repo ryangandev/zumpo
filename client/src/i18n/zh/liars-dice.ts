@@ -79,7 +79,7 @@ export const liarsDice: typeof en = {
   solo: {
     record: (wins, games, run) =>
       `你在这里玩了 ${games} 局，赢了 ${wins} 局。${run > 1 ? `目前连胜 ${run} 局。` : ''}`,
-    description: '对全桌叫点，偶尔吹个牛，也拆穿电脑对手的谎话。',
+    description: '叫点是说全桌有几颗骰子是某个点数，1 点算任意点数。',
     pickTable: '选一桌。',
     leaveWarning: '这局到此结束，不计入战绩。',
     start: '开始',
