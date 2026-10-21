@@ -310,3 +310,17 @@ test('doodle chain fits every width', async ({ player }) => {
   await maya.getByRole('button', { name: 'Done' }).click();
   await fitsEveryWidth(maya, 'done, waiting for the others');
 });
+
+test('gomoku fits every width', async ({ player }) => {
+  const sam = await player('Sam');
+  await sam.goto('/games/gomoku/solo');
+  await startSolo(sam);
+  await expect(sam.getByText('Move 1').first()).toBeVisible();
+  await fitsEveryWidth(sam, 'a board on your own');
+  const maya = await player('Maya');
+  const leo = await player('Leo');
+  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  await start(maya);
+  await expect(maya.getByText('Game 1').first()).toBeVisible();
+  await fitsEveryWidth(maya, 'a board in a room');
+});

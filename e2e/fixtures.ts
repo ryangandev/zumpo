@@ -19,7 +19,8 @@ export type GameType =
   | 'liars-dice'
   | 'hush'
   | 'daily-word'
-  | 'doodle-chain';
+  | 'doodle-chain'
+  | 'gomoku';
 
 export interface PlayerOptions {
   /** Browser language, independent for each player in a mixed-language room. */
