@@ -243,6 +243,9 @@ Routes live in [`app.tsx`](../client/src/app.tsx), on a data router so a room ca
 
 Every page opens without asking for anything first: a first visit is given a random name, changed in place from the Name menu ([design](design.md#names)).
 The room URL carries the game so that a page which cannot reach the room (a password, a room that moved on) still knows which game it belongs to; a link with the wrong game in it redirects to the right one.
+A locked room's invite link also carries its invite key after a `#key=`, which `room:join` takes in place of the password, so a friend with the link sits straight down; Ryan approved this in #62, and the password itself only keeps strangers from the lobby list out.
+The key is random, made with the room, and sent only in members' snapshots, so the password a host typed, which they may use elsewhere, never goes into a link or a browser history, and a fragment never reaches a server log.
+Once seated the page drops the fragment from the address.
 
 ### Talking to the server
 
@@ -253,7 +256,7 @@ The room URL carries the game so that a page which cannot reach the room (a pass
   `setName` saves a new name and sends `player:rename`, which Socket.IO holds until it is back online if it is not.
   Its status (`connecting`, `online`, `reconnecting`, `failed`) is what pages show, and `connection` numbers the live connection anew on every `session:ready` (null while offline), so anything the server keeps per connection is set up again by an effect keyed on it.
 - **`use-lobby.ts`** subscribes to one game's rooms while online.
-- **`use-room.ts`** takes a seat: `room:sync` first, then `room:join` when the server says this player has no seat, then the password page if the room has one.
+- **`use-room.ts`** takes a seat: `room:sync` first, then `room:join` when the server says this player has no seat, with the invite key when the link had one, then the password page if the room still asks for one.
   It keeps the latest snapshot and when it arrived, the chat, and the drawing as a `CanvasStream`, which lives outside React because a stroke grows dozens of times a second.
   A `notRoomMember` answer after the page has held a seat means the seat was released while away, which the page reports rather than quietly rejoining.
 - Requests use `emitWithAck` with a 10 second timeout, and a request that times out is treated as a failure the page can show.

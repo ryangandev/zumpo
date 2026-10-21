@@ -75,7 +75,12 @@ const roomEventsHandler = (
         reply(failure('roomNotOpen', 'Room is not open.'));
         return;
       }
-      if (room.password && room.password !== password) {
+      // The invite link's key opens the room as the password does.
+      if (
+        room.password &&
+        password !== room.password &&
+        password !== room.inviteKey
+      ) {
         reply(
           failure('incorrectPassword', 'Incorrect password. Please try again.'),
         );

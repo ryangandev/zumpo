@@ -7,7 +7,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Navigate, useBlocker, useNavigate, type Location } from 'react-router';
+import {
+  Navigate,
+  useBlocker,
+  useLocation,
+  useNavigate,
+  type Location,
+} from 'react-router';
 import type { ErrorType, GameType } from '../../../shared/wire-types';
 import { Button, ButtonLink, Card, TextField } from '../ui';
 import { gameInfo, gamePath, roomPath } from '../games/catalog';
@@ -54,7 +60,13 @@ export default function RoomPage({
   roomId: string;
 }) {
   const m = useMessages();
-  const connection = useRoom(roomId);
+  // An invite link to a locked room carries its key: #key=…, read once, since
+  // the room drops it from the address once seated.
+  const { hash } = useLocation();
+  const [invite] = useState(
+    () => new URLSearchParams(hash.slice(1)).get('key') ?? '',
+  );
+  const connection = useRoom(roomId, invite);
   const { stage } = connection;
 
   switch (stage.kind) {
@@ -158,6 +170,19 @@ export default function RoomPage({
         />
       );
   }
+}
+
+/**
+ * The room's invite link: its address, and for a locked room the key that
+ * lets a friend in without the password.
+ */
+function inviteLink(state: {
+  gameType: GameType;
+  roomId: string;
+  inviteKey: string;
+}) {
+  const address = `${window.location.origin}${roomPath(state.gameType, state.roomId)}`;
+  return state.inviteKey ? `${address}#key=${state.inviteKey}` : address;
 }
 
 /** P08: the seat was released while this player was away. */
@@ -278,8 +303,21 @@ function SeatedRoom({
   const m = useMessages();
   const { socket, playerId, reconnectGraceMs } = useSession();
   const navigate = useNavigate();
+  const location = useLocation();
   const { state, receivedAt } = snapshot;
   const [inviting, setInviting] = useState(false);
+
+  // Seated, the invite key has done its work: the address goes back to the
+  // room's own, which a reload or a bookmark finds the seat by.
+  const hasHash = location.hash !== '';
+  useEffect(() => {
+    if (hasHash) {
+      void navigate(
+        { pathname: location.pathname, search: location.search },
+        { replace: true },
+      );
+    }
+  }, [hasHash, navigate, location.pathname, location.search]);
   const [starting, setStarting] = useState(false);
   const [moving, setMoving] = useState(false);
   const [refusal, setRefusal] = useState<string | null>(null);
@@ -464,7 +502,7 @@ function SeatedRoom({
         open={inviting}
         onOpenChange={setInviting}
         roomName={roomNameOf(state, m)}
-        link={`${window.location.origin}${roomPath(state.gameType, state.roomId)}`}
+        link={inviteLink(state)}
       />
       <LeaveDialog
         open={blocked && !sure}

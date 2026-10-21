@@ -1,5 +1,5 @@
 import { failure, invalidRequest } from '../../models/error.js';
-import { generateRoomId } from '../utils.js';
+import { generateInviteKey, generateRoomId } from '../utils.js';
 import { parseArgs, roomCreateRequest, gameTypeOnly } from '../validation.js';
 import type { RoomMembership } from './membership.js';
 import type { RoomRegistry } from './registry.js';
@@ -126,6 +126,7 @@ const lobbyEventsHandler = (
       owner: { username, playerId },
       maxPlayers,
       password,
+      inviteKey: password ? generateInviteKey() : '',
       playerList: {
         [playerId]: { username, points: 0, isConnected: true },
       },

@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
 import type {
   PlayerInfo,
   Standing,
@@ -18,6 +18,12 @@ import type {
 const generateRoomId = (): string => {
   return randomUUID();
 };
+
+/**
+ * A locked room's invite key: 96 random bits, 16 URL-safe characters, short
+ * enough to go where a password goes and too long to guess.
+ */
+const generateInviteKey = (): string => randomBytes(12).toString('base64url');
 
 const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
@@ -93,6 +99,7 @@ export {
   gameOverNotice,
   standingsOf,
   generateRoomId,
+  generateInviteKey,
   getRandomInt,
   getRemainingPhaseMs,
   getRandomElementFromSet,

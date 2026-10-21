@@ -64,9 +64,10 @@ export interface RoomConnection {
 /**
  * A room page's connection to its room: it takes a seat (asking for the
  * password if it must), keeps the latest snapshot and the chat, and takes the
- * seat back after a dropped connection.
+ * seat back after a dropped connection. `invite` is the key an invite link
+ * carried, which a locked room takes in place of its password.
  */
-export function useRoom(roomId: string): RoomConnection {
+export function useRoom(roomId: string, invite = ''): RoomConnection {
   const session = useConnectedSession();
   const { socket, status, connection, name } = session;
 
@@ -240,9 +241,10 @@ export function useRoom(roomId: string): RoomConnection {
         setProblem({ kind: 'expired' });
         return;
       }
-      // Not seated yet: arriving from the list or a link. Try without a
-      // password first; a private room answers by asking for one.
-      await settle(await join(''), '', isCurrent);
+      // Not seated yet: arriving from the list or a link. Try with the
+      // link's key, or with nothing; a private room answers by asking for
+      // its password, as for a key from a room that no longer takes it.
+      await settle(await join(invite), '', isCurrent);
     })();
 
     return () => {
@@ -260,7 +262,17 @@ export function useRoom(roomId: string): RoomConnection {
       socket.off('dc:drawing', onDrawing);
       socket.off('server:closing', onClosing);
     };
-  }, [connection, socket, roomId, canvas, drawings, sync, join, settle]);
+  }, [
+    connection,
+    socket,
+    roomId,
+    invite,
+    canvas,
+    drawings,
+    sync,
+    join,
+    settle,
+  ]);
 
   const submitPassword = useCallback(
     (password: string) => {

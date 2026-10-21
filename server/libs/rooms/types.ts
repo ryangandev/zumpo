@@ -43,6 +43,14 @@ interface Room<TGameState = unknown> {
   maxPlayers: number;
   /** Never leaves the process. The wire carries `hasPassword`. */
   password: string;
+  /**
+   * '' for an unlocked room. Otherwise a random key that the room's invite
+   * link carries and `room:join` takes in place of the password, so a friend
+   * with the link sits straight down, and the password a host typed, which
+   * they may use elsewhere, never goes into a link. Sent only to the room's
+   * own members, in their snapshots.
+   */
+  inviteKey: string;
   playerList: Record<string, PlayerInfo>;
   /**
    * Who is watching. Kept apart from `playerList` so that a game, which reads

@@ -73,14 +73,15 @@ const lobbyBasics = (room: Room): Omit<LobbyRoomInfo, 'gameType'> => ({
 
 /**
  * What every game's snapshot says of a room, the game aside: who is at the
- * table and who is watching, and the clock.
+ * table and who is watching, the clock, and the key for its invite link.
  */
 const roomBasics = (
   room: Room,
 ): Pick<
   RoomState,
-  'playerList' | 'spectators' | 'isGameStarted' | 'phaseEndsInMs'
+  'playerList' | 'spectators' | 'isGameStarted' | 'phaseEndsInMs' | 'inviteKey'
 > => ({
+  inviteKey: room.inviteKey,
   playerList: room.playerList,
   spectators: room.spectators,
   isGameStarted: room.isGameStarted,

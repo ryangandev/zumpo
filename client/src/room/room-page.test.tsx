@@ -34,6 +34,8 @@ function server({ password = '' } = {}) {
   return fake;
 }
 
+const players = () => within(screen.getByRole('region', { name: /^Players/ }));
+
 describe('a room page', () => {
   it('renders tied results and the viewer’s place in Chinese', async () => {
     const fake = server();
@@ -120,11 +122,30 @@ describe('a room page', () => {
     expect(within(bar).queryByRole('link', { name: 'Games' })).toBeNull();
   });
 
+  it('takes a seat in a locked room with the invite link’s key, then drops it from the address', async () => {
+    const fake = server({ password: 'k3y-from-link' });
+    const { router } = await renderApp(`${ROOM}#key=k3y-from-link`, { fake });
+
+    expect(fake.requests.find((r) => r.event === 'room:join')!.args).toEqual([
+      'r1',
+      'Ryan',
+      'k3y-from-link',
+      null,
+    ]);
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ hasPassword: true, inviteKey: 'k3y-from-link' }),
+      ),
+    );
+    expect(screen.queryByLabelText('Room password')).toBeNull();
+    await vi.waitFor(() => expect(router.state.location.hash).toBe(''));
+    expect(router.state.location.pathname).toBe(ROOM);
+  });
+
   it('lists who is here before a first game, with no scores or Waiting yet', async () => {
     const fake = server();
     await renderApp(ROOM, { fake });
-    const players = () =>
-      within(screen.getByRole('region', { name: /^Players/ }));
     act(() =>
       fake.serverEmits(
         'room:state',
@@ -401,6 +422,27 @@ describe('a room page', () => {
     expect(
       within(dialog).getByRole('textbox', { name: 'Room link' }),
     ).toHaveValue(`${window.location.origin}${ROOM}`);
+  });
+
+  it('invites to a locked room with a link that carries its key', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ hasPassword: true, inviteKey: 'Zq9-k3y_8Bf2LmPw' }),
+      ),
+    );
+    await user.click(
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
+    );
+    const dialog = await screen.findByRole('dialog', {
+      name: 'Invite friends',
+    });
+    expect(
+      within(dialog).getByRole('textbox', { name: 'Room link' }),
+    ).toHaveValue(`${window.location.origin}${ROOM}#key=Zq9-k3y_8Bf2LmPw`);
     await vi.waitFor(() =>
       expect(
         within(dialog).getByRole('button', { name: 'Copy' }),
