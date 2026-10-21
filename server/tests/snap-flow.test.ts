@@ -371,10 +371,10 @@ describe('a Snap game', () => {
     );
     const said = waitForChat(
       players[2],
-      (m) => m.kind === 'system' && textOf(m).startsWith('Game has started'),
+      (m) => m.kind === 'system' && textOf(m).startsWith('Game started'),
     );
     await startGame(owner, roomId);
-    expect(textOf(await said)).toBe('Game has started! 28 cards to win.');
+    expect(textOf(await said)).toBe('Game started: 28 cards to win.');
   });
 
   it('ends early when too few players are left', async () => {

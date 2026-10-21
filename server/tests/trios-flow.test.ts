@@ -163,7 +163,7 @@ describe('a claim', () => {
     // The trio stays where it lay while it is on show.
     expect(view.table).toEqual(first.table);
     expect(view.phaseEndsInMs).toBeGreaterThan(0);
-    expect(textOf(await chat)).toBe('Bob found a trio! (+1)');
+    expect(textOf(await chat)).toBe('Bob found a trio, +1.');
 
     const refilled = await waitForTriosState(
       alice,
