@@ -4,11 +4,16 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 export interface Typing {
   onKey: (key: string) => void;
   onDelete: () => void;
-  /** Enter, for a board that checks a row; without it Enter is left alone. */
-  onEnter?: () => void;
+  onEnter: () => void;
   /** Escape, for a board that has a way back to its start. */
   onEscape?: () => void;
 }
+
+/** What the keys do: Enter is optional, for a board with no row to check. */
+type TypingKeys = Omit<Typing, 'onEnter'> & {
+  /** Without it Enter is left alone, to press a focused button. */
+  onEnter?: () => void;
+};
 
 /**
  * A real keyboard types into a board too: the keys `accepts` takes (letters
@@ -20,7 +25,7 @@ export interface Typing {
  * typed after it is what Enter is for.
  */
 export function useTypingKeys(
-  typing: Typing,
+  typing: TypingKeys,
   enabled: boolean,
   accepts: RegExp,
 ) {
