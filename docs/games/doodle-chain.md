@@ -160,7 +160,7 @@ The light competition is a **heart**, given during the reveal:
 
 - Every player may give **one heart per chain**, to any shown entry that is not their own.
   Giving it to another entry of the same chain moves it, and pressing it again takes it back.
-- Everybody sees each entry's hearts as they are given; on your own entry the count is all there is, and nothing shows while it is 0.
+- Everybody sees each entry's hearts as they are given; on your own entry the count is all there is, 0 included.
 - Spectators watch, but do not give hearts: they are not in the game.
 - A heart scores nothing in the game, but a player's **score** is the hearts their entries received this game, which the scoreboard shows during the reveal and the album ranks.
 - The album names the **crowd favourite**, the entry with the most hearts; entries that tie share it, and a game nobody hearted has none.
@@ -269,15 +269,15 @@ Your own drawing in progress comes back to you on sync by `dc:canvas:sync`, as a
 
 Doodle Chain's events of its own:
 
-| Event                                             | Payload                                       | Sent by                        |
-| ------------------------------------------------- | --------------------------------------------- | ------------------------------ |
-| `dc:text`                                         | The room, and the text or a suggestion number | A player writing or describing |
-| `dc:done`                                         | The room, and Done or not                     | A player                       |
-| `dc:canvas:start`, `move`, `end`, `undo`, `clear` | As Draw & Guess's, for your own drawing       | A player drawing               |
-| `dc:reveal:next`                                  | The room, and how many entries are shown      | The host                       |
-| `dc:heart`                                        | The room, the chain, and an entry or none     | A player, in the reveal        |
-| `dc:drawing`                                      | The room, a drawing id and its strokes        | The server                     |
-| `dc:canvas:sync`                                  | The room, and your own strokes                | The server                     |
+| Event                                           | Payload                                       | Sent by                        |
+| ----------------------------------------------- | --------------------------------------------- | ------------------------------ |
+| `dc:text`                                       | The room, and the text or a suggestion number | A player writing or describing |
+| `dc:done`                                       | The room, and Done or not                     | A player                       |
+| `dc:draw:start`, `move`, `end`, `undo`, `clear` | As Draw & Guess's, for your own drawing       | A player drawing               |
+| `dc:reveal:next`                                | The room, and how many entries are shown      | The host                       |
+| `dc:heart`                                      | The room, the chain, and an entry or none     | A player, in the reveal        |
+| `dc:drawing`                                    | The room, a drawing id and its strokes        | The server                     |
+| `dc:canvas:sync`                                | The room, and your own strokes                | The server                     |
 
 ## Configuration
 
@@ -289,25 +289,24 @@ Doodle Chain's events of its own:
 | `DC_DRAW_SECONDS`         | unset   | When set, every room's drawing time, to play a game through quickly while developing |
 | `RECONNECT_GRACE_SECONDS` | `30`    | How long a dropped player keeps their seat                                           |
 
-## Where the code will live
+## Where the code lives
 
-Doodle Chain is not built yet; this is the plan, after [adding a game](../architecture.md#adding-a-game).
+| File                                                                  | Responsibility                                                                                                                                                     |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`shared/doodle-chain.ts`](../../shared/doodle-chain.ts)              | Steps for a player count, which chain a place works on, the kind a step needs, the sit-out rule, the text limit, the drawing times, how many suggestions there are |
+| [`module.ts`](../../server/socket/doodle-chain/module.ts)             | What the room layer calls, and all it calls                                                                                                                        |
+| [`game-engine.ts`](../../server/socket/doodle-chain/game-engine.ts)   | Steps, Done, passing, departures, the reveal and hearts                                                                                                            |
+| [`state.ts`](../../server/socket/doodle-chain/state.ts)               | The game's state, its finished drawings, and the snapshot each viewer is sent                                                                                      |
+| [`validation.ts`](../../server/socket/doodle-chain/validation.ts)     | This game's inbound shapes                                                                                                                                         |
+| [`libs/drawing/`](../../server/libs/drawing/canvas.ts)                | A bounded stroke list and its inbound shapes, shared with Draw & Guess                                                                                             |
+| [`doodle-chain/room.tsx`](../../client/src/doodle-chain/room.tsx)     | A room's screens: waiting, the reveal and the album                                                                                                                |
+| [`doodle-chain/task.tsx`](../../client/src/doodle-chain/task.tsx)     | The step in hand: write, draw or describe, passing, and sitting out                                                                                                |
+| [`doodle-chain/chain.tsx`](../../client/src/doodle-chain/chain.tsx)   | A chain as a column of entries, shared by the reveal and the album                                                                                                 |
+| [`drawing/`](../../client/src/drawing/canvas.tsx)                     | The canvas, shared with Draw & Guess, and a finished drawing as a picture                                                                                          |
+| [`net/drawing-store.ts`](../../client/src/net/drawing-store.ts)       | The finished drawings `dc:drawing` has sent, by id                                                                                                                 |
+| [`i18n/en/doodle-chain.ts`](../../client/src/i18n/en/doodle-chain.ts) | The game's words, and the suggestions, the same list in every language                                                                                             |
 
-| File                                        | Responsibility                                                                                                                                                     |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `shared/doodle-chain.ts`                    | Steps for a player count, which chain a place works on, the kind a step needs, the sit-out rule, the text limit, the drawing times, how many suggestions there are |
-| `server/socket/doodle-chain/module.ts`      | What the room layer calls, and all it calls                                                                                                                        |
-| `server/socket/doodle-chain/game-engine.ts` | Steps, Done, passing, departures, the reveal and hearts                                                                                                            |
-| `server/socket/doodle-chain/state.ts`       | The game's state, and the snapshot each viewer is sent                                                                                                             |
-| `server/socket/doodle-chain/drawings.ts`    | Each entry's stroke list, bounded as Draw & Guess's `canvas.ts` bounds its one; that file's stroke list moves to `server/libs/drawing/` for both games             |
-| `server/socket/doodle-chain/validation.ts`  | This game's inbound shapes                                                                                                                                         |
-| `client/src/doodle-chain/room.tsx`          | A room's screens                                                                                                                                                   |
-| `client/src/doodle-chain/task.tsx`          | The step in hand: write, draw or describe, and sitting out                                                                                                         |
-| `client/src/doodle-chain/chain.tsx`         | A chain as a column of entries, shared by the reveal and the album                                                                                                 |
-| `client/src/i18n/*/doodle-chain.ts`         | The game's words, and the suggestions, the same list in every language                                                                                             |
-
-The canvas and the drawing toolbar are Draw & Guess's, moved from `client/src/draw-and-guess/` to a shared `client/src/drawing/` when this game first needs them.
-The rules will be covered by `doodle-chain-rules.test.ts` and `doodle-chain-flow.test.ts` in `server/tests/`.
+The rules are covered by [`doodle-chain-rules.test.ts`](../../server/tests/doodle-chain-rules.test.ts) and [`doodle-chain-flow.test.ts`](../../server/tests/doodle-chain-flow.test.ts), the screens by [`room.test.tsx`](../../client/src/doodle-chain/room.test.tsx), and a whole game with three players by [`doodle-chain.spec.ts`](../../e2e/doodle-chain.spec.ts).
 The screens are DC01-DC14 (game page, create room and room, desktop) and DC15-DC20 (phone) in [the Figma file](../design.md), section 12.
 Its new pieces are in Shared pieces under Doodle Chain pieces: `Zumpo/Chain entry` (one entry of a chain, by kind and layout), `Zumpo/Chain composer` (writing a line, and Done), `Zumpo/Heart button`, and `Sample / Chain drawing`, the example drawings.
 Its artwork is `Zumpo/Game artwork`'s `Game=Doodle Chain` variant, and its intro and card are the Doodle Chain variants of `Zumpo/Game intro` and `Zumpo/Game card`.
