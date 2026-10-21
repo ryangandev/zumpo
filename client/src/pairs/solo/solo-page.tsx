@@ -30,6 +30,7 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloTime } from '../../solo/solo-time';
 import { BoardPanel, PairsGrid } from '../board';
 import { BOARDS } from '../boards';
 import { readPairsBest, recordPairsBest, type PairsBest } from './best';
@@ -191,9 +192,13 @@ function SoloGameView({
 }) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
+  const clock = useSoloTime();
   const [game, setGame] = useState(() => newGame(board, seed));
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(game.startedAt !== null && !isOver(game));
+  const now = useClock(
+    game.startedAt !== null && !isOver(game) && !clock.paused,
+    clock.now,
+  );
   // Each miss is its own pair of places, so the next one starts its own wait.
   const miss = isShowingMiss(game) ? game.up : null;
 
@@ -211,11 +216,11 @@ function SoloGameView({
   }, [miss]);
 
   const play = (index: number) => {
-    const next = flip(game, index, Date.now());
+    const next = flip(game, index, clock.now());
     if (next === game) return;
     setGame(next);
     if (isOver(next)) {
-      const { turns, timeMs } = summary(next, Date.now());
+      const { turns, timeMs } = summary(next, clock.now());
       setFinish(recordPairsBest(board, { turns, ms: timeMs }));
     }
   };
@@ -240,6 +245,7 @@ function SoloGameView({
   return (
     <SoloLayout
       gameType="pairs"
+      time={finish ? undefined : clock}
       phase={
         finish
           ? { tone: 'lime', label: m.pairs.solo.boardCleared }

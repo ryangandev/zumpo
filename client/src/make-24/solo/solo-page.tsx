@@ -35,6 +35,7 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloTime } from '../../solo/solo-time';
 import {
   cardsAfter,
   FinalCard,
@@ -177,22 +178,23 @@ function RunView({
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
-  const [run, setRun] = useState(() => newRun(seed, Date.now()));
+  const clock = useSoloTime();
+  const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(run.handStartedAt !== null);
+  const now = useClock(run.handStartedAt !== null && !clock.paused, clock.now);
   const between = isBetweenHands(run);
 
   // A finished hand stays up for a moment; a skipped one a little longer, to
   // read the way it could have gone.
   useEffect(() => {
-    if (!between) return;
+    if (!between || clock.paused) return;
     const pause = lastResult(run)!.skipped ? SKIPPED_PAUSE_MS : SOLVED_PAUSE_MS;
     const timer = setTimeout(
-      () => setRun((current) => nextHand(current, Date.now())),
+      () => setRun((current) => nextHand(current, clock.now())),
       pause,
     );
     return () => clearTimeout(timer);
-  }, [between, run]);
+  }, [between, run, clock]);
 
   const play = (next: SoloRun) => {
     if (next === run) return;
@@ -279,6 +281,7 @@ function RunView({
   return (
     <SoloLayout
       gameType="make-24"
+      time={clock}
       phase={{ tone: 'blue', label: m.make24.hand(run.hand + 1, RUN_HANDS) }}
       stage={
         <>
@@ -295,14 +298,14 @@ function RunView({
               <HandTable
                 deal={deal(run)}
                 steps={run.steps}
-                onStep={(step) => play(takeStep(run, step, Date.now()))}
+                onStep={(step) => play(takeStep(run, step, clock.now()))}
                 onUndo={() => play(undo(run))}
                 onStartOver={() => play(startOver(run))}
                 done={last ? m.make24.solo.nextHandPrompt : undefined}
                 extraTool={
                   <Button
                     variant="quiet"
-                    onClick={() => play(skip(run, Date.now()))}
+                    onClick={() => play(skip(run, clock.now()))}
                   >
                     {m.make24.solo.skip}
                   </Button>

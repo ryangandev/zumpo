@@ -31,6 +31,7 @@ A finished hand reads as one expression with only the brackets it needs, such as
 A **run** is ten hands, with no name, no room and no server: it runs in the browser.
 
 - The **run time** counts up while a hand is in front of you, and stops for the moment between hands.
+  It also stops while **How to play** is open, and the hand is put away behind it until it closes.
 - **Skip** gives up a hand: one way to solve it shows for 2 seconds, and 30 seconds are added to the run time.
 - A solved hand shows **24! Nice.** and the next one follows a moment later.
 - After the tenth hand: the run time, how many hands were solved and skipped, the fastest solved hand, and every hand with how you solved it (or, for a skipped one, a way to).

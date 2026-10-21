@@ -130,6 +130,18 @@ describe('Make 24 on your own', () => {
     expect(turn().getByText('Hand 2 of 10')).toBeInTheDocument();
   });
 
+  it('stops the clock while How to play is open', async () => {
+    await startRun();
+    await pause(1000);
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await pause(4000);
+    await user.click(screen.getByRole('button', { name: 'Back to the game' }));
+    expect(turn().getByRole('timer')).toHaveTextContent(/^00:01/);
+    await pause(1000);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^00:02/);
+  });
+
   it('ends with every hand, keeps the best and copies a challenge', async () => {
     await startRun();
     for (let hand = 0; hand < RUN_HANDS; hand++) {

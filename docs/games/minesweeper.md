@@ -133,6 +133,7 @@ Classic single-player Minesweeper on the same three boards, with no name, no roo
 5. Click an opened number whose flags around it add up to that number to open all its other neighbours (a **chord**).
    If a flag was wrong, that opens a mine.
 6. The turn bar shows the mines left (mines minus flags, which can go below zero) and the run time.
+   The run time stops while **How to play** is open, and the board is put away behind it until it closes.
 
 **Opening a mine loses.**
 The mine you hit turns solid red, every other mine shows, flags with no mine under them are crossed out, and Try again starts a new board of the same size.
