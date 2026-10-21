@@ -97,6 +97,7 @@
   width: var(--cell);
   height: var(--cell);
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .open {
