@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Button, Card } from '../ui';
 import { useMessages } from '../i18n';
 import { SwapLabel } from '../shell/swap-label';
@@ -11,33 +12,27 @@ import styles from './challenge.module.css';
 export const challengeLink = (path: string, deal: Record<string, string>) =>
   `${window.location.origin}${path}?${new URLSearchParams(deal)}`;
 
-/** Challenge a friend, among a finished game's actions (T05, PR04). */
-export function ChallengeButton({ link }: { link: string }) {
-  const m = useMessages();
-  const { copied, copy } = useCopy(link);
-  return (
-    <Button variant="secondary" icon={copied ? 'check' : 'link'} onClick={copy}>
-      <SwapLabel
-        second={copied}
-        labels={[m.solo.challengeFriend, m.solo.linkCopied]}
-      />
-    </Button>
-  );
-}
-
-/** The card beside a finished game with the same link (T05, PR04). */
+/**
+ * Challenge a friend, the one way to it beside a finished game (T05, PR04,
+ * DW06, CB08): what they get, and a button that copies it.
+ */
 export function ChallengeCard({
   description,
-  link,
+  text,
+  children,
 }: {
   /** "They get these same ten hands and try to beat 2:41." */
   description: string;
-  link: string;
+  /** What is copied: the link, or a result to paste with the link in it. */
+  text: string;
+  /** What the friend will have to beat, such as the marks of each guess. */
+  children?: ReactNode;
 }) {
   const m = useMessages();
-  const { copied, copy } = useCopy(link);
+  const { copied, copy } = useCopy(text);
   return (
     <Card kind="panel" title={m.solo.challengeFriend} description={description}>
+      {children}
       <Button
         className={styles.copy}
         variant="secondary"

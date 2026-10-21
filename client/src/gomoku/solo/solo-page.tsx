@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import {
   boardOf,
   lastStoneOf,
@@ -8,20 +8,18 @@ import {
 import type { GomokuColor } from '../../../../shared/wire-types';
 import {
   Button,
-  ButtonLink,
   Card,
-  SelectField,
+  ChipField,
   StatList,
   TurnBar,
   type Stat,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
 import { useSession } from '../../net/session';
 import { initialsOf, toneOf } from '../../players/avatar';
-import { FormPage } from '../../shell/form-page';
 import { PHONE, TOUCH, useMediaQuery } from '../../shell/use-media-query';
+import { ChangeSettings } from '../../solo/change-settings';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { GomokuTable, type SeatView } from '../table';
@@ -32,7 +30,6 @@ import {
   isYourTurn,
   newGame,
   play,
-  stonesOn,
   takeBack,
   toMove,
   youWon,
@@ -67,91 +64,78 @@ function recordLine(
 }
 
 /**
- * GM02-GM06, GM17: Gomoku on your own, against the computer. It all runs
- * here: nothing reaches the server.
+ * GM03-GM06, GM17: Gomoku on your own, against the computer, straight away at
+ * the level and with the stones picked last here. It all runs here: nothing
+ * reaches the server.
  */
 export function GomokuSolo() {
   // Each game is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{
-    picks: SoloPicks;
-    game: number;
-  } | null>(null);
-  const start = (picks: SoloPicks, game: number) => {
+  const [playing, setPlaying] = useState(() => ({
+    picks: readPicks(),
+    game: 0,
+  }));
+  const start = (picks: SoloPicks) => {
     writePicks(picks);
-    setPlaying({ picks, game });
+    setPlaying({ picks, game: playing.game + 1 });
   };
-  if (playing === null) return <LevelPicker onStart={(p) => start(p, 0)} />;
   return (
     <SoloBoard
       key={playing.game}
       picks={playing.picks}
       // The colours swap, so the first move takes turns.
       onPlayAgain={() =>
-        start(
-          { ...playing.picks, color: otherColor(playing.picks.color) },
-          playing.game + 1,
-        )
+        start({ ...playing.picks, color: otherColor(playing.picks.color) })
       }
-      onChangeLevel={() => setPlaying(null)}
+      onChangeLevel={start}
     />
   );
 }
 
-/** GM02: a level, and your stones. */
-function LevelPicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
-  const game = gameInfo('gomoku');
+/** GM02, behind Change level: a level, and your stones. */
+function ChangeLevel({
+  picks,
+  onPlay,
+}: {
+  picks: SoloPicks;
+  onPlay: (picks: SoloPicks) => void;
+}) {
   const m = useMessages();
-  const text = m.games.of[game.type];
-  const [picks, setPicks] = useState(readPicks);
-  const description =
-    recordLine(picks, readRecord()[picks.level], m) ??
-    m.gomoku.solo.description;
+  const record = readRecord();
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
+    <ChangeSettings
+      label={m.gomoku.solo.changeLevel}
       title={m.gomoku.solo.pickTitle}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart(picks);
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.gomoku.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.shell.backToGames}
-          </ButtonLink>
-        </>
+      description={
+        recordLine(picks, record[picks.level], m) ?? m.gomoku.solo.description
       }
+      settings={picks}
+      onPlay={onPlay}
     >
-      <SelectField
-        label={m.gomoku.solo.level}
-        helper={m.gomoku.solo.levelHelp[picks.level]}
-        options={LEVELS.map((level) => ({
-          value: level,
-          label: m.gomoku.solo.levels[level],
-        }))}
-        value={picks.level}
-        onValueChange={(level) => setPicks({ ...picks, level })}
-        name="level"
-      />
-      <SelectField
-        label={m.gomoku.solo.stones}
-        helper={m.gomoku.solo.stonesHelp}
-        options={(['black', 'white'] as const).map((color) => ({
-          value: color,
-          label: m.gomoku.solo.stonesOf[color],
-        }))}
-        value={picks.color}
-        onValueChange={(color: GomokuColor) => setPicks({ ...picks, color })}
-        name="color"
-      />
-    </FormPage>
+      {(picked, pick) => (
+        <>
+          <ChipField
+            label={m.gomoku.solo.level}
+            helper={m.gomoku.solo.levelHelp[picked.level]}
+            options={LEVELS.map((level) => ({
+              value: level,
+              label: m.gomoku.solo.levels[level],
+            }))}
+            value={picked.level}
+            onValueChange={(level) => pick({ ...picked, level })}
+          />
+          <ChipField
+            label={m.gomoku.solo.stones}
+            helper={m.gomoku.solo.stonesOf[picked.color]}
+            options={(['black', 'white'] as const).map((color) => ({
+              value: color,
+              label: m.gomoku.color(color),
+            }))}
+            value={picked.color}
+            onValueChange={(color: GomokuColor) => pick({ ...picked, color })}
+          />
+        </>
+      )}
+    </ChangeSettings>
   );
 }
 
@@ -163,7 +147,7 @@ function SoloBoard({
 }: {
   picks: SoloPicks;
   onPlayAgain: () => void;
-  onChangeLevel: () => void;
+  onChangeLevel: (picks: SoloPicks) => void;
 }) {
   const m = useMessages();
   const { name } = useSession();
@@ -225,9 +209,7 @@ function SoloBoard({
   };
 
   const shown = record ?? readRecord()[game.level];
-  const games = gamesOf(shown);
   const level = m.gomoku.solo.levels[game.level];
-  const line = game.winLines?.[0];
 
   const takeBackButton = (
     <Button
@@ -254,128 +236,84 @@ function SoloBoard({
               : { tone: 'sand', label: m.gomoku.solo.drawTag }
       }
       stage={
-        <>
-          {game.over && (
-            <SoloResult
-              title={
-                youWon(game)
-                  ? m.gomoku.solo.wonOn(game.moves.length)
-                  : computerWon(game)
-                    ? m.gomoku.solo.lostOn(game.moves.length)
-                    : m.gomoku.solo.draw
-              }
-              body={
-                line
-                  ? m.gomoku.solo.five(
-                      pointName(line[0] ?? 0),
-                      pointName(line.at(-1) ?? 0),
-                      otherColor(game.color),
-                    )
-                  : m.gomoku.solo.drawBody(otherColor(game.color))
-              }
-              stats={[
-                { label: m.gomoku.solo.level, value: level },
-                {
-                  label: m.gomoku.solo.movesLabel,
-                  value: String(game.moves.length),
-                },
-                {
-                  label: m.gomoku.solo.gamesWonAt(level),
-                  value: m.gomoku.solo.gamesWonCount(shown.wins, games),
-                },
-              ]}
-              actions={
-                <>
-                  <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-                  <Button variant="secondary" onClick={onChangeLevel}>
-                    {m.gomoku.solo.changeLevel}
-                  </Button>
-                </>
-              }
-            />
-          )}
-          <GomokuTable
-            phone={phone}
-            fill={phone && !game.over}
-            turn={
-              !game.over && (
-                <TurnBar {...turnBar(game, previewing !== null, m)} />
-              )
+        <GomokuTable
+          phone={phone}
+          fill={phone && !game.over}
+          fitHeight
+          turn={<TurnBar {...turnBar(game, previewing !== null, m)} />}
+          board={{
+            stones: boardOf(game.moves),
+            last: lastStoneOf(game.moves),
+            winLines: game.winLines,
+            color: yours ? game.color : null,
+            pending: previewing,
+            disabled: !yours,
+            onPlace: place,
+            onPreview: tapTwice
+              ? (point) => setPreview({ point, at: game.moves.length })
+              : undefined,
+            label: m.gomoku.board,
+          }}
+          seats={seatsOf(game, name, m)}
+          actions={
+            tapTwice
+              ? // Place stone is always there in a game, live once a faint
+                // stone is down, so nothing moves when one is; the turn bar
+                // says to tap again.
+                !game.over && (
+                  <>
+                    <Button
+                      disabled={previewing === null}
+                      onClick={() => {
+                        if (previewing !== null) place(previewing);
+                      }}
+                    >
+                      {m.gomoku.placeStone}
+                    </Button>
+                    {yours && canTakeBack(game) && takeBackButton}
+                  </>
+                )
+              : yours && (
+                  <>
+                    {canTakeBack(game) && takeBackButton}
+                    <p className={styles.hint}>{m.gomoku.hoverHint}</p>
+                  </>
+                )
+          }
+        />
+      }
+      result={
+        game.over && (
+          <SoloResult
+            title={
+              youWon(game)
+                ? m.gomoku.solo.wonOn(game.moves.length)
+                : computerWon(game)
+                  ? m.gomoku.solo.lostOn(game.moves.length)
+                  : m.gomoku.solo.draw
             }
-            board={{
-              stones: boardOf(game.moves),
-              last: lastStoneOf(game.moves),
-              winLines: game.winLines,
-              color: yours ? game.color : null,
-              pending: previewing,
-              disabled: !yours,
-              onPlace: place,
-              onPreview: tapTwice
-                ? (point) => setPreview({ point, at: game.moves.length })
-                : undefined,
-              label: m.gomoku.board,
-            }}
-            seats={seatsOf(game, name, m)}
+            body={m.gomoku.solo.nextGame(otherColor(game.color))}
             actions={
-              tapTwice
-                ? // Place stone is always there in a game, live once a faint
-                  // stone is down, so nothing moves when one is; the turn bar
-                  // says to tap again.
-                  !game.over && (
-                    <>
-                      <Button
-                        disabled={previewing === null}
-                        onClick={() => {
-                          if (previewing !== null) place(previewing);
-                        }}
-                      >
-                        {m.gomoku.placeStone}
-                      </Button>
-                      {yours && canTakeBack(game) && takeBackButton}
-                    </>
-                  )
-                : yours && (
-                    <>
-                      {canTakeBack(game) && takeBackButton}
-                      <p className={styles.hint}>{m.gomoku.hoverHint}</p>
-                    </>
-                  )
+              <>
+                <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
+                <ChangeLevel picks={picks} onPlay={onChangeLevel} />
+              </>
             }
           />
-        </>
+        )
       }
       side={
-        <>
-          {!game.over && (
-            <Card kind="panel" title={m.gomoku.solo.thisGame}>
-              <StatList
-                className={styles.stats}
-                stats={[
-                  { label: m.gomoku.solo.level, value: level },
-                  {
-                    label: m.gomoku.solo.youPlay,
-                    value: m.gomoku.color(game.color),
-                  },
-                  {
-                    label: m.gomoku.solo.stonesOnBoard,
-                    value: String(stonesOn(game)),
-                  },
-                ]}
-              />
-            </Card>
-          )}
-          <Card kind="panel" title={m.gomoku.solo.onDevice}>
-            <StatList
-              className={styles.stats}
-              stats={deviceStats(
-                shown,
-                level,
-                record !== null && youWon(game),
-                m,
-              )}
-            />
-          </Card>
-        </>
+        <Card kind="panel" title={m.gomoku.solo.onDevice}>
+          <StatList
+            className={styles.stats}
+            stats={deviceStats(
+              shown,
+              level,
+              record !== null && youWon(game),
+              m,
+            )}
+          />
+        </Card>
       }
     />
   );
@@ -455,12 +393,33 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
   return game.color === 'black' ? [you, them] : [them, you];
 }
 
-/** GM03, GM04: whose turn, and the last stone; your turn has no clock. */
+/**
+ * GM03-GM06: whose turn, and the last stone; your turn has no clock. A
+ * finished game says who made five, and where, over the board that shows it.
+ */
 function turnBar(
   game: SoloGame,
   previewing: boolean,
   m: Messages,
 ): TurnBarProps {
+  if (game.over) {
+    const line = game.winLines?.[0];
+    return {
+      label: m.gomoku.gameOver,
+      kind: 'status',
+      main: youWon(game)
+        ? m.gomoku.solo.youMadeFive
+        : computerWon(game)
+          ? m.gomoku.solo.computerMadeFive
+          : m.gomoku.solo.noFive,
+      meta: line
+        ? m.gomoku.solo.fromTo(
+            pointName(line[0] ?? 0),
+            pointName(line.at(-1) ?? 0),
+          )
+        : undefined,
+    };
+  }
   const last = lastStoneOf(game.moves);
   const lastWasYours = game.moves.at(-1)?.color === game.color;
   const meta = previewing

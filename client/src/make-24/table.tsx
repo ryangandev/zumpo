@@ -15,7 +15,7 @@ import {
 import { Button, NumberCard, OperatorKey, type NumberCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { useTypingKeys } from '../shell/board-typing';
-import { Fit } from '../shell/fit';
+import { useFitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages, type Messages } from '../i18n';
@@ -25,9 +25,23 @@ import styles from './table.module.css';
 export const cardsAfter = (deal: readonly number[], steps: readonly Step[]) =>
   play(deal, steps) ?? play(deal, [])!;
 
-/** The paper panel a hand is played on (T02-T09); bare on a phone. */
-export function TablePanel({ children }: { children: ReactNode }) {
-  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
+/**
+ * The paper panel a hand is played on (T02-T09); bare on a phone. On your
+ * own, `fitHeight` keeps the cards and their keys inside the window.
+ */
+export function TablePanel({
+  children,
+  fitHeight = false,
+}: {
+  children: ReactNode;
+  fitHeight?: boolean;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  return (
+    <div ref={ref} className={cx(styles.panel, playColumn)}>
+      {children}
+    </div>
+  );
 }
 
 /** The cards in one row, each as it stands; scaled down where the row is wider than the table. */
@@ -51,9 +65,8 @@ function CardRow({
   inPlay?: boolean;
   children?: ReactNode;
 }) {
-  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Holder>
+    <PlayBoard inPlay={inPlay}>
       <div className={cx(styles.cards, compact && styles.compactCards)}>
         {cards.map(({ key, ...card }) => (
           <NumberCard
@@ -64,7 +77,7 @@ function CardRow({
         ))}
         {children}
       </div>
-    </Holder>
+    </PlayBoard>
   );
 }
 

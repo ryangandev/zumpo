@@ -59,6 +59,7 @@ The marks are the game's whole language: the board is digits and pegs, so the ga
 ### Typing
 
 A pad of the ten digits, with Enter and a delete key, and a physical keyboard's digit keys (top row and number pad) both type into the next empty tile; Enter submits and Backspace deletes.
+On your own on a short wide window, such as a laptop's at 1280 × 720, the pad, in its two rows, stands beside the board instead of under it, so the ten rows shrink less.
 A digit already in the row cannot be typed again: the key does nothing, and the tile that holds that digit gives a short nudge, so a repeated digit never reaches Enter.
 In a room the physical keyboard types into the board unless the chat input has focus.
 
@@ -103,7 +104,7 @@ The day is the device's **local date**, as in [Daily Word](daily-word.md#the-dai
   Guesses and notes are kept on this device as they are made, so a refresh, a closed tab or another visit later that day continues the same game, and a finished game stays finished until midnight.
 - There is no clock: it is not a race, and nothing is timed.
 
-When the code is cracked or missed, the board stays, and beside it:
+When the code is cracked or missed, the board stays, the same board in the same panel with the pad gone, and beside it (over it on one column, so Share is in sight, with the cards under it):
 
 - **The result**: cracked in _n_, or missed, with the code; a missed code is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them cracked, the current streak, the best streak, and how many were cracked in each number of guesses, with today's bar picked out.
@@ -139,7 +140,8 @@ After the daily code, **Practice code** starts extra codes, one at a time, as ma
 
 - A practice code is dealt from a **seed**, like Daily Word's practice words: the seed alone picks one of the 5,040 codes.
 - It plays exactly like the daily code, and keeps no stats and no streak.
-- When it ends: cracked in _n_ or missed, with the code; **Another code** deals a new seed; **Challenge a friend** copies the result grid with a link to the same code (`/games/code-breaker/solo?seed=k3f9x2`); and **Today's code** goes back to the daily result.
+- When it ends the board stays, as the daily code's does, and beside it: cracked in _n_ or missed, with the code; **Another code** deals a new seed, and **Today's code** goes back to the daily result.
+  Under them, **Challenge a friend** shows the marks of each guess and one button, **Copy challenge link**, which copies the result grid with a link to the same code (`/games/code-breaker/solo?seed=k3f9x2`).
 - Whoever opens a challenge link plays that code straight away, whether or not they have played today's.
   A practice code lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 

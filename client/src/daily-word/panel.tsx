@@ -2,12 +2,31 @@ import { useMessages } from '../i18n';
 import type { ReactNode } from 'react';
 import { LetterTile } from '../ui';
 import { cx } from '../ui/cx';
+import { useFitHeight } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import styles from './panel.module.css';
 
-/** The paper panel a board is played on (DW01-DW10); bare on a phone. */
-export function BoardPanel({ children }: { children: ReactNode }) {
-  return <div className={cx(styles.panel, playColumn)}>{children}</div>;
+/**
+ * The paper panel a board is played on (DW01-DW10); bare on a phone. On your
+ * own, `fitHeight` keeps the board and its keys inside the window, measured
+ * afresh when `layout` changes (useFitHeight).
+ */
+export function BoardPanel({
+  children,
+  fitHeight = false,
+  layout,
+}: {
+  children: ReactNode;
+  fitHeight?: boolean;
+  /** Where the keys are, such as beside the board on a short wide window. */
+  layout?: unknown;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(fitHeight, layout);
+  return (
+    <div ref={ref} className={cx(styles.panel, playColumn)}>
+      {children}
+    </div>
+  );
 }
 
 /** DW01-DW03: what the three marks mean, beside a board on your own. */

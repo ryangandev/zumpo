@@ -121,6 +121,22 @@ async function shot(page: Page, code: string) {
 }
 
 /**
+ * Captures the dialog `change` opens over a finished game on your own (MS01,
+ * PR01, LD01, GM02), the one place such a game is set, then closes it with
+ * nothing changed.
+ */
+async function shotChange(page: Page, change: string, code: string) {
+  await page.getByRole('button', { name: change }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await shot(page, code);
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Cancel' })
+    .click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+}
+
+/**
  * Captures a state that passes on its own, such as a miss on show, and says
  * whether it held for the whole capture; if not, the capture is no good.
  */
@@ -847,8 +863,6 @@ test('Minesweeper on your own', async ({ player }) => {
     'best:minesweeper:Medium': '192000',
   });
   await sam.goto('/games/minesweeper/solo');
-  await shot(sam, 'MS01');
-  await sam.getByRole('button', { name: 'Start' }).click();
   await openMiddle(sam);
   await playSure(sam, 2);
   await shot(sam, 'MS02');
@@ -857,6 +871,7 @@ test('Minesweeper on your own', async ({ player }) => {
   await sam.getByRole('button', { name: 'Try again' }).first().click();
   await clearABoard(sam);
   await shot(sam, 'MS04');
+  await shotChange(sam, 'Change board', 'MS01');
 
   const onPhone = await player('Sam', { ...phone, named: false });
   await onPhone.goto('/games/minesweeper/solo?board=Small');
@@ -879,8 +894,6 @@ test('Make 24 on your own', async ({ player }) => {
     ]),
   });
   await maya.goto('/games/make-24/solo');
-  await shot(maya, 'T01');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   const turn = maya.getByRole('region', { name: 'Turn' });
   const startOver = maya.getByRole('button', { name: 'Start over' });
@@ -917,7 +930,6 @@ test('Make 24 on your own', async ({ player }) => {
 
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/make-24/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   await startHand(onPhone);
   await shot(onPhone, 'T11');
 });
@@ -991,8 +1003,6 @@ test('Pairs on your own', async ({ player }) => {
   // A miss is on show for only a second.
   await maya.clock.install();
   await maya.goto('/games/pairs/solo');
-  await shot(maya, 'PR01');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   const memory: Memory = new Map();
   const cleared = maya.getByRole('heading', {
@@ -1018,10 +1028,10 @@ test('Pairs on your own', async ({ player }) => {
   }
   expect(missShown, 'a miss captured').toBe(true);
   await shot(maya, 'PR04');
+  await shotChange(maya, 'Change board', 'PR01');
 
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/pairs/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   const phoneMemory: Memory = new Map();
   for (let turn = 0; turn < 5; turn++) await playTurn(onPhone, phoneMemory);
   await playTurn(onPhone, phoneMemory, () => shot(onPhone, 'PR09'));
@@ -1099,8 +1109,6 @@ test('Trios on your own', async ({ player }) => {
   // "Not a trio" is on show for only a moment.
   await maya.clock.install();
   await maya.goto('/games/trios/solo');
-  await shot(maya, 'TS01');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   const turn = triosTurnOf(maya);
   const miss = turn.getByText('Not a trio, +5 s');
@@ -1139,7 +1147,6 @@ test('Trios on your own', async ({ player }) => {
 
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/trios/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   for (let trio = 1; trio <= 3; trio++) {
     await readyToFind(onPhone);
     await pickTrio(onPhone);
@@ -1235,8 +1242,6 @@ test('Snap on your own', async ({ player }) => {
   // "Not a match" is on show for only a moment.
   await maya.clock.install();
   await maya.goto('/games/snap/solo');
-  await shot(maya, 'SN01');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   const turn = snapTurnOf(maya);
   const miss = turn.getByText('Not a match, +3 s');
@@ -1268,7 +1273,6 @@ test('Snap on your own', async ({ player }) => {
 
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/snap/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   for (let card = 1; card <= 11; card++) {
     await readyToTap(onPhone);
     await tapMatch(onPhone);
@@ -1371,8 +1375,6 @@ test('Liar’s Dice on your own', async ({ player }) => {
   // A bot takes a second over its turn; the clock skips it.
   await maya.clock.install();
   await maya.goto('/games/liars-dice/solo');
-  await shot(maya, 'LD01');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   const won = maya.getByRole('heading', { name: /^You won in \d+ rounds?\.$/ });
   const out = maya.getByRole('heading', {
@@ -1384,7 +1386,9 @@ test('Liar’s Dice on your own', async ({ player }) => {
     .getByText(/ is thinking$/);
   const shown = new Set<string>();
   let calledToLose = false;
-  for (let games = 1; !(shown.has('LD05') && shown.has('LD06')); games++) {
+  const LD_SOLO = ['LD01', 'LD02', 'LD03', 'LD04', 'LD05', 'LD06'];
+  // Until every screen is captured: a mistaken call (LD04) is a chance too.
+  for (let games = 1; !LD_SOLO.every((code) => shown.has(code)); games++) {
     // Last of four is a long shot for a player this plain: a game takes a
     // second or two on the fast clock, so it can afford many tries.
     expect(games, 'a game won and a game lost').toBeLessThanOrEqual(100);
@@ -1428,6 +1432,10 @@ test('Liar’s Dice on your own', async ({ player }) => {
       await shot(maya, code);
       shown.add(code);
     }
+    if (!shown.has('LD01')) {
+      await shotChange(maya, 'Change table', 'LD01');
+      shown.add('LD01');
+    }
     // The record as Figma's next game starts from.
     await maya.evaluate((entries) => {
       for (const [key, value] of Object.entries(entries)) {
@@ -1436,12 +1444,11 @@ test('Liar’s Dice on your own', async ({ player }) => {
     }, LIARS_DICE_RECORD);
     await maya.getByRole('button', { name: 'Play again' }).click();
   }
-  expect(shown).toEqual(new Set(['LD02', 'LD03', 'LD04', 'LD05', 'LD06']));
+  expect(shown).toEqual(new Set(LD_SOLO));
 
   const onPhone = await player('Maya', phone);
   await onPhone.clock.install();
   await onPhone.goto('/games/liars-dice/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   const phoneNext = onPhone.getByRole('button', { name: 'Next round' });
   const phoneAgain = onPhone.getByRole('button', { name: 'Play again' });
   // Three or four bids in, so they wrap onto a second row as Figma's do.
@@ -2306,8 +2313,6 @@ test('Gomoku on your own', async ({ player }) => {
   // The computer takes half a second at least; the clock can hold it there.
   await maya.clock.install();
   await maya.goto('/games/gomoku/solo');
-  await shot(maya, 'GM02');
-  await maya.getByRole('button', { name: 'Start' }).click();
 
   // Sixteen stones down, as Figma's are, Maya playing Black as plainly as a
   // newcomer: her longest open line, or a block of the computer's.
@@ -2327,9 +2332,10 @@ test('Gomoku on your own', async ({ player }) => {
   expect(held, 'the computer captured thinking').toBe(true);
 
   // A game won, against Easy: it stops a four, but not an open three.
+  await keepOnDevice(maya, {
+    'picks:gomoku': JSON.stringify({ level: 'easy', color: 'black' }),
+  });
   await maya.goto('/games/gomoku/solo');
-  await choose(maya, 'Level', /^Easy/);
-  await maya.getByRole('button', { name: 'Start' }).click();
   const won = maya.getByRole('heading', {
     name: /^You won on move \d+\.$/,
   });
@@ -2339,6 +2345,7 @@ test('Gomoku on your own', async ({ player }) => {
     await placeAlone(maya, plainMove(await stonesOn(maya), 'black'), 'black');
   }
   await shot(maya, 'GM05');
+  await shotChange(maya, 'Change level', 'GM02');
 
   // And one lost, Maya now White, her stones kept far apart.
   await maya.getByRole('button', { name: 'Play again' }).click();
@@ -2359,7 +2366,6 @@ test('Gomoku on your own', async ({ player }) => {
 
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/gomoku/solo');
-  await onPhone.getByRole('button', { name: 'Start' }).click();
   for (let stones = 0; stones < 4; stones++) {
     await expect(yourGomokuTurn(onPhone)).toBeVisible();
     const name = plainMove(await stonesOn(onPhone), 'black');

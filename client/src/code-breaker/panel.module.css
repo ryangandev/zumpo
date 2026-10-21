@@ -49,3 +49,12 @@
 .icon {
   display: flex;
 }
+
+/* A short window (SHORT_WINDOW in use-media-query.ts): closer around the
+   board, so it shrinks less to fit the height. */
+@media (min-width: 641px) and (max-height: 800px) {
+  .panel {
+    gap: var(--zumpo-space-12);
+    padding: var(--zumpo-space-16);
+  }
+}

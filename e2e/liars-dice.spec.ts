@@ -102,10 +102,6 @@ test('a player with no name plays a table of bots to the end', async ({
   test.setTimeout(150_000);
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Liar’s Dice');
-  await expect(
-    sam.getByRole('heading', { name: 'Pick a table.' }),
-  ).toBeVisible();
-  await sam.getByRole('button', { name: 'Start' }).click();
   await expect(sam.getByText('Round 1', { exact: true })).toBeVisible();
   await expect(
     sam.getByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ }),

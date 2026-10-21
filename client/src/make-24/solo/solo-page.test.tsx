@@ -42,12 +42,8 @@ async function solve(deal: readonly number[]) {
 
 const pause = (ms: number) => act(() => vi.advanceTimersByTime(ms));
 
-/** Starts the run `SEED` deals. */
-async function startRun() {
-  const view = await renderApp(`/games/make-24/solo?seed=${SEED}`);
-  await user.click(screen.getByRole('button', { name: 'Start' }));
-  return view;
-}
+/** Plays the run `SEED` deals. */
+const startRun = () => renderApp(`/games/make-24/solo?seed=${SEED}`);
 
 describe('Make 24 on your own', () => {
   it('is offered on the game’s page', async () => {
@@ -58,27 +54,22 @@ describe('Make 24 on your own', () => {
     );
   });
 
-  it('starts on a first visit when asked', async () => {
+  it('deals at once on a first visit', async () => {
     const { router } = await renderApp('/games/make-24/solo', {
       firstVisit: true,
     });
     expect(router.state.location.pathname).toBe('/games/make-24/solo');
-    expect(screen.getByText('Ten hands, one clock.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
+    expect(screen.getAllByText('Ten hands').length).toBeGreaterThan(0);
     expect(screen.getByText('Not yet')).toBeInTheDocument();
-    expect(screen.queryByRole('region', { name: 'Turn' })).toBeNull();
-
-    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(turn().getByText('Hand 1 of 10')).toBeInTheDocument();
     expect(turn().getByText('Make 24')).toBeInTheDocument();
     expect(cards()).toHaveLength(4);
   });
 
   it('plays a challenge’s own hands', async () => {
-    await renderApp(`/games/make-24/solo?seed=${SEED}`);
-    expect(
-      screen.getByText(/^A friend sent you these ten hands\./),
-    ).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await startRun();
+    expect(screen.getByText('Challenge')).toBeInTheDocument();
     expect(cards().map((card) => card.textContent)).toEqual(
       deals[0]!.map(String),
     );
@@ -204,8 +195,11 @@ describe('Make 24 on your own', () => {
     );
     expect(screen.getByText('Today')).toBeInTheDocument();
 
+    expect(
+      screen.getByRole('heading', { name: 'Challenge a friend' }),
+    ).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Challenge a friend' }),
+      screen.getByRole('button', { name: 'Copy challenge link' }),
     );
     expect(await navigator.clipboard.readText()).toBe(
       `${window.location.origin}/games/make-24/solo?seed=${SEED}`,

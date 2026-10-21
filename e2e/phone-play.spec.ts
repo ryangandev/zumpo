@@ -76,12 +76,6 @@ async function onPhone(
   return page;
 }
 
-const startSolo = async (page: Page) => {
-  const button = page.getByRole('button', { name: 'Start', exact: true });
-  await expect(button).toBeVisible();
-  await button.click();
-};
-
 const turnOf = (page: Page) => page.getByRole('region', { name: 'Turn' });
 
 /** Draws one stroke across the canvas. */
@@ -169,7 +163,6 @@ for (const size of SIZES) {
     test('snap keeps both cards still', async ({ player }) => {
       const sam = await onPhone(player, 'Sam', size);
       await sam.goto('/games/snap/solo');
-      await startSolo(sam);
       await readyToTap(sam);
       const middle = await heldStill(
         sam.getByRole('group', { name: /^Middle card/ }),
@@ -193,7 +186,6 @@ for (const size of SIZES) {
     test('pairs keeps the cards still', async ({ player }) => {
       const sam = await onPhone(player, 'Sam', size);
       await sam.goto('/games/pairs/solo');
-      await startSolo(sam);
       const still = await heldStill(
         sam.getByRole('grid', { name: 'Cards' }),
         'the first turn',
@@ -208,7 +200,6 @@ for (const size of SIZES) {
     test('trios keeps the table still', async ({ player }) => {
       const sam = await onPhone(player, 'Sam', size);
       await sam.goto('/games/trios/solo');
-      await startSolo(sam);
       const still = await heldStill(
         sam.getByRole('group', { name: 'Table' }),
         'the first trio',
@@ -224,7 +215,6 @@ for (const size of SIZES) {
     test('make 24 keeps the signs still', async ({ player }) => {
       const sam = await onPhone(player, 'Sam', size);
       await sam.goto('/games/make-24/solo');
-      await startSolo(sam);
       await expect(sam.getByText('Hand 1 of 10').first()).toBeVisible();
       // With every card used the signs keep their room, out of sight.
       const signs = sam.locator('[aria-label="Signs"]');
@@ -268,7 +258,6 @@ for (const size of SIZES) {
       test.setTimeout(90_000);
       const sam = await onPhone(player, 'Sam', size);
       await sam.goto('/games/liars-dice/solo');
-      await startSolo(sam);
       const nextRound = sam.getByRole('button', { name: 'Next round' });
       let still: ((later: string) => Promise<void>) | null = null;
       for (let turn = 1; turn <= 4; turn++) {
@@ -526,7 +515,6 @@ test('a phone on its side shows the whole Gomoku board beside the turn', async (
 }) => {
   const sam = await onPhone(player, 'Sam', { width: 844, height: 390 });
   await sam.goto('/games/gomoku/solo');
-  await startSolo(sam);
   const board = sam.getByRole('grid', { name: 'Gomoku board' });
   await expect
     .poll(async () => (await placeOf(board)).inside, { message: 'in sight' })

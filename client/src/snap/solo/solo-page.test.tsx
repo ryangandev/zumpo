@@ -53,19 +53,14 @@ async function takeCard() {
   await pause(MATCH_FLASH_MS);
 }
 
-/** Starts the run `SEED` deals. */
-async function startRun() {
-  const view = await renderApp(`/games/snap/solo?seed=${SEED}`);
-  await user.click(screen.getByRole('button', { name: 'Start' }));
-  return view;
-}
+/** Plays the run `SEED` deals. */
+const startRun = () => renderApp(`/games/snap/solo?seed=${SEED}`);
 
 describe('Snap on your own', () => {
   it('runs in Chinese, symbols and all', async () => {
     await renderApp(`/games/snap/solo?seed=${SEED}`, { locale: 'zh' });
-    expect(screen.getByText('30 张牌，看你多快。')).toBeInTheDocument();
-    expect(screen.getByText(/^好友发来了这副牌。/)).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: '开始' }));
+    expect(screen.getByText('挑战')).toBeInTheDocument();
+    expect(screen.getByText('怎样算相同')).toBeInTheDocument();
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 1 / 30 张')).toBeInTheDocument();
     expect(bar.getByText('找出相同的图案')).toBeInTheDocument();
@@ -86,13 +81,11 @@ describe('Snap on your own', () => {
     );
   });
 
-  it('deals nothing until Start', async () => {
+  it('deals at once, with two cards to learn from', async () => {
     await renderApp('/games/snap/solo');
-    expect(screen.getByText('Thirty cards, one clock.')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
     expect(screen.getByText('Not yet')).toBeInTheDocument();
-    expect(screen.queryByRole('group', { name: 'Middle card' })).toBeNull();
-
-    await user.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.getByText('What makes a match')).toBeInTheDocument();
     expect(turn().getByText('Card 1 of 30')).toBeInTheDocument();
     expect(turn().getByText('Spot the match')).toBeInTheDocument();
     expect(card('Middle card').getAllByRole('button')).toHaveLength(6);
@@ -193,9 +186,19 @@ describe('Snap on your own', () => {
       /^\d+$/,
     );
     expect(screen.getByText('Today')).toBeInTheDocument();
+    // The last two cards stay as the run ended, their match marked.
+    expect(turn().getByText('All 30 cards taken')).toBeInTheDocument();
+    expect(
+      card('Middle card').getByLabelText(
+        `${nameOf(matchNow(model)!)}, on both cards`,
+      ),
+    ).toBeInTheDocument();
 
+    expect(
+      screen.getByRole('heading', { name: 'Challenge a friend' }),
+    ).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Challenge a friend' }),
+      screen.getByRole('button', { name: 'Copy challenge link' }),
     );
     expect(await navigator.clipboard.readText()).toBe(
       `${window.location.origin}/games/snap/solo?seed=${SEED}`,
@@ -211,5 +214,23 @@ describe('Snap on your own', () => {
     await startRun();
     expect(card('Middle card').getAllByRole('button')).toHaveLength(6);
     expect(screen.queryByText('This run')).toBeNull();
+  });
+
+  it('on a phone, leaves the last two cards under the result, no longer fitted to the screen', async () => {
+    onPhone();
+    await startRun();
+    const cards = screen
+      .getByRole('heading', { name: /^Middle card/ })
+      .closest('[data-play-board]');
+    expect(cards).not.toBeNull();
+    for (let taken = 0; taken < RUN_CARDS; taken++) await takeCard();
+
+    const result = screen.getByRole('heading', { name: /^30 cards in/ });
+    expect(result).toHaveFocus();
+    const middle = screen.getByRole('heading', { name: /^Middle card/ });
+    expect(middle.closest('[data-play-board]')).toBeNull();
+    expect(
+      result.compareDocumentPosition(middle) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 });

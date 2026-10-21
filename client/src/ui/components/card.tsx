@@ -19,6 +19,11 @@ export interface CardProps {
   onSubmit?: FormEventHandler<HTMLFormElement>;
   /** Marks the card as waiting on something, as a loading state does. */
   busy?: boolean;
+  /**
+   * The title can be given the focus from code, never by Tab: a card that
+   * appears as what was being done ends, such as a game's result.
+   */
+  focusableTitle?: boolean;
   className?: string;
 }
 
@@ -34,13 +39,18 @@ export function Card({
   actions,
   onSubmit,
   busy,
+  focusableTitle = false,
   className,
 }: CardProps) {
   const titleId = useId();
   const Title = kind === 'panel' ? 'h2' : 'h1';
   const content = (
     <>
-      <Title id={titleId} className={styles.title}>
+      <Title
+        id={titleId}
+        className={styles.title}
+        tabIndex={focusableTitle ? -1 : undefined}
+      >
         {title}
       </Title>
       {description != null && (

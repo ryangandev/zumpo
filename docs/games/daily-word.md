@@ -45,6 +45,7 @@ Six guesses without finding it, and it is **missed**.
 ### Typing
 
 An on-screen keyboard (three rows, QWERTY, with Enter and a delete key) and a physical keyboard both type into the next empty tile; Enter submits and Backspace deletes.
+On your own on a short wide window, such as a laptop's at 1280 × 720, the keyboard stands beside the board instead of under it, so the board stays near its full size.
 Each key shows the best mark its letter has had so far (`correct` over `present` over `absent`), and an unused letter is plain.
 In a room the physical keyboard types into the board unless the chat input has focus.
 
@@ -90,7 +91,7 @@ A server-wide date (UTC) was the alternative; it was rejected because the word w
   Guesses are kept on this device as they are made, so a refresh, a closed tab or another visit later that day continues the same game, and a finished game stays finished until midnight.
 - There is no clock: it is not a race, and nothing is timed.
 
-When the word is found or missed, the board stays, and beside it:
+When the word is found or missed, the board stays, the same board in the same panel with the keyboard gone, and beside it (over it on one column, so Share is in sight, with the cards under it):
 
 - **The result**: found in _n_, or missed, with the word; a missed word is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them found, the current streak, the best streak, and how many were found in 1, 2, 3, 4, 5 and 6 guesses, with today's bar picked out.
@@ -123,7 +124,8 @@ After the daily word, **Practice word** starts extra words, one at a time, as ma
 
 - A practice word is dealt from a **seed**, like Make 24's runs and Pairs' decks: the seed alone picks one word from the answer list.
 - It plays exactly like the daily word, and keeps no stats and no streak: practice is practice.
-- When it ends: found in _n_ or missed, with the word; **Another word** deals a new seed; **Challenge a friend** copies the result grid with a link to the same word (`/games/daily-word/solo?seed=k3f9x2`); and **Today's word** goes back to the daily result.
+- When it ends the board stays, as the daily word's does, and beside it: found in _n_ or missed, with the word; **Another word** deals a new seed, and **Today's word** goes back to the daily result.
+  Under them, **Challenge a friend** shows the marks of each guess and one button, **Copy challenge link**, which copies the result grid with a link to the same word (`/games/daily-word/solo?seed=k3f9x2`).
 - Whoever opens a challenge link plays that word straight away, whether or not they have played today's.
   A practice word lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 

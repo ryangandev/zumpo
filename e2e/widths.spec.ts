@@ -3,6 +3,7 @@ import { createRoom, expect, joinRoom, test } from './fixtures';
 import { readyUp } from './play/hush';
 import { yourTurn } from './play/liars-dice';
 import { openMiddle } from './play/minesweeper';
+import { playTurn, type Memory } from './play/pairs';
 
 /**
  * Figma draws the screens at 1440 and 390 px; a window can be any width. At
@@ -116,11 +117,6 @@ async function fitsEveryWidth(page: Page, state: string) {
 const start = (page: Page) =>
   page.getByRole('button', { name: 'Start game' }).click();
 
-const startSolo = async (page: Page) => {
-  const button = page.getByRole('button', { name: 'Start' });
-  if (await button.isVisible()) await button.click();
-};
-
 const offeredWord = (page: Page) =>
   page.getByRole('button', { name: /\d+ letters?$/ }).first();
 
@@ -166,7 +162,6 @@ test('minesweeper fits every width', async ({ player }) => {
   const sam = await player('Sam');
   for (const board of ['Medium', 'Large'] as const) {
     await sam.goto(`/games/minesweeper/solo?board=${board}`);
-    await startSolo(sam);
     await openMiddle(sam);
     await fitsEveryWidth(sam, `a ${board} board on your own`);
   }
@@ -184,8 +179,6 @@ test('minesweeper fits every width', async ({ player }) => {
 test('make 24 fits every width', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/make-24/solo');
-  await fitsEveryWidth(sam, 'before the first hand');
-  await startSolo(sam);
   await expect(sam.getByText('Hand 1 of 10').first()).toBeVisible();
   await fitsEveryWidth(sam, 'a hand on your own');
   const maya = await player('Maya');
@@ -201,9 +194,16 @@ test('make 24 fits every width', async ({ player }) => {
 test('pairs fits every width', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/pairs/solo?board=Large');
-  await startSolo(sam);
   await expect(sam.getByRole('region', { name: 'Turn' })).toBeVisible();
   await fitsEveryWidth(sam, 'a Large board on your own');
+  // A cleared board stays, its result and actions beside it or below.
+  await sam.goto('/games/pairs/solo?board=Small');
+  const memory: Memory = new Map();
+  const cleared = sam.getByRole('heading', {
+    name: /^8 pairs in \d+ turns\.$/,
+  });
+  while (!(await cleared.isVisible())) await playTurn(sam, memory);
+  await fitsEveryWidth(sam, 'a cleared board on your own');
   const maya = await player('Maya');
   const leo = await player('Leo');
   await joinRoom(
@@ -218,7 +218,6 @@ test('pairs fits every width', async ({ player }) => {
 test('trios fits every width', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/trios/solo');
-  await startSolo(sam);
   await expect(sam.getByText('Trio 1 of 10').first()).toBeVisible();
   await fitsEveryWidth(sam, 'a table on your own');
   const maya = await player('Maya');
@@ -232,7 +231,6 @@ test('trios fits every width', async ({ player }) => {
 test('snap fits every width', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/snap/solo');
-  await startSolo(sam);
   await expect(sam.getByText('Card 1 of 30').first()).toBeVisible();
   await fitsEveryWidth(sam, 'two cards on your own');
   const maya = await player('Maya');
@@ -246,7 +244,6 @@ test('snap fits every width', async ({ player }) => {
 test("liar's dice fits every width", async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/liars-dice/solo');
-  await startSolo(sam);
   // The bots may end a round before it comes to Sam, who starts the next.
   const nextRound = sam.getByRole('button', { name: 'Next round' });
   while (!(await yourTurn(sam).isVisible())) {
@@ -328,7 +325,6 @@ test('doodle chain fits every width', async ({ player }) => {
 test('gomoku fits every width', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/gomoku/solo');
-  await startSolo(sam);
   await expect(sam.getByText('Move 1').first()).toBeVisible();
   await fitsEveryWidth(sam, 'a board on your own');
   const maya = await player('Maya');

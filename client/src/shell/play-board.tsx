@@ -25,6 +25,12 @@ export interface PlayBoardProps {
    * height is better under it, where a round's results lie over its foot.
    */
   align?: 'center' | 'start';
+  /**
+   * False once the game is over: the board stays where it is, mounted, but
+   * no longer takes the height left, and is only scaled to the width, as
+   * `Fit` does, so a finished board and what follows it scroll as a page.
+   */
+  inPlay?: boolean;
   className?: string;
 }
 
@@ -47,6 +53,7 @@ export function PlayBoard({
   fitWidth = true,
   current,
   align = 'center',
+  inPlay = true,
   className,
 }: PlayBoardProps) {
   const box = useRef<HTMLDivElement>(null);
@@ -65,7 +72,7 @@ export function PlayBoard({
       const neededHeight = inner.getBoundingClientRect().height;
       if (!width || !neededWidth || !neededHeight) return;
       const byWidth = width / neededWidth;
-      const byHeight = height / neededHeight;
+      const byHeight = inPlay ? height / neededHeight : 1;
       const scale = Math.min(1, byWidth, Math.max(byHeight, min));
       if (scale < 1) inner.style.setProperty('zoom', String(scale));
       const scrolls = byHeight < min;
@@ -80,7 +87,7 @@ export function PlayBoard({
     observer.observe(outer);
     observer.observe(inner);
     return () => observer.disconnect();
-  }, [min, fitWidth, following]);
+  }, [min, fitWidth, inPlay, following]);
 
   // A board that scrolls keeps the row being played in view.
   useLayoutEffect(() => {
@@ -93,7 +100,7 @@ export function PlayBoard({
     <div
       ref={box}
       className={cx(styles.box, align === 'start' && styles.start, className)}
-      data-play-board=""
+      data-play-board={inPlay ? '' : undefined}
     >
       <div ref={piece} className={cx(styles.piece, !fitWidth && styles.wide)}>
         {children}

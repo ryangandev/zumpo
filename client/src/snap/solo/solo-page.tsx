@@ -1,10 +1,9 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import { SYMBOLS, type SymbolName } from '../../../../shared/snap';
 import {
   Button,
-  ButtonLink,
   Card,
   SnapCard,
   StatList,
@@ -13,14 +12,9 @@ import {
   type Stat,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo, soloPath } from '../../games/catalog';
+import { soloPath } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
-import { FormPage } from '../../shell/form-page';
-import {
-  ChallengeButton,
-  ChallengeCard,
-  challengeLink,
-} from '../../solo/challenge';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import {
   dayLabel,
   formatDuration,
@@ -41,6 +35,7 @@ import {
   cardsLeft,
   flashMs,
   isOver,
+  matchNow,
   middleOf,
   newRun,
   RUN_CARDS,
@@ -61,36 +56,29 @@ const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
 
 /**
- * SN01-SN04, SN11: Snap on your own, thirty cards against one clock.
+ * SN02-SN04, SN11: Snap on your own, thirty cards against one clock, dealt
+ * as the page opens, so nobody studies the first card before the clock runs.
  * `?seed=` is a challenge: the same deck somebody else played. It all runs
  * here: nothing reaches the server.
  */
 export function SnapSolo() {
   const [params, setParams] = useSearchParams();
-  const linked = params.get('seed');
   // Each run is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{ seed: string; run: number } | null>(
-    null,
-  );
-
-  if (playing === null) {
-    return (
-      <RunPicker
-        challenge={isSeed(linked)}
-        onStart={() =>
-          setPlaying({ seed: isSeed(linked) ? linked : newSeed(), run: 0 })
-        }
-      />
-    );
-  }
+  const [playing, setPlaying] = useState(() => {
+    const linked = params.get('seed');
+    return isSeed(linked)
+      ? { seed: linked, challenge: true, run: 0 }
+      : { seed: newSeed(), challenge: false, run: 0 };
+  });
   return (
     <RunView
       key={playing.run}
       seed={playing.seed}
+      challenge={playing.challenge}
       onPlayAgain={() => {
         // A challenge is played once; the next run is a new one.
-        if (linked !== null) setParams({}, { replace: true });
-        setPlaying({ seed: newSeed(), run: playing.run + 1 });
+        if (playing.challenge) setParams({}, { replace: true });
+        setPlaying({ seed: newSeed(), challenge: false, run: playing.run + 1 });
       }}
     />
   );
@@ -106,43 +94,14 @@ const EXAMPLE = [
 ];
 const EXAMPLE_MATCH = { [SYMBOLS.indexOf('cloud')]: 'match' } as const;
 
-/** SN01: what a run is, two cards to learn from, and the best on this device. */
-function RunPicker({
-  challenge,
-  onStart,
-}: {
-  challenge: boolean;
-  onStart: () => void;
-}) {
-  const game = gameInfo('snap');
+/** SN01's rule and two cards to learn from, beside the cards while they are played. */
+function SnapExample() {
   const m = useMessages();
-  const text = m.games.of[game.type];
-  const best = readBest(BEST_KEY);
-  const rule = m.snap.solo.rule;
-  const description = challenge ? m.snap.solo.challengeDescription(rule) : rule;
-
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
-      title={m.snap.solo.title}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart();
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.snap.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.shell.backToGames}
-          </ButtonLink>
-        </>
-      }
+    <Card
+      kind="panel"
+      title={m.snap.solo.whatMakesMatch}
+      description={m.snap.solo.rule}
     >
       <div className={styles.example}>
         <span className={styles.exampleCards}>
@@ -157,18 +116,7 @@ function RunPicker({
         </span>
         <span className={styles.exampleText}>{m.snap.solo.example}</span>
       </div>
-      <StatList
-        className={styles.stats}
-        stats={[
-          { label: m.snap.solo.cards, value: String(RUN_CARDS) },
-          {
-            label: m.snap.solo.yourBest,
-            value: best === null ? m.snap.solo.notYet : formatDuration(best),
-            tone: best === null ? 'muted' : undefined,
-          },
-        ]}
-      />
-    </FormPage>
+    </Card>
   );
 }
 
@@ -183,9 +131,12 @@ interface Finish {
 /** SN02-SN04, SN11: the run, from the first card to its results. */
 function RunView({
   seed,
+  challenge,
   onPlayAgain,
 }: {
   seed: string;
+  /** Dealt from somebody else's link. */
+  challenge: boolean;
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
@@ -214,7 +165,23 @@ function RunView({
     return () => clearTimeout(timer);
   }, [flash, run, clock]);
 
-  const link = challengeLink(soloPath('snap'), { seed });
+  const { middleMarks, myMarks } = marksOf(run);
+  // The last two cards stay as the run ended, their match marked.
+  const board = (
+    <SnapBoard
+      middle={{
+        symbols: middleOf(run),
+        label: m.snap.middleCard,
+        tag: finish ? undefined : m.snap.left(cardsLeft(run)),
+        marks: middleMarks,
+      }}
+      mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
+      onTap={(symbol) => setRun(tap(run, symbol, clock.now()))}
+      disabled={!canTap(run)}
+      inPlay={!finish}
+      fitHeight
+    />
+  );
 
   if (finish) {
     const { timeMs, wrongTaps, fastestMs, slowestMs } = summary(run);
@@ -226,6 +193,21 @@ function RunView({
         gameType="snap"
         phase={{ tone: 'lime', label: m.snap.solo.complete }}
         stage={
+          <>
+            <TurnBar
+              label={m.snap.solo.progress(RUN_CARDS, RUN_CARDS)}
+              kind="status"
+              main={m.snap.solo.allTaken(RUN_CARDS)}
+              countdown={{
+                seconds: Math.floor(timeMs / 1000),
+                label: m.snap.solo.runTime,
+                deadline: false,
+              }}
+            />
+            {board}
+          </>
+        }
+        result={
           <SoloResult
             celebrate={finish.isBest}
             title={m.snap.solo.resultTitle(RUN_CARDS, time)}
@@ -235,12 +217,7 @@ function RunView({
               { label: m.snap.solo.fastest, value: timeOf(fastestMs) },
               { label: m.snap.solo.slowest, value: timeOf(slowestMs) },
             ]}
-            actions={
-              <>
-                <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-                <ChallengeButton link={link} />
-              </>
-            }
+            actions={<Button onClick={onPlayAgain}>{m.room.playAgain}</Button>}
           />
         }
         side={
@@ -253,7 +230,7 @@ function RunView({
             </Card>
             <ChallengeCard
               description={m.snap.solo.challenge(time)}
-              link={link}
+              text={challengeLink(soloPath('snap'), { seed })}
             />
           </>
         }
@@ -264,26 +241,18 @@ function RunView({
   const best = readBest(BEST_KEY);
   const { wrongTaps, fastestMs } = summary(run);
   const label = m.snap.solo.progress(cardNumber(run), RUN_CARDS);
-  const { middleMarks, myMarks } = marksOf(run);
   return (
     <SoloLayout
       gameType="snap"
       time={clock}
-      phase={{ tone: 'blue', label }}
+      phase={{
+        tone: 'blue',
+        label: challenge ? m.solo.challenge : m.snap.solo.thirtyCards,
+      }}
       stage={
         <>
           <TurnBar {...turnBar(run, now, label, m)} />
-          <SnapBoard
-            middle={{
-              symbols: middleOf(run),
-              label: m.snap.middleCard,
-              tag: m.snap.left(cardsLeft(run)),
-              marks: middleMarks,
-            }}
-            mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
-            onTap={(symbol) => setRun(tap(run, symbol, clock.now()))}
-            disabled={!canTap(run)}
-          />
+          {board}
         </>
       }
       side={
@@ -292,10 +261,6 @@ function RunView({
             <StatList
               className={styles.stats}
               stats={[
-                {
-                  label: m.snap.solo.taken,
-                  value: String(run.results.length),
-                },
                 {
                   label: m.snap.solo.wrongTaps,
                   value: costOf(wrongTaps, m),
@@ -311,6 +276,7 @@ function RunView({
               ]}
             />
           </Card>
+          <SnapExample />
           <Card kind="panel" title={m.snap.solo.best}>
             <StatList
               className={styles.stats}
@@ -336,17 +302,24 @@ const costOf = (count: number, m: Messages) =>
 
 /**
  * What the spots show: a match on both cards, or a wrong tap on the card the
- * symbol is on.
+ * symbol is on. A finished run keeps its last match marked.
  */
 function marksOf(run: SoloRun) {
   const middleMarks: Partial<Record<number, SnapSpotMark>> = {};
   const myMarks: Partial<Record<number, SnapSpotMark>> = {};
   const flash = run.flash;
-  if (flash?.match) {
-    middleMarks[flash.symbol] = 'match';
-    myMarks[flash.symbol] = 'match';
-  } else if (flash) {
+  if (flash && !flash.match) {
     (flash.on === 'mine' ? myMarks : middleMarks)[flash.symbol] = 'miss';
+    return { middleMarks, myMarks };
+  }
+  const match = flash?.match
+    ? flash.symbol
+    : isOver(run)
+      ? matchNow(run)
+      : null;
+  if (match !== null) {
+    middleMarks[match] = 'match';
+    myMarks[match] = 'match';
   }
   return { middleMarks, myMarks };
 }

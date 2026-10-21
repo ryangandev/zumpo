@@ -36,6 +36,7 @@ export function PlayArea({
   ruledOut,
   pad,
   disabled,
+  beside = false,
   className,
   children,
 }: {
@@ -54,6 +55,12 @@ export function PlayArea({
   pad: boolean;
   /** A paused board: reconnecting, or a guess on its way. */
   disabled?: boolean;
+  /**
+   * The pad, in its two-row layout, beside the board and its line, not under
+   * them: on your own on a short wide window (SHORT_WIDE), while the pad is
+   * up.
+   */
+  beside?: boolean;
   className?: string;
   /** Beside the board: a room's others (CB09). */
   children?: ReactNode;
@@ -79,17 +86,28 @@ export function PlayArea({
       describe={(row) => describeRow(row, m)}
     />
   );
-  // In play the board gives the height the pad needs; done, it is as tall
-  // as it is.
-  const board = pad ? (
-    <PlayBoard min={0.75} current={rows.length}>
+  // In play the board gives the height the pad needs; done, it stays where
+  // it was, as tall as it is.
+  const board = (
+    <PlayBoard
+      min={0.75}
+      current={rows.length}
+      inPlay={pad}
+      className={styles.board}
+    >
       {codeBoard}
     </PlayBoard>
-  ) : (
-    codeBoard
   );
   return (
-    <div ref={play} className={cx(styles.play, pad && playColumn, className)}>
+    <div
+      ref={play}
+      className={cx(
+        styles.play,
+        pad && playColumn,
+        beside && styles.beside,
+        className,
+      )}
+    >
       {children ? (
         <div className={styles.boards}>
           {board}
@@ -127,7 +145,7 @@ export function PlayArea({
           onDigit={onDigit}
           onDelete={typing.onDelete}
           onEnter={typing.onEnter}
-          layout={phone ? 'phone' : 'desktop'}
+          layout={phone || beside ? 'phone' : 'desktop'}
           disabled={disabled}
           className={styles.pad}
         />

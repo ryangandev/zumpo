@@ -78,7 +78,7 @@ On a narrow screen the turn bar sits above it, so the bar keeps one height throu
 A **run** is **ten trios** against one clock, with no name, no room and no server: it runs in the browser.
 Ten is about two minutes for somebody who knows the game and four for somebody learning it, about the length of a Make 24 run.
 
-- The start screen shows the run and your best; the table is dealt and the **run time** starts on Start, so nobody studies the table before the clock runs.
+- Play solo, or a challenge link, deals the table and starts the **run time** at once; there is no start screen, so nobody studies the table before the clock runs.
   For the same reason the run time stops while **How to play** is open, and the table is put away behind it until it closes.
 - **A trio** shows as found for a moment (0.6 s, off the clock), then three new cards are dealt into its places, and the next trio begins.
 - **Not a trio:** the three cards show as wrong for a moment (0.6 s) and are put back, and **5 seconds** go on the clock.
@@ -87,13 +87,16 @@ Ten is about two minutes for somebody who knows the game and four for somebody l
 - **Hint** marks one card of a trio on the table, and **10 seconds** go on the clock.
   A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered, though its place under the table is kept so the table never moves.
   Hints are cleared when a trio is taken.
-- After the tenth trio: the run time, the wrong picks and hints with what they cost, the fastest trio, and every trio you found with its time.
+- While a run is played three cards sit beside the table (under it on one column, and not at all on a phone, which keeps to the table):
+  **This run**, the wrong picks and hints so far with what they cost; **What makes a trio**, the rule in one line with an example trio of three small cards and what makes it one (the same colour; shape, count and fill all different); and **Best**, the best time for ten trios on this device.
+- After the tenth trio the table gives way, in the same panel, to **every trio you found**, each with its time and its wrong picks and hints.
+  Beside it (over it on one column, so Play again is in sight) the result says the run time, with the wrong picks and hints and what they cost, and the fastest trio; then the best of each of the last few days, and Challenge a friend.
 - **Leave** goes to the game's page; once a trio is found, any way out asks first, since the run's time is not kept.
   The run time stops while it asks, and the table is put away, so staying costs nothing.
 - **The quicker run time is better.**
   The best is kept **on this device** (in `localStorage`), with the best of each of the last few days, as Make 24 keeps them.
 
-**Challenge a friend** copies a link to the same deal (`/games/trios/solo?seed=k3f9x2`).
+**Challenge a friend**, beside a finished game, has one button, **Copy challenge link**, which copies a link to the same deal (`/games/trios/solo?seed=k3f9x2`).
 Whoever opens it gets the same first table and the same deck, and can compare times.
 A run without a link gets a new seed, and Play again starts another.
 

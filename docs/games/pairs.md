@@ -32,17 +32,18 @@ The game ends when every pair is found.
 
 A game on your own needs no name, no room and no server: it runs in the browser.
 
-- Pick a board; the last one picked is offered first next time.
+- Play solo starts a board at once: the last one played, or Small on a first visit.
+  **Change board**, beside Play again when a board is cleared, picks another (PR01).
 - The **run time** starts with the first card turned and stops with the last pair.
   It also stops while **How to play** is open, and the cards are put away behind it until it closes; a miss stays up until then too.
 - Two cards that do not match turn back after **1 second**, or at once when you turn over another card.
 - **Turns** count every two cards turned over, pairs included.
-- After the last pair: the turns, the time, the longest streak of pairs found in a row, and the best on this device for each board, with Play again, Change board and Challenge a friend.
+- After the last pair the cleared board stays, and beside it (over it on one column, so Play again is in sight): the turns, the time, the longest streak of pairs found in a row, and the best on this device for each board, with Play again and Change board, then Challenge a friend.
 - **Leave** goes to the game's page at once: a board is a minute or two to play again.
 - **Fewer turns is better; for the same turns, the quicker time is.**
   The best for each board is kept **on this device** (in `localStorage`).
 
-**Challenge a friend** copies a link to the same deck (`/games/pairs/solo?board=Large&seed=k3f9x2`).
+**Challenge a friend**, beside a finished game, has one button, **Copy challenge link**, which copies a link to the same deck (`/games/pairs/solo?board=Large&seed=k3f9x2`).
 Whoever opens it plays exactly that deck and can compare turns.
 A game without a link gets a new seed, and Play again starts another.
 
