@@ -41,7 +41,7 @@ const CONTENT: Record<string, string> = {
   SN06: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN07: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN09: 'Between games a player may move to the spectator seats, a button no Figma screen has yet; the chat starts with the join messages.',
+  SN09: 'Between games a player may move to the spectator seats, a button no Figma screen has yet.',
   SN13: 'Every room shows its spectators a banner and a Watching panel, which no Figma screen has yet; the chat starts with the join messages.',
   LD07: 'Liar’s Dice’s description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
   LD08: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and two lines of talk.',

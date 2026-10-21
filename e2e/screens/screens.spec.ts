@@ -1255,11 +1255,8 @@ test('a Snap game', async ({ player }) => {
   await joinRoom(jo, link);
   await expect(snapTurnOf(jo).getByText('Everyone is looking')).toBeVisible();
   await shot(jo, 'SN13');
+  // Leaving while watching asks nothing.
   await jo.getByRole('button', { name: 'Leave room' }).click();
-  await jo
-    .getByRole('dialog')
-    .getByRole('button', { name: 'Leave room' })
-    .click();
   await expect(sam.getByRole('region', { name: /^Watching/ })).toBeHidden();
 
   // Maya takes the tenth, as Sam sees it.
