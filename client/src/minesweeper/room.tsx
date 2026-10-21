@@ -123,13 +123,23 @@ function Minefield({
   const m = useMessages();
   const { state } = room;
   const phone = useMediaQuery(PHONE);
+  // A game played to its end has standings that count its last round. Only
+  // that game drops the round, not one cut short, which has no standings.
+  const finished =
+    !state.isGameStarted &&
+    state.lastGame !== null &&
+    !state.lastGame.endedEarly;
   const results =
-    !state.isGameStarted || (phone && state.phase === 'picking')
+    finished || (phone && state.isGameStarted && state.phase === 'picking')
       ? []
       : state.lastRound.toSorted((a, b) => b.points - a.points);
-  // The round the results belong to: the one being revealed, or the one
-  // before the open one.
-  const resultsRound = state.phase === 'reveal' ? state.round : state.round - 1;
+  // The round the results belong to: the one being revealed, the one before
+  // the open one, or the last round of a game cut short.
+  const resultsRound = !state.isGameStarted
+    ? (state.lastGame?.rounds ?? state.round)
+    : state.phase === 'reveal'
+      ? state.round
+      : state.round - 1;
 
   return (
     <div className={styles.minefield}>
