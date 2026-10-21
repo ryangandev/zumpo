@@ -69,13 +69,25 @@ test('a Chinese phone visitor can change language with the keyboard and create a
   await phone.goto('/games/minesweeper');
   await phone.getByRole('link', { name: '创建房间', exact: true }).click();
   await phone.getByRole('button', { name: '更多选项', exact: true }).click();
-  await phone.getByRole('textbox', { name: '房间名称' }).fill('手机扫雷');
+  await phone
+    .getByRole('textbox', { name: '房间名称' })
+    .fill('周五晚上大家一起来玩的手机扫雷');
   await phone.getByRole('button', { name: '创建房间', exact: true }).click();
   await expect(phone).toHaveURL(/\/games\/minesweeper\/rooms\//);
   await expect(
     phone.getByRole('button', { name: '离开房间', exact: true }),
   ).toBeVisible();
   await expect(phone.getByRole('tab', { name: /^游戏/ })).toBeVisible();
+  // A long room name ends in an ellipsis on the room bar's one line: Chinese
+  // line breaking never wraps a line that is meant to stay one.
+  await phone.setViewportSize({ width: 360, height: 640 });
+  const context = phone.getByRole('banner').getByRole('paragraph');
+  await expect(context).toContainText('周五晚上');
+  expect(
+    await context.evaluate(
+      (line) => line.getBoundingClientRect().height <= 18.5,
+    ),
+  ).toBe(true);
   await phone.getByRole('tab', { name: '聊天', exact: true }).click();
   await expect(
     phone.getByText('小雨 创建了房间。', { exact: true }),
