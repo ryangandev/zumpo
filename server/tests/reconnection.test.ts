@@ -601,4 +601,28 @@ describe('a Draw & Guess player away for a whole round', () => {
     expect(ended.lastGame?.endedEarly).toBe(false);
     expect(ended.lastGame?.rounds).toBe(2);
   });
+
+  it('stops the game with a word to the room once everybody at the table is away', async () => {
+    await harness.teardown();
+    harness = await startTestServer({ ...FAST_PHASES, drawerHold: 0.2 }, 30);
+
+    const { roomId, alice, bob } = await playToDrawingPhase(harness);
+    const carol = await harness.connect();
+    await joinRoom(carol, roomId, 'Carol');
+    await settle(100);
+
+    const messages = collectChat(carol);
+    const ended = waitForDrawState(carol, (s) => s.lastGame !== null, 5000);
+    alice.close();
+    bob.close();
+
+    expect((await ended).lastGame?.endedEarly).toBe(true);
+    await settle(100);
+    // Said once, as every game cut short says it, and no result after it.
+    expect(
+      messages
+        .filter(({ notice }) => notice?.type.startsWith('game:'))
+        .map(({ kind, notice }) => ({ kind, type: notice?.type })),
+    ).toEqual([{ kind: 'alert', type: 'game:interrupted' }]);
+  });
 });

@@ -248,6 +248,11 @@ const createDrawAndGuessGameEngine = (
       (player) => player.isConnected,
     );
     if (room.game.wordCategory === '' || nobodyHere) {
+      // Nobody at the table can draw: the game stops, and says so, as any
+      // game cut short does. It posts no result.
+      if (nobodyHere) {
+        announce(room.roomId, 'alert', { type: 'game:interrupted' });
+      }
       endGame(room, { endedEarly: true });
       return;
     }
