@@ -77,6 +77,10 @@ export const room = {
   inviteDescription: (name: string) =>
     `Anyone with this link can join ${name} while a seat is open.`,
   copied: 'Copied',
+  linkCopied: 'Link copied',
+  /** With the link, in the share sheet: what the message says. */
+  shareText: (game: string, roomName: string) =>
+    `Join me for ${game} in ${roomName}.`,
   copy: 'Copy',
   done: 'Done',
   roomLink: 'Room link',

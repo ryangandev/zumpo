@@ -8,9 +8,11 @@ import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
 import { NameMenuButton } from '../shell/name-menu';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
+import { SwapLabel } from '../shell/swap-label';
+import { useCopy } from '../shell/use-copy';
 import { StatusLine } from '../shell/status-line';
-import { listNames, ordinal, placesOf } from './players';
+import { listNames, ordinal, placesOf, roomNameOf } from './players';
 import { useRoomContext } from './room-context';
 import styles from './panels.module.css';
 
@@ -49,16 +51,45 @@ export function RoomPanel({
   );
 }
 
+/**
+ * Invite friends sends the link the way the device does: the system share
+ * sheet under a finger, the clipboard under a mouse, saying "Link copied" in
+ * place. Where neither works, the invite dialog shows the link to copy by
+ * hand. A share sheet closed without sharing is the player changing their
+ * mind, and opens nothing.
+ */
 function InviteButton({ primary = false }: { primary?: boolean }) {
   const m = useMessages();
-  const { openInvite } = useRoomContext();
+  const { state, inviteLink, openInvite } = useRoomContext();
+  const { copied, copy } = useCopy(inviteLink);
+  const touch = useMediaQuery(TOUCH);
+  const invite = async () => {
+    if (touch && typeof navigator.share === 'function') {
+      const room = roomNameOf(state, m);
+      try {
+        await navigator.share({
+          title: room,
+          text: m.room.shareText(m.games.of[state.gameType].name, room),
+          url: inviteLink,
+        });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return;
+        }
+      }
+    } else if (await copy()) {
+      return;
+    }
+    openInvite();
+  };
   return (
     <Button
       variant={primary ? 'primary' : 'secondary'}
-      icon="link"
-      onClick={openInvite}
+      icon={copied ? 'check' : 'link'}
+      onClick={() => void invite()}
     >
-      {m.room.invite}
+      <SwapLabel second={copied} labels={[m.room.invite, m.room.linkCopied]} />
     </Button>
   );
 }

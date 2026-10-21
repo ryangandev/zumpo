@@ -70,6 +70,8 @@ export const room: typeof en = {
   inviteDescription: (name) =>
     `还有空位时，任何拿到链接的人都可以加入“${name}”。`,
   copied: '已复制',
+  linkCopied: '链接已复制',
+  shareText: (game, roomName) => `来“${roomName}”和我一起玩${game}吧。`,
   copy: '复制',
   done: '完成',
   roomLink: '房间链接',

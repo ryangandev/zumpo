@@ -406,8 +406,29 @@ describe('a room page', () => {
     expect(fake.sentArgs('room:leave')).toEqual([]);
   });
 
-  it('invites with the whole link, ready to copy', async () => {
+  it('copies the invite link at one click on a desktop, keeping the button’s width', async () => {
     const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    await user.click(
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
+    );
+    expect(await navigator.clipboard.readText()).toBe(
+      `${window.location.origin}${ROOM}`,
+    );
+    expect(
+      screen.getAllByRole('button', { name: 'Link copied' })[0],
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('shows the invite link to copy by hand when the clipboard refuses', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(
+      new DOMException('Denied', 'NotAllowedError'),
+    );
     const fake = server();
     await renderApp(ROOM, { fake });
     act(() => fake.serverEmits('room:state', minesweeperState()));
@@ -418,10 +439,14 @@ describe('a room page', () => {
     const dialog = await screen.findByRole('dialog', {
       name: 'Invite friends',
     });
-
     expect(
       within(dialog).getByRole('textbox', { name: 'Room link' }),
     ).toHaveValue(`${window.location.origin}${ROOM}`);
+    await vi.waitFor(() =>
+      expect(
+        within(dialog).getByRole('button', { name: 'Copy' }),
+      ).toHaveFocus(),
+    );
   });
 
   it('invites to a locked room with a link that carries its key', async () => {
@@ -437,17 +462,43 @@ describe('a room page', () => {
     await user.click(
       screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
     );
-    const dialog = await screen.findByRole('dialog', {
-      name: 'Invite friends',
-    });
-    expect(
-      within(dialog).getByRole('textbox', { name: 'Room link' }),
-    ).toHaveValue(`${window.location.origin}${ROOM}#key=Zq9-k3y_8Bf2LmPw`);
-    await vi.waitFor(() =>
-      expect(
-        within(dialog).getByRole('button', { name: 'Copy' }),
-      ).toHaveFocus(),
+    expect(await navigator.clipboard.readText()).toBe(
+      `${window.location.origin}${ROOM}#key=Zq9-k3y_8Bf2LmPw`,
     );
+  });
+
+  it('shares the invite link through the share sheet on a phone', async () => {
+    onPhone();
+    const share = vi.fn<(data: ShareData) => Promise<void>>();
+    share
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValueOnce(new DOMException('Cancelled', 'AbortError'));
+    Object.defineProperty(navigator, 'share', {
+      value: share,
+      configurable: true,
+    });
+    try {
+      const user = userEvent.setup();
+      const fake = server();
+      await renderApp(ROOM, { fake });
+      act(() => fake.serverEmits('room:state', minesweeperState()));
+
+      const invite = screen.getAllByRole('button', {
+        name: 'Invite friends',
+      })[0]!;
+      await user.click(invite);
+      expect(share).toHaveBeenCalledWith({
+        title: 'Friday table',
+        text: 'Join me for Minesweeper in Friday table.',
+        url: `${window.location.origin}${ROOM}`,
+      });
+      // A sheet closed without sharing is a change of mind: nothing opens.
+      await user.click(invite);
+      expect(share).toHaveBeenCalledTimes(2);
+      expect(screen.queryByRole('dialog')).toBeNull();
+    } finally {
+      Reflect.deleteProperty(navigator, 'share');
+    }
   });
 
   it('watches a game under way, with nothing to play and a seat for later', async () => {

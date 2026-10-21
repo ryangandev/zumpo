@@ -430,6 +430,7 @@ function SeatedRoom({
             drawings: connection.drawings,
             socket,
             sendChat: (text) => socket.emit('chat:send', state.roomId, text),
+            inviteLink: inviteLink(state),
             openInvite: () => setInviting(true),
             leave: () =>
               navigate(gamePath(state.gameType), {

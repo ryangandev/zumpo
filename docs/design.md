@@ -180,6 +180,10 @@ Code differs from Figma on purpose in a few places:
 - The header marks the page you are on; Figma draws Games as current on every screen.
 - Dialogs are centred in the window, so they sit a few pixels from where each Figma screen places them.
   The invite link's box grows to the whole link: two lines at P12's width, three on a phone, which Figma does not draw.
+- Invite friends opens P12 only where the link cannot be sent at once.
+  Under a mouse it copies the link and says "Link copied" with the check icon for a moment, as P12's Copy says "Copied"; under a finger it opens the system share sheet, and a sheet closed without sharing opens nothing.
+  Figma draws neither moment.
+- A Button whose label changes for a moment, Copy to Copied and Invite friends to Link copied, keeps the width of the wider label, so nothing beside it moves; P12 draws only Copied, at that width.
 - A game that ends while the room is open bursts into confetti in the brand accents and the sun brush's gold, at Ryan's request; Figma draws the results still, and a game found finished on arrival or after a refresh is not celebrated.
   It stays off when the system asks for reduced motion, and a Hush game the team lost is not celebrated.
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).

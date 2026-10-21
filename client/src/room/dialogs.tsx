@@ -5,6 +5,7 @@ import { Button, Dialog, DialogClose, TextField } from '../ui';
 import { gameInfo, scoreOf, type GameInfo } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
+import { SwapLabel } from '../shell/swap-label';
 import styles from './dialogs.module.css';
 
 /**
@@ -164,9 +165,9 @@ export function InviteDialog({
           <Button
             ref={copyButton}
             icon={copied ? 'check' : 'copy'}
-            onClick={copy}
+            onClick={() => void copy()}
           >
-            {copied ? m.room.copied : m.room.copy}
+            <SwapLabel second={copied} labels={[m.room.copy, m.room.copied]} />
           </Button>
           <DialogClose
             render={<Button variant="secondary">{m.room.done}</Button>}
