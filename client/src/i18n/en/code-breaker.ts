@@ -82,8 +82,7 @@ export const codeBreaker = {
   notThisTime: 'Not this time.',
   dailyCracked: (code: string, streak: string) =>
     `The code was ${code}. ${streak}`,
-  dailyMissed: (code: string) =>
-    `The code was ${code}. A new streak starts tomorrow.`,
+  dailyMissed: 'A new streak starts tomorrow.',
   guesses: 'Guesses',
   guessesOf: (count: number, max: number) => `${count} of ${max}`,
   nextCodeIn: 'Next code in',
@@ -103,6 +102,7 @@ export const codeBreaker = {
   sharePractice: 'Code Breaker practice',
   practiceResult: (code: string) =>
     `The code was ${code}. Practice codes keep no stats.`,
+  practiceMissed: 'Practice codes keep no stats.',
   anotherCode: 'Another code',
   challengeFriend: 'Challenge a friend',
   todayCode: 'Today’s code',
@@ -121,7 +121,7 @@ export const codeBreaker = {
   copied: 'Copied',
   guessNumber: (guess: number, max: number) => `Guess ${guess} of ${max}`,
   fixRow: 'Fix the row and try again',
-  /** "Three guesses in. 5, 6 and 8 are out." */
+  /** "Three guesses in. 5, 6, 8 and 9 are out." */
   known: (guesses: number, parts: readonly string[]) =>
     `${countWord(guesses)} ${guesses === 1 ? 'guess' : 'guesses'} in. ${
       parts.length ? parts.join(' ') : 'No digit is certain yet.'

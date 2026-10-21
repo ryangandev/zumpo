@@ -31,6 +31,19 @@
   color: var(--zumpo-white);
 }
 
+/* Zumpo/Mobile tabs' Chat unread: how many lines arrived out of sight. */
+.unread {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--zumpo-space-6);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-coral);
+  color: var(--zumpo-ink);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
 .tab:focus-visible {
   outline: 2px solid var(--zumpo-ink);
   outline-offset: 2px;

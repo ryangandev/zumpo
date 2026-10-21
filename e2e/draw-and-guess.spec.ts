@@ -97,7 +97,7 @@ test('two players play a whole game', async ({ player }) => {
   ).toBeVisible();
 });
 
-test('a spectator watches the drawing, cannot guess, and sees the round sum', async ({
+test('a spectator watches the drawing, talks only to the stands, cannot guess, and sees the round sum', async ({
   player,
 }) => {
   const maya = { name: 'Maya', page: await player('Maya') };
@@ -118,13 +118,17 @@ test('a spectator watches the drawing, cannot guess, and sees the round sum', as
     await expect.poll(() => painted(sam)).toBe(true);
 
     // The word from a spectator is swallowed: it neither shows nor scores.
-    // The line after it shows, so the word reached the server first.
+    // Anything else they say while it is drawn stays among the spectators;
+    // once it reaches Sam, the server has dealt with both.
     await say(sam, word);
     const after = `watching turn ${turn}`;
     await say(sam, after);
+    const stands = sam.getByRole('region', { name: 'Chat' });
+    await expect(stands.getByText(after)).toBeVisible();
+    await expect(stands.getByText(word, { exact: true })).toHaveCount(0);
     for (const seat of [drawer, guesser]) {
       const chat = seat.page.getByRole('region', { name: 'Chat' });
-      await expect(chat.getByText(after)).toBeVisible();
+      await expect(chat.getByText(after)).toHaveCount(0);
       await expect(chat.getByText(word, { exact: true })).toHaveCount(0);
       await expect(chat.getByText(/^Sam guessed/)).toHaveCount(0);
     }
@@ -161,6 +165,11 @@ test('a phone player draws from the words alone and guesses under the board', as
       const board = leo.page.getByRole('tabpanel', { name: 'Board' });
       await expect(board.getByText(/type your guess/)).toHaveCount(0);
       await expect(board.getByRole('textbox', { name: 'Guess' })).toBeVisible();
+      // A wrong guess lands under the board, with the newest lines.
+      await say(leo.page, 'not it', 'Guess');
+      const recent = board.getByRole('log', { name: 'Chat' });
+      await expect(recent.getByText('not it')).toBeVisible();
+      await expect(recent.getByText(/^Round 1 · \w+ draws$/)).toBeVisible();
       await say(leo.page, word, 'Guess');
     }
     // The phone's chat is a tab of its own, so the desktop player watches.

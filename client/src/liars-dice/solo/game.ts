@@ -235,7 +235,7 @@ export const youWon = (game: SoloGame) =>
 
 /**
  * Your place at the end: first when you won, otherwise one behind everybody
- * still in when you went out ("Out in 3rd of 4").
+ * still in when you went out ("You finished 3rd of 4").
  */
 export function placeOf(game: SoloGame) {
   return {

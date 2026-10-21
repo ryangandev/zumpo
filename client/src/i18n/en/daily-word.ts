@@ -78,8 +78,7 @@ export const dailyWord = {
   notThisTime: 'Not this time.',
   dailyFound: (word: string, streak: string) =>
     `The word was ${word}. ${streak}`,
-  dailyMissed: (word: string) =>
-    `The word was ${word}. A new streak starts tomorrow.`,
+  dailyMissed: 'A new streak starts tomorrow.',
   guesses: 'Guesses',
   guessesOf: (count: number, max: number) => `${count} of ${max}`,
   nextWordIn: 'Next word in',
@@ -96,6 +95,7 @@ export const dailyWord = {
   sharePractice: 'Daily Word practice',
   practiceResult: (word: string) =>
     `The word was ${word}. Practice words keep no stats.`,
+  practiceMissed: 'Practice words keep no stats.',
   anotherWord: 'Another word',
   challengeFriend: 'Challenge a friend',
   todayWord: 'Today’s word',

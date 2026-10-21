@@ -57,7 +57,7 @@ describe('a Snap room', () => {
 
     expect(screen.getByText('11 of 29 cards')).toBeInTheDocument();
     expect(turn().getByText('Spot the match')).toBeInTheDocument();
-    expect(turn().getByRole('timer')).toHaveTextContent(/^00:04on this card$/);
+    expect(turn().getByRole('timer')).toHaveTextContent(/^0:04on this card$/);
     expect(screen.getByText('18 left')).toBeInTheDocument();
     expect(screen.getByText('4 won')).toBeInTheDocument();
 

@@ -22,6 +22,7 @@ import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
+import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { DrawingCanvas, type Brush } from '../drawing/canvas';
 import styles from './room.module.css';
@@ -42,6 +43,8 @@ export function DrawAndGuessRoom() {
 
   const between = !inGame;
   const ended = between && state.lastGame;
+  // The drawer has a word to choose, then a clock to draw against.
+  useTurnTitle(isDrawer && state.phase !== 'reveal');
 
   return (
     <RoomLayout
@@ -62,9 +65,11 @@ export function DrawAndGuessRoom() {
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{
         placeholder:
-          drawing && !isDrawer && !scored && !room.spectating
-            ? m.drawAndGuess.guessPlaceholder
-            : m.drawAndGuess.messagePlaceholder,
+          drawing && room.spectating
+            ? m.drawAndGuess.spectatorPlaceholder
+            : drawing && !isDrawer && !scored
+              ? m.drawAndGuess.guessPlaceholder
+              : m.drawAndGuess.messagePlaceholder,
         lockedReason: chatLock(state, isDrawer, scored, m),
       }}
       boardInput={
@@ -74,6 +79,7 @@ export function DrawAndGuessRoom() {
             : m.drawAndGuess.message
           : undefined
       }
+      recentChat={inGame}
     />
   );
 }

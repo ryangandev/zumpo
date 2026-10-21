@@ -89,6 +89,15 @@ describe('Daily Word on your own', () => {
     expect(
       screen.getByRole('heading', { name: 'Not this time.' }),
     ).toBeInTheDocument();
+    // The word it was, in tiles under the result.
+    expect(
+      screen.getByRole('img', {
+        name: `The word was ${TODAY.toUpperCase()}.`,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('A new streak starts tomorrow.'),
+    ).toBeInTheDocument();
     view.unmount();
 
     await renderApp('/games/daily-word/solo');

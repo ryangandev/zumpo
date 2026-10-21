@@ -8,6 +8,7 @@ export const ui: typeof en = {
     message: '消息',
     placeholder: '猜一猜，或打个招呼…',
     send: '发送',
+    unread: (tab, count) => `${tab}，${count} 条新消息`,
   },
   you: '你',
   youName: (name) => `${name}（你）`,
@@ -90,6 +91,7 @@ export const ui: typeof en = {
     delete: '删除数字',
     noted: (digit, note) =>
       `${digit}，已记为${note === 'out' ? '不在答案中' : '在答案中'}`,
+    ruledOut: (digit) => `${digit}，不在答案中`,
     mark: (right, moved) => `${right} 个位置正确，${moved} 个位置不对`,
     board: (name) => `${name} 的猜数板`,
   },

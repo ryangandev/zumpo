@@ -50,12 +50,12 @@ test('two players race for the middle card while a third watches', async ({
 
   // Maya takes the first card, and everybody sees who took it. The taken
   // moment lasts half a second here, too short to catch under load; the
-  // chat and the count say so for good.
+  // count says so for good, and the chat is left to the talk.
   await tapMatch(maya);
   for (const page of [maya, leo, jo]) {
     await expect(page.getByText('1 of 29 cards')).toBeVisible();
   }
-  await expect(leo.getByText('Maya took a card! (+1)')).toBeVisible();
+  await expect(leo.getByText(/took a card/)).toHaveCount(0);
   await expect(maya.getByText('1 won')).toBeVisible();
 
   // Maya takes fifteen in all and Leo fourteen; his lockout is long over.
