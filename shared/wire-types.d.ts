@@ -35,7 +35,8 @@ type GameType =
   | 'snap'
   | 'liars-dice'
   | 'hush'
-  | 'daily-word';
+  | 'daily-word'
+  | 'code-breaker';
 
 type RoomStatus = 'Open' | 'Full' | 'In Progress';
 
@@ -159,7 +160,8 @@ interface RoomCreateRequest {
     | SnapSettings
     | LiarsDiceSettings
     | HushSettings
-    | DailyWordSettings;
+    | DailyWordSettings
+    | CodeBreakerSettings;
 }
 
 interface DrawAndGuessSettings {
@@ -202,6 +204,11 @@ type HushSettings = Record<string, never>;
 
 interface DailyWordSettings {
   /** Words a game has: 3 or 5. */
+  rounds: number;
+}
+
+interface CodeBreakerSettings {
+  /** Codes a game has: 1 or 3. */
   rounds: number;
 }
 
@@ -268,6 +275,11 @@ interface DailyWordLobbyRoomInfo extends LobbyRoomInfo {
   rounds: number;
 }
 
+interface CodeBreakerLobbyRoomInfo extends LobbyRoomInfo {
+  gameType: 'code-breaker';
+  rounds: number;
+}
+
 type AnyLobbyRoomInfo =
   | DrawAndGuessLobbyRoomInfo
   | MinesweeperLobbyRoomInfo
@@ -277,7 +289,8 @@ type AnyLobbyRoomInfo =
   | SnapLobbyRoomInfo
   | LiarsDiceLobbyRoomInfo
   | HushLobbyRoomInfo
-  | DailyWordLobbyRoomInfo;
+  | DailyWordLobbyRoomInfo
+  | CodeBreakerLobbyRoomInfo;
 
 // ---------------------------------------------------------------------------
 // Rooms
@@ -899,6 +912,71 @@ interface DailyWordRoomState extends RoomState {
   lastGame: DailyWordGameSummary | null;
 }
 
+/** waiting: no game; guessing: a code is open; reveal: its results are shown. */
+type CodeBreakerPhase = 'waiting' | 'guessing' | 'reveal';
+
+/**
+ * A guess's mark: how many of its digits are in the code in the same place,
+ * and how many are in the code somewhere else. It never says which.
+ */
+interface CodeBreakerMark {
+  right: number;
+  moved: number;
+}
+
+/** One guess. Its digits are null on another player's board while a round runs. */
+interface CodeBreakerRow {
+  guess: string | null;
+  mark: CodeBreakerMark;
+}
+
+/** guessing: still at it; cracked: four right; out: ten guesses, not cracked. */
+type CodeBreakerBoardStatus = 'guessing' | 'cracked' | 'out';
+
+/** One player's board for a round. */
+interface CodeBreakerBoard {
+  playerId: string;
+  username: string;
+  rows: CodeBreakerRow[];
+  status: CodeBreakerBoardStatus;
+  /** What cracking the code earned; 0 until cracked. */
+  points: number;
+  /** Whole seconds that were left on the round's clock when cracked; 0 before. */
+  secondsLeft: number;
+}
+
+/** A finished round: the code, and every board with its digits, best first. */
+interface CodeBreakerRoundResult {
+  code: string;
+  boards: CodeBreakerBoard[];
+}
+
+interface CodeBreakerGameSummary extends GameSummary {
+  /** Rounds played; fewer than the game's when it ended early. */
+  rounds: number;
+  /** How many of those codes each player cracked, by player id. */
+  cracked: Record<string, number>;
+}
+
+/**
+ * A Code Breaker room, as one player may see it.
+ *
+ * While a round runs the code is in nobody's snapshot, and every board but the
+ * viewer's own carries its marks only, never its digits.
+ */
+interface CodeBreakerRoomState extends RoomState {
+  gameType: 'code-breaker';
+  rounds: number;
+  phase: CodeBreakerPhase;
+  /** The round open or being revealed, from 1; 0 between games. */
+  round: number;
+  /** Every player's board for the open round, in seat order; empty otherwise. */
+  boards: CodeBreakerBoard[];
+  /** The latest finished round, which stays after the game ends. */
+  lastRound: CodeBreakerRoundResult | null;
+  lastGame: CodeBreakerGameSummary | null;
+}
+
 type AnyRoomState =
   | DrawAndGuessRoomState
   | MinesweeperRoomState
@@ -908,7 +986,8 @@ type AnyRoomState =
   | SnapRoomState
   | LiarsDiceRoomState
   | HushRoomState
-  | DailyWordRoomState;
+  | DailyWordRoomState
+  | CodeBreakerRoomState;
 
 // ---------------------------------------------------------------------------
 // Chat and the drawing
@@ -990,7 +1069,10 @@ type RoomNotice =
   | { type: 'hush:discarded'; cards: number[] }
   | { type: 'dw:started'; rounds: number; seconds: number }
   | { type: 'dw:solved'; name: string; guesses: number; points: number }
-  | { type: 'dw:revealed'; word: string };
+  | { type: 'dw:revealed'; word: string }
+  | { type: 'cb:started'; rounds: number; seconds: number }
+  | { type: 'cb:cracked'; name: string; guesses: number; points: number }
+  | { type: 'cb:revealed'; code: string };
 
 /** A player speaks verbatim; announcements are rendered by each viewer. */
 type ChatMessage =
@@ -1114,6 +1196,12 @@ interface ClientToServerEvents {
    * reason; an accepted one arrives marked in the next snapshot.
    */
   'dw:guess': (roomId: string, word: string, ack: Ack<Result>) => void;
+  /**
+   * A guess at the open code: four different digits. Refused as
+   * `invalidRequest` with the reason; an accepted one arrives marked in the
+   * next snapshot.
+   */
+  'cb:guess': (roomId: string, guess: string, ack: Ack<Result>) => void;
 }
 
 interface ServerToClientEvents {
@@ -1256,6 +1344,16 @@ export type {
   DailyWordRoundResult,
   DailyWordGameSummary,
   DailyWordRoomState,
+  CodeBreakerSettings,
+  CodeBreakerLobbyRoomInfo,
+  CodeBreakerPhase,
+  CodeBreakerMark,
+  CodeBreakerRow,
+  CodeBreakerBoardStatus,
+  CodeBreakerBoard,
+  CodeBreakerRoundResult,
+  CodeBreakerGameSummary,
+  CodeBreakerRoomState,
   AnyRoomState,
   RoomNotice,
   ChatMessageKind,

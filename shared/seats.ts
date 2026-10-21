@@ -16,4 +16,5 @@ export const SEATS: Readonly<Record<GameType, { min: number; max: number }>> = {
   'liars-dice': { min: 2, max: 6 },
   hush: { min: MIN_PLAYERS, max: MAX_PLAYERS },
   'daily-word': { min: 2, max: 8 },
+  'code-breaker': { min: 2, max: 8 },
 };
