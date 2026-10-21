@@ -209,8 +209,8 @@ function turnBar(
         countdown: left,
       };
     case 'drawing':
+      // DC07: the header's tag says the step, so the bar has no category.
       return {
-        category: label,
         label: m.doodleChain.drawThis,
         kind: 'word',
         main: task.given ? textOf(task.given.content, m) : '',

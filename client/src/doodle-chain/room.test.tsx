@@ -222,6 +222,8 @@ describe('a Doodle Chain room', () => {
     const { fake } = await renderSeated(drawing);
 
     expect(turn().getByText('Draw this')).toBeInTheDocument();
+    // DC07: the step is in the header's tag, not in the bar.
+    expect(turn().queryByText('Step 2 of 3')).toBeNull();
     expect(turn().getByText('A turtle on a skateboard')).toBeInTheDocument();
     expect(turn().getByText('Maya describes it next.')).toBeInTheDocument();
     expect(screen.getByLabelText('Drawing canvas')).toBeInTheDocument();

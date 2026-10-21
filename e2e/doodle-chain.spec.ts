@@ -76,7 +76,7 @@ test('three players write, draw and describe, then watch every chain unfold', as
     [leo, maya],
     [sam, leo],
   ] as const) {
-    await expect(turn(page).getByText('Step 2 of 3')).toBeVisible();
+    await expect(turn(page).getByText('Draw this')).toBeVisible();
     await expect(turn(page).getByText(lines.get(from)!)).toBeVisible();
     await scribble(page);
     await page.getByRole('button', { name: 'Done' }).click();
@@ -147,7 +147,7 @@ test('a player who drops mid-drawing gets their drawing back', async ({
   for (const page of [maya, leo, sam]) {
     await write(page, 'Your first line', 'A ghost doing laundry');
   }
-  await expect(turn(sam).getByText('Step 2 of 3')).toBeVisible();
+  await expect(turn(sam).getByText('Draw this')).toBeVisible();
   await scribble(sam);
 
   const restore = await dropConnection(sam);
@@ -159,7 +159,7 @@ test('a player who drops mid-drawing gets their drawing back', async ({
   await expect(sam.getByRole('button', { name: 'Leave room' })).toBeVisible({
     timeout: 20_000,
   });
-  await expect(turn(sam).getByText('Step 2 of 3')).toBeVisible();
+  await expect(turn(sam).getByText('Draw this')).toBeVisible();
   await expect.poll(() => painted(sam)).toBe(true);
   await sam.getByRole('button', { name: 'Done' }).click();
   await expect(sam.getByText('Done. Waiting for Maya and Leo.')).toBeVisible();
