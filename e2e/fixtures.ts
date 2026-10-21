@@ -18,7 +18,8 @@ export type GameType =
   | 'snap'
   | 'liars-dice'
   | 'hush'
-  | 'daily-word';
+  | 'daily-word'
+  | 'code-breaker';
 
 export interface PlayerOptions {
   /** Browser language, independent for each player in a mixed-language room. */
@@ -124,6 +125,8 @@ export interface RoomSettings {
   dice?: 3 | 5;
   /** Daily Word: how many words. */
   words?: 3 | 5;
+  /** Code Breaker: how many codes. */
+  codes?: 1 | 3;
 }
 
 /**
@@ -170,6 +173,9 @@ export async function createRoom(
   }
   if (settings.words) {
     await choose(page, 'Words', new RegExp(`^${settings.words} words$`));
+  }
+  if (settings.codes) {
+    await choose(page, 'Codes', new RegExp(`^${settings.codes} codes?$`));
   }
   if (settings.password) {
     await page.getByLabel('Password (optional)').fill(settings.password);
