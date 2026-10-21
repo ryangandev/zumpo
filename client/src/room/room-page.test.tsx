@@ -542,6 +542,36 @@ describe('a room page', () => {
     ).toBeInTheDocument();
   });
 
+  it('says how to play on the waiting card, to the host and every guest', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    const card = within(
+      screen.getByRole('region', { name: 'Everyone’s here?' }),
+    );
+    expect(card.getByRole('heading', { name: 'How to play' })).toBeVisible();
+    expect(
+      card.getByText('Share one board, and pick safe cells in secret.'),
+    ).toBeInTheDocument();
+    expect(card.getAllByRole('listitem')).toHaveLength(3);
+    // Rules, not the room's settings, which the line above states.
+    expect(card.queryByText('2–8 players')).toBeNull();
+
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ owner: { username: 'Maya', playerId: 'p2' } }),
+      ),
+    );
+    const guest = within(
+      screen.getByRole('region', { name: 'Waiting for Maya to start.' }),
+    );
+    expect(
+      guest.getByText('Share one board, and pick safe cells in secret.'),
+    ).toBeInTheDocument();
+  });
+
   it('shows how to play over the room, which stays', async () => {
     const user = userEvent.setup();
     const fake = server();
@@ -552,7 +582,27 @@ describe('a room page', () => {
     const dialog = screen.getByRole('dialog', {
       name: 'How to play Minesweeper',
     });
-    expect(within(dialog).getAllByRole('listitem').length).toBeGreaterThan(0);
+    // The goal, three lines on how to play and one on the score.
+    expect(
+      within(dialog).getByText(
+        'Share one board, and pick safe cells in secret.',
+      ),
+    ).toBeInTheDocument();
+    expect(within(dialog).getAllByRole('listitem')).toHaveLength(4);
+    expect(within(dialog).queryByText('2–8 players')).toBeNull();
+
+    // The full rules open under it, and start closed on the next opening.
+    const full = within(dialog).getByRole('button', { name: 'Full rules' });
+    expect(full).toHaveAttribute('aria-expanded', 'false');
+    expect(
+      within(dialog).getByText(/^You have 15 seconds to pick/),
+    ).not.toBeVisible();
+    await user.click(full);
+    expect(full).toHaveAttribute('aria-expanded', 'true');
+    expect(full).toHaveAccessibleName('Hide the full rules');
+    expect(
+      within(dialog).getByText(/^You have 15 seconds to pick/),
+    ).toBeVisible();
 
     await user.click(
       within(dialog).getByRole('button', { name: 'Back to the game' }),
@@ -560,5 +610,12 @@ describe('a room page', () => {
     await vi.waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     expect(router.state.location.pathname).toBe(ROOM);
     expect(fake.sentArgs('room:leave')).toEqual([]);
+
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    expect(
+      within(screen.getByRole('dialog')).getByRole('button', {
+        name: 'Full rules',
+      }),
+    ).toHaveAttribute('aria-expanded', 'false');
   });
 });

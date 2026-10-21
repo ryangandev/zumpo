@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Button, Dialog, DialogClose, TextField } from '../ui';
+import { useId, useRef, useState } from 'react';
+import { Button, Dialog, DialogClose, HowToPlay, TextField } from '../ui';
 import type { GameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
@@ -60,7 +60,11 @@ export function LeaveDialog({
   );
 }
 
-/** P15: the game's rules over the room, which carries on behind them. */
+/**
+ * P15, P21: how to play over the room, which carries on behind it: the goal,
+ * how to act and read the board, how it scores, and the full rules a click
+ * away, so nobody leaves the room to look a rule up.
+ */
 export function RulesDialog({
   open,
   onOpenChange,
@@ -70,28 +74,44 @@ export function RulesDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   game: GameInfo;
-  /** The rules of the game on your own rather than in a room. */
+  /** How to play the game on your own rather than in a room. */
   solo?: boolean;
 }) {
   const m = useMessages();
   const text = m.games.of[game.type];
-  const rules =
-    solo && text.solo
-      ? text.solo
-      : { summary: text.lobbySummary, facts: text.lobbyFacts };
+  const howTo = (solo && text.solo?.howToPlay) || text.howToPlay;
+  const [full, setFull] = useState(false);
+  const rulesId = useId();
   return (
     <Dialog
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={(next) => {
+        // Every opening starts from the short version.
+        if (!next) setFull(false);
+        onOpenChange(next);
+      }}
       title={m.room.rulesTitle(text.name)}
-      description={rules.summary}
+      description={howTo.goal}
       actions={<DialogClose render={<Button>{m.room.backToGame}</Button>} />}
     >
-      <ul className={styles.facts}>
-        {rules.facts.map((fact) => (
-          <li key={fact}>{fact}</li>
-        ))}
-      </ul>
+      <HowToPlay steps={[...howTo.steps, howTo.score]} />
+      <div className={styles.full}>
+        <Button
+          variant="quiet"
+          icon="chevron-down"
+          aria-expanded={full}
+          aria-controls={rulesId}
+          onClick={() => setFull(!full)}
+          className={styles.toggle}
+        >
+          {full ? m.room.hideFullRules : m.room.fullRules}
+        </Button>
+        <div id={rulesId} className={styles.rules} hidden={!full}>
+          {text.rules.split('\n\n').map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+      </div>
     </Dialog>
   );
 }

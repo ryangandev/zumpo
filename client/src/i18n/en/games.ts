@@ -2,6 +2,20 @@ import type { GameType } from '../../../../shared/wire-types';
 import type { GameKind } from '../../games/catalog';
 import { plural } from './plural';
 
+/**
+ * How to play, short enough to take in within half a minute: what a room's
+ * waiting card and its How to play dialog say, and the dialog on your own.
+ * Rules only, never the room's settings, which the waiting card states.
+ */
+export interface HowToPlay {
+  /** What you are trying to do, in one line. */
+  goal: string;
+  /** How to act, and how to read what the game shows back, a line each. */
+  steps: readonly [string, string, string];
+  /** How it is scored or won. */
+  score: string;
+}
+
 /** What every page says about a game outside its room. */
 export interface GameText {
   name: string;
@@ -17,12 +31,17 @@ export interface GameText {
   /** The lobby's "How to play" card: a summary, then one fact per line. */
   lobbySummary: string;
   lobbyFacts: readonly string[];
-  /** The rules page's full text; blank lines separate paragraphs. */
+  /** How to play in a room. */
+  howToPlay: HowToPlay;
+  /**
+   * The full rules, in a room and on your own, which the How to play dialog
+   * opens under its short version; blank lines separate paragraphs.
+   */
   rules: string;
   /** The create-room card's description. */
   createDescription: string;
   /** The rules of the game on your own, for a game that has one. */
-  solo?: { summary: string; facts: readonly string[] };
+  solo?: { summary: string; facts: readonly string[]; howToPlay: HowToPlay };
   /** "3 points", "1 pair": a score in the game's own unit. */
   score: (points: number) => string;
 }
@@ -77,6 +96,16 @@ export const games = {
         '15s to pick a word · 90s to draw',
         'The answer shows for 10s',
       ],
+      howToPlay: {
+        goal: 'Draw a word for the others to guess, and guess theirs.',
+        steps: [
+          'On your turn, pick one of three words and draw it.',
+          'Everyone else types guesses in the chat, and letters show as the clock runs down.',
+          'Guess it and your chat locks until the next turn, so you cannot give it away.',
+        ],
+        score:
+          'Faster guesses score more, and the drawer gets a share of each.',
+      },
       rules: `2–8 players · 1–4 rounds
 
 Everyone takes a turn to draw. One word category is used for the whole game, and everyone can see it.
@@ -100,6 +129,16 @@ Faster guesses earn more, from 50 to 150 points, and the drawer gets two fifths 
         '15s to pick · 4s reveal',
         'Same safe cell? The points are split.',
       ],
+      howToPlay: {
+        goal: 'Share one board, and pick safe cells in secret.',
+        steps: [
+          'Everyone picks one hidden cell at the same time, and nobody sees which.',
+          'A number counts the mines in the eight cells around it.',
+          'Then every pick opens at once: safe cells clear, mines go off.',
+        ],
+        score:
+          'A riskier safe pick pays more, a mine costs points, and two on one safe cell split it.',
+      },
       rules: `2–8 players · one shared board
 
 Everyone picks one hidden cell at the same time. Your click locks your pick, and nobody sees which cell you chose.
@@ -121,6 +160,15 @@ On your own, it is classic Minesweeper: open every safe cell without hitting a m
           'Click a number whose flags are placed to open the rest around it',
           'Your best time on each board is kept on this device',
         ],
+        howToPlay: {
+          goal: 'Open every safe cell without hitting a mine.',
+          steps: [
+            'Click a cell to open it; your first click is always safe.',
+            'A number counts the mines in the eight cells around it.',
+            'Right-click or long-press to flag a mine, then click a number whose flags are placed to open the rest around it.',
+          ],
+          score: 'Clear the board fast: your best time on each board is kept.',
+        },
       },
       score: (points) => plural(points, 'point'),
     },
@@ -136,6 +184,15 @@ On your own, it is classic Minesweeper: open every safe cell without hitting a m
         '60s to solve each hand',
         'Others see that you solved it, never how',
       ],
+      howToPlay: {
+        goal: 'Make 24 from the same four numbers before the others do.',
+        steps: [
+          'Use each number once, with plus, minus, times and divide.',
+          'Pick a number, a sign, then another number: the two become one new card.',
+          'Keep going until one card is left. Undo and Start over are free.',
+        ],
+        score: 'A solved hand pays 50 points, plus more the quicker you were.',
+      },
       rules: `2–8 players · 5 or 10 hands
 
 Every hand is four numbers from 1 to 13, and every hand can be solved. Use each number once, with plus, minus, times and divide, to make 24.
@@ -156,6 +213,15 @@ On your own, a run is ten hands against one clock. Skip a hand you are stuck on,
           'Stuck? Skip the hand for 30 seconds on the clock',
           'Your best time is kept on this device',
         ],
+        howToPlay: {
+          goal: 'Make 24 from four numbers, ten hands in a row, against one clock.',
+          steps: [
+            'Use each number once, with plus, minus, times and divide.',
+            'Pick a number, a sign, then another number: the two become one new card.',
+            'Stuck? Skip the hand, and 30 seconds go on the clock.',
+          ],
+          score: 'Your best time for the ten hands is kept on this device.',
+        },
       },
       score: (points) => plural(points, 'point'),
     },
@@ -172,6 +238,15 @@ On your own, a run is ten hands against one clock. Skip a hand you are stuck on,
         '10s to flip two cards',
         'Everyone sees every card you flip',
       ],
+      howToPlay: {
+        goal: 'Find more matching pairs than anybody else.',
+        steps: [
+          'Every symbol is on two cards. On your turn, flip two of them.',
+          'A match is your pair, and you go again.',
+          'No match: everyone sees both, then they flip back and the next player goes.',
+        ],
+        score: 'When every pair is found, whoever found the most wins.',
+      },
       rules: `2–6 players · a Small or Large board
 
 Every card lies face down, and every symbol is on two of them. Players take turns, in an order drawn at the start.
@@ -191,6 +266,16 @@ On your own, clear the board in as few turns as you can; your time breaks a tie.
           'Fewer turns is better; your time breaks a tie',
           'Your best on each board is kept on this device',
         ],
+        howToPlay: {
+          goal: 'Clear the board in as few turns as you can.',
+          steps: [
+            'Every symbol is on two cards. Flip two at a time.',
+            'A match stays face up.',
+            'No match: both flip back after a second, so remember where they were.',
+          ],
+          score:
+            'Fewer turns is better, and your time breaks a tie. Your best is kept.',
+        },
       },
       score: (pairs) => plural(pairs, 'pair'),
     },
@@ -206,6 +291,15 @@ On your own, clear the board in as few turns as you can; your time breaks a tie.
         'A wrong trio locks you out for 3s',
         'No trio for 30s? A card is marked',
       ],
+      howToPlay: {
+        goal: 'Spot trios among the twelve cards before anybody else.',
+        steps: [
+          'Every card has four features: colour, shape, how many shapes, and fill.',
+          'Three cards are a trio when each feature is all the same or all different on them.',
+          'Pick three, with no turns: the third pick claims them. A wrong trio locks you out for 3 seconds.',
+        ],
+        score: 'Every trio is a point, and whoever finds the most wins.',
+      },
       rules: `2–8 players · 10 or 20 trios
 
 Every card has four features: its colour (coral, blue or ink), its shape (circle, triangle or square), how many shapes it shows (one, two or three) and its fill (solid, striped or outlined). Three cards are a trio when, for each feature on its own, they are all the same or all different. Two circles and a square are never a trio.
@@ -228,6 +322,15 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
           'A wrong pick adds 5 seconds; a hint adds 10',
           'Your best time is kept on this device',
         ],
+        howToPlay: {
+          goal: 'Find ten trios among the twelve cards, against one clock.',
+          steps: [
+            'Every card has four features: colour, shape, how many shapes, and fill.',
+            'Three cards are a trio when each feature is all the same or all different on them.',
+            'A wrong pick adds 5 seconds. Hint marks a card of a trio and adds 10.',
+          ],
+          score: 'Your best time is kept on this device.',
+        },
       },
       score: (trios) => plural(trios, 'trio'),
     },
@@ -243,6 +346,16 @@ On your own, a run is ten trios against one clock. A wrong pick adds 5 seconds; 
         'Any two cards share exactly one symbol',
         'A wrong tap locks you out for 2s',
       ],
+      howToPlay: {
+        goal: 'Be first to spot the symbol your card shares with the middle card.',
+        steps: [
+          'Any two cards share exactly one symbol, never more and never less.',
+          'There are no turns: tap that symbol on either card.',
+          'Tap first and the middle card is yours. A wrong tap locks you out for 2 seconds.',
+        ],
+        score:
+          'Every card you take is a point, and whoever takes the most wins.',
+      },
       rules: `2–6 players · 31 cards
 
 Every card has six symbols, and any two cards share exactly one of them, never more and never less. No two symbols share a shape, so colour alone never tells them apart.
@@ -265,6 +378,15 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
           'A wrong tap adds 3 seconds',
           'Your best time is kept on this device',
         ],
+        howToPlay: {
+          goal: 'Spot the symbol your card shares with the middle card, thirty times, against one clock.',
+          steps: [
+            'Any two cards share exactly one symbol, never more and never less.',
+            'Tap that symbol on either card, and the middle card becomes yours.',
+            'A wrong tap adds 3 seconds.',
+          ],
+          score: 'Your best time is kept on this device.',
+        },
       },
       score: (cards) => plural(cards, 'card'),
     },
@@ -280,6 +402,16 @@ On your own, a run is thirty cards against one clock. A wrong tap adds 3 seconds
         '20s a turn · 5s reveal',
         'Ones are wild',
       ],
+      howToPlay: {
+        goal: 'Bid on what the whole table rolled, call the bluffs, and keep your dice.',
+        steps: [
+          'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face.',
+          'On your turn, raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
+          'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does.',
+        ],
+        score:
+          'Lose your last die and you are out. The last player with dice wins.',
+      },
       rules: `2–6 players · 3 or 5 dice each
 
 Everybody rolls their dice in secret, then takes turns bidding on the whole table: at least so many dice showing one face. Ones are wild: they count as any face, so nobody bids on them. About a third of the dice show any face, ones included.
@@ -299,6 +431,16 @@ On your own, play 1 to 5 bots with no clock, and go on to the next round when yo
           'Ones are wild, so nobody bids on them',
           'Your wins are kept on this device',
         ],
+        howToPlay: {
+          goal: 'Bid on what the whole table rolled, call the bots’ bluffs, and keep your dice.',
+          steps: [
+            'A bid like “four 6s” says the whole table holds at least four 6s. Ones are wild: they count as any face.',
+            'On your turn, raise or call Liar. A raise is more dice of any face, or as many of a higher face.',
+            'Call Liar and every cup opens. If the bid holds, the caller loses a die; if not, the bidder does.',
+          ],
+          score:
+            'The last player with dice wins. Expect about a third of all dice to count for any one face.',
+        },
       },
       score: (dice) => plural(dice, 'die', 'dice'),
     },
@@ -314,6 +456,16 @@ On your own, play 1 to 5 bots with no clock, and go on to the next round when yo
         'No turns, no clock and no chat while a level is played',
         '3 lives; a level without a slip wins one back',
       ],
+      howToPlay: {
+        goal: 'Play every card onto one pile, lowest first, together.',
+        steps: [
+          'Everybody holds numbered cards from 1 to 100, and sees only their own.',
+          'There are no turns and no talking: anybody plays their lowest card at any moment.',
+          'Play a card while somebody still holds a lower one, and the team loses a life.',
+        ],
+        score:
+          'Clear every level to win together. A level without a slip wins a life back.',
+      },
       rules: `2–4 players · 7, 6 or 5 levels
 
 Everybody holds numbered cards from 1 to 100, and the whole table plays them onto one pile, lowest first. There are no turns: anybody plays their lowest card at any moment. Nobody may say a word, so the chat is locked while a level is played.
@@ -339,6 +491,16 @@ Clear the last level to win together. Two players play 7 levels, three play 6 an
         '30s to write · 60s to draw · 30s to describe',
         'The host steps through the reveal',
       ],
+      howToPlay: {
+        goal: 'Pass a line round the table as drawings and words, and watch it change.',
+        steps: [
+          'Everyone starts a chain by writing a line: anything drawable.',
+          'Then draw the line you are given, or say in words what the drawing shows.',
+          'You only ever see the step before yours.',
+        ],
+        score:
+          'The host shows every chain at the end. Your score is the hearts your entries get.',
+      },
       rules: `3–8 players · one step each, up to six
 
 Everyone starts a chain by writing a line: anything drawable, in any language. Stuck? Suggest fills in one. Then every chain moves one place round the table, and the next player draws the line they are given. The next one says in words what that drawing shows, the next draws those words, and so on. You only ever see the step before yours.
@@ -364,6 +526,15 @@ Then the host shows every chain, one entry at a time, from its first line to its
         '2 minutes for each word',
         'Others see your marks, never your letters',
       ],
+      howToPlay: {
+        goal: 'Find the same hidden five-letter word as the others, in fewer guesses.',
+        steps: [
+          'Every guess must be a real five-letter word.',
+          'Green square: right letter, right place. Coral circle: in the word, somewhere else. Grey tile: not in the word.',
+          'Others see your marks as you go, never your letters.',
+        ],
+        score: 'Fewer guesses score more, plus a little for the time left.',
+      },
       rules: `2–8 players · 3 or 5 words
 
 Find a hidden five-letter word in six guesses. Every guess must be a real word. After each one, every letter is marked: a green square is in the right place, a coral circle is in the word but somewhere else, and a flat grey tile is not in the word.
@@ -384,6 +555,15 @@ On your own, there is one word a day, the same for everybody, and a new one at y
           'A new word at your midnight; your streak is kept on this device',
           'Practice words after it, as many as you like',
         ],
+        howToPlay: {
+          goal: 'Find the hidden five-letter word in six guesses.',
+          steps: [
+            'Every guess must be a real five-letter word.',
+            'Green square: right letter, right place. Coral circle: in the word, somewhere else. Grey tile: not in the word.',
+            'One word a day, the same for everybody, then practice words as you like.',
+          ],
+          score: 'Your stats and streak are kept on this device.',
+        },
       },
       score: (points) => plural(points, 'point'),
     },
@@ -399,6 +579,15 @@ On your own, there is one word a day, the same for everybody, and a new one at y
         '3 minutes for each code',
         'Others see your pegs, never your digits',
       ],
+      howToPlay: {
+        goal: 'Crack the same hidden four-digit code as the others, in fewer guesses.',
+        steps: [
+          'The code and every guess are four different digits; a code may start with 0.',
+          'Each guess gets four pegs. Green square: right digit, right place. Coral circle: right digit, somewhere else. Grey square: not in the code.',
+          'The pegs count digits; they never say which ones.',
+        ],
+        score: 'Fewer guesses score more, plus a little for the time left.',
+      },
       rules: `2–8 players · 1 or 3 codes
 
 Crack a hidden code of four different digits, 0 to 9, in ten guesses. A code may start with 0. Every guess is four different digits too.
@@ -421,6 +610,16 @@ On your own, there is one code a day, the same for everybody, and a new one at y
           'A new code at your midnight; your streak is kept on this device',
           'Practice codes after it, as many as you like',
         ],
+        howToPlay: {
+          goal: 'Crack the hidden four-digit code in ten guesses.',
+          steps: [
+            'The code and every guess are four different digits; a code may start with 0.',
+            'Each guess gets four pegs. Green square: right digit, right place. Coral circle: right digit, somewhere else. Grey square: not in the code.',
+            'The pegs count digits; they never say which ones.',
+          ],
+          score:
+            'One code a day, the same for everybody. Your streak is kept on this device.',
+        },
       },
       score: (points) => plural(points, 'point'),
     },
@@ -436,6 +635,15 @@ On your own, there is one code a day, the same for everybody, and a new one at y
         '30s a move; run out twice in a row and you lose',
         'A full board is a draw',
       ],
+      howToPlay: {
+        goal: 'Be the first to make five in a row.',
+        steps: [
+          'Black moves first, then you take turns placing one stone on any empty point.',
+          'Five or more in a row wins: across, down or diagonally.',
+          'You have 30 seconds a move. Miss two turns in a row and you lose.',
+        ],
+        score: 'Every game won is a point, and colours swap every game.',
+      },
       rules: `2 players · a 15 × 15 board
 
 Black and White take turns placing one stone on any empty point, Black first. The first to make five or more in a row, across, down or diagonally, wins. A full board with no five is a draw.
@@ -451,6 +659,15 @@ On your own, play the computer at Easy, Medium or Hard, as Black or White. Your 
           'Against the computer: Easy, Medium or Hard',
           'No clock: your turn waits for you',
         ],
+        howToPlay: {
+          goal: 'Make five in a row before the computer does.',
+          steps: [
+            'Black moves first, then you take turns placing one stone on any empty point.',
+            'Five or more in a row wins: across, down or diagonally.',
+            'There is no clock: your turn waits for you.',
+          ],
+          score: 'A full board is a draw. Your wins are kept on this device.',
+        },
       },
       score: (wins) => plural(wins, 'win'),
     },

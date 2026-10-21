@@ -173,7 +173,11 @@ test('a room keeps a player until they mean to leave', async ({ player }) => {
 
   await leo.getByRole('button', { name: 'How to play' }).click();
   const rules = leo.getByRole('dialog', { name: 'How to play Draw & Guess' });
-  await expect(rules.getByText('2–8 players')).toBeVisible();
+  await expect(
+    rules.getByText('Draw a word for the others to guess, and guess theirs.'),
+  ).toBeVisible();
+  await rules.getByRole('button', { name: 'Full rules' }).click();
+  await expect(rules.getByText(/^Everyone else has 90 seconds/)).toBeVisible();
   await rules.getByRole('button', { name: 'Back to the game' }).click();
   await expect(rules).toBeHidden();
   await expect(leo).toHaveURL(link);

@@ -63,6 +63,9 @@ export const room = {
     'You’re watching this game. You can take a seat once it ends.',
   rulesTitle: (game: string) => `How to play ${game}`,
   backToGame: 'Back to the game',
+  /** Opens the full rules under the short version, and closes them again. */
+  fullRules: 'Full rules',
+  hideFullRules: 'Hide the full rules',
   invite: 'Invite friends',
   inviteDescription: (name: string) =>
     `Anyone with this link can join ${name} while a seat is open.`,

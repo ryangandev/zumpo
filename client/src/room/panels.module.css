@@ -38,6 +38,14 @@
   padding-top: var(--zumpo-space-12);
 }
 
+/* How to play on the waiting card, past a line under the actions. */
+.howTo {
+  align-self: stretch;
+  margin-top: var(--zumpo-space-12);
+  padding-top: var(--zumpo-space-24);
+  border-top: 1px solid var(--zumpo-line);
+}
+
 .results .actions {
   padding-top: 0;
 }

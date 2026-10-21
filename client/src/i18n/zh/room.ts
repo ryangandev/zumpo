@@ -59,6 +59,8 @@ export const room: typeof en = {
   spectatingNotice: '你正在观战。这一局结束后可以加入玩家席。',
   rulesTitle: (game) => `${game}玩法`,
   backToGame: '返回游戏',
+  fullRules: '完整规则',
+  hideFullRules: '收起完整规则',
   invite: '邀请朋友',
   inviteDescription: (name) =>
     `还有空位时，任何拿到链接的人都可以加入“${name}”。`,
