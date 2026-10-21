@@ -292,6 +292,8 @@ Code differs from Figma on purpose in a few places:
 - Until `j-fig-6-mines-phone-turn.js` runs, MO11 and MO12 draw the board's tag in the Minesweeper turn bar; on a phone code leaves it out and says the mines short ("10 mines · 1 hit"), since the tag, the round and the mines do not fit one row at 360 px. The phone board also sits under the turn bar rather than centred in the height left, so the spare height is under it, where a round's results lie.
 - A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
+- Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
+- On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file
 

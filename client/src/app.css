@@ -15,3 +15,13 @@ body {
     scrollbar-gutter: stable;
   }
 }
+
+/* The focus a game takes as it starts (useStartFocus) is not ringed until
+   the first key, so a touch screen shows no frame around its board. */
+:root [data-start-quiet]:focus-visible {
+  outline: none;
+}
+
+:root [data-start-quiet]:focus-visible::after {
+  content: none;
+}
