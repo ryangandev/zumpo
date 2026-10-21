@@ -33,6 +33,7 @@ export function PlayArea({
   typing,
   notes,
   onNotes,
+  ruledOut,
   pad,
   disabled,
   className,
@@ -47,6 +48,8 @@ export function PlayArea({
   typing: Typing;
   notes: Notes;
   onNotes: (notes: Notes) => void;
+  /** Digits the game knows are out, dimmed on the pad: on your own only. */
+  ruledOut?: readonly string[];
   /** False once the board is done. */
   pad: boolean;
   /** A paused board: reconnecting, or a guess on its way. */
@@ -117,6 +120,7 @@ export function PlayArea({
       {pad && (
         <DigitPad
           notes={notes}
+          ruledOut={ruledOut}
           noting={noting}
           onNoting={() => setNoting(!noting)}
           onDigit={onDigit}

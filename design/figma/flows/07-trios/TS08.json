@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "to a second hint",
-                      "Time": "00:24",
+                      "Time": "0:24",
                       "Tone": "Running"
                     }
                   }
@@ -581,6 +581,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -614,6 +615,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -647,6 +649,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -722,6 +725,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",

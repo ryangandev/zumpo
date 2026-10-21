@@ -166,7 +166,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "run time",
-                      "Time": "01:12",
+                      "Time": "1:12",
                       "Tone": "Waiting"
                     }
                   }
@@ -474,7 +474,7 @@
                             "id": "162:67921",
                             "name": "Actions",
                             "w": 306,
-                            "h": 18,
+                            "h": 78,
                             "wSize": "fill",
                             "hSize": "hug",
                             "layout": {
@@ -483,6 +483,32 @@
                               "strokesIncluded": true
                             },
                             "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "163:66187",
+                                "name": "Action / Take back",
+                                "w": 139,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
+                                "variant": {
+                                  "Style": "Secondary",
+                                  "State": "Default"
+                                },
+                                "componentId": "4:18",
+                                "props": {
+                                  "Icon": "Zumpo/Icon / Glyph=undo",
+                                  "Show icon": true,
+                                  "Label": "Take back"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 139
+                                  }
+                                ]
+                              },
                               {
                                 "type": "TEXT",
                                 "id": "162:67917",

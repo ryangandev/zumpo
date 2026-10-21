@@ -111,7 +111,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "next round",
-              "Time": "00:03",
+              "Time": "0:03",
               "Tone": "Waiting"
             }
           }

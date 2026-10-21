@@ -28,13 +28,15 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloTime } from '../../solo/solo-time';
 import { MineGrid } from '../board';
 import {
   cellAt,
   chord,
   elapsed,
   minesLeft,
-  minesStillHidden,
+  clearedCells,
+  safeCells,
   newGame,
   reveal,
   toggleFlag,
@@ -158,14 +160,15 @@ function SoloGameView({
   const [game, setGame] = useState(() => newGame(difficulty));
   const [flagMode, setFlagMode] = useState(false);
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(game.status === 'playing');
+  const clock = useSoloTime();
+  const now = useClock(game.status === 'playing' && !clock.paused, clock.now);
   const over = game.status === 'won' || game.status === 'lost';
 
   const play = (next: SoloGame) => {
     if (next === game) return;
     setGame(next);
     if (next.status === 'won') {
-      const time = elapsed(next, Date.now());
+      const time = elapsed(next, clock.now());
       setFinish({ time, ...recordBest(bestKey(difficulty), time) });
     }
   };
@@ -182,13 +185,13 @@ function SoloGameView({
         onPick: flagMode
           ? flag
           : shown === 'hidden'
-            ? () => play(reveal(game, index, Date.now()))
+            ? () => play(reveal(game, index, clock.now()))
             : undefined,
         onMark: flag,
       };
     }
     if (typeof shown === 'number' && shown > 0) {
-      return { state, onPick: () => play(chord(game, index, Date.now())) };
+      return { state, onPick: () => play(chord(game, index, clock.now())) };
     }
     return { state };
   };
@@ -273,6 +276,7 @@ function SoloGameView({
   return (
     <SoloLayout
       gameType="minesweeper"
+      time={over ? undefined : clock}
       phase={
         game.status === 'won'
           ? { tone: 'lime', label: m.minesweeper.solo.boardCleared }
@@ -304,11 +308,7 @@ function SoloGameView({
                     },
                     {
                       label: m.minesweeper.solo.safeCellsLeft,
-                      value: String(
-                        game.width * game.height -
-                          game.mines -
-                          game.open.filter(Boolean).length,
-                      ),
+                      value: String(safeCells(game) - clearedCells(game)),
                     },
                   ]}
                 />
@@ -377,12 +377,11 @@ function turnBar(
     waiting: true,
   };
   if (game.status === 'lost') {
-    const hidden = minesStillHidden(game);
     return {
       label: m.minesweeper.gameOver,
       kind: 'status',
       main: m.minesweeper.solo.hitMine,
-      meta: m.minesweeper.solo.hiddenMines(hidden),
+      meta: m.minesweeper.solo.cleared(clearedCells(game), safeCells(game)),
       countdown,
     };
   }

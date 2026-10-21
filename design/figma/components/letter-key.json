@@ -4,7 +4,7 @@
   "id": "44:62031",
   "type": "COMPONENT_SET",
   "key": "5267b642ccd6c5988eb2755e3c41519ece762313",
-  "description": "Daily Word: one key of the on-screen keyboard. A letter key shows the best mark its letter has had, with the tile's shapes: a square for Correct, a pill for Present, flat grey for Absent.",
+  "description": "Daily Word: one key of the on-screen keyboard. A letter key shows the best mark its letter has had, with the tile's shapes: a square for Correct, a pill for Present, flat grey for Absent. Ruled out: on your own, a digit Code Breaker’s marks settle as out, dimmed to cream with its digit muted and still typeable; a note wins over it.",
   "properties": {
     "Letter": {
       "type": "text",
@@ -26,7 +26,8 @@
         "Plain",
         "Correct",
         "Present",
-        "Absent"
+        "Absent",
+        "Ruled out"
       ]
     },
     "Size": {
@@ -741,6 +742,108 @@
                 "height": 20,
                 "width": 20
               }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Letter, State=Ruled out, Size=Regular",
+      "id": "163:65928",
+      "props": {
+        "Kind": "Letter",
+        "State": "Ruled out",
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:65928",
+        "name": "Kind=Letter, State=Ruled out, Size=Regular",
+        "x": 456,
+        "y": 24,
+        "w": 40,
+        "h": 56,
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "163:65929",
+            "name": "Letter",
+            "w": 15,
+            "h": 24,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Letter"
+            },
+            "text": "Q",
+            "textStyle": "Zumpo/Number",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Letter, State=Ruled out, Size=Compact",
+      "id": "163:65930",
+      "props": {
+        "Kind": "Letter",
+        "State": "Ruled out",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:65930",
+        "name": "Kind=Letter, State=Ruled out, Size=Compact",
+        "x": 382,
+        "y": 104,
+        "w": 30,
+        "h": 44,
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/8",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "163:65931",
+            "name": "Letter",
+            "w": 11,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Letter"
+            },
+            "text": "Q",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/muted"
             ]
           }
         ]

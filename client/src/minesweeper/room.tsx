@@ -40,10 +40,7 @@ export function MinesweeperRoom() {
       }
       stage={inGame ? <Round room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
-      chat={{
-        placeholder: m.minesweeper.messagePlaceholder,
-        alertIcon: 'mine',
-      }}
+      chat={{ placeholder: m.minesweeper.messagePlaceholder }}
     />
   );
 }

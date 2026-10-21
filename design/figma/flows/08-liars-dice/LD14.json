@@ -87,7 +87,7 @@
         "props": {
           "Main": "Raise, or call Liar",
           "Category": false,
-          "Meta": "Leo bid five 5s",
+          "Meta": "Beat five 5s: more dice, or a higher face",
           "Label": "Your turn"
         },
         "overrides": [
@@ -110,7 +110,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "to bid",
-              "Time": "00:12",
+              "Time": "0:12",
               "Tone": "Running"
             }
           }

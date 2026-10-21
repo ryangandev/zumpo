@@ -121,7 +121,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
-              "Time": "00:33",
+              "Time": "0:33",
               "Tone": "Waiting"
             }
           }
@@ -211,7 +211,7 @@
               {
                 "path": "Guess 2 / Digits / Digit 3",
                 "componentProperties": {
-                  "Digit": "7",
+                  "Digit": "8",
                   "State": "Guessed",
                   "Size": "Compact"
                 }
@@ -219,7 +219,7 @@
               {
                 "path": "Guess 2 / Digits / Digit 4",
                 "componentProperties": {
-                  "Digit": "8",
+                  "Digit": "9",
                   "State": "Guessed",
                   "Size": "Compact"
                 }
@@ -308,6 +308,28 @@
                 "width": 53
               },
               {
+                "path": "Row 1 / Key 5",
+                "componentProperties": {
+                  "Letter": "5",
+                  "Kind": "Letter",
+                  "State": "Ruled out",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 55
+              },
+              {
+                "path": "Row 2 / Key 6",
+                "componentProperties": {
+                  "Letter": "6",
+                  "Kind": "Letter",
+                  "State": "Ruled out",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 55.33
+              },
+              {
                 "path": "Row 2 / Key 7",
                 "componentProperties": {
                   "Letter": "7",
@@ -317,6 +339,17 @@
                 },
                 "height": 56,
                 "width": 53.33
+              },
+              {
+                "path": "Row 2 / Key 8",
+                "componentProperties": {
+                  "Letter": "8",
+                  "Kind": "Letter",
+                  "State": "Ruled out",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 55.33
               },
               {
                 "path": "Row 2 / Key 9",

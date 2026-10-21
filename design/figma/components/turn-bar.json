@@ -85,7 +85,7 @@
             "type": "FRAME",
             "id": "26:16823",
             "name": "Turn",
-            "w": 745,
+            "w": 758,
             "h": 80,
             "wSize": "fill",
             "hSize": "hug",
@@ -213,7 +213,7 @@
             "type": "INSTANCE",
             "id": "26:16833",
             "name": "Countdown",
-            "w": 133,
+            "w": 120,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -227,13 +227,13 @@
             "componentId": "9:404",
             "props": {
               "Label": "left",
-              "Time": "01:12"
+              "Time": "1:12"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 133
+                "width": 120
               }
             ]
           }
@@ -279,7 +279,7 @@
             "type": "FRAME",
             "id": "26:16840",
             "name": "Turn",
-            "w": 733,
+            "w": 746,
             "h": 80,
             "wSize": "fill",
             "hSize": "hug",
@@ -407,7 +407,7 @@
             "type": "INSTANCE",
             "id": "26:16850",
             "name": "Countdown",
-            "w": 145,
+            "w": 132,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -421,13 +421,13 @@
             "componentId": "9:404",
             "props": {
               "Label": "left",
-              "Time": "00:58"
+              "Time": "0:58"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 145
+                "width": 132
               }
             ]
           }
@@ -473,7 +473,7 @@
             "type": "FRAME",
             "id": "26:16857",
             "name": "Turn",
-            "w": 695,
+            "w": 707,
             "h": 68,
             "wSize": "fill",
             "hSize": "hug",
@@ -601,7 +601,7 @@
             "type": "INSTANCE",
             "id": "26:16867",
             "name": "Countdown",
-            "w": 183,
+            "w": 171,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -615,13 +615,13 @@
             "componentId": "24:5274",
             "props": {
               "Label": "to choose",
-              "Time": "00:12"
+              "Time": "0:12"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 183
+                "width": 171
               }
             ]
           }
@@ -665,7 +665,7 @@
             "type": "FRAME",
             "id": "163:44736",
             "name": "Text",
-            "w": 203,
+            "w": 216,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -678,7 +678,7 @@
                 "type": "FRAME",
                 "id": "27:22156",
                 "name": "Eyebrow",
-                "w": 203,
+                "w": 216,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -741,7 +741,7 @@
                     "type": "TEXT",
                     "id": "27:22161",
                     "name": "Meta",
-                    "w": 10,
+                    "w": 23,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -764,7 +764,7 @@
                 "type": "FRAME",
                 "id": "27:22159",
                 "name": "Answer",
-                "w": 203,
+                "w": 216,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -803,7 +803,7 @@
             "type": "INSTANCE",
             "id": "27:22162",
             "name": "Countdown",
-            "w": 101,
+            "w": 88,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -818,13 +818,13 @@
             "props": {
               "Show label": false,
               "Label": "left",
-              "Time": "01:12"
+              "Time": "1:12"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 101
+                "width": 88
               }
             ]
           }
@@ -868,7 +868,7 @@
             "type": "FRAME",
             "id": "163:44737",
             "name": "Text",
-            "w": 191,
+            "w": 204,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -881,7 +881,7 @@
                 "type": "FRAME",
                 "id": "27:22175",
                 "name": "Eyebrow",
-                "w": 191,
+                "w": 204,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -944,7 +944,7 @@
                     "type": "TEXT",
                     "id": "27:22180",
                     "name": "Meta",
-                    "w": 1,
+                    "w": 11,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -967,7 +967,7 @@
                 "type": "FRAME",
                 "id": "27:22178",
                 "name": "Answer",
-                "w": 191,
+                "w": 204,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -1006,7 +1006,7 @@
             "type": "INSTANCE",
             "id": "27:22181",
             "name": "Countdown",
-            "w": 113,
+            "w": 100,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -1021,13 +1021,13 @@
             "props": {
               "Show label": false,
               "Label": "left",
-              "Time": "00:58"
+              "Time": "0:58"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 113
+                "width": 100
               }
             ]
           }
@@ -1071,7 +1071,7 @@
             "type": "FRAME",
             "id": "163:44738",
             "name": "Text",
-            "w": 197,
+            "w": 209,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -1084,7 +1084,7 @@
                 "type": "FRAME",
                 "id": "27:22194",
                 "name": "Eyebrow",
-                "w": 197,
+                "w": 209,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -1147,7 +1147,7 @@
                     "type": "TEXT",
                     "id": "27:22199",
                     "name": "Meta",
-                    "w": 4,
+                    "w": 16,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -1170,7 +1170,7 @@
                 "type": "FRAME",
                 "id": "27:22197",
                 "name": "Answer",
-                "w": 197,
+                "w": 209,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -1209,7 +1209,7 @@
             "type": "INSTANCE",
             "id": "27:22200",
             "name": "Countdown",
-            "w": 107,
+            "w": 95,
             "h": 44,
             "wSize": "hug",
             "hSize": "hug",
@@ -1224,13 +1224,13 @@
             "props": {
               "Show label": false,
               "Label": "to choose",
-              "Time": "00:12"
+              "Time": "0:12"
             },
             "overrides": [
               {
                 "path": ".",
                 "height": 44,
-                "width": 107
+                "width": 95
               }
             ]
           }

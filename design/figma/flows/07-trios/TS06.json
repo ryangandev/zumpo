@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "new cards",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -592,6 +592,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "3",
+                      "Show status": true,
                       "Status icon": false,
                       "Status": "Found a trio",
                       "State": "Scored"
@@ -619,6 +620,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -652,6 +654,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -727,6 +730,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",

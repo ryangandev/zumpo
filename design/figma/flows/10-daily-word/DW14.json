@@ -95,6 +95,7 @@
               "Host": true,
               "Name": "Maya",
               "Score": "756",
+              "Show status": true,
               "Status icon": true,
               "Status": "Found it · +431",
               "State": "Scored"
@@ -122,6 +123,7 @@
           {
             "path": "Player 2",
             "componentProperties": {
+              "Show status": true,
               "Show score": true,
               "Status icon": false,
               "Status": "Guessing",
@@ -136,6 +138,7 @@
           {
             "path": "Player 3",
             "componentProperties": {
+              "Show status": true,
               "Show score": true,
               "Status icon": false,
               "Status": "Guessing",
@@ -157,6 +160,7 @@
           {
             "path": "Player 4",
             "componentProperties": {
+              "Show status": true,
               "Show score": true,
               "Status icon": false,
               "Status": "Guessing",

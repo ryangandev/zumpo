@@ -125,8 +125,10 @@ interface RoomLookup {
  * - `chat`: an ordinary message; the room layer posts it.
  * - `consumed`: the game used it (a correct guess) and said whatever it had to.
  * - `blocked`: nobody sees it (a drawer who would be giving the word away).
+ * - `spectators`: only the spectators see it (a spectator talking while the
+ *   word is drawn, who could hint at it to the players).
  */
-type ChatVerdict = 'chat' | 'consumed' | 'blocked';
+type ChatVerdict = 'chat' | 'consumed' | 'blocked' | 'spectators';
 
 /**
  * One game, as the room layer sees it.

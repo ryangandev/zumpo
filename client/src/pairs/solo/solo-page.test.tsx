@@ -126,6 +126,21 @@ describe('Pairs on your own', () => {
     expect(card(pairs[0]![0]!)).toHaveAccessibleName(/face down$/);
   });
 
+  it('keeps a miss up while How to play is open', async () => {
+    await startChallenge();
+    await flipCard(pairs[0]![0]!);
+    await flipCard(pairs[1]![0]!);
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    await act(() => vi.advanceTimersByTime(MISS_SHOWN_MS * 3));
+    await user.click(screen.getByRole('button', { name: 'Back to the game' }));
+    expect(turn().getByText('Not a pair')).toBeInTheDocument();
+    expect(card(pairs[0]![0]!)).not.toHaveAccessibleName(/face down$/);
+
+    await act(() => vi.advanceTimersByTime(MISS_SHOWN_MS));
+    expect(turn().getByText('Flip a card')).toBeInTheDocument();
+    expect(card(pairs[0]![0]!)).toHaveAccessibleName(/face down$/);
+  });
+
   it('clears the board, keeps the best and copies a challenge', async () => {
     await startChallenge();
     // One miss, then every pair.

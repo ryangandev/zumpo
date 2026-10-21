@@ -108,7 +108,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "to pick",
-              "Time": "00:10",
+              "Time": "0:10",
               "Tone": "Running"
             }
           }

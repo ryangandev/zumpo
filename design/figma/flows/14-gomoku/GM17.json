@@ -14,7 +14,7 @@
     "x": 40,
     "y": 5580,
     "w": 390,
-    "h": 912,
+    "h": 972,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -100,7 +100,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
-              "Time": "00:24",
+              "Time": "0:24",
               "Tone": "Waiting"
             }
           }
@@ -111,7 +111,7 @@
         "id": "162:101870",
         "name": "Table",
         "w": 350,
-        "h": 646,
+        "h": 706,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -371,7 +371,7 @@
             "id": "162:102022",
             "name": "Actions",
             "w": 350,
-            "h": 96,
+            "h": 156,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -395,6 +395,33 @@
                 "componentId": "4:15",
                 "props": {
                   "Label": "Place stone"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "163:66195",
+                "name": "Action / Take back",
+                "w": 350,
+                "h": 48,
+                "wSize": "fill",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=undo",
+                  "Show icon": true,
+                  "Label": "Take back"
                 },
                 "overrides": [
                   {

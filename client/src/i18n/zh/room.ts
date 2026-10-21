@@ -32,6 +32,7 @@ export const room: typeof en = {
   nowHost: '你现在是房主了。',
   players: (count) => `玩家 · ${count}`,
   chat: '聊天',
+  turnTitle: '(!) 轮到你了 · Zumpo',
   leaveTitle: (name) => `离开“${name}”？`,
   leaveInGame: (score) =>
     `游戏会继续，但你的座位和 ${score} 会被移除。还有空位时，你可以再次加入。`,

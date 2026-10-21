@@ -9,6 +9,8 @@ export const drawAndGuess = {
   waitingRoom: 'Waiting room',
   guessPlaceholder: 'Type your guess…',
   messagePlaceholder: 'Say something…',
+  /** A spectator while the word is drawn: the players cannot read it. */
+  spectatorPlaceholder: 'Only spectators see this…',
   guess: 'Guess',
   message: 'Message',
   drawer: 'The drawer',

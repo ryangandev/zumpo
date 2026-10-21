@@ -116,7 +116,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "on this card",
-              "Time": "00:02",
+              "Time": "0:02",
               "Tone": "Waiting"
             }
           }

@@ -27,11 +27,13 @@ import { SoloResult } from '../../solo/solo-result';
 import { GomokuTable, type SeatView } from '../table';
 import { LEVELS, THINKING_MS } from './computer';
 import {
+  canTakeBack,
   computerWon,
   isYourTurn,
   newGame,
   play,
   stonesOn,
+  takeBack,
   toMove,
   youWon,
   type SoloGame,
@@ -223,6 +225,18 @@ function SoloBoard({
   const level = m.gomoku.solo.levels[game.level];
   const line = game.winLines?.[0];
 
+  const takeBackButton = (
+    <Button
+      variant="secondary"
+      icon="undo"
+      onClick={() => {
+        setPreview(null);
+        setGame(takeBack(game));
+      }}
+    >
+      {m.gomoku.solo.takeBack}
+    </Button>
+  );
   return (
     <SoloLayout
       gameType="gomoku"
@@ -241,9 +255,9 @@ function SoloBoard({
             <SoloResult
               title={
                 youWon(game)
-                  ? m.gomoku.solo.wonIn(game.moves.length)
+                  ? m.gomoku.solo.wonOn(game.moves.length)
                   : computerWon(game)
-                    ? m.gomoku.solo.lostIn(game.moves.length)
+                    ? m.gomoku.solo.lostOn(game.moves.length)
                     : m.gomoku.solo.draw
               }
               body={
@@ -297,20 +311,28 @@ function SoloBoard({
             seats={seatsOf(game, name, m)}
             actions={
               phone
-                ? // Always there in a game, live once a faint stone is down,
-                  // so nothing moves when one is; the turn bar says to tap
-                  // again.
+                ? // Place stone is always there in a game, live once a faint
+                  // stone is down, so nothing moves when one is; the turn bar
+                  // says to tap again.
                   !game.over && (
-                    <Button
-                      disabled={previewing === null}
-                      onClick={() => {
-                        if (previewing !== null) place(previewing);
-                      }}
-                    >
-                      {m.gomoku.placeStone}
-                    </Button>
+                    <>
+                      <Button
+                        disabled={previewing === null}
+                        onClick={() => {
+                          if (previewing !== null) place(previewing);
+                        }}
+                      >
+                        {m.gomoku.placeStone}
+                      </Button>
+                      {yours && canTakeBack(game) && takeBackButton}
+                    </>
                   )
-                : yours && <p className={styles.hint}>{m.gomoku.hoverHint}</p>
+                : yours && (
+                    <>
+                      {canTakeBack(game) && takeBackButton}
+                      <p className={styles.hint}>{m.gomoku.hoverHint}</p>
+                    </>
+                  )
             }
           />
         </>

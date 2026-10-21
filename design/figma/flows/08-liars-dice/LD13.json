@@ -77,7 +77,7 @@
           "Countdown": false,
           "Main": "Raise, or call Liar",
           "Category": false,
-          "Meta": "Otto bid three 5s",
+          "Meta": "Beat three 5s: more dice, or a higher face",
           "Label": "Your turn"
         },
         "overrides": [
@@ -100,7 +100,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
-              "Time": "00:24",
+              "Time": "0:24",
               "Tone": "Waiting"
             }
           }

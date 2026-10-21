@@ -6,6 +6,7 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
+import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { BoardPanel, PairsGrid } from './board';
@@ -95,6 +96,7 @@ function Turn({ room }: { room: Room }) {
     state.phase === 'flipping' &&
     state.turnPlayerId === playerId &&
     !reconnecting;
+  useTurnTitle(flipping);
   return (
     <>
       <TurnBar {...turnBar(room, seconds, phone, m)} />

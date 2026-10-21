@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "next round",
-                      "Time": "00:04",
+                      "Time": "0:04",
                       "Tone": "Waiting"
                     }
                   }
@@ -493,6 +493,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -526,6 +527,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Bid stands",
@@ -559,6 +561,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -634,6 +637,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Lost a die",

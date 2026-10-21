@@ -32,6 +32,8 @@ export const room = {
   nowHost: 'You’re the host now.',
   players: (count: number) => `Players · ${count}`,
   chat: 'Chat',
+  /** The browser tab's title while it is in the background and it is your go. */
+  turnTitle: '(!) Your turn · Zumpo',
   leaveTitle: (name: string) => `Leave ${name}?`,
   leaveInGame: (score: string) =>
     `The game carries on without you, and your seat and your ${score} go with you. You can join again while a seat is open.`,

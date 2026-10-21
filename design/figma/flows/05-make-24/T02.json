@@ -5,7 +5,7 @@
   "id": "40:40163",
   "section": "05 / Make 24 / complete flow",
   "reviewNotes": [
-    "T02 · Tap a number, a sign, then another number: the two merge into one card that shows its sum. The run clock counts up."
+    "T02 · Tap a number, a sign, then another number: the two merge into one card that shows its sum. The run clock counts up. With a mouse and keyboard, the keys line shows how to play from the keyboard."
   ],
   "frame": {
     "type": "FRAME",
@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 150,
     "w": 1440,
-    "h": 843,
+    "h": 771,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -104,7 +104,7 @@
         "id": "40:40165",
         "name": "Board & room",
         "w": 1312,
-        "h": 673,
+        "h": 601,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "40:40166",
             "name": "Board stage",
             "w": 944,
-            "h": 673,
+            "h": 601,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -165,7 +165,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "run time",
-                      "Time": "00:33",
+                      "Time": "0:33",
                       "Tone": "Waiting"
                     }
                   }
@@ -176,7 +176,7 @@
                 "id": "40:40168",
                 "name": "Table panel",
                 "w": 944,
-                "h": 565,
+                "h": 493,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -199,8 +199,8 @@
                     "type": "FRAME",
                     "id": "40:40330",
                     "name": "Table",
-                    "w": 368,
-                    "h": 401,
+                    "w": 410,
+                    "h": 443,
                     "wSize": "hug",
                     "hSize": "hug",
                     "layout": {
@@ -458,107 +458,21 @@
                             ]
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "40:40372",
-                    "name": "Steps",
-                    "w": 894,
-                    "h": 94,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "40:40373",
-                        "name": "Heading space",
-                        "w": 122,
-                        "h": 38,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "column",
-                          "pad": [
-                            0,
-                            0,
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40374",
-                            "w": 122,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Your steps",
-                            "textStyle": "Zumpo/Heading",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
                       },
                       {
-                        "type": "FRAME",
-                        "id": "40:40375",
-                        "name": "Step 1",
-                        "w": 894,
-                        "h": 48,
-                        "wSize": "fill",
+                        "type": "TEXT",
+                        "id": "163:65754",
+                        "name": "Keys",
+                        "w": 410,
+                        "h": 18,
+                        "wSize": "hug",
                         "hSize": "hug",
+                        "text": "Keys: 1 to 4 pick a card, + − × ÷ a sign, Backspace undoes, Esc starts over.",
+                        "textStyle": "Zumpo/Small",
                         "fills": [
-                          "$Zumpo · UI:color/cream"
+                          "$Zumpo · Primitives:color/muted"
                         ],
-                        "radius": "$Zumpo · UI:radius/12",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/12",
-                          "pad": [
-                            "$Zumpo · UI:space/12",
-                            "$Zumpo · UI:space/16"
-                          ],
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40376",
-                            "w": 6,
-                            "h": 20,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "1",
-                            "textStyle": "Zumpo/Label",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:40377",
-                            "w": 73,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "8 − 4 = 4",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
+                        "alignH": "center"
                       }
                     ]
                   }

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-21T17:42:05.357Z",
+  "exportedAt": "2026-10-21T18:12:55.069Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": false
   },
   "counts": {
-    "flows": 245,
-    "componentFamilies": 76,
+    "flows": 250,
+    "componentFamilies": 77,
     "outsideComponents": 0,
-    "svgs": 126,
-    "seconds": 11,
-    "nodes": 14079,
-    "instances": 7209,
+    "svgs": 127,
+    "seconds": 12,
+    "nodes": 14360,
+    "instances": 7315,
     "grids": 84,
     "gridCells": 2733
   },
@@ -258,6 +258,12 @@
       "variants": 3
     },
     {
+      "name": "Zumpo/How to play",
+      "id": "163:65908",
+      "file": "components/how-to-play.json",
+      "variants": 1
+    },
+    {
       "name": "Zumpo/Hush card",
       "id": "44:61118",
       "file": "components/hush-card.json",
@@ -267,7 +273,7 @@
       "name": "Zumpo/Icon",
       "id": "24:5086",
       "file": "components/icon.json",
-      "variants": 25
+      "variants": 26
     },
     {
       "name": "Zumpo/Input",
@@ -291,7 +297,7 @@
       "name": "Zumpo/Letter key",
       "id": "44:62031",
       "file": "components/letter-key.json",
-      "variants": 12
+      "variants": 14
     },
     {
       "name": "Zumpo/Letter tile",
@@ -345,7 +351,7 @@
       "name": "Zumpo/Pairs card",
       "id": "40:22031",
       "file": "components/pairs-card.json",
-      "variants": 6
+      "variants": 9
     },
     {
       "name": "Zumpo/Pairs symbol",
@@ -694,6 +700,17 @@
             580
           ],
           "file": "flows/01-platform/P18.json",
+          "isFlow": true
+        },
+        {
+          "code": "P21",
+          "title": "Full rules over a room",
+          "id": "163:66260",
+          "size": [
+            1440,
+            1008
+          ],
+          "file": "flows/01-platform/P21.json",
           "isFlow": true
         },
         {
@@ -1290,7 +1307,7 @@
           "id": "9:9799",
           "size": [
             1440,
-            1451
+            1149
           ],
           "file": "flows/03-minesweeper/M14.json",
           "isFlow": true
@@ -1301,7 +1318,7 @@
           "id": "9:9886",
           "size": [
             1440,
-            1428
+            1126
           ],
           "file": "flows/03-minesweeper/M15.json",
           "isFlow": true
@@ -1588,6 +1605,17 @@
           ],
           "file": "flows/04-mobile/MO19.json",
           "isFlow": true
+        },
+        {
+          "code": "MO20",
+          "title": "Room · host waiting room",
+          "id": "164:68981",
+          "size": [
+            390,
+            871
+          ],
+          "file": "flows/04-mobile/MO20.json",
+          "isFlow": true
         }
       ],
       "notes": [
@@ -1619,7 +1647,7 @@
           "id": "40:40163",
           "size": [
             1440,
-            843
+            771
           ],
           "file": "flows/05-make-24/T02.json",
           "isFlow": true
@@ -1630,7 +1658,7 @@
           "id": "40:40648",
           "size": [
             1440,
-            795
+            582
           ],
           "file": "flows/05-make-24/T03.json",
           "isFlow": true
@@ -1641,7 +1669,7 @@
           "id": "40:41103",
           "size": [
             1440,
-            818
+            634
           ],
           "file": "flows/05-make-24/T04.json",
           "isFlow": true
@@ -1652,7 +1680,7 @@
           "id": "40:42077",
           "size": [
             1440,
-            843
+            771
           ],
           "file": "flows/05-make-24/T06.json",
           "isFlow": true
@@ -1663,7 +1691,7 @@
           "id": "40:42554",
           "size": [
             1440,
-            795
+            767
           ],
           "file": "flows/05-make-24/T07.json",
           "isFlow": true
@@ -1685,7 +1713,7 @@
           "id": "40:43542",
           "size": [
             1440,
-            1211
+            913
           ],
           "file": "flows/05-make-24/T09.json",
           "isFlow": true
@@ -1732,6 +1760,17 @@
             637
           ],
           "file": "flows/05-make-24/T12.json",
+          "isFlow": true
+        },
+        {
+          "code": "T13",
+          "title": "Solo · skipped",
+          "id": "163:65757",
+          "size": [
+            1440,
+            641
+          ],
+          "file": "flows/05-make-24/T13.json",
           "isFlow": true
         }
       ],
@@ -1851,6 +1890,17 @@
           ],
           "file": "flows/06-pairs/PR10.json",
           "isFlow": true
+        },
+        {
+          "code": "PR11",
+          "title": "Solo · small board, desktop",
+          "id": "164:69313",
+          "size": [
+            1440,
+            848
+          ],
+          "file": "flows/06-pairs/PR11.json",
+          "isFlow": true
         }
       ],
       "notes": []
@@ -1954,7 +2004,7 @@
           "id": "79:88033",
           "size": [
             1440,
-            1186
+            1114
           ],
           "file": "flows/07-trios/TS09.json",
           "isFlow": true
@@ -2028,7 +2078,7 @@
           "id": "75:82404",
           "size": [
             1440,
-            974
+            893
           ],
           "file": "flows/08-liars-dice/LD01.json",
           "isFlow": true
@@ -2197,6 +2247,17 @@
           ],
           "file": "flows/08-liars-dice/game-artwork-liar-s-dice.json",
           "isFlow": false
+        },
+        {
+          "code": "LD16",
+          "title": "Solo · leave a game under way",
+          "id": "163:65953",
+          "size": [
+            1440,
+            623
+          ],
+          "file": "flows/08-liars-dice/LD16.json",
+          "isFlow": true
         }
       ],
       "notes": []
@@ -2440,7 +2501,7 @@
           "id": "79:99581",
           "size": [
             1440,
-            995
+            1035
           ],
           "file": "flows/10-daily-word/DW05.json",
           "isFlow": true
@@ -2506,7 +2567,7 @@
           "id": "97:115499",
           "size": [
             390,
-            1386
+            1170
           ],
           "file": "flows/10-daily-word/DW15.json",
           "isFlow": true
@@ -2517,7 +2578,7 @@
           "id": "97:116186",
           "size": [
             390,
-            1811
+            1595
           ],
           "file": "flows/10-daily-word/DW16.json",
           "isFlow": true
@@ -2745,7 +2806,7 @@
           "id": "162:97720",
           "size": [
             1440,
-            581
+            604
           ],
           "file": "flows/12-doodle-chain/DC03.json",
           "isFlow": true
@@ -3017,7 +3078,7 @@
           "id": "162:81855",
           "size": [
             1440,
-            1123
+            1163
           ],
           "file": "flows/13-code-breaker/CB07.json",
           "isFlow": true
@@ -3160,7 +3221,7 @@
           "id": "162:109211",
           "size": [
             390,
-            2122
+            1682
           ],
           "file": "flows/13-code-breaker/CB20.json",
           "isFlow": true
@@ -3171,7 +3232,7 @@
           "id": "162:110183",
           "size": [
             390,
-            2547
+            1987
           ],
           "file": "flows/13-code-breaker/CB21.json",
           "isFlow": true
@@ -3368,7 +3429,7 @@
           "id": "162:101867",
           "size": [
             390,
-            912
+            972
           ],
           "file": "flows/14-gomoku/GM17.json",
           "isFlow": true
@@ -3401,7 +3462,7 @@
           "id": "162:102701",
           "size": [
             390,
-            1684
+            1792
           ],
           "file": "flows/14-gomoku/GM20.json",
           "isFlow": true
@@ -3422,7 +3483,7 @@
     }
   ],
   "warnings": [
-    "Expected 74 component families, found 76",
-    "Expected 247 flow frames, found 245"
+    "Expected 74 component families, found 77",
+    "Expected 247 flow frames, found 250"
   ]
 }

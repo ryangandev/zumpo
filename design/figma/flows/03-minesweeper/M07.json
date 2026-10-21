@@ -133,7 +133,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "next round",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -1436,6 +1436,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "95",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +31",
                       "State": "Scored"
@@ -1469,6 +1470,7 @@
                       "Host": false,
                       "Name": "Leo",
                       "Score": "80",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +24",
                       "State": "Scored"
@@ -1496,6 +1498,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Hit a mine · −82",
@@ -1577,6 +1580,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "−61",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +17",
                       "State": "Scored"

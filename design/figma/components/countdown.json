@@ -4,11 +4,11 @@
   "id": "24:5284",
   "type": "COMPONENT_SET",
   "key": "5e3befb7e3da3f8c2819b9525c23cc9c152ec4e2",
-  "description": "Server-driven phase clock (the client only renders the time it is sent). Running: a phase you act in. Waiting: someone else is acting, or a reveal. Urgent: the last 5 seconds. Time is mm:ss; Label says what the clock is for.",
+  "description": "Server-driven phase clock (the client only renders the time it is sent). Running: a phase you act in. Waiting: someone else is acting, or a reveal. Urgent: the last 5 seconds. Time is m:ss, as every time on the site (0:33); Label says what the clock is for.",
   "properties": {
     "Time": {
       "type": "text",
-      "default": "00:15"
+      "default": "0:15"
     },
     "Label": {
       "type": "text",
@@ -40,7 +40,7 @@
         "type": "COMPONENT",
         "id": "9:404",
         "name": "Tone=Running",
-        "w": 164,
+        "w": 151,
         "h": 44,
         "wSize": "hug",
         "hSize": "hug",
@@ -91,14 +91,14 @@
             "type": "TEXT",
             "id": "9:403",
             "name": "Time",
-            "w": 48,
+            "w": 35,
             "h": 24,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Time"
             },
-            "text": "00:15",
+            "text": "0:15",
             "textStyle": "Zumpo/Number",
             "fills": [
               "$Zumpo · UI:color/ink"
@@ -135,7 +135,7 @@
         "type": "COMPONENT",
         "id": "24:5274",
         "name": "Tone=Waiting",
-        "w": 164,
+        "w": 151,
         "h": 44,
         "wSize": "hug",
         "hSize": "hug",
@@ -186,14 +186,14 @@
             "type": "TEXT",
             "id": "24:5276",
             "name": "Time",
-            "w": 48,
+            "w": 35,
             "h": 24,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Time"
             },
-            "text": "00:15",
+            "text": "0:15",
             "textStyle": "Zumpo/Number",
             "fills": [
               "$Zumpo · UI:color/ink"
@@ -230,7 +230,7 @@
         "type": "COMPONENT",
         "id": "24:5278",
         "name": "Tone=Urgent",
-        "w": 164,
+        "w": 151,
         "h": 44,
         "wSize": "hug",
         "hSize": "hug",
@@ -281,14 +281,14 @@
             "type": "TEXT",
             "id": "24:5280",
             "name": "Time",
-            "w": 48,
+            "w": 35,
             "h": 24,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Time"
             },
-            "text": "00:15",
+            "text": "0:15",
             "textStyle": "Zumpo/Number",
             "fills": [
               "$Zumpo · UI:color/danger"

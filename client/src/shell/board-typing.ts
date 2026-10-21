@@ -5,18 +5,27 @@ export interface Typing {
   onKey: (key: string) => void;
   onDelete: () => void;
   onEnter: () => void;
+  /** Escape, for a board that has a way back to its start. */
+  onEscape?: () => void;
 }
+
+/** What the keys do: Enter is optional, for a board with no row to check. */
+type TypingKeys = Omit<Typing, 'onEnter'> & {
+  /** Without it Enter is left alone, to press a focused button. */
+  onEnter?: () => void;
+};
 
 /**
  * A real keyboard types into a board too: the keys `accepts` takes (letters
- * for Daily Word, digits for Code Breaker), Backspace and Enter, unless a
- * text field has the focus (the chat) or a key comes with Ctrl, Alt or Cmd.
+ * for Daily Word, digits for Code Breaker), Backspace, Enter and Escape,
+ * unless a text field has the focus (the chat) or a key comes with Ctrl, Alt
+ * or Cmd.
  * Enter on a focused button presses that button, unless something was typed
  * since the focus came to it: a tab just tapped keeps the focus, and the row
  * typed after it is what Enter is for.
  */
 export function useTypingKeys(
-  typing: Typing,
+  typing: TypingKeys,
   enabled: boolean,
   accepts: RegExp,
 ) {
@@ -43,9 +52,12 @@ export function useTypingKeys(
       const onButton =
         target instanceof HTMLElement && target.closest('button, a') !== null;
       if (event.key === 'Enter') {
-        if (onButton && !typedSinceFocus) return;
+        const onEnter = latest.current.onEnter;
+        if (!onEnter || (onButton && !typedSinceFocus)) return;
         event.preventDefault();
-        latest.current.onEnter();
+        onEnter();
+      } else if (event.key === 'Escape') {
+        latest.current.onEscape?.();
       } else if (event.key === 'Backspace') {
         event.preventDefault();
         typedSinceFocus = true;

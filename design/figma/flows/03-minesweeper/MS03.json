@@ -138,7 +138,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "30 mines were still hidden",
+                  "Meta": "You cleared 116 of 216 safe cells",
                   "Main": "You hit a mine",
                   "Category": false,
                   "Label": "Game over"
@@ -163,7 +163,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "run time",
-                      "Time": "02:31",
+                      "Time": "2:31",
                       "Tone": "Waiting"
                     }
                   }

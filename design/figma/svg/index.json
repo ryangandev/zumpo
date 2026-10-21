@@ -146,6 +146,16 @@
     ]
   },
   {
+    "file": "svg/chevron-up-ab456e.svg",
+    "name": "chevron-up",
+    "w": 12,
+    "h": 6,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=chevron-up > chevron-up"
+    ]
+  },
+  {
     "file": "svg/clock-fcc82f.svg",
     "name": "clock",
     "w": 3.5,

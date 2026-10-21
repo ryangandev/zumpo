@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "on this card",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -453,6 +453,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -486,6 +487,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -519,6 +521,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -594,6 +597,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",

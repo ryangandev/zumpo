@@ -458,7 +458,7 @@
                       {
                         "path": "Guess 2 / Digits / Digit 3",
                         "componentProperties": {
-                          "Digit": "7",
+                          "Digit": "8",
                           "State": "Guessed",
                           "Size": "Compact"
                         }
@@ -466,7 +466,7 @@
                       {
                         "path": "Guess 2 / Digits / Digit 4",
                         "componentProperties": {
-                          "Digit": "8",
+                          "Digit": "9",
                           "State": "Guessed",
                           "Size": "Compact"
                         }

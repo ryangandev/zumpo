@@ -124,7 +124,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "to bid",
-              "Time": "00:12",
+              "Time": "0:12",
               "Tone": "Running"
             }
           }
@@ -455,7 +455,7 @@
               {
                 "type": "INSTANCE",
                 "id": "162:102632",
-                "name": "Action / Start game 3",
+                "name": "Action / Play again",
                 "w": 350,
                 "h": 48,
                 "wSize": "fill",
@@ -466,7 +466,7 @@
                 },
                 "componentId": "4:15",
                 "props": {
-                  "Label": "Start game 3"
+                  "Label": "Play again"
                 },
                 "overrides": [
                   {

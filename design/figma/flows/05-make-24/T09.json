@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 1550,
     "w": 1440,
-    "h": 1211,
+    "h": 913,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -97,7 +97,7 @@
         "id": "40:43544",
         "name": "Board & room",
         "w": 1312,
-        "h": 1041,
+        "h": 743,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -110,7 +110,7 @@
             "id": "40:43545",
             "name": "Board stage",
             "w": 944,
-            "h": 1041,
+            "h": 743,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -534,7 +534,7 @@
                 "id": "40:43566",
                 "name": "Table panel",
                 "w": 944,
-                "h": 540,
+                "h": 242,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -659,9 +659,9 @@
                     "type": "FRAME",
                     "id": "40:43805",
                     "name": "Hand results",
+                    "visible": false,
                     "w": 894,
                     "h": 278,
-                    "wSize": "fill",
                     "hSize": "hug",
                     "layout": {
                       "mode": "column",
@@ -902,6 +902,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -923,6 +924,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -944,6 +946,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -965,6 +968,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",

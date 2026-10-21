@@ -148,7 +148,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "left",
-                      "Time": "00:49",
+                      "Time": "0:49",
                       "Tone": "Running"
                     }
                   }
@@ -225,6 +225,7 @@
                       "Host": true,
                       "Status": "Away",
                       "You": false,
+                      "Show status": true,
                       "Score": "460",
                       "Name": "Maya",
                       "State": "Away"

@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "next word",
-                      "Time": "00:06",
+                      "Time": "0:06",
                       "Tone": "Waiting"
                     }
                   }
@@ -228,7 +228,7 @@
                         "id": "79:101474",
                         "name": "Race board / Maya",
                         "w": 208,
-                        "h": 294,
+                        "h": 186,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -242,6 +242,11 @@
                           "Status": "Found in 3 · +431"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 186,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -361,6 +366,18 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 4",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -369,7 +386,7 @@
                         "id": "79:101530",
                         "name": "Race board / Sam",
                         "w": 208,
-                        "h": 294,
+                        "h": 222,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -384,6 +401,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 222,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -543,6 +565,14 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -551,7 +581,7 @@
                         "id": "79:101591",
                         "name": "Race board / Leo",
                         "w": 208,
-                        "h": 294,
+                        "h": 258,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -566,6 +596,11 @@
                           "Name": "Leo"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 258,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -765,6 +800,10 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -1062,6 +1101,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Found it · +431",
@@ -1095,6 +1135,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Found it · +322",
@@ -1128,6 +1169,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Missed",
@@ -1203,6 +1245,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Found it · +208",

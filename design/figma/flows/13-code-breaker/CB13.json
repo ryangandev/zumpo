@@ -613,7 +613,7 @@
                         "id": "162:105920",
                         "name": "Race board / Maya",
                         "w": 216,
-                        "h": 478,
+                        "h": 278,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -627,6 +627,11 @@
                           "Status": "Cracked in 5 · +628"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 278,
+                            "width": 216
+                          },
                           {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
@@ -786,6 +791,26 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 6",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 7",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 8",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
@@ -794,7 +819,7 @@
                         "id": "162:106075",
                         "name": "Race board / Sam",
                         "w": 216,
-                        "h": 478,
+                        "h": 278,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -810,6 +835,11 @@
                         },
                         "overrides": [
                           {
+                            "path": ".",
+                            "height": 278,
+                            "width": 216
+                          },
+                          {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
                               "Digit": "0",
@@ -968,6 +998,26 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 6",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 7",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 8",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
@@ -976,7 +1026,7 @@
                         "id": "162:106230",
                         "name": "Race board / Ryan",
                         "w": 216,
-                        "h": 478,
+                        "h": 318,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -991,6 +1041,11 @@
                           "Name": "Ryan"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 318,
+                            "width": 216
+                          },
                           {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
@@ -1182,6 +1237,22 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 7",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 8",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
@@ -1565,6 +1636,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "1683",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +628",
                       "State": "Scored"
@@ -1586,6 +1658,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "1651",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +620",
                       "State": "Scored"
@@ -1607,6 +1680,7 @@
                       "Host": false,
                       "Name": "Ryan",
                       "Score": "1124",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +516",
                       "State": "Scored"
@@ -1622,6 +1696,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Missed",

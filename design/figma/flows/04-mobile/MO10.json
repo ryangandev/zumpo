@@ -100,7 +100,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "next turn",
-              "Time": "00:08",
+              "Time": "0:08",
               "Tone": "Waiting"
             }
           }

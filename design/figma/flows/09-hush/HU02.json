@@ -151,7 +151,7 @@
                     "componentProperties": {
                       "Show label": true,
                       "Label": "to start",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -510,6 +510,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "3 cards",
@@ -543,6 +544,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "3 cards",
@@ -576,6 +578,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "3 cards",
@@ -651,6 +654,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "3 cards",
@@ -685,6 +689,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -698,6 +703,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -712,6 +718,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -726,6 +733,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",

@@ -243,6 +243,71 @@ describe('a Draw & Guess room', () => {
       );
     });
 
+    it('shows the newest guesses under the board, the viewer’s own lit as it lands', async () => {
+      onPhone();
+      const { fake } = await renderSeated(
+        drawAndGuessState({
+          ...turn,
+          phase: 'drawing',
+          currentDrawer: 'p2',
+          hint: '______',
+        }),
+      );
+      act(() => {
+        fake.serverEmits('chat:message', 'r1', {
+          id: 1,
+          kind: 'divider',
+          notice: { type: 'dg:turn', round: 1, drawer: 'Maya' },
+        });
+        for (const [id, playerId, username, text] of [
+          [2, 'p3', 'Sam', 'cat'],
+          [3, 'p3', 'Sam', 'dog'],
+          [4, ME, 'Ryan', 'turtl'],
+        ] as const) {
+          fake.serverEmits('chat:message', 'r1', {
+            id,
+            kind: 'player',
+            playerId,
+            username,
+            text,
+          });
+        }
+      });
+
+      const lines = within(board().getByRole('log', { name: 'Chat' }))
+        .getAllByRole('listitem')
+        .map((line) => line.textContent);
+      expect(lines).toEqual(['Samcat', 'Samdog', 'Ryan (you)turtl']);
+      const mine = board().getByText('turtl').closest('li')!;
+      expect(mine.className).toMatch(/flash/);
+      expect(board().getByText('dog').closest('li')!.className).not.toMatch(
+        /flash/,
+      );
+      // Read on the board, so the Chat tab has nothing new to mark.
+      expect(screen.getByRole('tab', { name: 'Chat' })).toBeInTheDocument();
+    });
+
+    it('tells a spectator their chat stays in the stands while the word is drawn', async () => {
+      onPhone();
+      await renderSeated(
+        drawAndGuessState({
+          ...turn,
+          phase: 'drawing',
+          currentDrawer: 'p2',
+          hint: '______',
+          playerList: {
+            p2: { username: 'Maya', points: 0, isConnected: true },
+            p3: { username: 'Sam', points: 0, isConnected: true },
+          },
+          spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+        }),
+      );
+      expect(board().getByRole('textbox')).toHaveAttribute(
+        'placeholder',
+        'Only spectators see this…',
+      );
+    });
+
     it('gives the drawer no input under the board', async () => {
       onPhone();
       await renderSeated(

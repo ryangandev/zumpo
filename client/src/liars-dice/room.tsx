@@ -5,6 +5,7 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
+import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { useBidChoice } from './bid-choice';
 import { Table, type TableSeat } from './table';
@@ -125,6 +126,7 @@ function Turn({ room }: { room: Room }) {
     state.phase === 'bidding' &&
     state.turnPlayerId === playerId &&
     !reconnecting;
+  useTurnTitle(mine);
   const out =
     !room.spectating && (state.playerList[playerId]?.points ?? 0) === 0;
   return (

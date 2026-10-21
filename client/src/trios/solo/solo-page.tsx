@@ -30,6 +30,7 @@ import {
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloTime } from '../../solo/solo-time';
 import {
   MiniTrio,
   TablePanel,
@@ -179,16 +180,17 @@ function RunView({
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
-  const [run, setRun] = useState(() => newRun(seed, Date.now()));
+  const clock = useSoloTime();
+  const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
-  const now = useClock(run.trioStartedAt !== null);
+  const now = useClock(run.trioStartedAt !== null && !clock.paused, clock.now);
 
   // Three cards just judged stay up for a moment, then the run goes on.
   const flash = run.flash;
   useEffect(() => {
-    if (!flash) return;
+    if (!flash || clock.paused) return;
     const timer = setTimeout(() => {
-      const next = afterFlash(run, Date.now());
+      const next = afterFlash(run, clock.now());
       setRun(next);
       if (isOver(next)) {
         const { timeMs } = summary(next);
@@ -201,7 +203,7 @@ function RunView({
       }
     }, FLASH_MS);
     return () => clearTimeout(timer);
-  }, [flash, run]);
+  }, [flash, run, clock]);
 
   const link = challengeLink(soloPath('trios'), { seed });
 
@@ -270,6 +272,7 @@ function RunView({
   return (
     <SoloLayout
       gameType="trios"
+      time={clock}
       phase={{ tone: 'blue', label }}
       stage={
         <>
@@ -280,7 +283,7 @@ function RunView({
               places={placesOf(run, m)}
               onPick={
                 canPick(run)
-                  ? (place) => setRun(pick(run, place, Date.now()))
+                  ? (place) => setRun(pick(run, place, clock.now()))
                   : undefined
               }
             />

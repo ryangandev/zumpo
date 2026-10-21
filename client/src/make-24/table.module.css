@@ -1,4 +1,4 @@
-/* A hand on the table: the paper panel, the cards, the signs and the steps. */
+/* A hand on the table: the paper panel, the cards and the signs. */
 .panel {
   display: flex;
   flex-direction: column;
@@ -63,47 +63,20 @@
   gap: var(--zumpo-space-12);
 }
 
-.steps {
-  display: flex;
-  flex-direction: column;
-  align-self: stretch;
-  gap: var(--zumpo-space-8);
-}
-
-.heading {
+/* T02, T04, T06: the keys a keyboard plays with, only where there is one. */
+.keys {
+  display: none;
   margin: 0;
-  padding-bottom: var(--zumpo-space-8);
-  font: var(--zumpo-text-heading);
-  letter-spacing: var(--zumpo-text-heading-tracking);
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-8);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.step {
-  display: flex;
-  align-items: center;
-  gap: var(--zumpo-space-12);
-  padding: var(--zumpo-space-12) var(--zumpo-space-16);
-  border-radius: var(--zumpo-radius-12);
-  background: var(--zumpo-cream);
-}
-
-.number {
   color: var(--zumpo-muted);
-  font: var(--zumpo-text-label);
-  letter-spacing: var(--zumpo-text-label-tracking);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  text-align: center;
 }
 
-.sum {
-  font: var(--zumpo-text-number);
-  letter-spacing: var(--zumpo-text-number-tracking);
+@media (hover: hover) and (pointer: fine) {
+  .keys {
+    display: block;
+  }
 }
 
 /* T11, T12: on a phone the hand sits straight on the page. */

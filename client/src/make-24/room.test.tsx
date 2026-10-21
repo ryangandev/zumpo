@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import type { Make24HandResult } from '../../../shared/wire-types';
 import { make24State, ME } from '../tests/fixtures';
-import { onPhone } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 import { renderApp } from '../tests/render-app';
 import { FakeSocket } from '../tests/fake-socket';
@@ -69,12 +68,11 @@ describe('a Make 24 room', () => {
     expect(screen.getAllByText('第 1 手，共 5 手')).toHaveLength(2);
     expect(screen.getByText('每个数字用一次')).toBeInTheDocument();
     await step(user, '3', '加', '9');
-    expect(screen.getByText('你的步骤')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: '12，来自 3 + 9' }),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '撤销' }));
-    expect(screen.queryByText('你的步骤')).toBeNull();
+    expect(screen.queryByRole('button', { name: '12，来自 3 + 9' })).toBeNull();
 
     act(() =>
       fake.serverEmits('room:state', {
@@ -106,7 +104,9 @@ describe('a Make 24 room', () => {
 
     expect(turn().getByText('Make 24')).toBeInTheDocument();
     await step(user, '3', 'plus', '9');
-    expect(screen.getByText('3 + 9 = 12')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: '12, from 3 + 9' }),
+    ).toBeInTheDocument();
     await step(user, '12, from 3 + 9', 'minus', '6');
     expect(fake.sentArgs('t24:solve')).toEqual([]);
     await step(user, '6, from 12 − 6', 'times', '4');
@@ -185,14 +185,6 @@ describe('a Make 24 room', () => {
     expect(screen.getByText('One way: (3 + 9 − 6) × 4')).toBeInTheDocument();
     // The last hand leads to the final scores.
     expect(screen.getByText('final scores')).toBeInTheDocument();
-  });
-
-  it('leaves the steps out on a phone', async () => {
-    onPhone();
-    const user = userEvent.setup();
-    await renderSeated(solving);
-    await step(user, '3', 'plus', '9');
-    expect(screen.queryByText('Your steps')).toBeNull();
   });
 
   it('keeps the last hand up under the final scores', async () => {

@@ -122,7 +122,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
-              "Time": "00:33",
+              "Time": "0:33",
               "Tone": "Waiting"
             }
           }

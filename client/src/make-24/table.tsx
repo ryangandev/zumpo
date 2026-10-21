@@ -14,6 +14,7 @@ import {
 } from '../../../shared/make-24';
 import { Button, NumberCard, OperatorKey, type NumberCardState } from '../ui';
 import { cx } from '../ui/cx';
+import { useTypingKeys } from '../shell/board-typing';
 import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -83,17 +84,20 @@ export function DealtCards({ deal }: { deal: readonly number[] }) {
   );
 }
 
-/** One card that ends a hand, such as a skipped hand's 24 and how. */
+/** One card that ends a hand, such as a skipped hand's 24 and how (T13). */
 export function FinalCard({
   value,
   formula,
   state,
   prompt,
+  action,
 }: {
   value: string;
   formula: string;
   state: NumberCardState;
   prompt: string;
+  /** What to do next, under the prompt: Next hand after a skip. */
+  action?: ReactNode;
 }) {
   return (
     <div className={styles.table}>
@@ -103,6 +107,7 @@ export function FinalCard({
         cards={[{ key: 'final', value, formula, state }]}
       />
       <p className={styles.prompt}>{prompt}</p>
+      {action}
     </div>
   );
 }
@@ -128,6 +133,18 @@ function cardView(card: Card, cards: readonly Card[], m: Messages) {
   };
 }
 
+/** The keys a hand takes: a card's place from the left, or a sign. */
+const HAND_KEYS = /^[1-4+\-*x/]$/i;
+
+/** The sign each key picks; "x" is times too, as people write it. */
+const KEY_SIGNS: Readonly<Partial<Record<string, Operator>>> = {
+  '+': '+',
+  '-': '-',
+  '*': '*',
+  x: '*',
+  '/': '/',
+};
+
 export interface HandTableProps {
   deal: readonly number[];
   steps: readonly Step[];
@@ -148,7 +165,9 @@ export interface HandTableProps {
 /**
  * T02-T04, T06, T07, T11, T12: a hand in play. Pick a card, a sign and a
  * second card; the two become one in the first card's place. One card left
- * is 24, or it is not and says so.
+ * is 24, or it is not and says so. A keyboard plays it too, unless the chat
+ * has the focus: 1 to 4 pick a card by its place from the left, + - * x /
+ * a sign, Backspace undoes a step and Escape starts over.
  */
 export function HandTable({
   deal,
@@ -174,6 +193,43 @@ export function HandTable({
   const select = (next: { first: number | null; op: Operator | null }) =>
     setSelection({ at: steps.length, ...next });
 
+  const finished = cards.length === 1;
+  const playing = done === undefined && !paused;
+  // Nothing divides by zero.
+  const blocked = (index: number) =>
+    op === '/' && index !== first && itemAt(cards, index).value.n === 0;
+  const pick = (index: number) => {
+    if (first === null) return select({ first: index, op: null });
+    if (index === first) return select({ first: null, op: null });
+    if (op === null) return select({ first: index, op: null });
+    select({ first: null, op: null });
+    onStep({ left: first, op, right: index });
+  };
+  const pickSign = (sign: Operator) =>
+    select({ first, op: op === sign ? null : sign });
+
+  useTypingKeys(
+    {
+      onKey: (key) => {
+        const sign = KEY_SIGNS[key];
+        if (sign) {
+          if (first !== null && !finished) pickSign(sign);
+          return;
+        }
+        const index = Number(key) - 1;
+        if (index < cards.length && !finished && !blocked(index)) pick(index);
+      },
+      onDelete: () => {
+        if (steps.length > 0) onUndo();
+      },
+      onEscape: () => {
+        if (steps.length > 0) onStartOver();
+      },
+    },
+    playing,
+    HAND_KEYS,
+  );
+
   const compact = phone && cards.length > 2;
   const views = cards.map((card) => cardView(card, cards, m));
 
@@ -188,15 +244,6 @@ export function HandTable({
       </div>
     );
   }
-
-  const finished = cards.length === 1;
-  const pick = (index: number) => {
-    if (first === null) return select({ first: index, op: null });
-    if (index === first) return select({ first: null, op: null });
-    if (op === null) return select({ first: index, op: null });
-    select({ first: null, op: null });
-    onStep({ left: first, op, right: index });
-  };
 
   const firstValue = first === null ? null : itemAt(views, first).value;
   const prompt =
@@ -237,12 +284,7 @@ export function HandTable({
           state: index === first ? 'selected' : view.state,
           label: view.label ?? view.value,
           onPick: finished ? undefined : () => pick(index),
-          disabled:
-            paused ||
-            // Nothing divides by zero.
-            (op === '/' &&
-              index !== first &&
-              itemAt(cards, index).value.n === 0),
+          disabled: paused || blocked(index),
         }))}
       />
       {/* With one card left there is nothing to pick: the prompt and the
@@ -266,7 +308,7 @@ export function HandTable({
               label={m.make24.table.operator(sign)}
               selected={op === sign}
               disabled={paused || first === null || finished}
-              onPick={() => select({ first, op: op === sign ? null : sign })}
+              onPick={() => pickSign(sign)}
             />
           ))}
         </div>
@@ -282,44 +324,7 @@ export function HandTable({
           {extraTool}
         </div>
       )}
+      {!phone && <p className={styles.keys}>{m.make24.table.keys}</p>}
     </div>
-  );
-}
-
-/** "Your steps": each step as sums, "8 − 4 = 4". A phone leaves it out. */
-export function StepList({
-  deal,
-  steps,
-}: {
-  deal: readonly number[];
-  steps: readonly Step[];
-}) {
-  const m = useMessages();
-  const phone = useMediaQuery(PHONE);
-  if (phone || steps.length === 0) return null;
-  const lines = steps.map((step, index) => {
-    const cards = cardsAfter(deal, steps.slice(0, index + 1));
-    // The new card took the first card's place, one along if a card before
-    // it went.
-    const made = itemAt(
-      cards,
-      step.right < step.left ? step.left - 1 : step.left,
-    );
-    return `${formatLastStep(made.expression)} = ${formatFraction(made.value)}`;
-  });
-  return (
-    <section className={styles.steps} aria-labelledby="your-steps">
-      <h2 id="your-steps" className={styles.heading}>
-        {m.make24.table.yourSteps}
-      </h2>
-      <ol className={styles.list}>
-        {lines.map((line, index) => (
-          <li key={index} className={styles.step}>
-            <span className={styles.number}>{index + 1}</span>
-            <span className={styles.sum}>{line}</span>
-          </li>
-        ))}
-      </ol>
-    </section>
   );
 }

@@ -312,7 +312,7 @@
             "id": "162:97504",
             "name": "How to play",
             "w": 368,
-            "h": 572,
+            "h": 680,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -361,7 +361,7 @@
                 "id": "162:97716",
                 "name": "On your own",
                 "w": 302,
-                "h": 103,
+                "h": 211,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -389,10 +389,10 @@
                     "id": "162:97718",
                     "name": "2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
                     "w": 302,
-                    "h": 79,
+                    "h": 187,
                     "wSize": "fill",
                     "hSize": "hug",
-                    "text": "Against the computer: Easy, Medium or Hard\nNo clock: your turn waits for you",
+                    "text": "Against the computer: Easy, Medium or Hard\nMake two threats at once: the computer can block only one\nTake back your last move whenever it is your turn\nNo clock: your turn waits for you",
                     "font": "DM Sans Regular",
                     "size": 16,
                     "lineHeight": "25px",

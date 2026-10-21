@@ -34,7 +34,8 @@
         "edit",
         "flag",
         "dice",
-        "forward"
+        "forward",
+        "chevron-up"
       ]
     }
   },
@@ -388,6 +389,36 @@
               "scale"
             ],
             "svg": "svg/chevron-down-66695c.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Glyph=chevron-up",
+      "id": "163:66603",
+      "props": {
+        "Glyph": "chevron-up"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:66603",
+        "name": "Glyph=chevron-up",
+        "w": 24,
+        "h": 24,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "163:66604",
+            "name": "chevron-up",
+            "x": 6,
+            "y": 9,
+            "w": 12,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/chevron-up-ab456e.svg"
           }
         ]
       }

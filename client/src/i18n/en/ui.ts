@@ -8,6 +8,8 @@ export const ui = {
     message: 'Message',
     placeholder: 'Type a guess or say hi…',
     send: 'Send',
+    /** A phone's Chat tab with lines nobody has read yet: "Chat, 3 new". */
+    unread: (tab: string, count: number) => `${tab}, ${count} new`,
   },
   you: 'You',
   youName: (name: string) => `${name} (you)`,
@@ -103,6 +105,7 @@ export const ui = {
     delete: 'Delete digit',
     noted: (digit: string, note: 'out' | 'in') =>
       `${digit}, noted ${note === 'out' ? 'out of the code' : 'in the code'}`,
+    ruledOut: (digit: string) => `${digit}, not in the code`,
     mark: (right: number, moved: number) =>
       `${right} in place, ${moved} elsewhere`,
     board: (name: string) => `${name}’s board`,

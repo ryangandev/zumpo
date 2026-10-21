@@ -110,7 +110,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "to guess",
-              "Time": "01:06",
+              "Time": "1:06",
               "Tone": "Running"
             }
           }

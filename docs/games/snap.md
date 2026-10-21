@@ -89,6 +89,7 @@ You start with one card; the other thirty come up as the middle card one at a ti
 Thirty is about a minute and a half for somebody quick, and three minutes for somebody learning.
 
 - The start screen shows the run and your best; the cards are dealt and the **run time** starts on Start, so nobody studies the first card before the clock runs.
+  For the same reason the run time stops while **How to play** is open, and the cards are put away behind it until it closes.
 - **A match** shows on both cards for a moment (0.5 s, off the clock); then the middle card becomes your card, and the next card comes up.
 - **Not a match:** the symbol shows as wrong for a moment (0.6 s), and **3 seconds** go on the clock.
   Guessing among six symbols costs about 7.5 seconds a card, so looking is always faster.
@@ -148,7 +149,8 @@ The last middle card stays under the results, with its taker, until the next gam
 **The winner is whoever took the most cards.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody takes a card ("Leo took a card! (+1)"), how many cards a game has when it starts, and who won.
+The chat says how many cards a game has when it starts, and who won.
+A take is not a chat line: it shows on the table and in the scores, and with 28 cards a game a line for each would drown out the talk.
 
 ## Rules the server enforces
 

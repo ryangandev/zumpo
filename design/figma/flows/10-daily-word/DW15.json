@@ -11,7 +11,7 @@
     "x": 6130,
     "y": 2552,
     "w": 390,
-    "h": 1386,
+    "h": 1170,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -116,7 +116,7 @@
             "componentProperties": {
               "Show label": false,
               "Label": "next word",
-              "Time": "00:06",
+              "Time": "0:06",
               "Tone": "Waiting"
             }
           }
@@ -127,7 +127,7 @@
         "id": "97:115503",
         "name": "Word results",
         "w": 350,
-        "h": 1062,
+        "h": 846,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -170,7 +170,7 @@
             "id": "97:115680",
             "name": "Boards",
             "w": 350,
-            "h": 1012,
+            "h": 796,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -184,7 +184,7 @@
                 "id": "97:115681",
                 "name": "Race board / Maya",
                 "w": 350,
-                "h": 244,
+                "h": 136,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Race board",
@@ -198,6 +198,11 @@
                   "Status": "Found in 3 · +431"
                 },
                 "overrides": [
+                  {
+                    "path": ".",
+                    "height": 136,
+                    "width": 350
+                  },
                   {
                     "path": "Board / Row 1 / Zumpo/Letter tile",
                     "componentProperties": {
@@ -237,6 +242,10 @@
                       "State": "Absent",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 2",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 2 / Zumpo/Letter tile",
@@ -279,6 +288,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 3",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 3 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "G",
@@ -317,6 +330,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 4",
+                    "visible": false
                   },
                   {
                     "path": "Board / Row 4 / Tile 1",
@@ -359,6 +376,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 5",
+                    "visible": false
+                  },
+                  {
                     "path": "Board / Row 5 / Tile 1",
                     "componentProperties": {
                       "Letter": "A",
@@ -397,6 +418,10 @@
                       "State": "Empty",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 6",
+                    "visible": false
                   },
                   {
                     "path": "Board / Row 6 / Tile 1",
@@ -445,7 +470,7 @@
                 "id": "97:115792",
                 "name": "Race board / Sam",
                 "w": 350,
-                "h": 244,
+                "h": 172,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Race board",
@@ -460,6 +485,11 @@
                   "Name": "Sam"
                 },
                 "overrides": [
+                  {
+                    "path": ".",
+                    "height": 172,
+                    "width": 350
+                  },
                   {
                     "path": "Board / Row 1 / Zumpo/Letter tile",
                     "componentProperties": {
@@ -499,6 +529,10 @@
                       "State": "Absent",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 2",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 2 / Zumpo/Letter tile",
@@ -541,6 +575,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 3",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 3 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "M",
@@ -579,6 +617,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 4",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 4 / Zumpo/Letter tile",
@@ -621,6 +663,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 5",
+                    "visible": false
+                  },
+                  {
                     "path": "Board / Row 5 / Tile 1",
                     "componentProperties": {
                       "Letter": "A",
@@ -659,6 +705,10 @@
                       "State": "Empty",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 6",
+                    "visible": false
                   },
                   {
                     "path": "Board / Row 6 / Tile 1",
@@ -707,7 +757,7 @@
                 "id": "97:115913",
                 "name": "Race board / Leo",
                 "w": 350,
-                "h": 244,
+                "h": 208,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Race board",
@@ -722,6 +772,11 @@
                   "Name": "Leo"
                 },
                 "overrides": [
+                  {
+                    "path": ".",
+                    "height": 208,
+                    "width": 350
+                  },
                   {
                     "path": "Board / Row 1 / Zumpo/Letter tile",
                     "componentProperties": {
@@ -761,6 +816,10 @@
                       "State": "Absent",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 2",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 2 / Zumpo/Letter tile",
@@ -803,6 +862,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 3",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 3 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "F",
@@ -841,6 +904,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 4",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 4 / Zumpo/Letter tile",
@@ -883,6 +950,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 5",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 5 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "G",
@@ -921,6 +992,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 6",
+                    "visible": false
                   },
                   {
                     "path": "Board / Row 6 / Tile 1",
@@ -985,6 +1060,11 @@
                 },
                 "overrides": [
                   {
+                    "path": ".",
+                    "height": 244,
+                    "width": 350
+                  },
+                  {
                     "path": "Board / Row 1 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "A",
@@ -1023,6 +1103,10 @@
                       "State": "Present",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 2",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 2 / Zumpo/Letter tile",
@@ -1065,6 +1149,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 3",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 3 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "S",
@@ -1103,6 +1191,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 4",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 4 / Zumpo/Letter tile",
@@ -1145,6 +1237,10 @@
                     }
                   },
                   {
+                    "path": "Board / Row 5",
+                    "visible": true
+                  },
+                  {
                     "path": "Board / Row 5 / Zumpo/Letter tile",
                     "componentProperties": {
                       "Letter": "R",
@@ -1183,6 +1279,10 @@
                       "State": "Correct",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Row 6",
+                    "visible": true
                   },
                   {
                     "path": "Board / Row 6 / Zumpo/Letter tile",
