@@ -187,7 +187,7 @@
             "id": "9:1730",
             "name": "Room sidebar",
             "w": 344,
-            "h": 678,
+            "h": 671,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -240,32 +240,32 @@
                 "id": "9:1761",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 350,
+                "h": 343,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 350,
+                    "height": 343,
                     "width": 344
                   },
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
                       "Alert icon": "24:4999",
-                      "Message": "that horse was art",
-                      "Name": "Leo",
+                      "Message": "it was a giraffe!!",
+                      "Name": "Sam",
                       "Kind": "Player"
                     }
                   },
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
-                      "Alert icon": "24:4999",
-                      "Message": "it was a giraffe!!",
                       "Name": "Sam",
-                      "Kind": "Player"
+                      "Alert icon": "24:4999",
+                      "Message": "Round 2 · Maya draws",
+                      "Kind": "Divider"
                     }
                   },
                   {

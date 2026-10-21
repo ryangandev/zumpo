@@ -115,8 +115,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "10 mines · your pick locks when you click",
-                  "Label": "Round 1",
-                  "Main": "Pick a cell"
+                  "Main": "Pick a cell",
+                  "Label": "Round 1"
                 },
                 "overrides": [
                   {
@@ -131,6 +131,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to pick",
                       "Time": "00:11",
                       "Tone": "Running"

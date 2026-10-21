@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Tap the symbol on both cards",
-                  "Label": "Card 12 of 30",
                   "Main": "Spot the match",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Card 12 of 30"
                 },
                 "overrides": [
                   {
@@ -163,6 +163,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:41",
                       "Tone": "Waiting"

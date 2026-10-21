@@ -83,6 +83,17 @@
     "description": "The masked word in the Draw & Guess turn bar: Title, tracked so each blank reads as one letter."
   },
   {
+    "name": "Zumpo/Hint compact",
+    "id": "S:01bc2d7aec6592aa8e167e796034952ea2f35ef1,",
+    "font": "Nunito Sans Black",
+    "family": "Nunito Sans",
+    "style": "Black",
+    "size": 24,
+    "lineHeight": "30px",
+    "letterSpacing": "30%",
+    "description": "The masked word in the phone turn bar: Heading size, tracked as Hint so each blank reads as one letter."
+  },
+  {
     "name": "Zumpo/Club Circuit/Brand",
     "id": "S:c59fdfe8ec6c41401534372a544fe6aef4d8d662,",
     "font": "Space Grotesk Bold",

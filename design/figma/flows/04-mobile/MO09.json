@@ -14,7 +14,7 @@
     "x": 40,
     "y": 5503,
     "w": 390,
-    "h": 754,
+    "h": 779,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20515",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,19 +46,9 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Round 2 of 2",
           "Game": "Draw & Guess"
-        },
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 2 of 2",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        }
       },
       {
         "type": "INSTANCE",
@@ -85,7 +75,7 @@
         "id": "27:22370",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 156,
+        "h": 86,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -93,7 +83,14 @@
           "Kind": "Hint",
           "Layout": "Phone"
         },
-        "componentId": "27:22173"
+        "componentId": "27:22173",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 86,
+            "width": 350
+          }
+        ]
       },
       {
         "type": "FRAME",
@@ -130,6 +127,113 @@
               "Stage": "Head"
             },
             "componentId": "27:17560"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:64673",
+        "name": "Recent chat",
+        "w": 350,
+        "h": 91,
+        "wSize": "fill",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "max",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:64674",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "shell",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:64677",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "tortoise",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:64680",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "snail?",
+              "Name": "Ryan (you)"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
           }
         ]
       },

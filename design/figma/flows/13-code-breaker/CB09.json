@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Fewer guesses score more",
-                  "Label": "Code 2 of 3",
                   "Main": "Crack the code",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Code 2 of 3"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to guess",
                       "Time": "01:42",
                       "Tone": "Running"
@@ -546,7 +547,7 @@
             "id": "162:98319",
             "name": "Room sidebar",
             "w": 344,
-            "h": 578,
+            "h": 560,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -745,14 +746,14 @@
                 "id": "162:98321",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 250,
+                "h": 232,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 250,
+                    "height": 232,
                     "width": 344
                   },
                   {
@@ -770,7 +771,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya cracked it in 5! (+633)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

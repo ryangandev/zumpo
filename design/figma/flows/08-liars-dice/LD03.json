@@ -142,9 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Pip bid three 5s",
-                  "Label": "Juno’s turn",
                   "Main": "Juno is thinking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Juno’s turn"
                 },
                 "overrides": [
                   {
@@ -164,6 +164,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "01:12",
                       "Tone": "Waiting"

@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Solved in 0:21",
-                  "Label": "Hand 3 of 10",
                   "Main": "24! Nice.",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Hand 3 of 10"
                 },
                 "overrides": [
                   {
@@ -163,6 +163,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:39",
                       "Tone": "Waiting"

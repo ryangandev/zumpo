@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Your drawing goes to Leo, as it is.",
-                  "Label": "Step 2 of 4",
                   "Main": "Time’s up!",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 2 of 4"
                 },
                 "overrides": [
                   {
@@ -156,6 +156,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to step 3",
                       "Time": "00:03",
                       "Tone": "Waiting"

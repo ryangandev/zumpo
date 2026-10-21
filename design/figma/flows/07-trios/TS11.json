@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 3050,
     "w": 390,
-    "h": 776,
+    "h": 666,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "79:88826",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Trio 4 of 10",
           "Game": "Trios"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "On your own",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Trio 4 of 10",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -102,7 +85,7 @@
         "id": "79:88828",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 166,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -120,11 +103,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 166,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -133,8 +116,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "run time",
               "Time": "00:49",
               "Tone": "Waiting"

@@ -139,9 +139,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Right-click or long-press to flag",
-                  "Label": "Clear the board",
                   "Main": "30 mines left",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Clear the board"
                 },
                 "overrides": [
                   {
@@ -161,6 +161,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "02:14",
                       "Tone": "Waiting"

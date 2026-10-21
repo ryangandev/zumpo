@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Ryan still held 47. One life lost.",
-                  "Label": "Level 3 of 5",
                   "Main": "Maya played 52",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 3 of 5"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to go on",
                       "Time": "00:03",
                       "Tone": "Waiting"
@@ -539,7 +540,7 @@
             "id": "59:74159",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 608,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -762,14 +763,14 @@
                 "id": "59:74161",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 280,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 280,
                     "width": 344
                   },
                   {
@@ -778,7 +779,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 2 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

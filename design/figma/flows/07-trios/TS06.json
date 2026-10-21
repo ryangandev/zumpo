@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "New cards in a moment",
-                  "Label": "Trio taken",
                   "Main": "Maya found a trio",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Trio taken"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "new cards",
                       "Time": "00:02",
                       "Tone": "Waiting"
@@ -560,7 +561,7 @@
             "id": "79:84879",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 590,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -763,14 +764,14 @@
                 "id": "79:84881",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 262,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 262,
                     "width": 344
                   },
                   {
@@ -779,7 +780,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -806,7 +807,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

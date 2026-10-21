@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 150,
     "w": 1440,
-    "h": 866,
+    "h": 730,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -67,123 +67,10 @@
       },
       {
         "type": "FRAME",
-        "id": "9:959",
-        "name": "Lobby actions",
-        "w": 1312,
-        "h": 48,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/16",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "9:960",
-            "name": "Action / Back to games",
-            "w": 171,
-            "h": 48,
-            "wSize": "hug",
-            "component": "Zumpo/Button",
-            "variant": {
-              "Style": "Secondary",
-              "State": "Default"
-            },
-            "componentId": "4:18",
-            "props": {
-              "Icon": "Zumpo/Icon / Glyph=back",
-              "Show icon": true,
-              "Label": "Back to games"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 48,
-                "reactions": [
-                  {
-                    "on": "on_click",
-                    "do": [
-                      {
-                        "nav": "navigate",
-                        "to": "9:433",
-                        "toName": "P01 / Home",
-                        "transition": "dissolve"
-                      }
-                    ]
-                  }
-                ],
-                "width": 171
-              }
-            ],
-            "reactions": [
-              {
-                "on": "on_click",
-                "do": [
-                  {
-                    "nav": "navigate",
-                    "to": "9:433",
-                    "toName": "P01 / Home",
-                    "transition": "dissolve"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "90:112589",
-            "name": "End",
-            "w": 170,
-            "h": 48,
-            "wSize": "hug",
-            "hSize": "hug",
-            "clip": true,
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "align": "center",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "90:112582",
-                "name": "Action / Playing as",
-                "w": 170,
-                "h": 48,
-                "wSize": "hug",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Quiet",
-                  "State": "Default"
-                },
-                "componentId": "4:21",
-                "props": {
-                  "Icon": "Zumpo/Icon / Glyph=edit",
-                  "Show icon": true,
-                  "Label": "Playing as Sam"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "width": 170
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
         "id": "9:964",
         "name": "Lobby layout",
         "w": 1312,
-        "h": 568,
+        "h": 504,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -196,7 +83,7 @@
             "id": "120:119375",
             "name": "Main",
             "w": 920,
-            "h": 568,
+            "h": 504,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -232,7 +119,7 @@
                 "id": "9:965",
                 "name": "Rooms",
                 "w": 920,
-                "h": 247,
+                "h": 183,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -260,7 +147,7 @@
                     "id": "35:13519",
                     "name": "A little quiet in here.",
                     "w": 920,
-                    "h": 201,
+                    "h": 137,
                     "hSize": "hug",
                     "component": "Zumpo/Card",
                     "variant": {
@@ -268,69 +155,19 @@
                     },
                     "componentId": "35:13438",
                     "props": {
+                      "Show content": false,
                       "Description": "Be the first to make a room. Bring a friend and get playing.",
                       "Title": "A little quiet in here."
                     },
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 201,
+                        "height": 137,
                         "width": 920
                       }
                     ],
                     "slots": {
-                      "Content": [
-                        {
-                          "type": "INSTANCE",
-                          "id": "I35:13519;35:13441;36:14501",
-                          "name": "Action / Create the first room",
-                          "w": 184,
-                          "h": 48,
-                          "wSize": "hug",
-                          "component": "Zumpo/Button",
-                          "variant": {
-                            "Style": "Primary",
-                            "State": "Default"
-                          },
-                          "componentId": "4:15",
-                          "props": {
-                            "Label": "Create the first room"
-                          },
-                          "overrides": [
-                            {
-                              "path": ".",
-                              "height": 48,
-                              "reactions": [
-                                {
-                                  "on": "on_click",
-                                  "do": [
-                                    {
-                                      "nav": "navigate",
-                                      "to": "9:1014",
-                                      "toName": "DL04 / Create room · game-specific settings",
-                                      "transition": "dissolve"
-                                    }
-                                  ]
-                                }
-                              ],
-                              "width": 184
-                            }
-                          ],
-                          "reactions": [
-                            {
-                              "on": "on_click",
-                              "do": [
-                                {
-                                  "nav": "navigate",
-                                  "to": "9:1014",
-                                  "toName": "DL04 / Create room · game-specific settings",
-                                  "transition": "dissolve"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
+                      "Content": []
                     }
                   }
                 ]
@@ -342,7 +179,7 @@
             "id": "9:971",
             "name": "How to play",
             "w": 368,
-            "h": 416,
+            "h": 428,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -391,7 +228,7 @@
                 "id": "120:119417",
                 "name": "Play together",
                 "w": 302,
-                "h": 149,
+                "h": 161,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -419,11 +256,13 @@
                     "id": "9:974",
                     "name": "2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
                     "w": 302,
-                    "h": 125,
+                    "h": 137,
                     "wSize": "fill",
                     "hSize": "hug",
                     "text": "2–8 players\n1–4 rounds, everyone draws once a round\n15s to pick a word · 90s to draw\nThe answer shows for 10s",
-                    "textStyle": "Zumpo/Body",
+                    "font": "DM Sans Regular",
+                    "size": 16,
+                    "lineHeight": "25px",
                     "fills": [
                       "$Zumpo · UI:color/ink"
                     ],
@@ -435,7 +274,7 @@
                 "type": "INSTANCE",
                 "id": "120:119419",
                 "name": "Action / Full rules",
-                "w": 104,
+                "w": 132,
                 "h": 48,
                 "wSize": "hug",
                 "component": "Zumpo/Button",
@@ -445,13 +284,15 @@
                 },
                 "componentId": "4:18",
                 "props": {
+                  "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                  "Show icon": true,
                   "Label": "Full rules"
                 },
                 "overrides": [
                   {
                     "path": ".",
                     "height": 48,
-                    "width": 104
+                    "width": 132
                   }
                 ]
               }

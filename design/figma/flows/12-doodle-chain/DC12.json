@@ -135,9 +135,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "3 of 4 shown",
-                  "Label": "Reveal · chain 1 of 4",
                   "Main": "Maya’s chain",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Reveal · chain 1 of 4"
                 },
                 "overrides": [
                   {
@@ -157,6 +157,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "flip back",
                       "Time": "00:02",
                       "Tone": "Waiting"

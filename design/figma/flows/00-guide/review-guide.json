@@ -98,7 +98,7 @@
             "w": 1092,
             "h": 75,
             "hSize": "hug",
-            "text": "P01 Home → Choose a game; its page (DL01, ML01) has Play solo, Create a room and the open rooms. P02, P03 and P13 cover the name picked for you and changing it. P05–P10 cover connection and missing-page states. P11–P12 cover leaving and sharing. P14–P15 cover the game rules. P16 leaving between games. P17 a tab another tab took over; P18 a room closed by a restart. P19–P20 a picked name in a room, and renaming there.",
+            "text": "P01 Home → Choose a game; its page (DL01, ML01) has Play solo, Create a room, the open rooms and the rules. P03 and P13 cover changing the name picked for you. P05–P10 cover connection and missing-page states. P11–P12 cover leaving and sharing. P15 covers the rules over a room. P16 leaving between games. P17 a tab another tab took over; P18 a room closed by a restart. P19–P20 a picked name in a room, and renaming there.",
             "textStyle": "Zumpo/Body",
             "fills": [
               "$Zumpo · UI:color/muted"

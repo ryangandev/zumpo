@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Ryan bid four 5s",
-                  "Label": "Leo’s turn",
                   "Main": "Leo is deciding",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Leo’s turn"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
                       "Time": "00:15",
                       "Tone": "Waiting"

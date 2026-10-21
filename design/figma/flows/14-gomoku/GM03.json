@@ -142,9 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "The computer blocked at E8",
-                  "Label": "Your turn",
                   "Main": "Place a black stone",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Your turn"
                 },
                 "overrides": [
                   {
@@ -164,6 +164,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "01:12",
                       "Tone": "Waiting"

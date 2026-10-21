@@ -863,7 +863,7 @@
             "id": "162:93410",
             "name": "Room sidebar",
             "w": 344,
-            "h": 701,
+            "h": 739,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1094,14 +1094,14 @@
                 "id": "162:93412",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 269,
+                "h": 307,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 269,
+                    "height": 307,
                     "width": 344
                   },
                   {
@@ -1119,7 +1119,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya made five in a row and wins game 2.",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

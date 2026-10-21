@@ -1097,7 +1097,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo left the room. Maya wins game 2.",
-                      "Kind": "Alert"
+                      "Kind": "Success"
                     }
                   },
                   {

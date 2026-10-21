@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Find the two that go with it",
-                  "Label": "Hint",
                   "Main": "One card of a trio is marked",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Hint"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to a second hint",
                       "Time": "00:24",
                       "Tone": "Running"
@@ -402,10 +403,10 @@
                             "component": "Zumpo/Trios card",
                             "variant": {
                               "Count": "3",
-                              "State": "Default",
+                              "State": "Hinted",
                               "Size": "Regular"
                             },
-                            "componentId": "45:63750",
+                            "componentId": "163:63167",
                             "props": {
                               "Show badge": true,
                               "Shape": "Zumpo/Trios shape / Shape=Circle, Fill=Outline, Colour=Ink, Stripes=Fine"
@@ -555,7 +556,7 @@
             "id": "79:85959",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -758,14 +759,14 @@
                 "id": "79:85961",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -774,7 +775,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

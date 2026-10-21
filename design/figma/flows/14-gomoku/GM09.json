@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Leo played E8",
-                  "Label": "Your turn",
                   "Main": "Place a black stone",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Your turn"
                 },
                 "overrides": [
                   {
@@ -156,6 +156,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to move",
                       "Time": "00:21",
                       "Tone": "Running"
@@ -513,7 +514,7 @@
             "id": "162:82634",
             "name": "Room sidebar",
             "w": 344,
-            "h": 701,
+            "h": 719,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -924,14 +925,14 @@
                 "id": "162:82636",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 269,
+                "h": 287,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 269,
+                    "height": 287,
                     "width": 344
                   },
                   {
@@ -940,7 +941,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo won game 1: five in a row.",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

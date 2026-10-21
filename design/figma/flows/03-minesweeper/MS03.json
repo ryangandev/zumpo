@@ -139,9 +139,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "30 mines were still hidden",
-                  "Label": "Game over",
                   "Main": "You hit a mine",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Game over"
                 },
                 "overrides": [
                   {
@@ -161,6 +161,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "02:31",
                       "Tone": "Waiting"

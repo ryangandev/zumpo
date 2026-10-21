@@ -135,9 +135,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Colours are drawn when the game starts",
-                  "Label": "Game 1",
                   "Main": "Ready when you are",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Game 1"
                 },
                 "overrides": [
                   {
@@ -157,6 +157,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
                       "Time": "00:12",
                       "Tone": "Running"

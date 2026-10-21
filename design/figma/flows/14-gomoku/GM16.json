@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Maya played E9",
-                  "Label": "Leo’s turn",
                   "Main": "Leo is thinking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Leo’s turn"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to move",
                       "Time": "00:18",
                       "Tone": "Waiting"
@@ -486,7 +487,7 @@
             "id": "162:84394",
             "name": "Room sidebar",
             "w": 344,
-            "h": 701,
+            "h": 719,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -897,14 +898,14 @@
                 "id": "162:84396",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 269,
+                "h": 287,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 269,
+                    "height": 287,
                     "width": 344
                   },
                   {
@@ -913,7 +914,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo won game 1: five in a row.",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

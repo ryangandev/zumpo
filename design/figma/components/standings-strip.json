@@ -1,0 +1,143 @@
+{
+  "format": 1,
+  "name": "Zumpo/Standings strip",
+  "id": "163:62759",
+  "type": "COMPONENT",
+  "key": "9f1fcb1d198e1338d27b702d4bd059574531d2a5",
+  "description": "The phone Board tab's one line of standings while a game is on: every player's chip, best first, the viewer marked. Tapping it opens the Players tab. Wider than the screen, it scrolls sideways.",
+  "node": {
+    "type": "COMPONENT",
+    "id": "163:62759",
+    "name": "Zumpo/Standings strip",
+    "x": 2596,
+    "y": 3110,
+    "w": 350,
+    "h": 32,
+    "clip": true,
+    "layout": {
+      "mode": "row",
+      "gap": "$Zumpo · UI:space/8",
+      "align": "center",
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "163:62760",
+        "name": "Standing / MA",
+        "w": 80,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Standing",
+        "variant": {
+          "State": "Default"
+        },
+        "componentId": "163:62746",
+        "overrides": [
+          {
+            "path": "Avatar",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:62764",
+        "name": "Standing / SA",
+        "w": 79,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Standing",
+        "variant": {
+          "State": "You"
+        },
+        "componentId": "163:62750",
+        "props": {
+          "Value": "292"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 79
+          },
+          {
+            "path": "Avatar",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Lime"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:62769",
+        "name": "Standing / LE",
+        "w": 78,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Standing",
+        "variant": {
+          "State": "Default"
+        },
+        "componentId": "163:62746",
+        "props": {
+          "Value": "144"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 78
+          },
+          {
+            "path": "Avatar",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Blue"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:62774",
+        "name": "Standing / RY",
+        "w": 91,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "component": "Zumpo/Standing",
+        "variant": {
+          "State": "Away"
+        },
+        "componentId": "163:62754",
+        "props": {
+          "Value": "Away"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 91
+          },
+          {
+            "path": "Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            },
+            "opacity": 0.5
+          }
+        ]
+      }
+    ]
+  }
+}

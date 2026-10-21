@@ -18,6 +18,17 @@
         "Zumpo/Pick marker > Outcome=Mine, Size=Compact > Badge > Initials",
         "Zumpo/Pick marker > Outcome=Auto, Size=Compact > Badge > Initials"
       ]
+    },
+    "DM Sans Regular 16": {
+      "count": 20,
+      "samples": [
+        "DL01 > DL01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
+        "DL02 > DL02 / Game page · no rooms yet > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
+        "DL03 > DL03 / Game page · rooms loading > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
+        "ML01 > ML01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > On your own > Facts",
+        "ML01 > ML01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > Play together > 2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
+        "ML02 > ML02 / Game page · no rooms yet > Lobby layout > How to play > On your own > Facts"
+      ]
     }
   },
   "rasterFills": {},
@@ -35,6 +46,17 @@
         "Zumpo/Button > Style=Secondary, State=Disabled > Icon"
       ]
     },
+    "FRAME": {
+      "count": 58,
+      "samples": [
+        "Zumpo/Mobile tabs > View=Board > Status / Chat > Unread",
+        "Zumpo/Mobile tabs > View=Players > Status / Chat > Unread",
+        "Zumpo/Mobile tabs > View=Chat > Status / Chat > Unread",
+        "Zumpo/Snap card > State=Default, Size=Regular > Badge",
+        "Zumpo/Snap card > State=Taken, Size=Regular > Badge",
+        "Zumpo/Snap card > State=Locked, Size=Regular > Badge"
+      ]
+    },
     "TEXT": {
       "count": 12,
       "samples": [
@@ -44,17 +66,6 @@
         "Zumpo/Number card > State=Solved, Size=Regular > Formula",
         "Zumpo/Number card > State=Not 24, Size=Regular > Formula",
         "Zumpo/Number card > State=Default, Size=Compact > Formula"
-      ]
-    },
-    "FRAME": {
-      "count": 43,
-      "samples": [
-        "Zumpo/Snap card > State=Default, Size=Regular > Badge",
-        "Zumpo/Snap card > State=Taken, Size=Regular > Badge",
-        "Zumpo/Snap card > State=Locked, Size=Regular > Badge",
-        "Zumpo/Snap card > State=Default, Size=Compact > Badge",
-        "Zumpo/Snap card > State=Taken, Size=Compact > Badge",
-        "Zumpo/Snap card > State=Locked, Size=Compact > Badge"
       ]
     }
   },

@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 8895,
     "w": 1440,
-    "h": 716,
+    "h": 674,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "90:112601",
         "name": "Game & room",
         "w": 1312,
-        "h": 546,
+        "h": 504,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -267,7 +267,7 @@
             "id": "90:112608",
             "name": "Room sidebar",
             "w": 344,
-            "h": 546,
+            "h": 504,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -362,14 +362,14 @@
                 "id": "90:112610",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 218,
+                "h": 176,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 218,
+                    "height": 176,
                     "width": 344
                   },
                   {
@@ -377,7 +377,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan has joined the room.",
+                      "Message": "Ryan, Leo and Sleepy Otter have joined the room.",
                       "Kind": "System"
                     }
                   },
@@ -388,7 +388,8 @@
                       "Name": "System",
                       "Message": "Leo has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -397,7 +398,8 @@
                       "Name": "System",
                       "Message": "Sleepy Otter has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 4",

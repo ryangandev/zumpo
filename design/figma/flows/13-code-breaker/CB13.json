@@ -1538,7 +1538,7 @@
             "id": "162:105343",
             "name": "Room sidebar",
             "w": 344,
-            "h": 656,
+            "h": 638,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1647,14 +1647,14 @@
                 "id": "162:105345",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 328,
+                "h": 310,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 328,
+                    "height": 310,
                     "width": 344
                   },
                   {
@@ -1663,7 +1663,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan cracked it in 6! (+516)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

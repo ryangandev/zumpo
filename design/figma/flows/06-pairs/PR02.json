@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Where did you see it?",
-                  "Label": "Turn 15",
                   "Main": "Find its pair",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Turn 15"
                 },
                 "overrides": [
                   {
@@ -163,6 +163,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "01:12",
                       "Tone": "Waiting"

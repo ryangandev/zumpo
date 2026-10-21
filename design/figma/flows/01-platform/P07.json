@@ -135,6 +135,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "paused",
                       "Time": "00:58",
                       "Tone": "Waiting"

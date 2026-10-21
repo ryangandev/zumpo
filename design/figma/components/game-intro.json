@@ -181,7 +181,7 @@
                 "type": "FRAME",
                 "id": "124:119797",
                 "name": "Tags",
-                "w": 162,
+                "w": 91,
                 "h": 30,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -198,7 +198,7 @@
                     "type": "INSTANCE",
                     "id": "120:118650",
                     "name": "Players",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -208,13 +208,13 @@
                     },
                     "componentId": "24:6531",
                     "props": {
-                      "Label": "2–8 players · 1–4 rounds"
+                      "Label": "2–8 players"
                     },
                     "overrides": [
                       {
                         "path": ".",
                         "height": 30,
-                        "width": 162
+                        "width": 91
                       }
                     ]
                   }
@@ -2311,7 +2311,7 @@
                 "type": "FRAME",
                 "id": "124:119835",
                 "name": "Tags",
-                "w": 162,
+                "w": 91,
                 "h": 30,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -2328,7 +2328,7 @@
                     "type": "INSTANCE",
                     "id": "120:119001",
                     "name": "Players",
-                    "w": 162,
+                    "w": 91,
                     "h": 30,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -2338,13 +2338,13 @@
                     },
                     "componentId": "24:6531",
                     "props": {
-                      "Label": "2–8 players · 1–4 rounds"
+                      "Label": "2–8 players"
                     },
                     "overrides": [
                       {
                         "path": ".",
                         "height": 30,
-                        "width": 162
+                        "width": 91
                       }
                     ]
                   }

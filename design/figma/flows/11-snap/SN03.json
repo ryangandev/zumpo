@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "The cup is only on your card",
-                  "Label": "Card 12 of 30",
                   "Main": "Not a match, +3 s",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Card 12 of 30"
                 },
                 "overrides": [
                   {
@@ -163,6 +163,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:44",
                       "Tone": "Waiting"

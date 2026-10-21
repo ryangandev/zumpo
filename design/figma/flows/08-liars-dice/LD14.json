@@ -14,7 +14,7 @@
     "x": 530,
     "y": 4350,
     "w": 390,
-    "h": 1266,
+    "h": 1178,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "79:89903",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,28 +46,9 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Round 3",
           "Game": "Liar’s Dice"
-        },
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 3",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        }
       },
       {
         "type": "INSTANCE",
@@ -94,7 +75,7 @@
         "id": "79:89905",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -112,11 +93,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 144,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -125,8 +106,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "to bid",
               "Time": "00:12",
               "Tone": "Running"

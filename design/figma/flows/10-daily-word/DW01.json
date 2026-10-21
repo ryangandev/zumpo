@@ -142,10 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Six guesses. A new word every day.",
-                  "Top row": false,
-                  "Label": "Daily word #12",
                   "Main": "Find the word",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Daily word #12"
                 },
                 "overrides": [
                   {
@@ -165,6 +164,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:39",
                       "Tone": "Waiting"

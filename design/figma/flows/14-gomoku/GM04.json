@@ -142,9 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "You played E9",
-                  "Label": "Computer’s turn",
                   "Main": "The computer is thinking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Computer’s turn"
                 },
                 "overrides": [
                   {
@@ -164,6 +164,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "01:12",
                       "Tone": "Waiting"

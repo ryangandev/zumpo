@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Waiting for Ryan. The step ends when everyone is done.",
-                  "Label": "Step 1 of 4",
                   "Main": "Write the first line",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 1 of 4"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
                       "Time": "00:09",
                       "Tone": "Running"
@@ -447,10 +448,10 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
-                      "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Step 1: write the first line.",
-                      "Kind": "System"
+                      "Alert icon": "24:4999",
+                      "Message": "Step 1 · Write",
+                      "Kind": "Divider"
                     }
                   },
                   {

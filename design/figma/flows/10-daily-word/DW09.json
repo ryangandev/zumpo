@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 1318,
     "w": 1440,
-    "h": 837,
+    "h": 783,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -90,7 +90,7 @@
         "id": "79:101389",
         "name": "Board & room",
         "w": 1312,
-        "h": 667,
+        "h": 613,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "You found it in 4 for +322",
-                  "Label": "The word was",
                   "Main": "GHOST",
-                  "Category": false
+                  "Category": false,
+                  "Label": "The word was"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next word",
                       "Time": "00:06",
                       "Tone": "Waiting"
@@ -1040,7 +1041,7 @@
             "id": "79:101413",
             "name": "Room sidebar",
             "w": 344,
-            "h": 667,
+            "h": 613,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1239,14 +1240,14 @@
                 "id": "79:101415",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 339,
+                "h": 285,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 339,
+                    "height": 285,
                     "width": 344
                   },
                   {
@@ -1255,7 +1256,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya got it in 3! (+431)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1264,7 +1265,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam got it in 4! (+322)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1273,7 +1274,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo got it in 5! (+208)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

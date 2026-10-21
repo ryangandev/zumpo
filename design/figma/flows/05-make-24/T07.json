@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1550,
     "w": 1440,
-    "h": 796,
+    "h": 795,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -90,7 +90,7 @@
         "id": "40:42556",
         "name": "Board & room",
         "w": 1312,
-        "h": 626,
+        "h": 625,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Waiting for Ryan and Leo",
-                  "Label": "Hand 3 of 5",
                   "Main": "Solved! +95",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Hand 3 of 5"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to solve",
                       "Time": "00:26",
                       "Tone": "Running"
@@ -462,7 +463,7 @@
             "id": "40:42667",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -661,14 +662,14 @@
                 "id": "40:42669",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -684,9 +685,9 @@
                     "path": "Messages / Message 2",
                     "componentProperties": {
                       "Alert icon": "24:4999",
-                      "Name": "System",
-                      "Message": "Maya solved it! (+127)",
-                      "Kind": "Success"
+                      "Message": "ok this one is easy",
+                      "Name": "Maya",
+                      "Kind": "Player"
                     }
                   },
                   {
@@ -703,8 +704,8 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Sam solved it! (+95)",
-                      "Kind": "Success"
+                      "Message": "Hand 2: Maya +127, Sam +95",
+                      "Kind": "Score"
                     }
                   },
                   {

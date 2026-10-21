@@ -14,7 +14,7 @@
     "x": 5570,
     "y": 4350,
     "w": 390,
-    "h": 2210,
+    "h": 2122,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:109212",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Code 2 of 3",
           "Game": "Code Breaker"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Code 2 of 3",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -101,7 +84,7 @@
         "id": "162:109214",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -118,7 +101,12 @@
         },
         "overrides": [
           {
-            "path": "Top / Eyebrow / Category",
+            "path": ".",
+            "height": 76,
+            "width": 350
+          },
+          {
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -127,8 +115,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "next code",
               "Time": "00:06",
               "Tone": "Waiting"

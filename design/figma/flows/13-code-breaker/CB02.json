@@ -142,10 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Ten guesses. A new code every day.",
-                  "Top row": false,
-                  "Label": "Daily code #12",
                   "Main": "Crack the code",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Daily code #12"
                 },
                 "overrides": [
                   {
@@ -165,6 +164,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:39",
                       "Tone": "Waiting"
@@ -436,7 +436,7 @@
                         },
                         {
                           "type": "TEXT",
-                          "id": "162:67596",
+                          "id": "I162:67225;35:13441;162:67597",
                           "name": "Pegs count",
                           "w": 278,
                           "h": 50,

@@ -26,10 +26,6 @@
       "type": "boolean",
       "default": true
     },
-    "Top row": {
-      "type": "boolean",
-      "default": true
-    },
     "Kind": {
       "type": "variant",
       "default": "Word",
@@ -644,7 +640,7 @@
         "id": "27:22154",
         "name": "Kind=Word, Layout=Phone",
         "w": 350,
-        "h": 156,
+        "h": 86,
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -655,34 +651,26 @@
         "strokeAlign": "inside",
         "radius": "$Zumpo · UI:radius/20",
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/4",
-          "pad": "$Zumpo · UI:space/16",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
             "type": "FRAME",
-            "id": "27:22172",
-            "name": "Top",
-            "w": 316,
-            "h": 52,
+            "id": "163:44736",
+            "name": "Text",
+            "w": 203,
+            "h": 60,
             "wSize": "fill",
             "hSize": "hug",
-            "propRefs": {
-              "visible": "Top row"
-            },
             "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/8",
-              "pad": [
-                0,
-                0,
-                "$Zumpo · UI:space/8",
-                0
-              ],
-              "justify": "space_between",
-              "align": "center",
+              "mode": "column",
               "strokesIncluded": true
             },
             "children": [
@@ -690,10 +678,11 @@
                 "type": "FRAME",
                 "id": "27:22156",
                 "name": "Eyebrow",
-                "w": 69,
+                "w": 203,
                 "h": 30,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
+                "clip": true,
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/8",
@@ -727,106 +716,115 @@
                         "width": 69
                       }
                     ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22158",
+                    "name": "Label",
+                    "w": 108,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Label"
+                    },
+                    "text": "Guess the word",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22161",
+                    "name": "Meta",
+                    "w": 10,
+                    "h": 18,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Meta"
+                    },
+                    "text": "6 letters",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height",
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               },
               {
-                "type": "INSTANCE",
-                "id": "27:22162",
-                "name": "Countdown",
-                "w": 133,
-                "h": 44,
-                "wSize": "hug",
+                "type": "FRAME",
+                "id": "27:22159",
+                "name": "Answer",
+                "w": 203,
+                "h": 30,
+                "wSize": "fill",
                 "hSize": "hug",
-                "propRefs": {
-                  "visible": "Countdown"
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "baseline",
+                  "strokesIncluded": true
                 },
-                "component": "Zumpo/Countdown",
-                "variant": {
-                  "Tone": "Running"
-                },
-                "componentId": "9:404",
-                "props": {
-                  "Label": "left",
-                  "Time": "01:12"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 44,
-                    "width": 133
+                    "type": "TEXT",
+                    "id": "27:22160",
+                    "name": "Main",
+                    "w": 70,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Main"
+                    },
+                    "text": "__r___",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "27:22158",
-            "name": "Label",
-            "w": 108,
-            "h": 20,
+            "type": "INSTANCE",
+            "id": "27:22162",
+            "name": "Countdown",
+            "w": 101,
+            "h": 44,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
-              "characters": "Label"
+              "visible": "Countdown"
             },
-            "text": "Guess the word",
-            "textStyle": "Zumpo/Label",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "27:22159",
-            "name": "Answer",
-            "w": 316,
-            "h": 42,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "wrap": true,
-              "crossGap": "$Zumpo · UI:space/4",
-              "align": "baseline",
-              "strokesIncluded": true
+            "component": "Zumpo/Countdown",
+            "variant": {
+              "Tone": "Running"
             },
-            "children": [
+            "componentId": "9:404",
+            "props": {
+              "Show label": false,
+              "Label": "left",
+              "Time": "01:12"
+            },
+            "overrides": [
               {
-                "type": "TEXT",
-                "id": "27:22160",
-                "name": "Main",
-                "w": 105,
-                "h": 42,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Main"
-                },
-                "text": "__r___",
-                "textStyle": "Zumpo/Title",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "27:22161",
-                "name": "Meta",
-                "w": 48,
-                "h": 18,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Meta"
-                },
-                "text": "6 letters",
-                "textStyle": "Zumpo/Small",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ]
+                "path": ".",
+                "height": 44,
+                "width": 101
               }
             ]
           }
@@ -845,7 +843,7 @@
         "id": "27:22173",
         "name": "Kind=Hint, Layout=Phone",
         "w": 350,
-        "h": 156,
+        "h": 86,
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -856,34 +854,26 @@
         "strokeAlign": "inside",
         "radius": "$Zumpo · UI:radius/20",
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/4",
-          "pad": "$Zumpo · UI:space/16",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
             "type": "FRAME",
-            "id": "27:22191",
-            "name": "Top",
-            "w": 316,
-            "h": 52,
+            "id": "163:44737",
+            "name": "Text",
+            "w": 191,
+            "h": 60,
             "wSize": "fill",
             "hSize": "hug",
-            "propRefs": {
-              "visible": "Top row"
-            },
             "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/8",
-              "pad": [
-                0,
-                0,
-                "$Zumpo · UI:space/8",
-                0
-              ],
-              "justify": "space_between",
-              "align": "center",
+              "mode": "column",
               "strokesIncluded": true
             },
             "children": [
@@ -891,10 +881,11 @@
                 "type": "FRAME",
                 "id": "27:22175",
                 "name": "Eyebrow",
-                "w": 69,
+                "w": 191,
                 "h": 30,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
+                "clip": true,
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/8",
@@ -928,106 +919,115 @@
                         "width": 69
                       }
                     ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22177",
+                    "name": "Label",
+                    "w": 108,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Label"
+                    },
+                    "text": "Guess the word",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22180",
+                    "name": "Meta",
+                    "w": 1,
+                    "h": 18,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Meta"
+                    },
+                    "text": "6 letters",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height",
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               },
               {
-                "type": "INSTANCE",
-                "id": "27:22181",
-                "name": "Countdown",
-                "w": 145,
-                "h": 44,
-                "wSize": "hug",
+                "type": "FRAME",
+                "id": "27:22178",
+                "name": "Answer",
+                "w": 191,
+                "h": 30,
+                "wSize": "fill",
                 "hSize": "hug",
-                "propRefs": {
-                  "visible": "Countdown"
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "baseline",
+                  "strokesIncluded": true
                 },
-                "component": "Zumpo/Countdown",
-                "variant": {
-                  "Tone": "Running"
-                },
-                "componentId": "9:404",
-                "props": {
-                  "Label": "left",
-                  "Time": "00:58"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 44,
-                    "width": 145
+                    "type": "TEXT",
+                    "id": "27:22179",
+                    "name": "Main",
+                    "w": 106,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Main"
+                    },
+                    "text": "__r___",
+                    "textStyle": "Zumpo/Hint compact",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "27:22177",
-            "name": "Label",
-            "w": 108,
-            "h": 20,
+            "type": "INSTANCE",
+            "id": "27:22181",
+            "name": "Countdown",
+            "w": 113,
+            "h": 44,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
-              "characters": "Label"
+              "visible": "Countdown"
             },
-            "text": "Guess the word",
-            "textStyle": "Zumpo/Label",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "27:22178",
-            "name": "Answer",
-            "w": 316,
-            "h": 42,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "wrap": true,
-              "crossGap": "$Zumpo · UI:space/4",
-              "align": "baseline",
-              "strokesIncluded": true
+            "component": "Zumpo/Countdown",
+            "variant": {
+              "Tone": "Running"
             },
-            "children": [
+            "componentId": "9:404",
+            "props": {
+              "Show label": false,
+              "Label": "left",
+              "Time": "00:58"
+            },
+            "overrides": [
               {
-                "type": "TEXT",
-                "id": "27:22179",
-                "name": "Main",
-                "w": 159,
-                "h": 42,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Main"
-                },
-                "text": "__r___",
-                "textStyle": "Zumpo/Hint",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "27:22180",
-                "name": "Meta",
-                "w": 48,
-                "h": 18,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Meta"
-                },
-                "text": "6 letters",
-                "textStyle": "Zumpo/Small",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ]
+                "path": ".",
+                "height": 44,
+                "width": 113
               }
             ]
           }
@@ -1046,7 +1046,7 @@
         "id": "27:22192",
         "name": "Kind=Status, Layout=Phone",
         "w": 350,
-        "h": 144,
+        "h": 86,
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -1057,34 +1057,26 @@
         "strokeAlign": "inside",
         "radius": "$Zumpo · UI:radius/20",
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/4",
-          "pad": "$Zumpo · UI:space/16",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
             "type": "FRAME",
-            "id": "27:22210",
-            "name": "Top",
-            "w": 316,
-            "h": 52,
+            "id": "163:44738",
+            "name": "Text",
+            "w": 197,
+            "h": 60,
             "wSize": "fill",
             "hSize": "hug",
-            "propRefs": {
-              "visible": "Top row"
-            },
             "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/8",
-              "pad": [
-                0,
-                0,
-                "$Zumpo · UI:space/8",
-                0
-              ],
-              "justify": "space_between",
-              "align": "center",
+              "mode": "column",
               "strokesIncluded": true
             },
             "children": [
@@ -1092,10 +1084,11 @@
                 "type": "FRAME",
                 "id": "27:22194",
                 "name": "Eyebrow",
-                "w": 69,
+                "w": 197,
                 "h": 30,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
+                "clip": true,
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/8",
@@ -1129,106 +1122,115 @@
                         "width": 69
                       }
                     ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22196",
+                    "name": "Label",
+                    "w": 108,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Label"
+                    },
+                    "text": "Guess the word",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "27:22199",
+                    "name": "Meta",
+                    "w": 4,
+                    "h": 18,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Meta"
+                    },
+                    "text": "6 letters",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height",
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               },
               {
-                "type": "INSTANCE",
-                "id": "27:22200",
-                "name": "Countdown",
-                "w": 183,
-                "h": 44,
-                "wSize": "hug",
+                "type": "FRAME",
+                "id": "27:22197",
+                "name": "Answer",
+                "w": 197,
+                "h": 30,
+                "wSize": "fill",
                 "hSize": "hug",
-                "propRefs": {
-                  "visible": "Countdown"
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "baseline",
+                  "strokesIncluded": true
                 },
-                "component": "Zumpo/Countdown",
-                "variant": {
-                  "Tone": "Waiting"
-                },
-                "componentId": "24:5274",
-                "props": {
-                  "Label": "to choose",
-                  "Time": "00:12"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 44,
-                    "width": 183
+                    "type": "TEXT",
+                    "id": "27:22198",
+                    "name": "Main",
+                    "w": 70,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Main"
+                    },
+                    "text": "__r___",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "truncate": {
+                      "maxLines": 1
+                    }
                   }
                 ]
               }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "27:22196",
-            "name": "Label",
-            "w": 108,
-            "h": 20,
+            "type": "INSTANCE",
+            "id": "27:22200",
+            "name": "Countdown",
+            "w": 107,
+            "h": 44,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
-              "characters": "Label"
+              "visible": "Countdown"
             },
-            "text": "Guess the word",
-            "textStyle": "Zumpo/Label",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "27:22197",
-            "name": "Answer",
-            "w": 316,
-            "h": 30,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "wrap": true,
-              "crossGap": "$Zumpo · UI:space/4",
-              "align": "baseline",
-              "strokesIncluded": true
+            "component": "Zumpo/Countdown",
+            "variant": {
+              "Tone": "Waiting"
             },
-            "children": [
+            "componentId": "24:5274",
+            "props": {
+              "Show label": false,
+              "Label": "to choose",
+              "Time": "00:12"
+            },
+            "overrides": [
               {
-                "type": "TEXT",
-                "id": "27:22198",
-                "name": "Main",
-                "w": 70,
-                "h": 30,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Main"
-                },
-                "text": "__r___",
-                "textStyle": "Zumpo/Heading",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "27:22199",
-                "name": "Meta",
-                "w": 48,
-                "h": 18,
-                "wSize": "hug",
-                "hSize": "hug",
-                "propRefs": {
-                  "characters": "Meta"
-                },
-                "text": "6 letters",
-                "textStyle": "Zumpo/Small",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ]
+                "path": ".",
+                "height": 44,
+                "width": 107
               }
             ]
           }

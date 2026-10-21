@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "All the same or all different in every feature",
-                  "Label": "Trio 4 of 10",
                   "Main": "Pick a third card",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Trio 4 of 10"
                 },
                 "overrides": [
                   {
@@ -163,6 +163,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
                       "Time": "00:49",
                       "Tone": "Waiting"

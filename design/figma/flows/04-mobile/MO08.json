@@ -14,7 +14,7 @@
     "x": 1510,
     "y": 4254,
     "w": 390,
-    "h": 818,
+    "h": 843,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20486",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,18 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Round 2 of 2",
           "Game": "Draw & Guess"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 2 of 2",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -137,7 +129,7 @@
         "id": "27:22285",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 156,
+        "h": 86,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -147,10 +139,17 @@
         },
         "componentId": "27:22154",
         "props": {
-          "Main": "Turtle",
           "Meta": "Only you can see the word",
+          "Main": "Turtle",
           "Label": "Draw this"
-        }
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 86,
+            "width": 350
+          }
+        ]
       },
       {
         "type": "INSTANCE",
@@ -208,6 +207,112 @@
               "Stage": "Outline"
             },
             "componentId": "27:17556"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:64663",
+        "name": "Recent chat",
+        "w": 350,
+        "h": 91,
+        "wSize": "fill",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "max",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:64664",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a rock?",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:64667",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a hat",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:64670",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "shell"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
           }
         ]
       },

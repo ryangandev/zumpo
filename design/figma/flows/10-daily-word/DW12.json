@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 2552,
     "w": 390,
-    "h": 832,
+    "h": 778,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "79:100146",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Word #12",
           "Game": "Daily Word"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "On your own",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Word #12",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -102,7 +85,7 @@
         "id": "79:100148",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 110,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -112,7 +95,6 @@
         },
         "componentId": "27:22192",
         "props": {
-          "Top row": false,
           "Countdown": false,
           "Main": "Guess 3 of 6",
           "Category": false,
@@ -122,11 +104,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 110,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -135,8 +117,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "run time",
               "Time": "00:33",
               "Tone": "Waiting"

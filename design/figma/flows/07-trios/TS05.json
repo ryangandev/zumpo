@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "The first trio claimed takes it",
-                  "Label": "Find a trio",
                   "Main": "Pick a third card",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Find a trio"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to a hint",
                       "Time": "00:18",
                       "Tone": "Running"
@@ -551,7 +552,7 @@
             "id": "79:84318",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -754,14 +755,14 @@
                 "id": "79:84320",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -770,7 +771,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

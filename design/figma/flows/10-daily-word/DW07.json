@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Fewer guesses score more",
-                  "Label": "Word 2 of 3",
                   "Main": "Find the word",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Word 2 of 3"
                 },
                 "overrides": [
                   {
@@ -149,6 +149,7 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to guess",
                       "Time": "01:06",
                       "Tone": "Running"
@@ -619,7 +620,7 @@
             "id": "79:100370",
             "name": "Room sidebar",
             "w": 344,
-            "h": 578,
+            "h": 560,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -818,14 +819,14 @@
                 "id": "79:100372",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 250,
+                "h": 232,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 250,
+                    "height": 232,
                     "width": 344
                   },
                   {
@@ -843,7 +844,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya got it in 3! (+431)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

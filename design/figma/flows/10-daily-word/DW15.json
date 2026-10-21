@@ -11,7 +11,7 @@
     "x": 6130,
     "y": 2552,
     "w": 390,
-    "h": 1474,
+    "h": 1386,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -34,7 +34,7 @@
         "id": "97:115500",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -43,27 +43,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Word 2 of 3",
           "Game": "Daily Word"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Word 2 of 3",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -98,7 +81,7 @@
         "id": "97:115502",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -115,7 +98,12 @@
         },
         "overrides": [
           {
-            "path": "Top / Eyebrow / Category",
+            "path": ".",
+            "height": 76,
+            "width": 350
+          },
+          {
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -124,8 +112,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "next word",
               "Time": "00:06",
               "Tone": "Waiting"

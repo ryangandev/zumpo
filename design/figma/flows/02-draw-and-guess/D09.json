@@ -118,13 +118,14 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Maya +74 · Sam +112 · Ryan +72",
-                  "Label": "The word was",
-                  "Main": "Turtle"
+                  "Main": "Turtle",
+                  "Label": "The word was"
                 },
                 "overrides": [
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next turn",
                       "Time": "00:08",
                       "Tone": "Waiting"

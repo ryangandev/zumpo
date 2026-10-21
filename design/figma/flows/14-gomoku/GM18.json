@@ -14,7 +14,7 @@
     "x": 530,
     "y": 5580,
     "w": 390,
-    "h": 1070,
+    "h": 982,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:102026",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Game 2",
           "Game": "Gomoku"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Game 2",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -105,7 +88,7 @@
         "id": "162:102028",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -123,11 +106,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 144,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -136,8 +119,9 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "to move",
               "Time": "00:21",
               "Tone": "Running"
