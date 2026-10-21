@@ -288,6 +288,41 @@ describe('a room page', () => {
     ).toHaveTextContent('Maya left the room. You’re the host now.');
   });
 
+  it('leaves a phone’s ended-early panel to say who left, with no notice over it', async () => {
+    onPhone();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const maya = { username: 'Maya', playerId: 'p2' };
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ isGameStarted: true, owner: maya }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+          },
+          lastGame: {
+            endedEarly: true,
+            difficulty: 'Small',
+            rounds: 1,
+            standings: [{ playerId: 'p1', username: 'Ryan', points: 0 }],
+          },
+        }),
+      ),
+    );
+    const board = within(screen.getByRole('tabpanel', { name: 'Board' }));
+    expect(
+      board.getByRole('heading', { name: 'Everyone else left.' }),
+    ).toBeInTheDocument();
+    expect(board.getByText(/You are the host now/)).toBeInTheDocument();
+    expect(board.queryByRole('status')).not.toBeInTheDocument();
+  });
+
   it('asks for a password straight on the page on a phone', async () => {
     onPhone();
     await renderApp(ROOM, { fake: server({ password: 'turtle' }) });

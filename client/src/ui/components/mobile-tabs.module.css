@@ -40,8 +40,10 @@
   color: var(--zumpo-white);
 }
 
-/* Zumpo/Mobile tabs' Chat unread: how many lines arrived out of sight. */
-.unread {
+/* Zumpo/Mobile tabs' Chat unread: how many lines arrived out of sight;
+   Board turn: it is your go, while another tab is open. */
+.unread,
+.turn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +53,10 @@
   color: var(--zumpo-ink);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+.turn {
+  background: var(--zumpo-lime);
 }
 
 .tab:focus-visible {

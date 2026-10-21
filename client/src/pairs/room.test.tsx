@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import type { PairsCardView } from '../../../shared/wire-types';
@@ -152,6 +152,23 @@ describe('a Pairs room', () => {
       screen.getByText('Small board, 8 pairs. You finished 2nd.'),
     ).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
+  });
+
+  it('marks the Board tab when your turn comes while Chat is open', async () => {
+    onPhone();
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(theirMiss);
+    await user.click(screen.getByRole('tab', { name: 'Chat' }));
+    expect(screen.getByRole('tab', { name: 'Board' })).toBeInTheDocument();
+
+    act(() => fake.serverEmits('room:state', myTurn));
+    expect(
+      screen.getByRole('tab', { name: 'Board, your turn' }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('tab', { name: 'Board, your turn' }));
+    expect(screen.getByRole('tab', { name: 'Board' })).toBeInTheDocument();
+    expect(turn().getByText('Your turn')).toBeInTheDocument();
   });
 
   it('keeps the turn bar short on a phone', async () => {

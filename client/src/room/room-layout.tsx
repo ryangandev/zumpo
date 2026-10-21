@@ -25,6 +25,7 @@ import {
   useMediaQuery,
 } from '../shell/use-media-query';
 import { useStartFocus } from '../shell/use-start-focus';
+import { useTurnTitle } from './use-turn-title';
 import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
@@ -89,6 +90,12 @@ export interface RoomLayoutProps {
    * everyone, as Gomoku's seats do.
    */
   standings?: boolean;
+  /**
+   * This player's go, which a clock runs against: a drawer's word, a bid, a
+   * flip, a stone. Out of sight it is said in the window's title, and on a
+   * phone with another tab open, on the Board tab.
+   */
+  yourTurn?: boolean;
 }
 
 /** How long a phone says "You're the host now", or who went, over the board. */
@@ -115,6 +122,7 @@ export function RoomLayout({
   scoreTitle,
   playersAside,
   standings = showScores,
+  yourTurn = false,
 }: RoomLayoutProps) {
   const room = useRoomContext();
   const { state, reconnecting, reconnectGraceMs } = room;
@@ -125,11 +133,18 @@ export function RoomLayout({
   const oneColumn = useMediaQuery(ONE_COLUMN);
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
+  useTurnTitle(yourTurn);
   const { viewer, viewerMenu } = useViewer({
     seatName: room.me.username,
   });
   const newHost = useBecameHost(state.owner.playerId === room.playerId);
   const gone = usePlayerGone(state.playerList, state.spectators, room.playerId);
+  // A game cut short as the others left ends on a panel that says so, and
+  // who is host now: a notice over its heading would only hide it.
+  const endedAlone =
+    !state.isGameStarted &&
+    state.lastGame?.endedEarly === true &&
+    Object.keys(state.playerList).length < 2;
 
   const input = {
     onSend: room.sendChat,
@@ -257,6 +272,7 @@ export function RoomLayout({
             {
               value: 'board',
               label: m.room.board,
+              turn: yourTurn && view !== 'board',
               panel: (
                 <div className={cx(styles.stage, playColumn)}>
                   {standings && state.isGameStarted && (
@@ -277,7 +293,7 @@ export function RoomLayout({
                   {gameView}
                   {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
-                  {newHost ? (
+                  {endedAlone ? null : newHost ? (
                     // Over the top of the board, so nothing under it moves.
                     // A host who left hands the crown on: one line says both.
                     <div className={styles.toast}>
