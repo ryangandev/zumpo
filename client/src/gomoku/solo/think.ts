@@ -44,7 +44,8 @@ const hereFor = (
  * or here where the browser has none (or it fails), as the tests run it.
  * Once `signal` aborts, as when a game is left mid-thought, the move is
  * dropped and rejects with the signal's reason; a worker still busy with it
- * is stopped, so the next game's first move waits for nothing.
+ * is stopped and a fresh one started, so the next game's first move waits
+ * for nothing.
  */
 export function think(
   moves: readonly GomokuMove[],
@@ -85,6 +86,8 @@ export function think(
     const onAbort = () => {
       done();
       drop(undefined);
+      // Its successor starts loading now, ready by the next game's move.
+      workerFor();
       reject(signal?.reason);
     };
     thread.addEventListener('message', onAnswer);

@@ -87,6 +87,8 @@ describe('the computer’s thinking', () => {
     leaving.abort();
     await expect(dropped).rejects.toHaveProperty('name', 'AbortError');
     expect(SlowWorker.made[0]?.terminated).toBe(true);
+    // The next worker is on its way before the next move is asked.
+    expect(SlowWorker.made).toHaveLength(2);
 
     const next = think([], 'black', 'hard');
     expect(SlowWorker.made).toHaveLength(2);
