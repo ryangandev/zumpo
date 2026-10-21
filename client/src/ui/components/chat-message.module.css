@@ -101,8 +101,11 @@
 }
 
 /* The viewer's own line, just sent, lights up once and fades: a guess always
-   gets an answer, even a wrong one. The glow is a shadow, so nothing moves. */
+   gets an answer, even a wrong one. The light reaches past the text as far as
+   the margin pulls it back, so nothing moves. */
 .flash {
+  margin-inline: calc(-1 * var(--zumpo-space-6));
+  padding-inline: var(--zumpo-space-6);
   border-radius: var(--zumpo-radius-8);
   animation: flash 1.6s ease-out;
 }
@@ -110,12 +113,10 @@
 @keyframes flash {
   from {
     background: var(--zumpo-sand);
-    box-shadow: 0 0 0 var(--zumpo-space-4) var(--zumpo-sand);
   }
 
   to {
     background: transparent;
-    box-shadow: 0 0 0 var(--zumpo-space-4) transparent;
   }
 }
 
