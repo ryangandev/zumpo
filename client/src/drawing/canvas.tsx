@@ -8,6 +8,7 @@ import {
 } from 'react';
 import type { CanvasStroke, Coordinate } from '../../../shared/wire-types';
 import type { CanvasChange, CanvasStream } from '../net/canvas-stream';
+import { useHeightLeft } from '../shell/use-height-left';
 import { cx } from '../ui/cx';
 import { useMessages } from '../i18n';
 import styles from './canvas.module.css';
@@ -199,4 +200,20 @@ function paint(
     context.lineTo(point.x, point.y);
   }
   context.stroke();
+}
+
+/**
+ * Where a sheet is played, or a drawing shown to work from. A phone plays on
+ * one screen (play-board.tsx), so here the sheet keeps its 798 × 598
+ * proportions in the height the controls leave it: as wide as the column, or
+ * as tall as the room where that is less. Wider screens leave it as it is.
+ */
+export function PlaySheet({ children }: { children: ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  useHeightLeft(box);
+  return (
+    <div ref={box} className={styles.playSheet} data-play-board="">
+      {children}
+    </div>
+  );
 }

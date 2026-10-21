@@ -57,6 +57,23 @@ const rows = () =>
     .map((row) => row.getAttribute('aria-label'));
 
 describe('a Code Breaker room', () => {
+  it('shows each player’s guesses in a phone’s standings strip, not their 0 points', async () => {
+    onPhone();
+    const row = { guess: null, mark: { right: 1, moved: 0 } };
+    await renderSeated(
+      guessing([
+        board(ME, 'Ryan', { rows: [row, row, row] }),
+        board('p2', 'Maya', {
+          rows: Array.from({ length: 10 }, () => row),
+          status: 'out',
+        }),
+      ]),
+    );
+    expect(
+      await screen.findByRole('button', { name: /^Standings:/ }),
+    ).toHaveAccessibleName('Standings: You 3/10, Maya ✗/10. Show the players');
+  });
+
   it('lets the host start once two players are in', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(codeBreakerState());

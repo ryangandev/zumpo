@@ -6,6 +6,7 @@
 }
 
 .stage {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--zumpo-space-16);
@@ -17,6 +18,31 @@
   flex-direction: column;
   gap: var(--zumpo-space-24);
   min-width: 0;
+}
+
+/* Beside the stage, the side column never runs past the window: it is as
+   tall as the window leaves under the room bar, stays in sight as the page
+   scrolls, and the chat gives the room, scrolling its messages, so its input
+   is always on screen. Above it are the page's top padding and the gap under
+   the room bar (2 × 24), and the Desktop room bar's 48; under it the page's
+   foot padding, 32. */
+@media (min-width: 1024px) {
+  .room .side {
+    position: sticky;
+    top: var(--zumpo-space-24);
+    max-height: calc(
+      100dvh - 2 * var(--zumpo-space-24) - var(--zumpo-space-48) -
+        var(--zumpo-space-32)
+    );
+  }
+
+  .room .side > * {
+    flex: none;
+  }
+
+  .room .side > :last-child {
+    flex: 0 1 auto;
+  }
 }
 
 /* Under 1024 px (ONE_COLUMN in use-media-query.ts) the side column would
@@ -39,4 +65,19 @@
   .stage {
     gap: var(--zumpo-space-24);
   }
+
+  /* In play the Board tab is one screen: tighter, as the page is. */
+  .stage:has([data-play-board]) {
+    gap: var(--zumpo-space-12);
+  }
+}
+
+/* A notice about you, such as becoming the host, over the top of the board
+   for a moment, so nothing under it moves. */
+.toast {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  border-radius: var(--zumpo-radius-12);
+  box-shadow: var(--zumpo-shadow-menu-lift);
 }

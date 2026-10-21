@@ -18,13 +18,15 @@ import {
 import { useMessages, type Messages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSecondsLeft } from '../net/use-seconds-left';
+import { playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { DrawingCanvas, type Brush } from '../drawing/canvas';
+import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
 import styles from './room.module.css';
 
 type Room = RoomOf<DrawAndGuessRoomState>;
@@ -279,27 +281,35 @@ function Turn({ room }: { room: Room }) {
           }}
         />
       )}
-      {choices && phone ? (
-        choices
-      ) : (
-        <DrawingCanvas
-          stream={canvas}
-          brush={brush}
-          onStart={start}
-          onMove={move}
-          onEnd={end}
-          overlay={
-            choices ??
-            (state.phase === 'choosing' ? (
-              <p className={styles.waiting}>
-                <Icon glyph="brush" size={32} />
-                {m.drawAndGuess.drawingAppears(drawerName)}
-              </p>
-            ) : null)
-          }
-        />
-      )}
-      {state.lastRound && <RoundResults room={room} />}
+      {/* The sheet, and the round that just ended over its foot, where it
+          is seen without a scroll and moves nothing; the drawer choosing a
+          word sees the choices instead. On a phone the sheet is as large
+          as the screen leaves it. */}
+      <div className={cx(styles.board, playColumn)}>
+        <PlaySheet>
+          {choices && phone ? (
+            choices
+          ) : (
+            <DrawingCanvas
+              stream={canvas}
+              brush={brush}
+              onStart={start}
+              onMove={move}
+              onEnd={end}
+              overlay={
+                choices ??
+                (state.phase === 'choosing' ? (
+                  <p className={styles.waiting}>
+                    <Icon glyph="brush" size={32} />
+                    {m.drawAndGuess.drawingAppears(drawerName)}
+                  </p>
+                ) : null)
+              }
+            />
+          )}
+        </PlaySheet>
+        {state.lastRound && !choices && <RoundResults room={room} />}
+      </div>
     </>
   );
 }

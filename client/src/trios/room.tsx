@@ -1,7 +1,7 @@
 import { itemAt } from '../../../shared/list';
 import { useState } from 'react';
 import type { TriosRoomState } from '../../../shared/wire-types';
-import type { TurnBarProps } from '../ui';
+import { TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { useSecondsSince } from '../net/use-seconds-since';
@@ -10,13 +10,7 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import {
-  LastTrio,
-  TablePanel,
-  TriosTable,
-  TriosTurnBar,
-  type PlaceView,
-} from './table';
+import { LastTrio, TablePanel, TriosTable, type PlaceView } from './table';
 import { whyNotATrio } from './words';
 
 type Room = RoomOf<TriosRoomState>;
@@ -98,6 +92,7 @@ function BetweenGames({ room }: { room: Room }) {
           <TriosTable
             cards={state.table}
             places={takenPlaces(state, playerId, m)}
+            inPlay={false}
           />
         </TablePanel>
       </>
@@ -179,9 +174,7 @@ function Play({ room }: { room: Room }) {
   const finder = finderOf(state, playerId, m);
   return (
     <>
-      {/* The longest of its lines, why three cards are not a trio, takes two. */}
-      <TriosTurnBar
-        lines={2}
+      <TurnBar
         {...turnBar(
           room,
           picked.length,
@@ -199,9 +192,13 @@ function Play({ room }: { room: Room }) {
           places={places}
           onPick={canPick ? pick : undefined}
         />
-        {state.lastTrio && finder && (
-          <LastTrio finder={finder.name} cards={state.lastTrio.cards} />
-        )}
+        <LastTrio
+          trio={
+            state.lastTrio && finder
+              ? { finder: finder.name, cards: state.lastTrio.cards }
+              : null
+          }
+        />
       </TablePanel>
     </>
   );

@@ -10,6 +10,13 @@
   color: var(--zumpo-ink);
 }
 
+/* Everybody else and the bids, over your cup. */
+.ahead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-24);
+}
+
 /*
  * Everybody else's cups share the row in columns as wide as a cup of their
  * dice needs, so every cup is one size: a lone cup does not span the table,
@@ -116,5 +123,19 @@
   .others {
     grid-template-columns: 1fr;
     gap: var(--zumpo-space-8);
+  }
+
+  /* In play the table is one screen: everybody else and the bids scroll in
+     the room your cup and the picker leave them, at the foot. */
+  .table:has([data-play-board]) {
+    gap: var(--zumpo-space-16);
+  }
+
+  .table:has([data-play-board]) .ahead {
+    gap: var(--zumpo-space-16);
+  }
+
+  .table:has([data-play-board]) .yours {
+    gap: var(--zumpo-space-12);
   }
 }

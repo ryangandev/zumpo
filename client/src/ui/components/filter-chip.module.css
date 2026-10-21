@@ -1,6 +1,7 @@
 /* Zumpo/Filter chip. The border is 1 px in every state, so hovering or
    selecting a chip never moves the row. */
 .chip {
+  position: relative;
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -15,6 +16,15 @@
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Drawn 38 px tall, a chip takes a tap from 44, the size a thumb needs: the
+   area reaches 3 px above and below it, past the 1 px border it is placed
+   inside. */
+.chip::before {
+  position: absolute;
+  inset: calc(-1 * var(--zumpo-space-4)) calc(-1 * var(--zumpo-space-1));
+  content: '';
 }
 
 @media (hover: hover) {

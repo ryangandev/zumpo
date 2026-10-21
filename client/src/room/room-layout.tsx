@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
+import type { PlayerInfo, SpectatorInfo } from '../../../shared/wire-types';
 import {
   ChatInput,
   MobileTabs,
@@ -7,6 +8,7 @@ import {
   PlayerRow,
   RoomBar,
   Scoreboard,
+  StandingsStrip,
   type PlayerRowProps,
   type GlyphName,
   type TagTone,
@@ -15,7 +17,9 @@ import { gameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
+import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
@@ -27,6 +31,11 @@ export interface PlayerLine {
   status: string;
   statusIcon?: PlayerRowProps['statusIcon'];
   state?: PlayerRowProps['state'];
+  /**
+   * What a phone's standings strip shows for them instead of their points:
+   * a race's progress, where nobody scores until somebody solves it.
+   */
+  standing?: string;
 }
 
 export interface RoomLayoutProps {
@@ -63,7 +72,16 @@ export interface RoomLayoutProps {
   scoreTitle?: string;
   /** On a phone, more under the scoreboard on the Players tab: the race. */
   playersAside?: ReactNode;
+  /**
+   * Whether a phone's Board tab shows the standings strip while a game is
+   * on; by default where scores are shown. Off where the board itself shows
+   * everyone, as Gomoku's seats do.
+   */
+  standings?: boolean;
 }
+
+/** How long a phone says "You're the host now", or who went, over the board. */
+const NOTICE_MS = 5000;
 
 type View = 'board' | 'players' | 'chat';
 
@@ -85,6 +103,7 @@ export function RoomLayout({
   showScores = true,
   scoreTitle,
   playersAside,
+  standings = showScores,
 }: RoomLayoutProps) {
   const room = useRoomContext();
   const { state, reconnecting, reconnectGraceMs } = room;
@@ -97,6 +116,8 @@ export function RoomLayout({
   const { viewer, viewerMenu } = useViewer({
     seatName: room.me.username,
   });
+  const newHost = useBecameHost(state.owner.playerId === room.playerId);
+  const gone = usePlayerGone(state.playerList, state.spectators, room.playerId);
 
   const input = {
     onSend: room.sendChat,
@@ -132,12 +153,20 @@ export function RoomLayout({
   );
 
   const spectators = Object.entries(state.spectators);
+  // Folded to one line in the side column beside a desktop room, where the
+  // chat under it needs the height. In one column nothing sits under it, and
+  // a phone's Players tab is about who is here, so there it is open.
   const watching =
     spectators.length > 0 ? (
       <Scoreboard
         title={m.room.watching}
         players={spectators.length}
         seats={MAX_SPECTATORS}
+        folded={
+          oneColumn
+            ? undefined
+            : m.room.listNames(spectators.map(([, s]) => s.username))
+        }
       >
         {spectators.map(([playerId, spectator]) => (
           <PlayerRow
@@ -202,10 +231,45 @@ export function RoomLayout({
               value: 'board',
               label: m.room.board,
               panel: (
-                <div className={styles.stage}>
+                <div className={cx(styles.stage, playColumn)}>
+                  {standings && state.isGameStarted && (
+                    <StandingsStrip
+                      standings={players.map(({ seat, standing }) => ({
+                        key: seat.playerId,
+                        name: seat.username,
+                        initials: initialsOf(seat.username),
+                        tone: toneOf(seat.username),
+                        value: standing ?? String(seat.points),
+                        you: seat.playerId === room.playerId,
+                        away: !seat.isConnected,
+                      }))}
+                      onOpen={() => setView('players')}
+                    />
+                  )}
                   {stage}
                   {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
+                  {newHost ? (
+                    // Over the top of the board, so nothing under it moves.
+                    // A host who left hands the crown on: one line says both.
+                    <div className={styles.toast}>
+                      <Notice tone="success">
+                        {gone?.left
+                          ? m.room.leftNowHost(gone.name)
+                          : m.room.nowHost}
+                      </Notice>
+                    </div>
+                  ) : (
+                    gone && (
+                      <div className={styles.toast}>
+                        <Notice>
+                          {gone.left
+                            ? m.room.playerLeft(gone.name)
+                            : m.room.playerAway(gone.name)}
+                        </Notice>
+                      </div>
+                    )
+                  )}
                 </div>
               ),
             },
@@ -239,4 +303,70 @@ export function RoomLayout({
       <RulesDialog open={rules} onOpenChange={setRules} game={game} />
     </Page>
   );
+}
+
+/**
+ * True for a few seconds after the host's crown passes to this player, as
+ * when the host leaves mid-game, so a phone, whose Players tab is out of
+ * sight, says so over the board.
+ */
+function useBecameHost(host: boolean): boolean {
+  const [was, setWas] = useState(host);
+  const [shown, setShown] = useState(false);
+  // Worked out as the crown moves, not after: the notice shows with it.
+  if (host !== was) {
+    setWas(host);
+    setShown(host);
+  }
+  useEffect(() => {
+    if (!shown) return;
+    const timer = setTimeout(() => setShown(false), NOTICE_MS);
+    return () => clearTimeout(timer);
+  }, [shown]);
+  return shown;
+}
+
+interface Gone {
+  name: string;
+  /** Left the room, rather than lost the connection for now. */
+  left: boolean;
+}
+
+/**
+ * The player who last went, for a few seconds: their connection dropped, or
+ * they left the room. A phone's Players tab and chat are out of sight, so it
+ * says so over the board. A player who comes back clears it, and one who
+ * only moved to the stands has not gone anywhere.
+ */
+function usePlayerGone(
+  players: Record<string, PlayerInfo>,
+  spectators: Record<string, SpectatorInfo>,
+  me: string,
+): Gone | null {
+  const [was, setWas] = useState(players);
+  const [gone, setGone] = useState<(Gone & { playerId: string }) | null>(null);
+  // Worked out as the seats change, not after: the notice shows with them.
+  if (players !== was) {
+    setWas(players);
+    let news = gone;
+    for (const [playerId, seat] of Object.entries(was)) {
+      if (playerId === me) continue;
+      const now = players[playerId];
+      if (!now && !(playerId in spectators)) {
+        news = { playerId, name: seat.username, left: true };
+      } else if (now && seat.isConnected && !now.isConnected) {
+        news = { playerId, name: now.username, left: false };
+      }
+    }
+    if (news && news === gone && players[news.playerId]?.isConnected) {
+      news = null;
+    }
+    if (news !== gone) setGone(news);
+  }
+  useEffect(() => {
+    if (!gone) return;
+    const timer = setTimeout(() => setGone(null), NOTICE_MS);
+    return () => clearTimeout(timer);
+  }, [gone]);
+  return gone;
 }

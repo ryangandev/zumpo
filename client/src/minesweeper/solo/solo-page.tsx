@@ -13,8 +13,10 @@ import {
 } from '../../ui';
 import { useMessages, type Messages } from '../../i18n';
 import { useFitHeight } from '../../shell/fit-height';
+import { playColumn } from '../../shell/play-board';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { ChangeSettings } from '../../solo/change-settings';
+import { cx } from '../../ui/cx';
 import {
   formatDuration,
   readBest,
@@ -193,8 +195,13 @@ function SoloGameView({
       stage={
         <>
           <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
-          <div ref={panel} className={styles.boardPanel}>
-            <MineGrid width={game.width} height={game.height} cell={cell} />
+          <div ref={panel} className={cx(styles.boardPanel, playColumn)}>
+            <MineGrid
+              width={game.width}
+              height={game.height}
+              cell={cell}
+              inPlay={!over}
+            />
             {!over && (
               <div
                 className={styles.mode}

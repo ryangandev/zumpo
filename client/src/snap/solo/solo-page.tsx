@@ -7,6 +7,7 @@ import {
   Card,
   SnapCard,
   StatList,
+  TurnBar,
   type SnapSpotMark,
   type Stat,
   type TurnBarProps,
@@ -26,11 +27,12 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
-import { SnapBoard, SnapTurnBar } from '../board';
+import { SnapBoard } from '../board';
 import {
   afterFlash,
   canTap,
   cardNumber,
+  cardsLeft,
   flashMs,
   isOver,
   matchNow,
@@ -170,6 +172,7 @@ function RunView({
       middle={{
         symbols: middleOf(run),
         label: m.snap.middleCard,
+        tag: finish ? undefined : m.snap.left(cardsLeft(run)),
         marks: middleMarks,
       }}
       mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
@@ -189,7 +192,7 @@ function RunView({
         phase={{ tone: 'lime', label: m.snap.solo.complete }}
         stage={
           <>
-            <SnapTurnBar
+            <TurnBar
               label={m.snap.solo.progress(RUN_CARDS, RUN_CARDS)}
               kind="status"
               main={m.snap.solo.allTaken(RUN_CARDS)}
@@ -246,7 +249,7 @@ function RunView({
       }}
       stage={
         <>
-          <SnapTurnBar {...turnBar(run, now, label, m)} />
+          <TurnBar {...turnBar(run, now, label, m)} />
           {board}
         </>
       }

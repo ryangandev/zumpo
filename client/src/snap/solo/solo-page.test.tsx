@@ -64,8 +64,7 @@ describe('Snap on your own', () => {
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 1 / 30 张')).toBeInTheDocument();
     expect(bar.getByText('找出相同的图案')).toBeInTheDocument();
-    // The bar counts the cards; nothing else does.
-    expect(screen.queryByText('还剩 30 张')).toBeNull();
+    expect(screen.getByText('还剩 30 张')).toBeInTheDocument();
     const mine = within(screen.getByRole('group', { name: '你的牌' }));
     expect(mine.getAllByRole('button')).toHaveLength(6);
     const wrong = model.mine.find((s) => !middleOf(model).includes(s))!;

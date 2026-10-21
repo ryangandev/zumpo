@@ -1,0 +1,70 @@
+/* As Fit: the box takes the width it is given, and the board hugs its
+   content, centred, scaled down to the box (play-board.tsx). */
+.box {
+  align-self: stretch;
+  min-width: 0;
+}
+
+.piece {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* A piece never scaled to the width takes all of it. */
+.piece.wide {
+  width: 100%;
+}
+
+/* On a phone a game in play is one screen (page.module.css): from the stage
+   down, each column holding the board gives it the height left, and the
+   board, centred in it, is scaled to fit, or scrolls past its least scale. */
+@media (max-width: 640px) {
+  /* Only around a board: a column without one keeps its content's height. */
+  .column:has([data-play-board]) {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .box {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .box[data-scroll] {
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .piece {
+    flex: none;
+  }
+}
+
+/* A short screen wider than a phone, such as a phone turned sideways: the
+   page scrolls as on a desktop, but the board is never taller than the
+   window, so all of it can be seen at once. */
+@media (min-width: 641px) and (max-height: 500px) {
+  .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(100dvh - 2 * var(--zumpo-space-24));
+  }
+
+  .box[data-scroll] {
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .piece {
+    flex: none;
+  }
+}

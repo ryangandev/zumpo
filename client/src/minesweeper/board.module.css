@@ -30,7 +30,14 @@
 }
 
 @media (max-width: 640px) {
-  /* A Small board fits: 36 px cells, 3 px apart. */
+  /* A Small board is 348 px: 36 px cells, 3 px apart. Narrower than that
+     with the page's margins, as on every phone, it is scaled to fit
+     (play-board.tsx). The board lies on paper of its own. */
+  .viewport {
+    border-radius: var(--zumpo-radius-16);
+    background: var(--zumpo-paper);
+  }
+
   .board,
   .row {
     gap: var(--zumpo-space-3);

@@ -6,6 +6,7 @@ import { gameInfo, gamePath } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
+import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
@@ -85,13 +86,20 @@ export function SoloLayout({
   // A phone keeps to the game until there is a result to show.
   const alone = !result && (phone || !side);
 
+  // A game opens at the top of the page, as a new page does, not where the
+  // form it was started from had been scrolled to. A block body: browsers
+  // that return a promise from scrollTo would have React call it as cleanup.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Page
       header={
         <RoomBar
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[gameType].name}
-          room={m.solo.onYourOwn}
+          room={oneColumn ? undefined : m.solo.onYourOwn}
           phase={phase}
           onHowToPlay={() => setRules(true)}
           onLeave={() => navigate(gamePath(gameType))}
@@ -102,9 +110,12 @@ export function SoloLayout({
       }
     >
       {/* The stage keeps its place in the tree as the side comes and goes,
-          so the board is never mounted again when a game ends. */}
-      <div className={cx(styles.solo, alone && styles.alone)}>
-        <div className={stageClass}>{stage}</div>
+          so the board is never mounted again when a game ends. Alone, the
+          stage is a play column: on a phone the board takes the height left. */}
+      <div
+        className={cx(styles.solo, alone && styles.alone, alone && playColumn)}
+      >
+        <div className={cx(stageClass, alone && playColumn)}>{stage}</div>
         {!alone && (
           <div className={styles.side}>
             {result}

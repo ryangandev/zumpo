@@ -135,8 +135,11 @@ They cannot place a stone, and a Notice under the board says they can take a sea
 ## Placing a stone
 
 - **With a mouse**, hovering an empty point shows a faint stone of your colour there, and a click places it.
-- **On a phone's touch screen** a point is only 22 px, so a tap could land on its neighbour: the first tap puts a faint stone there and shows **Place stone** under the board, and a second tap on the same point, or the button, places it.
+- **On a touch screen**, a phone's or one on its side, a point is small and a tap has no hover before it, so a tap could land on its neighbour: the first tap puts a faint stone there, and a second tap on the same point, or **Place stone**, places it.
+  The turn bar says "Tap again to place" while a faint stone is down.
+  Place stone is there throughout a game, acting only once a faint stone is down, so the board never moves when one is: under the board on a phone, and at the foot of the seats' column on a wider touch screen.
   Tapping another point moves the faint stone.
+- **On a short screen**, such as a phone on its side, the turn bar, the seats and the actions are a column beside the board, and the board is as tall as the window leaves it, so all of it is in sight without scrolling.
 - **With a keyboard**, the board is one control: the arrow keys move a focus ring between points, starting at the last stone or the centre, and Enter or Space places a stone.
   Each point's accessible label names it and what is on it ("H8, black stone"; "J9, empty").
 - Nothing is shown on a point you cannot play, and while it is not your turn the board takes no input; a request in flight shows the stone faint until the server answers.

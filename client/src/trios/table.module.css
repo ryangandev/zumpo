@@ -41,37 +41,10 @@
   gap: var(--zumpo-space-12);
 }
 
-/* Out of sight, out of the tab order and the accessibility tree, but still
-   taking its room. */
-.hiddenTools {
+/* Kept for the room it takes: out of sight, and for the table tools out of
+   the tab order and the accessibility tree too. */
+.held {
   visibility: hidden;
-}
-
-/* The turn bar's lines: what it says, and the meta under it. */
-.turnBar {
-  --lines: 1;
-}
-
-.twoLines {
-  --lines: 2;
-}
-
-/* Stacked, as on a phone, the turn bar's answer keeps room for its longest
-   line; the 4 px is the answer's own gap between its lines. */
-@container (max-width: 560px) {
-  .turnBar p {
-    min-height: calc(
-      var(--lines) * var(--zumpo-text-heading-line) + var(--zumpo-space-4) +
-        var(--zumpo-text-small-line)
-    );
-  }
-}
-
-/* Narrower still, the longest of "why not a trio" takes three lines. */
-@container (max-width: 309px) {
-  .twoLines p {
-    --lines: 3;
-  }
 }
 
 /* On a phone: three columns of four compact cards, on the page itself. */

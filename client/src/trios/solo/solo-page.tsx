@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
-import { Button, Card, StatList, type Stat, type TurnBarProps } from '../../ui';
+import {
+  Button,
+  Card,
+  StatList,
+  TurnBar,
+  type Stat,
+  type TurnBarProps,
+} from '../../ui';
 import { soloPath } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
 import { ChallengeCard, challengeLink } from '../../solo/challenge';
@@ -23,7 +30,6 @@ import {
   TablePanel,
   TableTools,
   TriosTable,
-  TriosTurnBar,
   type PlaceView,
 } from '../table';
 import { whyNotATrio } from '../words';
@@ -161,8 +167,7 @@ function RunView({
         phase={{ tone: 'lime', label: m.trios.solo.complete }}
         stage={
           <>
-            <TriosTurnBar
-              lines={1}
+            <TurnBar
               label={m.trios.solo.progress(RUN_TRIOS, RUN_TRIOS)}
               kind="status"
               main={m.trios.solo.allFound(RUN_TRIOS)}
@@ -234,7 +239,7 @@ function RunView({
       leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
-          <TriosTurnBar lines={1} {...turnBar(run, now, label, m)} />
+          <TurnBar {...turnBar(run, now, label, m)} />
           <TablePanel>
             <TriosTable
               cards={run.deal.table}

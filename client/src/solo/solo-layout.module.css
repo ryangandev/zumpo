@@ -49,4 +49,9 @@
   .stage {
     gap: var(--zumpo-space-24);
   }
+
+  /* In play the stage is one screen: tighter, as the page is. */
+  .stage:has([data-play-board]) {
+    gap: var(--zumpo-space-12);
+  }
 }

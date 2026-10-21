@@ -1,6 +1,6 @@
 import { cardsToTake } from '../../../shared/snap';
 import type { SnapRoomState } from '../../../shared/wire-types';
-import type { SnapSpotMark, TurnBarProps } from '../ui';
+import { TurnBar, type SnapSpotMark, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { useSecondsSince } from '../net/use-seconds-since';
@@ -9,7 +9,7 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { SnapBoard, SnapTurnBar, type CardView } from './board';
+import { SnapBoard, type CardView } from './board';
 
 type Room = RoomOf<SnapRoomState>;
 type Marks = Partial<Record<number, SnapSpotMark>>;
@@ -101,6 +101,7 @@ function BetweenGames({ room }: { room: Room }) {
               badgeLabel: taker.label,
             }}
             mine={null}
+            inPlay={false}
           />
         )}
       </>
@@ -156,10 +157,7 @@ function Play({ room }: { room: Room }) {
 
   return (
     <>
-      <SnapTurnBar
-        names
-        {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)}
-      />
+      <TurnBar {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)} />
       <SnapBoard
         middle={{
           symbols: middle.symbols,

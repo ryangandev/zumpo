@@ -1,7 +1,9 @@
 import { useMessages } from '../i18n';
 import type { ReactNode } from 'react';
 import { LetterTile } from '../ui';
+import { cx } from '../ui/cx';
 import { useFitHeight } from '../shell/fit-height';
+import { playColumn } from '../shell/play-board';
 import styles from './panel.module.css';
 
 /**
@@ -17,7 +19,7 @@ export function BoardPanel({
 }) {
   const ref = useFitHeight<HTMLDivElement>(fitHeight);
   return (
-    <div ref={ref} className={styles.panel}>
+    <div ref={ref} className={cx(styles.panel, playColumn)}>
       {children}
     </div>
   );

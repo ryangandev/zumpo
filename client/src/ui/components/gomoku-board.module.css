@@ -104,7 +104,10 @@
   cursor: pointer;
 }
 
+/* Centred in its point over the lines, on its own: a faint stone beside it
+   never pushes it off the intersection. */
 .star {
+  position: absolute;
   width: var(--star);
   height: var(--star);
   border-radius: var(--zumpo-radius-999);

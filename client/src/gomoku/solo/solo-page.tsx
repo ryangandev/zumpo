@@ -18,7 +18,7 @@ import {
 import { useMessages, type Messages } from '../../i18n';
 import { useSession } from '../../net/session';
 import { initialsOf, toneOf } from '../../players/avatar';
-import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import { PHONE, TOUCH, useMediaQuery } from '../../shell/use-media-query';
 import { ChangeSettings } from '../../solo/change-settings';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
@@ -152,9 +152,13 @@ function SoloBoard({
   const m = useMessages();
   const { name } = useSession();
   const phone = useMediaQuery(PHONE);
+  // A tap shows the stone first, and a second places it, wherever there is
+  // no hover to show it: on a phone, or a touch screen such as one on its
+  // side.
+  const tapTwice = useMediaQuery(TOUCH) || phone;
   const [game, setGame] = useState(() => newGame(picks));
   const [record, setRecord] = useState<LevelRecord | null>(null);
-  // A first tap on a phone, good only on the move it was made on.
+  // A first tap, good only on the move it was made on.
   const [preview, setPreview] = useState<{ point: number; at: number } | null>(
     null,
   );
@@ -207,6 +211,18 @@ function SoloBoard({
   const shown = record ?? readRecord()[game.level];
   const level = m.gomoku.solo.levels[game.level];
 
+  const takeBackButton = (
+    <Button
+      variant="secondary"
+      icon="undo"
+      onClick={() => {
+        setPreview(null);
+        setGame(takeBack(game));
+      }}
+    >
+      {m.gomoku.solo.takeBack}
+    </Button>
+  );
   return (
     <SoloLayout
       gameType="gomoku"
@@ -220,53 +236,51 @@ function SoloBoard({
               : { tone: 'sand', label: m.gomoku.solo.drawTag }
       }
       stage={
-        <>
-          <TurnBar {...turnBar(game, m)} />
-          <GomokuTable
-            phone={phone}
-            fitHeight
-            board={{
-              stones: boardOf(game.moves),
-              last: lastStoneOf(game.moves),
-              winLines: game.winLines,
-              color: yours ? game.color : null,
-              pending: previewing,
-              disabled: !yours,
-              onPlace: place,
-              onPreview: phone
-                ? (point) => setPreview({ point, at: game.moves.length })
-                : undefined,
-              label: m.gomoku.board,
-            }}
-            seats={seatsOf(game, name, m)}
-            actions={
-              yours && (
-                <>
-                  {previewing !== null && (
-                    <Button onClick={() => place(previewing)}>
-                      {m.gomoku.placeStone}
-                    </Button>
-                  )}
-                  {canTakeBack(game) && (
+        <GomokuTable
+          phone={phone}
+          fill={phone && !game.over}
+          fitHeight
+          turn={<TurnBar {...turnBar(game, previewing !== null, m)} />}
+          board={{
+            stones: boardOf(game.moves),
+            last: lastStoneOf(game.moves),
+            winLines: game.winLines,
+            color: yours ? game.color : null,
+            pending: previewing,
+            disabled: !yours,
+            onPlace: place,
+            onPreview: tapTwice
+              ? (point) => setPreview({ point, at: game.moves.length })
+              : undefined,
+            label: m.gomoku.board,
+          }}
+          seats={seatsOf(game, name, m)}
+          actions={
+            tapTwice
+              ? // Place stone is always there in a game, live once a faint
+                // stone is down, so nothing moves when one is; the turn bar
+                // says to tap again.
+                !game.over && (
+                  <>
                     <Button
-                      variant="secondary"
-                      icon="undo"
+                      disabled={previewing === null}
                       onClick={() => {
-                        setPreview(null);
-                        setGame(takeBack(game));
+                        if (previewing !== null) place(previewing);
                       }}
                     >
-                      {m.gomoku.solo.takeBack}
+                      {m.gomoku.placeStone}
                     </Button>
-                  )}
-                  <p className={styles.hint}>
-                    {phone ? m.gomoku.tapHint : m.gomoku.hoverHint}
-                  </p>
-                </>
-              )
-            }
-          />
-        </>
+                    {yours && canTakeBack(game) && takeBackButton}
+                  </>
+                )
+              : yours && (
+                  <>
+                    {canTakeBack(game) && takeBackButton}
+                    <p className={styles.hint}>{m.gomoku.hoverHint}</p>
+                  </>
+                )
+          }
+        />
       }
       result={
         game.over && (
@@ -383,7 +397,11 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
  * GM03-GM06: whose turn, and the last stone; your turn has no clock. A
  * finished game says who made five, and where, over the board that shows it.
  */
-function turnBar(game: SoloGame, m: Messages): TurnBarProps {
+function turnBar(
+  game: SoloGame,
+  previewing: boolean,
+  m: Messages,
+): TurnBarProps {
   if (game.over) {
     const line = game.winLines?.[0];
     return {
@@ -404,8 +422,9 @@ function turnBar(game: SoloGame, m: Messages): TurnBarProps {
   }
   const last = lastStoneOf(game.moves);
   const lastWasYours = game.moves.at(-1)?.color === game.color;
-  const meta =
-    last === null
+  const meta = previewing
+    ? m.gomoku.tapAgain
+    : last === null
       ? m.gomoku.firstMove
       : lastWasYours
         ? m.gomoku.youPlayed(pointName(last))
