@@ -3,6 +3,7 @@ import type {
   DailyWordRoomState,
   DoodleChainRoomState,
   DrawAndGuessRoomState,
+  GomokuRoomState,
   LiarsDiceRoomState,
   HushRoomState,
   Make24RoomState,
@@ -261,6 +262,27 @@ export function doodleChainState(
       { playerId: 'p3', username: 'Leo' },
     ],
     table: {},
+    lastGame: null,
+    ...overrides,
+  };
+}
+
+/** Ryan and Maya at a two-seat board, before their first game. */
+export function gomokuState(
+  overrides: Partial<GomokuRoomState> = {},
+): GomokuRoomState {
+  return {
+    ...room,
+    maxPlayers: 2,
+    gameType: 'gomoku',
+    phase: 'waiting',
+    colors: null,
+    gameNumber: 0,
+    samePair: false,
+    moves: [],
+    turnPlayerId: null,
+    missedTurns: {},
+    winLines: null,
     lastGame: null,
     ...overrides,
   };

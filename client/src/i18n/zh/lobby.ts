@@ -6,7 +6,9 @@ export const lobby: typeof en = {
   subtitle: '加入房间，或为朋友们创建一个。',
   liveCount: (count) => `${count} 个房间 · 实时更新`,
   playingAs: (name) => `你的名字：${name}`,
-  hostedBy: (name, setting) => `房主 ${name} · ${setting}`,
+  hostedBy: (name, setting) =>
+    setting ? `房主 ${name} · ${setting}` : `房主 ${name}`,
+  watching: (count) => `${count} 人观战`,
   fullRules: '完整规则',
   createRoom: '创建房间',
   emptyTitle: '这里还很安静。',

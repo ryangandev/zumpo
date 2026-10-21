@@ -187,6 +187,7 @@ Code differs from Figma on purpose in a few places:
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
+- Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game among the seats: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board and the seats stay under it exactly as GM08 draws them.
 
 ## Editing the Figma file
 

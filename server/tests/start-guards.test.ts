@@ -22,6 +22,7 @@ const SETTINGS: Record<GameType, object> = {
   'daily-word': { rounds: 3 },
   'code-breaker': { rounds: 3 },
   'doodle-chain': { drawingSeconds: 60 },
+  gomoku: {},
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];

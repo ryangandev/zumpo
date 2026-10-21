@@ -5,7 +5,8 @@ import type { Messages } from '../i18n';
 
 /** The setting a room was made with: "2 rounds", "Small 9 × 9", "10 hands",
  * "Large 6 × 6", "20 trios", "31 cards", "3 dice each", "7 levels",
- * "60s to draw", "3 words", "3 codes". */
+ * "60s to draw", "3 words", "3 codes"; or nothing, for a game with nothing
+ * to set. */
 export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
   switch (room.gameType) {
     case 'draw-and-guess':
@@ -32,5 +33,10 @@ export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
       return m.games.counts['daily-word'](room.rounds);
     case 'code-breaker':
       return m.games.counts['code-breaker'](room.rounds);
+    case 'gomoku':
+      // Nothing is chosen; who is watching says more about the room.
+      return room.spectatorCount > 0
+        ? m.lobby.watching(room.spectatorCount)
+        : '';
   }
 }

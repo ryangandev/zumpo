@@ -1,0 +1,53 @@
+/* Zumpo/Stone: a 32 px disc with a 2 px edge inside it, or 18 px with 1 px
+   on a phone. A board may size it through --stone. */
+.stone {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--stone, var(--zumpo-space-32));
+  height: var(--stone, var(--zumpo-space-32));
+  border: var(--zumpo-space-2) solid var(--zumpo-ink);
+  border-radius: var(--zumpo-radius-999);
+}
+
+.black {
+  background: var(--zumpo-ink);
+}
+
+.white {
+  background: var(--zumpo-white);
+}
+
+.small {
+  width: var(--stone, var(--zumpo-space-18));
+  height: var(--stone, var(--zumpo-space-18));
+  border-width: var(--zumpo-space-1);
+}
+
+/* In the winning line: a coral ring in place of the edge. */
+.win {
+  border: var(--zumpo-space-3) solid var(--zumpo-coral);
+}
+
+.small.win {
+  border-width: var(--zumpo-space-2);
+}
+
+.ghost {
+  opacity: 0.4;
+}
+
+/* Zumpo/Last move marker: the coral dot on the last stone placed. */
+.last {
+  width: var(--zumpo-space-10);
+  height: var(--zumpo-space-10);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-coral);
+}
+
+.small .last {
+  width: var(--zumpo-space-6);
+  height: var(--zumpo-space-6);
+}

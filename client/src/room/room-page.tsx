@@ -22,6 +22,7 @@ import { LiarsDiceRoom } from '../liars-dice/room';
 import { HushRoom } from '../hush/room';
 import { CodeBreakerRoom } from '../code-breaker/room';
 import { DoodleChainRoom } from '../doodle-chain/room';
+import { GomokuRoom } from '../gomoku/room';
 import { useSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useLobby } from '../net/use-lobby';
@@ -442,6 +443,8 @@ function SeatedRoom({
         <CodeBreakerRoom />
       ) : state.gameType === 'doodle-chain' ? (
         <DoodleChainRoom />
+      ) : state.gameType === 'gomoku' ? (
+        <GomokuRoom />
       ) : (
         <Suspense>
           <DailyWordRoom />

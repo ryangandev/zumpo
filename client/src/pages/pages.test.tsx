@@ -161,6 +161,7 @@ describe('the home page', () => {
       'Pairs',
       'Snap',
       'Trios',
+      'Gomoku',
     ]);
   });
 
@@ -184,14 +185,18 @@ describe('the home page', () => {
       within(filters).getByRole('button', { name: 'Puzzles' }),
     ).toHaveAttribute('aria-pressed', 'true');
 
+    await user.click(within(filters).getByRole('button', { name: 'Strategy' }));
+    expect(router.state.location.search).toBe('?kind=strategy');
+    expect(tiles()).toEqual(['Gomoku']);
+
     await user.click(within(filters).getByRole('button', { name: 'All' }));
     expect(router.state.location.search).toBe('');
-    expect(tiles()).toHaveLength(11);
+    expect(tiles()).toHaveLength(12);
   });
 
   it('shows every game for a kind it does not know', async () => {
     await renderApp('/?kind=cards');
-    expect(tiles()).toHaveLength(11);
+    expect(tiles()).toHaveLength(12);
   });
 
   it('opens a game’s page from its card', async () => {

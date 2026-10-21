@@ -10,9 +10,12 @@ import {
   PairsCard,
   PickMarker,
   SnapCard,
+  Stone,
   symbolNamed,
   Tag,
   TriosCard,
+  type StoneColor,
+  type StoneMark,
 } from '../ui';
 import { turtle, TURTLE_SIZE } from '../ui/generated/drawings';
 import {
@@ -308,6 +311,60 @@ function ChainArtwork() {
   );
 }
 
+/** A stone on a corner of a Gomoku board, or an empty point. */
+type Spot = readonly [StoneColor, StoneMark] | null;
+
+/**
+ * A corner of a Gomoku board, its points 36 px apart: the stones of `rows`,
+ * row by row from the top left.
+ */
+function BoardCrop({
+  rows,
+  className,
+  children,
+}: {
+  rows: readonly (readonly Spot[])[];
+  className?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <div className={cx(styles.boardCrop, className)}>
+      {rows.flatMap((row, r) =>
+        row.map(
+          (spot, c) =>
+            spot && (
+              <span
+                key={`${r}-${c}`}
+                className={styles.spot}
+                style={{ gridRow: r + 1, gridColumn: c + 1 }}
+              >
+                <Stone color={spot[0]} mark={spot[1]} />
+              </span>
+            ),
+        ),
+      )}
+      {children}
+    </div>
+  );
+}
+
+const WON: Spot = ['black', 'win'];
+
+/** Black's five across the top of the board, struck through, and White's stones under it. */
+function GomokuArtwork() {
+  return (
+    <BoardCrop
+      rows={[
+        [WON, WON, WON, WON, WON],
+        [null, ['white', 'none'], ['white', 'none'], null, ['white', 'last']],
+      ]}
+      className={styles.gomoku}
+    >
+      <span className={styles.gomokuLine} />
+    </BoardCrop>
+  );
+}
+
 const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   'draw-and-guess': DrawingArtwork,
   minesweeper: BoardArtwork,
@@ -318,6 +375,7 @@ const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   'liars-dice': DiceArtwork,
   hush: PileArtwork,
   'doodle-chain': ChainArtwork,
+  gomoku: GomokuArtwork,
   'daily-word': WordArtwork,
   'code-breaker': CodeArtwork,
 };
@@ -374,6 +432,21 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
   ),
   'doodle-chain': () => (
     <ChainDrawing name="Burger on skates" className={styles.iconChain} />
+  ),
+  gomoku: () => (
+    <BoardCrop
+      rows={[
+        [
+          ['black', 'none'],
+          ['white', 'none'],
+        ],
+        [
+          ['white', 'none'],
+          ['black', 'last'],
+        ],
+      ]}
+      className={styles.iconGomoku}
+    />
   ),
   'daily-word': () => (
     <div className={styles.iconGrid}>

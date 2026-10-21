@@ -71,6 +71,15 @@ import {
   whoseTurn as whoseLiarsDiceTurn,
   yourTurn as yourLiarsDiceTurn,
 } from '../play/liars-dice';
+import {
+  blackOf,
+  boardOf as gomokuBoardOf,
+  place as placeStone,
+  plainMove,
+  pointOf,
+  stonesOn,
+  turnOf as gomokuTurnOf,
+} from '../play/gomoku';
 import { COMPARE_DIR, figmaSize, writeReport } from './report';
 
 /*
@@ -2235,4 +2244,309 @@ test('a Code Breaker game', async ({ player }) => {
   });
   await shot(sam, 'CB13');
   await shot(leo, 'CB21');
+});
+
+/** Gomoku's record on this device, as Figma's: 4 of 9 won, the last two. */
+const GOMOKU_RECORD = {
+  'record:gomoku': JSON.stringify({
+    easy: { wins: 4, losses: 5, draws: 0, run: 2 },
+    medium: { wins: 4, losses: 5, draws: 0, run: 2 },
+  }),
+};
+
+/** Your turn on your own: the hint under the board is back. */
+const yourGomokuTurn = (page: Page) =>
+  page.getByText(/^(Hover a point|Tap the faint stone)/);
+
+/** Places a stone on your own, with a second tap on a phone. */
+async function placeAlone(page: Page, name: string, stone: 'black' | 'white') {
+  await pointOf(page, name).click();
+  const placed = gomokuBoardOf(page).getByRole('gridcell', {
+    name: new RegExp(`^${name}, ${stone} stone`),
+  });
+  const faint = page.getByRole('button', { name: 'Place stone' });
+  await expect(placed.or(faint)).toBeVisible();
+  if (await faint.isVisible()) await pointOf(page, name).click();
+  await expect(placed).toBeVisible();
+}
+
+/** Points two apart each way, where a player's stones never make five. */
+const APART = [1, 3, 5, 7, 9, 11, 13, 15].flatMap((row) =>
+  [...'ACEGIKMO'].map((column) => `${column}${row}`),
+);
+
+test('Gomoku on your own', async ({ player }) => {
+  test.setTimeout(300_000);
+  const maya = await player('Maya', desktop);
+  await keepOnDevice(maya, GOMOKU_RECORD);
+  // The computer takes half a second at least; the clock can hold it there.
+  await maya.clock.install();
+  await maya.goto('/games/gomoku/solo');
+  await shot(maya, 'GM02');
+  await maya.getByRole('button', { name: 'Start' }).click();
+
+  // Sixteen stones down, as Figma's are, Maya playing Black as plainly as a
+  // newcomer: her longest open line, or a block of the computer's.
+  for (let stones = 0; stones < 8; stones++) {
+    await expect(yourGomokuTurn(maya)).toBeVisible();
+    await placeAlone(maya, plainMove(await stonesOn(maya), 'black'), 'black');
+  }
+  await expect(yourGomokuTurn(maya)).toBeVisible();
+  await shot(maya, 'GM03');
+  const thinking = gomokuTurnOf(maya).getByText('The computer is thinking');
+  const held = await paused(maya, async () => {
+    const name = plainMove(await stonesOn(maya), 'black');
+    await pointOf(maya, name).click();
+    await expect(thinking).toBeVisible();
+    return shotWhile(maya, 'GM04', thinking);
+  });
+  expect(held, 'the computer captured thinking').toBe(true);
+
+  // A game won, against Easy: it stops a four, but not an open three.
+  await maya.goto('/games/gomoku/solo');
+  await choose(maya, 'Level', /^Easy/);
+  await maya.getByRole('button', { name: 'Start' }).click();
+  const won = maya.getByRole('heading', {
+    name: /^You won a game of \d+ moves\.$/,
+  });
+  for (;;) {
+    await expect(yourGomokuTurn(maya).or(won)).toBeVisible();
+    if (await won.isVisible()) break;
+    await placeAlone(maya, plainMove(await stonesOn(maya), 'black'), 'black');
+  }
+  await shot(maya, 'GM05');
+
+  // And one lost, Maya now White, her stones kept far apart.
+  await maya.getByRole('button', { name: 'Play again' }).click();
+  const lost = maya.getByRole('heading', {
+    name: /^The computer won a game of \d+ moves\.$/,
+  });
+  for (;;) {
+    await expect(yourGomokuTurn(maya).or(lost)).toBeVisible();
+    if (await lost.isVisible()) break;
+    const stones = await stonesOn(maya);
+    await placeAlone(
+      maya,
+      APART.find((name) => !stones.has(name))!,
+      'white',
+    );
+  }
+  await shot(maya, 'GM06');
+
+  const onPhone = await player('Maya', phone);
+  await onPhone.goto('/games/gomoku/solo');
+  await onPhone.getByRole('button', { name: 'Start' }).click();
+  for (let stones = 0; stones < 4; stones++) {
+    await expect(yourGomokuTurn(onPhone)).toBeVisible();
+    const name = plainMove(await stonesOn(onPhone), 'black');
+    await placeAlone(onPhone, name, 'black');
+  }
+  await expect(yourGomokuTurn(onPhone)).toBeVisible();
+  // A first tap: the faint stone, and Place stone.
+  await pointOf(onPhone, plainMove(await stonesOn(onPhone), 'black')).tap();
+  await expect(
+    onPhone.getByRole('button', { name: 'Place stone' }),
+  ).toBeVisible();
+  await shot(onPhone, 'GM17');
+});
+
+test('Gomoku rooms and their list', async ({ player }) => {
+  // A room in each state the list shows: open, private, full and playing.
+  const maya = await player('Maya', desktop);
+  await createRoom(maya, 'gomoku', { name: 'Maya’s room' });
+  const ryan = await player('Ryan', desktop);
+  await createRoom(ryan, 'gomoku', { name: 'Ryan’s room', password: 'otter' });
+  const leo = await player('Leo', desktop);
+  const ada = await player('Ada', desktop);
+  await joinRoom(ada, await createRoom(leo, 'gomoku', { name: 'Leo’s room' }));
+  const kai = await player('Kai', desktop);
+  const noor = await player('Noor', desktop);
+  const playing = await createRoom(kai, 'gomoku', { name: 'Kai’s room' });
+  await joinRoom(noor, playing);
+  await startGame(kai);
+
+  const sam = await player('Sam', desktop);
+  await sam.goto('/games/gomoku');
+  await expect(sam.getByRole('article')).toHaveCount(4);
+  await shot(sam, 'GM01');
+  const samOnPhone = await player('Sam', phone);
+  await samOnPhone.goto('/games/gomoku');
+  await expect(samOnPhone.getByRole('article')).toHaveCount(4);
+  await shot(samOnPhone, 'GM20');
+});
+
+/**
+ * Plays `moves` in turn, Black's first: each a pair of a stone for Black and
+ * one for White, a null one left out. A player's stones go at most three a
+ * second, under the server's room rate limit, which drops a faster one.
+ */
+async function playGomoku(
+  black: Page,
+  white: Page,
+  moves: readonly (readonly [string | null, string | null])[],
+) {
+  const last = new Map<Page, number>();
+  const paced = async (page: Page, name: string) => {
+    const wait = (last.get(page) ?? 0) + 350 - Date.now();
+    if (wait > 0) await new Promise((done) => setTimeout(done, wait));
+    last.set(page, Date.now());
+    await placeStone(page, name);
+  };
+  for (const [forBlack, forWhite] of moves) {
+    if (forBlack) await paced(black, forBlack);
+    if (forWhite) await paced(white, forWhite);
+  }
+}
+
+test('a Gomoku game', async ({ player }) => {
+  test.setTimeout(600_000);
+  const maya = await player('Maya', desktop);
+  const leo = await player('Leo', desktop);
+  const sam = await player('Sam', desktop);
+  const ryan = await player('Ryan', desktop);
+  await maya.goto('/games/gomoku/new');
+  await shot(maya, 'GM07');
+  const link = await createRoom(maya, 'gomoku');
+  await joinRoom(leo, link);
+  await joinRoom(sam, link);
+  await expect(maya.getByRole('button', { name: 'Start game' })).toBeVisible();
+  await shot(maya, 'GM08');
+  await joinRoom(ryan, link);
+
+  // Game 1 goes to Leo, whichever colour the draw gives him.
+  await startGame(maya);
+  const firstBlack = await blackOf([maya, leo]);
+  const leoLine = ['E8', 'F8', 'G8', 'H8', 'I8'];
+  const mayaApart = ['A1', 'C1', 'E1', 'G1', 'J1'];
+  if (firstBlack === leo) {
+    await playGomoku(leo, maya, [
+      ...leoLine.slice(0, 4).map((name, i) => [name, mayaApart[i]!] as const),
+      [leoLine[4]!, null],
+    ]);
+  } else {
+    await playGomoku(
+      maya,
+      leo,
+      mayaApart.map((name, i) => [name, leoLine[i] ?? null] as const),
+    );
+  }
+  await expect(
+    maya.getByText('Game over', { exact: true }).first(),
+  ).toBeVisible();
+
+  // Game 2, the colours swapped: Maya builds on a slant while Leo plays
+  // elsewhere, then it is Maya's turn.
+  await maya.getByRole('button', { name: 'Start game 2' }).click();
+  const black = await blackOf([maya, leo]);
+  const white = black === maya ? leo : maya;
+  const mayaMoves = ['E5', 'F6', 'G7', 'H8', 'D6'];
+  const leoMoves = ['H6', 'I7', 'J9', 'G9', 'F9'];
+  await playGomoku(
+    black,
+    white,
+    mayaMoves.map(
+      (mine, i) =>
+        (black === maya ? [mine, leoMoves[i]!] : [leoMoves[i]!, mine]) as [
+          string,
+          string,
+        ],
+    ),
+  );
+  // Leo, playing Black, has one more stone before it is Maya's turn.
+  if (black === leo) await placeStone(leo, 'K8');
+  await expect(gomokuTurnOf(maya).getByText('Your turn')).toBeVisible();
+  await shot(maya, 'GM09');
+  await shot(sam, 'GM16');
+  await maya.getByRole('button', { name: 'Resign' }).click();
+  await expect(maya.getByRole('dialog')).toBeVisible();
+  await shot(maya, 'GM12');
+  await maya.getByRole('button', { name: 'Keep playing' }).click();
+  await placeStone(maya, 'L11');
+  await expect(gomokuTurnOf(maya).getByText('Leo’s turn')).toBeVisible();
+  await shot(maya, 'GM10');
+
+  // Leo lets his 30 seconds run out; the turn passes back to Maya.
+  await expect(gomokuTurnOf(leo).getByText('Your turn passed')).toBeVisible({
+    timeout: 45_000,
+  });
+  await shot(leo, 'GM11');
+  // Maya's fifth on the slant.
+  await placeStone(maya, 'I9');
+  await expect(
+    maya.getByRole('heading', { name: 'You win with five in a row.' }),
+  ).toBeVisible();
+  await shot(maya, 'GM13');
+
+  // Game 3: Leo leaves under way, and loses it.
+  await maya.getByRole('button', { name: 'Start game 3' }).click();
+  const third = await blackOf([maya, leo]);
+  await placeStone(third, 'H8');
+  await leo.getByRole('button', { name: 'Leave room' }).click();
+  await leo
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Leave room' })
+    .click();
+  await expect(
+    maya.getByRole('heading', { name: 'You win: Leo left the room.' }),
+  ).toBeVisible();
+  await shot(maya, 'GM14');
+});
+
+test('a Gomoku game played to a full board', async ({ player }) => {
+  test.setTimeout(600_000);
+  const maya = await player('Maya', desktop);
+  const leo = await player('Leo', desktop);
+  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  await startGame(maya);
+  const black = await blackOf([maya, leo]);
+  const white = black === maya ? leo : maya;
+  // Stripes two wide on a slant, so no line holds five of either colour.
+  const blacks: string[] = [];
+  const whites: string[] = [];
+  for (let row = 0; row < 15; row++) {
+    for (let column = 0; column < 15; column++) {
+      const name = `${'ABCDEFGHIJKLMNO'[column]}${row + 1}`;
+      ((column + 2 * row) % 4 < 2 ? blacks : whites).push(name);
+    }
+  }
+  await playGomoku(
+    black,
+    white,
+    blacks.map((name, i) => [name, whites[i] ?? null] as const),
+  );
+  await expect(
+    maya.getByRole('heading', { name: 'A draw: the board is full.' }),
+  ).toBeVisible();
+  await expect(gomokuBoardOf(maya)).toBeVisible();
+  await shot(maya, 'GM15');
+});
+
+test('a Gomoku game on a phone', async ({ player }) => {
+  test.setTimeout(300_000);
+  const maya = await player('Maya', phone);
+  const leo = await player('Leo', desktop);
+  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  await startGame(maya);
+  const black = await blackOf([maya, leo]);
+  const white = black === maya ? leo : maya;
+  const mayaMoves = ['E5', 'F6', 'G7', 'H8'];
+  const leoMoves = ['H6', 'I7', 'J9', 'G9'];
+  await playGomoku(
+    black,
+    white,
+    mayaMoves.map(
+      (mine, i) =>
+        (black === maya ? [mine, leoMoves[i]!] : [leoMoves[i]!, mine]) as [
+          string,
+          string,
+        ],
+    ),
+  );
+  if (black !== maya) await placeStone(leo, 'K8');
+  await expect(gomokuTurnOf(maya).getByText('Your turn')).toBeVisible();
+  await shot(maya, 'GM18');
+  await pointOf(maya, 'I9').tap();
+  await maya.getByRole('button', { name: 'Place stone' }).click();
+  await expect(gomokuTurnOf(maya).getByText('Game over')).toBeVisible();
+  await shot(maya, 'GM19');
 });

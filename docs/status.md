@@ -28,6 +28,10 @@ An eleventh game, Code Breaker (猜数字), followed on 2026-10-21: Bulls and Co
 It plays on your own, one code a day for everybody and practice codes after it, and in rooms of two to eight racing the same codes, where the others see your pegs and never your digits.
 Its daily calendar counts from 2026-10-21, puzzle #1.
 
+A twelfth game, Gomoku (五子棋), followed the same day: two players take turns placing Black and White stones on a 15 by 15 board, and the first to make five in a row wins ([rules](games/gomoku.md)).
+It was designed in Figma first (section 14), and plays on your own against the computer at three levels, and in rooms of two with spectators.
+It brought a fourth kind of game to the home filter, Strategy.
+
 On 2026-10-05 Ryan chose to host it for a few testers on Render's free plan, and it is live at `zumpo.ryangan.me` ([architecture](architecture.md#deployment)).
 The server was hardened for that the same day ([#30](https://github.com/ryangandev/zumpo/pull/30)): a restart tells each room it closed, a duplicated tab takes over its player, what a client can make the server hold is bounded, and Render checks `/healthz`.
 
@@ -62,8 +66,8 @@ Decided by Ryan, and the frame for every design and implementation choice:
 ## Next
 
 Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
-Snap, Doodle Chain and Code Breaker are built; Gomoku comes next.
-Gomoku brings a fourth kind of game, Strategy.
+Snap, Doodle Chain, Code Breaker and Gomoku are built.
+Gomoku brought a fourth kind of game, Strategy.
 Each game's behaviour contract lands in `docs/games/` with its implementation.
 After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
 

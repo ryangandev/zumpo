@@ -1,0 +1,487 @@
+import { useRef, useState } from 'react';
+import {
+  boardOf,
+  colorToMove,
+  lastStoneOf,
+  otherColor,
+  pointName,
+} from '../../../shared/gomoku';
+import type {
+  GomokuColor,
+  GomokuGameSummary,
+  GomokuRoomState,
+} from '../../../shared/wire-types';
+import { Button, Dialog, Notice, TurnBar, type TurnBarProps } from '../ui';
+import { scoreOf } from '../games/catalog';
+import { useMessages, type Messages } from '../i18n';
+import { useSecondsLeft } from '../net/use-seconds-left';
+import { initialsOf, toneOf } from '../players/avatar';
+import { ResultsActions, ResultsPanel, WaitingPanel } from '../room/panels';
+import { rankedPlayers, type Seat } from '../room/players';
+import { useRoomContext, type Room as RoomOf } from '../room/room-context';
+import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { GomokuTable, type SeatView } from './table';
+
+type Room = RoomOf<GomokuRoomState>;
+
+/** A point the viewer picked, good while the game is still at that move. */
+interface Picked {
+  point: number;
+  at: number;
+}
+
+/** GM08-GM19: a Gomoku room, before, during and after a game. */
+export function GomokuRoom() {
+  const m = useMessages();
+  const room = useRoomContext<GomokuRoomState>();
+  const { state, playerId, socket, spectating, reconnecting } = room;
+  const phone = useMediaQuery(PHONE);
+  const seconds = useSecondsLeft(
+    state.phaseEndsInMs,
+    room.receivedAt,
+    reconnecting,
+  );
+  const playing = state.phase === 'playing';
+  const summary = playing ? null : state.lastGame;
+  const mine = colorOf(state, playerId);
+  const myTurn = playing && state.turnPlayerId === playerId && !reconnecting;
+
+  // A first tap on a phone, and a stone sent and not yet answered: each holds
+  // only while the game is still at the move it was picked on.
+  const [preview, setPreview] = useState<Picked | null>(null);
+  const [sent, setSent] = useState<Picked | null>(null);
+  const current = (picked: Picked | null) =>
+    playing && picked?.at === state.moves.length ? picked.point : null;
+  const sending = current(sent);
+  const previewing = myTurn && sending === null ? current(preview) : null;
+  const [resigning, setResigning] = useState(false);
+
+  // A game that ends, or a page that drops and comes back, forgets what was
+  // picked or asked: the next game may reach the same move.
+  const [seen, setSeen] = useState({ playing, reconnecting });
+  if (seen.playing !== playing || seen.reconnecting !== reconnecting) {
+    setSeen({ playing, reconnecting });
+    setSent(null);
+    setPreview(null);
+    if (seen.playing !== playing) setResigning(false);
+  }
+
+  const place = (point: number) => {
+    if (!myTurn || sending !== null) return;
+    setSent({ point, at: state.moves.length });
+    setPreview(null);
+    socket.emit('gomoku:place', state.roomId, point);
+  };
+
+  const board = {
+    stones: boardOf(state.moves),
+    last: lastStoneOf(state.moves),
+    winLines: summary ? state.winLines : null,
+    color: playing ? mine : null,
+    pending: sending ?? previewing,
+    disabled: !myTurn || sending !== null,
+    onPlace: mine && playing ? place : undefined,
+    onPreview: phone
+      ? (point: number) => setPreview({ point, at: state.moves.length })
+      : undefined,
+    label: m.gomoku.board,
+  };
+
+  const canResign = playing && mine !== null;
+  const resign = canResign ? (
+    <Button variant="secondary" onClick={() => setResigning(true)}>
+      {m.gomoku.resign}
+    </Button>
+  ) : null;
+
+  return (
+    <RoomLayout
+      phase={
+        playing
+          ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }
+          : summary
+            ? { tone: 'lime', label: m.gomoku.gameOver }
+            : { tone: 'blue', label: m.gomoku.waitingRoom }
+      }
+      stage={
+        <>
+          {playing ? (
+            <TurnBar {...turnBar(room, seconds, m)} />
+          ) : summary ? (
+            phone ? (
+              <TurnBar {...resultBar(room, summary, m)} />
+            ) : (
+              <Results room={room} summary={summary} />
+            )
+          ) : (
+            <WaitingPanel
+              aloneTitle={m.gomoku.alone}
+              setup={m.gomoku.setup}
+              guestSetup={m.gomoku.setup}
+              onStart={room.startGame}
+              starting={room.starting}
+            />
+          )}
+          <GomokuTable
+            phone={phone}
+            board={board}
+            seats={seatsOf(room, phone, m)}
+            notice={
+              playing && mine && state.missedTurns[playerId] === 1 ? (
+                <Notice>{m.gomoku.missedNotice}</Notice>
+              ) : null
+            }
+            note={state.colors === null ? m.gomoku.colorsNote : undefined}
+            actions={
+              playing ? (
+                (previewing !== null || resign) && (
+                  <>
+                    {previewing !== null && (
+                      <Button onClick={() => place(previewing)}>
+                        {m.gomoku.placeStone}
+                      </Button>
+                    )}
+                    {resign}
+                  </>
+                )
+              ) : summary && phone ? (
+                <ResultsActions
+                  onPlayAgain={room.startGame}
+                  starting={room.starting}
+                  again={m.gomoku.startGame(nextGameNumber(state))}
+                />
+              ) : null
+            }
+          />
+          <ResignDialog
+            open={resigning && canResign && !spectating}
+            winner={mine ? sideName(state, otherColor(mine)) : ''}
+            game={state.gameNumber}
+            onResign={() => {
+              setResigning(false);
+              socket.emit('gomoku:resign', state.roomId);
+            }}
+            onKeep={() => setResigning(false)}
+          />
+        </>
+      }
+      players={playersOf(state).map((seat) =>
+        playerLine(state, playerId, seat, m),
+      )}
+      chat={{ placeholder: m.gomoku.chat }}
+    />
+  );
+}
+
+/** The viewer's colour this game, or the last; null while watching. */
+function colorOf(state: GomokuRoomState, playerId: string): GomokuColor | null {
+  if (state.colors?.black.playerId === playerId) return 'black';
+  if (state.colors?.white.playerId === playerId) return 'white';
+  return null;
+}
+
+function sideName(state: GomokuRoomState, color: GomokuColor): string {
+  return state.colors?.[color].username ?? '';
+}
+
+/** The next game's number: one on for the same pair, else their first. */
+const nextGameNumber = (state: GomokuRoomState) =>
+  state.samePair ? state.gameNumber + 1 : 1;
+
+/** A seat's avatar, as the scoreboard draws the same player's. */
+const avatar = (name: string) => ({
+  initials: initialsOf(name),
+  tone: toneOf(name),
+});
+
+/**
+ * The seats, Black's first: this game's or the last game's colours while
+ * nobody new has sat down, else the players at the table with no colours
+ * yet, as before a first game, and a free seat while one is.
+ */
+function seatsOf(room: Room, phone: boolean, m: Messages): SeatView[] {
+  const { state, playerId } = room;
+  const playing = state.phase === 'playing';
+  const seated = Object.entries(state.playerList);
+  const { colors } = state;
+  const coloured =
+    colors !== null &&
+    seated.every(
+      ([id]) => id === colors.black.playerId || id === colors.white.playerId,
+    );
+  const free = (color: GomokuColor | null): SeatView => ({
+    key: `free-${color ?? ''}`,
+    name: m.gomoku.freeSeat,
+    detail: m.gomoku.anybodyCanSit,
+    color,
+  });
+
+  if (!coloured) {
+    const seats: SeatView[] = seated.map(([id, seat]) => ({
+      key: id,
+      name: seat.username,
+      detail: !seat.isConnected
+        ? m.gomoku.away
+        : id === state.owner.playerId
+          ? m.gomoku.hostHere
+          : m.gomoku.here,
+      avatar: avatar(seat.username),
+      you: id === playerId,
+    }));
+    while (seats.length < 2) seats.push(free(null));
+    return seats;
+  }
+
+  const summary = playing ? null : state.lastGame;
+  return (['black', 'white'] as const).map((color) => {
+    const side = colors[color];
+    const seat = state.playerList[side.playerId];
+    if (!seat) return free(color);
+    const you = side.playerId === playerId;
+    const turn = playing && state.turnPlayerId === side.playerId;
+    const won = summary?.winner === color;
+    const note = !seat.isConnected
+      ? m.gomoku.notes.away
+      : playing
+        ? playingNote(state, playerId, side.playerId, m)
+        : won
+          ? summary?.ending === 'five'
+            ? m.gomoku.notes.five
+            : m.gomoku.notes.won
+          : summary?.ending === 'draw'
+            ? m.gomoku.notes.draw
+            : undefined;
+    // On a phone the scoreboard is on its own tab: the seats carry the score.
+    const notes = [note, summary && phone && scoreOf(m, 'gomoku', seat.points)]
+      .filter(Boolean)
+      .join(' · ');
+    return {
+      key: side.playerId,
+      name: seat.username,
+      detail: m.gomoku.seat(color, notes || undefined),
+      avatar: avatar(seat.username),
+      color,
+      state: turn ? 'turn' : won ? 'won' : 'default',
+      you,
+    };
+  });
+}
+
+/** In a game, a seat's note: whose turn it is, or a missed turn. */
+function playingNote(
+  state: GomokuRoomState,
+  viewer: string,
+  seat: string,
+  m: Messages,
+): string | undefined {
+  if (state.turnPlayerId === seat) {
+    return seat === viewer ? m.gomoku.notes.yourTurn : m.gomoku.notes.thinking;
+  }
+  return state.missedTurns[seat] === 1 ? m.gomoku.notes.missed : undefined;
+}
+
+/** GM09-GM11: whose turn, what was played last, and the clock. */
+function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
+  const { state, playerId, reconnecting } = room;
+  const toMove = colorToMove(state.moves);
+  const name = sideName(state, toMove);
+  const mine = state.turnPlayerId === playerId;
+  const last = state.moves.at(-1);
+  const lastMine = last
+    ? state.colors?.[last.color].playerId === playerId
+    : false;
+  const lastName = last ? sideName(state, last.color) : '';
+  return {
+    label: mine ? m.gomoku.yourTurn : m.gomoku.turn(name),
+    kind: 'status',
+    main: mine ? m.gomoku.place(toMove) : m.gomoku.isThinking(name),
+    meta: !last
+      ? m.gomoku.firstMove
+      : last.point === null
+        ? lastMine
+          ? m.gomoku.yourTurnPassed
+          : m.gomoku.passed(lastName)
+        : lastMine
+          ? m.gomoku.youPlayed(pointName(last.point))
+          : m.gomoku.played(lastName, pointName(last.point)),
+    // While reconnecting the server's clock cannot be known: it holds.
+    countdown: reconnecting
+      ? { seconds, label: m.gomoku.paused, waiting: true }
+      : { seconds, label: m.gomoku.toMove, waiting: !mine },
+  };
+}
+
+/** What happened in the last game, for the viewer: "You win: Leo resigned." */
+function resultTitle(
+  room: Room,
+  summary: GomokuGameSummary,
+  m: Messages,
+): string {
+  const { state, playerId } = room;
+  if (summary.winner === null) return m.gomoku.draw;
+  const winner = state.colors?.[summary.winner];
+  const loser = state.colors?.[otherColor(summary.winner)];
+  if (winner?.playerId === playerId) {
+    return m.gomoku.youWin(summary.ending, loser?.username ?? '');
+  }
+  if (loser?.playerId === playerId) {
+    return m.gomoku.youLose(summary.ending, winner?.username ?? '');
+  }
+  return m.gomoku.theyWin(
+    summary.ending,
+    winner?.username ?? '',
+    loser?.username ?? '',
+  );
+}
+
+/** What comes next: who plays Black, or whose seat is free. */
+function resultNext(
+  state: GomokuRoomState,
+  summary: GomokuGameSummary,
+  m: Messages,
+): string | null {
+  if (summary.ending === 'left' && summary.winner !== null) {
+    return m.gomoku.seatFree(sideName(state, otherColor(summary.winner)));
+  }
+  // The colours swap for the same pair; a new pair's are drawn.
+  return state.samePair ? m.gomoku.nextBlack(sideName(state, 'white')) : null;
+}
+
+/** GM13-GM15: the result over the finished board. */
+function Results({
+  room,
+  summary,
+}: {
+  room: Room;
+  summary: GomokuGameSummary;
+}) {
+  const m = useMessages();
+  const { state } = room;
+  const first =
+    summary.ending === 'draw'
+      ? m.gomoku.drawDetail(summary.stones)
+      : m.gomoku.moves(summary.stones);
+  const next = resultNext(state, summary, m);
+  const line = state.winLines?.[0];
+  return (
+    <ResultsPanel
+      summary={summary}
+      title={resultTitle(room, summary, m)}
+      detail={next ? m.gomoku.both(first, next) : first}
+      ranked={summary.winner !== null}
+      statusOf={(standing) => {
+        const color = colorOf(state, standing.playerId);
+        if (summary.winner === null) return m.gomoku.drawStatus;
+        if (color !== summary.winner) {
+          return color ? m.gomoku.color(color) : '';
+        }
+        return summary.ending === 'five' && line
+          ? m.gomoku.fiveFrom(
+              pointName(line[0] ?? 0),
+              pointName(line.at(-1) ?? 0),
+            )
+          : m.gomoku.wonGame(state.gameNumber);
+      }}
+      onPlayAgain={room.startGame}
+      starting={room.starting}
+      again={m.gomoku.startGame(nextGameNumber(state))}
+    />
+  );
+}
+
+/** GM19: on a phone the result sits in the turn bar, over the board. */
+function resultBar(
+  room: Room,
+  summary: GomokuGameSummary,
+  m: Messages,
+): TurnBarProps {
+  const next = resultNext(room.state, summary, m);
+  return {
+    label: m.gomoku.gameOver,
+    kind: 'status',
+    main: resultTitle(room, summary, m),
+    meta:
+      summary.ending === 'draw'
+        ? m.gomoku.drawDetail(summary.stones)
+        : (next ?? m.gomoku.moves(summary.stones)),
+  };
+}
+
+/** GM12: resigning asks first; the clock keeps running behind it. */
+function ResignDialog({
+  open,
+  winner,
+  game,
+  onResign,
+  onKeep,
+}: {
+  open: boolean;
+  winner: string;
+  game: number;
+  onResign: () => void;
+  onKeep: () => void;
+}) {
+  const m = useMessages();
+  const keep = useRef<HTMLButtonElement>(null);
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) onKeep();
+      }}
+      title={m.gomoku.resignTitle}
+      description={m.gomoku.resignBody(winner, game)}
+      initialFocus={keep}
+      actions={
+        <>
+          <Button variant="danger" onClick={onResign}>
+            {m.gomoku.resign}
+          </Button>
+          <Button ref={keep} variant="secondary" onClick={onKeep}>
+            {m.gomoku.keepPlaying}
+          </Button>
+        </>
+      }
+    />
+  );
+}
+
+/** The scoreboard's order: Black then White in a game, else most games won. */
+function playersOf(state: GomokuRoomState): Seat[] {
+  const players = rankedPlayers(state);
+  const { colors } = state;
+  if (state.phase !== 'playing' || !colors) return players;
+  const order = [colors.black.playerId, colors.white.playerId];
+  return players.toSorted(
+    (a, b) => order.indexOf(a.playerId) - order.indexOf(b.playerId),
+  );
+}
+
+/** One player's line on the scoreboard, as their seat reads in a game. */
+function playerLine(
+  state: GomokuRoomState,
+  viewer: string,
+  seat: Seat,
+  m: Messages,
+): PlayerLine {
+  if (!seat.isConnected) {
+    return { seat, status: m.gomoku.away, statusIcon: 'away', state: 'away' };
+  }
+  const color = colorOf(state, seat.playerId);
+  if (state.phase === 'playing' && color) {
+    return {
+      seat,
+      status: m.gomoku.seat(
+        color,
+        playingNote(state, viewer, seat.playerId, m),
+      ),
+      state: state.turnPlayerId === seat.playerId ? 'highlight' : 'default',
+    };
+  }
+  const summary = state.lastGame;
+  if (summary?.winner && color === summary.winner) {
+    return { seat, status: m.gomoku.wonGame(state.gameNumber) };
+  }
+  return { seat, status: m.gomoku.waiting };
+}

@@ -2,6 +2,7 @@
 // draws, beside that family's Figma preview, each measured against the
 // export. Development only, at /design.
 
+import { pointAt, POINTS } from '../../../../shared/gomoku';
 import { itemAt } from '../../../../shared/list';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import '../zumpo.css';
@@ -29,6 +30,8 @@ import {
   DigitTile,
   DrawingToolbar,
   FilterChip,
+  GomokuBoard,
+  GomokuSeat,
   Header,
   Icon,
   Keyboard,
@@ -58,6 +61,7 @@ import {
   ToggleChip,
   SnapCard,
   SnapSymbol,
+  Stone,
   TriosCard,
   TriosShape,
   TurnBar,
@@ -85,6 +89,23 @@ import { Specimen } from './specimen';
 import styles from './gallery.module.css';
 
 const noop = () => {};
+
+/** A Gomoku game won by Black on the diagonal from C11 to G7 (GM13). */
+const GOMOKU_LINE = [0, 1, 2, 3, 4].map((step) => pointAt(2 + step, 11 - step));
+const GOMOKU_WHITE = [
+  pointAt(3, 11),
+  pointAt(4, 10),
+  pointAt(5, 10),
+  pointAt(3, 8),
+  pointAt(7, 7),
+];
+const GOMOKU_STONES = Array.from({ length: POINTS }, (_, point) =>
+  GOMOKU_LINE.includes(point)
+    ? ('black' as const)
+    : GOMOKU_WHITE.includes(point)
+      ? ('white' as const)
+      : null,
+);
 
 /** The symbols every Zumpo/Snap card variant shows, spot by spot. */
 const SNAP_SAMPLE = ['Star', 'Heart', 'Cloud', 'Crown', 'Fish', 'Leaf'].map(
@@ -1785,6 +1806,139 @@ export default function Gallery() {
             </ul>
           </Specimen>
         ))}
+      </Family>
+
+      <Family
+        name="Stone"
+        file="stone"
+        note="Black or White, placed or faint (the viewer's own colour at 40%), with the last move's coral dot or the winning line's coral ring."
+      >
+        {(
+          [
+            ['regular', 'Regular'],
+            ['small', 'Small'],
+          ] as const
+        ).map(([stoneSize, sizeName]) => (
+          <div key={stoneSize} className={styles.cellRow}>
+            {(['black', 'white'] as const).flatMap((color) =>
+              (
+                [
+                  ['none', 'Placed'],
+                  ['last', 'Placed'],
+                  ['win', 'Placed'],
+                  ['none', 'Ghost'],
+                ] as const
+              ).map(([mark, state]) => {
+                const colorName = color === 'black' ? 'Black' : 'White';
+                const markName =
+                  mark === 'none' ? 'None' : mark === 'last' ? 'Last' : 'Win';
+                const variant = `Color=${colorName}, Mark=${markName}, State=${state}, Size=${sizeName}`;
+                return (
+                  <Specimen
+                    key={variant}
+                    family="stone"
+                    variant={variant}
+                    label={`${colorName}, ${state === 'Ghost' ? 'Ghost' : markName}`}
+                  >
+                    <Stone
+                      color={color}
+                      mark={mark}
+                      ghost={state === 'Ghost'}
+                      size={stoneSize}
+                    />
+                  </Specimen>
+                );
+              }),
+            )}
+          </div>
+        ))}
+      </Family>
+
+      <Family
+        name="Gomoku board"
+        file="gomoku-board"
+        note="15 × 15 lines on peach with five star points; the last stone carries the coral dot, and a five is struck through with Zumpo/Win line. Tab onto the board, then the arrow keys show Zumpo/Point focus and the faint stone."
+      >
+        <div className={styles.cellRow}>
+          {(
+            [
+              ['regular', 'Desktop', 564],
+              ['small', 'Phone', 350],
+            ] as const
+          ).map(([boardSize, layout, width]) => (
+            <Specimen
+              key={layout}
+              family="gomoku-board"
+              variant={`Layout=${layout}`}
+              label={`${layout}, won`}
+              width={width}
+            >
+              <GomokuBoard
+                stones={GOMOKU_STONES}
+                size={boardSize}
+                last={GOMOKU_LINE[4]}
+                winLines={[GOMOKU_LINE]}
+                label={`Gomoku board, ${layout}`}
+              />
+            </Specimen>
+          ))}
+          <Specimen label="Your turn, Black" width={350}>
+            <GomokuBoard
+              size="small"
+              stones={GOMOKU_STONES.map((stone, point) =>
+                point === GOMOKU_LINE[4] ? null : stone,
+              )}
+              last={GOMOKU_WHITE[4]}
+              color="black"
+              pending={GOMOKU_LINE[4]}
+              onPlace={noop}
+              label="Gomoku board, your turn"
+            />
+          </Specimen>
+        </div>
+      </Family>
+
+      <Family name="Gomoku seat" file="gomoku-seat">
+        <div className={styles.cellRow}>
+          {(['black', 'white'] as const).flatMap((color) =>
+            (['default', 'turn', 'won'] as const).map((seatState) => {
+              const colorName = color === 'black' ? 'Black' : 'White';
+              const stateName =
+                seatState === 'default'
+                  ? 'Default'
+                  : seatState === 'turn'
+                    ? 'Turn'
+                    : 'Won';
+              return (
+                <Specimen
+                  key={`${color}-${seatState}`}
+                  family="gomoku-seat"
+                  variant={`Color=${colorName}, State=${stateName}`}
+                  width={306}
+                  heightOnly
+                >
+                  <GomokuSeat
+                    name={color === 'black' ? 'Maya' : 'Leo'}
+                    detail={
+                      seatState === 'turn'
+                        ? `${colorName} · your turn`
+                        : seatState === 'won'
+                          ? `${colorName} · five in a row`
+                          : colorName
+                    }
+                    avatar={
+                      color === 'black'
+                        ? { initials: 'MA', tone: 'peach' }
+                        : { initials: 'LE', tone: 'lime' }
+                    }
+                    color={color}
+                    state={seatState}
+                  />
+                </Specimen>
+              );
+            }),
+          )}
+        </div>
       </Family>
 
       <Family name="Mobile tabs" file="mobile-tabs">

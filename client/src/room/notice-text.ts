@@ -106,6 +106,12 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['dc:reveal'](notice);
     case 'dc:album':
       return m.notices['dc:album'](notice);
+    case 'gomoku:started':
+      return m.notices['gomoku:started'](notice);
+    case 'gomoku:timeout':
+      return m.notices['gomoku:timeout'](notice);
+    case 'gomoku:over':
+      return m.notices['gomoku:over'](notice);
   }
 }
 

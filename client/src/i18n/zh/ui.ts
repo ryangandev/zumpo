@@ -146,4 +146,14 @@ export const ui: typeof en = {
     takenBy: (who) => `被 ${who} 抢走`,
     locked: '锁定中',
   },
+  gomoku: {
+    point: (name, stone, { last, won }) =>
+      [
+        name,
+        stone === null ? '空' : stone === 'black' ? '黑子' : '白子',
+        won ? '连成五子' : last ? '最后一手' : null,
+      ]
+        .filter(Boolean)
+        .join('，'),
+  },
 };

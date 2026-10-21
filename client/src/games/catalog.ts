@@ -6,13 +6,14 @@ import type { Messages } from '../i18n';
  * What a game has you do; every game has exactly one, and the home page sorts
  * and filters by it (docs/design.md).
  */
-export type GameKind = 'party' | 'puzzles' | 'spot-and-remember';
+export type GameKind = 'party' | 'puzzles' | 'spot-and-remember' | 'strategy';
 
 /** The kinds, alphabetically; what each says of itself is in the catalog. */
 export const GAME_KINDS: readonly GameKind[] = [
   'party',
   'puzzles',
   'spot-and-remember',
+  'strategy',
 ];
 
 /**
@@ -85,6 +86,7 @@ const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
     tone: 'sand',
     solo: true,
   },
+  { type: 'gomoku', kind: 'strategy', tone: 'blue', solo: true },
 ];
 
 export const GAMES: readonly GameInfo[] = ENTRIES.map((game) => ({

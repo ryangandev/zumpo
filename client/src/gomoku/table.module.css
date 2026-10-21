@@ -1,0 +1,101 @@
+/* GM09: the board and the seats on a paper panel, 24 px apart. */
+.table {
+  container-type: inline-size;
+}
+
+.panel {
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+.game {
+  display: flex;
+  gap: var(--zumpo-space-24);
+}
+
+/* The board's column is as wide as a regular board, or narrower with it. */
+.board {
+  flex: 0 1
+    calc(
+      15 * (var(--zumpo-space-32) + var(--zumpo-space-4)) + 2 *
+        var(--zumpo-space-12)
+    );
+  min-width: 0;
+}
+
+/* The seats at the top of their column, the actions at its foot. */
+.side {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--zumpo-space-24);
+  min-width: 0;
+}
+
+.seats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-12);
+}
+
+.note {
+  margin: 0;
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  color: var(--zumpo-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--zumpo-space-12);
+}
+
+/* Too narrow for a regular board and a side beside it: the side goes under
+   the board, as on a phone. */
+@container (max-width: 820px) {
+  .game {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board {
+    flex: none;
+    width: 100%;
+  }
+
+  .board > * {
+    margin-inline: auto;
+  }
+
+  .side {
+    align-self: stretch;
+  }
+}
+
+/* GM17-GM19: the board fills the column, then the seats, then the actions
+   full width. */
+.phone .game {
+  flex-direction: column;
+}
+
+.phone .board {
+  flex: none;
+  width: 100%;
+}
+
+.phone .board > * {
+  margin-inline: auto;
+}
+
+.phone .seats {
+  gap: var(--zumpo-space-8);
+}
+
+.phone .actions {
+  align-items: stretch;
+}

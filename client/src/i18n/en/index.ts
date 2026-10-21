@@ -5,6 +5,7 @@ import { dailyWord } from './daily-word';
 import { doodleChain } from './doodle-chain';
 import { drawAndGuess } from './draw-and-guess';
 import { games } from './games';
+import { gomoku } from './gomoku';
 import { home, howToPlay } from './home';
 import { hush } from './hush';
 import { liarsDice } from './liars-dice';
@@ -48,6 +49,7 @@ export const en = {
   doodleChain,
   dailyWord,
   codeBreaker,
+  gomoku,
 };
 
 export type Messages = typeof en;

@@ -152,6 +152,21 @@ export const ui = {
     takenBy: (name: string) => `taken by ${name}`,
     locked: 'locked out',
   },
+  gomoku: {
+    /** A point's accessible name: "H8, black stone"; "J9, empty". */
+    point: (
+      name: string,
+      stone: 'black' | 'white' | null,
+      { last, won }: { last: boolean; won: boolean },
+    ) =>
+      [
+        name,
+        stone === null ? 'empty' : `${stone} stone`,
+        won ? 'in the winning line' : last ? 'last placed' : null,
+      ]
+        .filter(Boolean)
+        .join(', '),
+  },
 };
 
 function capital(word: string) {

@@ -8,6 +8,7 @@ import type {
   DailyWordDurationsInSeconds,
   CodeBreakerDurationsInSeconds,
   DoodleChainDurationsInSeconds,
+  GomokuDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
@@ -33,6 +34,7 @@ import { createHushModule } from './socket/hush/index.js';
 import { createDailyWordModule } from './socket/daily-word/index.js';
 import { createCodeBreakerModule } from './socket/code-breaker/index.js';
 import { createDoodleChainModule } from './socket/doodle-chain/index.js';
+import { createGomokuModule } from './socket/gomoku/index.js';
 import { clientDepartureOnDisconnectHandler } from './socket/client-disconnect-handler.js';
 import { playerSessionHandler } from './socket/player-session-handler.js';
 import {
@@ -137,6 +139,10 @@ interface CreateZumpoServerOptions {
   dailyWordDurations?: DailyWordDurationsInSeconds;
   /** Doodle Chain's steps and the pause between them. Shortened by tests. */
   doodleChainDurations?: DoodleChainDurationsInSeconds;
+  /** A Gomoku move's clock. Shortened by tests. */
+  gomokuDurations?: GomokuDurationsInSeconds;
+  /** Draws a new pair's colours. Fixed by tests. */
+  gomokuRandom?: () => number;
   /**
    * Deals every Daily Word game's words from this seed instead of at random,
    * so a test run plays the same words each time. Defaults to
@@ -208,6 +214,8 @@ const createZumpoServer = (
     hushDurations,
     dailyWordDurations,
     doodleChainDurations,
+    gomokuDurations,
+    gomokuRandom,
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
     codeBreakerDurations,
     codeBreakerSeed = process.env.CODE_BREAKER_SEED || undefined,
@@ -288,6 +296,9 @@ const createZumpoServer = (
   );
   registry.register(
     createDoodleChainModule(registry.context, doodleChainDurations),
+  );
+  registry.register(
+    createGomokuModule(registry.context, gomokuDurations, gomokuRandom),
   );
 
   const membership = createRoomMembership(

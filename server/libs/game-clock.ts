@@ -1,4 +1,5 @@
 import * as doodleChain from '../../shared/doodle-chain.js';
+import * as gomoku from '../../shared/gomoku.js';
 
 /**
  * How long each phase of a turn lasts. These live on the server because the
@@ -218,6 +219,16 @@ const snapDurationsInSeconds: SnapDurationsInSeconds = {
   lockout: readSecondsFromEnv('SNAP_LOCKOUT_SECONDS', 2),
 };
 
+/** Gomoku's clock: one turn at a time, and nothing else waits. */
+interface GomokuDurationsInSeconds {
+  /** How long a player has to place a stone. */
+  turn: number;
+}
+
+const gomokuDurationsInSeconds: GomokuDurationsInSeconds = {
+  turn: readSecondsFromEnv('GOMOKU_TURN_SECONDS', gomoku.TURN_SECONDS),
+};
+
 /**
  * How long a disconnected player keeps their seat, their score and their place
  * in the round before the room gives up on them.
@@ -244,6 +255,7 @@ export {
   dailyWordDurationsInSeconds,
   codeBreakerDurationsInSeconds,
   doodleChainDurationsInSeconds,
+  gomokuDurationsInSeconds,
   reconnectGraceInSeconds,
 };
 export type {
@@ -258,4 +270,5 @@ export type {
   DailyWordDurationsInSeconds,
   CodeBreakerDurationsInSeconds,
   DoodleChainDurationsInSeconds,
+  GomokuDurationsInSeconds,
 };
