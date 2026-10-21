@@ -88,9 +88,8 @@ export const notices = {
   ): string => `Game has started! ${n.trios} trios to find.`,
   'trios:found': (n: Extract<RoomNotice, { type: 'trios:found' }>): string =>
     `${who(n.name)} found a trio! (+1)`,
-  'snap:started': (
-    n: Extract<RoomNotice, { type: 'snap:started' }>,
-  ): string => `Game has started! ${n.cards} cards to win.`,
+  'snap:started': (n: Extract<RoomNotice, { type: 'snap:started' }>): string =>
+    `Game has started! ${n.cards} cards to win.`,
   'snap:took': (n: Extract<RoomNotice, { type: 'snap:took' }>): string =>
     `${who(n.name)} took a card! (+1)`,
   'ld:started': (n: Extract<RoomNotice, { type: 'ld:started' }>): string =>

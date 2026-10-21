@@ -157,6 +157,7 @@ describe('the home page', () => {
       'Make 24',
       'Minesweeper',
       'Pairs',
+      'Snap',
       'Trios',
     ]);
   });
@@ -178,12 +179,12 @@ describe('the home page', () => {
 
     await user.click(within(filters).getByRole('button', { name: 'All' }));
     expect(router.state.location.search).toBe('');
-    expect(tiles()).toHaveLength(8);
+    expect(tiles()).toHaveLength(9);
   });
 
   it('shows every game for a kind it does not know', async () => {
     await renderApp('/?kind=cards');
-    expect(tiles()).toHaveLength(8);
+    expect(tiles()).toHaveLength(9);
   });
 
   it('opens a game’s page from its card', async () => {
@@ -352,6 +353,7 @@ describe('how to play', () => {
       ['Make 24', 'make-24'],
       ['Pairs', 'pairs'],
       ['Trios', 'trios'],
+      ['Snap', 'snap'],
     ]) {
       expect(
         rules(name!).getByRole('link', { name: 'Play solo' }),
@@ -447,6 +449,26 @@ describe('making a room', () => {
             gameType: 'trios',
             maxPlayers: 8,
             settings: { trios: 20 },
+          }),
+        ],
+      }),
+    );
+  });
+
+  it('makes a Snap room with nothing to choose but up to six seats', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderApp('/games/snap/new');
+    expect(screen.getByText('Choose 2–6 seats.')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
+
+    await waitFor(() =>
+      expect(fake.requests).toContainEqual({
+        event: 'room:create',
+        args: [
+          expect.objectContaining({
+            gameType: 'snap',
+            maxPlayers: 6,
+            settings: {},
           }),
         ],
       }),

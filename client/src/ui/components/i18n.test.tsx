@@ -12,6 +12,7 @@ import { MineCell } from './mine-cell';
 import { PairsCard } from './pairs-card';
 import { PlayerRow } from './player-row';
 import { Scoreboard } from './scoreboard';
+import { SnapCard } from './snap-card';
 import { TriosCard } from './trios-card';
 import { WordChoice } from './word-choice';
 
@@ -106,6 +107,13 @@ describe('public components in Chinese', () => {
         <MineCell state={{ kind: 'picked' }} row={0} column={1} />
         <PairsCard state={{ kind: 'matched', symbol: 0 }} row={1} column={0} />
         <TriosCard card={0} state="selected" />
+        <SnapCard
+          symbols={[9, 0, 1, 2, 3, 4]}
+          label="中间的牌"
+          state="taken"
+          badgeLabel="被 小美 拿走"
+          marks={{ 9: 'match' }}
+        />
         <WordChoice word="turtle" onChoose={noop} />
       </>,
     );
@@ -125,6 +133,10 @@ describe('public components in Chinese', () => {
     expect(
       screen.getByRole('img', { name: '1 个珊瑚色实心圆形，已选中' }),
     ).toBeVisible();
+    expect(
+      screen.getByRole('group', { name: '中间的牌，被 小美 拿走' }),
+    ).toBeVisible();
+    expect(screen.getByRole('img', { name: '爱心，两张牌都有' })).toBeVisible();
     expect(
       screen.getByRole('button', { name: 'turtle6 个字母' }),
     ).toBeVisible();

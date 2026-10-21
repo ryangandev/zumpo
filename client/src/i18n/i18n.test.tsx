@@ -115,6 +115,6 @@ describe('the language switch', () => {
     await renderApp('/how-to-play', { locale: 'zh' });
     expect(document.documentElement.lang).toBe('zh-CN');
     expect(screen.getByRole('heading', { name: '扫雷' })).toBeVisible();
-    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(8);
+    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(9);
   });
 });

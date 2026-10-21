@@ -1,0 +1,59 @@
+/* SN02, SN05: the middle card and yours on a paper panel, 48 px apart. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-48);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  margin: 0;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+}
+
+/* Stacked, as on a phone, the turn bar's answer keeps room for one line of
+   what it says and the meta under it; the 4 px is the answer's own gap. */
+@container (max-width: 560px) {
+  .turnBar p {
+    min-height: calc(
+      var(--zumpo-text-heading-line) + var(--zumpo-space-4) +
+        var(--zumpo-text-small-line)
+    );
+  }
+}
+
+/* SN11, SN12: on a phone, the two compact cards one above the other, on the
+   page itself. */
+@media (max-width: 640px) {
+  .panel {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .cards {
+    flex-direction: column;
+    gap: var(--zumpo-space-16);
+  }
+}
