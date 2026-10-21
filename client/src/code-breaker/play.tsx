@@ -78,14 +78,12 @@ export function PlayArea({
       describe={(row) => describeRow(row, m)}
     />
   );
-  // In play the board gives the height the pad needs; done, it is as tall
-  // as it is.
-  const board = pad ? (
-    <PlayBoard min={0.75} current={rows.length}>
+  // In play the board gives the height the pad needs; done, it stays where
+  // it was, as tall as it is.
+  const board = (
+    <PlayBoard min={0.75} current={rows.length} inPlay={pad}>
       {codeBoard}
     </PlayBoard>
-  ) : (
-    codeBoard
   );
   return (
     <div ref={play} className={cx(styles.play, pad && playColumn, className)}>

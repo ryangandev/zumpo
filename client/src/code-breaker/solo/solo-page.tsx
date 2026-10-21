@@ -14,7 +14,6 @@ import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
   Button,
   Card,
-  CodeBoard,
   CodeMarksBoard,
   DigitTile,
   StatList,
@@ -30,7 +29,7 @@ import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { CopyButton, Distribution, formatWait } from '../../solo/daily';
 import { BoardPanel, PegLegend } from '../panel';
-import { describeRow, PlayArea } from '../play';
+import { PlayArea } from '../play';
 import type { Notes } from '../draft';
 import {
   deleteKey,
@@ -126,38 +125,63 @@ function useSoloGame(
 const dailyGame = (puzzle: number) =>
   newGame(dailyCode(puzzle), readRecords().get(puzzle) ?? []);
 
-/** The board, the line under it and the pad, while a code is open. */
-function OpenBoard({
+/**
+ * CB02-CB08: one code from the first guess to how it went. The board is
+ * played and finished in the same panel, so it never moves or changes size:
+ * the pad goes, the bar says how it ended, and the result leads the cards
+ * beside it.
+ */
+function SoloStage({
+  phase,
+  bar,
   game,
   typing,
   notes,
   onNotes,
+  result,
+  side,
 }: {
+  phase: { tone: 'blue'; label: string };
+  bar: TurnBarProps;
   game: SoloGame;
   typing: ReturnType<typeof useSoloGame>['typing'];
   notes: Notes;
   onNotes: (notes: Notes) => void;
+  result: ReactNode;
+  side: ReactNode;
 }) {
   const m = useMessages();
+  const over = isOver(game);
   const { problem } = game.draft;
   return (
-    <BoardPanel fitHeight>
-      <PlayArea
-        rows={rowsOf(game)}
-        draft={game.draft}
-        problem={
-          problem === 'network' || problem === null
-            ? null
-            : m.codeBreaker.problem(problem)
-        }
-        prompt={promptFor(game.guesses.length, m)}
-        typing={typing}
-        notes={notes}
-        onNotes={onNotes}
-        ruledOut={settledDigits(rowsOf(game)).out}
-        pad
-      />
-    </BoardPanel>
+    <SoloLayout
+      gameType="code-breaker"
+      phase={phase}
+      stage={
+        <>
+          <TurnBar {...bar} />
+          <BoardPanel fitHeight>
+            <PlayArea
+              rows={rowsOf(game)}
+              draft={game.draft}
+              problem={
+                problem === 'network' || problem === null
+                  ? null
+                  : m.codeBreaker.problem(problem)
+              }
+              prompt={over ? undefined : promptFor(game.guesses.length, m)}
+              typing={typing}
+              notes={notes}
+              onNotes={onNotes}
+              ruledOut={settledDigits(rowsOf(game)).out}
+              pad={!over}
+            />
+          </BoardPanel>
+        </>
+      }
+      result={result}
+      side={side}
+    />
   );
 }
 
@@ -198,105 +222,92 @@ function DailyView({
   };
   const title = m.codeBreaker.dailyNumber(puzzle);
 
-  if (!over) {
-    return (
-      <SoloLayout
-        gameType="code-breaker"
-        phase={phase}
-        stage={
+  const cracked = guessesToCrack(game);
+  return (
+    <SoloStage
+      phase={phase}
+      bar={
+        over
+          ? endBar(game, title, m.codeBreaker.newCodeAtMidnight, m)
+          : playingBar(game, title, m.codeBreaker.dailyFresh, phone, m)
+      }
+      game={game}
+      typing={typing}
+      notes={notes}
+      onNotes={(next) => {
+        setNotes(next);
+        recordNotes(puzzle, next);
+      }}
+      result={
+        over && (
+          <SoloResult
+            title={
+              cracked
+                ? m.codeBreaker.crackedIn(cracked)
+                : m.codeBreaker.notThisTime
+            }
+            answer={!cracked && <CodeAnswer code={game.code} />}
+            body={
+              cracked
+                ? m.codeBreaker.dailyCracked(
+                    game.code,
+                    m.codeBreaker.streak(stats.currentStreak),
+                  )
+                : m.codeBreaker.dailyMissed
+            }
+            stats={[
+              {
+                label: m.codeBreaker.nextCodeIn,
+                value: formatWait(msUntilNextPuzzle(new Date(now))),
+              },
+            ]}
+            actions={
+              <>
+                <CopyButton
+                  text={shareText(
+                    m.codeBreaker.shareDaily(puzzle),
+                    rowsOf(game).map((row) => row.mark),
+                    `${window.location.origin}${soloPath('code-breaker')}`,
+                  )}
+                  label={m.codeBreaker.share}
+                  copiedLabel={m.codeBreaker.copied}
+                  icon="copy"
+                  primary
+                />
+                <Button variant="secondary" onClick={onPractice}>
+                  {m.codeBreaker.practiceCode}
+                </Button>
+              </>
+            }
+          />
+        )
+      }
+      side={
+        over ? (
           <>
-            <TurnBar
-              {...playingBar(game, title, m.codeBreaker.dailyFresh, phone, m)}
-            />
-            <OpenBoard
-              game={game}
-              typing={typing}
-              notes={notes}
-              onNotes={(next) => {
-                setNotes(next);
-                recordNotes(puzzle, next);
-              }}
-            />
+            <DeviceStats stats={stats} />
+            <Card kind="panel" title={m.codeBreaker.guessesToCrack}>
+              <Distribution
+                bars={stats.distribution.map((count, bar) => {
+                  const guesses = barLabel(bar);
+                  return {
+                    guesses,
+                    count,
+                    label: m.codeBreaker.distribution(count, guesses),
+                  };
+                })}
+                today={cracked === null ? null : barIndex(cracked)}
+              />
+            </Card>
           </>
-        }
-        side={
+        ) : (
           <>
             <Card kind="panel" title={m.codeBreaker.readIt}>
               <PegLegend />
             </Card>
             <DeviceStats stats={stats} />
           </>
-        }
-      />
-    );
-  }
-
-  const cracked = guessesToCrack(game);
-  const share = shareText(
-    m.codeBreaker.shareDaily(puzzle),
-    rowsOf(game).map((row) => row.mark),
-    `${window.location.origin}${soloPath('code-breaker')}`,
-  );
-  return (
-    <FinishedLayout
-      phase={phase}
-      bar={endBar(game, title, m.codeBreaker.newCodeAtMidnight, m)}
-      result={
-        <SoloResult
-          title={
-            cracked
-              ? m.codeBreaker.crackedIn(cracked)
-              : m.codeBreaker.notThisTime
-          }
-          answer={!cracked && <CodeAnswer code={game.code} />}
-          body={
-            cracked
-              ? m.codeBreaker.dailyCracked(
-                  game.code,
-                  m.codeBreaker.streak(stats.currentStreak),
-                )
-              : m.codeBreaker.dailyMissed
-          }
-          stats={[
-            {
-              label: m.codeBreaker.nextCodeIn,
-              value: formatWait(msUntilNextPuzzle(new Date(now))),
-            },
-          ]}
-          actions={
-            <>
-              <CopyButton
-                text={share}
-                label={m.codeBreaker.share}
-                copiedLabel={m.codeBreaker.copied}
-                icon="copy"
-                primary
-              />
-              <Button variant="secondary" onClick={onPractice}>
-                {m.codeBreaker.practiceCode}
-              </Button>
-            </>
-          }
-        />
-      }
-      game={game}
-      side={
-        <>
-          <DeviceStats stats={stats} />
-          <Card kind="panel" title={m.codeBreaker.guessesToCrack}>
-            <Distribution
-              bars={stats.distribution.map((count, bar) => {
-                const guesses = barLabel(bar);
-                return {
-                  guesses,
-                  count,
-                  label: m.codeBreaker.distribution(count, guesses),
-                };
-              })}
-              today={cracked === null ? null : barIndex(cracked)}
-            />
-          </Card>
-        </>
+        )
       }
     />
   );
@@ -330,142 +341,79 @@ function PracticeView({
     label: challenge ? m.codeBreaker.challenge : m.codeBreaker.practice,
   };
 
-  if (!isOver(game)) {
-    return (
-      <SoloLayout
-        gameType="code-breaker"
-        phase={phase}
-        stage={
-          <>
-            <TurnBar
-              {...playingBar(
-                game,
-                challenge
-                  ? m.codeBreaker.friendCode
-                  : m.codeBreaker.practiceCode,
-                challenge
-                  ? m.codeBreaker.challengeFresh
-                  : m.codeBreaker.practiceFresh,
-                phone,
-                m,
-              )}
-            />
-            <OpenBoard
-              game={game}
-              typing={typing}
-              notes={notes}
-              onNotes={setNotes}
-            />
-          </>
-        }
-        side={
+  const over = isOver(game);
+  const cracked = guessesToCrack(game);
+  const marks = rowsOf(game).map((row) => row.mark);
+  const label = challenge
+    ? m.codeBreaker.friendCode
+    : m.codeBreaker.practiceCode;
+  return (
+    <SoloStage
+      phase={phase}
+      bar={
+        over
+          ? endBar(game, label, undefined, m)
+          : playingBar(
+              game,
+              label,
+              challenge
+                ? m.codeBreaker.challengeFresh
+                : m.codeBreaker.practiceFresh,
+              phone,
+              m,
+            )
+      }
+      game={game}
+      typing={typing}
+      notes={notes}
+      onNotes={setNotes}
+      result={
+        over && (
+          <SoloResult
+            title={
+              cracked
+                ? m.codeBreaker.crackedIn(cracked)
+                : m.codeBreaker.notThisTime
+            }
+            answer={!cracked && <CodeAnswer code={game.code} />}
+            body={
+              cracked
+                ? m.codeBreaker.practiceResult(game.code)
+                : m.codeBreaker.practiceMissed
+            }
+            actions={
+              <>
+                <Button onClick={onAnother}>{m.codeBreaker.anotherCode}</Button>
+                <Button variant="quiet" icon="back" onClick={onToday}>
+                  {m.codeBreaker.todayCode}
+                </Button>
+              </>
+            }
+          />
+        )
+      }
+      side={
+        over ? (
+          <ChallengeCard
+            description={
+              cracked
+                ? m.codeBreaker.friendFewer(cracked)
+                : m.codeBreaker.friendSame
+            }
+            text={shareText(
+              m.codeBreaker.sharePractice,
+              marks,
+              challengeLink(soloPath('code-breaker'), { seed }),
+            )}
+          >
+            <CodeMarksBoard marks={marks} label={m.codeBreaker.yourPegs} />
+          </ChallengeCard>
+        ) : (
           <Card kind="panel" title={m.codeBreaker.readIt}>
             <PegLegend />
           </Card>
-        }
-      />
-    );
-  }
-
-  const cracked = guessesToCrack(game);
-  const marks = rowsOf(game).map((row) => row.mark);
-  const share = shareText(
-    m.codeBreaker.sharePractice,
-    marks,
-    challengeLink(soloPath('code-breaker'), { seed }),
-  );
-  return (
-    <FinishedLayout
-      phase={phase}
-      bar={endBar(
-        game,
-        challenge ? m.codeBreaker.friendCode : m.codeBreaker.practiceCode,
-        undefined,
-        m,
-      )}
-      result={
-        <SoloResult
-          title={
-            cracked
-              ? m.codeBreaker.crackedIn(cracked)
-              : m.codeBreaker.notThisTime
-          }
-          answer={!cracked && <CodeAnswer code={game.code} />}
-          body={
-            cracked
-              ? m.codeBreaker.practiceResult(game.code)
-              : m.codeBreaker.practiceMissed
-          }
-          actions={
-            <>
-              <Button onClick={onAnother}>{m.codeBreaker.anotherCode}</Button>
-              <Button variant="quiet" icon="back" onClick={onToday}>
-                {m.codeBreaker.todayCode}
-              </Button>
-            </>
-          }
-        />
+        )
       }
-      game={game}
-      side={
-        <ChallengeCard
-          description={
-            cracked
-              ? m.codeBreaker.friendFewer(cracked)
-              : m.codeBreaker.friendSame
-          }
-          text={share}
-        >
-          <CodeMarksBoard marks={marks} label={m.codeBreaker.yourPegs} />
-        </ChallengeCard>
-      }
-    />
-  );
-}
-
-/**
- * CB06-CB08, CB17: the finished board where it was played, under a bar that
- * says how it ended, and how it went first in the column beside it.
- */
-function FinishedLayout({
-  phase,
-  bar,
-  result,
-  game,
-  side,
-}: {
-  phase: { tone: 'blue'; label: string };
-  bar: TurnBarProps;
-  result: ReactNode;
-  game: SoloGame;
-  side: ReactNode;
-}) {
-  return (
-    <SoloLayout
-      gameType="code-breaker"
-      phase={phase}
-      stage={
-        <>
-          <TurnBar {...bar} />
-          <BoardPanel>
-            <FinishedBoard game={game} />
-          </BoardPanel>
-        </>
-      }
-      result={result}
-      side={side}
-    />
-  );
-}
-
-function FinishedBoard({ game }: { game: SoloGame }) {
-  const m = useMessages();
-  return (
-    <CodeBoard
-      rows={rowsOf(game)}
-      size="compact"
-      label={m.codeBreaker.yourGuesses}
-      describe={(row) => describeRow(row, m)}
     />
   );
 }

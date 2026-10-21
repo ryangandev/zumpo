@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import type { Card } from '../../../shared/snap';
 import { SnapCard, Tag, type SnapCardState, type SnapSpotMark } from '../ui';
-import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
@@ -49,12 +48,11 @@ export function SnapBoard({
 }: SnapBoardProps) {
   const phone = useMediaQuery(PHONE);
   const size = phone ? 'compact' : 'regular';
-  const Holder = inPlay ? PlayBoard : Fit;
   const boxes = useRef<(HTMLDivElement | null)[]>([]);
   useCardMotion(boxes, middle.symbols, mine?.symbols ?? null);
   return (
     <div className={cx(styles.panel, playColumn)}>
-      <Holder>
+      <PlayBoard inPlay={inPlay}>
         <div className={styles.cards}>
           {[middle, mine].map(
             (view, index) =>
@@ -86,7 +84,7 @@ export function SnapBoard({
               ),
           )}
         </div>
-      </Holder>
+      </PlayBoard>
     </div>
   );
 }

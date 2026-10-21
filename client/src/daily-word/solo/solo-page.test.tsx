@@ -74,6 +74,26 @@ describe('Daily Word on your own', () => {
     expect(screen.getByRole('button', { name: 'Share' })).toBeInTheDocument();
   });
 
+  it('keeps the board it was played on, and its panel, through the last guess', async () => {
+    await renderApp('/games/daily-word/solo');
+    await (await findTurn()).findByText('Find the word');
+    const board = screen.getByRole('group', { name: 'Your guesses' });
+    const panel =
+      board.closest('[data-play-board]')!.parentElement!.parentElement!;
+    for (const word of misses(TODAY, 5)) await guess(word);
+    expect(screen.getByRole('group', { name: 'Keyboard' })).toBeInTheDocument();
+    await guess(TODAY);
+
+    expect(
+      screen.getByRole('heading', { name: 'Found in 6.' }),
+    ).toBeInTheDocument();
+    // The same nodes, not a finished copy: nothing moves or resizes.
+    expect(screen.getByRole('group', { name: 'Your guesses' })).toBe(board);
+    expect(panel.isConnected).toBe(true);
+    expect(panel.contains(board)).toBe(true);
+    expect(screen.queryByRole('group', { name: 'Keyboard' })).toBeNull();
+  });
+
   it('turns away a word it does not know, without spending a guess', async () => {
     await renderApp('/games/daily-word/solo');
     await (await findTurn()).findByText('Find the word');

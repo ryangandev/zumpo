@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import { useMessages } from '../i18n';
 import { TriosCard, type TriosCardState } from '../ui';
 import { cx } from '../ui/cx';
-import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
@@ -43,9 +42,8 @@ export function TriosTable({
 }: TriosTableProps) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
-  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Holder>
+    <PlayBoard inPlay={inPlay}>
       <div className={styles.table} role="group" aria-label={m.trios.table}>
         {cards.map((card, place) => (
           <TriosCard
@@ -57,7 +55,7 @@ export function TriosTable({
           />
         ))}
       </div>
-    </Holder>
+    </PlayBoard>
   );
 }
 

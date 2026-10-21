@@ -91,6 +91,29 @@ describe('Code Breaker on your own', () => {
     expect(screen.getByRole('button', { name: 'Share' })).toBeInTheDocument();
   });
 
+  it('keeps the board it was played on, and its panel, through the last guess', async () => {
+    await renderApp(PAGE);
+    await turn().findByText('Crack the code');
+    const board = mine();
+    const panel =
+      board.closest('[data-play-board]')!.parentElement!.parentElement!;
+    const [miss] = strangers(TODAY);
+    await guess(miss!);
+    expect(
+      screen.getByRole('group', { name: 'Digit pad' }),
+    ).toBeInTheDocument();
+    await guess(TODAY);
+
+    expect(
+      screen.getByRole('heading', { name: 'Cracked in 2.' }),
+    ).toBeInTheDocument();
+    // The same nodes, not a finished copy: nothing moves or resizes.
+    expect(mine()).toBe(board);
+    expect(panel.isConnected).toBe(true);
+    expect(panel.contains(board)).toBe(true);
+    expect(screen.queryByRole('group', { name: 'Digit pad' })).toBeNull();
+  });
+
   it('never types a digit twice, and turns back a row it cannot use', async () => {
     await renderApp(PAGE);
     await turn().findByText('Crack the code');

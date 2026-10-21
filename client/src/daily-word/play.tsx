@@ -76,14 +76,11 @@ export function PlayArea({
       ref={play}
       className={cx(styles.play, keyboard && playColumn, className)}
     >
-      {keyboard ? (
-        // In play the board gives the height the keyboard needs.
-        <PlayBoard min={0.6} current={rows.length}>
-          {board}
-        </PlayBoard>
-      ) : (
-        board
-      )}
+      {/* In play the board gives the height the keyboard needs; done, it
+          stays where it was, as tall as it is. */}
+      <PlayBoard min={0.6} current={rows.length} inPlay={keyboard}>
+        {board}
+      </PlayBoard>
       {phone || !prompt ? (
         // With nothing to say under the board, or no room for it on a phone,
         // there is no line: a row turned back is said over the board, so the

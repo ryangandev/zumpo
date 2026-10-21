@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { PairsCard, type PairsCardSize, type PairsCardState } from '../ui';
 import { cx } from '../ui/cx';
-import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages } from '../i18n';
@@ -33,9 +32,8 @@ export function PairsGrid({ cards, onFlip, inPlay = true }: PairsGridProps) {
   const rows = Array.from({ length: side }, (_, row) =>
     cards.slice(row * side, (row + 1) * side),
   );
-  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Holder>
+    <PlayBoard inPlay={inPlay}>
       <div
         className={cx(styles.board, size === 'compact' && styles.compact)}
         role="grid"
@@ -59,7 +57,7 @@ export function PairsGrid({ cards, onFlip, inPlay = true }: PairsGridProps) {
           </div>
         ))}
       </div>
-    </Holder>
+    </PlayBoard>
   );
 }
 

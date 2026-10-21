@@ -20,6 +20,12 @@ export interface PlayBoardProps {
   fitWidth?: boolean;
   /** Changes when the element to keep in view may have moved. */
   current?: unknown;
+  /**
+   * False once the game is over: the board stays where it is, mounted, but
+   * no longer takes the height left, and is only scaled to the width, as
+   * `Fit` does, so a finished board and what follows it scroll as a page.
+   */
+  inPlay?: boolean;
   className?: string;
 }
 
@@ -41,6 +47,7 @@ export function PlayBoard({
   min = 0.5,
   fitWidth = true,
   current,
+  inPlay = true,
   className,
 }: PlayBoardProps) {
   const box = useRef<HTMLDivElement>(null);
@@ -58,7 +65,7 @@ export function PlayBoard({
       const neededHeight = inner.getBoundingClientRect().height;
       if (!width || !neededWidth || !neededHeight) return;
       const byWidth = width / neededWidth;
-      const byHeight = height / neededHeight;
+      const byHeight = inPlay ? height / neededHeight : 1;
       const scale = Math.min(1, byWidth, Math.max(byHeight, min));
       if (scale < 1) inner.style.setProperty('zoom', String(scale));
       outer.toggleAttribute('data-scroll', byHeight < min);
@@ -68,7 +75,7 @@ export function PlayBoard({
     observer.observe(outer);
     observer.observe(inner);
     return () => observer.disconnect();
-  }, [min, fitWidth]);
+  }, [min, fitWidth, inPlay]);
 
   // A board that scrolls keeps the row being played in view.
   useLayoutEffect(() => {
@@ -84,7 +91,11 @@ export function PlayBoard({
   }, [current]);
 
   return (
-    <div ref={box} className={cx(styles.box, className)} data-play-board="">
+    <div
+      ref={box}
+      className={cx(styles.box, className)}
+      data-play-board={inPlay ? '' : undefined}
+    >
       <div ref={piece} className={cx(styles.piece, !fitWidth && styles.wide)}>
         {children}
       </div>

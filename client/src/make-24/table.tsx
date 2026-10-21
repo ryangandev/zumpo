@@ -15,7 +15,6 @@ import {
 import { Button, NumberCard, OperatorKey, type NumberCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { useTypingKeys } from '../shell/board-typing';
-import { Fit } from '../shell/fit';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages, type Messages } from '../i18n';
@@ -51,9 +50,8 @@ function CardRow({
   inPlay?: boolean;
   children?: ReactNode;
 }) {
-  const Holder = inPlay ? PlayBoard : Fit;
   return (
-    <Holder>
+    <PlayBoard inPlay={inPlay}>
       <div className={cx(styles.cards, compact && styles.compactCards)}>
         {cards.map(({ key, ...card }) => (
           <NumberCard
@@ -64,7 +62,7 @@ function CardRow({
         ))}
         {children}
       </div>
-    </Holder>
+    </PlayBoard>
   );
 }
 

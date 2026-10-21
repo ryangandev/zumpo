@@ -22,7 +22,7 @@ import {
 } from '../../ui';
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
-import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import type { Typing } from '../../shell/board-typing';
 import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
@@ -156,98 +156,81 @@ function DailyView({
   };
   const title = m.dailyWord.dailyNumber(puzzle);
 
-  if (!over) {
-    return (
-      <SoloLayout
-        gameType="daily-word"
-        phase={phase}
-        stage={
+  const found = guessesToWin(game);
+  const word = game.answer.toUpperCase();
+  return (
+    <SoloStage
+      phase={phase}
+      bar={
+        over
+          ? endBar(game, title, m.dailyWord.newWordAtMidnight, m)
+          : playingBar(game, title, m.dailyWord.dailyFresh, m)
+      }
+      game={game}
+      typing={typing}
+      result={
+        over && (
+          <SoloResult
+            title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
+            answer={!found && <WordAnswer word={word} />}
+            body={
+              found
+                ? m.dailyWord.dailyFound(
+                    word,
+                    m.dailyWord.streak(stats.currentStreak),
+                  )
+                : m.dailyWord.dailyMissed
+            }
+            stats={[
+              {
+                label: m.dailyWord.nextWordIn,
+                value: formatWait(msUntilNextPuzzle(new Date(now))),
+              },
+            ]}
+            actions={
+              <>
+                <CopyButton
+                  text={shareText(
+                    m.dailyWord.shareDaily(puzzle),
+                    rowsOf(game).map((row) => row.marks),
+                    `${window.location.origin}${soloPath('daily-word')}`,
+                  )}
+                  label={m.dailyWord.share}
+                  copiedLabel={m.dailyWord.copied}
+                  icon="copy"
+                  primary
+                />
+                <Button variant="secondary" onClick={onPractice}>
+                  {m.dailyWord.practiceWord}
+                </Button>
+              </>
+            }
+          />
+        )
+      }
+      side={
+        over ? (
           <>
-            <TurnBar {...playingBar(game, title, m.dailyWord.dailyFresh, m)} />
-            <BoardPanel fitHeight>
-              <PlayArea
-                rows={rowsOf(game)}
-                typed={game.typed}
-                problem={game.problem && m.dailyWord.problem(game.problem)}
-                prompt={promptFor(game.guesses.length, m)}
-                typing={typing}
-                keyboard
+            <DeviceStats stats={stats} />
+            <Card kind="panel" title={m.dailyWord.guessesToFind}>
+              <Distribution
+                bars={stats.distribution.map((count, index) => ({
+                  guesses: String(index + 1),
+                  count,
+                  label: m.dailyWord.distribution(count, index + 1),
+                }))}
+                today={found === null ? null : found - 1}
               />
-            </BoardPanel>
+            </Card>
           </>
-        }
-        side={
+        ) : (
           <>
             <Card kind="panel" title={m.dailyWord.readIt}>
               <MarkLegend />
             </Card>
             <DeviceStats stats={stats} />
           </>
-        }
-      />
-    );
-  }
-
-  const found = guessesToWin(game);
-  const word = game.answer.toUpperCase();
-  const share = shareText(
-    m.dailyWord.shareDaily(puzzle),
-    rowsOf(game).map((row) => row.marks),
-    `${window.location.origin}${soloPath('daily-word')}`,
-  );
-  return (
-    <FinishedLayout
-      phase={phase}
-      bar={endBar(game, title, m.dailyWord.newWordAtMidnight, m)}
-      result={
-        <SoloResult
-          title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
-          answer={!found && <WordAnswer word={word} />}
-          body={
-            found
-              ? m.dailyWord.dailyFound(
-                  word,
-                  m.dailyWord.streak(stats.currentStreak),
-                )
-              : m.dailyWord.dailyMissed
-          }
-          stats={[
-            {
-              label: m.dailyWord.nextWordIn,
-              value: formatWait(msUntilNextPuzzle(new Date(now))),
-            },
-          ]}
-          actions={
-            <>
-              <CopyButton
-                text={share}
-                label={m.dailyWord.share}
-                copiedLabel={m.dailyWord.copied}
-                icon="copy"
-                primary
-              />
-              <Button variant="secondary" onClick={onPractice}>
-                {m.dailyWord.practiceWord}
-              </Button>
-            </>
-          }
-        />
-      }
-      game={game}
-      side={
-        <>
-          <DeviceStats stats={stats} />
-          <Card kind="panel" title={m.dailyWord.guessesToFind}>
-            <Distribution
-              bars={stats.distribution.map((count, index) => ({
-                guesses: String(index + 1),
-                count,
-                label: m.dailyWord.distribution(count, index + 1),
-              }))}
-              today={found === null ? null : found - 1}
-            />
-          </Card>
-        </>
+        )
       }
     />
   );
@@ -273,117 +256,99 @@ function PracticeView({
     label: challenge ? m.dailyWord.challenge : m.dailyWord.practice,
   };
 
-  if (!isOver(game)) {
-    return (
-      <SoloLayout
-        gameType="daily-word"
-        phase={phase}
-        stage={
-          <>
-            <TurnBar
-              {...playingBar(
-                game,
-                challenge ? m.dailyWord.friendWord : m.dailyWord.practiceWord,
-                challenge
-                  ? m.dailyWord.challengeFresh
-                  : m.dailyWord.practiceFresh,
-                m,
-              )}
+  const over = isOver(game);
+  const found = guessesToWin(game);
+  const marks = rowsOf(game).map((row) => row.marks);
+  const label = challenge ? m.dailyWord.friendWord : m.dailyWord.practiceWord;
+  return (
+    <SoloStage
+      phase={phase}
+      bar={
+        over
+          ? endBar(game, label, undefined, m)
+          : playingBar(
+              game,
+              label,
+              challenge
+                ? m.dailyWord.challengeFresh
+                : m.dailyWord.practiceFresh,
+              m,
+            )
+      }
+      game={game}
+      typing={typing}
+      result={
+        over && (
+          <SoloResult
+            title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
+            answer={!found && <WordAnswer word={game.answer.toUpperCase()} />}
+            body={
+              found
+                ? m.dailyWord.practiceResult(game.answer.toUpperCase())
+                : m.dailyWord.practiceMissed
+            }
+            actions={
+              <>
+                <Button onClick={onAnother}>{m.dailyWord.anotherWord}</Button>
+                <Button variant="quiet" icon="back" onClick={onToday}>
+                  {m.dailyWord.todayWord}
+                </Button>
+              </>
+            }
+          />
+        )
+      }
+      side={
+        over ? (
+          <ChallengeCard
+            description={
+              found ? m.dailyWord.friendFewer(found) : m.dailyWord.friendSame
+            }
+            text={shareText(
+              m.dailyWord.sharePractice,
+              marks,
+              challengeLink(soloPath('daily-word'), { seed }),
+            )}
+          >
+            <WordBoard
+              rows={marks.map((rowMarks) => ({ word: null, marks: rowMarks }))}
+              size="mini"
+              label={m.dailyWord.yourMarks}
             />
-            <BoardPanel fitHeight>
-              <PlayArea
-                rows={rowsOf(game)}
-                typed={game.typed}
-                problem={game.problem && m.dailyWord.problem(game.problem)}
-                prompt={promptFor(game.guesses.length, m)}
-                typing={typing}
-                keyboard
-              />
-            </BoardPanel>
-          </>
-        }
-        side={
+          </ChallengeCard>
+        ) : (
           <Card kind="panel" title={m.dailyWord.readIt}>
             <MarkLegend />
           </Card>
-        }
-      />
-    );
-  }
-
-  const found = guessesToWin(game);
-  const marks = rowsOf(game).map((row) => row.marks);
-  const share = shareText(
-    m.dailyWord.sharePractice,
-    marks,
-    challengeLink(soloPath('daily-word'), { seed }),
-  );
-  return (
-    <FinishedLayout
-      phase={phase}
-      bar={endBar(
-        game,
-        challenge ? m.dailyWord.friendWord : m.dailyWord.practiceWord,
-        undefined,
-        m,
-      )}
-      result={
-        <SoloResult
-          title={found ? m.dailyWord.foundIn(found) : m.dailyWord.notThisTime}
-          answer={!found && <WordAnswer word={game.answer.toUpperCase()} />}
-          body={
-            found
-              ? m.dailyWord.practiceResult(game.answer.toUpperCase())
-              : m.dailyWord.practiceMissed
-          }
-          actions={
-            <>
-              <Button onClick={onAnother}>{m.dailyWord.anotherWord}</Button>
-              <Button variant="quiet" icon="back" onClick={onToday}>
-                {m.dailyWord.todayWord}
-              </Button>
-            </>
-          }
-        />
-      }
-      game={game}
-      side={
-        <ChallengeCard
-          description={
-            found ? m.dailyWord.friendFewer(found) : m.dailyWord.friendSame
-          }
-          text={share}
-        >
-          <WordBoard
-            rows={marks.map((rowMarks) => ({ word: null, marks: rowMarks }))}
-            size="mini"
-            label={m.dailyWord.yourMarks}
-          />
-        </ChallengeCard>
+        )
       }
     />
   );
 }
 
 /**
- * DW04-DW06: the finished board where it was played, under a bar that says
- * how it ended, and how it went first in the column beside it.
+ * DW01-DW06: one word from the first guess to how it went. The board is
+ * played and finished in the same panel, so it never moves or changes size:
+ * the keyboard goes, the bar says how it ended, and the result leads the
+ * cards beside it.
  */
-function FinishedLayout({
+function SoloStage({
   phase,
   bar,
-  result,
   game,
+  typing,
+  result,
   side,
 }: {
   phase: { tone: 'blue'; label: string };
   bar: TurnBarProps;
-  result: ReactNode;
   game: SoloGame;
+  typing: Typing;
+  result: ReactNode;
   side: ReactNode;
 }) {
   const m = useMessages();
-  const phone = useMediaQuery(PHONE);
+  const over = isOver(game);
   return (
     <SoloLayout
       gameType="daily-word"
@@ -391,11 +356,14 @@ function FinishedLayout({
       stage={
         <>
           <TurnBar {...bar} />
-          <BoardPanel>
-            <WordBoard
+          <BoardPanel fitHeight>
+            <PlayArea
               rows={rowsOf(game)}
-              size={phone ? 'compact' : 'regular'}
-              label={m.dailyWord.yourGuesses}
+              typed={game.typed}
+              problem={game.problem && m.dailyWord.problem(game.problem)}
+              prompt={over ? undefined : promptFor(game.guesses.length, m)}
+              typing={typing}
+              keyboard={!over}
             />
           </BoardPanel>
         </>
