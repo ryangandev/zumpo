@@ -47,7 +47,7 @@ export function CodeMarks({
     >
       {pegs.map((state, index) => (
         <span key={index} className={styles.peg} aria-hidden="true">
-          <LetterTile state={state} size="mini" />
+          <LetterTile state={state} size="mini" decorative />
         </span>
       ))}
     </span>

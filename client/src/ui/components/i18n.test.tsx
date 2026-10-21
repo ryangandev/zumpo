@@ -128,6 +128,8 @@ describe('public components in Chinese', () => {
     expect(
       screen.getByRole('img', { name: '2 个位置正确，1 个位置不对' }),
     ).toBeVisible();
+    // The pegs are Letter tiles, but no word game's wording reaches them.
+    expect(document.querySelector('[aria-label*="单词"]')).toBeNull();
   });
 
   it('translates player markers, seat counts, lives and card descriptions', () => {

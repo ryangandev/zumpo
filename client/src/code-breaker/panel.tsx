@@ -16,19 +16,19 @@ export function PegLegend() {
       <ul className={styles.pegs}>
         <li className={styles.peg}>
           <span className={styles.icon} aria-hidden="true">
-            <LetterTile state="correct" size="mini" />
+            <LetterTile state="correct" size="mini" decorative />
           </span>
           {m.codeBreaker.legend.right}
         </li>
         <li className={styles.peg}>
           <span className={styles.icon} aria-hidden="true">
-            <LetterTile state="present" size="mini" />
+            <LetterTile state="present" size="mini" decorative />
           </span>
           {m.codeBreaker.legend.moved}
         </li>
         <li className={styles.peg}>
           <span className={styles.icon} aria-hidden="true">
-            <LetterTile state="absent" size="mini" />
+            <LetterTile state="absent" size="mini" decorative />
           </span>
           {m.codeBreaker.legend.none}
         </li>
