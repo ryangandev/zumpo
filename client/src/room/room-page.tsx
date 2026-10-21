@@ -287,8 +287,12 @@ function SeatedRoom({
   // A Hush team can lose together, and a loss is not celebrated.
   const [wasPlaying, setWasPlaying] = useState(state.isGameStarted);
   const [celebrations, setCelebrations] = useState(0);
+  // Who was host when the last game started, so a game cut short can say
+  // whether the crown has just come to the viewer.
+  const [startedBy, setStartedBy] = useState(state.owner.playerId);
   if (state.isGameStarted !== wasPlaying) {
     setWasPlaying(state.isGameStarted);
+    if (state.isGameStarted) setStartedBy(state.owner.playerId);
     // A game starting or ending moves on from whatever was refused before.
     setRefusal(null);
     if (
@@ -379,6 +383,8 @@ function SeatedRoom({
             me,
             spectating: !seat,
             isHost: state.owner.playerId === playerId,
+            becameHost:
+              state.owner.playerId === playerId && startedBy !== playerId,
             chat: connection.chat,
             canvas: connection.canvas,
             drawings: connection.drawings,
@@ -405,6 +411,7 @@ function SeatedRoom({
       playerId,
       me,
       seat,
+      startedBy,
       connection.chat,
       connection.canvas,
       connection.drawings,

@@ -118,6 +118,7 @@ Between games a player may move to watch (`room:watch`) and a spectator may take
 A spectator can talk, through the module's `handleChat` like anybody, so a right guess from the spectator seats is swallowed and scores nobody, and Make 24 keeps spectators quiet while a hand is being solved.
 A spectator's place is held through a refresh like a seat, but quietly: nobody is told they dropped or came back, and the game is never paused for them.
 When the owner leaves, the crown passes to a player here, then a player away, and to a spectator only when no player is left; a host who moves to watch hands it to a player at the table if there is one, and a room ends with its last member.
+The client offers Watch instead only to a guest, because for a host it is a one-way step.
 A game left with too few players ends with one chat line, `game:interrupted`, and no result: nobody finished it, so nobody "wins with 0 points".
 A player holds one seat at a time: creating or joining a room gives up any other seat, as leaving it would.
 The client leaves a room on its way out, but only while connected, so without this a player who navigated away offline would hold the old seat through its grace period while playing somewhere else.

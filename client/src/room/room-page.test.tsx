@@ -250,6 +250,13 @@ describe('a room page', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(
       'Zumpo 没有回应，请再试一次。',
     );
+    // Only a guest may move to watch.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ owner: { username: 'Maya', playerId: 'p2' } }),
+      ),
+    );
     await user.click(screen.getByRole('button', { name: '去观战' }));
     expect(screen.getByRole('alert')).toHaveTextContent('观战席已经满了。');
   });
@@ -415,18 +422,104 @@ describe('a room page', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'room:sit', args: ['r1'] });
   });
 
-  it('lets a player watch instead between games', async () => {
+  it('lets a guest watch instead between games', async () => {
     const user = userEvent.setup();
     const fake = server();
     fake.answer('room:watch', () => ok);
     await renderApp(ROOM, { fake });
-    act(() => fake.serverEmits('room:state', minesweeperState()));
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ owner: { username: 'Maya', playerId: 'p2' } }),
+      ),
+    );
 
     await user.click(screen.getByRole('button', { name: 'Watch instead' }));
     expect(fake.requests.at(-1)).toEqual({
       event: 'room:watch',
       args: ['r1'],
     });
+  });
+
+  it('never offers the host Watch instead, which would give the crown away', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+    expect(
+      screen.getByRole('heading', { name: 'Everyone’s here?' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Watch instead' })).toBeNull();
+
+    // Alone, after the others left, there is nobody to hand it to either.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+          },
+        }),
+      ),
+    );
+    expect(screen.queryByRole('button', { name: 'Watch instead' })).toBeNull();
+  });
+
+  it('says the crown came to the viewer only when it did', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const alone = { p1: { username: 'Ryan', points: 0, isConnected: true } };
+    const cutShort = {
+      endedEarly: true,
+      difficulty: 'Small' as const,
+      rounds: 1,
+      standings: [{ playerId: 'p1', username: 'Ryan', points: 0 }],
+    };
+
+    // Ryan hosted the game, and Maya left it.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ isGameStarted: true, phase: 'picking', round: 1 }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ playerList: alone, lastGame: cutShort }),
+      ),
+    );
+    expect(
+      screen.getByRole('heading', { name: 'Everyone else left.' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Minesweeper needs at least 2 players, so the game has ended. Invite friends to start a new one.',
+      ),
+    ).toBeInTheDocument();
+
+    // Maya hosted the next one, and left it: the crown is Ryan's now.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          owner: { username: 'Maya', playerId: 'p2' },
+          isGameStarted: true,
+          phase: 'picking',
+          round: 1,
+        }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ playerList: alone, lastGame: cutShort }),
+      ),
+    );
+    expect(
+      screen.getByText(
+        'Minesweeper needs at least 2 players, so the game has ended. You are the host now: invite friends to start a new one.',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('lets a spectator leave a game under way at once', async () => {

@@ -60,12 +60,16 @@ function InviteButton({ primary = false }: { primary?: boolean }) {
 
 /**
  * Between games, the way to the other kind of seat: Take a seat for a
- * spectator while one is free, Watch instead for a player while a spectator
+ * spectator while one is free, Watch instead for a guest while a spectator
  * seat is free, or nothing. A move under way says so instead.
+ *
+ * The host is never offered Watch instead: it would hand the crown to
+ * somebody at the table for good, and a host alone has nobody to hand it to.
+ * For a guest it is the quiet choice beside Invite, not one of equal weight.
  */
 function SeatMove({ primary = false }: { primary?: boolean }) {
   const m = useMessages();
-  const { state, spectating, watch, sit, moving } = useRoomContext();
+  const { state, spectating, isHost, watch, sit, moving } = useRoomContext();
   if (moving) return <StatusLine>{m.room.moving}</StatusLine>;
   if (spectating) {
     const seatFree = Object.keys(state.playerList).length < state.maxPlayers;
@@ -76,9 +80,10 @@ function SeatMove({ primary = false }: { primary?: boolean }) {
       </Button>
     );
   }
+  if (isHost) return null;
   if (Object.keys(state.spectators).length >= MAX_SPECTATORS) return null;
   return (
-    <Button variant="secondary" onClick={watch}>
+    <Button variant="quiet" onClick={watch}>
       {m.room.watch}
     </Button>
   );
@@ -213,7 +218,7 @@ export function WaitingPanel({
 
 /** D15, M16: the game ended because everyone else left. */
 export function EndedEarlyPanel() {
-  const { state, spectating, isHost } = useRoomContext();
+  const { state, spectating, isHost, becameHost } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   // Its words are for the player left at the table.
@@ -235,7 +240,9 @@ export function EndedEarlyPanel() {
         </>
       }
     >
-      {m.room.endedEarly(gameName)}
+      {becameHost
+        ? m.room.endedEarlyNewHost(gameName)
+        : m.room.endedEarly(gameName)}
     </RoomPanel>
   );
 }

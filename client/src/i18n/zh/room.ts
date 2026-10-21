@@ -76,6 +76,8 @@ export const room: typeof en = {
   start: '开始游戏',
   everyoneLeft: '其他人都离开了。',
   endedEarly: (game) =>
+    `${game}至少需要 2 人，因此这一局已结束。邀请朋友开始新的一局吧。`,
+  endedEarlyNewHost: (game) =>
     `${game}至少需要 2 人，因此这一局已结束。你现在是房主，邀请朋友开始新的一局吧。`,
   waitingForAgain: (name) => `等待 ${name} 开始下一局。`,
   playAgain: '再玩一局',

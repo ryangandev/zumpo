@@ -81,6 +81,8 @@ export const room = {
   start: 'Start game',
   everyoneLeft: 'Everyone else left.',
   endedEarly: (game: string) =>
+    `${game} needs at least 2 players, so the game has ended. Invite friends to start a new one.`,
+  endedEarlyNewHost: (game: string) =>
     `${game} needs at least 2 players, so the game has ended. You are the host now: invite friends to start a new one.`,
   waitingForAgain: (name: string) =>
     `Waiting for ${name} to start another game.`,
