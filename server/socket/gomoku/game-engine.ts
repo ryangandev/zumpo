@@ -70,8 +70,9 @@ const createGomokuGameEngine = (
     ctx.rooms.ofType(roomId, 'gomoku');
 
   /**
-   * The same two players as last game swap colours, so each has the first
-   * move in turn; a new pair is drawn at random.
+   * The same two players as last game, neither of whom has left or watched
+   * since, swap colours, so each has the first move in turn; a new pair is
+   * drawn at random.
    */
   const colorsFor = (
     room: GomokuRoom,
@@ -84,6 +85,7 @@ const createGomokuGameEngine = (
     const last = room.game.colors;
     const samePair =
       last !== null &&
+      room.game.pairKept &&
       seated.length === 2 &&
       seated.includes(last.black.playerId) &&
       seated.includes(last.white.playerId);
@@ -104,6 +106,7 @@ const createGomokuGameEngine = (
     const { samePair, ...colors } = colorsFor(room);
     game.colors = colors;
     game.gameNumber = samePair ? game.gameNumber + 1 : 1;
+    game.pairKept = true;
     game.moves = [];
     game.missedTurns = {
       [game.colors.black.playerId]: 0,
@@ -232,13 +235,15 @@ const createGomokuGameEngine = (
 
   /**
    * Called after the seat is already gone from `playerList`. A player who
-   * leaves mid-game, or whose seat's grace runs out, loses it: with two seats
-   * there is nobody else to play on with.
+   * leaves or moves to watch ends their pair, so coming back starts a new
+   * one. Mid-game, they lose the game too: with two seats there is nobody
+   * else to play on with.
    */
   const handlePlayerDeparture = (room: GomokuRoom, playerId: string) => {
-    if (!room.isGameStarted) return;
     const color = colorOf(room, playerId);
     if (color === null) return;
+    room.game.pairKept = false;
+    if (!room.isGameStarted) return;
     endGame(room, 'left', otherColor(color));
   };
 

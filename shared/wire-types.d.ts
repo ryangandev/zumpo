@@ -1103,11 +1103,19 @@ interface GomokuRoomState extends RoomState {
    * counted again from 1 for a new pair; 0 before any.
    */
   gameNumber: number;
+  /**
+   * Whether the next game is this pair's next: the last game's two players
+   * are both at the table, and neither has left or moved to watch since.
+   */
+  samePair: boolean;
   /** This game's turns in order; between games, the last game's. */
   moves: GomokuMove[];
   /** Whose turn it is; null between games. */
   turnPlayerId: string | null;
-  /** Each player's lost turns in a row, 0 or 1; the next one loses. */
+  /**
+   * Each player's lost turns in a row: 0 or 1 while a game is on, where the
+   * next one loses, and 2 after a game lost on time.
+   */
   missedTurns: Record<string, number>;
   /** When a game was won by five, each winning line's points in order along it. */
   winLines: number[][] | null;

@@ -365,6 +365,27 @@ describe('a rematch', () => {
     expect(third.gameNumber).toBe(1);
   });
 
+  it('starts a new pair for a player who moved to watch and sat down again', async () => {
+    harness = await startServer();
+    const { roomId, alice, bob } = await playToFirstMove(harness);
+    const over = waitForGomokuState(alice, (s) => s.phase === 'waiting');
+    bob.emit('gomoku:resign', roomId);
+    expect((await over).samePair).toBe(true);
+
+    expect((await request(alice, 'room:watch', roomId)).ok).toBe(true);
+    const back = waitForGomokuState(bob, (s) => alice.playerId in s.playerList);
+    expect((await request(alice, 'room:sit', roomId)).ok).toBe(true);
+    expect((await back).samePair).toBe(false);
+
+    // Alice was Black, so the same pair would have swapped her to White;
+    // Bob is now seated first, so this draw gives Black to Alice.
+    draw = 0.9;
+    // Watching handed the room to Bob.
+    const [view] = await startAndWait(bob, roomId, [alice, bob]);
+    expect(view!.colors?.black.playerId).toBe(alice.playerId);
+    expect(view!.gameNumber).toBe(1);
+  });
+
   it('puts the game’s winner first on the result, whoever has won more', async () => {
     harness = await startServer();
     const { roomId, alice, bob } = await playToFirstMove(harness);

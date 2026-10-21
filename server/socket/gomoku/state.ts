@@ -19,6 +19,11 @@ interface GomokuState {
   colors: GomokuColors | null;
   /** This pair's game: 1 for their first, again 1 for a new pair. */
   gameNumber: number;
+  /**
+   * Whether the last game's two players have both stayed at the table since
+   * it began: one who left or moved to watch makes a new pair, even back.
+   */
+  pairKept: boolean;
   moves: GomokuMove[];
   /** Whose turn it is; null between games. */
   turnPlayerId: string | null;
@@ -32,6 +37,7 @@ const createState = (): GomokuState => ({
   phase: 'waiting',
   colors: null,
   gameNumber: 0,
+  pairKept: false,
   moves: [],
   turnPlayerId: null,
   missedTurns: {},
@@ -61,6 +67,11 @@ const toRoomState = (room: GomokuRoom): GomokuRoomState => {
       white: { ...game.colors.white },
     },
     gameNumber: game.gameNumber,
+    samePair:
+      game.colors !== null &&
+      game.pairKept &&
+      game.colors.black.playerId in room.playerList &&
+      game.colors.white.playerId in room.playerList,
     moves: game.moves.map((move) => ({ ...move })),
     turnPlayerId: game.turnPlayerId,
     missedTurns: { ...game.missedTurns },

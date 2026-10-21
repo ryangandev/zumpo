@@ -108,7 +108,7 @@ Two in a row means the player is not there; the game ends within a minute instea
 
 30 seconds is enough for any move a casual game needs and keeps a game short; a board of 40 stones is at most twenty minutes, and most moves take a few seconds.
 
-When a game ends, the last board stays on the table, winning line and last stone marked, under the result, until the next game starts.
+When a game ends, the last board stays on the table under the result until the next game starts, with the winning line drawn and the last stone marked unless it is in that line.
 
 ### A rematch
 
@@ -127,12 +127,12 @@ Everybody may chat at any time, spectators included.
 ### Spectators
 
 A spectator sees the board, both players and their colours, the clock and the last stone, live, exactly as the players do, and nothing of a move before it is placed.
-They cannot place a stone, and a Notice under the board says they can take a seat once the game ends. ([on purpose](../design.md#on-purpose)), as in every room with spectators.
+They cannot place a stone, and a Notice under the board says they can take a seat once the game ends, as in every room with spectators ([on purpose](../design.md#on-purpose)).
 
 ## Placing a stone
 
 - **With a mouse**, hovering an empty point shows a faint stone of your colour there, and a click places it.
-- **On a touch screen** a point is only 22 px, so a tap could land on its neighbour: the first tap puts a faint stone there and shows **Place stone** under the board, and a second tap on the same point, or the button, places it.
+- **On a phone's touch screen** a point is only 22 px, so a tap could land on its neighbour: the first tap puts a faint stone there and shows **Place stone** under the board, and a second tap on the same point, or the button, places it.
   Tapping another point moves the faint stone.
 - **With a keyboard**, the board is one control: the arrow keys move a focus ring between points, starting at the last stone or the centre, and Enter or Space places a stone.
   Each point's accessible label names it and what is on it ("H8, black stone"; "J9, empty").
@@ -163,16 +163,17 @@ A spectator who drops or leaves changes nothing.
 Every change reaches a player as `room:state`, the whole room as that player may see it ([the wire contract](../architecture.md#the-wire-contract)).
 Nothing in Gomoku is hidden, so every viewer, spectators included, is sent the same game.
 
-| Field          | What it is                                                                                                                    |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `phase`        | `waiting` or `playing`                                                                                                        |
-| `colors`       | Who plays Black and who plays White this game (or the last, between games); `null` before the first                           |
-| `moves`        | This game's turns in order: the colour, and the point, or `null` for a turn lost to the clock; between games, the last game's |
-| `turnPlayerId` | Whose turn it is; `null` between games                                                                                        |
-| `missedTurns`  | Each player's lost turns in a row, 0 or 1, so the screen can warn that the next one loses                                     |
-| `gameNumber`   | Which of this pair's games this is, or the last was, counted from 1 for each new pair; 0 before any                           |
-| `winLines`     | When a game was won by five: the points of each winning line, in order along it; otherwise `null`                             |
-| `lastGame`     | The summary of the last finished game until the next one starts: the winner or a draw, how it ended, and how many stones      |
+| Field          | What it is                                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `phase`        | `waiting` or `playing`                                                                                                                    |
+| `colors`       | Who plays Black and who plays White this game (or the last, between games); `null` before the first                                       |
+| `moves`        | This game's turns in order: the colour, and the point, or `null` for a turn lost to the clock; between games, the last game's             |
+| `turnPlayerId` | Whose turn it is; `null` between games                                                                                                    |
+| `missedTurns`  | Each player's lost turns in a row, 0 or 1 while a game is on, so the screen can warn that the next one loses; 2 after a game lost on time |
+| `gameNumber`   | Which of this pair's games this is, or the last was, counted from 1 for each new pair; 0 before any                                       |
+| `samePair`     | Whether the next game is this pair's next: both of the last game's players are at the table, and neither has left or moved to watch since |
+| `winLines`     | When a game was won by five: the points of each winning line, in order along it; otherwise `null`                                         |
+| `lastGame`     | The summary of the last finished game until the next one starts: the winner or a draw, how it ended, and how many stones                  |
 
 How a game ended is one of `five`, `draw`, `resigned`, `timeout` (two turns in a row) and `left`.
 The board itself is not sent: it is the `moves` played in order, so the last stone is the last of them.

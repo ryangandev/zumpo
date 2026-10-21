@@ -261,6 +261,7 @@ export function gomokuState(
     phase: 'waiting',
     colors: null,
     gameNumber: 0,
+    samePair: false,
     moves: [],
     turnPlayerId: null,
     missedTurns: {},
