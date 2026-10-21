@@ -7,7 +7,8 @@ import styles from './solo-result.module.css';
  * A finished game on your own, first in the column beside the board, so the
  * board stays where it was played (MS03, MS04, T05, PR04, DW04-DW06): how it
  * went, a number or two the screen shows nowhere else, and what next.
- * `SoloLayout` places it, under the board on one column.
+ * `SoloLayout` places it, over the board on one column, and gives its title
+ * the focus when the game ends.
  */
 export function SoloResult({
   title,
@@ -38,6 +39,7 @@ export function SoloResult({
       kind="panel"
       title={title}
       actions={actions}
+      focusableTitle
       className={styles.result}
     >
       {answer}

@@ -84,9 +84,8 @@ describe('Daily Word on your own', () => {
     expect(screen.getByRole('group', { name: 'Keyboard' })).toBeInTheDocument();
     await guess(TODAY);
 
-    expect(
-      screen.getByRole('heading', { name: 'Found in 6.' }),
-    ).toBeInTheDocument();
+    // The result says how it went, and has the focus the keyboard had.
+    expect(screen.getByRole('heading', { name: 'Found in 6.' })).toHaveFocus();
     // The same nodes, not a finished copy: nothing moves or resizes.
     expect(screen.getByRole('group', { name: 'Your guesses' })).toBe(board);
     expect(panel.isConnected).toBe(true);
@@ -162,18 +161,26 @@ describe('Daily Word on your own', () => {
       await (await findTurn()).findByText('Find the word'),
     ).toBeInTheDocument();
     expect(screen.getByText('Word #1')).toBeInTheDocument();
+    // The button pressed has gone; the focus goes to the new board's keys.
+    expect(
+      screen
+        .getByRole('group', { name: 'Keyboard' })
+        .contains(document.activeElement),
+    ).toBe(true);
   });
 
-  it('puts the cards under the board on a phone', async () => {
+  it('puts the result over the board and the cards under it on a phone', async () => {
     onPhone();
     await renderApp('/games/daily-word/solo');
     await (await findTurn()).findByText('Find the word');
     await guess(TODAY);
+    const result = screen.getByRole('heading', { name: 'Found in 1.' });
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });
-    expect(
-      board.compareDocumentPosition(device) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
+    const follows = (a: Node, b: Node) =>
+      Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(follows(result, board)).toBe(true);
+    expect(follows(board, device)).toBe(true);
   });
 });
 

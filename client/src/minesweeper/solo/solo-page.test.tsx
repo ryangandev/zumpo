@@ -150,6 +150,12 @@ describe('a board on your own', () => {
     expect(screen.getAllByRole('button', { name: /: hidden$/ })).toHaveLength(
       81,
     );
+    // Try again has gone with the last board; the new board has the focus.
+    expect(
+      screen
+        .getByRole('grid', { name: 'Board, 9 by 9' })
+        .contains(document.activeElement),
+    ).toBe(true);
   });
 
   it('is won by opening every safe cell, and keeps the best', async () => {

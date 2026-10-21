@@ -17,6 +17,11 @@
   min-width: 0;
 }
 
+/* The result, first beside the board or over it: only a place for it. */
+.result {
+  display: contents;
+}
+
 /* Paused while How to play is open: the game keeps its place, unseen. */
 .away {
   visibility: hidden;
@@ -30,9 +35,9 @@
 }
 
 /* Under 1024 px (ONE_COLUMN in use-media-query.ts) the side column would
-   leave the stage less than a board needs: one column, the side's cards
-   under the stage, side by side where two fit, and one the whole width on
-   the narrowest phones. */
+   leave the stage less than a board needs: one column, a result over the
+   stage, the side's cards under it, side by side where two fit, and one the
+   whole width on the narrowest phones. */
 @media (max-width: 1023px) {
   .solo {
     grid-template-columns: minmax(0, 1fr);

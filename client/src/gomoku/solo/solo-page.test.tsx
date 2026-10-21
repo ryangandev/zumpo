@@ -170,7 +170,7 @@ describe('Gomoku on your own', () => {
       screen.getByRole('heading', {
         name: /^The computer won on move \d+\.$/,
       }),
-    ).toBeInTheDocument();
+    ).toHaveFocus();
     expect(
       turn().getByText('The computer made five in a row'),
     ).toBeInTheDocument();
@@ -209,6 +209,7 @@ describe('Gomoku on your own', () => {
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(readPicks()).toEqual({ level: 'medium', color: 'white' });
     expect(turn().getByText('Computer’s turn')).toBeInTheDocument();
+    expect(board().contains(document.activeElement)).toBe(true);
   });
 
   it('plays at the last picks', async () => {

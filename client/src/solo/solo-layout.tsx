@@ -1,4 +1,10 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { useBlocker, useNavigate } from 'react-router';
 import type { GameType } from '../../../shared/wire-types';
 import { Button, Dialog, RoomBar, type TagTone } from '../ui';
@@ -23,8 +29,9 @@ export interface SoloLayoutProps {
   stage: ReactNode;
   /**
    * A finished game's `SoloResult`: first in the column beside the board, or
-   * under the board where there is one column. Nothing, or false, while the
-   * game is played.
+   * over it where there is one column, so Play again is on screen without
+   * scrolling. Nothing, or false, while the game is played. It takes the
+   * focus when it appears.
    */
   result?: ReactNode;
   /**
@@ -45,9 +52,34 @@ export interface SoloLayoutProps {
 }
 
 /**
+ * A solo game was just put away, in this same commit: the next one mounting
+ * now replaces it, from Play again or a change of settings, rather than
+ * opening on a page of its own.
+ */
+let replacing = false;
+
+const focusLost = () =>
+  document.activeElement === null || document.activeElement === document.body;
+
+/** Where Tab goes: a board's cells take one stop between them. */
+const TABBABLE = ['button:not(:disabled)', 'input:not(:disabled)', 'a[href]']
+  .map((element) => element + ':not([tabindex="-1"])')
+  .concat('[tabindex="0"]')
+  .join(', ');
+
+/** The stage's first stop for Tab: the board's, or the first control by it. */
+function focusStage(stage: HTMLElement | null) {
+  stage?.querySelector<HTMLElement>(TABBABLE)?.focus();
+}
+
+/**
  * A game on your own: a room bar with no room, the game, and its cards beside
  * it (MS02-MS05, T02-T05, PR02-PR04), or under it from 1023 px down. A
- * finished game's result leads the cards, so the board never moves. There is
+ * finished game's result leads the cards, so the board never moves; on one
+ * column it comes before the board instead, so its actions are in sight.
+ * When a game ends the result's title takes the focus, and when the next
+ * game starts, from Play again or a change of settings, the board's first
+ * control does: the button pressed has gone. There is
  * no seat, so Leave goes back to the game's page, where the game can be
  * started again with other settings; it asks first only with `leaveWarning`.
  * While How to play or that question is open the game's time stands still, and
@@ -85,6 +117,39 @@ export function SoloLayout({
   const stageClass = cx(styles.stage, time?.paused && styles.away);
   // A phone keeps to the game until there is a result to show.
   const alone = !result && (phone || !side);
+  const lead = oneColumn && Boolean(result);
+
+  const stageBox = useRef<HTMLDivElement>(null);
+  const resultBox = useRef<HTMLDivElement>(null);
+  const finished = Boolean(result);
+  const wasFinished = useRef(finished);
+  useEffect(() => {
+    const was = wasFinished.current;
+    wasFinished.current = finished;
+    if (finished && !was) {
+      resultBox.current
+        ?.querySelector<HTMLElement>('h1[tabindex="-1"], h2[tabindex="-1"]')
+        ?.focus();
+    } else if (!finished && was && focusLost()) {
+      focusStage(stageBox.current);
+    }
+  }, [finished]);
+  // Play again mounts the next game afresh, and the button pressed goes with
+  // the last one. A game opened on its own page leaves the focus to the page,
+  // as any page does. Counted once, as a development build runs it twice.
+  const counted = useRef(false);
+  useEffect(() => {
+    if (!counted.current) {
+      counted.current = true;
+      if (replacing && focusLost()) focusStage(stageBox.current);
+    }
+    return () => {
+      replacing = true;
+      setTimeout(() => {
+        replacing = false;
+      });
+    };
+  }, []);
 
   // A game opens at the top of the page, as a new page does, not where the
   // form it was started from had been scrolled to. A block body: browsers
@@ -109,16 +174,28 @@ export function SoloLayout({
         />
       }
     >
-      {/* The stage keeps its place in the tree as the side comes and goes,
-          so the board is never mounted again when a game ends. Alone, the
-          stage is a play column: on a phone the board takes the height left. */}
+      {/* The stage keeps its place in the tree as the result and the side
+          come and go, so the board is never mounted again when a game ends.
+          Alone, the stage is a play column: on a phone the board takes the
+          height left. */}
       <div
         className={cx(styles.solo, alone && styles.alone, alone && playColumn)}
       >
-        <div className={cx(stageClass, alone && playColumn)}>{stage}</div>
+        {lead && (
+          <div ref={resultBox} className={styles.result}>
+            {result}
+          </div>
+        )}
+        <div ref={stageBox} className={cx(stageClass, alone && playColumn)}>
+          {stage}
+        </div>
         {!alone && (
           <div className={styles.side}>
-            {result}
+            {!lead && result && (
+              <div ref={resultBox} className={styles.result}>
+                {result}
+              </div>
+            )}
             {side}
           </div>
         )}
