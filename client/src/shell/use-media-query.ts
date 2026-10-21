@@ -49,3 +49,12 @@ export const SHORT_SCREEN = '(min-width: 641px) and (max-height: 500px)';
  * query is in the layouts' CSS.
  */
 export const SHORT_WINDOW = '(min-width: 641px) and (max-height: 800px)';
+
+/**
+ * A short window wide enough for a board and its keys side by side (a
+ * regular Daily Word board, 24 px, and a keyboard in its Phone layout, beside
+ * the 344 px side column): on your own, Daily Word's keyboard and Code
+ * Breaker's pad go beside the board instead of under it, so neither shrinks
+ * far.
+ */
+export const SHORT_WIDE = '(min-width: 1240px) and (max-height: 800px)';

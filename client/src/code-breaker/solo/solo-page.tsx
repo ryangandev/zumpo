@@ -22,7 +22,7 @@ import {
 } from '../../ui';
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
-import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import { PHONE, SHORT_WIDE, useMediaQuery } from '../../shell/use-media-query';
 import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
@@ -127,9 +127,9 @@ const dailyGame = (puzzle: number) =>
 
 /**
  * CB02-CB08: one code from the first guess to how it went. The board is
- * played and finished in the same panel, so it never moves or changes size:
- * the pad goes, the bar says how it ended, and the result leads the cards
- * beside it.
+ * played and finished in the same panel, so it keeps its size, and its
+ * place unless the pad was beside it: the pad goes, the bar says how
+ * it ended, and the result leads the cards beside it.
  */
 function SoloStage({
   phase,
@@ -152,6 +152,7 @@ function SoloStage({
 }) {
   const m = useMessages();
   const over = isOver(game);
+  const beside = useMediaQuery(SHORT_WIDE);
   const { problem } = game.draft;
   return (
     <SoloLayout
@@ -175,6 +176,7 @@ function SoloStage({
               onNotes={onNotes}
               ruledOut={settledDigits(rowsOf(game)).out}
               pad={!over}
+              beside={beside && !over}
             />
           </BoardPanel>
         </>

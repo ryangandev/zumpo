@@ -23,6 +23,7 @@ import {
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
 import type { Typing } from '../../shell/board-typing';
+import { SHORT_WIDE, useMediaQuery } from '../../shell/use-media-query';
 import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
@@ -328,9 +329,9 @@ function PracticeView({
 
 /**
  * DW01-DW06: one word from the first guess to how it went. The board is
- * played and finished in the same panel, so it never moves or changes size:
- * the keyboard goes, the bar says how it ended, and the result leads the
- * cards beside it.
+ * played and finished in the same panel, so it keeps its size, and its
+ * place unless the keyboard was beside it: the keyboard goes, the bar says how
+ * it ended, and the result leads the cards beside it.
  */
 function SoloStage({
   phase,
@@ -349,6 +350,7 @@ function SoloStage({
 }) {
   const m = useMessages();
   const over = isOver(game);
+  const beside = useMediaQuery(SHORT_WIDE);
   return (
     <SoloLayout
       gameType="daily-word"
@@ -364,6 +366,7 @@ function SoloStage({
               prompt={over ? undefined : promptFor(game.guesses.length, m)}
               typing={typing}
               keyboard={!over}
+              beside={beside && !over}
             />
           </BoardPanel>
         </>
