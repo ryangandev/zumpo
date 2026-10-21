@@ -8,16 +8,20 @@ import styles from './panel.module.css';
 
 /**
  * The paper panel a board is played on (DW01-DW10); bare on a phone. On your
- * own, `fitHeight` keeps the board and its keys inside the window.
+ * own, `fitHeight` keeps the board and its keys inside the window, measured
+ * afresh when `layout` changes (useFitHeight).
  */
 export function BoardPanel({
   children,
   fitHeight = false,
+  layout,
 }: {
   children: ReactNode;
   fitHeight?: boolean;
+  /** Where the keys are, such as beside the board on a short wide window. */
+  layout?: unknown;
 }) {
-  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  const ref = useFitHeight<HTMLDivElement>(fitHeight, layout);
   return (
     <div ref={ref} className={cx(styles.panel, playColumn)}>
       {children}

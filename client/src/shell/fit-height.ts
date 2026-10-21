@@ -10,29 +10,42 @@ const MIN_SCALE = 0.5;
 
 /**
  * A board played on your own, with any keys under it (a word, a code, a
- * minefield, a table of cards), scaled down with every proportion kept when the page would
- * otherwise end below the window, so the last row and Enter are in view
- * without scrolling. Only beside a side column, where the board's column is
- * the page's tallest; on one column the page scrolls as it is. The element
- * is measured unscaled each time the window or the element changes size.
- * Scaled, it lays its content out wider by as much, so a board that pans or
- * a keyboard that narrows keeps its desktop layout. The element is marked
- * `data-fit-height`, so a page around it can tighten itself on a short
- * window (page.module.css).
+ * minefield, a table of cards), scaled down with every proportion kept when
+ * the page would otherwise end below the window, so the last row and Enter
+ * are in view without scrolling. Only beside a side column, where the
+ * board's column is the page's tallest; on one column the page scrolls as it
+ * is. The element is measured unscaled each time the window or the element
+ * changes size. Scaled, it lays its content out wider by as much, so a board
+ * that pans or a keyboard that narrows keeps its desktop layout. While it
+ * may scale, the element is marked `data-fit-height`, so a page around it
+ * can tighten itself on a short window (page.module.css).
+ *
+ * `layout` names the layout the board is in, such as keys beside it or under
+ * it, where that follows the window from a media query: the query changes in
+ * a render after the window's resize, so a new `layout` measures afresh, and
+ * a board laid out shorter may grow back.
  */
-export function useFitHeight<T extends HTMLElement>(enabled = true) {
+export function useFitHeight<T extends HTMLElement>(
+  enabled = true,
+  layout?: unknown,
+) {
   const ref = useRef<T>(null);
+  /** Measures afresh, letting the board grow back; set while it may scale. */
+  const remeasure = useRef(() => {});
+  const laidOut = useRef(layout);
 
   useLayoutEffect(() => {
     const element = ref.current;
     if (!element || !enabled) return;
-    element.setAttribute('data-fit-height', '');
     // The board keeps its size as the game goes on, such as when its
-    // controls go at the end; only a change of window lets it grow back.
+    // controls go at the end; only a change of window or of layout lets it
+    // grow back.
     let most = 1;
     const fit = () => {
       element.style.removeProperty('zoom');
-      if (window.matchMedia(ONE_COLUMN).matches) return;
+      const oneColumn = window.matchMedia(ONE_COLUMN).matches;
+      element.toggleAttribute('data-fit-height', !oneColumn);
+      if (oneColumn) return;
       most = Math.min(most, heightScale(element));
       if (most < 1) element.style.setProperty('zoom', String(most));
     };
@@ -41,16 +54,25 @@ export function useFitHeight<T extends HTMLElement>(enabled = true) {
       fit();
     };
     fit();
+    remeasure.current = refit;
     const observer = new ResizeObserver(fit);
     observer.observe(element);
     window.addEventListener('resize', refit);
     return () => {
+      remeasure.current = () => {};
       observer.disconnect();
       window.removeEventListener('resize', refit);
       element.style.removeProperty('zoom');
       element.removeAttribute('data-fit-height');
     };
   }, [enabled]);
+
+  // A new layout, which comes a render after the resize that brought it.
+  useLayoutEffect(() => {
+    if (laidOut.current === layout) return;
+    laidOut.current = layout;
+    remeasure.current();
+  }, [layout]);
 
   return ref;
 }

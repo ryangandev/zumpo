@@ -23,8 +23,8 @@ function setWindowHeight(height: number) {
   });
 }
 
-function Board() {
-  const ref = useFitHeight<HTMLDivElement>();
+function Board({ layout }: { layout?: string }) {
+  const ref = useFitHeight<HTMLDivElement>(true, layout);
   return <div ref={ref} data-testid="board" />;
 }
 
@@ -143,6 +143,26 @@ describe('useFitHeight', () => {
     expect(zoomOf(board())).toBeGreaterThan(0.575);
   });
 
+  it('measures again when its layout changes, after the resize that changed it', () => {
+    const { rerender } = render(<Board layout="keys under" />);
+    const stacked = zoomOf(board());
+    expect(stacked).toBeLessThan(0.58);
+
+    // The window widens: its resize comes first, with the keys still under
+    // the board, and only the next render puts them beside it.
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    natural = 600;
+    act(() => observed.forEach((callback) => callback([], {} as never)));
+    expect(zoomOf(board())).toBe(stacked);
+
+    rerender(<Board layout="keys beside" />);
+    expect(endsInWindow()).toBe(true);
+    // (720 - 100 - 40 - 1) / 600, to the search's step.
+    expect(zoomOf(board())).toBeGreaterThan(0.95);
+  });
+
   it('stops at half size, below which the page scrolls instead', () => {
     natural = 3000;
     render(<Board />);
@@ -153,5 +173,12 @@ describe('useFitHeight', () => {
     onPhone();
     render(<Board />);
     expect(board().style.zoom).toBe('');
+    // Nor marks it, so the page keeps its own spacing.
+    expect(board()).not.toHaveAttribute('data-fit-height');
+  });
+
+  it('marks a board it may scale', () => {
+    render(<Board />);
+    expect(board()).toHaveAttribute('data-fit-height');
   });
 });

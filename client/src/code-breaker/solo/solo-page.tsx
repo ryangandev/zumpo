@@ -161,7 +161,10 @@ function SoloStage({
       stage={
         <>
           <TurnBar {...bar} />
-          <BoardPanel fitHeight>
+          {/* Keyed on the window's layout, not on whether the keys are
+              beside the board now, so the board grows back when the window
+              makes room, but not when the keys go at the end. */}
+          <BoardPanel fitHeight layout={beside}>
             <PlayArea
               rows={rowsOf(game)}
               draft={game.draft}
