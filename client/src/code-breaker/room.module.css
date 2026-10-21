@@ -67,6 +67,12 @@
   gap: var(--zumpo-space-16);
 }
 
+/* Four Small boards 16 px apart are 16 px wider than the panel holds, which
+   Figma lets CB12 overflow; 8 apart, four fit. */
+.results .boards {
+  gap: var(--zumpo-space-8);
+}
+
 /* On a phone the others are on the Players tab, on a paper panel. */
 @media (max-width: 640px) {
   .others {
