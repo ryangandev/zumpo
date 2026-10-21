@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { pointAt, POINTS } from '../../../../shared/gomoku';
 import {
+  canTakeBack,
   isYourTurn,
   newGame,
   play,
+  takeBack,
   toMove,
   youWon,
   type SoloGame,
@@ -24,6 +26,20 @@ describe('a game on your own', () => {
     expect(toMove(start)).toBe('black');
     expect(isYourTurn(start)).toBe(true);
     expect(isYourTurn(newGame({ level: 'easy', color: 'white' }))).toBe(false);
+  });
+
+  it('takes back your last stone and the answer to it, on your turn only', () => {
+    const asWhite = newGame({ level: 'easy', color: 'white' });
+    const opened = play(asWhite, pointAt(7, 8));
+    expect(canTakeBack(opened)).toBe(false);
+    expect(takeBack(opened)).toBe(opened);
+
+    const answered = playAll(opened, [pointAt(0, 1), pointAt(7, 9)]);
+    expect(canTakeBack(answered)).toBe(true);
+    expect(takeBack(answered).moves).toEqual(opened.moves);
+    // Mid-thought, it is not your turn.
+    const thinking = play(answered, pointAt(0, 2));
+    expect(takeBack(thinking)).toBe(thinking);
   });
 
   it('ignores a stone on a taken point or off the board', () => {

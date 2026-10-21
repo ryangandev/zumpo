@@ -149,6 +149,7 @@ export const gomoku = {
     drawBody: (next: GomokuColor) =>
       `Nobody made five. Play again and you take ${COLOR[next]}.`,
     changeLevel: 'Change level',
+    takeBack: 'Take back',
     thisGame: 'This game',
     youPlay: 'You play',
     stonesOnBoard: 'Stones on the board',

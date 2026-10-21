@@ -124,6 +124,7 @@ export const gomoku: typeof en = {
     five: (from, to, next) =>
       `五子连珠，从 ${from} 到 ${to}。再来一局你执${COLOR[next]}。`,
     drawBody: (next) => `没有人连成五子。再来一局你执${COLOR[next]}。`,
+    takeBack: '悔棋',
     changeLevel: '换难度',
     thisGame: '这一局',
     youPlay: '你执',
