@@ -638,8 +638,8 @@ function hardMove(
 
 /**
  * The computer's move for `color` after `moves`, at `level`. At every level
- * it plays its own five and blocks a four of yours; Easy weighs defence at
- * half and picks among its four best, Medium plays its best, and Hard
+ * it plays its own five and blocks a four of yours; Easy weighs only its own
+ * lines and picks among its four best, Medium plays its best, and Hard
  * searches ahead.
  */
 export function chooseMove(
@@ -654,7 +654,8 @@ export function chooseMove(
   if (forced !== null) return forced;
   switch (level) {
     case 'easy':
-      return pick(ranked(board, color, 0.5).slice(0, 4), random).point;
+      // Its own lines alone: of yours, it stops only the four above.
+      return pick(ranked(board, color, 0).slice(0, 4), random).point;
     case 'medium':
       return mediumMove(board, color, random);
     case 'hard':

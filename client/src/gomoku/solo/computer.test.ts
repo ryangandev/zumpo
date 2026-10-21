@@ -96,6 +96,25 @@ describe('the computer', () => {
     }
   });
 
+  it('lets most open threes through at Easy', () => {
+    // Black's open three across, up and on a slant; White's stones apart.
+    const threes = [
+      ['E8 A1 F8 A3 G8', ['D8', 'H8', 'C8', 'I8']],
+      ['H5 O1 H6 O3 H7', ['H4', 'H8', 'H3', 'H9']],
+      ['E5 A15 F6 C15 G7', ['D4', 'H8', 'C3', 'I9']],
+    ] as const;
+    let blocked = 0;
+    let tries = 0;
+    for (const [moves, blocks] of threes) {
+      for (let seed = 1; seed <= 10; seed += 1) {
+        const point = chooseMove(movesOf(moves), 'white', 'easy', seeded(seed));
+        if ((blocks as readonly string[]).includes(named(point))) blocked += 1;
+        tries += 1;
+      }
+    }
+    expect(blocked).toBeLessThan(tries / 2);
+  });
+
   it('makes an open four of its own over blocking a three', () => {
     // White has an open three on row 3; Black has an open three on row 8.
     const moves = movesOf('E8 E3 F8 F3 G8 G3 A15');
