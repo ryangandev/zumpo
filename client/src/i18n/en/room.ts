@@ -32,6 +32,9 @@ export const room = {
   nowHost: 'You’re the host now.',
   playerAway: (name: string): string => `${name} is away.`,
   playerLeft: (name: string): string => `${name} left the room.`,
+  /** The host left, and the crown passed to the viewer. */
+  leftNowHost: (name: string): string =>
+    `${name} left the room. You’re the host now.`,
   players: (count: number) => `Players · ${count}`,
   chat: 'Chat',
   /** The browser tab's title while it is in the background and it is your go. */

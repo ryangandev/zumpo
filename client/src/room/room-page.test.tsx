@@ -259,6 +259,35 @@ describe('a room page', () => {
     );
   });
 
+  it('says on a phone’s board that the host left and the crown passed', async () => {
+    onPhone();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const maya = { username: 'Maya', playerId: 'p2' };
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ isGameStarted: true, owner: maya }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          isGameStarted: true,
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+          },
+        }),
+      ),
+    );
+    expect(
+      within(screen.getByRole('tabpanel', { name: 'Board' })).getByRole(
+        'status',
+      ),
+    ).toHaveTextContent('Maya left the room. You’re the host now.');
+  });
+
   it('asks for a password straight on the page on a phone', async () => {
     onPhone();
     await renderApp(ROOM, { fake: server({ password: 'turtle' }) });

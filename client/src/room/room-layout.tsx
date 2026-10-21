@@ -250,8 +250,13 @@ export function RoomLayout({
                   {boardInput && <ChatInput {...input} label={boardInput} />}
                   {newHost ? (
                     // Over the top of the board, so nothing under it moves.
+                    // A host who left hands the crown on: one line says both.
                     <div className={styles.toast}>
-                      <Notice tone="success">{m.room.nowHost}</Notice>
+                      <Notice tone="success">
+                        {gone?.left
+                          ? m.room.leftNowHost(gone.name)
+                          : m.room.nowHost}
+                      </Notice>
                     </div>
                   ) : (
                     gone && (
