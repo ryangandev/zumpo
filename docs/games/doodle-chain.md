@@ -161,7 +161,7 @@ After the last step everybody, spectators included, watches the chains together:
 Next names the entry it means to show (`dc:reveal:next` carries how many are shown), so a double tap shows one entry, never two.
 There is no Back: the album is where chains are read again, at each player's own pace.
 
-**A host who is away does not hold the reveal:** at once the player next in line steps it on from the same entry, as they may start a game (`starterOf` in [`shared/room.ts`](../../shared/room.ts)), and is told "Maya is away, so you show the chains."
+**A host who is away does not hold the reveal:** at once the player next in line steps it on from the same entry, as they may start a game (`starterOf` in [`shared/room.ts`](../../shared/room.ts)), and is told "Maya isn’t at the table, so you show the chains."
 The host takes it back the moment they return; if their seat goes, the crown passes and the new host carries on.
 
 ### Hearts

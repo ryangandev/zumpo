@@ -97,7 +97,7 @@ describe('what comes after a game', () => {
       }),
     );
     expect(
-      screen.getByText('Maya is away, so you can start the next game.'),
+      screen.getByText('Maya isn’t at the table, so you can start the next game.'),
     ).toBeInTheDocument();
     expect(screen.queryByText(/is ready/)).toBeNull();
     expect(

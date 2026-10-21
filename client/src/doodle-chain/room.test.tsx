@@ -518,7 +518,7 @@ describe('a Doodle Chain room', () => {
 
     expect(
       screen.getByText(
-        'Maya is away, so you show the chains. Next shows the last of Ryan’s chain.',
+        'Maya isn’t at the table, so you show the chains. Next shows the last of Ryan’s chain.',
       ),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Next' }));

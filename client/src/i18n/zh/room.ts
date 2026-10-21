@@ -106,7 +106,7 @@ export const room: typeof en = {
   waitingOnReady: (names, starter) =>
     `你已准备。等待 ${names}，或由 ${starter} 开始。`,
   areReady: (names) => `${names} 已准备。`,
-  standIn: (host) => `${host} 暂时不在，由你来开始下一局。`,
+  standIn: (host) => `${host} 不在座位上，由你来开始下一局。`,
   gameOver: '游戏结束。',
   wins: (name, score) => `${name} 以 ${score}获胜。`,
   ties: (names, score) => `${names} 以 ${score}并列获胜。`,

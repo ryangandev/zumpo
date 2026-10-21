@@ -253,7 +253,7 @@ Code differs from Figma on purpose in a few places:
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - Between games every room's results end the same way: the starter gets a Next game select (an Input with no helper, 320 px wide), and everyone else gets a muted line saying the setting, a muted line saying how the next game starts, and Ready.
   Figma draws this on M14 for the host and on LD12 for a guest; the other results screens still show the host with Play again alone and a guest with "Waiting for … to start another game."
-  The lines for Not ready, for a stand-in while the host is away ("Ryan is away, so you can start the next game."), and for who is ready are muted body lines too, and Figma does not draw them.
+  The lines for Not ready, for a stand-in while the host is away ("Ryan isn’t at the table, so you can start the next game."), and for who is ready are muted body lines too, and Figma does not draw them.
 - The turn bar's meta names who has locked in on a Minesweeper round ("Maya locked in"), and who has solved a Make 24 hand while you undo; M04, M11 to M13 and T04 draw the lines from before anybody has.
   A Pairs turn that ran out says so in the meta for the next turn ("Maya ran out of time · your turn"), and no Pairs screen draws it.
 - Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.

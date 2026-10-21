@@ -124,8 +124,9 @@ export const room = {
     `You’re ready. Waiting for ${names}, or for ${starter} to start.`,
   areReady: (names: string, count: number) =>
     `${names} ${count === 1 ? 'is' : 'are'} ready.`,
-  /** For the player the right to start passed to while the host is away. */
-  standIn: (host: string) => `${host} is away, so you can start the next game.`,
+  /** For the player the right to start passed to while the host is away or watching. */
+  standIn: (host: string) =>
+    `${host} isn’t at the table, so you can start the next game.`,
   gameOver: 'Game over.',
   wins: (name: string, score: string) => `${name} wins with ${score}.`,
   ties: (names: string, score: string) => `${names} tie with ${score}.`,

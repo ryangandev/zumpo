@@ -182,7 +182,7 @@ export const doodleChain: typeof en = {
   allShown: '所有传话都看完了，画册里都有。',
   hostShowing: (host) => `${host} 在逐条揭晓传话。`,
   hostNext: (host, next) => `${host} 在逐条揭晓传话。接下来是 ${next} 的传话。`,
-  standInReveal: (host) => `${host} 暂时不在，由你来揭晓传话。`,
+  standInReveal: (host) => `${host} 不在座位上，由你来揭晓传话。`,
 
   everyChain: '每条传话都在这里了。',
   soFar: '到目前为止的每条传话都在这里了。',
