@@ -29,6 +29,7 @@ Where to find the answer, without searching the repository.
 | Liar's Dice rules, the raise, the bots, code           | [games/liars-dice.md](games/liars-dice.md)                                                                                      |
 | Hush rules, levels, lives, pauses, code                | [games/hush.md](games/hush.md)                                                                                                  |
 | Daily Word rules, word lists, scoring, code            | [games/daily-word.md](games/daily-word.md)                                                                                      |
+| Code Breaker rules, pegs, notes, daily codes, code     | [games/code-breaker.md](games/code-breaker.md)                                                                                  |
 | Doodle Chain rules, steps, the reveal, hearts, code    | [games/doodle-chain.md](games/doodle-chain.md)                                                                                  |
 | Brand, visual direction, the Figma file                | [design.md](design.md)                                                                                                          |
 | The design system in code, reviewing it against Figma  | [design.md#in-code](design.md#in-code), then [architecture.md#client](architecture.md#client)                                   |

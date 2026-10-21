@@ -7,9 +7,9 @@ import {
   pairsDurationsInSeconds as defaultDurations,
   type PairsDurationsInSeconds,
 } from '../../libs/game-clock.js';
-import { dealDeck, PAIRS_BOARDS, shuffle } from '../../../shared/pairs.js';
+import { dealDeck, PAIRS_BOARDS } from '../../../shared/pairs.js';
 import { pairsFound, playerAfter, type PairsState } from './state.js';
-import { itemAt } from '../../../shared/list.js';
+import { itemAt, shuffle } from '../../../shared/list.js';
 
 type PairsRoom = Room<PairsState>;
 

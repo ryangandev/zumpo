@@ -54,6 +54,9 @@ export const createRoom = {
   words: 'Words',
   wordsHelper: '3 or 5 words, 2 minutes each.',
   wordCount: (count: number) => plural(count, 'word'),
+  codes: 'Codes',
+  codesHelper: '1 or 3 codes, 3 minutes each.',
+  codeCount: (count: number) => plural(count, 'code'),
   drawingTime: 'Drawing time',
   drawingTimeHelper:
     '45, 60 or 90 seconds a drawing. Writing and describing take 30s.',

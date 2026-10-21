@@ -16,6 +16,17 @@ import { startServer } from '../own-server';
 import { dailyAnswer, roomWords } from '../../shared/daily-word.js';
 import { seededRandom, seedNumber } from '../../shared/seed.js';
 import { guessesOf, solve, typeGuess } from '../play/daily-word';
+import {
+  ALL_CODES,
+  dailyCode,
+  MAX_GUESSES,
+  roomCodes,
+} from '../../shared/code-breaker.js';
+import {
+  guessesOf as codeGuessesOf,
+  solve as solveCode,
+  typeGuess as typeCode,
+} from '../play/code-breaker';
 import { missHand, solveHand, startHand } from '../play/make-24';
 import { deal, handOf, play, pressReady, readyUp } from '../play/hush';
 import {
@@ -284,6 +295,33 @@ test('a tab taken over, and a room closed by a restart', async ({ player }) => {
   }
 });
 
+/**
+ * A room in each state a game page lists beside an open one: private, full
+ * and playing.
+ */
+async function roomInEachState(
+  player: (name: string, options?: PlayerOptions) => Promise<Page>,
+  game: 'draw-and-guess' | 'minesweeper' | 'code-breaker',
+) {
+  const ryan = await player('Ryan', desktop);
+  const privateRoom = await createRoom(ryan, game, {
+    name: 'Ryan’s room',
+    password: 'otter',
+  });
+  const leo = await player('Leo', desktop);
+  const ada = await player('Ada', desktop);
+  await joinRoom(
+    ada,
+    await createRoom(leo, game, { name: 'Leo’s room', seats: 2 }),
+  );
+  const kai = await player('Kai', desktop);
+  const noor = await player('Noor', desktop);
+  const playing = await createRoom(kai, game, { name: 'Kai’s room' });
+  await joinRoom(noor, playing);
+  await startGame(kai);
+  return { privateRoom, playing };
+}
+
 /** The lobby pages of one game, empty and then with a room in each state. */
 async function lobbyScreens(
   player: (name: string, options?: PlayerOptions) => Promise<Page>,
@@ -325,24 +363,7 @@ async function lobbyScreens(
     timeout: 20_000,
   });
 
-  // A room in each state the list shows: open, private, full and playing.
-  const ryan = await player('Ryan', desktop);
-  const privateRoom = await createRoom(ryan, game, {
-    name: 'Ryan’s room',
-    password: 'otter',
-  });
-  const leo = await player('Leo', desktop);
-  const ada = await player('Ada', desktop);
-  await joinRoom(
-    ada,
-    await createRoom(leo, game, { name: 'Leo’s room', seats: 2 }),
-  );
-  const kai = await player('Kai', desktop);
-  const noor = await player('Noor', desktop);
-  const playing = await createRoom(kai, game, { name: 'Kai’s room' });
-  await joinRoom(noor, playing);
-  await startGame(kai);
-
+  const { privateRoom, playing } = await roomInEachState(player, game);
   await expect(sam.getByRole('article')).toHaveCount(4);
   await shot(sam, codes.list);
   if (game === 'draw-and-guess') {
@@ -1890,4 +1911,328 @@ test('a Daily Word game', async ({ player }) => {
   await say(leo, 'gg', true);
   await shot(maya, 'DW10');
   await shot(leo, 'DW16');
+});
+
+/*
+ * Code Breaker on your own runs on the device's date too: code #12 on
+ * 1 November 2026, #13 the day after, the clock stopped at Figma's 09:41:18
+ * to the next code. Figma's guesses are played as they are, against whatever
+ * the codes turn out to be, so the pegs are the codes' own.
+ */
+const codeBreakerDay = (day: number) => new Date(2026, 10, day, 14, 18, 42);
+
+/** Figma's guess, or, should it be the code itself, the next code that is not. */
+function missingCode(code: string, guesses: readonly string[]) {
+  const played = new Set<string>();
+  return guesses.map((figma) => {
+    const miss =
+      figma !== code && !played.has(figma)
+        ? figma
+        : ALL_CODES.find((other) => other !== code && !played.has(other))!;
+    played.add(miss);
+    return miss;
+  });
+}
+
+/**
+ * Eleven codes played before #12, as Figma's device has: 91% cracked, the
+ * last four in a row, a best streak of 6, and the bars CB06 draws once #12 is
+ * cracked in 6.
+ */
+function pastCodes(): Record<number, string[]> {
+  const lengths = [6, 5, 7, 4, 6, 8, 0, 5, 9, 7, 6];
+  return Object.fromEntries(
+    lengths.map((guesses, index) => {
+      const code = dailyCode(index + 1);
+      const misses = ALL_CODES.filter((other) => other !== code);
+      return [
+        index + 1,
+        guesses === 0
+          ? misses.slice(0, MAX_GUESSES)
+          : [...misses.slice(0, guesses - 1), code],
+      ];
+    }),
+  );
+}
+
+/** Guesses each code in turn, waiting for each to be marked. */
+async function guessCodes(page: Page, codes: readonly string[]) {
+  for (const code of codes) {
+    const count = (await codeGuessesOf(page)).length;
+    await typeCode(page, code);
+    await expect
+      .poll(async () => (await codeGuessesOf(page)).length)
+      .toBe(count + 1);
+  }
+}
+
+/** Notes, with the Notes toggle on: each digit key pressed `times` times. */
+async function note(page: Page, presses: Record<string, number>) {
+  for (const [digit, times] of Object.entries(presses)) {
+    for (let i = 0; i < times; i++) await page.keyboard.press(digit);
+  }
+}
+
+const notesToggle = (page: Page) =>
+  page.getByRole('button', { name: 'Notes', exact: true });
+
+/** Maya's notes in CB03: 2 and 9 out, 1 and 4 in. */
+const MAYA_NOTES = { 2: 1, 9: 1, 1: 2, 4: 2 };
+
+test('the Code Breaker game page', async ({ player }) => {
+  const maya = await player('Maya', desktop);
+  await createRoom(maya, 'code-breaker', { name: 'Maya’s room' });
+  await roomInEachState(player, 'code-breaker');
+
+  const sam = await player('Sam', desktop);
+  await sam.goto('/games/code-breaker');
+  await expect(sam.getByRole('article')).toHaveCount(4);
+  await shot(sam, 'CB01');
+  const samOnPhone = await player('Sam', phone);
+  await samOnPhone.goto('/games/code-breaker');
+  await expect(samOnPhone.getByRole('article')).toHaveCount(4);
+  await shot(samOnPhone, 'CB15');
+});
+
+test('Code Breaker on your own', async ({ player }) => {
+  test.setTimeout(300_000);
+  const kept = { 'code-breaker:puzzles': JSON.stringify(pastCodes()) };
+  const twelfth = dailyCode(12);
+  const [first, second, third, fourth, fifth] = missingCode(twelfth, [
+    '1234',
+    '5678',
+    '2149',
+    '4310',
+    '4170',
+  ]);
+
+  const maya = await player('Maya', desktop);
+  await maya.clock.setFixedTime(codeBreakerDay(1));
+  await keepOnDevice(maya, kept);
+  await maya.goto('/games/code-breaker/solo');
+  await expect(yourGuesses(maya)).toBeVisible();
+  await shot(maya, 'CB02');
+
+  await guessCodes(maya, [first!, second!, third!]);
+  await notesToggle(maya).click();
+  await note(maya, MAYA_NOTES);
+  await notesToggle(maya).click();
+  await maya.keyboard.type('43');
+  await shot(maya, 'CB03');
+  await notesToggle(maya).click();
+  await note(maya, { 5: 1, 6: 1 });
+  await shot(maya, 'CB04');
+  // Back to CB03's notes, and Notes off.
+  await note(maya, { 5: 2, 6: 2 });
+  await notesToggle(maya).click();
+
+  for (let i = 0; i < 2; i++) await maya.keyboard.press('Backspace');
+  await typeCode(maya, third!);
+  await expect(maya.getByText('Already guessed')).toBeVisible();
+  await shot(maya, 'CB05');
+  for (let i = 0; i < 4; i++) await maya.keyboard.press('Backspace');
+  await guessCodes(maya, [fourth!, fifth!]);
+  await typeCode(maya, twelfth);
+  await expect(
+    maya.getByRole('heading', { name: 'Cracked in 6.' }),
+  ).toBeVisible();
+  await shot(maya, 'CB06');
+
+  await maya.getByRole('button', { name: 'Practice code' }).click();
+  await solveCode(maya);
+  await expect(
+    maya.getByRole('heading', { name: /^(Cracked in \d+\.|Not this time\.)$/ }),
+  ).toBeVisible();
+  await shot(maya, 'CB08');
+
+  // The next day's code, #13: ten guesses that miss it.
+  await maya.clock.setFixedTime(codeBreakerDay(2));
+  await maya.goto('/games/code-breaker/solo');
+  await expect(yourGuesses(maya)).toBeVisible();
+  await guessCodes(
+    maya,
+    missingCode(dailyCode(13), [
+      '1234',
+      '8749',
+      '9726',
+      '9386',
+      '0294',
+      '6345',
+      '3821',
+      '7582',
+      '8931',
+      '2503',
+    ]),
+  );
+  await expect(
+    maya.getByRole('heading', { name: 'Not this time.' }),
+  ).toBeVisible();
+  await shot(maya, 'CB07');
+
+  const onPhone = await player('Maya', phone);
+  await onPhone.clock.setFixedTime(codeBreakerDay(1));
+  await keepOnDevice(onPhone, kept);
+  await onPhone.goto('/games/code-breaker/solo');
+  await expect(yourGuesses(onPhone)).toBeVisible();
+  await guessCodes(onPhone, [first!, second!, third!]);
+  await notesToggle(onPhone).click();
+  await note(onPhone, MAYA_NOTES);
+  await shot(onPhone, 'CB16');
+  await notesToggle(onPhone).click();
+  await guessCodes(onPhone, [fourth!, fifth!]);
+  await typeCode(onPhone, twelfth);
+  await expect(
+    onPhone.getByRole('heading', { name: 'Cracked in 6.' }),
+  ).toBeVisible();
+  await shot(onPhone, 'CB17');
+});
+
+/**
+ * Figma's guesses, then the code itself. Each is waited for until it is
+ * marked, but for the code cracked last, which ends the round at once.
+ */
+async function crackIt(
+  page: Page,
+  code: string,
+  misses: readonly string[],
+  last = false,
+) {
+  await guessCodes(page, missingCode(code, misses));
+  if (last) await typeCode(page, code);
+  else await guessCodes(page, [code]);
+}
+
+test('a Code Breaker game', async ({ player }) => {
+  test.setTimeout(600_000);
+  const maya = await player('Maya', desktop);
+  const sam = await player('Sam', desktop);
+  const ryan = await player('Ryan', desktop);
+  const leo = await player('Leo', phone);
+  const seats = [maya, sam, ryan, leo];
+
+  await maya.goto('/games/code-breaker/new');
+  await maya.getByLabel('Password (optional)').fill('otters');
+  await shot(maya, 'CB14');
+  const link = await createRoom(maya, 'code-breaker');
+  for (const seat of [sam, ryan, leo]) await joinRoom(seat, link);
+  await startGame(maya);
+
+  const codeOn = async (code: number) => {
+    for (const seat of seats) {
+      // After the last code's reveal, which runs its own clock.
+      await expect(
+        turnOf(seat).getByText(`Code ${code} of 3`, { exact: true }),
+      ).toBeVisible({ timeout: 15_000 });
+      await expect(yourGuesses(seat)).toBeVisible();
+    }
+  };
+
+  // The server deals from the seed in screens.config.ts, so the codes are
+  // known here and Figma's story plays the same whatever they are.
+  const [first, second, third] = roomCodes(
+    seededRandom(seedNumber(process.env.CODE_BREAKER_SEED!)),
+    3,
+    new Date(),
+  );
+
+  // Code 1: everybody cracks it in three.
+  await codeOn(1);
+  for (const seat of seats) {
+    await crackIt(seat, first!, ['1234', '5678'], seat === seats.at(-1));
+  }
+
+  // Code 2, as Figma tells it: Maya cracks it in 5 while the others guess.
+  await codeOn(2);
+  const sams = missingCode(second!, ['0123', '5231', '6310', '4302', '8302']);
+  const ryans = missingCode(second!, [
+    '9876',
+    '2506',
+    '0815',
+    '8630',
+    '9420',
+    '8217',
+    '1467',
+    '1238',
+    '8947',
+    '9167',
+  ]);
+  const leos = missingCode(second!, [
+    '5678',
+    '6059',
+    '3028',
+    '0182',
+    '7485',
+    '2983',
+    '0698',
+  ]);
+  await crackIt(maya, second!, ['1234', '2495', '7382', '0382']);
+  await guessCodes(sam, sams.slice(0, 3));
+  await guessCodes(ryan, ryans.slice(0, 4));
+  await guessCodes(leo, leos.slice(0, 3));
+  await sam.keyboard.type(sams[3]!.slice(0, 2));
+  await shot(sam, 'CB09');
+  await leo.keyboard.type(leos[3]!.slice(0, 2));
+  await shot(leo, 'CB18');
+  await leo.getByRole('tab', { name: /^Players/ }).click();
+  await shot(leo, 'CB19');
+  await leo.getByRole('tab', { name: 'Board' }).click();
+  await leo.getByRole('tab', { name: 'Board' }).blur();
+  for (let i = 0; i < 2; i++) await leo.keyboard.press('Backspace');
+
+  // Sam cracks it in six; Ryan reaches seven guesses and Leo five.
+  for (let i = 0; i < 2; i++) await sam.keyboard.press('Backspace');
+  await crackIt(sam, second!, sams.slice(3));
+  await guessCodes(ryan, ryans.slice(4, 7));
+  await guessCodes(leo, leos.slice(3, 5));
+  await expect(
+    turnOf(sam).getByText('Cracked it in 6! +', { exact: false }),
+  ).toBeVisible();
+  await shot(sam, 'CB10');
+
+  // Ryan runs out of guesses while Leo, at seven, guesses on.
+  await guessCodes(ryan, ryans.slice(7));
+  await guessCodes(leo, leos.slice(5));
+  await expect(
+    turnOf(ryan).getByText('Out of guesses', { exact: true }),
+  ).toBeVisible();
+  await shot(ryan, 'CB11');
+
+  // Leo cracks it in eight, the last guess of the code, which ends at once.
+  await typeCode(leo, second!);
+  const results = sam.getByRole('heading', { name: 'Code 2 results' });
+  await expect(results).toBeVisible();
+  expect(await shotWhile(sam, 'CB12', results)).toBe(true);
+  expect(
+    await shotWhile(
+      leo,
+      'CB20',
+      leo.getByRole('heading', { name: 'Code 2 results' }),
+    ),
+  ).toBe(true);
+
+  // Code 3, as Figma's boards have it, and the game is over.
+  await codeOn(3);
+  await crackIt(maya, third!, ['1234', '0789', '6750', '9586']);
+  await crackIt(sam, third!, ['0347', '6259', '8296', '2169']);
+  await crackIt(ryan, third!, ['4567', '1247', '6583', '5860', '5360']);
+  const leoMisses = missingCode(third!, [
+    '1023',
+    '1038',
+    '8047',
+    '7605',
+    '3476',
+    '0523',
+    '6859',
+    '0146',
+    '4296',
+    '3748',
+  ]);
+  await guessCodes(leo, leoMisses.slice(0, -1));
+  // Leo's tenth guess is the last of the code, which ends the game.
+  await typeCode(leo, leoMisses.at(-1)!);
+  await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
+    timeout: 15_000,
+  });
+  await shot(sam, 'CB13');
+  await shot(leo, 'CB21');
 });

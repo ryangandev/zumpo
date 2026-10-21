@@ -12,9 +12,8 @@ import {
   isTrio,
   takeTrio,
 } from '../../../shared/trios.js';
-import { shuffle } from '../../../shared/pairs.js';
 import { lockoutOf, type TriosState } from './state.js';
-import { itemAt, pickFrom } from '../../../shared/list.js';
+import { itemAt, pickFrom, shuffle } from '../../../shared/list.js';
 
 type TriosRoom = Room<TriosState>;
 

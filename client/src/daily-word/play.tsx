@@ -1,70 +1,20 @@
 import { itemAt } from '../../../shared/list';
 import { useMessages, type Messages } from '../i18n';
-import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { DailyWordMark } from '../../../shared/wire-types';
 import { keyMarks, WORD_LENGTH } from '../../../shared/daily-word';
 import { Keyboard, Notice, WordBoard, type WordBoardRow } from '../ui';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
+import {
+  useNoteOverBoard,
+  useTypingKeys,
+  type Typing,
+} from '../shell/board-typing';
 import styles from './play.module.css';
 
-export interface Typing {
-  onLetter: (letter: string) => void;
-  onDelete: () => void;
-  onEnter: () => void;
-}
-
-/**
- * A real keyboard types into the board too: letters, Backspace and Enter,
- * unless a text field has the focus (the chat) or a key comes with Ctrl, Alt
- * or Cmd. Enter on a focused button presses that button, unless letters were
- * typed since the focus came to it: a tab just tapped keeps the focus, and
- * the word typed after it is what Enter is for.
- */
-export function useTypingKeys(typing: Typing, enabled: boolean) {
-  const latest = useRef(typing);
-  useEffect(() => {
-    latest.current = typing;
-  });
-  useEffect(() => {
-    if (!enabled) return;
-    let typedSinceFocus = false;
-    const onFocus = () => {
-      typedSinceFocus = false;
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-      const target = event.target;
-      if (
-        target instanceof HTMLElement &&
-        (target.isContentEditable ||
-          target.closest('input, textarea, select, [role="dialog"]'))
-      ) {
-        return;
-      }
-      const onButton =
-        target instanceof HTMLElement && target.closest('button, a') !== null;
-      if (event.key === 'Enter') {
-        if (onButton && !typedSinceFocus) return;
-        event.preventDefault();
-        latest.current.onEnter();
-      } else if (event.key === 'Backspace') {
-        event.preventDefault();
-        typedSinceFocus = true;
-        latest.current.onDelete();
-      } else if (/^[a-z]$/i.test(event.key)) {
-        typedSinceFocus = true;
-        latest.current.onLetter(event.key.toLowerCase());
-      }
-    };
-    window.addEventListener('focusin', onFocus);
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      window.removeEventListener('focusin', onFocus);
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [enabled]);
-}
+/** A Daily Word row takes letters, from either case. */
+const LETTER = /^[a-z]$/i;
 
 /** What a checked guess said, for a screen reader: "STARE: S not in the word, …". */
 export function describeRow(
@@ -110,7 +60,7 @@ export function PlayArea({
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
   const { play, over } = useNoteOverBoard(problem ? rows.length : null);
-  useTypingKeys(typing, keyboard && !disabled);
+  useTypingKeys(typing, keyboard && !disabled, LETTER);
   const last = rows.at(-1);
   return (
     <div ref={play} className={cx(styles.play, className)}>
@@ -144,7 +94,9 @@ export function PlayArea({
         <Keyboard
           marks={Object.fromEntries(keyMarks(rows))}
           disabled={disabled}
-          {...typing}
+          onLetter={typing.onKey}
+          onDelete={typing.onDelete}
+          onEnter={typing.onEnter}
         />
       )}
       <p className={styles.announce} aria-live="polite">
@@ -152,24 +104,4 @@ export function PlayArea({
       </p>
     </div>
   );
-}
-
-/**
- * Puts a note over the board across the middle of the row under the one
- * being fixed, so that row stays readable, or of the row above it when it is
- * the last.
- */
-function useNoteOverBoard(typedRow: number | null) {
-  const play = useRef<HTMLDivElement>(null);
-  const over = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => {
-    const board = play.current?.querySelector('[role="group"]');
-    const note = over.current;
-    if (typedRow === null || !board || !note) return;
-    const row = board.children[typedRow + 1] ?? board.children[typedRow - 1];
-    if (row instanceof HTMLElement) {
-      note.style.top = `${row.offsetTop + row.offsetHeight / 2}px`;
-    }
-  }, [typedRow]);
-  return { play, over };
 }

@@ -1,0 +1,93 @@
+/* Your finished board and the others side by side (CB10, CB11). */
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: stretch;
+  gap: var(--zumpo-space-32);
+}
+
+/* Your board with the line under it, the others beside it when there is
+   room, under it when not. Only in the table: on a phone's Players tab the
+   others stand in a column, where a basis would be a height. */
+.table > .mine {
+  flex: 0 1 472px;
+  min-width: 0;
+}
+
+.table > .others {
+  flex: 1 1 280px;
+}
+
+.others,
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-16);
+  min-width: 0;
+}
+
+.results {
+  align-self: stretch;
+  gap: var(--zumpo-space-20);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-4);
+}
+
+.title {
+  margin: 0;
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+}
+
+.note,
+.body {
+  margin: 0;
+  color: var(--zumpo-muted);
+}
+
+.note {
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+.body {
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}
+
+.boards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zumpo-space-16);
+}
+
+/* Four Small boards 16 px apart are 16 px wider than the panel holds, which
+   Figma lets CB12 overflow; 8 apart, four fit. */
+.results .boards {
+  gap: var(--zumpo-space-8);
+}
+
+/* On a phone the others are on the Players tab, on a paper panel. */
+@media (max-width: 640px) {
+  .others {
+    padding: var(--zumpo-space-20);
+    border: 1px solid var(--zumpo-line);
+    border-radius: var(--zumpo-radius-24);
+    background: var(--zumpo-paper);
+  }
+
+  .boards {
+    gap: var(--zumpo-space-12);
+  }
+
+  /* The results' Small boards one under another, each a Row board (CB20). */
+  .results .boards {
+    flex-direction: column;
+  }
+}

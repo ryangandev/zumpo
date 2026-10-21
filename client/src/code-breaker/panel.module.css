@@ -1,0 +1,51 @@
+/* A board on the table: the paper panel. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--zumpo-space-20);
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+}
+
+.legend,
+.pegs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-12);
+}
+
+.pegs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.peg {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}
+
+.count {
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+}
+
+.icon {
+  display: flex;
+}

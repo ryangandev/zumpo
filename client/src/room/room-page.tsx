@@ -20,6 +20,7 @@ import { TriosRoom } from '../trios/room';
 import { SnapRoom } from '../snap/room';
 import { LiarsDiceRoom } from '../liars-dice/room';
 import { HushRoom } from '../hush/room';
+import { CodeBreakerRoom } from '../code-breaker/room';
 import { DoodleChainRoom } from '../doodle-chain/room';
 import { useSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
@@ -437,6 +438,8 @@ function SeatedRoom({
         <SnapRoom />
       ) : state.gameType === 'hush' ? (
         <HushRoom />
+      ) : state.gameType === 'code-breaker' ? (
+        <CodeBreakerRoom />
       ) : state.gameType === 'doodle-chain' ? (
         <DoodleChainRoom />
       ) : (

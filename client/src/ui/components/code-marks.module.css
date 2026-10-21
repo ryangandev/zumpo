@@ -1,0 +1,18 @@
+/* Zumpo/Code marks. */
+.marks {
+  display: inline-grid;
+  flex: none;
+  gap: var(--zumpo-space-4);
+}
+
+.grid {
+  grid-template-columns: repeat(2, auto);
+}
+
+.row {
+  grid-auto-flow: column;
+}
+
+.peg {
+  display: flex;
+}

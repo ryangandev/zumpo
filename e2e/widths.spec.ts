@@ -298,6 +298,19 @@ test('daily word fits every width', async ({ player }) => {
   await fitsEveryWidth(maya, 'a word in a room');
 });
 
+test('code breaker fits every width', async ({ player }) => {
+  const sam = await player('Sam');
+  await sam.goto('/games/code-breaker/solo');
+  await expect(sam.getByRole('group', { name: 'Digit pad' })).toBeVisible();
+  await fitsEveryWidth(sam, 'a code on your own');
+  const maya = await player('Maya');
+  const leo = await player('Leo');
+  await joinRoom(leo, await createRoom(maya, 'code-breaker', { seats: 2 }));
+  await start(maya);
+  await expect(maya.getByText('Code 1 of 3').first()).toBeVisible();
+  await fitsEveryWidth(maya, 'a code in a room');
+});
+
 test('doodle chain fits every width', async ({ player }) => {
   const maya = await player('Maya');
   const link = await createRoom(maya, 'doodle-chain', { seats: 3 });

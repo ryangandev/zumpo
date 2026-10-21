@@ -1,34 +1,35 @@
-/* Guesses to find it (DW04, DW05). */
+/* Guesses to solve it (DW04, DW05, CB06): a column of bucket names as wide
+   as the widest, and the bars beside them. A panel card lines its children
+   up at the start, so the list stretches itself to the card's width. */
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--zumpo-space-8);
+  display: grid;
+  align-self: stretch;
+  grid-template-columns: auto 1fr;
+  gap: var(--zumpo-space-8) var(--zumpo-space-12);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .row {
-  display: flex;
-  align-items: center;
-  gap: var(--zumpo-space-12);
+  display: contents;
 }
 
 .guesses {
-  width: var(--zumpo-space-12);
+  align-self: center;
+  min-width: var(--zumpo-space-12);
   color: var(--zumpo-muted);
   font: var(--zumpo-text-label);
   letter-spacing: var(--zumpo-text-label-tracking);
 }
 
-/* The longest bar fills the row; an empty one is just wide enough for 0. */
+/* The longest bar fills its column; an empty one is just wide enough for 0. */
 .bar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   width: calc(
-    var(--zumpo-space-32) +
-      (100% - var(--zumpo-space-32) - var(--zumpo-space-24)) * var(--share)
+    var(--zumpo-space-32) + (100% - var(--zumpo-space-32)) * var(--share)
   );
   height: var(--zumpo-space-24);
   padding: 0 var(--zumpo-space-8);

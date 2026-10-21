@@ -48,9 +48,13 @@
   flex: none;
 }
 
+/* A long status, like a phone ranking's place and codes cracked, ends in an
+   ellipsis instead of running under the score. */
 .status {
+  overflow: hidden;
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

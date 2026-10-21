@@ -125,7 +125,7 @@ After the daily word, **Practice word** starts extra words, one at a time, as ma
 - It plays exactly like the daily word, and keeps no stats and no streak: practice is practice.
 - When it ends: found in _n_ or missed, with the word; **Another word** deals a new seed; **Challenge a friend** copies the result grid with a link to the same word (`/games/daily-word/solo?seed=k3f9x2`); and **Today's word** goes back to the daily result.
 - Whoever opens a challenge link plays that word straight away, whether or not they have played today's.
-  A practice word lives only in the page: a refresh deals it again from the link's seed, or a new one without a link.
+  A practice word lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 
 Practice is offered only after today's word, so the daily word stays the first thing on the page.
 
@@ -177,6 +177,7 @@ The chat says when somebody finds the word ("Maya got it in 3! (+431)"), what th
   The server marks it; the client never sends marks.
 - **A player who has found the word cannot chat until the round ends,** because they could type it.
   A player who is out of guesses does not know the word and can talk.
+  Leaving and coming back to watch does not open it early.
 - **The deal, the clock and the score are the server's.**
 - **Only the room owner may start a game**, and only with two or more players.
 
@@ -223,6 +224,7 @@ The words are still drawn by the rules above, never twice in a game and never a 
 | File                                                                 | Responsibility                                                                                |
 | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | [`shared/daily-word.ts`](../../shared/daily-word.ts)                 | Marks, guess checks, puzzle numbers, the practice deal and the share grid: the rules both run |
+| [`shared/daily.ts`](../../shared/daily.ts)                           | Counting puzzle days by the local or UTC date, as Code Breaker does too                       |
 | [`shared/daily-word-answers.ts`](../../shared/daily-word-answers.ts) | The answers in puzzle order, with SCOWL's notice                                              |
 | [`shared/daily-word-guesses.ts`](../../shared/daily-word-guesses.ts) | The valid guesses, generated from ENABLE                                                      |
 | [`tools/daily-word-words/`](../../tools/daily-word-words/build.mjs)  | Builds the guesses from their sources, and made the answers once                              |
@@ -230,7 +232,8 @@ The words are still drawn by the rules above, never twice in a game and never a 
 | [`game-engine.ts`](../../server/socket/daily-word/game-engine.ts)    | The round loop, guesses and scores                                                            |
 | [`state.ts`](../../server/socket/daily-word/state.ts)                | The game's state, and the snapshot each player is sent                                        |
 | [`daily-word/solo/`](../../client/src/daily-word/solo/)              | The daily word and practice words on your own                                                 |
-| [`daily-word/play.tsx`](../../client/src/daily-word/play.tsx)        | Your board, the line under it, the keyboard, and typing on a real one                         |
+| [`daily-word/play.tsx`](../../client/src/daily-word/play.tsx)        | Your board, the line under it, and the keyboard                                               |
+| [`shell/board-typing.ts`](../../client/src/shell/board-typing.ts)    | Typing on a real keyboard, and the note over the board, shared with Code Breaker              |
 | [`daily-word/room.tsx`](../../client/src/daily-word/room.tsx)        | A room's screens                                                                              |
 
 The rules are covered by `daily-word-rules.test.ts` and `daily-word-flow.test.ts` in `server/tests/`.

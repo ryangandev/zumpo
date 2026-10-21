@@ -88,6 +88,16 @@ export const ui = {
     letters: (count: number) =>
       `${count} ${count === 1 ? 'letter' : 'letters'}`,
   },
+  code: {
+    pad: 'Digit pad',
+    notes: 'Notes',
+    delete: 'Delete digit',
+    noted: (digit: string, note: 'out' | 'in') =>
+      `${digit}, noted ${note === 'out' ? 'out of the code' : 'in the code'}`,
+    mark: (right: number, moved: number) =>
+      `${right} in place, ${moved} elsewhere`,
+    board: (name: string) => `${name}’s board`,
+  },
   lives: (lives: number) =>
     lives === 0 ? 'No lives' : lives === 1 ? '1 life' : `${lives} lives`,
   discarded: (value: number) => `${value}, discarded`,

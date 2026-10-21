@@ -20,6 +20,7 @@ const SETTINGS: Record<GameType, object> = {
   'liars-dice': { dicePerPlayer: 3 },
   hush: {},
   'daily-word': { rounds: 3 },
+  'code-breaker': { rounds: 3 },
   'doodle-chain': { drawingSeconds: 60 },
 };
 

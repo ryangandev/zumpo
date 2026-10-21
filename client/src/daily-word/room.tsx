@@ -177,7 +177,7 @@ function Round({
   const change = (next: string) =>
     onDraft({ round: state.round, typed: next, problem: null });
   const typing = {
-    onLetter: (letter: string) => {
+    onKey: (letter: string) => {
       if (typed.length < 5) change(typed + letter);
     },
     onDelete: () => change(typed.slice(0, -1)),

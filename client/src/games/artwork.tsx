@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import {
+  CodeMarks,
   Die,
+  DigitTile,
   HushCard,
   LetterTile,
   MineCell,
@@ -280,6 +282,18 @@ function WordArtwork() {
   );
 }
 
+/** Three digits of a guess and the pegs that will mark it. */
+function CodeArtwork() {
+  return (
+    <div className={styles.code}>
+      {[...'407'].map((digit) => (
+        <DigitTile key={digit} digit={digit} state="guessed" size="regular" />
+      ))}
+      <CodeMarks mark={{ right: 1, moved: 2 }} decorative />
+    </div>
+  );
+}
+
 /** A chain's first line, its drawing, and what the drawing became. */
 function ChainArtwork() {
   return (
@@ -305,6 +319,7 @@ const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   hush: PileArtwork,
   'doodle-chain': ChainArtwork,
   'daily-word': WordArtwork,
+  'code-breaker': CodeArtwork,
 };
 
 /** Each game's signature piece, in a row's 80 px icon. */
@@ -371,6 +386,20 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
         ] as const
       ).map(([letter, state]) => (
         <LetterTile key={letter} letter={letter} state={state} size="small" />
+      ))}
+    </div>
+  ),
+  'code-breaker': () => (
+    <div className={styles.iconGrid}>
+      {(
+        [
+          ['4', 'guessed'],
+          ['0', 'guessed'],
+          ['7', 'cracked'],
+          ['1', 'cracked'],
+        ] as const
+      ).map(([digit, state]) => (
+        <DigitTile key={digit} digit={digit} state={state} size="small" />
       ))}
     </div>
   ),

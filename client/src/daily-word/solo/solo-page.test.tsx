@@ -10,7 +10,7 @@ import {
 } from '../../../../shared/daily-word';
 import { onPhone } from '../../tests/phone';
 import { renderApp } from '../../tests/render-app';
-import { formatWait } from './solo-page';
+import { formatWait } from '../../solo/daily';
 
 // 9:00 on the first day of the calendar: Word #1.
 const NOW = new Date(2026, 9, 5, 9, 0, 0);
@@ -32,6 +32,10 @@ afterEach(() => {
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 
+/** The turn bar, once the page has loaded: Daily Word loads only when played. */
+const findTurn = async () =>
+  within(await screen.findByRole('region', { name: 'Turn' }));
+
 /** Answers that are not `answer`, to miss it with. */
 const misses = (answer: string, count: number) =>
   ANSWERS.filter((word) => word !== answer).slice(0, count);
@@ -43,7 +47,9 @@ async function guess(word: string) {
 describe('Daily Word on your own', () => {
   it('is today’s word, found and counted on this device', async () => {
     await renderApp('/games/daily-word/solo');
-    expect(await turn().findByText('Find the word')).toBeInTheDocument();
+    expect(
+      await (await findTurn()).findByText('Find the word'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Word #1')).toBeInTheDocument();
 
     const [first] = misses(TODAY, 1);
@@ -70,7 +76,7 @@ describe('Daily Word on your own', () => {
 
   it('turns away a word it does not know, without spending a guess', async () => {
     await renderApp('/games/daily-word/solo');
-    await turn().findByText('Find the word');
+    await (await findTurn()).findByText('Find the word');
     await guess('xxxxx');
     expect(screen.getByText('Not in the word list')).toBeInTheDocument();
     expect(turn().getByText('Find the word')).toBeInTheDocument();
@@ -78,7 +84,7 @@ describe('Daily Word on your own', () => {
 
   it('remembers a finished day, and moves on at midnight', async () => {
     const view = await renderApp('/games/daily-word/solo');
-    await turn().findByText('Find the word');
+    await (await findTurn()).findByText('Find the word');
     for (const word of misses(TODAY, 6)) await guess(word);
     expect(
       screen.getByRole('heading', { name: 'Not this time.' }),
@@ -91,7 +97,9 @@ describe('Daily Word on your own', () => {
     ).toBeInTheDocument();
 
     await act(() => vi.advanceTimersByTime(msUntilNextPuzzle(NOW) + 2_000));
-    expect(await turn().findByText('Find the word')).toBeInTheDocument();
+    expect(
+      await (await findTurn()).findByText('Find the word'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Word #2')).toBeInTheDocument();
   });
 
@@ -110,14 +118,16 @@ describe('Daily Word on your own', () => {
       ),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Today’s word' }));
-    expect(await turn().findByText('Find the word')).toBeInTheDocument();
+    expect(
+      await (await findTurn()).findByText('Find the word'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Word #1')).toBeInTheDocument();
   });
 
   it('puts the cards under the board on a phone', async () => {
     onPhone();
     await renderApp('/games/daily-word/solo');
-    await turn().findByText('Find the word');
+    await (await findTurn()).findByText('Find the word');
     await guess(TODAY);
     const board = screen.getByRole('group', { name: 'Your guesses' });
     const device = screen.getByRole('heading', { name: 'On this device' });

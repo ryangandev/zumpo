@@ -128,6 +128,14 @@ export const notices = {
     `${who(n.name)} got it in ${n.guesses}! (+${n.points})`,
   'dw:revealed': (n: Extract<RoomNotice, { type: 'dw:revealed' }>): string =>
     `The word was ${n.word}.`,
+  'cb:started': (n: Extract<RoomNotice, { type: 'cb:started' }>): string =>
+    n.rounds === 1
+      ? `Game has started! 1 code, ${n.seconds} seconds.`
+      : `Game has started! ${n.rounds} codes, ${n.seconds} seconds each.`,
+  'cb:cracked': (n: Extract<RoomNotice, { type: 'cb:cracked' }>): string =>
+    `${who(n.name)} cracked it in ${n.guesses}! (+${n.points})`,
+  'cb:revealed': (n: Extract<RoomNotice, { type: 'cb:revealed' }>): string =>
+    `The code was ${n.code}.`,
   'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
     n.kind === 'prompt'
       ? `Step ${n.step}: write the first line.`

@@ -133,6 +133,19 @@ const dailyWordDurationsInSeconds: DailyWordDurationsInSeconds = {
   reveal: readSecondsFromEnv('DAILY_WORD_REVEAL_SECONDS', 8),
 };
 
+/** Code Breaker's clock: one code for everybody at once, then its results. */
+interface CodeBreakerDurationsInSeconds {
+  /** How long everybody has to crack the code. */
+  round: number;
+  /** How long a round's results stay up before the next code. */
+  reveal: number;
+}
+
+const codeBreakerDurationsInSeconds: CodeBreakerDurationsInSeconds = {
+  round: readSecondsFromEnv('CODE_BREAKER_ROUND_SECONDS', 180),
+  reveal: readSecondsFromEnv('CODE_BREAKER_REVEAL_SECONDS', 8),
+};
+
 /**
  * Doodle Chain's clock. A drawing step lasts as long as its room chose, so it
  * is here only to be overridden: unset, each room's own setting stands.
@@ -229,6 +242,7 @@ export {
   liarsDiceDurationsInSeconds,
   hushDurationsInSeconds,
   dailyWordDurationsInSeconds,
+  codeBreakerDurationsInSeconds,
   doodleChainDurationsInSeconds,
   reconnectGraceInSeconds,
 };
@@ -242,5 +256,6 @@ export type {
   LiarsDiceDurationsInSeconds,
   HushDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  CodeBreakerDurationsInSeconds,
   DoodleChainDurationsInSeconds,
 };

@@ -10,6 +10,7 @@ import {
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  CodeBreakerDurationsInSeconds,
   DoodleChainDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
@@ -27,6 +28,7 @@ import type { SnapState } from '../../socket/snap/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
+import type { CodeBreakerState } from '../../socket/code-breaker/index.js';
 import type { DoodleChainState } from '../../socket/doodle-chain/index.js';
 import type {
   AnyLobbyRoomInfo,
@@ -34,6 +36,7 @@ import type {
   ChatMessage,
   ClientToServerEvents,
   DailyWordRoomState,
+  CodeBreakerRoomState,
   DoodleChainRoomState,
   DrawAndGuessRoomState,
   DrawAndGuessState,
@@ -147,6 +150,15 @@ const FAST_DAILY_WORD: DailyWordDurationsInSeconds = {
 };
 
 /**
+ * The same for Code Breaker, with a round long enough for all ten guesses,
+ * which a socket's request budget paces past its burst.
+ */
+const FAST_CODE_BREAKER: CodeBreakerDurationsInSeconds = {
+  round: 3,
+  reveal: 0.1,
+};
+
+/**
  * Steps long enough to write, draw and press Done deliberately inside them,
  * which is how most tests end a step, and a short pause between them.
  */
@@ -218,6 +230,7 @@ const startTestServer = async (
     liarsDiceDurations: FAST_LIARS_DICE,
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
+    codeBreakerDurations: FAST_CODE_BREAKER,
     doodleChainDurations: FAST_DOODLE_CHAIN,
     graceInSeconds,
     // Every test client comes from this machine; the limits' own tests turn
@@ -400,6 +413,12 @@ const waitForDailyWordState = (
   timeoutMs = 3000,
 ) => waitForState<DailyWordRoomState>(client, predicate, timeoutMs);
 
+/** And for Code Breaker. */
+const waitForCodeBreakerState = (
+  client: ClientSocket,
+  predicate: (state: CodeBreakerRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<CodeBreakerRoomState>(client, predicate, timeoutMs);
 /** And for Doodle Chain. */
 const waitForDoodleChainState = (
   client: ClientSocket,
@@ -916,16 +935,22 @@ const dailyWordRoom = (
 ): Room<DailyWordState> =>
   harness.server.rooms.get(roomId) as Room<DailyWordState>;
 
-/** Seats Alice and Bob in a Daily Word room and opens the first word. */
-const playToFirstWord = async (harness: TestServer, rounds = 3) => {
+/** Seats Alice and Bob, and Carol if asked, in a Daily Word room and opens the first word. */
+const playToFirstWord = async (
+  harness: TestServer,
+  rounds = 3,
+  { carol = false }: { carol?: boolean } = {},
+) => {
   const alice = await harness.connect();
   const bob = await harness.connect();
+  const third = carol ? await harness.connect() : null;
 
   const roomId = await createDailyWordRoom(alice, {
     username: 'Alice',
     rounds,
   });
   await joinRoom(bob, roomId, 'Bob');
+  if (third) await joinRoom(third, roomId, 'Carol');
 
   const round = waitForDailyWordState(
     alice,
@@ -935,7 +960,63 @@ const playToFirstWord = async (harness: TestServer, rounds = 3) => {
   await startGame(alice, roomId);
   const first = await round;
 
-  return { roomId, alice, bob, first };
+  return { roomId, alice, bob, carol: third, first };
+};
+
+/** Creates a Code Breaker room, with its creator seated, and returns its id. */
+const createCodeBreakerRoom = async (
+  client: ClientSocket,
+  options: { username?: string; rounds?: number; maxPlayers?: number } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'code-breaker',
+    roomName: 'Code table',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 4,
+    password: '',
+    settings: { rounds: options.rounds ?? 3 },
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/**
+ * The server's own Code Breaker room. Tests read the codes through it on
+ * purpose: knowing the code is the only way to crack it deliberately, and it
+ * is exactly what a client is never sent.
+ */
+const codeBreakerRoom = (
+  harness: TestServer,
+  roomId: string,
+): Room<CodeBreakerState> =>
+  harness.server.rooms.get(roomId) as Room<CodeBreakerState>;
+
+/** Seats Alice and Bob, and Carol if asked, in a Code Breaker room and opens the first code. */
+const playToFirstCode = async (
+  harness: TestServer,
+  rounds = 3,
+  { carol = false }: { carol?: boolean } = {},
+) => {
+  const alice = await harness.connect();
+  const bob = await harness.connect();
+  const third = carol ? await harness.connect() : null;
+
+  const roomId = await createCodeBreakerRoom(alice, {
+    username: 'Alice',
+    rounds,
+  });
+  await joinRoom(bob, roomId, 'Bob');
+  if (third) await joinRoom(third, roomId, 'Carol');
+
+  const round = waitForCodeBreakerState(
+    alice,
+    (state) => state.phase === 'guessing' && state.round === 1,
+    5000,
+  );
+  await startGame(alice, roomId);
+  const first = await round;
+
+  return { roomId, alice, bob, carol: third, first };
 };
 
 /** Seats two players in a Minesweeper room and opens the first round. */
@@ -968,6 +1049,7 @@ export {
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
+  FAST_CODE_BREAKER,
   FAST_DOODLE_CHAIN,
   startTestServer,
   waitFor,
@@ -981,6 +1063,7 @@ export {
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
+  waitForCodeBreakerState,
   waitForDoodleChainState,
   waitForChat,
   collect,
@@ -997,6 +1080,7 @@ export {
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
+  createCodeBreakerRoom,
   createDoodleChainRoom,
   joinRoom,
   seatTable,
@@ -1018,6 +1102,8 @@ export {
   hushRoom,
   dailyWordRoom,
   playToFirstWord,
+  codeBreakerRoom,
+  playToFirstCode,
   doodleChainRoom,
 };
 export type { TestServer, TestClient, ClientSocket, ClientsFor };

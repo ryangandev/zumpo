@@ -61,6 +61,7 @@ export const games = {
     hush: (levels) => plural(levels, 'level'),
     'doodle-chain': (seconds) => `${seconds}s to draw`,
     'daily-word': (words) => plural(words, 'word'),
+    'code-breaker': (codes) => plural(codes, 'code'),
   },
   of: <Record<GameType, GameText>>{
     'draw-and-guess': {
@@ -381,6 +382,43 @@ On your own, there is one word a day, the same for everybody, and a new one at y
           'Green square: right place. Coral circle: somewhere else. Grey: not in it',
           'A new word at your midnight; your streak is kept on this device',
           'Practice words after it, as many as you like',
+        ],
+      },
+      score: (points) => plural(points, 'point'),
+    },
+    'code-breaker': {
+      name: 'Code Breaker',
+      tagline: 'Four digits, ten guesses. A new code every day.',
+      facts: '2–8 players',
+      lobbySummary:
+        'Everyone races to crack the same four-digit code, with ten guesses each. Fewer guesses score more.',
+      lobbyFacts: [
+        '2–8 players',
+        '1 or 3 codes',
+        '3 minutes for each code',
+        'Others see your pegs, never your digits',
+      ],
+      rules: `2–8 players · 1 or 3 codes
+
+Crack a hidden code of four different digits, 0 to 9, in ten guesses. A code may start with 0. Every guess is four different digits too.
+
+After each guess, four pegs say how close it was: a green square for each digit in the code and in the right place, a coral circle for each digit in the code but somewhere else, and a grey square for each of the rest. The pegs count digits; they never say which ones. A guess you already made is turned back and costs nothing.
+
+Notes on the pad are yours alone: turn Notes on, and a digit key marks that digit out, then in, then plain again.
+
+Everyone guesses the same code at the same time, with 3 minutes for each. Cracking it pays 100 points, plus 100 for every guess you had left over, plus up to 50 for the time left. Others see your pegs as you go, never your digits, and once you crack it your chat waits until the code is revealed.
+
+On your own, there is one code a day, the same for everybody, and a new one at your midnight. Your stats and streak are kept on this device. After it, play practice codes as long as you like, and Challenge a friend sends them the same code.`,
+      createDescription:
+        'Every code is three minutes. Three codes is about ten minutes.',
+      solo: {
+        summary:
+          'One code a day, the same for everybody. Ten guesses to crack it.',
+        facts: [
+          'Four different digits; a code may start with 0',
+          'Green square: right place. Coral circle: somewhere else. Grey: not in it',
+          'A new code at your midnight; your streak is kept on this device',
+          'Practice codes after it, as many as you like',
         ],
       },
       score: (points) => plural(points, 'point'),
