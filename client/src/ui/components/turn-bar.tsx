@@ -4,6 +4,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  type Ref,
   type RefObject,
 } from 'react';
 import { useMessages } from '../../i18n';
@@ -44,6 +45,8 @@ export interface TurnBarProps {
    * give the meta a line of its own, and the board has that height.
    */
   stackOnPhone?: boolean;
+  /** The bar's region, for a page that hands it the focus. */
+  ref?: Ref<HTMLElement>;
   className?: string;
 }
 
@@ -70,6 +73,7 @@ export function TurnBar({
   countdown,
   labelOnPhone = true,
   stackOnPhone = true,
+  ref,
   className,
 }: TurnBarProps) {
   const m = useMessages();
@@ -90,6 +94,7 @@ export function TurnBar({
       )}
     >
       <section
+        ref={ref}
         className={cx(
           styles.bar,
           category == null && styles.untagged,

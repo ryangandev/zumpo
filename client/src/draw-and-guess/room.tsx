@@ -285,13 +285,13 @@ function Turn({ room }: { room: Room }) {
   }, [choosingNow]);
   // The choice pressed, or picked when time ran out, goes with the choices:
   // the turn, which now says the word, takes the focus they had.
+  const turnBox = useRef<HTMLElement>(null);
   const drawingNow = isDrawer && state.phase === 'drawing' ? state.turn : null;
   useEffect(() => {
     if (drawingNow === null) return;
     const active = document.activeElement;
     if (active && active !== document.body) return;
-    const turn = document.querySelector<HTMLElement>('[data-start-fallback]');
-    if (turn) focusQuietly(turn);
+    if (turnBox.current) focusQuietly(turnBox.current);
   }, [drawingNow]);
 
   const choices =
@@ -305,7 +305,10 @@ function Turn({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, drawerName, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, drawerName, phone, m)}
+        ref={turnBox}
+      />
       {canDraw && (
         <DrawingToolbar
           colour={colour}
