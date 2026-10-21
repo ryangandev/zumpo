@@ -77,7 +77,7 @@
   grid-template-areas:
     'board pad'
     'line pad';
-  grid-template-columns: auto auto;
+  grid-template-columns: auto minmax(0, calc(6 * var(--zumpo-space-64)));
   grid-template-rows: auto 1fr;
   align-items: start;
   justify-content: center;
@@ -93,9 +93,10 @@
   contain: inline-size;
 }
 
-/* As wide as six thumb-sized keys. */
+/* As wide as six thumb-sized keys, or the room left where that is less: its
+   column is capped rather than the pad, since a percentage of an auto column
+   has nothing to resolve against. */
 .beside > .pad {
   grid-area: pad;
   align-self: center;
-  width: calc(6 * var(--zumpo-space-64));
 }
