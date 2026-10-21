@@ -354,10 +354,9 @@
                         "id": "164:67481",
                         "name": "Side",
                         "w": 411,
-                        "h": 10,
+                        "h": 548,
                         "wSize": "fill",
                         "hSize": "hug",
-                        "clip": true,
                         "layout": {
                           "mode": "column",
                           "gap": "$Zumpo · UI:space/32",
@@ -369,9 +368,9 @@
                             "id": "164:67482",
                             "name": "The others",
                             "w": 411,
-                            "h": 1,
+                            "h": 334,
                             "wSize": "fill",
-                            "hSize": "fill",
+                            "hSize": "hug",
                             "layout": {
                               "mode": "column",
                               "gap": "$Zumpo · UI:space/16",
@@ -516,7 +515,6 @@
                             "h": 182,
                             "wSize": "fill",
                             "hSize": "hug",
-                            "clip": true,
                             "layout": {
                               "mode": "column",
                               "gap": "$Zumpo · UI:space/16",
@@ -544,7 +542,6 @@
                                 "h": 136,
                                 "wSize": "fill",
                                 "hSize": "hug",
-                                "clip": true,
                                 "layout": {
                                   "mode": "column",
                                   "gap": "$Zumpo · UI:space/12",
@@ -559,7 +556,6 @@
                                     "h": 25,
                                     "wSize": "hug",
                                     "hSize": "hug",
-                                    "clip": true,
                                     "layout": {
                                       "mode": "row",
                                       "gap": "$Zumpo · UI:space/12",
@@ -607,7 +603,6 @@
                                     "h": 25,
                                     "wSize": "hug",
                                     "hSize": "hug",
-                                    "clip": true,
                                     "layout": {
                                       "mode": "row",
                                       "gap": "$Zumpo · UI:space/12",
@@ -655,7 +650,6 @@
                                     "h": 25,
                                     "wSize": "hug",
                                     "hSize": "hug",
-                                    "clip": true,
                                     "layout": {
                                       "mode": "row",
                                       "gap": "$Zumpo · UI:space/12",

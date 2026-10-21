@@ -228,7 +228,7 @@
                         "id": "162:104565",
                         "name": "Race board / Maya",
                         "w": 216,
-                        "h": 478,
+                        "h": 278,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -242,6 +242,11 @@
                           "Status": "Cracked in 5 · +633"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 278,
+                            "width": 216
+                          },
                           {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
@@ -401,6 +406,26 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 6",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 7",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 8",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
@@ -409,7 +434,7 @@
                         "id": "162:104720",
                         "name": "Race board / Sam",
                         "w": 216,
-                        "h": 478,
+                        "h": 318,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -424,6 +449,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 318,
+                            "width": 216
+                          },
                           {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
@@ -615,6 +645,22 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 7",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 8",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
@@ -623,7 +669,7 @@
                         "id": "162:104879",
                         "name": "Race board / Leo",
                         "w": 216,
-                        "h": 478,
+                        "h": 398,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Code race board",
@@ -638,6 +684,11 @@
                           "Name": "Leo"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 398,
+                            "width": 216
+                          },
                           {
                             "path": "Board / Guess 1 / Digits / Digit 1",
                             "componentProperties": {
@@ -893,6 +944,14 @@
                               "State": "Cracked",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Guess 9",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Guess 10",
+                            "visible": false
                           }
                         ]
                       },
