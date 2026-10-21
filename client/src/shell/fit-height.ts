@@ -52,8 +52,10 @@ export function useFitHeight<T extends HTMLElement>(enabled = true) {
 }
 
 /**
- * How far the unscaled element must shrink for the page to end inside the
- * window, when what is above it and what follows it keep their size.
+ * The largest scale, at most 1, at which the element and what follows it end
+ * inside the window, found by trying scales: scaled, the element lays its
+ * content out wider, which can make it shorter still (a Gomoku table puts
+ * its seats back beside the board). Called with the element unscaled.
  */
 function heightScale(element: HTMLElement): number {
   const rect = element.getBoundingClientRect();
@@ -61,8 +63,21 @@ function heightScale(element: HTMLElement): number {
   const top = rect.top + window.scrollY;
   const below =
     document.documentElement.scrollHeight - (rect.bottom + window.scrollY);
+  if (top + rect.height + below <= window.innerHeight) return 1;
   // A pixel spare, so rounding never leaves the page a pixel too tall.
   const room = window.innerHeight - top - below - 1;
-  if (room >= rect.height) return 1;
-  return Math.max(MIN_SCALE, room / rect.height);
+  const fits = (scale: number) => {
+    element.style.setProperty('zoom', String(scale));
+    return element.getBoundingClientRect().height <= room;
+  };
+  let low = MIN_SCALE;
+  let high = 1;
+  if (!fits(low)) return low;
+  for (let step = 0; step < 8; step++) {
+    const middle = (low + high) / 2;
+    if (fits(middle)) low = middle;
+    else high = middle;
+  }
+  element.style.removeProperty('zoom');
+  return low;
 }

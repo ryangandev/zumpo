@@ -224,6 +224,7 @@ function SoloBoard({
           <TurnBar {...turnBar(game, m)} />
           <GomokuTable
             phone={phone}
+            fitHeight
             board={{
               stones: boardOf(game.moves),
               last: lastStoneOf(game.moves),

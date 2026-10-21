@@ -6,6 +6,7 @@ import {
   type GomokuSeatProps,
 } from '../ui';
 import { cx } from '../ui/cx';
+import { useFitHeight } from '../shell/fit-height';
 import styles from './table.module.css';
 
 export interface SeatView extends GomokuSeatProps {
@@ -25,6 +26,8 @@ export interface GomokuTableProps {
   actions?: ReactNode;
   /** A phone's column: no panel, the small board, actions full width. */
   phone: boolean;
+  /** On your own: the table scales down to end inside the window. */
+  fitHeight?: boolean;
 }
 
 /**
@@ -41,9 +44,14 @@ export function GomokuTable({
   note,
   actions,
   phone,
+  fitHeight = false,
 }: GomokuTableProps) {
+  const ref = useFitHeight<HTMLElement>(fitHeight);
   return (
-    <section className={cx(styles.table, phone ? styles.phone : styles.panel)}>
+    <section
+      ref={ref}
+      className={cx(styles.table, phone ? styles.phone : styles.panel)}
+    >
       <div className={styles.game}>
         <GomokuBoard
           {...board}

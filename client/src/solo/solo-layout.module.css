@@ -5,6 +5,11 @@
   gap: var(--zumpo-space-24);
 }
 
+/* Nothing beside the game: a phone while it is played. */
+.alone {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .stage {
   display: flex;
   flex-direction: column;

@@ -82,6 +82,8 @@ export function SoloLayout({
     time?.setPaused(away);
   }, [time, away]);
   const stageClass = cx(styles.stage, time?.paused && styles.away);
+  // A phone keeps to the game until there is a result to show.
+  const alone = !result && (phone || !side);
 
   return (
     <Page
@@ -99,17 +101,17 @@ export function SoloLayout({
         />
       }
     >
-      {!result && (phone || !side) ? (
+      {/* The stage keeps its place in the tree as the side comes and goes,
+          so the board is never mounted again when a game ends. */}
+      <div className={cx(styles.solo, alone && styles.alone)}>
         <div className={stageClass}>{stage}</div>
-      ) : (
-        <div className={styles.solo}>
-          <div className={stageClass}>{stage}</div>
+        {!alone && (
           <div className={styles.side}>
             {result}
             {side}
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <RulesDialog open={rules} onOpenChange={setRules} game={game} solo />
       <Dialog
         open={asking}
