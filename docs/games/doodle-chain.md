@@ -232,6 +232,7 @@ If the step ends while you are away, whatever you had made is your entry.
 - Your chain and your entries stay in the reveal and the album, under your name.
 
 **If fewer than two players are left**, the steps still to come are dropped and the game goes straight to the reveal, so what was made is still seen; its summary says it ended early.
+Once the last step is passing on, every step has been played: the reveal comes as it would have, and nothing ended early.
 A room with nobody left in it is deleted.
 
 **If the host leaves**, the crown passes to another player, as in every room, and during the reveal the new host carries on stepping it.
