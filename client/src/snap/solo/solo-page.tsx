@@ -226,6 +226,7 @@ function RunView({
         phase={{ tone: 'lime', label: m.snap.solo.complete }}
         stage={
           <SoloResult
+            celebrate={finish.isBest}
             title={m.snap.solo.resultTitle(RUN_CARDS, time)}
             body={finishBody(finish, m)}
             stats={[
@@ -296,7 +297,7 @@ function RunView({
                 },
                 {
                   label: m.snap.solo.wrongTaps,
-                  value: costOf(wrongTaps + run.wrongTaps, m),
+                  value: costOf(wrongTaps, m),
                 },
                 {
                   label: m.snap.solo.fastest,
@@ -373,11 +374,13 @@ function turnBar(
       meta: last ? m.snap.solo.foundIn(formatDuration(last.ms)) : undefined,
     };
   }
-  if (flash) {
+  // Which card a wrong symbol is on stays until the next tap, long after its
+  // mark goes, so it can be read.
+  if (run.miss) {
     return {
       ...base,
       main: m.snap.solo.wrong,
-      meta: m.snap.onlyOn(flash.symbol, flash.on),
+      meta: m.snap.onlyOn(run.miss.symbol, run.miss.on),
     };
   }
   return { ...base, main: m.snap.spot, meta: m.snap.solo.tapBoth };

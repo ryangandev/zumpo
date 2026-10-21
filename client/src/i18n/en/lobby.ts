@@ -9,9 +9,8 @@ export const lobby = {
   hostedBy: (name: string, setting: string) =>
     setting ? `Hosted by ${name} · ${setting}` : `Hosted by ${name}`,
   watching: (count: number) => `${count} watching`,
-  /** The game page's rules panel, and the button that opens every rule in it. */
+  /** The game page's rules panel. */
   howToPlay: 'How to play',
-  fullRules: 'Full rules',
   createRoom: 'Create a room',
   emptyTitle: 'A little quiet in here.',
   emptyDescription:

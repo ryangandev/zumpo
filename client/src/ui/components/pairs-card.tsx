@@ -11,10 +11,22 @@ export type PairsCardState =
   /** One of a pair somebody found; it stays where it lies. */
   | { kind: 'matched'; symbol: number };
 
+export type PairsCardSize = 'regular' | 'compact' | 'large';
+
+/** The symbol on a card of each size, as Figma draws it. */
+const SYMBOL_SIZE: Record<PairsCardSize, number> = {
+  regular: 44,
+  compact: 30,
+  large: 68,
+};
+
 export interface PairsCardProps {
   state: PairsCardState;
-  /** Regular is 80 px; Compact, 52 px, fits a 6 × 6 board on a phone. */
-  size?: 'regular' | 'compact';
+  /**
+   * Regular is 80 px; Compact, 52 px, fits a 6 × 6 board on a phone; Large,
+   * 124 px, makes a 4 × 4 board on a desktop as wide as 6 × 6 at Regular.
+   */
+  size?: PairsCardSize;
   /** Makes a face-down card a button that turns it over. */
   onPick?: () => void;
   /** The card's place, for its accessible name. */
@@ -42,14 +54,13 @@ export function PairsCard({
   column,
 }: PairsCardProps) {
   const m = useMessages();
-  const compact = size === 'compact';
   const label = m.ui.position(row + 1, column + 1, describe(state, m));
   const actionable = state.kind === 'down' && onPick != null;
   return (
     <span
       className={cx(
         styles.card,
-        compact && styles.compact,
+        size !== 'regular' && styles[size],
         styles[state.kind],
         actionable && styles.pickable,
       )}
@@ -59,7 +70,7 @@ export function PairsCard({
       {state.kind !== 'down' && (
         <PairsSymbol
           symbol={state.symbol}
-          size={compact ? 30 : 44}
+          size={SYMBOL_SIZE[size]}
           className={styles.symbol}
         />
       )}

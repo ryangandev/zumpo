@@ -27,7 +27,7 @@ test('two players bid and call until one of them has dice left', async ({
     [leo, 'Maya', 'Leo (you)'],
   ] as const) {
     await expect(
-      cup(page, you).getByRole('img', { name: /^[1-6]$/ }),
+      cup(page, you).getByRole('img', { name: /^[1-6](, wild)?$/ }),
     ).toHaveCount(3);
     await expect(
       cup(page, other).getByRole('img', { name: 'Hidden die' }),

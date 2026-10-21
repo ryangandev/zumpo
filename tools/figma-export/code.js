@@ -34,8 +34,8 @@ const FLOW_SECTIONS = [
   { id: '162:67746', prefix: '14', dir: '14-gomoku' },
 ];
 const SHARED_SECTION = { id: '9:198', name: 'Shared pieces' };
-const EXPECTED_FLOWS = 247;
-const EXPECTED_FAMILIES = 74;
+const EXPECTED_FLOWS = 250;
+const EXPECTED_FAMILIES = 77;
 
 const FLOW_CODE = /^([A-Z]{1,2}\d{2})\b/;
 const PATH_TYPES = ['VECTOR', 'BOOLEAN_OPERATION', 'STAR', 'POLYGON', 'LINE'];

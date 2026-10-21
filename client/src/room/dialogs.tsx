@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { departureFrom, heirOf } from '../../../shared/room';
 import type { AnyRoomState } from '../../../shared/wire-types';
-import { Button, Dialog, DialogClose, TextField } from '../ui';
+import { Button, Dialog, DialogClose, HowToPlay, TextField } from '../ui';
 import { scoreOf, type GameInfo } from '../games/catalog';
+import { FullRules } from '../games/full-rules';
 import { useMessages, type Messages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
 import { SwapLabel } from '../shell/swap-label';
@@ -122,7 +123,11 @@ export function LeaveDialog({
   );
 }
 
-/** P15: the game's rules over the room, which carries on behind them. */
+/**
+ * P15, P21: how to play over the room, which carries on behind it: the goal,
+ * how to act and read the board, how it scores, and the full rules a click
+ * away, so nobody leaves the room to look a rule up.
+ */
 export function RulesDialog({
   open,
   onOpenChange,
@@ -132,28 +137,22 @@ export function RulesDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   game: GameInfo;
-  /** The rules of the game on your own rather than in a room. */
+  /** How to play the game on your own rather than in a room. */
   solo?: boolean;
 }) {
   const m = useMessages();
   const text = m.games.of[game.type];
-  const rules =
-    solo && text.solo
-      ? text.solo
-      : { summary: text.lobbySummary, facts: text.lobbyFacts };
+  const howTo = (solo && text.solo?.howToPlay) || text.howToPlay;
   return (
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
       title={m.room.rulesTitle(text.name)}
-      description={rules.summary}
+      description={howTo.goal}
       actions={<DialogClose render={<Button>{m.room.backToGame}</Button>} />}
     >
-      <ul className={styles.facts}>
-        {rules.facts.map((fact) => (
-          <li key={fact}>{fact}</li>
-        ))}
-      </ul>
+      <HowToPlay steps={[...howTo.steps, howTo.score]} />
+      <FullRules game={game.type} />
     </Dialog>
   );
 }

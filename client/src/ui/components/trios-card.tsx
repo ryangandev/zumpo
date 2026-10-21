@@ -11,7 +11,9 @@ export type TriosCardState =
   /** Part of a trio just taken. */
   | 'found'
   /** Part of three that were not a trio. */
-  | 'wrong';
+  | 'wrong'
+  /** A card of a trio a hint gave away; its Hint badge names it. */
+  | 'hinted';
 
 export type TriosCardSize = 'regular' | 'compact' | 'mini';
 
@@ -50,7 +52,8 @@ export function TriosCard({
   const m = useMessages();
   const features = cardFeatures(card);
   const { colour, shape, count, fill } = features;
-  const name = `${m.ui.trios.card(card)}${state === 'default' ? '' : m.ui.trios.states[state]}`;
+  // A hinted card is named by its Hint badge.
+  const name = `${m.ui.trios.card(card)}${state === 'default' || state === 'hinted' ? '' : m.ui.trios.states[state]}`;
   const label = badgeLabel ? m.ui.trios.badge(name, badgeLabel) : name;
   const className = cx(
     styles.card,

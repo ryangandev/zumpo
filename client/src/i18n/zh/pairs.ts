@@ -69,6 +69,7 @@ export const pairs: typeof en = {
     longestStreak: '最长连对',
     streak: (total) => `连续 ${total} 对`,
     playAgain: '再玩一局',
+    changeBoard: '换个棋盘',
     bestOnDevice: '本机最佳成绩',
     challengeDescription: (turns) =>
       `朋友拿到相同的牌，挑战你的 ${turns} 次翻牌成绩。`,

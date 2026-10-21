@@ -13,6 +13,7 @@ import {
   BidPicker,
   Button,
   Card,
+  ChipField,
   ChoiceList,
   Chat,
   CodeBoard,
@@ -75,6 +76,7 @@ import {
   ChainComposer,
   ChainEntry,
   HeartButton,
+  HowToPlay,
 } from '..';
 import { GAMES } from '../../games/catalog';
 import { ChainDrawing, GameArtwork } from '../../games/artwork';
@@ -137,6 +139,7 @@ const TRIOS_SPECIMENS = [
   [0, 1],
   [80, 3],
   [41, 2],
+  [62, 3],
 ] as const;
 
 const cap = (word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
@@ -235,6 +238,7 @@ export default function Gallery() {
   const [rounds, setRounds] = useState(2);
   const [board, setBoard] = useState<'small' | 'medium' | 'large'>('medium');
   const [choice, setChoice] = useState('medium');
+  const [bots, setBots] = useState(3);
   const [colour, setColour] = useState<BrushName>('ink');
   const [size, setSize] = useState<BrushSize>(10);
   const [view, setView] = useState<'board' | 'players' | 'chat'>('board');
@@ -347,6 +351,18 @@ export default function Gallery() {
             Puzzles
           </FilterChip>
         </Specimen>
+        <Specimen label="Chip field: Bots, one choice" width={320}>
+          <ChipField
+            label="Bots"
+            value={bots}
+            onValueChange={setBots}
+            options={[1, 2, 3, 4, 5].map((count) => ({
+              value: count,
+              label: String(count),
+              name: count === 1 ? '1 bot' : `${count} bots`,
+            }))}
+          />
+        </Specimen>
       </Family>
 
       <Family name="Notice" file="notice">
@@ -364,6 +380,28 @@ export default function Gallery() {
           <Notice tone="error">
             That room is full now. Pick another one, or make your own room.
           </Notice>
+        </Specimen>
+      </Family>
+
+      <Family
+        name="How to play"
+        file="how-to-play"
+        note="A game in half a minute: under a waiting card with its heading and goal, and in the How to play dialog as steps with the score last."
+      >
+        <Specimen family="how-to-play" label="Waiting card" width={360}>
+          <HowToPlay
+            heading={m.ui.room.howToPlay}
+            goal={m.games.of['draw-and-guess'].howToPlay.goal}
+            steps={m.games.of['draw-and-guess'].howToPlay.steps}
+          />
+        </Specimen>
+        <Specimen label="Dialog: steps only" width={360}>
+          <HowToPlay
+            steps={[
+              ...m.games.of['draw-and-guess'].howToPlay.steps,
+              m.games.of['draw-and-guess'].howToPlay.score,
+            ]}
+          />
         </Specimen>
       </Family>
 
@@ -952,8 +990,13 @@ export default function Gallery() {
       </Family>
 
       <Family name="Pairs card" file="pairs-card">
-        {(['regular', 'compact'] as const).map((cardSize) => {
-          const sizeName = cardSize === 'regular' ? 'Regular' : 'Compact';
+        {(
+          [
+            ['regular', 'Regular'],
+            ['compact', 'Compact'],
+            ['large', 'Large'],
+          ] as const
+        ).map(([cardSize, sizeName]) => {
           return (
             <div
               key={cardSize}
@@ -1077,8 +1120,16 @@ export default function Gallery() {
       <Family name="Trios card" file="trios-card">
         {(
           [
-            ['regular', 'Regular', ['Default', 'Selected', 'Found', 'Wrong']],
-            ['compact', 'Compact', ['Default', 'Selected', 'Found', 'Wrong']],
+            [
+              'regular',
+              'Regular',
+              ['Default', 'Selected', 'Found', 'Wrong', 'Hinted'],
+            ],
+            [
+              'compact',
+              'Compact',
+              ['Default', 'Selected', 'Found', 'Wrong', 'Hinted'],
+            ],
             ['mini', 'Mini', ['Default', 'Found']],
           ] as const
         ).map(([cardSize, sizeName, states]) => (
@@ -1100,17 +1151,14 @@ export default function Gallery() {
                     badge={
                       state === 'Found' && cardSize !== 'mini'
                         ? 'MA'
-                        : undefined
+                        : state === 'Hinted'
+                          ? 'Hint'
+                          : undefined
                     }
                   />
                 </Specimen>
               );
             })}
-            {cardSize !== 'mini' && (
-              <Specimen label={`Hinted, ${sizeName}`}>
-                <TriosCard card={62} size={cardSize} badge="Hint" />
-              </Specimen>
-            )}
           </div>
         ))}
       </Family>

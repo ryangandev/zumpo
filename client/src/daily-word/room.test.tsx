@@ -111,6 +111,78 @@ describe('a Daily Word room', () => {
     expect(screen.getByText('1 guess')).toBeInTheDocument();
   });
 
+  it('says how to read the marks beside the board', async () => {
+    await renderSeated(start);
+    const legend = await screen.findByRole('region', {
+      name: 'How to read it',
+    });
+    expect(
+      within(legend).getByText('Right letter, right place'),
+    ).toBeInTheDocument();
+    expect(within(legend).getByText('Not in the word')).toBeInTheDocument();
+  });
+
+  it('says how to read the marks in a phone’s turn bar until your board is done', async () => {
+    onPhone();
+    const { update } = await renderSeated(start);
+    await screen.findByRole('group', { name: 'Your guesses' });
+    expect(
+      turn().getByText('Green: right place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'How to read it' })).toBeNull();
+
+    update(
+      guessing([
+        board(ME, 'Ryan'),
+        board('p2', 'Maya', {
+          rows: [{ word: null, marks: Array(5).fill('correct') }],
+          status: 'found',
+        }),
+      ]),
+    );
+    // Somebody else finding it does not take the legend away.
+    expect(
+      turn().getByText('Green: right place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+
+    update(
+      guessing([
+        board(ME, 'Ryan', {
+          rows: [{ word: 'south', marks: Array(5).fill('correct') }],
+          status: 'found',
+          points: 540,
+        }),
+        board('p2', 'Maya'),
+      ]),
+    );
+    expect(
+      turn().queryByText('Green: right place. Coral: somewhere else.'),
+    ).toBeNull();
+  });
+
+  it('says how to read the marks in a phone spectator’s turn bar too', async () => {
+    onPhone();
+    await renderSeated({
+      ...guessing([
+        board('p2', 'Maya', {
+          rows: [{ word: null, marks: Array(5).fill('correct') }],
+          status: 'found',
+        }),
+        board('p3', 'Leo'),
+      ]),
+      playerList: {
+        p2: { username: 'Maya', points: 0, isConnected: true },
+        p3: { username: 'Leo', points: 0, isConnected: true },
+      },
+      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+    });
+    await screen.findByRole('region', { name: 'Turn' });
+    // A spectator reads boards of marks alone too, even once one is found.
+    expect(
+      turn().getByText('Green: right place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+  });
+
   it('quiets a finder’s chat until the reveal', async () => {
     await renderSeated(
       guessing([

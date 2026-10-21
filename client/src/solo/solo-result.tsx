@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Confetti } from '../room/confetti';
 import { StatList, type Stat } from '../ui';
 import styles from './solo-result.module.css';
 
@@ -12,6 +13,7 @@ export function SoloResult({
   body,
   stats,
   actions,
+  celebrate = false,
 }: {
   /** "Cleared in 3:05." */
   title: string;
@@ -23,6 +25,8 @@ export function SoloResult({
   stats?: readonly Stat[];
   /** Buttons, primary first. */
   actions: ReactNode;
+  /** Bursts into a room's confetti: a new best, or a win against the bots. */
+  celebrate?: boolean;
 }) {
   return (
     <section className={styles.result} aria-labelledby="solo-result-title">
@@ -35,6 +39,7 @@ export function SoloResult({
       </div>
       {stats && <StatList stats={stats} />}
       <div className={styles.actions}>{actions}</div>
+      {celebrate && <Confetti />}
     </section>
   );
 }

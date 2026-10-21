@@ -53,6 +53,9 @@ export const hush = {
   yourReady: 'You’re ready',
   readyWhen: 'Ready when you are',
   chatTiming: 'The chat locks when the level starts, and opens when it ends.',
+  /** Level 1's, before the first deal: the rule, then the chat. */
+  firstRule:
+    'No turns, no talking: play your lowest card when it feels like its moment. Every card at the table must reach the pile in rising order. The chat locks when the level starts.',
   readyButton: 'I’m ready',
   waitingOthers: 'Waiting for the others.',
   nextUp: 'Next up',

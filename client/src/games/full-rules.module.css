@@ -1,0 +1,24 @@
+.fullRules {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--zumpo-space-16);
+}
+
+/* Every rule, one paragraph after another, under Full rules once open. */
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-12);
+  font: var(--zumpo-text-body);
+  letter-spacing: var(--zumpo-text-body-tracking);
+  white-space: pre-line;
+}
+
+.rules p {
+  margin: 0;
+}
+
+.rules[hidden] {
+  display: none;
+}

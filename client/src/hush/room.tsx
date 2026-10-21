@@ -323,9 +323,19 @@ function Hand({ room }: { room: Room }) {
   const { phase, hand } = state;
   const ready = state.table[playerId]?.ready ?? false;
 
-  // A spectator holds no cards and readies for nothing.
+  // A spectator holds no cards and readies for nothing, but learns the rule
+  // before the first deal as the players do.
   if (room.spectating) {
-    return <HandRow label={m.room.watching} message={m.hush.watchingHand} />;
+    return (
+      <HandRow
+        label={m.room.watching}
+        message={
+          phase === 'ready' && state.level === 1
+            ? m.hush.firstRule
+            : m.hush.watchingHand
+        }
+      />
+    );
   }
 
   switch (phase) {
@@ -333,7 +343,9 @@ function Hand({ room }: { room: Room }) {
       return (
         <HandRow
           label={ready ? m.hush.yourReady : m.hush.readyWhen}
-          message={m.hush.chatTiming}
+          // Before the first deal, the rule itself: once the chat locks,
+          // nobody can ask.
+          message={state.level === 1 ? m.hush.firstRule : m.hush.chatTiming}
           action={
             !ready && !reconnecting ? (
               <Button onClick={() => socket.emit('hush:ready', state.roomId)}>

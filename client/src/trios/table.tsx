@@ -105,7 +105,24 @@ export function LastTrio({
   );
 }
 
-/** The row under the table, for Hint. */
-export function TableTools({ children }: { children: ReactNode }) {
-  return <div className={styles.tools}>{children}</div>;
+/**
+ * The row under the table, for Hint. Hidden, it keeps its height, so the
+ * table panel does not change size when Hint is no longer offered.
+ */
+export function TableTools({
+  hidden = false,
+  children,
+}: {
+  hidden?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={cx(styles.tools, hidden && styles.hiddenTools)}
+      inert={hidden}
+      aria-hidden={hidden || undefined}
+    >
+      {children}
+    </div>
+  );
 }

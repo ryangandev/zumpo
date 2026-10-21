@@ -16,6 +16,8 @@ export const ui: typeof en = {
   players: '玩家',
   seatsTaken: (players, seats) => `已有 ${players} 人，共 ${seats} 个位置`,
   turn: '当前回合',
+  fullRules: '完整规则',
+  hideFullRules: '收起完整规则',
   room: {
     leave: '离开房间',
     howToPlay: '玩法',
@@ -138,7 +140,11 @@ export const ui: typeof en = {
       const { colour, shape, count, fill } = cardFeatures(card);
       return `${count} 个${{ coral: '珊瑚色', blue: '蓝色', ink: '墨色' }[colour]}${{ solid: '实心', striped: '条纹', outline: '空心' }[fill]}${{ circle: '圆形', triangle: '三角形', square: '方形' }[shape]}`;
     },
-    states: { selected: '，已选中', found: '，已找到', wrong: '，不成一组' },
+    states: {
+      selected: '，已选中',
+      found: '，已找到',
+      wrong: '，不成一组',
+    },
     badge: (name, badge) => `${name}，${badge}`,
   },
   snap: {
