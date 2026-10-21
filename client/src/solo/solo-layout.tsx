@@ -54,8 +54,11 @@ export function SoloLayout({
   const stageClass = cx(styles.stage, time?.paused && styles.away);
 
   // A game opens at the top of the page, as a new page does, not where the
-  // form it was started from had been scrolled to.
-  useLayoutEffect(() => window.scrollTo(0, 0), []);
+  // form it was started from had been scrolled to. A block body: browsers
+  // that return a promise from scrollTo would have React call it as cleanup.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Page
