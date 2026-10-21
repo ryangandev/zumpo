@@ -118,7 +118,7 @@ export const gomoku = {
       easy: 'Lets most open threes through: make one and you are on your way.',
       medium:
         'Blocks your open threes, but not a threat built two moves ahead.',
-      hard: 'Looks two moves ahead, and plays a forced win when it has one.',
+      hard: 'Looks six moves ahead, and plays a forced win when it has one.',
     } satisfies Record<Level, string>,
     pickTitle: 'Pick a game.',
     description: 'Play the computer at three levels, as Black or White.',

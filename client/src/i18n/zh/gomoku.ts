@@ -97,7 +97,7 @@ export const gomoku: typeof en = {
     levelHelp: {
       easy: '大多数活三都不挡：做出一个，你就快赢了。',
       medium: '会挡住你的活三，但看不出两步之后的威胁。',
-      hard: '会往后看两步，有必胜的连续冲四就一定走出来。',
+      hard: '会往后看六手，有必胜的连续冲四就一定走出来。',
     },
     pickTitle: '开一局。',
     description: '和电脑对战，三档难度，可以执黑或执白。',
