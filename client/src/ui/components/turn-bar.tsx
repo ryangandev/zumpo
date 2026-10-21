@@ -34,8 +34,8 @@ export interface TurnBarProps {
   /**
    * False where the page already names what the label says, such as a game
    * on your own under its room bar: on a phone's width the Phone variant
-   * leaves the label out, so the meta has the whole first line. A short
-   * window wider than that has the room, and keeps it.
+   * says the label to a screen reader only, so the meta has the whole first
+   * line. A short window wider than that has the room, and shows it.
    */
   labelOnPhone?: boolean;
   className?: string;
@@ -80,7 +80,7 @@ export function TurnBar({
         aria-label={m.ui.turn}
       >
         {category != null && <Tag className={styles.tag}>{category}</Tag>}
-        {labelled && <span className={styles.label}>{label}</span>}
+        <span className={styles.label}>{label}</span>
         <div className={styles.answer} aria-live="polite">
           <Fit align="start" className={styles.mainBox}>
             <span className={cx(styles.main, styles[kind])}>{main}</span>

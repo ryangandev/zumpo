@@ -128,7 +128,8 @@
     'main main main clock';
 }
 
-/* Without the label (labelOnPhone), the meta has the first line to itself. */
+/* Without the label (labelOnPhone), the meta has the first line to itself;
+   the label is said to a screen reader only, as the clock's purpose is. */
 .phone .unlabelled {
   grid-template-areas:
     'tag meta meta clock'
@@ -139,6 +140,15 @@
   grid-template-areas:
     'meta meta meta clock'
     'main main main clock';
+}
+
+.phone .unlabelled .label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .phone .answer {
