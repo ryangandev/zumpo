@@ -71,7 +71,9 @@ describe('a Daily Word room', () => {
     );
     expect(
       await screen.findByRole('button', { name: /^Standings:/ }),
-    ).toHaveAccessibleName('Standings: You 1/6, Maya ✓ 2/6. Show the players');
+    ).toHaveAccessibleName(
+      'Standings: You 1/6, Maya solved 2/6. Show the players',
+    );
   });
 
   it('lets the host start once two players are in', async () => {

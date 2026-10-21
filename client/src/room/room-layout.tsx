@@ -24,7 +24,7 @@ import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
-import { roomNameOf, type Seat } from './players';
+import { roomNameOf, type RaceStanding, type Seat } from './players';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -36,7 +36,7 @@ export interface PlayerLine {
    * What a phone's standings strip shows for them instead of their points:
    * a race's progress, where nobody scores until somebody solves it.
    */
-  standing?: string;
+  standing?: RaceStanding;
 }
 
 export interface RoomLayoutProps {
@@ -250,7 +250,8 @@ export function RoomLayout({
                         name: seat.username,
                         initials: initialsOf(seat.username),
                         tone: toneOf(seat.username),
-                        value: standing ?? String(seat.points),
+                        value: standing?.value ?? String(seat.points),
+                        mark: standing?.mark,
                         you: seat.playerId === room.playerId,
                         away: !seat.isConnected,
                       }))}

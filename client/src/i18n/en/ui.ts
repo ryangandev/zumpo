@@ -26,10 +26,13 @@ export const ui = {
     away: 'Away',
     /** A race's progress in place of a score: guesses used of the most. */
     guesses: (used: number, most: number) => `${used}/${most}`,
-    /** Found the word or cracked the code, in this many guesses. */
-    solved: (used: number, most: number) => `✓ ${used}/${most}`,
-    /** Used every guess without solving it. */
-    missed: (most: number) => `✗/${most}`,
+    /** What the check and the cross beside it say, in the strip's name. */
+    mark: {
+      /** Found the word or cracked the code. */
+      solved: 'solved',
+      /** Used every guess without solving it. */
+      missed: 'missed',
+    },
   },
   /** Opens every rule of a game under its short version, and closes them again. */
   fullRules: 'Full rules',

@@ -71,7 +71,9 @@ describe('a Code Breaker room', () => {
     );
     expect(
       await screen.findByRole('button', { name: /^Standings:/ }),
-    ).toHaveAccessibleName('Standings: You 3/10, Maya ✗/10. Show the players');
+    ).toHaveAccessibleName(
+      'Standings: You 3/10, Maya missed 10/10. Show the players',
+    );
   });
 
   it('lets the host start once two players are in', async () => {
