@@ -87,6 +87,8 @@ describe('what comes after a game', () => {
     await renderSeated(
       finished({
         ...asGuest,
+        // The stand-in said Ready before the host left: that goes unsaid.
+        ready: [ME],
         playerList: {
           p2: { username: 'Maya', points: 4, isConnected: false },
           p1: { username: 'Ryan', points: 2, isConnected: true },
@@ -97,6 +99,7 @@ describe('what comes after a game', () => {
     expect(
       screen.getByText('Maya is away, so you can start the next game.'),
     ).toBeInTheDocument();
+    expect(screen.queryByText(/is ready/)).toBeNull();
     expect(
       screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();

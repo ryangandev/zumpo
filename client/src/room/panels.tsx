@@ -427,7 +427,9 @@ export function ResultsActions({
   if (canStart) {
     if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
     const enough = count >= gameInfo(state.gameType).minPlayers;
-    const ready = state.ready.filter((id) => state.playerList[id]);
+    const ready = state.ready.filter(
+      (id) => id !== playerId && state.playerList[id],
+    );
     const said = [
       standIn,
       ready.length > 0 && m.room.areReady(names(ready), ready.length),
