@@ -240,7 +240,11 @@ function turnBar(
     kind: 'status',
     main: room.spectating ? m.snap.everyoneLooking : m.snap.spot,
     meta: m.snap.firstTakes,
-    countdown: { ...clock(m.snap.onThisCard, cardSeconds), deadline: false },
+    // Help, not a deadline, unless it is held and says Paused.
+    countdown: {
+      ...clock(m.snap.onThisCard, cardSeconds),
+      deadline: reconnecting,
+    },
   };
 }
 

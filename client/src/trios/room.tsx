@@ -231,10 +231,11 @@ function turnBar(
       ? { seconds: left, label: m.trios.paused, waiting: true }
       : { seconds: left, label, waiting };
   // A hint is help, not a deadline, and neither is the time since a trio:
-  // those clocks never turn urgent. A spectator only waits on them.
+  // those clocks never turn urgent. A spectator only waits on them. Held
+  // while reconnecting, they say Paused as every other clock does.
   const helpClock = (label: string, left = seconds) => ({
     ...clock(label, room.spectating, left),
-    deadline: false,
+    deadline: reconnecting,
   });
   if (state.phase === 'taken' && state.lastTrio) {
     const mine = state.lastTrio.playerId === playerId;

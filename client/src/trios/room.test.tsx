@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { cardName } from '../../../shared/trios';
@@ -163,6 +163,16 @@ describe('a Trios room', () => {
     ).toBeInTheDocument();
     expect(turn().getByText('to a second hint')).toBeInTheDocument();
     expect(card(9, ', hint')).toBeInTheDocument();
+  });
+
+  it('draws the hint clock as a line, and holds it as Paused like any clock', async () => {
+    const { fake } = await renderSeated(finding);
+    const tone = (label: string) =>
+      turn().getByText(label).closest('[data-tone]')?.getAttribute('data-tone');
+    expect(tone('to a hint')).toBe('info');
+
+    act(() => fake.drop());
+    expect(tone('paused')).toBe('waiting');
   });
 
   it('counts the time without a trio once both hints are given', async () => {
