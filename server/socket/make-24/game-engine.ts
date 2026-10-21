@@ -1,10 +1,9 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type {
   Make24HandResult,
   Make24Settings,
   Make24Step,
 } from '../../models/types.js';
-import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
@@ -209,7 +208,10 @@ const createMake24GameEngine = (
     game.solves.clear();
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) {
+      ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
+    }
     ctx.rooms.emitLobby('make-24');
   };
 
@@ -219,7 +221,10 @@ const createMake24GameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['make-24'].min) {
+    if (
+      departureFrom({ gameType: 'make-24', seats: room.playerList }).kind ===
+      'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;

@@ -114,7 +114,8 @@ When a game ends, the last board stays on the table under the result until the n
 
 ### A rematch
 
-The owner starts the next game from the result, as in every room.
+The owner starts the next game from the result with **Play again**, as in every room.
+Once somebody new takes a seat the result belongs to the last pair, so the room shows the waiting card instead, over the same board, and the host starts the new pair's first game from it.
 **The colours swap every game**: whoever played White plays Black, so over two games each player has the first move once.
 A player who moves to watch, or leaves, takes their turn at Black with them: a new pair starts on a fresh draw.
 

@@ -9,6 +9,7 @@ import type { LiarsDiceRoomState } from '../models/types.js';
 import {
   collectChat,
   createLiarsDiceRoom,
+  endNotices,
   liarsDiceRoom,
   lobbyView,
   request,
@@ -540,9 +541,13 @@ describe('leaving', () => {
     const { roomId, owner, players } = await playToFirstTurn(harness);
     const guest = players.find((p) => p !== owner)!;
 
+    const endChat = collectChat(owner);
     const over = waitForLiarsDiceState(owner, (s) => s.lastGame !== null);
     guest.emit('room:leave', roomId);
     const ended = await over;
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
 
     expect(ended.lastGame).toMatchObject({
       endedEarly: true,

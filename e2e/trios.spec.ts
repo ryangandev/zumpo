@@ -57,7 +57,10 @@ test('two players race for trios until the game is over', async ({
   for (const page of [maya, leo]) {
     await expect(page.getByText('Game over', { exact: true })).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Maya wins with 6 trios.' }),
+      page.getByRole('heading', {
+        name:
+          page === maya ? 'You win with 6 trios.' : 'Maya wins with 6 trios.',
+      }),
     ).toBeVisible();
   }
   await expect(

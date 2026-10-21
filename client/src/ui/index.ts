@@ -104,6 +104,7 @@ export {
   type ViewerMenu,
 } from './components/header';
 export { HeartButton, type HeartButtonProps } from './components/heart-button';
+export { HowToPlay, type HowToPlayProps } from './components/how-to-play';
 export {
   HushCard,
   type HushCardProps,

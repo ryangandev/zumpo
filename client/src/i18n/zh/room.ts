@@ -35,6 +35,13 @@ export const room: typeof en = {
   leaveTitle: (name) => `离开“${name}”？`,
   leaveInGame: (score) =>
     `游戏会继续，但你的座位和 ${score} 会被移除。还有空位时，你可以再次加入。`,
+  leaveInGameNoScore:
+    '游戏会继续，但你的座位会被移除。还有空位时，你可以再次加入。',
+  leaveEndsGame: '剩下的玩家会不够，所以你离开后，这一局对所有人都会结束。',
+  leaveResigns: (opponent) => `离开会结束这一局，${opponent} 获胜。`,
+  leaveNextHost: (name) => `${name} 会成为房主。`,
+  leaveCloses: '房间里没有别人了，所以房间会关闭。',
+  both: (first, second) => `${first}${second}`,
   leaveBetweenGames: '你的座位会被释放。还有空位时，你可以再次加入。',
   leaveSpectating:
     '你只是在观战，离开不会有任何损失。观战席有空位时可以再回来。',
@@ -64,6 +71,8 @@ export const room: typeof en = {
   inviteDescription: (name) =>
     `还有空位时，任何拿到链接的人都可以加入“${name}”。`,
   copied: '已复制',
+  linkCopied: '链接已复制',
+  shareText: (game, roomName) => `来“${roomName}”和我一起玩${game}吧。`,
   copy: '复制',
   done: '完成',
   roomLink: '房间链接',
@@ -73,16 +82,21 @@ export const room: typeof en = {
   needsPlayers: (game, fewest) =>
     `${game}至少需要 ${fewest} 人。分享房间，邀请朋友加入就能开始。`,
   everyoneHere: '大家到齐了吗？',
+  here: (names) => `${names} 已经在房间里了。`,
   starting: '正在开始游戏…',
   start: '开始游戏',
   everyoneLeft: '其他人都离开了。',
   endedEarly: (game) =>
+    `${game}至少需要 2 人，因此这一局已结束。邀请朋友开始新的一局吧。`,
+  endedEarlyNewHost: (game) =>
     `${game}至少需要 2 人，因此这一局已结束。你现在是房主，邀请朋友开始新的一局吧。`,
   waitingForAgain: (name) => `等待 ${name} 开始下一局。`,
   playAgain: '再玩一局',
   gameOver: '游戏结束。',
   wins: (name, score) => `${name} 以 ${score}获胜。`,
   ties: (names, score) => `${names} 以 ${score}并列获胜。`,
+  youWin: (score) => `你以 ${score}获胜。`,
+  youTie: (others, score) => `你和 ${others} 以 ${score}并列获胜。`,
   finished: (detail, place) => `${detail}你获得了${place}。`,
   standings: '排名',
   winner: '获胜者',

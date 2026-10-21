@@ -179,7 +179,7 @@ describe('spectators', () => {
 
     const told = waitForChat(
       bob,
-      (m) => textOf(m) === 'Ada is watching. Bob is now the owner.',
+      (m) => textOf(m) === 'Ada is watching. Bob is now the host.',
     );
     expect((await request(owner, 'room:watch', roomId)).ok).toBe(true);
     await told;

@@ -7,10 +7,16 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Navigate, useBlocker, useNavigate, type Location } from 'react-router';
+import {
+  Navigate,
+  useBlocker,
+  useLocation,
+  useNavigate,
+  type Location,
+} from 'react-router';
 import type { ErrorType, GameType } from '../../../shared/wire-types';
 import { Button, ButtonLink, Card, TextField } from '../ui';
-import { gameInfo, gamePath, roomPath, scoreOf } from '../games/catalog';
+import { gameInfo, gamePath, roomPath } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
 import { DrawAndGuessRoom } from '../draw-and-guess/room';
 import { MinesweeperRoom } from '../minesweeper/room';
@@ -35,7 +41,8 @@ import { StatusLine } from '../shell/status-line';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { LobbyHeading, lobbyHeading } from '../pages/lobby-heading';
 import { Confetti } from './confetti';
-import { InviteDialog, LeaveDialog } from './dialogs';
+import { InviteDialog, LeaveDialog, leaveCost } from './dialogs';
+import { roomNameOf } from './players';
 import { RoomContext, type Room } from './room-context';
 
 // Daily Word brings its word lists, so it loads only when played.
@@ -53,7 +60,13 @@ export default function RoomPage({
   roomId: string;
 }) {
   const m = useMessages();
-  const connection = useRoom(roomId);
+  // An invite link to a locked room carries its key: #key=…, read once, since
+  // the room drops it from the address once seated.
+  const { hash } = useLocation();
+  const [invite] = useState(
+    () => new URLSearchParams(hash.slice(1)).get('key') ?? '',
+  );
+  const connection = useRoom(roomId, invite);
   const { stage } = connection;
 
   switch (stage.kind) {
@@ -159,6 +172,19 @@ export default function RoomPage({
   }
 }
 
+/**
+ * The room's invite link: its address, and for a locked room the key that
+ * lets a friend in without the password.
+ */
+function inviteLink(state: {
+  gameType: GameType;
+  roomId: string;
+  inviteKey: string;
+}) {
+  const address = `${window.location.origin}${roomPath(state.gameType, state.roomId)}`;
+  return state.inviteKey ? `${address}#key=${state.inviteKey}` : address;
+}
+
 /** P08: the seat was released while this player was away. */
 function ExpiredPage({ gameType }: { gameType: GameType }) {
   const m = useMessages();
@@ -211,7 +237,8 @@ function PasswordPage({
   }, [rejected, pending]);
   // The lobby knows the room's name; a link alone does not.
   const rooms = useLobby(gameType);
-  const roomName = rooms?.find((room) => room.roomId === roomId)?.roomName;
+  const room = rooms?.find((candidate) => candidate.roomId === roomId);
+  const roomName = room && roomNameOf(room, m);
   const description = m.room.passwordDescription(roomName);
 
   return (
@@ -276,8 +303,21 @@ function SeatedRoom({
   const m = useMessages();
   const { socket, playerId, reconnectGraceMs } = useSession();
   const navigate = useNavigate();
+  const location = useLocation();
   const { state, receivedAt } = snapshot;
   const [inviting, setInviting] = useState(false);
+
+  // Seated, the invite key has done its work: the address goes back to the
+  // room's own, which a reload or a bookmark finds the seat by.
+  const hasHash = location.hash !== '';
+  useEffect(() => {
+    if (hasHash) {
+      void navigate(
+        { pathname: location.pathname, search: location.search },
+        { replace: true },
+      );
+    }
+  }, [hasHash, navigate, location.pathname, location.search]);
   const [starting, setStarting] = useState(false);
   const [moving, setMoving] = useState(false);
   const [refusal, setRefusal] = useState<string | null>(null);
@@ -287,8 +327,12 @@ function SeatedRoom({
   // A Hush team can lose together, and a loss is not celebrated.
   const [wasPlaying, setWasPlaying] = useState(state.isGameStarted);
   const [celebrations, setCelebrations] = useState(0);
+  // Who was host when the last game started, so a game cut short can say
+  // whether the crown has just come to the viewer.
+  const [startedBy, setStartedBy] = useState(state.owner.playerId);
   if (state.isGameStarted !== wasPlaying) {
     setWasPlaying(state.isGameStarted);
+    if (state.isGameStarted) setStartedBy(state.owner.playerId);
     // A game starting or ending moves on from whatever was refused before.
     setRefusal(null);
     if (
@@ -379,11 +423,14 @@ function SeatedRoom({
             me,
             spectating: !seat,
             isHost: state.owner.playerId === playerId,
+            becameHost:
+              state.owner.playerId === playerId && startedBy !== playerId,
             chat: connection.chat,
             canvas: connection.canvas,
             drawings: connection.drawings,
             socket,
             sendChat: (text) => socket.emit('chat:send', state.roomId, text),
+            inviteLink: inviteLink(state),
             openInvite: () => setInviting(true),
             leave: () =>
               navigate(gamePath(state.gameType), {
@@ -405,6 +452,7 @@ function SeatedRoom({
       playerId,
       me,
       seat,
+      startedBy,
       connection.chat,
       connection.canvas,
       connection.drawings,
@@ -454,15 +502,13 @@ function SeatedRoom({
       <InviteDialog
         open={inviting}
         onOpenChange={setInviting}
-        roomName={state.roomName}
-        link={`${window.location.origin}${roomPath(state.gameType, state.roomId)}`}
+        roomName={roomNameOf(state, m)}
+        link={inviteLink(state)}
       />
       <LeaveDialog
         open={blocked && !sure}
-        roomName={state.roomName}
-        inGame={state.isGameStarted}
-        spectating={room.spectating}
-        score={scoreOf(m, state.gameType, room.me.points)}
+        roomName={roomNameOf(state, m)}
+        cost={leaveCost(state, playerId, m)}
         onStay={() => blocker.reset?.()}
         onLeave={() => {
           leave();

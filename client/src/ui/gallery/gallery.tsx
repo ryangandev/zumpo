@@ -76,6 +76,7 @@ import {
   ChainComposer,
   ChainEntry,
   HeartButton,
+  HowToPlay,
 } from '..';
 import { GAMES } from '../../games/catalog';
 import { ChainDrawing, GameArtwork } from '../../games/artwork';
@@ -379,6 +380,28 @@ export default function Gallery() {
           <Notice tone="error">
             That room is full now. Pick another one, or make your own room.
           </Notice>
+        </Specimen>
+      </Family>
+
+      <Family
+        name="How to play"
+        file="how-to-play"
+        note="A game in half a minute: under a waiting card with its heading and goal, and in the How to play dialog as steps with the score last."
+      >
+        <Specimen family="how-to-play" label="Waiting card" width={360}>
+          <HowToPlay
+            heading={m.ui.room.howToPlay}
+            goal={m.games.of['draw-and-guess'].howToPlay.goal}
+            steps={m.games.of['draw-and-guess'].howToPlay.steps}
+          />
+        </Specimen>
+        <Specimen label="Dialog: steps only" width={360}>
+          <HowToPlay
+            steps={[
+              ...m.games.of['draw-and-guess'].howToPlay.steps,
+              m.games.of['draw-and-guess'].howToPlay.score,
+            ]}
+          />
         </Specimen>
       </Family>
 

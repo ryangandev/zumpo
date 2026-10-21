@@ -19,6 +19,8 @@ import {
   waitForChat,
   waitForMineState,
   type TestServer,
+  collectChat,
+  endNotices,
 } from './helpers/test-server.js';
 import { gameOverNotice } from '../libs/utils.js';
 import { hiddenIndexes } from '../socket/minesweeper/board.js';
@@ -550,10 +552,14 @@ describe('a Minesweeper game', () => {
   it('ends when the room drops below two players, and says it ended early', async () => {
     const { roomId, alice, bob } = await playToFirstRound(harness);
 
+    const endChat = collectChat(alice);
     const ended = waitForMineState(alice, (s) => s.lastGame !== null);
     bob.emit('room:leave', roomId);
 
     const final = await ended;
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
     expect(final.isGameStarted).toBe(false);
     expect(final.phase).toBe('waiting');
     expect(final.lastGame).toMatchObject({

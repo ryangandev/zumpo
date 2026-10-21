@@ -1,4 +1,4 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type { HushDiscard } from '../../models/types.js';
 import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
@@ -394,7 +394,10 @@ const createHushGameEngine = (
       ].toSorted((a, b) => a.card - b.card);
     }
 
-    if (seatCount(room) < SEATS.hush.min) {
+    if (
+      departureFrom({ gameType: 'hush', seats: room.playerList }).kind ===
+      'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { won: false, endedEarly: true });
       return;

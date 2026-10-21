@@ -44,7 +44,10 @@ export function GomokuRoom() {
     reconnecting,
   );
   const playing = state.phase === 'playing';
-  const summary = playing ? null : state.lastGame;
+  // The last board stays until the next game; its result only while the
+  // same pair is at the table: a new opponent is waiting for a new game.
+  const last = playing ? null : state.lastGame;
+  const summary = last && sameSeats(state) ? last : null;
   const mine = colorOf(state, playerId);
   const myTurn = playing && state.turnPlayerId === playerId && !reconnecting;
   useTurnTitle(myTurn);
@@ -79,7 +82,7 @@ export function GomokuRoom() {
   const board = {
     stones: boardOf(state.moves),
     last: lastStoneOf(state.moves),
-    winLines: summary ? state.winLines : null,
+    winLines: last ? state.winLines : null,
     color: playing ? mine : null,
     pending: sending ?? previewing,
     disabled: !myTurn || sending !== null,
@@ -134,7 +137,7 @@ export function GomokuRoom() {
                 <Notice>{m.gomoku.missedNotice}</Notice>
               ) : null
             }
-            note={state.colors === null ? m.gomoku.colorsNote : undefined}
+            note={!playing && !summary ? m.gomoku.colorsNote : undefined}
             actions={
               playing ? (
                 (previewing !== null || resign) && (
@@ -151,7 +154,6 @@ export function GomokuRoom() {
                 <ResultsActions
                   onPlayAgain={room.startGame}
                   starting={room.starting}
-                  again={m.gomoku.startGame(nextGameNumber(state))}
                 />
               ) : null
             }
@@ -187,9 +189,16 @@ function sideName(state: GomokuRoomState, color: GomokuColor): string {
   return state.colors?.[color].username ?? '';
 }
 
-/** The next game's number: one on for the same pair, else their first. */
-const nextGameNumber = (state: GomokuRoomState) =>
-  state.samePair ? state.gameNumber + 1 : 1;
+/** Whether everybody at the table played in this game, or the last. */
+function sameSeats(state: GomokuRoomState): boolean {
+  const { colors } = state;
+  return (
+    colors !== null &&
+    Object.keys(state.playerList).every(
+      (id) => id === colors.black.playerId || id === colors.white.playerId,
+    )
+  );
+}
 
 /** A seat's avatar, as the scoreboard draws the same player's. */
 const avatar = (name: string) => ({
@@ -198,42 +207,21 @@ const avatar = (name: string) => ({
 });
 
 /**
- * The seats, Black's first: this game's or the last game's colours while
- * nobody new has sat down, else the players at the table with no colours
- * yet, as before a first game, and a free seat while one is.
+ * The seats, Black's first: this game's or the last game's colours, and a
+ * free seat while one is. Before a pair's first game nobody has a colour,
+ * and the scoreboard already says who is here: there are no seats yet.
  */
 function seatsOf(room: Room, phone: boolean, m: Messages): SeatView[] {
   const { state, playerId } = room;
   const playing = state.phase === 'playing';
-  const seated = Object.entries(state.playerList);
   const { colors } = state;
-  const coloured =
-    colors !== null &&
-    seated.every(
-      ([id]) => id === colors.black.playerId || id === colors.white.playerId,
-    );
-  const free = (color: GomokuColor | null): SeatView => ({
-    key: `free-${color ?? ''}`,
+  if (!colors || !sameSeats(state)) return [];
+  const free = (color: GomokuColor): SeatView => ({
+    key: `free-${color}`,
     name: m.gomoku.freeSeat,
     detail: m.gomoku.anybodyCanSit,
     color,
   });
-
-  if (!coloured) {
-    const seats: SeatView[] = seated.map(([id, seat]) => ({
-      key: id,
-      name: seat.username,
-      detail: !seat.isConnected
-        ? m.gomoku.away
-        : id === state.owner.playerId
-          ? m.gomoku.hostHere
-          : m.gomoku.here,
-      avatar: avatar(seat.username),
-      you: id === playerId,
-    }));
-    while (seats.length < 2) seats.push(free(null));
-    return seats;
-  }
 
   const summary = playing ? null : state.lastGame;
   return (['black', 'white'] as const).map((color) => {
@@ -387,7 +375,6 @@ function Results({
       }}
       onPlayAgain={room.startGame}
       starting={room.starting}
-      again={m.gomoku.startGame(nextGameNumber(state))}
     />
   );
 }
@@ -482,7 +469,7 @@ function playerLine(
     };
   }
   const summary = state.lastGame;
-  if (summary?.winner && color === summary.winner) {
+  if (summary?.winner && color === summary.winner && sameSeats(state)) {
     return { seat, status: m.gomoku.wonGame(state.gameNumber) };
   }
   return { seat, status: m.gomoku.waiting };

@@ -18,7 +18,7 @@ They are not copied here, so there is one place to change them.
 | Section                              | Id          | Contents                                                                              |
 | ------------------------------------ | ----------- | ------------------------------------------------------------------------------------- |
 | 00 / Review guide & flow map         | `9:14700`   | Review order, the real rules, which UX is new                                         |
-| 01 / Platform & shared flows         | `9:431`     | P01-P20 without P04, desktop                                                          |
+| 01 / Platform & shared flows         | `9:431`     | P01-P21 without P04, desktop                                                          |
 | 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D15 room, desktop                                            |
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
 | 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px                                      |
@@ -69,7 +69,7 @@ Decisions from the design review rounds (their reports are in git history):
   Under the pointer the card lifts 4 px onto the Paper lift shadow and its arrow leads 3 px on, easing out over 180 ms (`State=Hover`); Ryan found an ink border that came at once too hard for the cards, so it was redesigned in Claude Design among four (lift, sticker, tilt, brighten) on 2026-10-08.
   With reduced motion only the shadow comes.
   The page (DL01-DL03, ML01-ML03, MO04) opens with one `Zumpo/Game intro`: the game's artwork, kind, name and tagline, and its ways in, Play solo first where the game has it, because one click starts it with nobody to wait for, then Create a room.
-  The open rooms to join are listed under it, and the How to play panel beside it gives the rules at a glance in the buttons' order, on your own first where the game has it, then in a room, as bulleted points; Full rules opens the whole of them in the panel, so each game's rules are on its own page and in the dialog over its room, and nowhere else; Ryan removed the page of every game's rules (P14) and its header link on 2026-10-21.
+  The open rooms to join are listed under it, and the How to play panel beside it says how to play in the buttons' order, on your own first where the game has it, then in a room, each as `Zumpo/How to play` with its goal, steps and score, whole on its own; Full rules, the same `Full rules` button as in the room's dialog, opens the whole of them in the panel, so each game's rules are on its own page and in the dialog over its room, and nowhere else; Ryan removed the page of every game's rules (P14) and its header link on 2026-10-21.
   A phone shows the panel too, after the rooms.
   The header and the wordmark are the ways home, so the page has no Back to games, and the avatar is the name, so no Playing as either.
   An empty room list says so, with no button of its own: Create a room is in the intro.
@@ -93,6 +93,7 @@ Decisions from the design review rounds (their reports are in git history):
 - Minesweeper shows each round's outcome as `Zumpo/Pick result` rows: who picked how risky a cell, and what it paid.
   On a phone the row is its Phone layout, two lines with the name above the outcome tag and its detail, so a long tag such as Auto-picked never squeezes the name (MO13, MO19); Make 24's hand results are the same rows.
 - Daily Word's reveal lists every board as a `Zumpo/Race board` with its letters, best first; on a phone each is the Row layout, the name beside the board, one under another (DW15, DW16), since two Small boards do not fit across.
+  A revealed board, Daily Word's or Code Breaker's, draws only the rows played, so a word found in 3 is three rows, not six with three empty.
 - No disabled primary buttons: a request in flight is a status line, and an action you cannot take is not shown.
 - Dialogs (leave, invite) sit over the screen they come from, behind a scrim.
 - Example data follows one story with four players (Maya, Ryan, Leo, Sam), each with a fixed avatar colour, and every score is computed with the real formula.
@@ -110,16 +111,23 @@ On a phone it drops the wordmark, puts the tags under the game and keeps the two
 Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16), and it is 160 px shorter than the old pair on a desktop and 80 px on a phone.
 
 - A room has no links out but the wordmark: How to play opens over the room (P15), so a game is never lost to a rules check.
+  It says how to play, not how the room is set: the goal, then `Zumpo/How to play`'s steps with the score last, and Full rules opens the game's whole rules under them (P21).
+- A waiting card ends with the game in half a minute, `Zumpo/How to play` with its heading and goal, under a line (D01-D03, M01-M03, DC03, DC04, P19, P20), so a friend who came from an invite link knows the game before it starts.
 - Leave room between games leaves at once; nothing is at stake and the click says what it means.
 - Every other way out asks first, mid-game and between games: Leave room mid-game, the wordmark and the browser's back button.
   Changing your name is not a way out: it happens in place, so it never asks.
-  Mid-game the dialog names the points that go (P11); between games only the seat (P16).
+  Mid-game the dialog names the points that go (P11), or says the game ends for everyone, or that somebody wins it (the Gomoku opponent, or Liar's Dice's last player with dice); between games only the seat (P16).
+  Which of these it is comes from the rule the server acts on (`departureFrom` in `shared/room.ts`), so a Doodle Chain that plays on with two says so.
+  A host is also told who takes the crown, the same player the server picks (`heirOf` in `shared/room.ts`); a host alone is told only that the room closes.
 - While reconnecting the bar has no Leave room; the notice under it says what is happening (P07).
 - On your own the bar says On your own in place of the room, and Leave goes to the game's page, where the game starts again with other settings.
   It asks first only where leaving throws away minutes of play: a Liar's Dice game under way, and a Trios run once a trio is found (LD16).
   While it asks, the game's time stands still and the board is put away, as under How to play, so staying costs nothing.
   A Pairs board, a Snap run and the puzzles leave at once: each is a minute or two to play again, and a question on every way out would cost more than it saves.
 - The room screens' hidden notice layers are gone; the visible notices, such as D10's pending one, stay.
+- Before a room's first game the scoreboard's rows show no score and no status, Player row's Show score and Show status off: every score is 0 and everybody is waiting, so a row says only who is here, and Away for a player who dropped.
+  Gomoku draws no seats then either (GM08), since with no colours yet they would only list the same two players again.
+- On a phone, where the scoreboard is on its own tab, the waiting card says who else is at the table, their small avatars over "Maya and Leo are here." (MO20), so "Everyone's here?" is answered where it is asked.
 
 ### Names
 
@@ -201,6 +209,10 @@ Code differs from Figma on purpose in a few places:
 - The header marks the page you are on; Figma draws Games as current on every screen.
 - Dialogs are centred in the window, so they sit a few pixels from where each Figma screen places them.
   The invite link's box grows to the whole link: two lines at P12's width, three on a phone, which Figma does not draw.
+- Invite friends opens P12 only where the link cannot be sent at once.
+  Under a mouse it copies the link and says "Link copied" with the check icon for a moment, as P12's Copy says "Copied"; under a finger it opens the system share sheet, and a sheet closed without sharing opens nothing.
+  Figma draws neither moment.
+- A Button whose label changes for a moment, Copy to Copied and Invite friends to Link copied, keeps the width of the wider label, so nothing beside it moves; P12 draws only Copied, at that width.
 - A game that ends while the room is open bursts into confetti in the brand accents and the sun brush's gold, at Ryan's request; Figma draws the results still, and a game found finished on arrival or after a refresh is not celebrated.
   It stays off when the system asks for reduced motion, and a Hush game the team lost is not celebrated.
   On your own the same confetti marks a new best on this device in Pairs, Trios and Snap, and a Liar's Dice win against the bots; a first finish is a new best too, so it is celebrated, and only a finish short of the best is not.
@@ -209,14 +221,18 @@ Code differs from Figma on purpose in a few places:
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
 - The footer carries a language switch, English and 中文 in the footer's small text, which the Figma file does not draw: the design is English, and the switch is the one control that lets a reader choose otherwise ([languages](architecture.md#languages)).
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.
-- Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat or Watch instead is a secondary Button among a panel's actions.
+- Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat is a secondary Button among a panel's actions.
+  Watch instead is a Quiet Button after Invite friends, offered only to a guest: for the host it would hand the crown on for good.
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
 - Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
+- A Code Breaker or Daily Word room's phone turn bar says how to read the marks while you still guess or watch as a spectator, even after somebody else has solved it; CB18 and DW13 show Maya's name there instead.
+- Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
-- Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game among the seats: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board and the seats stay under it exactly as GM08 draws them.
+  In a game's final standings it wraps to a second line instead, since there the detail is what the row is for.
+- Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - Games on your own start at once and end beside the board (#105, #86, #107), which the Figma file does not draw yet: the bridge was down when the change was made, so its scripts wait to be run.
   T01, TS01 and SN01 are start screens no state shows; MS01, PR01, LD01 and GM02 are start pages that code shows as the Change dialog over a finished game.

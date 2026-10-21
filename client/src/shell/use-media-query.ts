@@ -17,6 +17,12 @@ export function useMediaQuery(query: string): boolean {
   );
 }
 
+/**
+ * A finger, not a mouse: a phone or a tablet, where sending a link means the
+ * system share sheet.
+ */
+export const TOUCH = '(pointer: coarse)';
+
 /** The phone layout's breakpoint, the same as the components' CSS. */
 export const PHONE = '(max-width: 640px)';
 

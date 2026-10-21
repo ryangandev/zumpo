@@ -38,6 +38,14 @@
   padding-top: var(--zumpo-space-12);
 }
 
+/* How to play on the waiting card, past a line under the actions. */
+.howTo {
+  align-self: stretch;
+  margin-top: var(--zumpo-space-12);
+  padding-top: var(--zumpo-space-24);
+  border-top: 1px solid var(--zumpo-line);
+}
+
 .results .actions {
   padding-top: 0;
 }
@@ -75,6 +83,24 @@
   font: var(--zumpo-text-number);
   letter-spacing: var(--zumpo-text-number-tracking);
   text-align: center;
+}
+
+/* MO20: the others at the table, small avatars then their names. */
+.here {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+}
+
+.faces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zumpo-space-4);
+}
+
+.hereText {
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
 }
 
 @media (max-width: 640px) {

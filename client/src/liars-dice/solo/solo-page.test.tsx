@@ -93,6 +93,23 @@ describe('Liar’s Dice on your own', () => {
     }
   });
 
+  it('says what a bid, a raise and a call are, during a game', async () => {
+    await renderApp('/games/liars-dice/solo', { firstVisit: true });
+    await user.click(screen.getByRole('button', { name: 'How to play' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'How to play Liar’s Dice' }),
+    );
+    expect(dialog.getByText(/^A bid like “four 6s”/)).toBeInTheDocument();
+    expect(
+      dialog.getByText(/^On your turn, raise or call Liar/),
+    ).toBeInTheDocument();
+    expect(
+      dialog.getByText(/^Call Liar and every cup opens\. If/),
+    ).toBeInTheDocument();
+    // Settings are behind Change table at the end, not here.
+    expect(dialog.queryByText('1 to 5 bots, 3 or 5 dice each')).toBeNull();
+  });
+
   it('sits at the last table picked', async () => {
     writePicks({ bots: 5, dicePerPlayer: 5 });
     await renderApp('/games/liars-dice/solo', { name: 'Maya' });

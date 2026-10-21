@@ -566,6 +566,11 @@ test('a Draw & Guess game', async ({ player }) => {
   await ryan!.page.getByRole('link', { name: 'Zumpo home' }).click();
   await shot(ryan!.page, 'P16');
   await ryan!.page.getByRole('button', { name: 'Stay' }).click();
+  // P12 is where an invite the clipboard refuses goes.
+  await maya!.page.evaluate(() => {
+    navigator.clipboard.writeText = () =>
+      Promise.reject(new DOMException('Denied', 'NotAllowedError'));
+  });
   await maya!.page
     .getByRole('button', { name: 'Invite friends' })
     .first()
@@ -608,6 +613,8 @@ test('a Draw & Guess game', async ({ player }) => {
       await watcher.page.getByRole('button', { name: 'Stay' }).click();
       await watcher.page.getByRole('button', { name: 'How to play' }).click();
       await shot(watcher.page, 'P15');
+      await watcher.page.getByRole('button', { name: 'Full rules' }).click();
+      await shot(watcher.page, 'P21');
       await watcher.page
         .getByRole('button', { name: 'Back to the game' })
         .click();

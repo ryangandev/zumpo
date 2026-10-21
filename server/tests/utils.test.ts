@@ -3,6 +3,7 @@ import {
   gameOverNotice,
   getRandomElementFromSet,
   getRemainingPhaseMs,
+  matchesSecret,
   resetPoints,
   standingsOf,
 } from '../libs/utils.js';
@@ -132,5 +133,19 @@ describe('standingsOf', () => {
       ['a', 0],
       ['b', 0],
     ]);
+  });
+});
+
+describe('matchesSecret', () => {
+  it('matches only the whole secret', () => {
+    expect(matchesSecret('open-sesame', 'open-sesame')).toBe(true);
+    expect(matchesSecret('open-sesamE', 'open-sesame')).toBe(false);
+    expect(matchesSecret('open', 'open-sesame')).toBe(false);
+    expect(matchesSecret('open-sesame!', 'open-sesame')).toBe(false);
+  });
+
+  it('is matched by nothing when the secret is empty', () => {
+    expect(matchesSecret('', '')).toBe(false);
+    expect(matchesSecret('anything', '')).toBe(false);
   });
 });

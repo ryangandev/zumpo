@@ -15,6 +15,7 @@ import {
   waitForCodeBreakerState,
   type ClientSocket,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 import {
   ALL_CODES,
@@ -397,6 +398,7 @@ describe('leaving and coming back', () => {
   it('ends early when too few players are left', async () => {
     const { roomId, alice, bob } = await playToFirstCode(harness);
     await guess(alice, roomId, codeOf(harness, roomId));
+    const endChat = collectChat(alice);
     const over = waitForCodeBreakerState(alice, (s) => s.lastGame !== null);
     bob.emit('room:leave', roomId);
 
@@ -406,6 +408,9 @@ describe('leaving and coming back', () => {
       rounds: 0,
       cracked: { [alice.playerId]: 1 },
     });
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
   });
 });
 

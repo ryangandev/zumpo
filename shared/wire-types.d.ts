@@ -147,6 +147,10 @@ type Result<T extends object = object> =
  */
 interface RoomCreateRequest {
   gameType: GameType;
+  /**
+   * '' names the room after its host, so the name follows the crown: each
+   * client words it, as "Ben's room" once Ben hosts.
+   */
   roomName: string;
   username: string;
   maxPlayers: number;
@@ -234,6 +238,7 @@ interface CodeBreakerSettings {
 interface LobbyRoomInfo {
   gameType: GameType;
   roomId: string;
+  /** '' for a room named after its host, `owner`, as the client words it. */
   roomName: string;
   owner: OwnerInfo;
   status: RoomStatus;
@@ -323,6 +328,12 @@ type AnyLobbyRoomInfo =
  * clock; everything else is the game's own.
  */
 interface RoomState extends LobbyRoomInfo {
+  /**
+   * '' for an unlocked room; otherwise the key its invite link carries,
+   * which `room:join` takes in place of the password. Only in a member's
+   * own snapshot, never in a lobby row.
+   */
+  inviteKey: string;
   playerList: Record<string, PlayerInfo>;
   /**
    * Who is watching, keyed by player id like `playerList`. A viewer in here
@@ -1386,6 +1397,7 @@ interface ClientToServerEvents {
    * for the table or the spectator seats; without it a player sits at the
    * table when it is open and watches when it is not (a game under way, or
    * every seat taken). `roomNotOpen` when there is no place of that kind.
+   * `password` is the room's password or its invite key.
    */
   'room:join': (
     roomId: string,

@@ -340,19 +340,20 @@ describe('a game’s page', () => {
     expect(
       within(howToPlay)
         .getAllByRole('region')
-        .map((region) => region.getAttribute('aria-labelledby')),
-    ).toEqual(['game-rules-solo', 'game-rules-room']);
+        .map((region) => region.querySelector('h3')?.textContent),
+    ).toEqual(['On your own', 'Play together']);
+    // Each stands on its own, so a step the two share is said in both.
     const together = within(howToPlay).getByRole('region', {
       name: 'Play together',
     });
-    expect(
-      within(together)
-        .getAllByRole('listitem')
-        .map((fact) => fact.textContent),
-    ).toContain('15s to pick · 4s reveal');
+    expect(together).toHaveTextContent(
+      'Share one board, and pick safe cells in secret.',
+    );
+    expect(together).toHaveTextContent('A number counts the mines');
     expect(
       within(howToPlay).getByRole('region', { name: 'On your own' }),
-    ).toHaveTextContent('Your first click is always safe');
+    ).toHaveTextContent('your first click is always safe');
+    expect(howToPlay).not.toHaveTextContent('15s to pick');
 
     const full = within(howToPlay).getByRole('button', { name: 'Full rules' });
     expect(full).toHaveAttribute('aria-expanded', 'false');
@@ -393,7 +394,7 @@ describe('a game’s page', () => {
     expect(within(row).getByText('房主 Maya · 小 9 × 9')).toBeInTheDocument();
     act(() =>
       fake.serverEmits('lobby:rooms', 'minesweeper', [
-        { ...lobbyRoom, roomName: 'Maya 的房间' },
+        { ...lobbyRoom, roomName: '' },
       ]),
     );
     expect(
@@ -446,19 +447,20 @@ describe('a game’s page', () => {
     expect(router.state.location.pathname).toBe('/games/minesweeper/rooms/r1');
   });
 
-  it('says only the setting of a room named after its host', async () => {
+  it('names a room after its host, saying the host once', async () => {
     const { fake } = await renderApp('/games/minesweeper');
     act(() =>
       fake.serverEmits('lobby:rooms', 'minesweeper', [
-        { ...lobbyRoom, roomName: 'Maya’s room' },
-        { ...lobbyRoom, roomId: 'r2', roomName: 'Maya 的房间' },
+        { ...lobbyRoom, roomName: '' },
+        { ...lobbyRoom, roomId: 'r2' },
       ]),
     );
-    for (const name of ['Maya’s room', 'Maya 的房间']) {
-      const row = screen.getByRole('article', { name });
-      expect(within(row).getByText('Small 9 × 9')).toBeVisible();
-      expect(within(row).queryByText(/Hosted by/)).toBeNull();
-    }
+    const named = screen.getByRole('article', { name: 'Maya’s room' });
+    expect(within(named).getByText('Small 9 × 9')).toBeInTheDocument();
+    const typed = screen.getByRole('article', { name: 'Friday table' });
+    expect(
+      within(typed).getByText('Hosted by Maya · Small 9 × 9'),
+    ).toBeInTheDocument();
   });
 
   it('leaves Create a room to the intro when no room is open', async () => {
@@ -545,7 +547,7 @@ describe('making a room', () => {
         event: 'room:create',
         args: [
           expect.objectContaining({
-            roomName: 'Ryan’s room',
+            roomName: '',
             maxPlayers: 4,
             password: 'otters',
           }),
@@ -611,6 +613,20 @@ describe('making a room', () => {
             settings: { trios: 20 },
           }),
         ],
+      }),
+    );
+  });
+
+  it('names a room after its host while the suggested name is kept', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderApp('/games/snap/new');
+    await user.click(screen.getByRole('button', { name: 'More options' }));
+    expect(screen.getByLabelText('Room name')).toHaveValue('Ryan’s room');
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
+    await waitFor(() =>
+      expect(fake.requests).toContainEqual({
+        event: 'room:create',
+        args: [expect.objectContaining({ roomName: '' })],
       }),
     );
   });

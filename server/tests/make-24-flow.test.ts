@@ -15,6 +15,7 @@ import {
   waitForMake24State,
   type ClientSocket,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 import {
   combine,
@@ -340,9 +341,13 @@ describe('a Make 24 game', () => {
 
   it('ends early when too few players are left', async () => {
     const { roomId, alice, bob } = await playToFirstHand(harness);
+    const endChat = collectChat(alice);
     const over = waitForMake24State(alice, (s) => s.lastGame !== null);
     bob.emit('room:leave', roomId);
 
     expect((await over).lastGame).toMatchObject({ endedEarly: true, hands: 0 });
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
   });
 });

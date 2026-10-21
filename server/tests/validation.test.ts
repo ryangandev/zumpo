@@ -99,6 +99,13 @@ describe('roomCreateRequest', () => {
     ).toBe(false);
   });
 
+  it('takes no name for a room named after its host', () => {
+    expect(
+      roomCreateRequest.safeParse({ ...validCreateRequest, roomName: '' })
+        .success,
+    ).toBe(true);
+  });
+
   it('rejects a name that is only whitespace', () => {
     expect(
       roomCreateRequest.safeParse({

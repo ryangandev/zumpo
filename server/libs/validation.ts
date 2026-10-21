@@ -53,7 +53,8 @@ const gameType = z.enum([
  */
 const roomCreateRequest = z.object({
   gameType,
-  roomName: trimmedString(ROOM_NAME_MAX),
+  // '' names the room after its host, whoever that is at the time.
+  roomName: z.union([z.literal(''), trimmedString(ROOM_NAME_MAX)]),
   username,
   maxPlayers: z.number().int().min(2).max(8),
   password: password,

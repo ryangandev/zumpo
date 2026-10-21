@@ -26,6 +26,11 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   /** In the spectator seats: sees what any player may, and plays no part. */
   spectating: boolean;
   isHost: boolean;
+  /**
+   * The viewer is the host now and was not when the last game started, as
+   * this page saw it: the crown came to them during that game.
+   */
+  becameHost: boolean;
   chat: readonly ChatMessage[];
   canvas: CanvasStream;
   /** Finished drawings sent apart from the snapshots, by id. */
@@ -35,6 +40,9 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   /** Asks the server to start a game; `starting` until it answers. */
   startGame: () => void;
   starting: boolean;
+  /** The room's invite link, with a locked room's key. */
+  inviteLink: string;
+  /** The invite dialog, with the link to copy by hand. */
   openInvite: () => void;
   /** Between games: gives up the seat to watch, or takes a free one. */
   watch: () => void;

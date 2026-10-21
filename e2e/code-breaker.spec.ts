@@ -79,7 +79,7 @@ test('two players race to crack the same three codes', async ({ player }) => {
 
   await expect(
     maya.getByRole('heading', {
-      name: /( wins with | tie with |^Game over\.)/,
+      name: /( wins with | tie with |^You win with |^You tie with |^Game over\.)/,
     }),
   ).toBeVisible();
   const standings = maya.getByRole('list', { name: 'Standings' });

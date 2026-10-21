@@ -18,6 +18,7 @@ import {
   waitForDrawState,
   type TestClient,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 
 /** How many of a hint's letters are showing rather than still hidden. */
@@ -484,9 +485,13 @@ describe('the last game', () => {
     await startGame(alice, roomId);
     const { wordCategory } = await started;
 
+    const endChat = collectChat(alice);
     const ended = waitForDrawState(alice, (s) => s.lastGame !== null);
     bob.emit('room:leave', roomId);
     const final = await ended;
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
     return { alice, roomId, wordCategory, final };
   };
 

@@ -108,7 +108,8 @@ function Round({ room }: { room: Room }) {
 /**
  * The board, with the latest round's results under it. A phone shows them
  * only while the round is revealed (MO13), so the next pick (MO11, MO12)
- * keeps the board alone on screen.
+ * keeps the board alone on screen. A finished game's standings already
+ * count its last round, so the board stands alone under them.
  */
 function Minefield({
   room,
@@ -122,12 +123,18 @@ function Minefield({
   const m = useMessages();
   const { state } = room;
   const phone = useMediaQuery(PHONE);
+  // A game played to its end has standings that count its last round. Only
+  // that game drops the round, not one cut short, which has no standings.
+  const finished =
+    !state.isGameStarted &&
+    state.lastGame !== null &&
+    !state.lastGame.endedEarly;
   const results =
-    phone && state.isGameStarted && state.phase === 'picking'
+    finished || (phone && state.isGameStarted && state.phase === 'picking')
       ? []
       : state.lastRound.toSorted((a, b) => b.points - a.points);
   // The round the results belong to: the one being revealed, the one before
-  // the open one, or the last round of a finished game.
+  // the open one, or the last round of a game cut short.
   const resultsRound = !state.isGameStarted
     ? (state.lastGame?.rounds ?? state.round)
     : state.phase === 'reveal'
