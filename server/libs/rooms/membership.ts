@@ -178,6 +178,10 @@ const createRoomMembership = (
       const member = memberOf(room, playerId);
       if (!member) continue;
       member.isConnected = false;
+      // Between games the one the table was waiting on may be the one who
+      // went, or the host whose stand-in need not say Ready.
+      const module = registry.moduleOf(room);
+      if (module && !isSpectator(room, playerId)) startIfReady(room, module);
       registry.lookup.emitState(room);
 
       if (!isSpectator(room, playerId)) {
@@ -189,7 +193,7 @@ const createRoomMembership = (
         // The seat waits for them. So, briefly, may their turn - that decision
         // belongs to the game, which is the only thing that knows whether
         // there is anything worth coming back to.
-        registry.moduleOf(room)?.onDisconnect(room, playerId);
+        module?.onDisconnect(room, playerId);
       }
 
       const key = graceKey(room.roomId, playerId);
@@ -242,6 +246,10 @@ const createRoomMembership = (
       const member = memberOf(room, playerId);
       if (!member) continue;
       member.isConnected = true;
+      // A host coming back takes the start back, and a player who said Ready
+      // before going counts again.
+      const module = registry.moduleOf(room);
+      if (module && !isSpectator(room, playerId)) startIfReady(room, module);
       registry.lookup.emitState(room);
       if (isSpectator(room, playerId)) continue;
 
@@ -251,7 +259,7 @@ const createRoomMembership = (
       });
 
       // If the room was holding a turn open for them, it can stop.
-      registry.moduleOf(room)?.onReturn(room, playerId);
+      module?.onReturn(room, playerId);
     }
 
     for (const gameType of touchedGames) registry.lookup.emitLobby(gameType);

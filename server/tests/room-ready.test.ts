@@ -97,6 +97,41 @@ describe('getting ready for the next game', () => {
     expect(room().isGameStarted).toBe(true);
   });
 
+  it('starts when the one the table waited on goes away', async () => {
+    // A grace long enough that Leo's seat is still held when it starts.
+    harness = await startTestServer(undefined, 5);
+    const {
+      roomId,
+      players: [, maya, leo],
+    } = await snapTable(['Ryan', 'Maya', 'Leo']);
+    const room = () => harness.server.rooms.get(roomId)!;
+
+    await request(maya, 'room:ready', roomId, true);
+    expect(room().isGameStarted).toBe(false);
+    leo.close();
+    await settle();
+    expect(room().playerList[leo.playerId]?.isConnected).toBe(false);
+    expect(room().isGameStarted).toBe(true);
+  });
+
+  it('starts when the host goes away and their stand-in was all the table waited on', async () => {
+    harness = await startTestServer(undefined, 5);
+    const {
+      roomId,
+      players: [ryan, , leo],
+    } = await snapTable(['Ryan', 'Maya', 'Leo']);
+    const room = () => harness.server.rooms.get(roomId)!;
+
+    // Maya has not said Ready, so the table waits on her.
+    await request(leo, 'room:ready', roomId, true);
+    expect(room().isGameStarted).toBe(false);
+    // With Ryan away Maya stands in, and a starter need not say Ready.
+    ryan.close();
+    await settle();
+    expect(room().owner.playerId).toBe(ryan.playerId);
+    expect(room().isGameStarted).toBe(true);
+  });
+
   it('starts when the one the table waited on leaves it', async () => {
     harness = await startTestServer();
     const {
