@@ -4,6 +4,7 @@ Two players take turns placing stones on a grid, black then white, and the first
 On your own it is you against the computer, at three levels; in a room it is two friends at one board, with anybody else watching.
 
 Solo against the computer, or 2 players and up to five spectators.
+Its kind is **Strategy**, a new kind that says "Think a few moves ahead." and comes last on the home page, as kinds sort by name; its tone is blue.
 
 ---
 
@@ -200,4 +201,5 @@ Planned, before the code exists:
 
 The rules will be covered by `gomoku-rules.test.ts` and `gomoku-flow.test.ts` in `server/tests/`, and the computer by tests that it plays a five, blocks a four, and at Hard finds a forced win by fours.
 The screens are GM01-GM21 in [the Figma file](../design.md), section 14: the game page (GM01, GM20), solo (GM02-GM06, GM17), a room (GM07-GM16, GM18, GM19) and every state a point can show (GM21).
-Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus`, `Zumpo/Gomoku seat` and `Zumpo/Gomoku artwork`.
+Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus` and `Zumpo/Gomoku seat`.
+Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules card is on P14 / How to play.
