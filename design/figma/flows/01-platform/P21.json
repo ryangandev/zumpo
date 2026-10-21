@@ -369,7 +369,6 @@
               "h": 375,
               "wSize": "fill",
               "hSize": "hug",
-              "clip": true,
               "layout": {
                 "mode": "column",
                 "gap": "$Zumpo · UI:space/16",
@@ -410,7 +409,6 @@
                   "h": 311,
                   "wSize": "fill",
                   "hSize": "hug",
-                  "clip": true,
                   "layout": {
                     "mode": "column",
                     "gap": "$Zumpo · UI:space/12",

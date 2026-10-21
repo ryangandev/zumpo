@@ -145,9 +145,9 @@
                 "type": "TEXT",
                 "id": "9:246",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 470,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -156,7 +156,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               }
             ]
           },
@@ -379,9 +383,9 @@
                 "type": "TEXT",
                 "id": "9:258",
                 "name": "Password protected",
-                "w": 150,
+                "w": 470,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -390,7 +394,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               }
             ]
           },
@@ -601,9 +609,9 @@
                 "type": "TEXT",
                 "id": "9:270",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 470,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -612,7 +620,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               }
             ]
           },
@@ -848,9 +860,9 @@
                 "type": "TEXT",
                 "id": "9:282",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 470,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -859,7 +871,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               }
             ]
           },
@@ -1094,9 +1110,9 @@
                 "type": "TEXT",
                 "id": "28:23783",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 180,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -1105,7 +1121,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               },
               {
                 "type": "FRAME",
@@ -1331,9 +1351,9 @@
                 "type": "TEXT",
                 "id": "28:23803",
                 "name": "Password protected",
-                "w": 150,
+                "w": 180,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -1342,7 +1362,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               },
               {
                 "type": "FRAME",
@@ -1556,9 +1580,9 @@
                 "type": "TEXT",
                 "id": "28:23824",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 113,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -1567,7 +1591,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               },
               {
                 "type": "FRAME",
@@ -1806,9 +1834,9 @@
                 "type": "TEXT",
                 "id": "28:23842",
                 "name": "Hosted by Maya",
-                "w": 150,
+                "w": 92,
                 "h": 18,
-                "wSize": "hug",
+                "wSize": "fill",
                 "hSize": "hug",
                 "propRefs": {
                   "characters": "Details"
@@ -1817,7 +1845,11 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"
-                ]
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
               },
               {
                 "type": "FRAME",

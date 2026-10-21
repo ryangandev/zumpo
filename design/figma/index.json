@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-21T17:53:44.245Z",
+  "exportedAt": "2026-10-21T18:13:29.490Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": false
   },
   "counts": {
-    "flows": 249,
+    "flows": 250,
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
     "seconds": 11,
-    "nodes": 14291,
-    "instances": 7283,
+    "nodes": 14360,
+    "instances": 7315,
     "grids": 84,
     "gridCells": 2733
   },
@@ -351,7 +351,7 @@
       "name": "Zumpo/Pairs card",
       "id": "40:22031",
       "file": "components/pairs-card.json",
-      "variants": 6
+      "variants": 9
     },
     {
       "name": "Zumpo/Pairs symbol",
@@ -1307,7 +1307,7 @@
           "id": "9:9799",
           "size": [
             1440,
-            1451
+            1149
           ],
           "file": "flows/03-minesweeper/M14.json",
           "isFlow": true
@@ -1318,7 +1318,7 @@
           "id": "9:9886",
           "size": [
             1440,
-            1428
+            1126
           ],
           "file": "flows/03-minesweeper/M15.json",
           "isFlow": true
@@ -1713,7 +1713,7 @@
           "id": "40:43542",
           "size": [
             1440,
-            1211
+            913
           ],
           "file": "flows/05-make-24/T09.json",
           "isFlow": true
@@ -1890,6 +1890,17 @@
           ],
           "file": "flows/06-pairs/PR10.json",
           "isFlow": true
+        },
+        {
+          "code": "PR11",
+          "title": "Solo · small board, desktop",
+          "id": "164:69313",
+          "size": [
+            1440,
+            848
+          ],
+          "file": "flows/06-pairs/PR11.json",
+          "isFlow": true
         }
       ],
       "notes": []
@@ -1993,7 +2004,7 @@
           "id": "79:88033",
           "size": [
             1440,
-            1186
+            1114
           ],
           "file": "flows/07-trios/TS09.json",
           "isFlow": true
@@ -2067,7 +2078,7 @@
           "id": "75:82404",
           "size": [
             1440,
-            974
+            893
           ],
           "file": "flows/08-liars-dice/LD01.json",
           "isFlow": true
@@ -2556,7 +2567,7 @@
           "id": "97:115499",
           "size": [
             390,
-            1386
+            1170
           ],
           "file": "flows/10-daily-word/DW15.json",
           "isFlow": true
@@ -2567,7 +2578,7 @@
           "id": "97:116186",
           "size": [
             390,
-            1811
+            1595
           ],
           "file": "flows/10-daily-word/DW16.json",
           "isFlow": true
@@ -3210,7 +3221,7 @@
           "id": "162:109211",
           "size": [
             390,
-            2122
+            1682
           ],
           "file": "flows/13-code-breaker/CB20.json",
           "isFlow": true
@@ -3221,7 +3232,7 @@
           "id": "162:110183",
           "size": [
             390,
-            2547
+            1987
           ],
           "file": "flows/13-code-breaker/CB21.json",
           "isFlow": true
@@ -3473,6 +3484,6 @@
   ],
   "warnings": [
     "Expected 74 component families, found 77",
-    "Expected 247 flow frames, found 249"
+    "Expected 249 flow frames, found 250"
   ]
 }
