@@ -67,6 +67,7 @@ export const minesweeper = {
   revealingPicks: 'Revealing the picks…',
   lockedIn: 'Locked in',
   waitingFor: (names: string) => `Waiting for ${names}`,
+  othersLockedIn: (names: string) => `${names} locked in`,
   toPick: 'to pick',
   pickCell: 'Pick a cell',
   everyonePicking: 'Everyone is picking',

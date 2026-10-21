@@ -104,6 +104,17 @@ export const doodleChain = {
   whatDoesItShow: 'What does this drawing show?',
   sitOut: 'You sit this step out',
   timesUp: 'Time’s up!',
+  everyoneDone: 'Everyone’s done!',
+  stepSkipped: 'Nothing to play this step',
+  /** A step whose players all left before it ended. */
+  stepOver: 'This step is over',
+  /** Why a step nobody could play was skipped, by what it asked for. */
+  skippedWhy: {
+    prompt: 'Every chain moves one place on.',
+    drawing: 'Every description came back empty, so nobody had words to draw.',
+    description:
+      'Every drawing came back empty, so nobody had a drawing to describe.',
+  } satisfies Record<DoodleChainKind, string>,
   everybody: {
     prompt: 'Everybody is writing',
     drawing: 'Everybody is drawing',
@@ -142,6 +153,7 @@ export const doodleChain = {
   doneWaiting: (names: string) => `Done. Waiting for ${names}.`,
   doneAll: 'Done. Everyone is done.',
   asItIs: 'When the clock runs out, your drawing goes on as it is.',
+  drawFirst: 'Draw something first, then press Done.',
   givenDrawing: 'The drawing you were given',
   yourDrawing: 'Your drawing',
   nothingTo: {
@@ -218,8 +230,9 @@ export const doodleChain = {
   hostShowing: (host: string) => `${host} is showing the chains.`,
   hostNext: (host: string, next: string) =>
     `${host} is showing the chains. ${next}’s chain is next.`,
-  hostAway: (host: string) =>
-    `${host} is away. The reveal goes on when they are back.`,
+  /** For the player who steps the reveal on while the host is away or watching. */
+  standInReveal: (host: string) =>
+    `${host} isn’t at the table, so you show the chains.`,
 
   // The album.
   everyChain: 'That’s every chain.',

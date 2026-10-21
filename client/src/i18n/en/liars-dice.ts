@@ -42,8 +42,8 @@ export const liarsDice = {
   lossLine: loss,
   verdict: (reveal: LiarsDiceReveal, who: Naming) =>
     stands(reveal)
-      ? `${capital(who(reveal.bid.playerId).possessive)} bid stands`
-      : `a lie, so ${loss(reveal, who)}`,
+      ? `${capital(who(reveal.bid.playerId).possessive)} bid stands, so ${loss(reveal, who)}`
+      : `${capital(who(reveal.bid.playerId).possessive)} bid was a lie, so ${loss(reveal, who)}`,
   revealBar: (reveal: LiarsDiceReveal, who: Naming) => ({
     label: `${capital(who(reveal.callerId).name)} called Liar`,
     main: `${capital(who(reveal.bid.playerId).possessive)} bid ${stands(reveal) ? 'stands' : 'was a lie'}`,

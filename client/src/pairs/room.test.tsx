@@ -106,6 +106,25 @@ describe('a Pairs room', () => {
     expect(turn().getByText('You’re next.')).toBeInTheDocument();
   });
 
+  it('tells everybody whose turn ran out of time', async () => {
+    // Maya ran out of time, so the turn came to the viewer.
+    const { update } = await renderSeated({ ...myTurn, timedOut: 'p2' });
+    expect(turn().getByText('Flip a card')).toBeInTheDocument();
+    expect(
+      turn().getByText('Maya ran out of time · your turn'),
+    ).toBeInTheDocument();
+
+    // The viewer ran out of time, so the turn went to Maya.
+    update({
+      ...myTurn,
+      turnPlayerId: 'p2',
+      nextPlayerId: ME,
+      timedOut: ME,
+    });
+    expect(turn().getByText('Time’s up, your turn passed')).toBeInTheDocument();
+    expect(turn().getByText('You’re next.')).toBeInTheDocument();
+  });
+
   it('ranks the pairs found, and keeps the finished board up', async () => {
     await renderSeated(
       pairsState({

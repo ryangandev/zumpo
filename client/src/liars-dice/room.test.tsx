@@ -35,7 +35,7 @@ const myTurn = liarsDiceState({
     { playerId: 'p3', count: 5, face: 5 },
   ],
   turnPlayerId: ME,
-  nextPlayerId: 'p2',
+  nextPlayerId: 'p3',
 });
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
@@ -138,6 +138,28 @@ describe('a Liar’s Dice room', () => {
     expect(screen.queryByRole('group', { name: 'Your bid' })).toBeNull();
   });
 
+  it('lists everybody in turn order from you, at the table and on the Players panel', async () => {
+    // The order is Maya, Ryan, Leo: after Ryan comes Leo, then Maya.
+    await renderSeated({ ...myTurn, turnPlayerId: 'p3', nextPlayerId: 'p2' });
+
+    const leo = screen.getByRole('region', { name: 'Leo' });
+    const maya = screen.getByRole('region', { name: 'Maya' });
+    expect(
+      leo.compareDocumentPosition(maya) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(within(leo).getByText('Deciding')).toBeVisible();
+    expect(within(maya).getByText('Up next')).toBeVisible();
+    const rows = scoreboard()
+      .getAllByRole('listitem')
+      .map((row) => row.textContent);
+    expect(rows.map((row) => row?.match(/Ryan|Leo|Maya/)?.[0])).toEqual([
+      'Ryan',
+      'Leo',
+      'Maya',
+    ]);
+    expect(scoreboard().getByText('Up next')).toBeInTheDocument();
+  });
+
   it('opens every cup on a call, and counts at a glance', async () => {
     const reveal: LiarsDiceRoomState = {
       ...myTurn,
@@ -167,6 +189,10 @@ describe('a Liar’s Dice room', () => {
     expect(turn().getByText('You lose a die')).toBeInTheDocument();
     expect(
       screen.getByText('incl. 2 wild ones · bid was five'),
+    ).toBeInTheDocument();
+    // The count and the verdict are two lines, not one.
+    expect(
+      screen.getByText('Leo’s bid stands, so you lose a die'),
     ).toBeInTheDocument();
     expect(cupOf('Leo').getByRole('img', { name: '1, wild' })).toBeVisible();
     expect(cupOf('Maya').getByRole('img', { name: '5, counts' })).toBeVisible();
@@ -234,6 +260,8 @@ describe('a Liar’s Dice room', () => {
     expect(standings.getByText('Out in round 10')).toBeInTheDocument();
     expect(standings.getByText('Out in round 8')).toBeInTheDocument();
     expect(screen.getByText('The last call')).toBeInTheDocument();
-    expect(screen.getByText('a lie, so you are out')).toBeInTheDocument();
+    expect(
+      screen.getByText('Your bid was a lie, so you are out'),
+    ).toBeInTheDocument();
   });
 });

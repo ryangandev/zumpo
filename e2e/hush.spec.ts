@@ -79,9 +79,16 @@ test('two players play every card in order, together, without a word', async ({
     maya.getByRole('region', { name: 'The pile' }).getByRole('img'),
   ).toHaveCount(14);
   await expect(maya.getByRole('button', { name: 'Play again' })).toBeVisible();
+  // Leo need not wait for Maya: once he is ready, the next game starts.
   await expect(
-    leo.getByText('Waiting for Maya to start another game.'),
+    leo.getByText(
+      'The next game starts once everyone is ready, or when Maya starts it.',
+    ),
   ).toBeVisible();
+  await leo.getByRole('button', { name: 'Ready', exact: true }).click();
+  for (const page of [maya, leo]) {
+    await expect(page.getByRole('button', { name: 'I’m ready' })).toBeVisible();
+  }
 });
 
 test('a level waits for a player who dropped, and goes on when they are back', async ({

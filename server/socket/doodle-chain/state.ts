@@ -10,6 +10,7 @@ import type {
   DoodleChainRoomState,
   DoodleChainSeat,
   DoodleChainSettings,
+  DoodleChainStepEnd,
   DoodleChainTask,
   RoomCanvas,
 } from '../../models/types.js';
@@ -69,6 +70,8 @@ interface DoodleChainState {
   work: Map<string, Work>;
   /** Who has pressed Done this step. */
   done: Set<string>;
+  /** Why the last step ended, said while the chains pass on. */
+  stepEnd: DoodleChainStepEnd;
   /** While the reveal is on: the chain on show, and how many of its entries. */
   reveal: { chain: number; shown: number } | null;
   /** Each chain's hearts: by chain, the step each player hearted, by player id. */
@@ -92,6 +95,7 @@ const createState = ({
   tasks: new Map(),
   work: new Map(),
   done: new Set(),
+  stepEnd: 'time',
   reveal: null,
   hearts: new Map(),
   endedEarly: false,
@@ -239,6 +243,10 @@ const toRoomState = (
           ? { text: work.text }
           : { suggestion: work.suggestion };
     }
+  }
+
+  if (room.isGameStarted && game.phase === 'passing') {
+    state.stepEnd = game.stepEnd;
   }
 
   if (room.isGameStarted && game.phase === 'reveal' && game.reveal) {

@@ -84,7 +84,8 @@ Players who share the top score share the win, and the results rank a shared sco
 - **A player who has solved the hand cannot chat until it ends,** for the same reason.
 - **The chat hears of a hand once, when it ends:** one quiet line, `Hand <n>: <name> +<points>, <name> +<points>`, best first, and none for a hand nobody solved.
 - **One solve per player per hand**, and only while the hand is open.
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

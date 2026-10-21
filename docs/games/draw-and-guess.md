@@ -80,7 +80,8 @@ The client shows them, and the server checks them, so a modified client gains no
 
 - **Only the drawer may draw**, and only during a drawing phase.
   That covers drawing, undo and clear: a stranger with a room id off the lobby broadcast used to be able to wipe a room's canvas with one event.
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 - **Only a member may read a room's state**, a player or a spectator, so a locked room's player list is not readable by anyone who has a room id.
 - **Only a member may talk** in a room, and a spectator's right guess is swallowed and scores nobody.
 - **During drawing, a spectator talks only to the other spectators.**

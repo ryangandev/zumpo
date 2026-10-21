@@ -31,6 +31,11 @@ interface PairsState {
   order: string[];
   /** Whose turn it is; null between games. */
   turnPlayerId: string | null;
+  /**
+   * Whose turn ran out of time just before this one, said on the turn card
+   * until the player now flipping turns their first card.
+   */
+  timedOut: string | null;
   lastGame: PairsGameSummary | null;
 }
 
@@ -42,6 +47,7 @@ const createState = (settings: PairsSettings): PairsState => ({
   up: [],
   order: [],
   turnPlayerId: null,
+  timedOut: null,
   lastGame: null,
 });
 
@@ -102,6 +108,7 @@ const toRoomState = (room: Room<PairsState>): PairsRoomState => {
       ? playerAfter(room, game.turnPlayerId)
       : null,
     lastMiss: game.phase === 'showing' ? [...game.up] : [],
+    timedOut: room.isGameStarted ? game.timedOut : null,
     lastGame: game.lastGame,
   };
 };

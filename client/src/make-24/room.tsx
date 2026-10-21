@@ -270,17 +270,20 @@ function turnBar(
       countdown: clock(m.make24.toSolve),
     };
   }
+  const solvers = state.solved.map((solve) => solve.username);
   const last = lastCard(cards);
   if (last && !isTarget(last.value)) {
     return {
       label,
       kind: 'status',
       main: m.make24.makes(formatFraction(last.value)),
-      meta: m.make24.undoPrompt,
+      // Who has solved it stays in view: the race goes on while you undo.
+      meta: solvers.length
+        ? m.make24.solversUndo(listNames(solvers, m))
+        : m.make24.undoPrompt,
       countdown: clock(m.make24.toSolve),
     };
   }
-  const solvers = state.solved.map((solve) => solve.username);
   return {
     label,
     kind: 'status',

@@ -1,5 +1,5 @@
 import { useMessages } from '../../i18n';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { cx } from '../cx';
 import { Icon } from './icon';
 import styles from './chat-input.module.css';
@@ -17,6 +17,11 @@ export interface ChatInputProps {
   lockedReason?: string;
   /** Accessible name of the text box. */
   label?: string;
+  /**
+   * Each new value takes the keyboard to the box, as a Draw & Guess turn
+   * starts for a guesser, unless the viewer is typing somewhere else.
+   */
+  focusKey?: string;
   className?: string;
 }
 
@@ -26,11 +31,28 @@ export function ChatInput({
   placeholder,
   lockedReason,
   label,
+  focusKey,
   className,
 }: ChatInputProps) {
   const m = useMessages();
   const [text, setText] = useState('');
   const locked = lockedReason != null;
+  const box = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (focusKey === undefined || !box.current) return;
+    // Never from under the viewer: not while they type somewhere else, nor
+    // while a dialog (How to play, a name) has the focus.
+    const typing = document.activeElement;
+    if (
+      typing instanceof HTMLInputElement ||
+      typing instanceof HTMLTextAreaElement ||
+      typing?.closest('[role="dialog"]')
+    ) {
+      return;
+    }
+    // The page stays where it is: in one column the box is under the board.
+    box.current.focus({ preventScroll: true });
+  }, [focusKey]);
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -47,6 +69,7 @@ export function ChatInput({
     >
       {locked && <Icon glyph="lock" size={16} />}
       <input
+        ref={box}
         className={styles.input}
         value={text}
         onChange={(event) => setText(event.target.value)}

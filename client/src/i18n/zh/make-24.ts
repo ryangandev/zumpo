@@ -43,6 +43,7 @@ export const make24: typeof en = {
   makes: (value) => `结果是 ${value}`,
   undoPrompt: '撤销一步或重新开始',
   solvers: (names) => `${names} 已解出`,
+  solversUndo: (names) => `${names} 已解出 · 撤销一步`,
   useEachNumber: '每个数字用一次',
   away: '暂离',
   waiting: '等待中',

@@ -14,7 +14,14 @@ import {
   useNavigate,
   type Location,
 } from 'react-router';
-import type { ErrorType, GameType } from '../../../shared/wire-types';
+import type {
+  AnyRoomState,
+  ErrorType,
+  GameSettings,
+  GameType,
+  Result,
+} from '../../../shared/wire-types';
+import { mayStart, starterOf } from '../../../shared/room';
 import { Button, ButtonLink, Card, TextField } from '../ui';
 import { gameInfo, gamePath, roomPath } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
@@ -382,6 +389,42 @@ function SeatedRoom({
     setStarting(false);
   }, [socket, state.roomId, m]);
 
+  // Ready and the next game's settings: the snapshot that follows shows
+  // them, and a refusal says why not.
+  const ask = useCallback(
+    async (
+      request: 'room:ready' | 'room:settings',
+      send: () => Promise<Result>,
+    ) => {
+      setRefusal(null);
+      try {
+        const answer = await send();
+        if (!answer.ok) setRefusal(refusalOf(m, request, answer.error.type));
+      } catch {
+        setRefusal(m.room.refused.noAnswer);
+      }
+    },
+    [m],
+  );
+  const setReady = useCallback(
+    (ready: boolean) =>
+      void ask('room:ready', () =>
+        socket
+          .timeout(REQUEST_TIMEOUT_MS)
+          .emitWithAck('room:ready', state.roomId, ready),
+      ),
+    [ask, socket, state.roomId],
+  );
+  const changeSettings = useCallback(
+    (settings: GameSettings) =>
+      void ask('room:settings', () =>
+        socket
+          .timeout(REQUEST_TIMEOUT_MS)
+          .emitWithAck('room:settings', state.roomId, settings),
+      ),
+    [ask, socket, state.roomId],
+  );
+
   // Moves between the table and the spectator seats; the snapshot that
   // follows shows where the viewer sits now, and a refusal says why not.
   const move = useCallback(
@@ -401,6 +444,7 @@ function SeatedRoom({
     [socket, state.roomId, m],
   );
 
+  const starter = starterOf(state);
   const seat = state.playerList[playerId];
   const me = useMemo(
     () =>
@@ -423,6 +467,8 @@ function SeatedRoom({
             me,
             spectating: !seat,
             isHost: state.owner.playerId === playerId,
+            canStart: mayStart(state, playerId),
+            starterName: memberName(state, starter),
             becameHost:
               state.owner.playerId === playerId && startedBy !== playerId,
             chat: connection.chat,
@@ -438,6 +484,8 @@ function SeatedRoom({
               }),
             startGame,
             starting,
+            setReady,
+            changeSettings,
             watch: () => void move('room:watch'),
             sit: () => void move('room:sit'),
             moving,
@@ -458,8 +506,11 @@ function SeatedRoom({
       connection.drawings,
       socket,
       navigate,
+      starter,
       startGame,
       starting,
+      setReady,
+      changeSettings,
       move,
       moving,
       refusal,
@@ -519,16 +570,24 @@ function SeatedRoom({
   );
 }
 
-/** Why a start or a move between seats was refused, in the viewer's words. */
+/** A member's name, at the table or watching; '' for nobody. */
+const memberName = (state: AnyRoomState, playerId: string): string =>
+  (state.playerList[playerId] ?? state.spectators[playerId])?.username ?? '';
+
+/**
+ * Why a start, a move between seats, a Ready or a setting was refused, in
+ * the viewer's words.
+ */
 function refusalOf(
   m: Messages,
-  request: 'start' | 'room:watch' | 'room:sit',
+  request: 'start' | 'room:watch' | 'room:sit' | 'room:ready' | 'room:settings',
   type: ErrorType,
 ): string {
   const refused = m.room.refused;
   switch (type) {
-    case 'notEnoughPlayers':
     case 'notRoomOwner':
+      return request === 'room:settings' ? refused.notStarter : refused[type];
+    case 'notEnoughPlayers':
     case 'gameAlreadyStarted':
       return refused[type];
     // The one way a move is refused for a room that is still open: the

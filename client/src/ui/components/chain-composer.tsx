@@ -1,4 +1,4 @@
-import { useRef, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { useMessages } from '../../i18n';
 import { cx } from '../cx';
 import { useFocusFollows } from '../use-focus-follows';
@@ -16,7 +16,7 @@ export interface ChainComposerProps {
   onValueChange: (value: string) => void;
   /**
    * Done: the line is kept and waits; the field is read-only until Keep
-   * editing. A blank line cannot be Done.
+   * editing. A blank line cannot be Done: pressing it says so instead.
    */
   done: boolean;
   /** Beside Keep editing once done: "Done. Waiting for Leo and Sam." */
@@ -25,6 +25,8 @@ export interface ChainComposerProps {
   onKeepEditing: () => void;
   /** Fills the field with a suggested line; without it, no Suggest. */
   onSuggest?: () => void;
+  /** Takes the keyboard as it appears: not under a finger, whose keyboard would cover the page. */
+  autoFocus?: boolean;
   className?: string;
 }
 
@@ -42,6 +44,7 @@ export function ChainComposer({
   onDone,
   onKeepEditing,
   onSuggest,
+  autoFocus = false,
   className,
 }: ChainComposerProps) {
   const m = useMessages();
@@ -50,12 +53,21 @@ export function ChainComposer({
   const keepEditing = useRef<HTMLButtonElement>(null);
   // Done takes the field and itself away, and Keep editing gives them back.
   useFocusFollows(done, form, keepEditing, field);
-  // A blank line is never Done; the button keeps its focus meanwhile.
+  // A blank line is never Done. Done stays pressable, and pressing it on a
+  // blank line says why nothing happened, until there is something to send.
   const blank = value.trim() === '';
+  const [triedBlank, setTriedBlank] = useState(false);
+  if (triedBlank && !blank) setTriedBlank(false);
   // Enter is Done, as a form's submit.
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!done && !blank) onDone();
+    if (done) return;
+    if (blank) {
+      setTriedBlank(true);
+      field.current?.focus();
+      return;
+    }
+    onDone();
   };
   return (
     <form
@@ -68,10 +80,12 @@ export function ChainComposer({
           ref={field}
           label={label}
           helper={helper}
+          error={triedBlank ? m.ui.chain.writeFirst : undefined}
           value={value}
           onValueChange={(next: string) => onValueChange(next)}
           disabled={done}
           autoComplete="off"
+          autoFocus={autoFocus}
           name="line"
         />
         {/* Both rows share one place and the taller one's height, so Done and
@@ -126,8 +140,7 @@ export function ChainComposer({
               type="submit"
               icon="check"
               className={styles.done}
-              disabled={done || blank}
-              focusableWhenDisabled={!done}
+              disabled={done}
             >
               {m.ui.chain.done}
             </Button>

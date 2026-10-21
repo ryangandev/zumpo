@@ -146,6 +146,23 @@ test('a phone puts a faint stone down first, and places it on a second tap', asy
   await expect(pointOf(black, 'H8')).toHaveAccessibleName(
     'H8, white stone, last placed',
   );
+
+  // After the game a guest's line about the next one has a row of its own
+  // above Ready, not a sliver beside it.
+  await black.getByRole('button', { name: 'Resign' }).click();
+  await black
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Resign' })
+    .click();
+  const hint = leo.getByText(
+    'The next game starts once everyone is ready, or when Maya starts it.',
+  );
+  await expect(hint).toBeVisible();
+  const line = (await hint.boundingBox())!;
+  const ready = (await leo
+    .getByRole('button', { name: 'Ready', exact: true })
+    .boundingBox())!;
+  expect(line.y + line.height).toBeLessThanOrEqual(ready.y);
 });
 
 test('a player plays the computer on their own, with nothing sent to the server', async ({

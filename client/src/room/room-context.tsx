@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react';
 import type {
   AnyRoomState,
   ChatMessage,
+  GameSettings,
   PlayerInfo,
 } from '../../../shared/wire-types';
 import type { CanvasStream } from '../net/canvas-stream';
@@ -27,6 +28,13 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   spectating: boolean;
   isHost: boolean;
   /**
+   * The viewer may start the next game and choose its settings: they are the
+   * host, or the host is away and they are next in line (`starterOf`).
+   */
+  canStart: boolean;
+  /** Who may start the next game, by name. */
+  starterName: string;
+  /**
    * The viewer is the host now and was not when the last game started, as
    * this page saw it: the crown came to them during that game.
    */
@@ -40,6 +48,10 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   /** Asks the server to start a game; `starting` until it answers. */
   startGame: () => void;
   starting: boolean;
+  /** Between games, at the table: says the viewer is ready, or takes it back. */
+  setReady: (ready: boolean) => void;
+  /** Between games, for the starter: what the next game is played with. */
+  changeSettings: (settings: GameSettings) => void;
   /** The room's invite link, with a locked room's key. */
   inviteLink: string;
   /** The invite dialog, with the link to copy by hand. */
@@ -49,7 +61,10 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   sit: () => void;
   /** A move between the table and the spectator seats is on its way. */
   moving: boolean;
-  /** Why the last start or move did not happen, worded; null once it is moot. */
+  /**
+   * Why the last start, move, Ready or setting did not happen, worded; null
+   * once it is moot.
+   */
   refusal: string | null;
   /** The Leave room button: goes at once between games, asks mid-game. */
   leave: () => void;

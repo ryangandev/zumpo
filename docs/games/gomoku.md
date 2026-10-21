@@ -114,7 +114,7 @@ When a game ends, the last board stays on the table under the result until the n
 
 ### A rematch
 
-The owner starts the next game from the result with **Play again**, as in every room.
+The host starts the next game from the result with **Play again**, or the other player says Ready, as in every room.
 Once somebody new takes a seat the result belongs to the last pair, so the room shows the waiting card instead, over the same board, and the host starts the new pair's first game from it.
 **The colours swap every game**: whoever played White plays Black, so over two games each player has the first move once.
 A player who moves to watch, or leaves, takes their turn at Black with them: a new pair starts on a fresh draw.
@@ -150,7 +150,8 @@ They cannot place a stone, and a Notice under the board says they can take a sea
 - **The win, the draw, the clock and the lost turns are the server's.**
   A client never says that a game is over; it is told.
 - **Only a player at the table may resign,** and only during `playing`.
-- **Only the room owner may start a game**, and only with both seats taken.
+- **Only the host may start a game**, or while they are away the player next in line, and only with both seats taken.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 - **The colours are the server's:** drawn at random for a new pair, then swapped each game.
 
 ## Leaving, dropping and coming back

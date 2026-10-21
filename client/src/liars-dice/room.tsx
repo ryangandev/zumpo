@@ -8,7 +8,7 @@ import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { useBidChoice } from './bid-choice';
-import { Table, type TableSeat } from './table';
+import { fromViewer, Table, type TableSeat } from './table';
 import { bidLine, naming, revealBar, stood, type Naming } from './words';
 import styles from './room.module.css';
 
@@ -19,8 +19,10 @@ export function LiarsDiceRoom() {
   const m = useMessages();
   const room = useRoomContext<LiarsDiceRoomState>();
   const { state } = room;
-  const players = rankedPlayers(state);
   const inGame = state.isGameStarted;
+  const players = inGame
+    ? inTurnOrder(state, room.playerId)
+    : rankedPlayers(state);
   const ended = !inGame ? state.lastGame : null;
   return (
     <RoomLayout
@@ -40,6 +42,23 @@ export function LiarsDiceRoom() {
       chat={{ placeholder: m.liarsDice.chat }}
     />
   );
+}
+
+/**
+ * During a game the Players panel follows the table: turn order from the
+ * viewer, so who bids after whom reads the same in both. Between games it
+ * ranks by dice left.
+ */
+function inTurnOrder(state: LiarsDiceRoomState, youId: string): Seat[] {
+  const ranked = rankedPlayers(state);
+  const order = fromViewer(state.cups, (cup) => cup.playerId, youId).map(
+    (cup) => cup.playerId,
+  );
+  const place = (seat: Seat) => {
+    const at = order.indexOf(seat.playerId);
+    return at < 0 ? order.length : at;
+  };
+  return ranked.toSorted((a, b) => place(a) - place(b));
 }
 
 const whoIn = (room: Room, m: Messages): Naming =>
@@ -93,7 +112,8 @@ function BetweenGames({ room }: { room: Room }) {
           <Table
             seats={seatsOf(state, m)}
             youId={room.playerId}
-            dicePerPlayer={state.dicePerPlayer}
+            // The last game's, as the next game's may have been changed.
+            dicePerPlayer={summary.dicePerPlayer}
             turnId={null}
             nextId={null}
             bids={[]}

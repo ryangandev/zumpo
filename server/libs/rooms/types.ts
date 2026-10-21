@@ -60,6 +60,11 @@ interface Room<TGameState = unknown> {
   spectators: Record<string, SpectatorInfo>;
   isGameStarted: boolean;
   /**
+   * Who at the table has said Ready for the next game, between games; empty
+   * while one is on. See `ready.ts`.
+   */
+  ready: Set<string>;
+  /**
    * Epoch ms the current phase ends; 0 when idle. Set only by `startPhase`
    * and `stopPhase`, with the timer that ends it.
    */
@@ -165,6 +170,11 @@ interface GameModule<TGameState = unknown, TSettings = unknown> {
    * Reads the game-specific half of a create request, or returns null to
    * reject it. The generic half (name, seats, password) is validated by the
    * room layer before this is called.
+   *
+   * Between games the starter may change the settings for the next game
+   * (`room:settings`), read by the same function. Each setting is kept on the
+   * game's state under its own name, as `room-settings.test.ts` checks of
+   * every game, so the room layer sets it there; the next `startGame` plays with it.
    */
   parseSettings(raw: unknown): TSettings | null;
   createState(settings: TSettings): TGameState;
@@ -197,8 +207,9 @@ interface GameModule<TGameState = unknown, TSettings = unknown> {
   ): ChatVerdict;
 
   /**
-   * The owner pressed start. The room layer has already checked that they
-   * may: they own the room, no game is on, and `minPlayers` are seated.
+   * The next game starts: the starter pressed start, or everybody said Ready.
+   * The room layer has already checked that it may: no game is on, and
+   * `minPlayers` are seated.
    */
   startGame(room: Room<TGameState>): void;
 

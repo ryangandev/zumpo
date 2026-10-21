@@ -165,7 +165,8 @@ A take is not a chat line: it shows on the table and in the scores, and with 28 
   Claims are handled one at a time, and a take ends `finding` before the next claim is read.
 - **The clocks, the lockouts and the score are the server's.**
 - **Claims are rate-limited** like every event, so a flood of them is dropped before it is judged.
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

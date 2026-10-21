@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import {
   DESCRIBE_SECONDS,
   kindOf,
@@ -32,6 +38,7 @@ import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
 import { Picture } from '../drawing/picture';
 import { listNames } from '../room/players';
+import { TOUCH, useMediaQuery } from '../shell/use-media-query';
 import type { Room as RoomOf } from '../room/room-context';
 import { EntryDrawing, textOf } from './chain';
 import styles from './task.module.css';
@@ -169,14 +176,19 @@ function turnBar(
       ? m.doodleChain.toStep(state.step + 1)
       : m.doodleChain.toReveal;
 
+  const skipped = passing && state.stepEnd === 'skipped';
   if (!task) {
     return {
       label,
       kind: 'status',
       main: passing
-        ? m.doodleChain.timesUp
+        ? stepEndLine(state, m)
         : m.doodleChain.everybody[kindNow(state)],
-      meta: passing ? m.doodleChain.chainsMoveOn : m.doodleChain.secret,
+      meta: skipped
+        ? m.doodleChain.skippedWhy[kindNow(state)]
+        : passing
+          ? m.doodleChain.chainsMoveOn
+          : m.doodleChain.secret,
       countdown: passing ? clock(next, true) : left,
     };
   }
@@ -186,14 +198,16 @@ function turnBar(
     return {
       label,
       kind: 'status',
-      main: m.doodleChain.timesUp,
-      meta: task.sitsOut
-        ? m.doodleChain.chainsMoveOn
-        : nextName
-          ? m.doodleChain.goesOn[task.kind](nextName)
-          : nextName === null
-            ? m.doodleChain.revealNext
-            : m.doodleChain.chainsMoveOn,
+      main: stepEndLine(state, m),
+      meta: skipped
+        ? m.doodleChain.skippedWhy[task.kind]
+        : task.sitsOut
+          ? m.doodleChain.chainsMoveOn
+          : nextName
+            ? m.doodleChain.goesOn[task.kind](nextName)
+            : nextName === null
+              ? m.doodleChain.revealNext
+              : m.doodleChain.chainsMoveOn,
       countdown: clock(next, true),
     };
   }
@@ -256,6 +270,24 @@ function turnBar(
 
 /** What everybody is making this step. */
 const kindNow = (state: DoodleChainRoomState) => kindOf(state.step);
+
+/**
+ * Why the step before the passing ended: its clock ran out, everybody was
+ * done early, or nobody had anything to do in it. A step everybody playing
+ * left ends plainly, neither done nor out of time.
+ */
+function stepEndLine(state: DoodleChainRoomState, m: Messages): string {
+  switch (state.stepEnd) {
+    case 'done':
+      return m.doodleChain.everyoneDone;
+    case 'skipped':
+      return m.doodleChain.stepSkipped;
+    case 'left':
+      return m.doodleChain.stepOver;
+    default:
+      return m.doodleChain.timesUp;
+  }
+}
 
 /** "Done. Waiting for Leo and Sam.", or that nobody is left to wait for. */
 function doneMessage(room: Room, m: Messages) {
@@ -333,6 +365,9 @@ function Writing({
   const done = state.table[playerId]?.done ?? false;
   const { send, flush } = useTextSender(room);
   const prompt = task.kind === 'prompt';
+  // A step's field takes the keyboard as the step starts, except under a
+  // finger, whose keyboard would cover the drawing being described.
+  const touch = useMediaQuery(TOUCH);
 
   const change = (next: string) => {
     const words = Array.from(next).slice(0, TEXT_MAX).join('');
@@ -377,6 +412,7 @@ function Writing({
         }}
         onKeepEditing={() => socket.emit('dc:done', roomId, false)}
         onSuggest={prompt ? suggest : undefined}
+        autoFocus={!touch}
       />
     </>
   );
@@ -399,8 +435,11 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const { colour, size } = desk;
   const done = state.table[playerId]?.done ?? false;
   const canDraw = !done && !reconnecting;
-  // An empty drawing is never Done; the button keeps its focus meanwhile.
+  // An empty drawing is never Done. Done stays pressable, and pressing it on
+  // a blank canvas says why nothing happened, until there is a stroke.
   const blank = useBlankCanvas(canvas);
+  const [triedBlank, setTriedBlank] = useState(false);
+  if (triedBlank && !blank) setTriedBlank(false);
   const actions = useRef<HTMLDivElement>(null);
   const doneButton = useRef<HTMLButtonElement>(null);
   const keepEditing = useRef<HTMLButtonElement>(null);
@@ -495,14 +534,24 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
           className={cx(styles.actions, done && styles.held)}
           aria-hidden={done ? true : undefined}
         >
-          <p className={styles.hint}>{m.doodleChain.asItIs}</p>
+          {/* Done stays pressable: on a blank canvas it says why it sent
+              nothing, in this live row only, never in the held copy. */}
+          <p
+            className={cx(styles.hint, triedBlank && styles.hintError)}
+            role="status"
+          >
+            {triedBlank ? m.doodleChain.drawFirst : m.doodleChain.asItIs}
+          </p>
           {!reconnecting && (
             <Button
               ref={doneButton}
               icon="check"
-              disabled={done || blank}
-              focusableWhenDisabled={!done}
-              onClick={() => socket.emit('dc:done', roomId, true)}
+              disabled={done}
+              onClick={() =>
+                blank
+                  ? setTriedBlank(true)
+                  : socket.emit('dc:done', roomId, true)
+              }
             >
               {m.ui.chain.done}
             </Button>

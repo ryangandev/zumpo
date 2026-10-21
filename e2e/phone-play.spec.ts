@@ -96,6 +96,16 @@ const placeStone = (page: Page) =>
 const offered = (page: Page) =>
   page.getByRole('button', { name: /\d+ letters?$/ }).first();
 
+/** Whether the board's current row or entry is wholly in the board's view. */
+const currentInBoard = (page: Page) =>
+  page.locator('[data-play-board]').evaluate((board) => {
+    const current = board.querySelector('[data-play-current]');
+    if (!current) return false;
+    const room = board.getBoundingClientRect();
+    const rect = current.getBoundingClientRect();
+    return rect.top >= room.top - 1 && rect.bottom <= room.bottom + 1;
+  });
+
 /** Writes `text` in a Doodle Chain step's field and presses Done. */
 async function write(page: Page, field: string, text: string) {
   await page.getByRole('textbox', { name: field }).fill(text);
@@ -447,6 +457,9 @@ for (const size of SIZES) {
           turnOf(maya).getByText(`${((shown - 1) % 3) + 1} of 3 shown`),
         ).toBeVisible();
         await showing(`entry ${shown}`);
+        // The entry it shows is whole, even the first that makes the
+        // board scroll.
+        await expect.poll(() => currentInBoard(maya)).toBe(true);
       }
     });
   });

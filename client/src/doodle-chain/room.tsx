@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { kindOf, MIN_PLAYERS, minutesFor } from '../../../shared/doodle-chain';
 import type {
   DoodleChainEntry,
@@ -12,6 +12,7 @@ import { ordinal, placesOf, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PlayBoard, playColumn } from '../shell/play-board';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import { Chain } from './chain';
 import { NEW_DESK, Step, type Desk } from './task';
@@ -176,18 +177,41 @@ function Waiting({ room }: { room: Room }) {
   );
 }
 
-/** DC12, DC13, DC19: the host shows the chains, one entry at a time. */
+/**
+ * DC12, DC13, DC19: the host shows the chains, one entry at a time, or while
+ * they are away the player next in line, as for starting a game.
+ */
 function Reveal({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, playerId, socket, spectating, isHost } = room;
+  const { state, playerId, socket, spectating, isHost, canStart, starterName } =
+    room;
   const reveal = state.reveal;
+  const panel = useRef<HTMLElement>(null);
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  // Each entry the reveal shows comes into view with what is under it, Next
+  // or who is showing, without its top going out of view: the window scrolls
+  // on a wider screen, and on a phone the board scrolls itself.
+  const showing = reveal ? `${reveal.chain}.${reveal.shown}` : null;
+  useLayoutEffect(() => {
+    const section = panel.current;
+    const entry = section?.querySelector('[data-play-current]');
+    if (showing === null || !section || !entry) return;
+    const margin =
+      parseFloat(
+        getComputedStyle(section).getPropertyValue('--zumpo-space-16'),
+      ) || 0;
+    const top = entry.getBoundingClientRect().top - margin;
+    const bottom =
+      section.getBoundingClientRect().bottom + margin - window.innerHeight;
+    const by = top < 0 ? top : Math.min(Math.max(bottom, 0), top);
+    if (by === 0) return;
+    window.scrollBy({ top: by, behavior: reducedMotion ? 'auto' : 'smooth' });
+  }, [showing, reducedMotion]);
   if (!reveal) return null;
   const { chain, shown, chains } = reveal;
   const owner = chains[chain]?.owner.username ?? '';
   const length = chains[chain]?.length ?? 0;
   const nextOwner = chains[chain + 1]?.owner.username;
-  const host = state.playerList[state.owner.playerId];
-  const hostName = state.owner.username;
 
   const heartOf = (entry: DoodleChainEntry) => {
     if (spectating || entry.author.playerId === playerId) {
@@ -216,7 +240,7 @@ function Reveal({ room }: { room: Room }) {
         meta={m.doodleChain.shownOf(shown, length)}
       />
       {/* On a phone the chain scrolls above Next, its newest entry in view. */}
-      <section className={cx(styles.panel, playColumn)}>
+      <section ref={panel} className={cx(styles.panel, playColumn)}>
         <PlayBoard min={1} fitWidth={false} current={shown}>
           <Chain
             entries={reveal.entries[chain] ?? []}
@@ -225,9 +249,11 @@ function Reveal({ room }: { room: Room }) {
           />
         </PlayBoard>
         <hr className={styles.divider} />
-        {isHost ? (
+        {canStart ? (
           <div className={styles.reveal}>
             <p className={styles.hint}>
+              {!isHost &&
+                `${m.doodleChain.standInReveal(state.owner.username)} `}
               {shown < length
                 ? length - shown === 1
                   ? m.doodleChain.lastIn(owner)
@@ -251,16 +277,31 @@ function Reveal({ room }: { room: Room }) {
           </div>
         ) : (
           <Notice tone="pending">
-            {host && !host.isConnected
-              ? m.doodleChain.hostAway(hostName)
-              : shown >= length && nextOwner
-                ? m.doodleChain.hostNext(hostName, nextOwner)
-                : m.doodleChain.hostShowing(hostName)}
+            {shown >= length && nextOwner
+              ? m.doodleChain.hostNext(starterName, nextOwner)
+              : m.doodleChain.hostShowing(starterName)}
           </Notice>
         )}
       </section>
     </>
   );
+}
+
+/**
+ * The album's foot is held over the bottom of the window, so whatever the
+ * keyboard or a scroll brings into view stops above it, never under it.
+ */
+function holdOverFoot(foot: HTMLDivElement) {
+  const root = document.documentElement;
+  const hold = () =>
+    root.style.setProperty('scroll-padding-bottom', `${foot.offsetHeight}px`);
+  hold();
+  const observer = new ResizeObserver(hold);
+  observer.observe(foot);
+  return () => {
+    observer.disconnect();
+    root.style.removeProperty('scroll-padding-bottom');
+  };
 }
 
 /** DC14, DC20: every chain to read again, and the hearts they were given. */
@@ -277,6 +318,7 @@ function Album({
 }) {
   const m = useMessages();
   const { startGame, starting } = room;
+  const phone = useMediaQuery(PHONE);
   const chain = summary.chains[picked] ?? summary.chains[0];
   const entries = summary.chains.reduce(
     (sum, { entries: list }) => sum + list.length,
@@ -308,6 +350,13 @@ function Album({
     .filter(Boolean)
     .join(' ');
 
+  const actions = (
+    <div className={styles.actions}>
+      <ResultsActions onPlayAgain={startGame} starting={starting} />
+      <p className={styles.hint}>{m.doodleChain.albumStays}</p>
+    </div>
+  );
+
   return (
     <section className={styles.panel} aria-labelledby="album-title">
       <div className={styles.result}>
@@ -316,6 +365,10 @@ function Album({
         </h2>
         <p className={styles.detail}>{detail}</p>
       </div>
+      {/* Play again or Ready is never below every chain: at the top on a
+          phone, as DC20 says the wait there, and on a wider screen at the
+          foot, as DC14 draws it, but held on screen while the album scrolls. */}
+      {phone && actions}
       <div
         className={styles.chips}
         role="group"
@@ -338,11 +391,12 @@ function Album({
           isFavourite={isFavourite}
         />
       )}
-      <hr className={styles.divider} />
-      <div className={styles.actions}>
-        <ResultsActions onPlayAgain={startGame} starting={starting} />
-        <p className={styles.hint}>{m.doodleChain.albumStays}</p>
-      </div>
+      {!phone && (
+        <div ref={holdOverFoot} className={styles.albumFoot}>
+          <hr className={styles.divider} />
+          {actions}
+        </div>
+      )}
     </section>
   );
 }

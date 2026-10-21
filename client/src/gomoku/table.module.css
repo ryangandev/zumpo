@@ -126,11 +126,13 @@
   align-items: stretch;
 }
 
+/* The buttons share a row; a line of words, such as how the next game
+   starts or what it will be, takes a row of its own above them. */
 .phone .actions > * {
   flex: 1 1 0;
 }
 
-.phone .actions > p {
+.phone .actions > :not(button) {
   flex-basis: 100%;
 }
 

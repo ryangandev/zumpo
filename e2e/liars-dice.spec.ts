@@ -83,13 +83,13 @@ test('two players bid and call until one of them has dice left', async ({
     maya.getByRole('list', { name: 'Standings' }).getByRole('listitem'),
   ).toHaveCount(2);
   // The call that ended the game stays up under the results, every cup open
-  // for both players, with the same count; the verdict names the bidder to the
-  // others and says "Your bid" to them.
+  // for both players, with the same count on its first line; the verdict,
+  // on its own line, names the bidder to the others and says "Your bid" to them.
   const counts: (string | null)[] = [];
   for (const page of [maya, leo]) {
     const lastCall = page.getByRole('region', { name: 'The last call' });
     await expect(lastCall).toBeVisible();
-    counts.push((await lastCall.textContent())?.split('→')[0] ?? null);
+    counts.push(await lastCall.getByRole('paragraph').first().textContent());
     await expect(page.getByRole('img', { name: 'Hidden die' })).toHaveCount(0);
   }
   expect(counts[0]).toBe(counts[1]);

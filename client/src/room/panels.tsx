@@ -1,7 +1,7 @@
 import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
-import { MAX_SPECTATORS } from '../../../shared/room';
+import { MAX_SPECTATORS, waitingOn } from '../../../shared/room';
 import {
   Avatar,
   Button,
@@ -11,6 +11,9 @@ import {
   PlayerRow,
 } from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
+import { roomSetting } from '../games/room-setting';
+import { SettingField, settingsOf } from '../games/setting-field';
+import { cx } from '../ui/cx';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
@@ -178,6 +181,16 @@ function usePickedName(): { notice?: string; change?: ReactNode } {
 }
 
 /**
+ * For the player who may start because the host is away: why the start is
+ * theirs to press.
+ */
+function useStandIn(): string | undefined {
+  const m = useMessages();
+  const { canStart, isHost, state } = useRoomContext();
+  return canStart && !isHost ? m.room.standIn(state.owner.username) : undefined;
+}
+
+/**
  * MO20: on a phone, where the scoreboard is on its own tab, the waiting card
  * says who else is at the table, so "Everyone's here?" can be answered on
  * the spot. Nothing while nobody else is.
@@ -230,8 +243,9 @@ function WaitingHowTo() {
 }
 
 /**
- * D01-D03, M01-M03: before a game. The host starts once there are two; a
- * guest waits for the host. Each says how to play under its actions.
+ * D01-D03, M01-M03: before a game. The host starts once there are two, or
+ * while they are away the player next in line; a guest waits for them. Each
+ * says how to play under its actions.
  */
 export function WaitingPanel({
   aloneTitle,
@@ -252,19 +266,20 @@ export function WaitingPanel({
   onStart: () => void;
   starting: boolean;
 }) {
-  const { state, isHost, spectating } = useRoomContext();
+  const { state, canStart, spectating, starterName } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   const { minPlayers } = gameInfo(state.gameType);
   const count = Object.keys(state.playerList).length;
   const picked = usePickedName();
+  const standIn = useStandIn();
   const howTo = <WaitingHowTo />;
 
-  if (spectating && !isHost) return <SpectatorPanel footer={howTo} />;
-  if (!isHost) {
+  if (spectating && !canStart) return <SpectatorPanel footer={howTo} />;
+  if (!canStart) {
     return (
       <RoomPanel
-        title={m.room.waitingForHost(state.owner.username)}
+        title={m.room.waitingForHost(starterName)}
         aside={<WhoIsHere />}
         notice={picked.notice}
         footer={howTo}
@@ -303,7 +318,7 @@ export function WaitingPanel({
     <RoomPanel
       title={m.room.everyoneHere}
       aside={<WhoIsHere />}
-      notice={picked.notice}
+      notice={picked.notice ?? standIn}
       footer={howTo}
       actions={
         starting ? (
@@ -356,8 +371,40 @@ export function EndedEarlyPanel() {
 }
 
 /**
- * A finished game's actions: Play again for the host while there are enough
- * players, Invite while there are not, or a guest's wait for the host.
+ * Between games, the next game's setting: for the starter to choose, for
+ * everyone else to read. Nothing for a game with nothing to set.
+ */
+function NextGame() {
+  const m = useMessages();
+  const { state, canStart, changeSettings } = useRoomContext();
+  const settings = settingsOf(state);
+  if (!settings) return null;
+  return (
+    <div className={styles.line}>
+      {canStart ? (
+        <div className={styles.setting}>
+          <SettingField
+            gameType={state.gameType}
+            settings={settings}
+            onChange={changeSettings}
+            label={m.room.nextGame}
+          />
+        </div>
+      ) : (
+        <p className={styles.body}>
+          {m.room.nextGameIs(roomSetting(state, m))}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A finished game's actions. The starter (the host, or while they are away
+ * the player next in line) chooses the next game's setting and plays again
+ * while there are enough players, or invites while there are not, and sees
+ * who is ready. Anybody else at the table says Ready: once everyone has, the
+ * next game starts without the starter. A spectator waits, and may sit.
  */
 export function ResultsActions({
   onPlayAgain,
@@ -366,30 +413,73 @@ export function ResultsActions({
   onPlayAgain: () => void;
   starting: boolean;
 }) {
-  const { state, isHost, spectating } = useRoomContext();
+  const { state, playerId, canStart, starterName, spectating, setReady } =
+    useRoomContext();
   const m = useMessages();
+  const standIn = useStandIn();
   const count = Object.keys(state.playerList).length;
-  if (!isHost) {
-    return (
-      <>
-        <StatusLine>{m.room.waitingForAgain(state.owner.username)}</StatusLine>
-        <SeatMove primary={spectating} />
-      </>
+  const names = (ids: readonly string[]) =>
+    listNames(
+      ids.map((id) => state.playerList[id]?.username ?? ''),
+      m,
     );
-  }
-  if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
-  if (count >= gameInfo(state.gameType).minPlayers) {
+
+  if (canStart) {
+    if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
+    const enough = count >= gameInfo(state.gameType).minPlayers;
+    const ready = state.ready.filter(
+      (id) => id !== playerId && state.playerList[id],
+    );
+    const said = [
+      standIn,
+      ready.length > 0 && m.room.areReady(names(ready), ready.length),
+    ].filter(Boolean);
     return (
       <>
-        <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-        <InviteButton />
+        <NextGame />
+        {said.length > 0 && (
+          <p className={cx(styles.line, styles.body)}>{said.join(' ')}</p>
+        )}
+        {enough && <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>}
+        <InviteButton primary={!enough} />
         <SeatMove />
       </>
     );
   }
+  if (spectating) {
+    return (
+      <>
+        <NextGame />
+        <StatusLine>{m.room.waitingForAgain(starterName)}</StatusLine>
+        <SeatMove primary />
+      </>
+    );
+  }
+  const youReady = state.ready.includes(playerId);
+  const waiting = waitingOn(state, state.ready).filter((id) => id !== playerId);
   return (
     <>
-      <InviteButton primary />
+      <NextGame />
+      <div className={styles.line}>
+        {youReady ? (
+          <StatusLine>
+            {waiting.length > 0
+              ? m.room.waitingOnReady(names(waiting), starterName)
+              : m.room.waitingForAgain(starterName)}
+          </StatusLine>
+        ) : (
+          <p className={styles.body}>{m.room.readyHint(starterName)}</p>
+        )}
+      </div>
+      {youReady ? (
+        <Button variant="secondary" onClick={() => setReady(false)}>
+          {m.room.notReady}
+        </Button>
+      ) : (
+        <Button icon="check" onClick={() => setReady(true)}>
+          {m.room.ready}
+        </Button>
+      )}
       <SeatMove />
     </>
   );
@@ -397,7 +487,7 @@ export function ResultsActions({
 
 /**
  * A finished game's panel: what happened, the game's own account of it, and
- * Play again for the host, or a guest's wait for them.
+ * what comes next (`ResultsActions`).
  */
 export function ResultsFrame({
   title,
@@ -429,8 +519,8 @@ export function ResultsFrame({
 }
 
 /**
- * D13, D14, M14, M15: the final standings. The host can play again; a guest
- * waits for them.
+ * D13, D14, M14, M15: the final standings, and what comes next
+ * (`ResultsActions`).
  */
 export function ResultsPanel<Summary extends GameSummary>({
   summary,

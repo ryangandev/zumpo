@@ -43,6 +43,20 @@
   background: var(--zumpo-line);
 }
 
+/* The album's foot stays on screen while its chains scroll by, on the
+   panel's paper, out to the panel's own padding. */
+.albumFoot {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-24);
+  margin-bottom: calc(-1 * var(--zumpo-space-24));
+  padding-bottom: var(--zumpo-space-24);
+  background: var(--zumpo-paper);
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

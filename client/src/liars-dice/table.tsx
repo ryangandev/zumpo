@@ -125,8 +125,12 @@ function cupLine(
       state: 'turn',
     };
   }
-  if (you && seat.id === nextId)
-    return { detail: m.liarsDice.youNext, state: 'default' };
+  if (seat.id === nextId) {
+    return {
+      detail: you ? m.liarsDice.youNext : m.liarsDice.upNext,
+      state: 'default',
+    };
+  }
   return { detail: diceWord(seat.diceLeft, m), state: 'default' };
 }
 
@@ -150,6 +154,20 @@ function cupProps(
 }
 
 /**
+ * `items` in turn order starting from the viewer, so every list of the table
+ * reads the same way round: you, whoever bids after you, and so on. A viewer
+ * who is not seated sees the order as it is.
+ */
+export function fromViewer<T>(
+  items: readonly T[],
+  idOf: (item: T) => string,
+  youId: string,
+): T[] {
+  const at = items.findIndex((item) => idOf(item) === youId);
+  return at < 0 ? [...items] : [...items.slice(at), ...items.slice(0, at)];
+}
+
+/**
  * LD02-LD04, LD08-LD12: the table. Everybody else's cups, then this round's
  * bids or what a call found, then your own cup with what you can do beside it.
  * A player out of dice leaves the table, unless a call has just put them out.
@@ -166,7 +184,8 @@ export function Table(props: TableProps) {
     beside,
     inPlay = true,
   } = props;
-  const others = seats.filter(
+  // Everybody else in the order they bid after you, as the Players panel lists them.
+  const others = fromViewer(seats, (seat) => seat.id, youId).filter(
     (seat) =>
       seat.id !== youId && (seat.diceLeft > 0 || seat.id === reveal?.loserId),
   );
@@ -244,7 +263,10 @@ export function Table(props: TableProps) {
   );
 }
 
-/** "5 × ⚄ incl. 2 wild ones · bid was five → Leo’s bid stands". */
+/**
+ * What a call found, in two lines: the count ("5 × ⚄ incl. 2 wild ones · bid
+ * was five"), then the verdict ("Leo’s bid stands, so Sam loses a die").
+ */
 export function CountLine({
   reveal,
   who,
@@ -268,13 +290,8 @@ export function CountLine({
           label={m.liarsDice.face(reveal.bid.face)}
         />
         <span className={styles.detail}>{countDetail(reveal, m)}</span>
-        <span className={styles.outcome}>
-          <span className={styles.detail} aria-hidden="true">
-            →
-          </span>
-          <span className={styles.verdict}>{verdict(reveal, who, m)}</span>
-        </span>
       </p>
+      <p className={styles.verdict}>{verdict(reveal, who, m)}</p>
     </section>
   );
 }
