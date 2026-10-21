@@ -47,7 +47,7 @@ export const gomoku = {
   yourTurnPassed: 'Your turn passed',
   firstMove: 'Black moves first, anywhere on the board',
   /** A faint stone is down on a phone: the second tap places it. */
-  tapAgain: 'Tap again to place',
+  tapAgain: 'Tap again',
   toMove: 'to move',
   paused: 'paused',
 

@@ -400,6 +400,37 @@ function NextGame() {
 }
 
 /**
+ * What a finished game's actions would say in words, short, for a phone's
+ * results turn bar to say instead (`ResultsActions` with `words={false}`):
+ * who the next game waits on, or that it is starting. Null when there is
+ * nothing to say.
+ */
+export function useResultsNote(starting: boolean): string | null {
+  const { state, playerId, canStart, isHost, starterName, spectating } =
+    useRoomContext();
+  const m = useMessages();
+  const names = (ids: readonly string[]) =>
+    listNames(
+      ids.map((id) => state.playerList[id]?.username ?? ''),
+      m,
+    );
+  if (canStart) {
+    if (starting) return m.room.starting;
+    const ready = state.ready.filter(
+      (id) => id !== playerId && state.playerList[id],
+    );
+    if (ready.length > 0) return m.room.areReady(names(ready), ready.length);
+    return isHost ? null : m.room.short.standIn(state.owner.username);
+  }
+  if (spectating) return m.room.short.waitingFor(starterName);
+  if (!state.ready.includes(playerId)) return m.room.short.ready;
+  const waiting = waitingOn(state, state.ready).filter((id) => id !== playerId);
+  return m.room.short.waitingFor(
+    waiting.length > 0 ? names(waiting) : starterName,
+  );
+}
+
+/**
  * A finished game's actions. The starter (the host, or while they are away
  * the player next in line) chooses the next game's setting and plays again
  * while there are enough players, or invites while there are not, and sees
@@ -409,9 +440,12 @@ function NextGame() {
 export function ResultsActions({
   onPlayAgain,
   starting,
+  words = true,
 }: {
   onPlayAgain: () => void;
   starting: boolean;
+  /** False where `useResultsNote` says the words elsewhere: only buttons. */
+  words?: boolean;
 }) {
   const { state, playerId, canStart, starterName, spectating, setReady } =
     useRoomContext();
@@ -425,7 +459,9 @@ export function ResultsActions({
     );
 
   if (canStart) {
-    if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
+    if (starting) {
+      return words ? <StatusLine>{m.room.starting}</StatusLine> : null;
+    }
     const enough = count >= gameInfo(state.gameType).minPlayers;
     const ready = state.ready.filter(
       (id) => id !== playerId && state.playerList[id],
@@ -437,7 +473,7 @@ export function ResultsActions({
     return (
       <>
         <NextGame />
-        {said.length > 0 && (
+        {words && said.length > 0 && (
           <p className={cx(styles.line, styles.body)}>{said.join(' ')}</p>
         )}
         {enough && <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>}
@@ -450,7 +486,9 @@ export function ResultsActions({
     return (
       <>
         <NextGame />
-        <StatusLine>{m.room.waitingForAgain(starterName)}</StatusLine>
+        {words && (
+          <StatusLine>{m.room.waitingForAgain(starterName)}</StatusLine>
+        )}
         <SeatMove primary />
       </>
     );
@@ -460,17 +498,19 @@ export function ResultsActions({
   return (
     <>
       <NextGame />
-      <div className={styles.line}>
-        {youReady ? (
-          <StatusLine>
-            {waiting.length > 0
-              ? m.room.waitingOnReady(names(waiting), starterName)
-              : m.room.waitingForAgain(starterName)}
-          </StatusLine>
-        ) : (
-          <p className={styles.body}>{m.room.readyHint(starterName)}</p>
-        )}
-      </div>
+      {words && (
+        <div className={styles.line}>
+          {youReady ? (
+            <StatusLine>
+              {waiting.length > 0
+                ? m.room.waitingOnReady(names(waiting), starterName)
+                : m.room.waitingForAgain(starterName)}
+            </StatusLine>
+          ) : (
+            <p className={styles.body}>{m.room.readyHint(starterName)}</p>
+          )}
+        </div>
+      )}
       {youReady ? (
         <Button variant="secondary" onClick={() => setReady(false)}>
           {m.room.notReady}

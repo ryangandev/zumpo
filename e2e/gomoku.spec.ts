@@ -147,22 +147,20 @@ test('a phone puts a faint stone down first, and places it on a second tap', asy
     'H8, white stone, last placed',
   );
 
-  // After the game a guest's line about the next one has a row of its own
-  // above Ready, not a sliver beside it.
+  // After the game a guest's line about the next one is in the turn bar,
+  // and only buttons are under the board, which keeps its size and place.
+  const board = leo.getByRole('grid', { name: 'Gomoku board' });
+  const during = (await board.boundingBox())!;
   await black.getByRole('button', { name: 'Resign' }).click();
   await black
     .getByRole('dialog')
     .getByRole('button', { name: 'Resign' })
     .click();
-  const hint = leo.getByText(
-    'The next game starts once everyone is ready, or when Maya starts it.',
-  );
-  await expect(hint).toBeVisible();
-  const line = (await hint.boundingBox())!;
-  const ready = (await leo
-    .getByRole('button', { name: 'Ready', exact: true })
-    .boundingBox())!;
-  expect(line.y + line.height).toBeLessThanOrEqual(ready.y);
+  await expect(turnOf(leo).getByText('Ready for the next game?')).toBeVisible();
+  await expect(
+    leo.getByRole('button', { name: 'Ready', exact: true }),
+  ).toBeVisible();
+  expect(await board.boundingBox()).toEqual(during);
 });
 
 test('a player plays the computer on their own, with nothing sent to the server', async ({

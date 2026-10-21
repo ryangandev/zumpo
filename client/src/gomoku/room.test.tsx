@@ -292,6 +292,36 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
   });
 
+  it('on a phone, says what the next game waits on in the turn bar, with only buttons under the board', async () => {
+    onPhone();
+    const results = gomokuState({
+      owner: { username: 'Maya', playerId: 'p2' },
+      colors,
+      gameNumber: 2,
+      samePair: true,
+      moves: [{ color: 'white', point: E8 }],
+      lastGame: {
+        endedEarly: false,
+        ending: 'resigned',
+        winner: 'black',
+        stones: 1,
+        standings: [
+          { playerId: ME, username: 'Ryan', points: 1 },
+          { playerId: 'p2', username: 'Maya', points: 0 },
+        ],
+      },
+    });
+    const { update } = await renderSeated(results);
+
+    expect(turn().getByText('Ready for the next game?')).toBeInTheDocument();
+    expect(screen.queryByText(/^The next game starts once/)).toBeNull();
+    expect(screen.getByRole('button', { name: 'Ready' })).toBeInTheDocument();
+
+    update({ ...results, ready: [ME] });
+    expect(turn().getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(screen.queryByText(/^You’re ready\./)).toBeNull();
+  });
+
   it('frees the seat of a player who left, and counts only the stones placed', async () => {
     await renderSeated(
       gomokuState({
@@ -389,11 +419,11 @@ describe('a Gomoku room', () => {
     // Place stone is always there, live only once a faint stone is down,
     // and the turn bar says the second tap places it.
     expect(placeStone()).toBeDisabled();
-    expect(turn().queryByText('Tap again to place')).toBeNull();
+    expect(turn().queryByText('Tap again')).toBeNull();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([]);
     expect(placeStone()).toBeEnabled();
-    expect(turn().getByText('Tap again to place')).toBeInTheDocument();
+    expect(turn().getByText('Tap again')).toBeInTheDocument();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([['r1', F8]]);
   });
