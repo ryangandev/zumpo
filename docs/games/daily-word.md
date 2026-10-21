@@ -90,7 +90,7 @@ A server-wide date (UTC) was the alternative; it was rejected because the word w
   Guesses are kept on this device as they are made, so a refresh, a closed tab or another visit later that day continues the same game, and a finished game stays finished until midnight.
 - There is no clock: it is not a race, and nothing is timed.
 
-When the word is found or missed, the board stays, and beside it:
+When the word is found or missed, the board stays, the same board in the same panel with the keyboard gone, and beside it (over it on one column, so Share is in sight, with the cards under it):
 
 - **The result**: found in _n_, or missed, with the word; a missed word is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them found, the current streak, the best streak, and how many were found in 1, 2, 3, 4, 5 and 6 guesses, with today's bar picked out.

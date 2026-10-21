@@ -86,7 +86,10 @@ Ten is about two minutes for somebody who knows the game and four for somebody l
 - **Hint** marks one card of a trio on the table, and **10 seconds** go on the clock.
   A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered, though its place under the table is kept so the table never moves.
   Hints are cleared when a trio is taken.
-- After the tenth trio the last table stays, and beside it (under it on a phone): the run time, the wrong picks and hints with what they cost, the fastest trio, and every trio you found with its time.
+- While a run is played three cards sit beside the table (under it on one column, and not at all on a phone, which keeps to the table):
+  **This run**, the wrong picks and hints so far with what they cost; **What makes a trio**, the rule in one line with an example trio of three small cards and what makes it one (the same colour; shape, count and fill all different); and **Best**, the best time for ten trios on this device.
+- After the tenth trio the table gives way, in the same panel, to **every trio you found**, each with its time and its wrong picks and hints.
+  Beside it (over it on one column, so Play again is in sight) the result says the run time, with the wrong picks and hints and what they cost, and the fastest trio; then the best of each of the last few days, and Challenge a friend.
 - **Leave** goes to the game's page; once a trio is found, any way out asks first, since the run's time is not kept.
   The run time stops while it asks, and the table is put away, so staying costs nothing.
 - **The quicker run time is better.**

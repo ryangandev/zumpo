@@ -103,7 +103,7 @@ The day is the device's **local date**, as in [Daily Word](daily-word.md#the-dai
   Guesses and notes are kept on this device as they are made, so a refresh, a closed tab or another visit later that day continues the same game, and a finished game stays finished until midnight.
 - There is no clock: it is not a race, and nothing is timed.
 
-When the code is cracked or missed, the board stays, and beside it:
+When the code is cracked or missed, the board stays, the same board in the same panel with the pad gone, and beside it (over it on one column, so Share is in sight, with the cards under it):
 
 - **The result**: cracked in _n_, or missed, with the code; a missed code is spelled out in tiles under the result.
 - **Stats on this device**: games played, the share of them cracked, the current streak, the best streak, and how many were cracked in each number of guesses, with today's bar picked out.

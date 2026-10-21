@@ -39,7 +39,7 @@ Play solo, or a challenge link, deals the first hand at once.
 - **Skip** gives up a hand: one way to solve it shows, off the clock, until you press **Next hand** (T13), and 30 seconds are added to the run time.
   The way shown is the one a person would most likely write: whole numbers all along where possible, a 1 multiplied in last rather than mid-sum, then the shortest.
 - A solved hand shows **24! Nice.** and the next one follows a moment later.
-- After the tenth hand every hand stays where the table was, with how you solved it (or, for a skipped one, a way to), and beside it (under it on a phone): the run time, how many hands were solved and skipped, and the fastest solved hand.
+- After the tenth hand every hand stays where the table was, with how you solved it (or, for a skipped one, a way to), and beside it (over it on one column, so Play again is in sight): the run time, how many hands were solved and skipped, and the fastest solved hand.
 - The best run time is kept **on this device** (in `localStorage`), with the best of each of the last few days.
 
 **Challenge a friend**, beside a finished game, has one button, **Copy challenge link**, which copies a link to the same ten hands (`/games/make-24/solo?seed=k3f9x2`).

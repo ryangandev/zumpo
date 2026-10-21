@@ -54,7 +54,7 @@ A game on your own needs no room and no server: it runs in the browser, against 
   A finished game stays as it ended, and a game with take-backs counts like any other.
 - The computer takes about half a second over each move, at least, so every stone can be seen landing, and the turn bar says it is thinking.
   On Black it opens on the centre point.
-- After the game the board stays as it ended, with the winning line drawn, and beside it (under it on a phone) the result: who won and on which move, and your record at that level.
+- After the game the board stays as it ended, with the winning line drawn, and beside it (over it on one column, so Play again is in sight) the result: who won and on which move, and your record at that level.
   **Play again** starts a new game at the same level, with the colours swapped, so black's head start alternates; **Change level** opens the picks over the finished board.
 - Your **wins, losses and draws** at each level, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count, and neither does one you resign; resigning is a room's way to save a friend's time, so solo has no Resign: you leave or play on.

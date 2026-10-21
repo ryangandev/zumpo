@@ -141,7 +141,7 @@ The mine you hit turns solid red, every other mine shows, flags with no mine und
 
 **Opening every safe cell wins**, whatever is flagged; the mines left are flagged for you.
 The time is shown and kept as the best for that board **on this device** (in `localStorage`) when it beats the last one.
-Either way the board stays as it ended, with the result beside it, or under it on a phone.
+Either way the board stays as it ended, with the result beside it, or over it on one column, so Play again is in sight.
 
 There is no challenge link: the mines depend on where the first click lands, so two people could not play the same board.
 

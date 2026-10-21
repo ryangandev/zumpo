@@ -80,7 +80,9 @@ Decisions from the design review rounds (their reports are in git history):
 - Play solo starts the game: a board, a run or a table is dealt at once, with the settings last played on this device or the defaults, so a first game is one click.
   There are no start screens (#105).
   The settings are on the finished game instead, as Change board, Change level or Change table beside Play again, a Dialog over the board that Play closes into the next game (MS01, PR01, LD01, GM02).
-- Every game on your own ends the same way (#86): the board stays as it ended, the turn bar over it says how it ended, and the side column, or the column under the board on a phone, starts with the result, a `Zumpo/Card` Panel with the outcome, a line of detail, a few stats and the actions.
+- Every game on your own ends the same way (#86): the board stays as it ended, the turn bar over it says how it ended, and the side column starts with the result, a `Zumpo/Card` Panel with the outcome, a line of detail, a few stats and the actions.
+  On one column (under 1024 px) the result comes over the board instead, so Play again is in sight without scrolling, and the other cards follow under the board.
+  The board is the one played on, never mounted again, so it keeps its place and its scale; the result's title takes the focus when the game ends, and the next game's board takes it after Play again.
   The side column's other cards follow: the best on this device, and Challenge a friend where the game has it, whose one button is Copy challenge link (#107); the progress during play is not repeated there.
   `Zumpo/Game artwork` is the paper panel both draw, one per game and size, so the artwork is drawn once.
 - A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.

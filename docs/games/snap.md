@@ -94,7 +94,9 @@ Thirty is about a minute and a half for somebody quick, and three minutes for so
 - **Not a match:** the symbol shows as wrong for a moment (0.6 s), and **3 seconds** go on the clock.
   Which card the symbol is on stays in the turn bar until the next tap.
   Guessing among six symbols costs about 7.5 seconds a card, so looking is always faster.
-- After the thirtieth card the last two cards stay, and beside them (under them on a phone): the run time, the wrong taps with what they cost, the fastest card and the slowest card.
+- While a run is played three cards sit beside the two cards (under them on one column, and not at all on a phone, which keeps to the cards):
+  **This run**, the wrong taps so far with what they cost and the fastest card; **What makes a match**, the rule in one line with two small example cards, their one shared symbol marked, and the fact behind every card ("Every two cards share exactly one symbol."); and **Best**, the best time for thirty cards on this device.
+- After the thirtieth card the last two cards stay, their match marked, and beside them (over them on one column, so Play again is in sight): the run time, the wrong taps with what they cost, the fastest card and the slowest card; then the best of each of the last few days, and Challenge a friend.
 - **The quicker run time is better.**
   The best is kept **on this device** (in `localStorage`), with the best of each of the last few days, as Trios keeps them.
 
