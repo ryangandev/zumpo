@@ -20,6 +20,7 @@ const SETTINGS: Record<GameType, object> = {
   'liars-dice': { dicePerPlayer: 3 },
   hush: {},
   'daily-word': { rounds: 3 },
+  'code-breaker': { rounds: 3 },
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];

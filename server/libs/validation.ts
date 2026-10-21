@@ -41,6 +41,7 @@ const gameType = z.enum([
   'liars-dice',
   'hush',
   'daily-word',
+  'code-breaker',
 ]);
 
 /**

@@ -86,6 +86,8 @@ const BUCKET_FOR_EVENT: Record<ClientToServerEvent, BucketName> = {
   'hush:play': 'room',
   // Six guesses a word, typed out a letter at a time.
   'dw:guess': 'room',
+  // Ten guesses a code, typed out a digit at a time.
+  'cb:guess': 'room',
 };
 
 /**

@@ -131,6 +131,19 @@ const dailyWordDurationsInSeconds: DailyWordDurationsInSeconds = {
   reveal: readSecondsFromEnv('DAILY_WORD_REVEAL_SECONDS', 8),
 };
 
+/** Code Breaker's clock: one code for everybody at once, then its results. */
+interface CodeBreakerDurationsInSeconds {
+  /** How long everybody has to crack the code. */
+  round: number;
+  /** How long a round's results stay up before the next code. */
+  reveal: number;
+}
+
+const codeBreakerDurationsInSeconds: CodeBreakerDurationsInSeconds = {
+  round: readSecondsFromEnv('CODE_BREAKER_ROUND_SECONDS', 180),
+  reveal: readSecondsFromEnv('CODE_BREAKER_REVEAL_SECONDS', 8),
+};
+
 /**
  * Trios' clock. A table has no deadline of its own: nothing ends while
  * everybody looks, so these are the pause after a trio, the cost of a wrong
@@ -192,6 +205,7 @@ export {
   liarsDiceDurationsInSeconds,
   hushDurationsInSeconds,
   dailyWordDurationsInSeconds,
+  codeBreakerDurationsInSeconds,
   reconnectGraceInSeconds,
 };
 export type {
@@ -204,4 +218,5 @@ export type {
   LiarsDiceDurationsInSeconds,
   HushDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  CodeBreakerDurationsInSeconds,
 };

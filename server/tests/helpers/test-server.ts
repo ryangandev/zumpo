@@ -10,6 +10,7 @@ import {
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  CodeBreakerDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
@@ -26,12 +27,14 @@ import type { SnapState } from '../../socket/snap/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
+import type { CodeBreakerState } from '../../socket/code-breaker/index.js';
 import type {
   AnyLobbyRoomInfo,
   AnyRoomState,
   ChatMessage,
   ClientToServerEvents,
   DailyWordRoomState,
+  CodeBreakerRoomState,
   DrawAndGuessRoomState,
   DrawAndGuessState,
   GameType,
@@ -143,6 +146,15 @@ const FAST_DAILY_WORD: DailyWordDurationsInSeconds = {
   reveal: 0.1,
 };
 
+/**
+ * The same for Code Breaker, with a round long enough for all ten guesses,
+ * which a socket's request budget paces past its burst.
+ */
+const FAST_CODE_BREAKER: CodeBreakerDurationsInSeconds = {
+  round: 3,
+  reveal: 0.1,
+};
+
 /** A client socket typed on the contract, from the client's side of it. */
 type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -204,6 +216,7 @@ const startTestServer = async (
     liarsDiceDurations: FAST_LIARS_DICE,
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
+    codeBreakerDurations: FAST_CODE_BREAKER,
     graceInSeconds,
     // Every test client comes from this machine; the limits' own tests turn
     // them back on.
@@ -384,6 +397,13 @@ const waitForDailyWordState = (
   predicate: (state: DailyWordRoomState) => boolean = () => true,
   timeoutMs = 3000,
 ) => waitForState<DailyWordRoomState>(client, predicate, timeoutMs);
+
+/** And for Code Breaker. */
+const waitForCodeBreakerState = (
+  client: ClientSocket,
+  predicate: (state: CodeBreakerRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<CodeBreakerRoomState>(client, predicate, timeoutMs);
 
 /** Resolves with the next chat message that satisfies `predicate`. */
 const waitForChat = async (
@@ -884,6 +904,56 @@ const playToFirstWord = async (harness: TestServer, rounds = 3) => {
   return { roomId, alice, bob, first };
 };
 
+/** Creates a Code Breaker room, with its creator seated, and returns its id. */
+const createCodeBreakerRoom = async (
+  client: ClientSocket,
+  options: { username?: string; rounds?: number; maxPlayers?: number } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'code-breaker',
+    roomName: 'Code table',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 4,
+    password: '',
+    settings: { rounds: options.rounds ?? 3 },
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/**
+ * The server's own Code Breaker room. Tests read the codes through it on
+ * purpose: knowing the code is the only way to crack it deliberately, and it
+ * is exactly what a client is never sent.
+ */
+const codeBreakerRoom = (
+  harness: TestServer,
+  roomId: string,
+): Room<CodeBreakerState> =>
+  harness.server.rooms.get(roomId) as Room<CodeBreakerState>;
+
+/** Seats Alice and Bob in a Code Breaker room and opens the first code. */
+const playToFirstCode = async (harness: TestServer, rounds = 3) => {
+  const alice = await harness.connect();
+  const bob = await harness.connect();
+
+  const roomId = await createCodeBreakerRoom(alice, {
+    username: 'Alice',
+    rounds,
+  });
+  await joinRoom(bob, roomId, 'Bob');
+
+  const round = waitForCodeBreakerState(
+    alice,
+    (state) => state.phase === 'guessing' && state.round === 1,
+    5000,
+  );
+  await startGame(alice, roomId);
+  const first = await round;
+
+  return { roomId, alice, bob, first };
+};
+
 /** Seats two players in a Minesweeper room and opens the first round. */
 const playToFirstRound = async (harness: TestServer) => {
   const alice = await harness.connect();
@@ -914,6 +984,7 @@ export {
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
+  FAST_CODE_BREAKER,
   startTestServer,
   waitFor,
   waitForState,
@@ -926,6 +997,7 @@ export {
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
+  waitForCodeBreakerState,
   waitForChat,
   collect,
   collectChat,
@@ -941,6 +1013,7 @@ export {
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
+  createCodeBreakerRoom,
   joinRoom,
   seatTable,
   TWO_NAMES,
@@ -961,6 +1034,8 @@ export {
   hushRoom,
   dailyWordRoom,
   playToFirstWord,
+  codeBreakerRoom,
+  playToFirstCode,
 };
 export type { TestServer, TestClient, ClientSocket, ClientsFor };
 
