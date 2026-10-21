@@ -9,7 +9,7 @@ import { FakeSocket } from '../tests/fake-socket';
 import { roomPath } from '../games/catalog';
 
 /** The phone's Board tab. */
-const board = () => within(screen.getByRole('tabpanel', { name: 'Board' }));
+const board = () => within(screen.getByRole('tabpanel', { name: 'Game' }));
 
 const turn = {
   isGameStarted: true,

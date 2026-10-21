@@ -84,7 +84,7 @@ describe('Snap on your own', () => {
   it('deals at once, with two cards to learn from', async () => {
     await renderApp('/games/snap/solo');
     expect(screen.queryByRole('button', { name: 'Start' })).toBeNull();
-    expect(screen.getByText('Not yet')).toBeInTheDocument();
+    expect(screen.getAllByText('Not yet')).toHaveLength(2);
     expect(screen.getByText('What makes a match')).toBeInTheDocument();
     expect(turn().getByText('Card 1 of 30')).toBeInTheDocument();
     expect(turn().getByText('Spot the match')).toBeInTheDocument();

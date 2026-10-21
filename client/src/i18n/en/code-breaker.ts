@@ -74,7 +74,7 @@ export const codeBreaker = {
   nextPrompt: 'Enter checks the guess. Backspace takes a digit back.',
   notesPrompt: 'Notes on: a digit key marks it out, then in, then clears it.',
   codeNumber: (puzzle: number) => `Code #${puzzle}`,
-  dailyNumber: (puzzle: number) => `Daily code #${puzzle}`,
+  today: 'Today’s code',
   dailyFresh: 'Ten guesses. A new code every day.',
   readIt: 'How to read it',
   shareDaily: (puzzle: number) => `Code Breaker #${puzzle}`,

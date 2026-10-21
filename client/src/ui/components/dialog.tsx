@@ -37,7 +37,10 @@ export function Dialog({
   return (
     <BaseDialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className={cx('zumpo', styles.backdrop)} />
+        <BaseDialog.Backdrop
+          className={cx('zumpo', styles.backdrop)}
+          data-dialog-backdrop=""
+        />
         <BaseDialog.Viewport className={cx('zumpo', styles.viewport)}>
           <BaseDialog.Popup
             className={cx(card.card, styles.popup)}

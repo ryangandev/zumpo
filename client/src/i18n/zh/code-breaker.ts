@@ -67,7 +67,7 @@ export const codeBreaker: typeof en = {
   nextPrompt: '回车检查这一行，退格删除数字。',
   notesPrompt: '笔记已打开：按数字键标为不在、再按标为在、第三次清除。',
   codeNumber: (puzzle) => `第 ${puzzle} 题`,
-  dailyNumber: (puzzle) => `每日一题 #${puzzle}`,
+  today: '今日题目',
   dailyFresh: '十次机会，每天一道新题。',
   readIt: '怎么看标记',
   shareDaily: (puzzle) => `猜数字 #${puzzle}`,

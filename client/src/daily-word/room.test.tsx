@@ -325,7 +325,7 @@ describe('a Daily Word room', () => {
     expect(
       screen.getByRole('group', { name: 'Maya’s board' }),
     ).toBeInTheDocument();
-    await user.click(screen.getByRole('tab', { name: 'Board' }));
+    await user.click(screen.getByRole('tab', { name: 'Game' }));
     // The tab keeps the focus; the word typed after it is still the word.
     await user.keyboard('te{Enter}');
     expect(

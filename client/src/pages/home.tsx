@@ -3,6 +3,7 @@ import { HeroArt } from '../games/hero-art';
 import { useMessages } from '../i18n';
 import { Page } from '../shell/page';
 import { PageHeading } from '../shell/page-heading';
+import { usePageTitle } from '../shell/use-page-title';
 import { PHONE, SHORT_SCREEN, useMediaQuery } from '../shell/use-media-query';
 import styles from './home.module.css';
 
@@ -12,6 +13,7 @@ import styles from './home.module.css';
  */
 export default function HomePage() {
   const m = useMessages();
+  usePageTitle();
   // A phone keeps shorter copy, so the games show sooner, and so does a
   // phone on its side.
   const phone = useMediaQuery(PHONE);

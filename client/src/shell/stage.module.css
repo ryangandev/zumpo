@@ -6,6 +6,10 @@
   padding: var(--zumpo-space-56) 0;
 }
 
+.top {
+  align-items: flex-start;
+}
+
 @media (max-width: 640px) {
   .stage {
     align-items: flex-start;

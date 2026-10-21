@@ -226,6 +226,10 @@ Code differs from Figma on purpose in a few places:
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
+- Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
+- The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
+- A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
+- The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
 - The drawer's word-choice clock is Running, as the Countdown's own rule says of a phase you act in; D04 and MO07 keep the Status turn bar's default Waiting tone.
 - The header marks the page you are on; Figma draws Games as current on every screen.
@@ -267,7 +271,7 @@ Code differs from Figma on purpose in a few places:
   The home page's hero takes MO01's shorter copy and Title-size heading there too, so the whole of it and the game filters are in the first screen.
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A game on your own on a window 800 px tall or less takes the Turn bar's Phone row too, with 16 px around the page and 12 px between the turn bar and the board, and Daily Word's keyboard and Code Breaker's pad stand beside the board from 1240 px wide; Figma draws no window that short yet, and the frames for it wait on the bridge.
-- A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
+- A phone's Game tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - Games on your own start at once and end beside the board (#105, #86, #107), which the Figma file does not draw yet: the bridge was down when the change was made, so its scripts wait to be run.
   T01, TS01 and SN01 are start screens no state shows; MS01, PR01, LD01 and GM02 are start pages that code shows as the Change dialog over a finished game.

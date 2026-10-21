@@ -65,7 +65,8 @@ export const make24: typeof en = {
     notYet: '暂无',
     runComplete: '本轮完成',
     solvedOf: (solved, hands) => `解出 ${solved} 题，共 ${hands} 题`,
-    finishedIn: (hands, time) => `${time} 完成 ${hands} 题。`,
+    runResult: (solved, hands, time) =>
+      `${time} 内解出 ${solved} 题，共 ${hands} 题。`,
     skipped: '已跳过',
     skippedPenalty: (skipped, time) => `${skipped} 题，+${time}`,
     fastestHand: '最快一题',
