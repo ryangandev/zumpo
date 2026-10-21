@@ -10,7 +10,7 @@ export const lobby: typeof en = {
   watching: (count) => `${count} 人观战`,
   howToPlay: '玩法',
   createRoom: '创建房间',
-  emptyTitle: '这里还很安静。',
+  emptyTitle: '还没有房间。',
   emptyDescription: '创建第一个房间，叫上好友一起玩。',
   loadingTitle: '正在寻找玩伴…',
   loadingDescription: '正在连接房间列表。',

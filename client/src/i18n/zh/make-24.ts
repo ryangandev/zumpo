@@ -74,7 +74,7 @@ export const make24: typeof en = {
     yourBestOnDevice: '你的本机最佳成绩',
     notYet: '暂无',
     runComplete: '本轮完成',
-    finishedIn: (hands, time) => `${hands} 题，用时 ${time}。`,
+    finishedIn: (hands, time) => `${time} 完成 ${hands} 题。`,
     skipped: '已跳过',
     skippedPenalty: (skipped, time) => `${skipped} 题，+${time}`,
     fastestHand: '最快一题',
