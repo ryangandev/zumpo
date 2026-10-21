@@ -128,6 +128,19 @@
     'main main main clock';
 }
 
+/* Without the label (labelOnPhone), the meta has the first line to itself. */
+.phone .unlabelled {
+  grid-template-areas:
+    'tag meta meta clock'
+    'main main main clock';
+}
+
+.phone .untagged.unlabelled {
+  grid-template-areas:
+    'meta meta meta clock'
+    'main main main clock';
+}
+
 .phone .answer {
   display: contents;
 }

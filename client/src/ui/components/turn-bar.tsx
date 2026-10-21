@@ -31,6 +31,13 @@ export interface TurnBarProps {
   meta?: string;
   /** Hidden while nothing is timed, such as everyone locked in before a reveal. */
   countdown?: CountdownProps;
+  /**
+   * False where the page already names what the label says, such as a game
+   * on your own under its room bar: on a phone's width the Phone variant
+   * leaves the label out, so the meta has the whole first line. A short
+   * window wider than that has the room, and keeps it.
+   */
+  labelOnPhone?: boolean;
   className?: string;
 }
 
@@ -51,11 +58,13 @@ export function TurnBar({
   main,
   meta,
   countdown,
+  labelOnPhone = true,
   className,
 }: TurnBarProps) {
   const m = useMessages();
   const box = useRef<HTMLDivElement>(null);
-  const phone = usePhoneRow(box);
+  const { phone, narrow } = usePhoneRow(box);
+  const labelled = labelOnPhone || !narrow;
   return (
     <div
       ref={box}
@@ -66,11 +75,12 @@ export function TurnBar({
           styles.bar,
           category == null && styles.untagged,
           category == null && !countdown && styles.topless,
+          !labelled && styles.unlabelled,
         )}
         aria-label={m.ui.turn}
       >
         {category != null && <Tag className={styles.tag}>{category}</Tag>}
-        <span className={styles.label}>{label}</span>
+        {labelled && <span className={styles.label}>{label}</span>}
         <div className={styles.answer} aria-live="polite">
           <Fit align="start" className={styles.mainBox}>
             <span className={cx(styles.main, styles[kind])}>{main}</span>
@@ -98,7 +108,10 @@ const PHONE_WIDTH = 560;
  * screen, or where the page asks for it. Measured before the first paint, so
  * it never shows the other.
  */
-function usePhoneRow(box: RefObject<HTMLElement | null>): boolean {
+function usePhoneRow(box: RefObject<HTMLElement | null>): {
+  phone: boolean;
+  narrow: boolean;
+} {
   const short = useMediaQuery(SHORT_SCREEN);
   const asked = useContext(CompactTurnBar);
   const [narrow, setNarrow] = useState(false);
@@ -114,5 +127,5 @@ function usePhoneRow(box: RefObject<HTMLElement | null>): boolean {
     observer.observe(element);
     return () => observer.disconnect();
   }, [box]);
-  return short || asked || narrow;
+  return { phone: short || asked || narrow, narrow };
 }
