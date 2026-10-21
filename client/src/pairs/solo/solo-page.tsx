@@ -202,9 +202,10 @@ function SoloGameView({
   // Each miss is its own pair of places, so the next one starts its own wait.
   const miss = isShowingMiss(game) ? game.up : null;
 
-  // Two cards that do not match stay up a moment, unless another is flipped.
+  // Two cards that do not match stay up a moment, unless another is flipped,
+  // and a moment of the clock: How to play holds them up until it closes.
   useEffect(() => {
-    if (!miss) return;
+    if (!miss || clock.paused) return;
     const timer = setTimeout(
       () =>
         setGame((current) =>
@@ -213,7 +214,7 @@ function SoloGameView({
       MISS_SHOWN_MS,
     );
     return () => clearTimeout(timer);
-  }, [miss]);
+  }, [miss, clock.paused]);
 
   const play = (index: number) => {
     const next = flip(game, index, clock.now());
