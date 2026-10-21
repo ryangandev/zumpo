@@ -335,6 +335,22 @@ describe('a game’s page', () => {
     expect(router.state.location.pathname).toBe('/games/minesweeper/rooms/r1');
   });
 
+  it('names a room after its host, saying the host once', async () => {
+    const { fake } = await renderApp('/games/minesweeper');
+    act(() =>
+      fake.serverEmits('lobby:rooms', 'minesweeper', [
+        { ...lobbyRoom, roomName: '' },
+        { ...lobbyRoom, roomId: 'r2' },
+      ]),
+    );
+    const named = screen.getByRole('article', { name: 'Maya’s room' });
+    expect(within(named).getByText('Small 9 × 9')).toBeInTheDocument();
+    const typed = screen.getByRole('article', { name: 'Friday table' });
+    expect(
+      within(typed).getByText('Hosted by Maya · Small 9 × 9'),
+    ).toBeInTheDocument();
+  });
+
   it('ignores another game’s rooms', async () => {
     const { fake } = await renderApp('/games/minesweeper');
     act(() => fake.serverEmits('lobby:rooms', 'draw-and-guess', []));
@@ -463,6 +479,19 @@ describe('making a room', () => {
             settings: { trios: 20 },
           }),
         ],
+      }),
+    );
+  });
+
+  it('names a room after its host while the suggested name is kept', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderApp('/games/snap/new');
+    expect(screen.getByLabelText('Room name')).toHaveValue('Ryan’s room');
+    await user.click(screen.getByRole('button', { name: 'Create room' }));
+    await waitFor(() =>
+      expect(fake.requests).toContainEqual({
+        event: 'room:create',
+        args: [expect.objectContaining({ roomName: '' })],
       }),
     );
   });

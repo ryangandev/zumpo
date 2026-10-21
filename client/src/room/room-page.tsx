@@ -36,6 +36,7 @@ import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { LobbyHeading, lobbyHeading } from '../pages/lobby-heading';
 import { Confetti } from './confetti';
 import { InviteDialog, LeaveDialog } from './dialogs';
+import { roomNameOf } from './players';
 import { RoomContext, type Room } from './room-context';
 
 // Daily Word brings its word lists, so it loads only when played.
@@ -211,7 +212,8 @@ function PasswordPage({
   }, [rejected, pending]);
   // The lobby knows the room's name; a link alone does not.
   const rooms = useLobby(gameType);
-  const roomName = rooms?.find((room) => room.roomId === roomId)?.roomName;
+  const room = rooms?.find((candidate) => candidate.roomId === roomId);
+  const roomName = room && roomNameOf(room, m);
   const description = m.room.passwordDescription(roomName);
 
   return (
@@ -461,12 +463,12 @@ function SeatedRoom({
       <InviteDialog
         open={inviting}
         onOpenChange={setInviting}
-        roomName={state.roomName}
+        roomName={roomNameOf(state, m)}
         link={`${window.location.origin}${roomPath(state.gameType, state.roomId)}`}
       />
       <LeaveDialog
         open={blocked && !sure}
-        roomName={state.roomName}
+        roomName={roomNameOf(state, m)}
         inGame={state.isGameStarted}
         spectating={room.spectating}
         score={scoreOf(m, state.gameType, room.me.points)}

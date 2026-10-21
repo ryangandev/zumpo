@@ -37,6 +37,7 @@ interface RoomChat {
 interface Room<TGameState = unknown> {
   gameType: GameType;
   roomId: string;
+  /** '' while the room goes by its host's name, which each client words. */
   roomName: string;
   owner: OwnerInfo;
   maxPlayers: number;

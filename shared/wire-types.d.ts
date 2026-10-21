@@ -147,6 +147,10 @@ type Result<T extends object = object> =
  */
 interface RoomCreateRequest {
   gameType: GameType;
+  /**
+   * '' names the room after its host, so the name follows the crown: each
+   * client words it, as "Ben's room" once Ben hosts.
+   */
   roomName: string;
   username: string;
   maxPlayers: number;
@@ -234,6 +238,7 @@ interface CodeBreakerSettings {
 interface LobbyRoomInfo {
   gameType: GameType;
   roomId: string;
+  /** '' for a room named after its host, `owner`, as the client words it. */
   roomName: string;
   owner: OwnerInfo;
   status: RoomStatus;

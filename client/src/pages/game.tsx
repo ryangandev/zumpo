@@ -10,10 +10,11 @@ import {
 } from '../games/catalog';
 import { GameIntro } from '../games/game-intro';
 import { roomSetting } from '../games/room-setting';
-import { useMessages } from '../i18n';
+import { useMessages, type Messages } from '../i18n';
 import { useLobby } from '../net/use-lobby';
 import { useSession } from '../net/session';
 import { initialsOf, toneOf } from '../players/avatar';
+import { roomNameOf } from '../room/players';
 import { ConnectionLost } from '../shell/connection-lost';
 import { NameMenuButton } from '../shell/name-menu';
 import { Page } from '../shell/page';
@@ -70,6 +71,16 @@ function statusOf(room: AnyLobbyRoomInfo): RoomRowStatus {
   return room.hasPassword ? 'private' : 'open';
 }
 
+/**
+ * Who hosts a room and how it is set up; a room named after its host says
+ * the host once, in its name.
+ */
+function details(room: AnyLobbyRoomInfo, m: Messages): string {
+  const setting = roomSetting(room, m);
+  if (room.roomName === '' && setting) return setting;
+  return m.lobby.hostedBy(room.owner.username, setting);
+}
+
 function RoomList({ rooms }: { rooms: AnyLobbyRoomInfo[] }) {
   const navigate = useNavigate();
   const m = useMessages();
@@ -79,11 +90,8 @@ function RoomList({ rooms }: { rooms: AnyLobbyRoomInfo[] }) {
         {rooms.map((room) => (
           <RoomRow
             key={room.roomId}
-            name={room.roomName}
-            details={m.lobby.hostedBy(
-              room.owner.username,
-              roomSetting(room, m),
-            )}
+            name={roomNameOf(room, m)}
+            details={details(room, m)}
             host={{
               initials: initialsOf(room.owner.username),
               tone: toneOf(room.owner.username),

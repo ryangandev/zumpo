@@ -19,7 +19,7 @@ import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { RulesDialog } from './dialogs';
 import { RoomChat } from './room-chat';
 import { useRoomContext } from './room-context';
-import type { Seat } from './players';
+import { roomNameOf, type Seat } from './players';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -156,7 +156,7 @@ export function RoomLayout({
         <RoomBar
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[state.gameType].name}
-          room={state.roomName}
+          room={roomNameOf(state, m)}
           phase={phase}
           onHowToPlay={() => setRules(true)}
           onLeave={reconnecting ? undefined : room.leave}
@@ -167,7 +167,7 @@ export function RoomLayout({
     >
       {reconnecting ? (
         <Notice tone="pending">
-          {m.room.reconnectingNotice(state.roomName, seconds)}
+          {m.room.reconnectingNotice(roomNameOf(state, m), seconds)}
         </Notice>
       ) : (
         <>

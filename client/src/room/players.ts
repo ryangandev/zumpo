@@ -25,6 +25,17 @@ export function placesOf(standings: readonly { points: number }[]): number[] {
   );
 }
 
+/**
+ * A room's name: the one its creator typed, or for a room that kept the
+ * suggested one, its host's, so it follows the crown ("Ben's room").
+ */
+export function roomNameOf(
+  room: { roomName: string; owner: { username: string } },
+  m: Messages,
+): string {
+  return room.roomName || m.createRoom.defaultName(room.owner.username);
+}
+
 /** "Ryan", "Ryan and Maya", "Ryan, Maya and Sam". */
 export function listNames(names: readonly string[], m: Messages): string {
   return m.room.listNames(names);
