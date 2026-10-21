@@ -67,6 +67,8 @@ Everything before the third pick is yours alone and never leaves your screen.
 Three cards that are not a trio are told why, by the first feature that breaks it, in the order colour, shape, count, fill: "Two are striped and one is solid."
 A feature breaks a trio when exactly two of the three cards share it.
 
+A card a hint marks, on your own or in a room, is ringed in lime with a Hint tag, and the turn bar says what is marked and what is left to find: "One card of a trio is marked, find the two that go with it".
+
 The table never moves while you look.
 On a narrow screen the turn bar sits above it, so the bar keeps one height through every phase: a clock is always in its top row, and it keeps room for two lines of what it says, the most any phase needs (three on the narrowest phones).
 
@@ -81,7 +83,7 @@ Ten is about two minutes for somebody who knows the game and four for somebody l
   Why they were not a trio stays in the turn bar until the next pick or hint, so it can be read after the cards go back.
   A wrong pick costs time, never a trio, so a run always ends at ten.
 - **Hint** marks one card of a trio on the table, and **10 seconds** go on the clock.
-  A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered.
+  A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered, though its place under the table is kept so the table never moves.
   Hints are cleared when a trio is taken.
 - After the tenth trio: the run time, the wrong picks and hints with what they cost, the fastest trio, and every trio you found with its time.
 - **The quicker run time is better.**

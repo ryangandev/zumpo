@@ -177,8 +177,18 @@ describe('Trios on your own', () => {
     await startRun();
     await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
     expect(table().getAllByRole('button', { name: /, hint$/ })).toHaveLength(1);
+    expect(
+      turn().getByText('One card of a trio is marked'),
+    ).toBeInTheDocument();
+    expect(
+      turn().getByText('Find the two that go with it'),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
     expect(table().getAllByRole('button', { name: /, hint$/ })).toHaveLength(2);
+    expect(
+      turn().getByText('Two cards of a trio are marked'),
+    ).toBeInTheDocument();
+    expect(turn().getByText('Find the third card')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Hint, +10 s' })).toBeNull();
     expect(turn().getByRole('timer')).toHaveTextContent(/^00:2[0-1]/);
   });

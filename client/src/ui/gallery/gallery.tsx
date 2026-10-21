@@ -137,6 +137,7 @@ const TRIOS_SPECIMENS = [
   [0, 1],
   [80, 3],
   [41, 2],
+  [62, 3],
 ] as const;
 
 const cap = (word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
@@ -1075,8 +1076,16 @@ export default function Gallery() {
       <Family name="Trios card" file="trios-card">
         {(
           [
-            ['regular', 'Regular', ['Default', 'Selected', 'Found', 'Wrong']],
-            ['compact', 'Compact', ['Default', 'Selected', 'Found', 'Wrong']],
+            [
+              'regular',
+              'Regular',
+              ['Default', 'Selected', 'Found', 'Wrong', 'Hinted'],
+            ],
+            [
+              'compact',
+              'Compact',
+              ['Default', 'Selected', 'Found', 'Wrong', 'Hinted'],
+            ],
             ['mini', 'Mini', ['Default', 'Found']],
           ] as const
         ).map(([cardSize, sizeName, states]) => (
@@ -1098,17 +1107,14 @@ export default function Gallery() {
                     badge={
                       state === 'Found' && cardSize !== 'mini'
                         ? 'MA'
-                        : undefined
+                        : state === 'Hinted'
+                          ? 'Hint'
+                          : undefined
                     }
                   />
                 </Specimen>
               );
             })}
-            {cardSize !== 'mini' && (
-              <Specimen label={`Hinted, ${sizeName}`}>
-                <TriosCard card={62} size={cardSize} badge="Hint" />
-              </Specimen>
-            )}
           </div>
         ))}
       </Family>

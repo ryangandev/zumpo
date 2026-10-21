@@ -71,7 +71,7 @@ export const trios = {
       `A friend sent you this deal. ${rule}`,
     title: 'Ten trios, one clock.',
     start: 'Start',
-    example: 'A trio: every feature differs.',
+    example: 'A trio: the same colour; shape, count and fill all different.',
     trios: 'Trios',
     yourBest: 'Your best on this device',
     notYet: 'Not yet',

@@ -11,7 +11,9 @@ export type TriosCardState =
   /** Part of a trio just taken. */
   | 'found'
   /** Part of three that were not a trio. */
-  | 'wrong';
+  | 'wrong'
+  /** A card of a trio a hint gave away; its Hint badge names it. */
+  | 'hinted';
 
 export type TriosCardSize = 'regular' | 'compact' | 'mini';
 

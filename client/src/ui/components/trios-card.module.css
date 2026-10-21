@@ -55,6 +55,19 @@
     inset 0 0 0 3px var(--zumpo-danger);
 }
 
+/* Hinted: a lime ring, as a highlighter would mark it, and a lime badge. */
+.hinted {
+  box-shadow:
+    var(--zumpo-shadow-cell-edge),
+    inset 0 0 0 4px var(--zumpo-lime);
+}
+
+.compact.hinted {
+  box-shadow:
+    var(--zumpo-shadow-cell-edge),
+    inset 0 0 0 3px var(--zumpo-lime);
+}
+
 /* "Hint", or the finder's initials, on the top right corner. */
 .badge {
   position: absolute;
@@ -77,18 +90,36 @@
   background: var(--zumpo-green);
 }
 
+.hinted .badge {
+  background: var(--zumpo-lime);
+  color: var(--zumpo-ink);
+}
+
 .button {
   cursor: pointer;
   touch-action: manipulation;
 }
 
-/* Only where there is a pointer to hover with: on a touch screen the hover
-   sticks after a tap, and a card just put back would still look picked. */
+/* Hover lifts the card without an outline, so a card under the pointer never
+   looks picked, even just after three went back. Only where there is a
+   pointer to hover with: on a touch screen the hover sticks after a tap. */
 @media (hover: hover) {
-  .button:hover:not(:disabled, .selected, .found, .wrong) {
+  .button:hover:not(:disabled, .selected, .found, .wrong, .hinted) {
     box-shadow:
-      var(--zumpo-shadow-cell-edge),
-      inset 0 0 0 2px var(--zumpo-ink);
+      var(--zumpo-shadow-paper-lift),
+      inset 0 0 0 1px var(--zumpo-line);
+  }
+
+  .button.hinted:hover:not(:disabled) {
+    box-shadow:
+      var(--zumpo-shadow-paper-lift),
+      inset 0 0 0 4px var(--zumpo-lime);
+  }
+
+  .button.compact.hinted:hover:not(:disabled) {
+    box-shadow:
+      var(--zumpo-shadow-paper-lift),
+      inset 0 0 0 3px var(--zumpo-lime);
   }
 }
 

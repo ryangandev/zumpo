@@ -69,7 +69,7 @@ export const trios: typeof en = {
     challengeDescription: (rule) => `朋友发来了这副牌。${rule}`,
     title: '找 10 组，看你多快。',
     start: '开始',
-    example: '这是一组：每个特征都不同。',
+    example: '这是一组：颜色相同；形状、数量和填充都不同。',
     trios: '组数',
     yourBest: '你的本机最佳成绩',
     notYet: '暂无',
