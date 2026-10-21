@@ -102,6 +102,10 @@ describe('a run on your own', () => {
     run = afterFlash(run, 4600);
     expect(run.flash).toBeNull();
     expect(canPick(run)).toBe(true);
+    // The miss is kept until the next pick, so its reason can be read.
+    expect(run.miss).toEqual(wrong.map((p) => run.deal.table[p]));
+    expect(pick(run, 0, 5000).miss).toBeNull();
+    expect(hint(run).miss).toBeNull();
 
     run = findOne(run, 10_000);
     expect(run.results[0]).toMatchObject({

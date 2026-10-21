@@ -91,6 +91,7 @@ Thirty is about a minute and a half for somebody quick, and three minutes for so
 - The start screen shows the run and your best; the cards are dealt and the **run time** starts on Start, so nobody studies the first card before the clock runs.
 - **A match** shows on both cards for a moment (0.5 s, off the clock); then the middle card becomes your card, and the next card comes up.
 - **Not a match:** the symbol shows as wrong for a moment (0.6 s), and **3 seconds** go on the clock.
+  Which card the symbol is on stays in the turn bar until the next tap.
   Guessing among six symbols costs about 7.5 seconds a card, so looking is always faster.
 - After the thirtieth card: the run time, the wrong taps with what they cost, the fastest card and the slowest card.
 - **The quicker run time is better.**

@@ -61,6 +61,11 @@ export interface SoloRun {
   /** When the open trio began; null while a found trio is up and after the last. */
   trioStartedAt: number | null;
   flash: Flash | null;
+  /**
+   * The last three that were not a trio, until the next pick or hint, so
+   * why they were not one stays readable after they go back.
+   */
+  miss: readonly number[] | null;
 }
 
 /**
@@ -83,6 +88,7 @@ export function newRun(seed: string, now: number): SoloRun {
     bankedMs: 0,
     trioStartedAt: now,
     flash: null,
+    miss: null,
   };
 }
 
@@ -119,10 +125,14 @@ export const runTime = (run: SoloRun, now: number) =>
 export function pick(run: SoloRun, place: number, now: number): SoloRun {
   if (!canPick(run)) return run;
   if (run.picked.includes(place)) {
-    return { ...run, picked: run.picked.filter((p) => p !== place) };
+    return {
+      ...run,
+      picked: run.picked.filter((p) => p !== place),
+      miss: null,
+    };
   }
   const picked = [...run.picked, place];
-  if (picked.length < 3) return { ...run, picked };
+  if (picked.length < 3) return { ...run, picked, miss: null };
 
   const cards = picked.map((p) => itemAt(run.deal.table, p));
   const [a, b, c] = [itemAt(cards, 0), itemAt(cards, 1), itemAt(cards, 2)];
@@ -132,12 +142,14 @@ export function pick(run: SoloRun, place: number, now: number): SoloRun {
       picked: [],
       wrongPicks: run.wrongPicks + 1,
       flash: { found: false, places: picked, feature: brokenFeature(a, b, c) },
+      miss: cards,
     };
   }
   const ms = runTime(run, now) - run.bankedMs;
   return {
     ...run,
     picked: [],
+    miss: null,
     results: [
       ...run.results,
       { cards, ms, wrongPicks: run.wrongPicks, hints: run.hints },
@@ -193,7 +205,7 @@ export function hint(run: SoloRun): SoloRun {
       random,
     );
   }
-  return { ...run, hintTrio, hints: run.hints + 1 };
+  return { ...run, hintTrio, hints: run.hints + 1, miss: null };
 }
 
 /** The places the hints have marked. */

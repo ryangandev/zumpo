@@ -1,4 +1,3 @@
-import { itemAt } from '../../../../shared/list';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'react-router';
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
@@ -384,15 +383,13 @@ function turnBar(
       meta: m.trios.solo.foundIn(formatDuration(last.ms)),
     };
   }
-  if (flash) {
+  // Why three were not a trio stays until the next pick, long after they
+  // go back, so it can be read.
+  if (run.miss) {
     return {
       ...base,
       main: m.trios.solo.wrong,
-      meta:
-        whyNotATrio(
-          flash.places.map((place) => itemAt(run.deal.table, place)),
-          m,
-        ) ?? undefined,
+      meta: whyNotATrio(run.miss, m) ?? undefined,
     };
   }
   return {

@@ -78,6 +78,7 @@ Ten is about two minutes for somebody who knows the game and four for somebody l
 - The start screen shows the run and your best; the table is dealt and the **run time** starts on Start, so nobody studies the table before the clock runs.
 - **A trio** shows as found for a moment (0.6 s, off the clock), then three new cards are dealt into its places, and the next trio begins.
 - **Not a trio:** the three cards show as wrong for a moment (0.6 s) and are put back, and **5 seconds** go on the clock.
+  Why they were not a trio stays in the turn bar until the next pick or hint, so it can be read after the cards go back.
   A wrong pick costs time, never a trio, so a run always ends at ten.
 - **Hint** marks one card of a trio on the table, and **10 seconds** go on the clock.
   A second hint marks a second card of the same trio, for 10 more; after that the third card is yours to find, and Hint is not offered.

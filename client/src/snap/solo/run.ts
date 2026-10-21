@@ -48,6 +48,11 @@ export interface SoloRun {
   /** When the open card was turned; null while a match is up and after the last. */
   cardStartedAt: number | null;
   flash: Flash | null;
+  /**
+   * The last wrong tap, until the next tap, so which card its symbol is on
+   * stays readable after its mark goes.
+   */
+  miss: { symbol: number; on: 'mine' | 'middle' } | null;
 }
 
 export function newRun(seed: string, now: number): SoloRun {
@@ -61,6 +66,7 @@ export function newRun(seed: string, now: number): SoloRun {
     bankedMs: 0,
     cardStartedAt: now,
     flash: null,
+    miss: null,
   };
 }
 
@@ -113,6 +119,7 @@ export function tap(run: SoloRun, symbol: number, now: number): SoloRun {
       ...run,
       wrongTaps: run.wrongTaps + 1,
       flash: { match: false, symbol, on: judged },
+      miss: { symbol, on: judged },
     };
   }
   const ms = runTime(run, now) - run.bankedMs;
@@ -122,6 +129,7 @@ export function tap(run: SoloRun, symbol: number, now: number): SoloRun {
     bankedMs: run.bankedMs + ms,
     cardStartedAt: null,
     flash: { match: true, symbol },
+    miss: null,
   };
 }
 

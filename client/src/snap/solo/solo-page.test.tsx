@@ -125,9 +125,24 @@ describe('Snap on your own', () => {
       }),
     ).toBeInTheDocument();
 
+    // The mark goes, but which card the symbol is on stays until the next tap.
     await pause(WRONG_FLASH_MS);
-    expect(turn().getByText('Spot the match')).toBeInTheDocument();
+    expect(
+      card('Middle card').queryByRole('button', { name: /, not a match$/ }),
+    ).toBeNull();
+    expect(turn().getByText('Not a match, +3 s')).toBeInTheDocument();
+    expect(
+      turn().getByText(en.snap.onlyOn(wrong, 'middle')),
+    ).toBeInTheDocument();
     expect(screen.getByText('1, +0:03')).toBeInTheDocument();
+    await user.click(
+      card('Middle card').getByRole('button', {
+        name: nameOf(matchNow(model)!),
+      }),
+    );
+    expect(turn().getByText('A match!')).toBeInTheDocument();
+    await pause(MATCH_FLASH_MS);
+    expect(turn().getByText('Spot the match')).toBeInTheDocument();
   });
 
   it('counts a taken card’s wrong tap once while the match is up', async () => {

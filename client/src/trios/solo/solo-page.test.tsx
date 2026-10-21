@@ -140,9 +140,16 @@ describe('Trios on your own', () => {
       table().getByRole('img', { name: `${cardName(t[0]!)}, not a trio` }),
     ).toBeInTheDocument();
 
+    // The cards go back, but why they were not a trio stays until the next pick.
     await pause(FLASH_MS);
-    expect(turn().getByText('Find a trio')).toBeInTheDocument();
+    expect(table().queryByRole('button', { name: /, not a trio$/ })).toBeNull();
+    expect(turn().getByText('Not a trio, +5 s')).toBeInTheDocument();
+    expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
     expect(screen.getByText('1, +0:05')).toBeInTheDocument();
+    await pause(5000);
+    expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
+    await pickPlaces([0]);
+    expect(turn().getByText('Pick two more')).toBeInTheDocument();
   });
 
   it('counts a found trio’s wrong pick and hints once while it is up', async () => {

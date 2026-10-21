@@ -64,6 +64,9 @@ describe('a run of Snap on your own', () => {
     run = afterFlash(run, 1_600);
     expect(run.results).toEqual([]);
     expect(canTap(run)).toBe(true);
+    // The miss is kept until the next tap, so its reason can be read.
+    expect(run.miss).toEqual({ symbol: wrong, on: 'mine' });
+    expect(tap(run, matchNow(run)!, 1_700).miss).toBeNull();
     run = tap(run, matchNow(run)!, 2_000);
     expect(run.results).toEqual([
       { ms: 2_000 + WRONG_PENALTY_MS, wrongTaps: 1 },
