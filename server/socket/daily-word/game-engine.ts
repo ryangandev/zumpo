@@ -232,7 +232,9 @@ const createDailyWordGameEngine = (
 
   /** Called after the seat is already gone from `playerList`. */
   const handlePlayerDeparture = (room: DailyWordRoom, playerId: string) => {
-    room.game.boards.delete(playerId);
+    // The board stays until the round ends: one who has found the word could
+    // otherwise leave, come back to watch, and say it. Nothing else reads a
+    // board for somebody no longer seated.
     room.game.found.delete(playerId);
 
     if (!room.isGameStarted) return;

@@ -235,7 +235,9 @@ const createCodeBreakerGameEngine = (
 
   /** Called after the seat is already gone from `playerList`. */
   const handlePlayerDeparture = (room: CodeBreakerRoom, playerId: string) => {
-    room.game.boards.delete(playerId);
+    // The board stays until the round ends: one who has cracked the code could
+    // otherwise leave, come back to watch, and say it. Nothing else reads a
+    // board for somebody no longer seated.
     room.game.cracked.delete(playerId);
 
     if (!room.isGameStarted) return;

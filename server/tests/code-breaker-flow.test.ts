@@ -10,7 +10,6 @@ import {
   playToFirstCode,
   request,
   settle,
-  startGame,
   startTestServer,
   waitForChat,
   waitForCodeBreakerState,
@@ -429,22 +428,11 @@ describe('leaving mid-game', () => {
     await harness.teardown();
   });
 
-  /** Seats Alice, Bob and Carol and opens the first code. */
   const playThreeToFirstCode = async () => {
-    const alice = await harness.connect();
-    const bob = await harness.connect();
-    const carol = await harness.connect();
-    const roomId = await createCodeBreakerRoom(alice, { username: 'Alice' });
-    await joinRoom(bob, roomId, 'Bob');
-    await joinRoom(carol, roomId, 'Carol');
-    const round = waitForCodeBreakerState(
-      alice,
-      (s) => s.phase === 'guessing' && s.round === 1,
-      5000,
-    );
-    await startGame(alice, roomId);
-    await round;
-    return { roomId, alice, bob, carol };
+    const { carol, ...rest } = await playToFirstCode(harness, 3, {
+      carol: true,
+    });
+    return { ...rest, carol: carol! };
   };
 
   it('ends the round early when the one still guessing leaves', async () => {
@@ -471,6 +459,30 @@ describe('leaving mid-game', () => {
       5000,
     );
     expect(Object.keys(next.playerList)).not.toContain(carol.playerId);
+  });
+
+  it('keeps a cracker who leaves and comes back to watch out of the chat', async () => {
+    const { roomId, alice, bob } = await playThreeToFirstCode();
+    await guess(alice, roomId, codeOf(harness, roomId));
+    alice.emit('room:leave', roomId);
+    const watching = waitForCodeBreakerState(
+      alice,
+      (s) => alice.playerId in s.spectators,
+    );
+    await joinRoom(alice, roomId, 'Alice');
+    await watching;
+
+    const bobHears = collectChat(bob);
+    alice.emit('chat:send', roomId, 'it starts with');
+    await settle();
+    expect(bobHears.filter((m) => m.kind === 'player')).toEqual([]);
+
+    // Once the code is out, they may talk again.
+    await missEveryGuess(bob, roomId, codeOf(harness, roomId));
+    await waitForCodeBreakerState(alice, (s) => s.phase === 'reveal');
+    const heard = waitForChat(bob, (m) => m.kind === 'player');
+    alice.emit('chat:send', roomId, 'nice');
+    expect(textOf(await heard)).toBe('nice');
   });
 
   it('goes on to the next code when one of three leaves during the reveal', async () => {
@@ -507,18 +519,7 @@ describe('leaving mid-game', () => {
   });
 
   it('ends the game, with the code just revealed counted, when one of two leaves during the reveal', async () => {
-    const alice = await harness.connect();
-    const bob = await harness.connect();
-    const roomId = await createCodeBreakerRoom(alice, { username: 'Alice' });
-    await joinRoom(bob, roomId, 'Bob');
-    const round = waitForCodeBreakerState(
-      alice,
-      (s) => s.phase === 'guessing' && s.round === 1,
-      5000,
-    );
-    await startGame(alice, roomId);
-    await round;
-
+    const { roomId, alice, bob } = await playToFirstCode(harness);
     const code = codeOf(harness, roomId);
     const reveal = waitForCodeBreakerState(alice, (s) => s.phase === 'reveal');
     await guess(alice, roomId, code);

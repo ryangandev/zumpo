@@ -195,6 +195,7 @@ The chat says when somebody cracks the code ("Maya cracked it in 5! (+633)"), wh
   The server marks it; the client never sends marks.
 - **A player who has cracked the code cannot chat until the round ends,** because they could type it.
   A player who is out of guesses does not know the code and can talk.
+  Leaving and coming back to watch does not open it early.
 - **The deal, the clock and the score are the server's.**
 - **Only the room owner may start a game**, and only with two or more players.
 

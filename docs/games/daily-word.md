@@ -177,6 +177,7 @@ The chat says when somebody finds the word ("Maya got it in 3! (+431)"), what th
   The server marks it; the client never sends marks.
 - **A player who has found the word cannot chat until the round ends,** because they could type it.
   A player who is out of guesses does not know the word and can talk.
+  Leaving and coming back to watch does not open it early.
 - **The deal, the clock and the score are the server's.**
 - **Only the room owner may start a game**, and only with two or more players.
 

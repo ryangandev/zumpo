@@ -935,16 +935,22 @@ const dailyWordRoom = (
 ): Room<DailyWordState> =>
   harness.server.rooms.get(roomId) as Room<DailyWordState>;
 
-/** Seats Alice and Bob in a Daily Word room and opens the first word. */
-const playToFirstWord = async (harness: TestServer, rounds = 3) => {
+/** Seats Alice and Bob, and Carol if asked, in a Daily Word room and opens the first word. */
+const playToFirstWord = async (
+  harness: TestServer,
+  rounds = 3,
+  { carol = false }: { carol?: boolean } = {},
+) => {
   const alice = await harness.connect();
   const bob = await harness.connect();
+  const third = carol ? await harness.connect() : null;
 
   const roomId = await createDailyWordRoom(alice, {
     username: 'Alice',
     rounds,
   });
   await joinRoom(bob, roomId, 'Bob');
+  if (third) await joinRoom(third, roomId, 'Carol');
 
   const round = waitForDailyWordState(
     alice,
@@ -954,7 +960,7 @@ const playToFirstWord = async (harness: TestServer, rounds = 3) => {
   await startGame(alice, roomId);
   const first = await round;
 
-  return { roomId, alice, bob, first };
+  return { roomId, alice, bob, carol: third, first };
 };
 
 /** Creates a Code Breaker room, with its creator seated, and returns its id. */
@@ -985,16 +991,22 @@ const codeBreakerRoom = (
 ): Room<CodeBreakerState> =>
   harness.server.rooms.get(roomId) as Room<CodeBreakerState>;
 
-/** Seats Alice and Bob in a Code Breaker room and opens the first code. */
-const playToFirstCode = async (harness: TestServer, rounds = 3) => {
+/** Seats Alice and Bob, and Carol if asked, in a Code Breaker room and opens the first code. */
+const playToFirstCode = async (
+  harness: TestServer,
+  rounds = 3,
+  { carol = false }: { carol?: boolean } = {},
+) => {
   const alice = await harness.connect();
   const bob = await harness.connect();
+  const third = carol ? await harness.connect() : null;
 
   const roomId = await createCodeBreakerRoom(alice, {
     username: 'Alice',
     rounds,
   });
   await joinRoom(bob, roomId, 'Bob');
+  if (third) await joinRoom(third, roomId, 'Carol');
 
   const round = waitForCodeBreakerState(
     alice,
@@ -1004,7 +1016,7 @@ const playToFirstCode = async (harness: TestServer, rounds = 3) => {
   await startGame(alice, roomId);
   const first = await round;
 
-  return { roomId, alice, bob, first };
+  return { roomId, alice, bob, carol: third, first };
 };
 
 /** Seats two players in a Minesweeper room and opens the first round. */
