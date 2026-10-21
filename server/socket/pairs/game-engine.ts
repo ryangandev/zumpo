@@ -1,6 +1,6 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type { PairsSettings } from '../../models/types.js';
-import { seatCount, seatOf } from '../../libs/rooms/seats.js';
+import { seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
@@ -159,7 +159,10 @@ const createPairsGameEngine = (
   const handlePlayerDeparture = (room: PairsRoom, playerId: string) => {
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['pairs'].min) {
+    if (
+      departureFrom({ gameType: 'pairs', seats: room.playerList }).kind ===
+      'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;

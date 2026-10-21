@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import { heirOf } from '../../../shared/room';
+import { departureFrom, heirOf } from '../../../shared/room';
 import type { AnyRoomState } from '../../../shared/wire-types';
 import { Button, Dialog, DialogClose, TextField } from '../ui';
-import { gameInfo, scoreOf, type GameInfo } from '../games/catalog';
+import { scoreOf, type GameInfo } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
 import { SwapLabel } from '../shell/swap-label';
@@ -10,41 +10,64 @@ import styles from './dialogs.module.css';
 
 /**
  * What leaving costs this viewer, as the room stands: watching costs
- * nothing; mid-game a Gomoku player resigns, a player whose going leaves too
- * few ends the game for everybody, and anybody else gives up their seat and
- * score while the game carries on; between games only the seat. A host is
- * told who takes the crown, or that the room closes with them.
+ * nothing; mid-game the game's own rule (`departureFrom`, which the server
+ * acts on too) says whether it hands the game to somebody, ends it for
+ * everybody, or plays on without their seat and score; between games only
+ * the seat. A host is told who takes the crown; a host alone, only that the
+ * room closes, since there is nothing to come back to.
  */
 export function leaveCost(
   state: AnyRoomState,
   playerId: string,
   m: Messages,
 ): string {
-  const seat = state.playerList[playerId];
-  const others = Object.keys(state.playerList).filter((id) => id !== playerId);
-  const cost = !seat
-    ? m.room.leaveSpectating
-    : !state.isGameStarted
-      ? m.room.leaveBetweenGames
-      : state.gameType === 'gomoku'
-        ? m.room.leaveResigns(state.playerList[others[0] ?? '']?.username ?? '')
-        : others.length < gameInfo(state.gameType).minPlayers
-          ? m.room.leaveEndsGame
-          : seat.points === 0
-            ? m.room.leaveInGameNoScore
-            : m.room.leaveInGame(scoreOf(m, state.gameType, seat.points));
-  if (state.owner.playerId !== playerId) return cost;
   const rest = {
     playerList: without(state.playerList, playerId),
     spectators: without(state.spectators, playerId),
   };
   const heir = heirOf(rest);
-  const next = heir
-    ? m.room.leaveNextHost(
-        (rest.playerList[heir] ?? rest.spectators[heir])?.username ?? '',
-      )
-    : m.room.leaveCloses;
+  const host = state.owner.playerId === playerId;
+  // Nobody to come back to: the room closes, and that is the whole cost.
+  if (host && !heir) return m.room.leaveCloses;
+  const cost = seatCost(state, playerId, rest.playerList, m);
+  if (!host || !heir) return cost;
+  const next = m.room.leaveNextHost(
+    (rest.playerList[heir] ?? rest.spectators[heir])?.username ?? '',
+  );
   return m.room.both(cost, next);
+}
+
+/** What leaving costs a viewer at the table, or watching it. */
+function seatCost(
+  state: AnyRoomState,
+  playerId: string,
+  seats: AnyRoomState['playerList'],
+  m: Messages,
+): string {
+  const seat = state.playerList[playerId];
+  if (!seat) return m.room.leaveSpectating;
+  if (!state.isGameStarted) return m.room.leaveBetweenGames;
+  const departure = departureFrom(
+    state.gameType === 'doodle-chain'
+      ? {
+          gameType: state.gameType,
+          seats,
+          phase: state.phase,
+          step: state.step,
+          steps: state.steps,
+        }
+      : { gameType: state.gameType, seats },
+  );
+  switch (departure.kind) {
+    case 'decided':
+      return m.room.leaveResigns(seats[departure.winner]?.username ?? '');
+    case 'cut-short':
+      return m.room.leaveEndsGame;
+    case 'plays-on':
+      return seat.points === 0
+        ? m.room.leaveInGameNoScore
+        : m.room.leaveInGame(scoreOf(m, state.gameType, seat.points));
+  }
 }
 
 function without<T>(

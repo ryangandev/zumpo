@@ -1,9 +1,8 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type {
   CodeBreakerBoard,
   CodeBreakerSettings,
 } from '../../models/types.js';
-import { seatCount } from '../../libs/rooms/seats.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
@@ -245,7 +244,10 @@ const createCodeBreakerGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['code-breaker'].min) {
+    if (
+      departureFrom({ gameType: 'code-breaker', seats: room.playerList })
+        .kind === 'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;

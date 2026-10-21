@@ -1,5 +1,4 @@
-import { SEATS } from '../../../shared/seats.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
@@ -220,7 +219,10 @@ const createTriosGameEngine = (
     clearLockout(room, playerId);
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['trios'].min) {
+    if (
+      departureFrom({ gameType: 'trios', seats: room.playerList }).kind ===
+      'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
     }

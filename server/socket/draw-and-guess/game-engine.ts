@@ -1,10 +1,10 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type {
   ChatMessageKind,
   RoomNotice,
 } from '../../../shared/wire-types.js';
 import type { DrawAndGuessState } from '../../models/types.js';
-import { isSpectator, seatCount } from '../../libs/rooms/seats.js';
+import { isSpectator } from '../../libs/rooms/seats.js';
 import type { ChatVerdict, GameContext, Room } from '../../libs/rooms/types.js';
 import { emitToRoom } from '../../libs/rooms/emit.js';
 import {
@@ -417,7 +417,10 @@ const createDrawAndGuessGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['draw-and-guess'].min) {
+    if (
+      departureFrom({ gameType: 'draw-and-guess', seats: room.playerList })
+        .kind === 'cut-short'
+    ) {
       announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;

@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { en } from '../i18n/en';
 import { zh } from '../i18n/zh';
-import { gomokuState, ME, minesweeperState } from '../tests/fixtures';
+import {
+  doodleChainState,
+  gomokuState,
+  liarsDiceState,
+  ME,
+  minesweeperState,
+} from '../tests/fixtures';
 import { leaveCost } from './dialogs';
 
 const seat = (username: string, points = 0, isConnected = true) => ({
@@ -86,11 +92,119 @@ describe('what leaving costs', () => {
     );
   });
 
-  it('says a host alone closes the room', () => {
+  it('says a host alone closes the room, and nothing about coming back', () => {
     expect(
       leaveCost(minesweeperState({ playerList: { p1: seat('Ryan') } }), ME, en),
+    ).toBe('Nobody else is here, so the room closes.');
+  });
+
+  it('plays a Doodle Chain on with two of three, as the server does', () => {
+    expect(
+      leaveCost(
+        doodleChainState({
+          ...asGuest,
+          isGameStarted: true,
+          phase: 'draw',
+          step: 2,
+        }),
+        ME,
+        en,
+      ),
     ).toBe(
-      'Your seat goes with you. You can join again while a seat is open. Nobody else is here, so the room closes.',
+      'The game carries on without you, and your seat goes with you. You can join again while a seat is open.',
+    );
+  });
+
+  it('ends a Doodle Chain mid-step when one would be left', () => {
+    const twoAtTheTable = { p1: seat('Ryan'), p2: seat('Maya') };
+    expect(
+      leaveCost(
+        doodleChainState({
+          ...asGuest,
+          playerList: twoAtTheTable,
+          isGameStarted: true,
+          phase: 'write',
+          step: 1,
+        }),
+        ME,
+        en,
+      ),
+    ).toBe(
+      'Too few players would be left, so leaving ends the game for everyone.',
+    );
+    // The last step played and passing, or the reveal: nothing ends early.
+    for (const late of [
+      { phase: 'passing' as const, step: 3 },
+      { phase: 'reveal' as const, step: 3 },
+    ]) {
+      expect(
+        leaveCost(
+          doodleChainState({
+            ...asGuest,
+            playerList: twoAtTheTable,
+            isGameStarted: true,
+            ...late,
+          }),
+          ME,
+          en,
+        ),
+      ).toBe(
+        'The game carries on without you, and your seat goes with you. You can join again while a seat is open.',
+      );
+    }
+  });
+
+  it('hands Liar’s Dice to the one player left with dice', () => {
+    expect(
+      leaveCost(
+        liarsDiceState({
+          ...asGuest,
+          isGameStarted: true,
+          phase: 'bidding',
+          playerList: {
+            p1: seat('Ryan', 2),
+            p2: seat('Maya', 1),
+            p3: seat('Sam'),
+          },
+        }),
+        ME,
+        en,
+      ),
+    ).toBe('Leaving ends the game, and Maya wins it.');
+  });
+
+  it('plays Liar’s Dice on while two still hold dice, and ends it with one seat left', () => {
+    expect(
+      leaveCost(
+        liarsDiceState({
+          ...asGuest,
+          isGameStarted: true,
+          phase: 'bidding',
+          playerList: {
+            p1: seat('Ryan', 2),
+            p2: seat('Maya', 1),
+            p3: seat('Sam', 3),
+          },
+        }),
+        ME,
+        en,
+      ),
+    ).toBe(
+      'The game carries on without you, and your seat and your 2 dice go with you. You can join again while a seat is open.',
+    );
+    expect(
+      leaveCost(
+        liarsDiceState({
+          ...asGuest,
+          isGameStarted: true,
+          phase: 'bidding',
+          playerList: { p1: seat('Ryan', 2), p2: seat('Maya', 1) },
+        }),
+        ME,
+        en,
+      ),
+    ).toBe(
+      'Too few players would be left, so leaving ends the game for everyone.',
     );
   });
 
