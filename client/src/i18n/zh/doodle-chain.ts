@@ -161,6 +161,8 @@ export const doodleChain: typeof en = {
   ranOutOfTime: '没来得及完成',
   leftTheGame: '离开了游戏',
   drawingBy: (name) => `${name} 的画`,
+  shown: (name, verb, text) =>
+    text ? `${name}${verb}：${text}` : `${name}${verb}。`,
 
   next: '下一条',
   nextChain: '下一条传话',

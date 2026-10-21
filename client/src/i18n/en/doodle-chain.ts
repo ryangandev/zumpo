@@ -201,6 +201,9 @@ export const doodleChain = {
   ranOutOfTime: 'ran out of time',
   leftTheGame: 'left the game',
   drawingBy: (name: string) => `${name}’s drawing`,
+  // Read out as the reveal shows an entry: "Maya started the chain: …".
+  shown: (name: string, verb: string, text: string) =>
+    text ? `${name} ${verb}: ${text}` : `${name} ${verb}.`,
 
   // The reveal.
   next: 'Next',

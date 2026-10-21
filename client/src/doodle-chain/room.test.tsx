@@ -409,6 +409,36 @@ describe('a Doodle Chain room', () => {
     expect(fake.sentArgs('dc:reveal:next')).toEqual([['r1', 2]]);
   });
 
+  it('reads out each entry as the reveal shows it', async () => {
+    const { update } = await renderSeated(revealing());
+    const live = screen.getByText('Maya drew it.');
+    expect(live).toHaveAttribute('aria-live', 'polite');
+
+    update(
+      revealing({
+        reveal: {
+          ...revealing().reveal!,
+          shown: 3,
+          total: 3,
+          entries: [
+            [
+              ...ryansChain,
+              {
+                chain: 0,
+                step: 3,
+                kind: 'description',
+                author: LEO,
+                content: { type: 'text', text: 'A cat on a unicycle' },
+                hearts: 0,
+              },
+            ],
+          ],
+        },
+      }),
+    );
+    expect(live).toHaveTextContent(/^Leo described it: A cat on a unicycle$/);
+  });
+
   it('takes a heart back, and tells a guest who is showing the chains', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(

@@ -197,7 +197,11 @@ function Reveal({ room }: { room: Room }) {
         meta={m.doodleChain.shownOf(shown, length)}
       />
       <section className={styles.panel}>
-        <Chain entries={reveal.entries[chain] ?? []} heartOf={heartOf} />
+        <Chain
+          entries={reveal.entries[chain] ?? []}
+          heartOf={heartOf}
+          announce
+        />
         <hr className={styles.divider} />
         {isHost ? (
           <div className={styles.reveal}>

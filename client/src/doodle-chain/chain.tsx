@@ -41,6 +41,14 @@ export function EntryDrawing({
   );
 }
 
+/** What the entry's author did: "drew it", or "ran out of time". */
+function verbOf({ kind, content }: DoodleChainEntry, m: Messages): string {
+  if (content.type !== 'empty') return m.doodleChain.verb[kind];
+  return content.reason === 'left'
+    ? m.doodleChain.leftTheGame
+    : m.doodleChain.ranOutOfTime;
+}
+
 /**
  * A chain as a column of entries, first line first, each with its author:
  * the reveal's, as far as it has gone, and the album's.
@@ -49,49 +57,60 @@ export function Chain({
   entries,
   heartOf,
   isFavourite,
+  announce = false,
 }: {
   entries: readonly DoodleChainEntry[];
   /** The entry's heart button or count; none for an empty entry. */
   heartOf: (entry: DoodleChainEntry) => HeartButtonProps;
   isFavourite?: (entry: DoodleChainEntry) => boolean;
+  /** Reads out each entry as it is added, as the reveal shows it. */
+  announce?: boolean;
 }) {
   const m = useMessages();
+  const last = entries.at(-1);
   return (
-    <ol className={styles.chain}>
-      {entries.map((entry) => {
-        const { author, content } = entry;
-        const empty = content.type === 'empty';
-        return (
-          <li key={entry.step}>
-            <ChainEntry
-              kind={empty ? 'empty' : entry.kind}
-              name={author.username}
-              initials={initialsOf(author.username)}
-              tone={toneOf(author.username)}
-              verb={
-                content.type === 'empty'
-                  ? content.reason === 'left'
-                    ? m.doodleChain.leftTheGame
-                    : m.doodleChain.ranOutOfTime
-                  : m.doodleChain.verb[entry.kind]
-              }
-              text={textOf(content, m)}
-              drawing={
-                content.type === 'drawing' ? (
-                  <EntryDrawing
-                    drawing={content.drawing}
-                    label={m.doodleChain.drawingBy(author.username)}
-                  />
-                ) : undefined
-              }
-              favourite={
-                isFavourite?.(entry) ? m.doodleChain.favourite : undefined
-              }
-              heart={empty ? undefined : <HeartButton {...heartOf(entry)} />}
-            />
-          </li>
-        );
-      })}
-    </ol>
+    <>
+      {announce && (
+        <p className={styles.announce} aria-live="polite">
+          {last
+            ? m.doodleChain.shown(
+                last.author.username,
+                verbOf(last, m),
+                textOf(last.content, m),
+              )
+            : ''}
+        </p>
+      )}
+      <ol className={styles.chain}>
+        {entries.map((entry) => {
+          const { author, content } = entry;
+          const empty = content.type === 'empty';
+          return (
+            <li key={entry.step}>
+              <ChainEntry
+                kind={empty ? 'empty' : entry.kind}
+                name={author.username}
+                initials={initialsOf(author.username)}
+                tone={toneOf(author.username)}
+                verb={verbOf(entry, m)}
+                text={textOf(content, m)}
+                drawing={
+                  content.type === 'drawing' ? (
+                    <EntryDrawing
+                      drawing={content.drawing}
+                      label={m.doodleChain.drawingBy(author.username)}
+                    />
+                  ) : undefined
+                }
+                favourite={
+                  isFavourite?.(entry) ? m.doodleChain.favourite : undefined
+                }
+                heart={empty ? undefined : <HeartButton {...heartOf(entry)} />}
+              />
+            </li>
+          );
+        })}
+      </ol>
+    </>
   );
 }
