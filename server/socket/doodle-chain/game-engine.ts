@@ -4,7 +4,7 @@ import type {
   DoodleChainDraft,
   DoodleChainStepEnd,
 } from '../../models/types.js';
-import { departureFrom, mayStart } from '../../../shared/room.js';
+import { departureFrom, mayStart, starterOf } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import {
   emitToPlayer,
@@ -287,9 +287,12 @@ const createDoodleChainGameEngine = (
     game.phase = 'reveal';
     game.tasks = new Map();
     game.reveal = { chain: 0, shown: 1 };
+    // Whoever steps it is named: the host, or while they are away the
+    // player next in line.
+    const starter = starterOf(room);
     ctx.rooms.announce(room.roomId, 'system', {
       type: 'dc:reveal',
-      host: room.owner.username,
+      host: room.playerList[starter]?.username ?? room.owner.username,
     });
     sendShown(room);
     ctx.rooms.emitState(room);

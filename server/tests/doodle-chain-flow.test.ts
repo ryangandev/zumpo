@@ -15,6 +15,7 @@ import {
   startTestServer,
   syncRoom,
   waitFor,
+  waitForChat,
   waitForDoodleChainState,
   type TestClient,
   type TestServer,
@@ -741,6 +742,33 @@ describe('Doodle Chain', () => {
       );
       back.emit('dc:reveal:next', roomId, 2);
       expect((await third).reveal?.shown).toBe(3);
+    });
+
+    it('names the player next in line as the one showing the chains while the host is away', async () => {
+      await harness.teardown();
+      harness = await startTestServer(undefined, 5);
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const [, ryan, leo] = players;
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      drawAll(players, roomId, [true, true, true]);
+      await at(owner, 'describe', 3);
+      // The host is away as the last step runs out, and the reveal begins.
+      owner.close();
+      await settle();
+      const said = waitForChat(
+        ryan,
+        (message) => message.notice?.type === 'dc:reveal',
+        6000,
+      );
+      writeAll([ryan, leo], roomId, ['zwei', 'drei']);
+      const notice = (await said).notice;
+      const standIn = starterOf(doodleChainRoom(harness, roomId));
+      expect(standIn).not.toBe(owner.playerId);
+      expect(notice).toEqual({
+        type: 'dc:reveal',
+        host: standIn === ryan.playerId ? 'Ryan' : 'Leo',
+      });
     });
 
     it('gives a spectator the drawings but no heart', async () => {
