@@ -8,6 +8,7 @@ import {
 } from 'react';
 import type { CanvasStroke, Coordinate } from '../../../shared/wire-types';
 import type { CanvasChange, CanvasStream } from '../net/canvas-stream';
+import { useHeightLeft } from '../shell/use-height-left';
 import { cx } from '../ui/cx';
 import { useMessages } from '../i18n';
 import styles from './canvas.module.css';
@@ -208,8 +209,10 @@ function paint(
  * as tall as the room where that is less. Wider screens leave it as it is.
  */
 export function PlaySheet({ children }: { children: ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  useHeightLeft(box);
   return (
-    <div className={styles.playSheet} data-play-board="">
+    <div ref={box} className={styles.playSheet} data-play-board="">
       {children}
     </div>
   );

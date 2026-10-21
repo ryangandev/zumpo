@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import {
   GomokuBoard,
   GomokuSeat,
@@ -7,6 +7,7 @@ import {
 } from '../ui';
 import { cx } from '../ui/cx';
 import { playColumn } from '../shell/play-board';
+import { useHeightLeft } from '../shell/use-height-left';
 import { SHORT_SCREEN, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
 
@@ -100,28 +101,4 @@ export function GomokuTable({
       </section>
     </>
   );
-}
-
-/**
- * Keeps `--height-left` on the table: the window's height below the table's
- * top, which a board beside its seats is sized to on a short screen.
- */
-function useHeightLeft(table: { current: HTMLElement | null }, on: boolean) {
-  useLayoutEffect(() => {
-    const element = table.current;
-    if (!element || !on) return;
-    const measure = () => {
-      const top = element.getBoundingClientRect().top + window.scrollY;
-      element.style.setProperty(
-        '--height-left',
-        `${Math.max(0, window.innerHeight - top)}px`,
-      );
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => {
-      window.removeEventListener('resize', measure);
-      element.style.removeProperty('--height-left');
-    };
-  }, [table, on]);
 }

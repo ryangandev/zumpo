@@ -44,6 +44,24 @@
   }
 }
 
+/* Wider than a phone, the sheet is all in sight under the turn bar: never
+   taller than the window leaves it below its top, less the page's foot, nor
+   narrower than half its column. */
+@media (min-width: 641px) and (min-height: 501px) {
+  .playSheet {
+    display: flex;
+    justify-content: center;
+  }
+
+  .playSheet > * {
+    width: 100%;
+    max-width: max(
+      50%,
+      calc((var(--height-left, 100dvh) - var(--zumpo-space-24)) * 798 / 598)
+    );
+  }
+}
+
 /* A short screen wider than a phone, such as a phone turned sideways: the
    sheet is never taller than the window, so all of it can be seen at once. */
 @media (min-width: 641px) and (max-height: 500px) {
