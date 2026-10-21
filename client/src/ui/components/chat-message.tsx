@@ -27,7 +27,7 @@ export interface ChatMessageProps {
   kind: ChatMessageKind;
   /** The Alert icon, for a game with its own: the mine in Minesweeper. */
   alertIcon?: GlyphName;
-  /** The player's name, for kind player; "(you)" marks the viewer's own lines. */
+  /** The player's name, for kind player; the viewer's own lines say You. */
   name?: string;
   /** One line, ending in an ellipsis: the few lines under a phone's board. */
   truncate?: boolean;

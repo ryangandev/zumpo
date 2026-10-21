@@ -35,7 +35,7 @@ export const minesweeper = {
   messagePlaceholder: 'Say something…',
   resultsDetail: (difficulty: MinesweeperDifficulty, rounds: number) =>
     `${SIZES[difficulty]} board, ${plural(rounds, 'round')}.`,
-  aloneTitle: 'A little better with company.',
+  aloneTitle: 'Better with company.',
   setup: (players: number, difficulty: MinesweeperDifficulty) => {
     const { width, height, mines } = BOARD_SIZES[difficulty];
     return `${plural(players, 'player')} on a ${SIZES[difficulty]} board: ${width} × ${height} with ${mines} mines. Every round, everyone picks one cell at the same time.`;
@@ -126,9 +126,9 @@ export const minesweeper = {
       `You cleared ${cleared} of ${plural(safe, 'safe cell')}`,
     clearBoard: 'Clear the board',
     flagMode: (phone: boolean) =>
-      `Flag mode: a ${phone ? 'tap' : 'click'} flags`,
+      `Flag is on: ${phone ? 'tap' : 'click'} to flag`,
     firstClickSafe: 'Your first click is always safe',
-    longPressFlag: 'Long-press to flag',
+    longPressFlag: 'Long-press or turn on Flag to flag',
     rightClickFlag: 'Right-click or long-press to flag',
   },
 };

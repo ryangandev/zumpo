@@ -19,7 +19,7 @@ export const codeBreaker = {
   waitingRoom: 'Waiting room',
   codesDetail: (codes: number) => `${plural(codes, 'code')}.`,
   codesCracked: (codes: number) => `${plural(codes, 'code')} cracked`,
-  alone: 'A little better with company.',
+  alone: 'Better with company.',
   setup: (players: number, codes: number) =>
     `${plural(players, 'player')}, ${plural(codes, 'code')}. Everyone cracks the same hidden code at once, and fewer guesses score more.`,
   guestSetup: (players: number, codes: number) =>

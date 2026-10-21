@@ -12,7 +12,7 @@ export interface ChatLine {
   /** The last message it stands for: anything newer arrived after it. */
   id: number;
   kind: ChatMessage['kind'];
-  /** Who said it, for a player's line; "(you)" for the viewer's own. */
+  /** Who said it, for a player's line; "You" for the viewer's own. */
   name?: string;
   text: string;
   /** The viewer's own line. */
@@ -40,7 +40,7 @@ export function chatLines(
         key: message.id,
         id: message.id,
         kind: 'player',
-        name: mine ? m.chat.you(message.username) : message.username,
+        name: mine ? m.chat.you : message.username,
         text: message.text,
         mine,
       });

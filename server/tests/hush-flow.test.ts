@@ -172,7 +172,9 @@ describe('a Hush room', () => {
       'notRoomOwner',
     );
 
-    const chat = waitForChat(owner, (m) => textOf(m).startsWith('Game has'));
+    const chat = waitForChat(owner, (m) =>
+      textOf(m).startsWith('Game started'),
+    );
     const ready = waitForHushState(owner, (s) => s.phase === 'ready');
     await startGame(owner, roomId);
     expect(await ready).toMatchObject({
@@ -184,7 +186,7 @@ describe('a Hush room', () => {
       phaseEndsInMs: 0,
     });
     expect(textOf(await chat)).toBe(
-      'Game has started! 7 levels and 3 lives. Not a word while a level is played.',
+      'Game started: 7 levels and 3 lives. Not a word while a level is played.',
     );
   });
 });
@@ -326,7 +328,7 @@ describe('a level', () => {
     expect(view.phaseEndsInMs).toBeGreaterThan(0);
     expect(view.playerList[players[0].playerId]!.points).toBe(1);
     expect(view.playerList[players[1].playerId]!.points).toBe(1);
-    expect(textOf(await chat)).toBe('Level 1 cleared without a slip!');
+    expect(textOf(await chat)).toBe('Level 1 cleared without a slip.');
 
     const next = await waitForHushState(owner, (s) => s.phase === 'ready');
     expect(next).toMatchObject({
@@ -432,7 +434,7 @@ describe('a mistake', () => {
     });
     expect(chat.map((m) => textOf(m))).toEqual([
       'Alice played 60, but Bob held 30.',
-      'Level 1 cleared!',
+      'Level 1 cleared.',
     ]);
   });
 
@@ -450,7 +452,7 @@ describe('a mistake', () => {
     expect(view.lives).toBe(3);
     expect(view.lastLevel).toMatchObject({ level: 2, lifeBack: true });
     expect(textOf(await chat)).toBe(
-      'Level 2 cleared without a slip: a life back!',
+      'Level 2 cleared without a slip: a life back.',
     );
 
     await waitForHushState(owner, (s) => s.phase === 'ready' && s.level === 3);

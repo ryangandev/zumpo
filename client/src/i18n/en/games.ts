@@ -143,13 +143,13 @@ Faster guesses earn more, from 50 to 150 points, and the drawer gets two fifths 
           'Then every pick opens at once: safe cells clear, mines go off.',
         ],
         score:
-          'A riskier safe pick pays more, a mine costs points, and two on one safe cell split it.',
+          'A safe cell that looked risky pays more, a mine costs points, and two on one safe cell split it.',
       },
       rules: `2–8 players · one shared board
 
 Everyone picks one hidden cell at the same time. Your click locks your pick, and nobody sees which cell you chose.
 
-You have 15 seconds to pick, then 4 seconds to see what everyone picked. A safe pick pays 10 points, plus more the riskier it was. A mine costs points, and costs more the safer the cell looked.
+You have 15 seconds to pick, then 4 seconds to see what everyone picked. A safe pick pays 10 points, plus more if the cell looked risky. A mine costs points, and costs more the safer the cell looked.
 
 Pick the same safe cell as someone else? You split the reward. Run out of time? The safest cell is picked for you, without the 10-point base.
 
@@ -266,7 +266,7 @@ On your own, clear the board in as few turns as you can; your time breaks a tie.
       },
       rules: `2–8 players · 10 or 20 trios
 
-Every card has four features: its colour (coral, blue or ink), its shape (circle, triangle or square), how many shapes it shows (one, two or three) and its fill (solid, striped or outlined). Three cards are a trio when, for each feature on its own, they are all the same or all different. Two circles and a square are never a trio.
+Every card has four features: its colour (coral, blue or black), its shape (circle, triangle or square), how many shapes it shows (one, two or three) and its fill (solid, striped or outlined). Three cards are a trio when, for each feature on its own, they are all the same or all different. Two circles and a square are never a trio.
 
 Twelve cards are on the table, always with a trio among them. Everyone looks at the same table at the same time, and there are no turns. Pick three cards; your third pick claims them, and nobody sees your picks before then.
 
@@ -439,7 +439,7 @@ Then the host shows every chain, one entry at a time, from its first line to its
           'Green square: right letter, right place. Coral circle: in the word, somewhere else. Grey tile: not in the word.',
           'Others see your marks as you go, never your letters.',
         ],
-        score: 'Fewer guesses score more, plus a little for the time left.',
+        score: 'Fewer guesses score more, plus a bonus for the time left.',
       },
       rules: `2–8 players · 3 or 5 words
 
@@ -449,7 +449,7 @@ A letter is marked only as many times as it is in the word, and a letter in its 
 
 Everyone guesses the same word at the same time, with 2 minutes for each. Finding it pays 100 points for every guess you had left over, plus up to 50 for the time left. Others see your marks as you go, never your letters, and once you find it your chat waits until the word is revealed.
 
-On your own, there is one word a day, the same for everybody, and a new one at your midnight. Your stats and streak are kept on this device. After it, play practice words as long as you like, and Challenge a friend sends them the same word.`,
+On your own, there is one word a day, the same for everybody, and a new one at midnight, your time. Your stats and streak are kept on this device. After it, play practice words as long as you like, and Challenge a friend sends them the same word.`,
       createDescription:
         'Every word is two minutes. Three words is a quick game.',
       solo: {
@@ -478,7 +478,7 @@ On your own, there is one word a day, the same for everybody, and a new one at y
           'Each guess gets four pegs. Green square: right digit, right place. Coral circle: right digit, somewhere else. Grey square: not in the code.',
           'The pegs count digits; they never say which ones.',
         ],
-        score: 'Fewer guesses score more, plus a little for the time left.',
+        score: 'Fewer guesses score more, plus a bonus for the time left.',
       },
       rules: `2–8 players · 1 or 3 codes
 
@@ -490,7 +490,7 @@ Notes on the pad are yours alone: turn Notes on, and a digit key marks that digi
 
 Everyone guesses the same code at the same time, with 3 minutes for each. Cracking it pays 100 points, plus 100 for every guess you had left over, plus up to 50 for the time left. Others see your pegs as you go, never your digits, and once you crack it your chat waits until the code is revealed.
 
-On your own, there is one code a day, the same for everybody, and a new one at your midnight. Your stats and streak are kept on this device. After it, play practice codes as long as you like, and Challenge a friend sends them the same code.`,
+On your own, there is one code a day, the same for everybody, and a new one at midnight, your time. Your stats and streak are kept on this device. After it, play practice codes as long as you like, and Challenge a friend sends them the same code.`,
       createDescription:
         'Every code is three minutes. Three codes is about ten minutes.',
       solo: {

@@ -70,7 +70,7 @@ export const liarsDice = {
     `${plural(rounds, 'round')}, ${plural(dice, 'die', 'dice')} each.`,
   leftGame: 'Left the game',
   lastCall: 'The last call',
-  alone: 'A little better with company.',
+  alone: 'Better with company.',
   setup: (players: number, dice: number) =>
     `${plural(players, 'player')}, ${plural(dice, 'die', 'dice')} each. Everybody rolls in secret, then bids on the whole table; call Liar on a bid you doubt.`,
   guestSetup: (players: number, dice: number) =>

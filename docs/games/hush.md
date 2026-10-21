@@ -108,7 +108,7 @@ Hush is won or lost together, so the score is the **team's**, not anybody's own:
 - At the end of a lost game, the cards still held are shown to everybody: nothing is secret once the game is over.
 - The scoreboard during a game shows what each player holds (how many cards, or whether they are ready) instead of points, since everybody's points are the same.
 
-The chat says what happened: a mistake as an alert naming the card and the cards under it ("Maya played 52, but Ryan held 47."), a cleared level as a quiet score line ("Level 3 cleared!", or "Level 3 cleared without a slip: a life back!"), and the end of the game.
+The chat says what happened: a mistake as an alert naming the card and the cards under it ("Maya played 52, but Ryan held 47."), a cleared level as a quiet score line ("Level 3 cleared.", or "Level 3 cleared without a slip: a life back."), and the end of the game.
 It never names who played a card that went well.
 
 ## Rules the server enforces

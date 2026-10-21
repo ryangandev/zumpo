@@ -195,7 +195,7 @@ describe('a Gomoku room', () => {
     });
     expect(view!.phaseEndsInMs).toBeGreaterThan(0);
     expect(textOf(await said)).toBe(
-      'Game has started! Bob plays Black and Alice plays White, 2 seconds a move.',
+      'Game started: Bob plays Black and Alice plays White, 2 seconds a move.',
     );
   });
 

@@ -147,7 +147,7 @@ export const ui: typeof en = {
   trios: {
     card: (card) => {
       const { colour, shape, count, fill } = cardFeatures(card);
-      return `${count} 个${{ coral: '珊瑚色', blue: '蓝色', ink: '墨色' }[colour]}${{ solid: '实心', striped: '条纹', outline: '空心' }[fill]}${{ circle: '圆形', triangle: '三角形', square: '方形' }[shape]}`;
+      return `${count} 个${{ coral: '珊瑚色', blue: '蓝色', ink: '黑色' }[colour]}${{ solid: '实心', striped: '条纹', outline: '空心' }[fill]}${{ circle: '圆形', triangle: '三角形', square: '方形' }[shape]}`;
     },
     states: {
       selected: '，已选中',

@@ -37,7 +37,7 @@ export const notices: typeof en = {
   'room:left': (n) => `${who(n.name)} 离开了房间。`,
   'room:disconnected': (n) => `${who(n.name)} 的连接中断了。`,
   'room:reconnected': (n) => `${who(n.name)} 已重新连接。`,
-  'game:ended': (_n) => '游戏结束！',
+  'game:ended': (_n) => '游戏结束。',
   'game:interrupted': (_n) => '剩余玩家不足，游戏已结束。',
   'game:over': (n) => {
     const unit = {
@@ -52,31 +52,31 @@ export const notices: typeof en = {
     return `游戏结束：${list(n.names)} ${n.names.length === 1 ? '获胜' : '并列获胜'}，${result}！`;
   },
   'dg:started': (n) =>
-    `游戏开始！本局词语类别是“${category(n.category)}”，词语都是英文单词，请用英文猜！`,
+    `游戏开始：词语类别“${category(n.category)}”。词语都是英文单词，请用英文猜。`,
   'dg:drawer-left': (_n) => '画画的玩家离开了房间，进入下一回合。',
   'dg:drawer-lost': (_n) => '画画的玩家连接中断，进入下一回合。',
   'dg:drawer-timeout': (_n) => '画画的玩家未能回来，进入下一回合。',
-  'dg:drawer-returned': (_n) => '画画的玩家回来了，继续吧！',
-  'dg:all-guessed': (_n) => '大家都猜中了！',
-  'dg:guessed': (n) => `${who(n.name)} 猜中了！(+${n.points})`,
+  'dg:drawer-returned': (_n) => '画画的玩家回来了。',
+  'dg:all-guessed': (_n) => '大家都猜中了。',
+  'dg:guessed': (n) => `${who(n.name)} 猜中了，+${n.points}。`,
   'dg:turn': (n) => `第 ${n.round} 轮 · ${who(n.drawer)} 来画`,
   'ms:started': (n) =>
-    `游戏开始！${n.width} × ${n.height} 的棋盘上有 ${n.mines} 颗雷。`,
+    `游戏开始：${n.width} × ${n.height} 的棋盘上有 ${n.mines} 颗雷。`,
   'ms:mines': (n) =>
     n.hits.length === 1
       ? `第 ${n.round} 轮：${who(n.hits[0]!.name)} 踩到了雷（−${Math.abs(n.hits[0]!.points)}）。`
       : `第 ${n.round} 轮：${list(n.hits.map((h) => `${who(h.name)}（−${Math.abs(h.points)}）`))} 踩到了雷。`,
-  'make24:started': (n) => `游戏开始！共 ${n.hands} 手，每手 ${n.seconds} 秒。`,
+  'make24:started': (n) => `游戏开始：共 ${n.hands} 题，每题 ${n.seconds} 秒。`,
   'make24:hand': (n) =>
-    `第 ${n.hand} 手：${n.solved.map((s) => `${who(s.name)} +${s.points}`).join('、')}`,
+    `第 ${n.hand} 题：${n.solved.map((s) => `${who(s.name)} +${s.points}`).join('、')}`,
   'pairs:started': (n) =>
-    `游戏开始！共 ${n.pairs} 对，每回合 ${n.seconds} 秒。`,
-  'pairs:found': (n) => `${who(n.name)} 找到了一对！(+1)`,
-  'trios:started': (n) => `游戏开始！共 ${n.trios} 组等你找。`,
-  'trios:found': (n) => `${who(n.name)} 找到了一组！(+1)`,
-  'snap:started': (n) => `游戏开始！共 ${n.cards} 张牌等你抢。`,
+    `游戏开始：共 ${n.pairs} 对，每回合 ${n.seconds} 秒。`,
+  'pairs:found': (n) => `${who(n.name)} 找到了一对，+1。`,
+  'trios:started': (n) => `游戏开始：共 ${n.trios} 组等你找。`,
+  'trios:found': (n) => `${who(n.name)} 找到了一组，+1。`,
+  'snap:started': (n) => `游戏开始：共 ${n.cards} 张牌等你抢。`,
   'ld:started': (n) =>
-    `游戏开始！每人 ${n.dice} 颗骰子，每回合 ${n.seconds} 秒。`,
+    `游戏开始：每人 ${n.dice} 颗骰子，每回合 ${n.seconds} 秒。`,
   'ld:auto-bid': (n) =>
     `${who(n.name)} 超时，自动叫 ${n.bid.count} 个 ${n.bid.face}。`,
   'ld:auto-call': (n) => `${who(n.name)} 超时，自动喊了“吹牛”。`,
@@ -85,31 +85,31 @@ export const notices: typeof en = {
   'ld:out': (n) => `${who(n.name)} 出局了。`,
   'ld:reroll': (_n) => '有玩家离开，大家重新掷骰。',
   'hush:started': (n) =>
-    `游戏开始！共 ${n.levels} 关、${n.lives} 条命。闯关时保持安静。`,
+    `游戏开始：共 ${n.levels} 关、${n.lives} 条命。闯关时保持安静。`,
   'hush:mistake': (n) =>
     `${who(n.name)} 出了 ${n.card}，但 ${list(n.held.map((h) => `${who(h.name)} 还拿着 ${list(h.cards.map(String))}`))}。`,
   'hush:cleared': (n) =>
     n.lifeBack
-      ? `第 ${n.level} 关完美通过，赢回一条命！`
+      ? `第 ${n.level} 关完美通过，赢回一条命。`
       : n.clean
-        ? `第 ${n.level} 关完美通过！`
-        : `第 ${n.level} 关通过！`,
+        ? `第 ${n.level} 关完美通过。`
+        : `第 ${n.level} 关通过。`,
   'hush:won': (n) => `全部 ${n.levels} 关通过，配合得真好！`,
   'hush:lost': (n) =>
     `在第 ${n.level} 关用完了命：共 ${n.levels} 关，通过了 ${n.cleared} 关。`,
   'hush:discarded': (n) =>
     `离开玩家手里的 ${list(n.cards.map(String))} 已弃掉，不扣命。`,
   'dw:started': (n) =>
-    `游戏开始！共 ${n.rounds} 个单词，每个 ${duration(n.seconds)}。`,
+    `游戏开始：共 ${n.rounds} 个单词，每个 ${duration(n.seconds)}。`,
   'dw:solved': (n) =>
-    `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
+    `${who(n.name)} 猜了 ${n.guesses} 次后猜中，+${n.points}。`,
   'dw:revealed': (n) => `答案是 ${n.word}。`,
   'cb:started': (n) =>
     n.rounds === 1
-      ? `游戏开始！共 1 局，限时 ${duration(n.seconds)}。`
-      : `游戏开始！共 ${n.rounds} 局，每局 ${duration(n.seconds)}。`,
+      ? `游戏开始：共 1 题，限时 ${duration(n.seconds)}。`
+      : `游戏开始：共 ${n.rounds} 题，每题 ${duration(n.seconds)}。`,
   'cb:cracked': (n) =>
-    `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
+    `${who(n.name)} 猜了 ${n.guesses} 次后猜中，+${n.points}。`,
   'cb:revealed': (n) => `答案是 ${n.code}。`,
   'dc:step': (n) =>
     `第 ${n.step} 步 · ${{ prompt: '写', drawing: '画', description: '描述' }[n.kind]}`,
@@ -117,17 +117,17 @@ export const notices: typeof en = {
     n.kind === 'drawing'
       ? `第 ${n.step} 步跳过了：上一步的描述都是空的，没人有字可画。`
       : `第 ${n.step} 步跳过了：上一步的画都是空的，没人有画可描述。`,
-  'dc:reveal': (n) => `揭晓时间！${who(n.host)} 来逐条展示每条传话。`,
+  'dc:reveal': (n) => `揭晓时间。${who(n.host)} 来逐条展示每条传话。`,
   'dc:album': (_n) => '所有传话都收进画册了。',
   'gomoku:started': (n) =>
-    `游戏开始！${who(n.black)} 执黑，${who(n.white)} 执白，每步 ${n.seconds} 秒。`,
+    `游戏开始：${who(n.black)} 执黑，${who(n.white)} 执白，每步 ${n.seconds} 秒。`,
   'gomoku:timeout': (n) => `${who(n.name)} 超时了。`,
   'gomoku:over': (n) => {
     const winner = who(n.winner ?? '');
     const loser = who(n.loser ?? '');
     switch (n.ending) {
       case 'five':
-        return `${winner} 连成五子！`;
+        return `${winner} 连成五子。`;
       case 'resigned':
         return `${loser} 认输了。`;
       case 'timeout':

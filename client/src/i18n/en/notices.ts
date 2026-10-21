@@ -38,7 +38,7 @@ export const notices = {
     n: Extract<RoomNotice, { type: 'room:reconnected' }>,
   ): string => `${who(n.name)} reconnected.`,
   'game:ended': (_n: Extract<RoomNotice, { type: 'game:ended' }>): string =>
-    'Game has ended!',
+    'Game has ended.',
   'game:interrupted': (
     _n: Extract<RoomNotice, { type: 'game:interrupted' }>,
   ): string => 'Not enough players left to continue. Game has ended.',
@@ -50,7 +50,7 @@ export const notices = {
     return `Game over: ${list(n.names)} ${n.names.length === 1 ? 'wins' : 'tie'} with ${score}!`;
   },
   'dg:started': (n: Extract<RoomNotice, { type: 'dg:started' }>): string =>
-    `Game has started! The word category for this game is "${n.category}"!`,
+    `Game started: category ${n.category}.`,
   'dg:drawer-left': (
     _n: Extract<RoomNotice, { type: 'dg:drawer-left' }>,
   ): string => 'The drawer left the room. Skipping to the next turn.',
@@ -62,16 +62,16 @@ export const notices = {
   ): string => 'The drawer did not come back. Skipping to the next turn.',
   'dg:drawer-returned': (
     _n: Extract<RoomNotice, { type: 'dg:drawer-returned' }>,
-  ): string => 'The drawer is back. Carry on!',
+  ): string => 'The drawer is back.',
   'dg:all-guessed': (
     _n: Extract<RoomNotice, { type: 'dg:all-guessed' }>,
-  ): string => 'Everybody guessed the word!',
+  ): string => 'Everybody guessed the word.',
   'dg:guessed': (n: Extract<RoomNotice, { type: 'dg:guessed' }>): string =>
-    `${who(n.name)} guessed the correct word! (+${n.points})`,
+    `${who(n.name)} guessed the word, +${n.points}.`,
   'dg:turn': (n: Extract<RoomNotice, { type: 'dg:turn' }>): string =>
     `Round ${n.round} · ${who(n.drawer)} draws`,
   'ms:started': (n: Extract<RoomNotice, { type: 'ms:started' }>): string =>
-    `Game has started! ${n.mines} mines on a ${n.width}×${n.height} board.`,
+    `Game started: ${n.mines} mines on a ${n.width}×${n.height} board.`,
   // U+2212, a true minus: a hyphen reads as a dash beside a number.
   'ms:mines': (n: Extract<RoomNotice, { type: 'ms:mines' }>): string =>
     n.hits.length === 1
@@ -79,24 +79,24 @@ export const notices = {
       : `Round ${n.round}: ${list(n.hits.map((h) => `${who(h.name)} (−${Math.abs(h.points)})`))} hit mines.`,
   'make24:started': (
     n: Extract<RoomNotice, { type: 'make24:started' }>,
-  ): string => `Game has started! ${n.hands} hands, ${n.seconds} seconds each.`,
+  ): string => `Game started: ${n.hands} hands, ${n.seconds} seconds each.`,
   'make24:hand': (n: Extract<RoomNotice, { type: 'make24:hand' }>): string =>
     `Hand ${n.hand}: ${n.solved.map((s) => `${who(s.name)} +${s.points}`).join(', ')}`,
   'pairs:started': (
     n: Extract<RoomNotice, { type: 'pairs:started' }>,
   ): string =>
-    `Game has started! ${n.pairs} pairs to find, ${n.seconds} seconds a turn.`,
+    `Game started: ${n.pairs} pairs to find, ${n.seconds} seconds a turn.`,
   'pairs:found': (n: Extract<RoomNotice, { type: 'pairs:found' }>): string =>
-    `${who(n.name)} found a pair! (+1)`,
+    `${who(n.name)} found a pair, +1.`,
   'trios:started': (
     n: Extract<RoomNotice, { type: 'trios:started' }>,
-  ): string => `Game has started! ${n.trios} trios to find.`,
+  ): string => `Game started: ${n.trios} trios to find.`,
   'trios:found': (n: Extract<RoomNotice, { type: 'trios:found' }>): string =>
-    `${who(n.name)} found a trio! (+1)`,
+    `${who(n.name)} found a trio, +1.`,
   'snap:started': (n: Extract<RoomNotice, { type: 'snap:started' }>): string =>
-    `Game has started! ${n.cards} cards to win.`,
+    `Game started: ${n.cards} cards to win.`,
   'ld:started': (n: Extract<RoomNotice, { type: 'ld:started' }>): string =>
-    `Game has started! ${n.dice} dice each, ${n.seconds} seconds a turn.`,
+    `Game started: ${n.dice} dice each, ${n.seconds} seconds a turn.`,
   'ld:auto-bid': (n: Extract<RoomNotice, { type: 'ld:auto-bid' }>): string =>
     `${who(n.name)} ran out of time, so ${bidWords(n.bid)} is bid for them.`,
   'ld:auto-call': (n: Extract<RoomNotice, { type: 'ld:auto-call' }>): string =>
@@ -108,15 +108,15 @@ export const notices = {
   'ld:reroll': (_n: Extract<RoomNotice, { type: 'ld:reroll' }>): string =>
     'A player left, so everybody rolls again.',
   'hush:started': (n: Extract<RoomNotice, { type: 'hush:started' }>): string =>
-    `Game has started! ${n.levels} levels and ${n.lives} lives. Not a word while a level is played.`,
+    `Game started: ${n.levels} levels and ${n.lives} lives. Not a word while a level is played.`,
   'hush:mistake': (n: Extract<RoomNotice, { type: 'hush:mistake' }>): string =>
     `${who(n.name)} played ${n.card}, but ${list(n.held.map((h) => `${who(h.name)} held ${list(h.cards.map(String))}`))}.`,
   'hush:cleared': (n: Extract<RoomNotice, { type: 'hush:cleared' }>): string =>
     n.lifeBack
-      ? `Level ${n.level} cleared without a slip: a life back!`
+      ? `Level ${n.level} cleared without a slip: a life back.`
       : n.clean
-        ? `Level ${n.level} cleared without a slip!`
-        : `Level ${n.level} cleared!`,
+        ? `Level ${n.level} cleared without a slip.`
+        : `Level ${n.level} cleared.`,
   'hush:won': (n: Extract<RoomNotice, { type: 'hush:won' }>): string =>
     `All ${n.levels} levels cleared. Well played!`,
   'hush:lost': (n: Extract<RoomNotice, { type: 'hush:lost' }>): string =>
@@ -126,17 +126,17 @@ export const notices = {
   ): string =>
     `Their ${list(n.cards.map(String))} ${n.cards.length === 1 ? 'is' : 'are'} discarded, with no life lost.`,
   'dw:started': (n: Extract<RoomNotice, { type: 'dw:started' }>): string =>
-    `Game has started! ${n.rounds} words, ${duration(n.seconds)} each.`,
+    `Game started: ${n.rounds} words, ${duration(n.seconds)} each.`,
   'dw:solved': (n: Extract<RoomNotice, { type: 'dw:solved' }>): string =>
-    `${who(n.name)} got it in ${n.guesses}! (+${n.points})`,
+    `${who(n.name)} got it in ${n.guesses}, +${n.points}.`,
   'dw:revealed': (n: Extract<RoomNotice, { type: 'dw:revealed' }>): string =>
     `The word was ${n.word}.`,
   'cb:started': (n: Extract<RoomNotice, { type: 'cb:started' }>): string =>
     n.rounds === 1
-      ? `Game has started! 1 code, ${duration(n.seconds)}.`
-      : `Game has started! ${n.rounds} codes, ${duration(n.seconds)} each.`,
+      ? `Game started: 1 code, ${duration(n.seconds)}.`
+      : `Game started: ${n.rounds} codes, ${duration(n.seconds)} each.`,
   'cb:cracked': (n: Extract<RoomNotice, { type: 'cb:cracked' }>): string =>
-    `${who(n.name)} cracked it in ${n.guesses}! (+${n.points})`,
+    `${who(n.name)} cracked it in ${n.guesses}, +${n.points}.`,
   'cb:revealed': (n: Extract<RoomNotice, { type: 'cb:revealed' }>): string =>
     `The code was ${n.code}.`,
   'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
@@ -146,13 +146,13 @@ export const notices = {
       ? `Step ${n.step} is skipped: every description came back empty, so nobody had words to draw.`
       : `Step ${n.step} is skipped: every drawing came back empty, so nobody had a drawing to describe.`,
   'dc:reveal': (n: Extract<RoomNotice, { type: 'dc:reveal' }>): string =>
-    `Time for the reveal! ${who(n.host)} shows the chains.`,
+    `Time for the reveal. ${who(n.host)} shows the chains.`,
   'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>
     'Every chain is in the album.',
   'gomoku:started': (
     n: Extract<RoomNotice, { type: 'gomoku:started' }>,
   ): string =>
-    `Game has started! ${who(n.black)} plays Black and ${who(n.white)} plays White, ${n.seconds} seconds a move.`,
+    `Game started: ${who(n.black)} plays Black and ${who(n.white)} plays White, ${n.seconds} seconds a move.`,
   'gomoku:timeout': (
     n: Extract<RoomNotice, { type: 'gomoku:timeout' }>,
   ): string => `${who(n.name)} ran out of time.`,

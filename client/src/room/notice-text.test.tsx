@@ -28,23 +28,23 @@ describe('room announcements', () => {
     ],
     [
       { type: 'cb:started', rounds: 3, seconds: 180 },
-      'Game has started! 3 codes, 3 minutes each.',
-      '游戏开始！共 3 局，每局 3 分钟。',
+      'Game started: 3 codes, 3 minutes each.',
+      '游戏开始：共 3 题，每题 3 分钟。',
     ],
     [
       { type: 'dw:started', rounds: 3, seconds: 90 },
-      'Game has started! 3 words, 90 seconds each.',
-      '游戏开始！共 3 个单词，每个 90 秒。',
+      'Game started: 3 words, 90 seconds each.',
+      '游戏开始：共 3 个单词，每个 90 秒。',
     ],
     [
       { type: 'dg:started', category: 'Animals' },
-      'Game has started! The word category for this game is "Animals"!',
-      '游戏开始！本局词语类别是“动物”，词语都是英文单词，请用英文猜！',
+      'Game started: category Animals.',
+      '游戏开始：词语类别“动物”。词语都是英文单词，请用英文猜。',
     ],
     [
       { type: 'dg:started', category: 'League of Legends' },
-      'Game has started! The word category for this game is "League of Legends"!',
-      '游戏开始！本局词语类别是“League of Legends”，词语都是英文单词，请用英文猜！',
+      'Game started: category League of Legends.',
+      '游戏开始：词语类别“League of Legends”。词语都是英文单词，请用英文猜。',
     ],
     [
       { type: 'game:over', names: ['Ada', 'Bob'], points: 1, unit: 'pair' },
@@ -79,8 +79,8 @@ describe('room announcements', () => {
     ],
     [
       { type: 'hush:cleared', level: 2, clean: true, lifeBack: true },
-      'Level 2 cleared without a slip: a life back!',
-      '第 2 关完美通过，赢回一条命！',
+      'Level 2 cleared without a slip: a life back.',
+      '第 2 关完美通过，赢回一条命。',
     ],
     [
       { type: 'dw:revealed', word: 'APPLE' },
@@ -119,7 +119,7 @@ describe('room announcements', () => {
         ],
       },
       'Hand 2: Ana +148, Ben +120',
-      '第 2 手：Ana +148、Ben +120',
+      '第 2 题：Ana +148、Ben +120',
     ],
     [
       { type: 'dc:step', step: 1, kind: 'prompt' },
@@ -169,13 +169,11 @@ describe('room announcements', () => {
       });
     });
     expect(screen.getByText('Sam 创建了房间。')).toBeVisible();
-    expect(screen.getByText('Bob 猜中了！(+90)')).toBeVisible();
+    expect(screen.getByText('Bob 猜中了，+90。')).toBeVisible();
     expect(screen.getByText('hello，朋友')).toBeVisible();
     await user.click(screen.getByRole('radio', { name: 'English' }));
     expect(screen.getByText('Sam created the room.')).toBeVisible();
-    expect(
-      screen.getByText('Bob guessed the correct word! (+90)'),
-    ).toBeVisible();
+    expect(screen.getByText('Bob guessed the word, +90.')).toBeVisible();
     expect(screen.queryByText('Sam 创建了房间。')).not.toBeInTheDocument();
     expect(screen.getByText('hello，朋友')).toBeVisible();
   });

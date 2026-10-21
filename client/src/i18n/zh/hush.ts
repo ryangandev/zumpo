@@ -12,7 +12,7 @@ export const hush: typeof en = {
   level: (level) => `第 ${level} 关`,
   allCards: (count) => `全部 ${count} 张牌`,
   asEnded: '结束时的牌堆',
-  alone: '叫上朋友更好玩。',
+  alone: '叫上好友更好玩。',
   setup: (players, levels) =>
     `${players} 人，${levels} 关。不说话，一起按顺序打出每一张牌。`,
   guestSetup: (players, levels) => `${players} 人，${levels} 关。`,

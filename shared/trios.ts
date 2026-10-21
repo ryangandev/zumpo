@@ -70,6 +70,12 @@ export function cardOf({ colour, shape, count, fill }: CardFeatures): number {
 }
 
 const COUNT_WORDS = ['One', 'Two', 'Three'] as const;
+/** The colour as a player reads it: the token `ink` is plain black on a card. */
+export const COLOUR_WORDS: Readonly<Record<Colour, string>> = {
+  coral: 'coral',
+  blue: 'blue',
+  ink: 'black',
+};
 const FILL_WORDS: Readonly<Record<Fill, string>> = {
   solid: 'solid',
   striped: 'striped',
@@ -79,7 +85,7 @@ const FILL_WORDS: Readonly<Record<Fill, string>> = {
 /** What a card shows, in words: "Two blue striped triangles". */
 export function cardName(card: number): string {
   const { colour, shape, count, fill } = cardFeatures(card);
-  return `${COUNT_WORDS[count - 1]} ${colour} ${FILL_WORDS[fill]} ${shape}${count === 1 ? '' : 's'}`;
+  return `${COUNT_WORDS[count - 1]} ${COLOUR_WORDS[colour]} ${FILL_WORDS[fill]} ${shape}${count === 1 ? '' : 's'}`;
 }
 
 /** True when, for `feature`, three cards are all the same or all different. */
