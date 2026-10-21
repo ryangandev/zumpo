@@ -333,7 +333,9 @@ function Hand({ room }: { room: Room }) {
       return (
         <HandRow
           label={ready ? m.hush.yourReady : m.hush.readyWhen}
-          message={m.hush.chatTiming}
+          // Before the first deal, the rule itself: once the chat locks,
+          // nobody can ask.
+          message={state.level === 1 ? m.hush.firstRule : m.hush.chatTiming}
           action={
             !ready && !reconnecting ? (
               <Button onClick={() => socket.emit('hush:ready', state.roomId)}>

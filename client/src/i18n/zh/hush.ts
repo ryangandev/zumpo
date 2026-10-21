@@ -46,6 +46,8 @@ export const hush: typeof en = {
   yourReady: '你准备好了',
   readyWhen: '准备好了就开始',
   chatTiming: '关卡开始后不能聊天，结束后重新开放。',
+  firstRule:
+    '没有回合，不许说话：觉得时机到了就打出你最小的牌，让牌堆从小到大往上叠。关卡开始后聊天会锁定。',
   readyButton: '我准备好了',
   waitingOthers: '等其他人准备。',
   nextUp: '下一关',

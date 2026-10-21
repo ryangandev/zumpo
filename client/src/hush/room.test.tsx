@@ -86,6 +86,31 @@ describe('a Hush room', () => {
     expect(screen.queryByRole('button', { name: 'I’m ready' })).toBeNull();
   });
 
+  it('says the rule before the first deal, and only then', async () => {
+    const ready = (level: number) =>
+      hushState({
+        isGameStarted: true,
+        phase: 'ready',
+        level,
+        table: {
+          p1: { held: 0, ready: false },
+          p2: { held: 0, ready: false },
+        },
+      });
+    const { update } = await renderSeated(ready(1));
+    expect(
+      screen.getByText(/^No turns, no talking: play your lowest card/),
+    ).toBeInTheDocument();
+
+    update(ready(2));
+    expect(screen.queryByText(/^No turns, no talking/)).toBeNull();
+    expect(
+      screen.getByText(
+        'The chat locks when the level starts, and opens when it ends.',
+      ),
+    ).toBeInTheDocument();
+  });
+
   it('counts down with the hands dealt and the chat locked', async () => {
     await renderSeated({
       ...playing,
