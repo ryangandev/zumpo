@@ -1,0 +1,375 @@
+{
+  "format": 1,
+  "code": "DC19",
+  "title": "Phone · the host steps through the reveal",
+  "id": "162:103355",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC19 · The host’s reveal on a phone: entries in a column, Next full width. No countdown, so the turn bar has no top row."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:103355",
+    "name": "DC19 / Phone · the host steps through the reveal",
+    "x": 4880,
+    "y": 4082,
+    "w": 390,
+    "h": 1026,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:103356",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Doodle Chain"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Reveal",
+              "Tone": "Lime"
+            },
+            "height": 30,
+            "width": 61
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:103357",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          },
+          {
+            "path": "Status / Board",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:10340",
+                    "toName": "MO09 / Guesser · canvas & guess input"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Players · 4",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13463",
+                    "toName": "MO15 / Room · players tab"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Chat",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13517",
+                    "toName": "MO16 / Room · chat tab"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:103358",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 88,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Top row": false,
+          "Countdown": false,
+          "Main": "Maya’s chain",
+          "Category": false,
+          "Meta": "",
+          "Label": "Reveal · chain 1 of 4 · 3 of 4 shown"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 88,
+            "width": 350
+          },
+          {
+            "path": "Answer",
+            "counterAxisAlignItems": "MIN"
+          },
+          {
+            "path": "Answer / Main",
+            "layoutGrow": 1,
+            "textAutoResize": "HEIGHT"
+          },
+          {
+            "path": "Answer / Meta",
+            "visible": false
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103475",
+        "name": "Reveal panel",
+        "w": 350,
+        "h": 670,
+        "wSize": "fill",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:103476",
+            "name": "Entry / Maya",
+            "w": 316,
+            "h": 108,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Prompt",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66111",
+            "props": {
+              "Heart": false
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 108,
+                "width": 316
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103494",
+            "name": "Entry / Ryan",
+            "w": 316,
+            "h": 261,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Drawing",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66129",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 261,
+                "width": 316
+              },
+              {
+                "path": "Body / Head / Heart",
+                "componentProperties": {
+                  "Count": "1",
+                  "State": "Off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103528",
+            "name": "Entry / Leo",
+            "w": 316,
+            "h": 120,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain entry",
+            "variant": {
+              "Kind": "Description",
+              "Layout": "Phone"
+            },
+            "componentId": "162:66163",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 120,
+                "width": 316
+              },
+              {
+                "path": "Body / Head / Heart",
+                "componentProperties": {
+                  "Count": "2",
+                  "State": "On"
+                }
+              }
+            ]
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "162:103548",
+            "name": "Divider",
+            "w": 316,
+            "h": 1,
+            "wSize": "fill",
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:103549",
+            "name": "Action / Next",
+            "w": 316,
+            "h": 48,
+            "wSize": "fill",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Primary",
+              "State": "Default"
+            },
+            "componentId": "4:15",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=forward",
+              "Show icon": true,
+              "Label": "Next"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "primaryAxisSizingMode": "FIXED",
+                "width": 316
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "162:103557",
+            "name": "Hint",
+            "w": 316,
+            "h": 18,
+            "wSize": "fill",
+            "hSize": "hug",
+            "text": "Next shows Sam’s drawing, the last of Maya’s chain.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103362",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:103363",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "format": 1,
+  "name": "Zumpo/Heart button",
+  "id": "162:65812",
+  "type": "COMPONENT_SET",
+  "key": "6056299f86f7c18c02bd09ebb36b69e5106d3b81",
+  "description": "A heart for one entry in the reveal. Off and On are a player's button on somebody else's entry; Count is the read-only tally on your own entries, for spectators and in the album.",
+  "properties": {
+    "Count": {
+      "type": "text",
+      "default": "2"
+    },
+    "State": {
+      "type": "variant",
+      "default": "Off",
+      "options": [
+        "Off",
+        "On",
+        "Count"
+      ]
+    }
+  },
+  "defaultVariant": "State=Off",
+  "variants": [
+    {
+      "name": "State=Off",
+      "id": "162:65803",
+      "props": {
+        "State": "Off"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65803",
+        "name": "State=Off",
+        "w": 51,
+        "h": 30,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/4",
+          "pad": [
+            "$Zumpo · UI:space/4",
+            "$Zumpo · UI:space/10"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:65804",
+            "name": "Heart",
+            "w": 16,
+            "h": 14,
+            "svg": "svg/heart-237151.svg"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:65805",
+            "name": "Count",
+            "w": 9,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Count"
+            },
+            "text": "2",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=On",
+      "id": "162:65806",
+      "props": {
+        "State": "On"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65806",
+        "name": "State=On",
+        "w": 51,
+        "h": 30,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/4",
+          "pad": [
+            "$Zumpo · UI:space/4",
+            "$Zumpo · UI:space/10"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:65807",
+            "name": "Heart",
+            "w": 16,
+            "h": 14,
+            "svg": "svg/heart-ff16c9.svg"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:65808",
+            "name": "Count",
+            "w": 9,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Count"
+            },
+            "text": "2",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Count",
+      "id": "162:65809",
+      "props": {
+        "State": "Count"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:65809",
+        "name": "State=Count",
+        "w": 27,
+        "h": 18,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/4",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "162:65810",
+            "name": "Heart",
+            "w": 16,
+            "h": 14,
+            "svg": "svg/heart-ff16c9.svg"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:65811",
+            "name": "Count",
+            "w": 7,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Count"
+            },
+            "text": "2",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

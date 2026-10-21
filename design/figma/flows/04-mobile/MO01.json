@@ -11,7 +11,7 @@
     "x": 40,
     "y": 150,
     "w": 390,
-    "h": 2123,
+    "h": 2912,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -153,7 +153,7 @@
         "id": "90:110371",
         "name": "Games",
         "w": 350,
-        "h": 1774,
+        "h": 2563,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -180,7 +180,7 @@
                 "type": "FRAME",
                 "id": "90:110373",
                 "name": "Filters",
-                "w": 388,
+                "w": 490,
                 "h": 38,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -275,6 +275,30 @@
                         "width": 156
                       }
                     ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:112977",
+                    "name": "Filter / Strategy",
+                    "w": 94,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Strategy"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 94
+                      }
+                    ]
                   }
                 ]
               }
@@ -285,7 +309,7 @@
             "id": "90:110382",
             "name": "Kind / Party",
             "w": 350,
-            "h": 626,
+            "h": 815,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -336,6 +360,22 @@
                     "autoResize": "height"
                   }
                 ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:112979",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:111368"
               },
               {
                 "type": "INSTANCE",
@@ -413,7 +453,7 @@
             "id": "90:110474",
             "name": "Kind / Puzzles",
             "w": 350,
-            "h": 626,
+            "h": 790,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -464,6 +504,22 @@
                     "autoResize": "height"
                   }
                 ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113594",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Code Breaker",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:113235"
               },
               {
                 "type": "INSTANCE",
@@ -541,7 +597,7 @@
             "id": "90:110579",
             "name": "Kind / Spot & remember",
             "w": 350,
-            "h": 412,
+            "h": 576,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -618,6 +674,29 @@
               },
               {
                 "type": "INSTANCE",
+                "id": "162:68062",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Snap",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:66434",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 152,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
                 "id": "90:110610",
                 "name": "Zumpo/Game card",
                 "w": 350,
@@ -638,6 +717,81 @@
                     "width": 350
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:113015",
+            "name": "Kind / Strategy",
+            "w": 350,
+            "h": 248,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:113016",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 59,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:113017",
+                    "w": 102,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Strategy",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:113018",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Think a few moves ahead.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113019",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Gomoku",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:111605"
               }
             ]
           }

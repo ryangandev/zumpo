@@ -14,7 +14,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 1224,
+    "h": 1542,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -345,7 +345,7 @@
         "id": "90:109630",
         "name": "Games",
         "w": 1312,
-        "h": 674,
+        "h": 992,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -387,7 +387,7 @@
                 "type": "FRAME",
                 "id": "90:109633",
                 "name": "Filters",
-                "w": 388,
+                "w": 490,
                 "h": 38,
                 "wSize": "hug",
                 "hSize": "hug",
@@ -482,6 +482,30 @@
                         "width": 156
                       }
                     ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:112975",
+                    "name": "Filter / Strategy",
+                    "w": 94,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Strategy"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 94
+                      }
+                    ]
                   }
                 ]
               }
@@ -492,7 +516,7 @@
             "id": "90:109642",
             "name": "Cards",
             "w": 1312,
-            "h": 612,
+            "h": 930,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -503,6 +527,21 @@
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:112890",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "162:111304"
+              },
               {
                 "type": "INSTANCE",
                 "id": "90:109643",
@@ -547,6 +586,21 @@
                   "State": "Default"
                 },
                 "componentId": "90:105242"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113560",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Code Breaker",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "162:113181"
               },
               {
                 "type": "INSTANCE",
@@ -610,6 +664,21 @@
               },
               {
                 "type": "INSTANCE",
+                "id": "162:67946",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Snap",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "162:66340"
+              },
+              {
+                "type": "INSTANCE",
                 "id": "90:109885",
                 "name": "Zumpo/Game card",
                 "w": 310,
@@ -622,6 +691,21 @@
                   "State": "Default"
                 },
                 "componentId": "90:105184"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:112933",
+                "name": "Zumpo/Game card",
+                "w": 310,
+                "h": 294,
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Gomoku",
+                  "Layout": "Tile",
+                  "State": "Default"
+                },
+                "componentId": "162:111524"
               }
             ]
           }

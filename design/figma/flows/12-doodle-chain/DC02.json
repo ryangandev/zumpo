@@ -1,0 +1,416 @@
+{
+  "format": 1,
+  "code": "DC02",
+  "title": "Create room · Doodle Chain settings",
+  "id": "162:101560",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC02 · Create room: 3–8 seats and the drawing time, 45, 60 or 90 seconds, here with its menu open. No step count to pick: one step per player, up to six. Writing and describing are always 30s."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:101560",
+    "name": "DC02 / Create room · Doodle Chain settings",
+    "x": 1580,
+    "y": 224,
+    "w": 1440,
+    "h": 1248,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:101561",
+        "name": "Zumpo/Header",
+        "w": 1312,
+        "h": 104,
+        "component": "Zumpo/Header",
+        "componentId": "4:39",
+        "overrides": [
+          {
+            "path": "Navigation / Games",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Navigation / You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101562",
+        "name": "Page heading",
+        "w": 1312,
+        "h": 121,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:101563",
+            "name": "Tag / PLAY TOGETHER",
+            "w": 117,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Sand"
+            },
+            "componentId": "24:6511",
+            "props": {
+              "Label": "PLAY TOGETHER"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 117
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "162:101564",
+            "name": "Minesweeper rooms",
+            "w": 1312,
+            "h": 42,
+            "hSize": "hug",
+            "text": "Doodle Chain rooms",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:101565",
+            "w": 1312,
+            "h": 25,
+            "hSize": "hug",
+            "text": "Make a little space for your next game.",
+            "textStyle": "Zumpo/Body",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101566",
+        "name": "Dialog stage",
+        "w": 1312,
+        "h": 877,
+        "layout": {
+          "mode": "row",
+          "pad": [
+            "$Zumpo · UI:space/56",
+            0
+          ],
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:101567",
+            "name": "A little room for you.",
+            "w": 560,
+            "h": 792,
+            "hSize": "hug",
+            "component": "Zumpo/Card",
+            "variant": {
+              "Kind": "Focused"
+            },
+            "componentId": "9:400",
+            "props": {
+              "Description": "Write, draw and describe round the table, then watch every chain unfold. The players are the length: one step each, up to six."
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 792,
+                "width": 560
+              }
+            ],
+            "slots": {
+              "Content": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:101567;35:13433;162:101572",
+                  "name": "Zumpo/Input",
+                  "w": 496,
+                  "h": 113,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Helper": "Up to 40 characters.",
+                    "Value": "Maya’s room",
+                    "Label": "Room name"
+                  }
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:101567;35:13433;162:101573",
+                  "name": "Zumpo/Input",
+                  "w": 496,
+                  "h": 113,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "Choose 3–8 seats.",
+                    "Value": "8 players",
+                    "Label": "Seats"
+                  }
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "162:101627",
+                  "name": "Zumpo/Input",
+                  "w": 496,
+                  "h": 115,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Focus"
+                  },
+                  "componentId": "9:210",
+                  "props": {
+                    "Helper": "45, 60 or 90 seconds a drawing. Writing and describing take 30s.",
+                    "Select": true,
+                    "Value": "60 seconds",
+                    "Label": "Drawing time"
+                  }
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:101567;35:13433;162:101574",
+                  "name": "Zumpo/Input",
+                  "w": 496,
+                  "h": 113,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Helper": "Leave blank for an open room. Up to 20 characters.",
+                    "Value": "••••••",
+                    "Label": "Password (optional)"
+                  }
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I162:101567;35:13433;162:101575",
+                  "name": "Actions",
+                  "w": 496,
+                  "h": 48,
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:101567;35:13433;162:101576",
+                      "name": "Action / Create room",
+                      "w": 126,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Primary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:15",
+                      "props": {
+                        "Label": "Create room"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "reactions": [],
+                          "width": 126
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:101567;35:13433;162:101577",
+                      "name": "Action / Cancel",
+                      "w": 90,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Secondary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:18",
+                      "props": {
+                        "Label": "Cancel"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 90
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:101568",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:101569",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:101570",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:101641",
+        "name": "Drawing time menu",
+        "x": 473,
+        "y": 871.5,
+        "absolute": true,
+        "w": 496,
+        "h": 142,
+        "hSize": "hug",
+        "component": "Zumpo/Select menu / Rounds",
+        "componentId": "9:15842",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 142,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 496
+          },
+          {
+            "path": "Option / 1 round",
+            "componentProperties": {
+              "Show detail": false,
+              "Detail": "",
+              "Label": "45 seconds",
+              "Selected": "False"
+            }
+          },
+          {
+            "path": "Option / 2 rounds",
+            "componentProperties": {
+              "Detail": "",
+              "Show detail": false,
+              "Label": "60 seconds",
+              "Selected": "True"
+            }
+          },
+          {
+            "path": "Option / 3 rounds",
+            "componentProperties": {
+              "Show detail": false,
+              "Detail": "",
+              "Label": "90 seconds",
+              "Selected": "False"
+            }
+          },
+          {
+            "path": "Option / 4 rounds",
+            "visible": false
+          }
+        ]
+      }
+    ]
+  }
+}

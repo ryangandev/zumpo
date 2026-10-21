@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "name": "Zumpo/Last move marker",
+  "id": "162:62873",
+  "type": "COMPONENT_SET",
+  "key": "c104fdc6aaaeee356aa841bdf3b5f393f98e45a2",
+  "properties": {
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Small"
+      ]
+    }
+  },
+  "defaultVariant": "Size=Regular",
+  "variants": [
+    {
+      "name": "Size=Regular",
+      "id": "162:62871",
+      "props": {
+        "Size": "Regular"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62871",
+        "name": "Size=Regular",
+        "x": 24,
+        "y": 24,
+        "w": "$Zumpo · UI:space/10",
+        "h": "$Zumpo · UI:space/10",
+        "fills": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    },
+    {
+      "name": "Size=Small",
+      "id": "162:62872",
+      "props": {
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62872",
+        "name": "Size=Small",
+        "x": 58,
+        "y": 24,
+        "w": "$Zumpo · UI:space/6",
+        "h": "$Zumpo · UI:space/6",
+        "fills": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "radius": "$Zumpo · UI:radius/999"
+      }
+    }
+  ]
+}

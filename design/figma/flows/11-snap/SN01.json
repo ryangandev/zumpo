@@ -1,0 +1,480 @@
+{
+  "format": 1,
+  "code": "SN01",
+  "title": "Solo · ready to start",
+  "id": "162:86146",
+  "section": "11 / Snap / complete flow",
+  "reviewNotes": [
+    "SN01 · Play solo from the game page lands here. The cards are dealt and the clock starts on Start, so nobody studies the first card. A run is the whole deck: one card is yours, and the other 30 come up in the middle one at a time."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:86146",
+    "name": "SN01 / Solo · ready to start",
+    "x": 40,
+    "y": 150,
+    "w": 1440,
+    "h": 927,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:86147",
+        "name": "Zumpo/Header",
+        "w": 1312,
+        "h": 104,
+        "component": "Zumpo/Header",
+        "componentId": "4:39",
+        "overrides": [
+          {
+            "path": "Navigation / Games",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Navigation / You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86148",
+        "name": "Page heading",
+        "w": 1312,
+        "h": 121,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:86149",
+            "name": "Tag / COME ON IN",
+            "w": 109,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Sand"
+            },
+            "componentId": "24:6511",
+            "props": {
+              "Label": "ON YOUR OWN"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 109
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "162:86150",
+            "name": "Every good game starts with a name.",
+            "w": 1312,
+            "h": 42,
+            "hSize": "hug",
+            "text": "Snap",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:86151",
+            "name": "No signup. Just pick a name your friends will recognize.",
+            "w": 1312,
+            "h": 25,
+            "hSize": "hug",
+            "text": "Your card and the middle card share exactly one symbol. Spot it thirty times, as fast as you can.",
+            "textStyle": "Zumpo/Body",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86152",
+        "name": "Dialog stage",
+        "w": 1312,
+        "h": 556,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "pad": [
+            "$Zumpo · UI:space/56",
+            0
+          ],
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:86153",
+            "name": "Thirty cards, one clock.",
+            "w": 560,
+            "h": 444,
+            "hSize": "hug",
+            "component": "Zumpo/Card",
+            "variant": {
+              "Kind": "Focused"
+            },
+            "componentId": "9:400",
+            "props": {
+              "Description": "Tap the symbol on both cards, and the middle card becomes yours. A wrong tap adds 3 seconds.",
+              "Title": "Thirty cards, one clock."
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 444,
+                "width": 560
+              }
+            ],
+            "slots": {
+              "Content": [
+                {
+                  "type": "FRAME",
+                  "id": "I162:86153;35:13433;162:86471",
+                  "name": "Example match",
+                  "w": 474,
+                  "h": 72,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:86153;35:13433;162:86472",
+                      "name": "Cards",
+                      "w": 148,
+                      "h": 72,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/4",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I162:86153;35:13433;162:86473",
+                          "name": "Snap card / Default / Cloud",
+                          "w": 72,
+                          "h": 72,
+                          "component": "Zumpo/Snap card",
+                          "variant": {
+                            "State": "Default",
+                            "Size": "Mini"
+                          },
+                          "componentId": "162:39096"
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I162:86153;35:13433;162:86474",
+                          "name": "Snap card / Default / Cloud",
+                          "w": 72,
+                          "h": 72,
+                          "component": "Zumpo/Snap card",
+                          "variant": {
+                            "State": "Default",
+                            "Size": "Mini"
+                          },
+                          "componentId": "162:39096"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "TEXT",
+                      "id": "I162:86153;35:13433;162:86476",
+                      "name": "A trio: every feature differs.",
+                      "w": 314,
+                      "h": 25,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "text": "Every two cards share exactly one symbol.",
+                      "textStyle": "Zumpo/Body",
+                      "fills": [
+                        "$Zumpo · UI:color/muted"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I162:86153;35:13433;162:86477",
+                  "name": "Stats",
+                  "w": 494,
+                  "h": 82,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "column",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "FRAME",
+                      "id": "I162:86153;35:13433;162:86478",
+                      "name": "Stat / Cards",
+                      "w": 494,
+                      "h": 41,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "pad": [
+                          "$Zumpo · UI:space/8",
+                          0
+                        ],
+                        "justify": "space_between",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "TEXT",
+                          "id": "I162:86153;35:13433;162:86479",
+                          "name": "Hands",
+                          "w": 44,
+                          "h": 25,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "text": "Cards",
+                          "textStyle": "Zumpo/Body",
+                          "fills": [
+                            "$Zumpo · UI:color/muted"
+                          ]
+                        },
+                        {
+                          "type": "TEXT",
+                          "id": "I162:86153;35:13433;162:86480",
+                          "name": "10",
+                          "w": 24,
+                          "h": 24,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "text": "30",
+                          "textStyle": "Zumpo/Number",
+                          "fills": [
+                            "$Zumpo · UI:color/ink"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "I162:86153;35:13433;162:86481",
+                      "name": "Stat / Your best on this device",
+                      "w": 494,
+                      "h": 41,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "pad": [
+                          "$Zumpo · UI:space/8",
+                          0
+                        ],
+                        "justify": "space_between",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "TEXT",
+                          "id": "I162:86153;35:13433;162:86482",
+                          "w": 178,
+                          "h": 25,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "text": "Your best on this device",
+                          "textStyle": "Zumpo/Body",
+                          "fills": [
+                            "$Zumpo · UI:color/muted"
+                          ]
+                        },
+                        {
+                          "type": "TEXT",
+                          "id": "I162:86153;35:13433;162:86483",
+                          "name": "3:05",
+                          "w": 33,
+                          "h": 24,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "text": "1:52",
+                          "textStyle": "Zumpo/Number",
+                          "fills": [
+                            "$Zumpo · UI:color/ink"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I162:86153;35:13433;162:86484",
+                  "name": "Actions",
+                  "w": 494,
+                  "h": 48,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:86153;35:13433;162:86485",
+                      "name": "Action / Start",
+                      "w": 75,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Primary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:15",
+                      "props": {
+                        "Label": "Start"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 75
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:86153;35:13433;162:86486",
+                      "name": "Action / Back to games",
+                      "w": 171,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Secondary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:18",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=back",
+                        "Show icon": true,
+                        "Label": "Back to games"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 171
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86154",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:86155",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:86156",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
