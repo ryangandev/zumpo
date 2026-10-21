@@ -79,6 +79,9 @@ Instead the player keeps their own **notes** on the pad.
 - An **out** digit's key is a flat grey key, as an absent letter is in Daily Word; an **in** digit's key is green.
   The notes show whether Notes is on or off, so they help while typing too, and a noted digit can still be typed.
 - Notes are the player's own: the game never fills them in, checks them or corrects them.
+- The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6 and 8 are out." (CB03).
+  A row with no pegs rules its four digits out; a row with four pegs, or six digits ruled out, settles every digit as in or out.
+  Anything less than certain, which is most of the game, stays the player's to work out, and a phone's turn bar shows the peg legend instead.
 - They are kept with the guesses for the daily code (on the device, so a refresh keeps them), and live only in the page for practice and in a room, where a new code clears them.
 
 ## On your own
@@ -136,7 +139,7 @@ After the daily code, **Practice code** starts extra codes, one at a time, as ma
 - It plays exactly like the daily code, and keeps no stats and no streak.
 - When it ends: cracked in _n_ or missed, with the code; **Another code** deals a new seed; **Challenge a friend** copies the result grid with a link to the same code (`/games/code-breaker/solo?seed=k3f9x2`); and **Today's code** goes back to the daily result.
 - Whoever opens a challenge link plays that code straight away, whether or not they have played today's.
-  A practice code lives only in the page: a refresh deals it again from the link's seed, or a new one without a link.
+  A practice code lives only in the page: a refresh deals it again from the link's seed, and without a link goes back to today's result.
 
 Practice is offered only after today's code, so the daily code stays the first thing on the page.
 
@@ -245,15 +248,22 @@ The codes are still drawn by the rules above, never twice in a game and never a 
 | File                                                                                        | Responsibility                                                                               |
 | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [`shared/code-breaker.ts`](../../shared/code-breaker.ts)                                    | Marks, guess checks, puzzle numbers, the code calendar, the practice deal and the share grid |
+| [`shared/daily.ts`](../../shared/daily.ts)                                                  | Counting puzzle days by the local or UTC date, as Daily Word does too                        |
 | [`module.ts`](../../server/socket/code-breaker/module.ts)                                   | What the room layer calls, and all it calls                                                  |
 | [`game-engine.ts`](../../server/socket/code-breaker/game-engine.ts)                         | The round loop, guesses and scores                                                           |
 | [`state.ts`](../../server/socket/code-breaker/state.ts)                                     | The game's state, and the snapshot each player is sent                                       |
 | [`code-breaker/draft.ts`](../../client/src/code-breaker/draft.ts)                           | The row being typed and the notes, as both modes keep them                                   |
-| [`code-breaker/play.tsx`](../../client/src/code-breaker/play.tsx)                           | Your board, the line under it, the pad with its notes, and typing on a real keyboard         |
+| [`code-breaker/play.tsx`](../../client/src/code-breaker/play.tsx)                           | Your board, the line under it, and the pad with its notes                                    |
 | [`code-breaker/panel.tsx`](../../client/src/code-breaker/panel.tsx)                         | The board's paper panel and the legend of the pegs                                           |
 | [`code-breaker/solo/`](../../client/src/code-breaker/solo/)                                 | The daily code and practice codes on your own, and the records kept on the device            |
 | [`code-breaker/room.tsx`](../../client/src/code-breaker/room.tsx)                           | A room's screens                                                                             |
+| [`shell/board-typing.ts`](../../client/src/shell/board-typing.ts)                           | Typing on a real keyboard, and the note over the board, shared with Daily Word               |
+| [`solo/daily.tsx`](../../client/src/solo/daily.tsx)                                         | The wait for the next code, the distribution and the copy button, shared with Daily Word     |
 | [`ui/components/code-board.tsx`](../../client/src/ui/components/code-board.tsx)             | `Zumpo/Code board`, drawn from Digit tiles and Code marks                                    |
+| [`ui/components/digit-tile.tsx`](../../client/src/ui/components/digit-tile.tsx)             | `Zumpo/Digit tile`                                                                           |
+| [`ui/components/code-marks.tsx`](../../client/src/ui/components/code-marks.tsx)             | `Zumpo/Code marks`, a guess's four pegs                                                      |
+| [`ui/components/digit-pad.tsx`](../../client/src/ui/components/digit-pad.tsx)               | `Zumpo/Digit pad`, with its notes                                                            |
+| [`ui/components/toggle-chip.tsx`](../../client/src/ui/components/toggle-chip.tsx)           | `Zumpo/Toggle chip`, the Notes toggle                                                        |
 | [`ui/components/code-race-board.tsx`](../../client/src/ui/components/code-race-board.tsx)   | `Zumpo/Code race board`, a board in a round's results                                        |
 | [`ui/components/code-marks-board.tsx`](../../client/src/ui/components/code-marks-board.tsx) | `Zumpo/Code marks board`, another player's pegs while a code is open                         |
 
