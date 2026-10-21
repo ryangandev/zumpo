@@ -33,7 +33,7 @@
 .side {
   display: flex;
   flex-direction: column;
-  gap: var(--zumpo-space-24);
+  gap: var(--zumpo-space-16);
   min-width: 0;
 }
 

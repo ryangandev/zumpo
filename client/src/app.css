@@ -4,3 +4,14 @@ body {
   margin: 0;
   background: var(--zumpo-cream);
 }
+
+/* Room for a scrollbar is always kept, so a page that grows past the window
+   mid-game does not shift sideways. On a page that never scrolls the gutter
+   is cream, the same as the margin. Overlay scrollbars (phones, macOS) take
+   no room, so nothing changes there; a window narrower than a phone's layout
+   keeps its width for the content instead. */
+@media (min-width: 641px) {
+  html {
+    scrollbar-gutter: stable;
+  }
+}

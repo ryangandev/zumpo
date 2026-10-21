@@ -21,6 +21,8 @@ export interface FormPageProps {
   phone: { eyebrow?: string; subtitle: ReactNode; title?: ReactNode };
   title: string;
   description?: ReactNode;
+  /** The card grows as the form does (a section opens): set at the top, not centred. */
+  grows?: boolean;
   onSubmit: FormEventHandler<HTMLFormElement>;
   /** Buttons, primary first. */
   actions?: ReactNode;
@@ -37,6 +39,7 @@ export function FormPage({
   phone,
   title,
   description,
+  grows,
   onSubmit,
   actions,
   children,
@@ -67,7 +70,7 @@ export function FormPage({
   return (
     <Page>
       {heading && <PageHeading {...heading} />}
-      <Stage>
+      <Stage top={grows}>
         <Card
           title={title}
           description={description}
