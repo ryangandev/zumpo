@@ -233,6 +233,7 @@ Code differs from Figma on purpose in a few places:
   Beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat keeps its height; a phone's Players tab keeps it open.
 - Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
   It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
+  The drawer does not see it while choosing the next word: the word choices take the sheet, and the panel over them would hide them; the guessers keep it until a word is chosen.
 - A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
 - PH04 and PH06 predate two phone pieces code has: Gomoku's seats side by side drop the avatar and put the stone before the name, and Liar's Dice's own cup is one row unless it holds five dice.
 - Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
