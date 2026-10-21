@@ -3,13 +3,22 @@ import type {
   DailyWordBoard,
   DailyWordRoomState,
 } from '../../../shared/wire-types';
-import { checkGuess, type GuessProblem } from '../../../shared/daily-word';
+import {
+  MAX_GUESSES,
+  checkGuess,
+  type GuessProblem,
+} from '../../../shared/daily-word';
 import { RaceBoard, TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import { listNames, rankedPlayers, type Seat } from '../room/players';
+import {
+  listNames,
+  raceStanding,
+  rankedPlayers,
+  type Seat,
+} from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { playColumn } from '../shell/play-board';
@@ -450,8 +459,25 @@ function turnBar(
   };
 }
 
-/** One player's line on the scoreboard. */
+/**
+ * One player's line on the scoreboard, and their place in a phone's
+ * standings strip: guesses used, since nobody scores until it is solved.
+ */
 function playerLine(
+  state: DailyWordRoomState,
+  seat: Seat,
+  m: Messages,
+): PlayerLine {
+  const line = scoreLine(state, seat, m);
+  if (!state.isGameStarted) return line;
+  const boards =
+    state.phase === 'reveal' ? state.lastRound?.boards : state.boards;
+  const board = boards?.find((b) => b.playerId === seat.playerId);
+  return { ...line, standing: raceStanding(board, MAX_GUESSES, m) };
+}
+
+/** One player's line on the scoreboard: how their round is going. */
+function scoreLine(
   state: DailyWordRoomState,
   seat: Seat,
   m: Messages,

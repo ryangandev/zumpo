@@ -24,6 +24,12 @@ export const ui = {
     label: (entries: readonly string[]) =>
       `Standings: ${entries.join(', ')}. Show the players`,
     away: 'Away',
+    /** A race's progress in place of a score: guesses used of the most. */
+    guesses: (used: number, most: number) => `${used}/${most}`,
+    /** Found the word or cracked the code, in this many guesses. */
+    solved: (used: number, most: number) => `✓ ${used}/${most}`,
+    /** Used every guess without solving it. */
+    missed: (most: number) => `✗/${most}`,
   },
   /** Opens every rule of a game under its short version, and closes them again. */
   fullRules: 'Full rules',

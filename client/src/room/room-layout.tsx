@@ -31,6 +31,11 @@ export interface PlayerLine {
   status: string;
   statusIcon?: PlayerRowProps['statusIcon'];
   state?: PlayerRowProps['state'];
+  /**
+   * What a phone's standings strip shows for them instead of their points:
+   * a race's progress, where nobody scores until somebody solves it.
+   */
+  standing?: string;
 }
 
 export interface RoomLayoutProps {
@@ -228,12 +233,12 @@ export function RoomLayout({
                 <div className={cx(styles.stage, playColumn)}>
                   {standings && state.isGameStarted && (
                     <StandingsStrip
-                      standings={players.map(({ seat }) => ({
+                      standings={players.map(({ seat, standing }) => ({
                         key: seat.playerId,
                         name: seat.username,
                         initials: initialsOf(seat.username),
                         tone: toneOf(seat.username),
-                        value: String(seat.points),
+                        value: standing ?? String(seat.points),
                         you: seat.playerId === room.playerId,
                         away: !seat.isConnected,
                       }))}
