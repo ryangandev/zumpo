@@ -178,6 +178,7 @@ function RunView({
       mine={{ symbols: run.mine, label: m.snap.yourCard, marks: myMarks }}
       onTap={(symbol) => setRun(tap(run, symbol, clock.now()))}
       disabled={!canTap(run)}
+      inPlay={!finish}
     />
   );
 

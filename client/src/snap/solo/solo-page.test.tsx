@@ -215,4 +215,22 @@ describe('Snap on your own', () => {
     expect(card('Middle card').getAllByRole('button')).toHaveLength(6);
     expect(screen.queryByText('This run')).toBeNull();
   });
+
+  it('on a phone, leaves the last two cards under the result, no longer fitted to the screen', async () => {
+    onPhone();
+    await startRun();
+    const cards = screen
+      .getByRole('heading', { name: /^Middle card/ })
+      .closest('[data-play-board]');
+    expect(cards).not.toBeNull();
+    for (let taken = 0; taken < RUN_CARDS; taken++) await takeCard();
+
+    const result = screen.getByRole('heading', { name: /^30 cards in/ });
+    expect(result).toHaveFocus();
+    const middle = screen.getByRole('heading', { name: /^Middle card/ });
+    expect(middle.closest('[data-play-board]')).toBeNull();
+    expect(
+      result.compareDocumentPosition(middle) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
 });
