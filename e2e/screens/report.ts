@@ -40,7 +40,8 @@ const CONTENT: Record<string, string> = {
   SN06: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN07: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN13: 'The chat starts with the room’s join messages, which Figma leaves out.',
+  SN09: 'Between games a player may move to the spectator seats, a button no Figma screen has yet; the chat starts with the join messages.',
+  SN13: 'Every room shows its spectators a banner and a Watching panel, which no Figma screen has yet; the chat starts with the join messages.',
   LD07: 'Liar’s Dice’s description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
   LD08: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and two lines of talk.',
   LD09: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and three lines of talk.',
@@ -63,7 +64,8 @@ interface Screen {
   code: string;
   title: string;
   size: [number, number];
-  preview: string;
+  /** Missing from an export made without previews. */
+  preview?: string;
 }
 
 /** A screen's frame size in Figma. */
@@ -108,8 +110,9 @@ const escape = (text: string) =>
 export function writeReport() {
   const rows = screens().map((screen) => {
     const capture = path.join(COMPARE_DIR, `${screen.code}.png`);
-    const preview = path.join(FIGMA_DIR, screen.preview);
-    const figma = existsSync(preview) ? pngSize(preview) : screen.size;
+    const preview = screen.preview && path.join(FIGMA_DIR, screen.preview);
+    const figma =
+      preview && existsSync(preview) ? pngSize(preview) : screen.size;
     const code = existsSync(capture) ? pngSize(capture) : undefined;
     const differs =
       code !== undefined &&
@@ -132,7 +135,7 @@ export function writeReport() {
   <h2><a href="#${screen.code}">${screen.code}</a> ${escape(screen.title)}</h2>
   <p>${escape(status)}</p>
   <div class="pair" style="--width: ${figma[0]}px">
-    <figure><img src="../figma/${screen.preview}" alt="" loading="lazy"><figcaption>Figma</figcaption></figure>
+    ${screen.preview ? `<figure><img src="../figma/${screen.preview}" alt="" loading="lazy"><figcaption>Figma</figcaption></figure>` : ''}
     ${code ? `<figure><img src="${screen.code}.png" alt="" loading="lazy"><figcaption>Code</figcaption></figure>` : ''}
   </div>
 </section>`;

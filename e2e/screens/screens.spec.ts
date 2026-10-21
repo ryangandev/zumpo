@@ -1230,15 +1230,12 @@ test('a Snap game', async ({ player }) => {
   const link = await createRoom(maya, 'snap');
   for (const seat of [sam, leo, ryan]) await joinRoom(seat, link);
   await startGame(maya);
-  // Jo comes in after the start, and watches.
-  const jo = await player('Jo', desktop);
-  await joinRoom(jo, link);
 
   /** `taker` takes the `taken`th card, and everybody sees it taken. */
   const take = async (taker: Page, taken: number) => {
     await readyToTap(taker);
     await tapMatch(taker);
-    for (const seat of [...seats, jo]) {
+    for (const seat of seats) {
       await expect(
         seat.getByText(`${taken} of 27 cards`, { exact: true }),
       ).toBeVisible();
@@ -1252,7 +1249,18 @@ test('a Snap game', async ({ player }) => {
   for (const seat of seats) await readyToTap(seat);
   await shot(sam, 'SN05');
   await shot(leo, 'SN12');
+
+  // Jo comes in after the start, and watches; only SN13 has Jo.
+  const jo = await player('Jo', desktop);
+  await joinRoom(jo, link);
+  await expect(snapTurnOf(jo).getByText('Everyone is looking')).toBeVisible();
   await shot(jo, 'SN13');
+  await jo.getByRole('button', { name: 'Leave room' }).click();
+  await jo
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Leave room' })
+    .click();
+  await expect(sam.getByRole('region', { name: /^Watching/ })).toBeHidden();
 
   // Maya takes the tenth, as Sam sees it.
   await tapMatch(maya);
@@ -1274,12 +1282,13 @@ test('a Snap game', async ({ player }) => {
   await expect(yours).toBeVisible();
   expect(await shotWhile(sam, 'SN08', yours)).toBe(true);
 
-  // Then the rest, to Maya 9, Sam 7, Leo 6 and Ryan 5.
+  // Then the rest, to Maya 9, Sam 7, Leo 6 and Ryan 5, Maya taking the last.
   const rest = [
-    ...Array<Page>(5).fill(maya),
-    ...Array<Page>(4).fill(sam),
-    ...Array<Page>(3).fill(leo),
     ...Array<Page>(4).fill(ryan),
+    ...Array<Page>(3).fill(leo),
+    ...Array<Page>(4).fill(maya),
+    ...Array<Page>(4).fill(sam),
+    maya,
   ];
   for (const [index, taker] of rest.entries()) {
     if (index === rest.length - 1) {
