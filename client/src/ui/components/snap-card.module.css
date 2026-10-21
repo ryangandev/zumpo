@@ -1,10 +1,12 @@
 /* Zumpo/Snap card. Outlines are inset shadows, so a taken card keeps its
-   size. The spots are placed in fractions of the card (shared/snap.ts). */
+   size. The spots are placed in fractions of the card (shared/snap.ts), so
+   where less room is left the card shrinks, its spots with it. */
 .card {
   position: relative;
   flex: none;
   width: 320px;
-  height: 320px;
+  max-width: 100%;
+  aspect-ratio: 1;
   border-radius: var(--zumpo-radius-999);
   box-shadow:
     var(--zumpo-shadow-cell-edge),
@@ -14,12 +16,10 @@
 
 .compact {
   width: 224px;
-  height: 224px;
 }
 
 .mini {
   width: 72px;
-  height: 72px;
 }
 
 .taken {

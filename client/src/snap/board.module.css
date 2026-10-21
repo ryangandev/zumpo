@@ -13,14 +13,20 @@
 .cards {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--zumpo-space-48);
+  width: 100%;
 }
 
+/* Beside the side column a stage can be narrower than two regular cards:
+   the columns shrink, and the cards in them. */
 .column {
   display: flex;
+  flex: 0 1 auto;
   flex-direction: column;
   align-items: center;
   gap: var(--zumpo-space-12);
+  min-width: 0;
 }
 
 .label {
