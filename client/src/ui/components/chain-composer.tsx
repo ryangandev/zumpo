@@ -86,7 +86,13 @@ export function ChainComposer({
             aria-hidden={done ? undefined : true}
           >
             <Notice tone="success" className={styles.notice}>
-              {doneMessage}
+              {/* Its words arrive with Done, so the status is announced; until
+                  then they only hold the row's height, out of sight. */}
+              {done ? (
+                doneMessage
+              ) : (
+                <span aria-hidden="true">{doneMessage}</span>
+              )}
             </Notice>
             <Button
               ref={keepEditing}

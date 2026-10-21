@@ -473,7 +473,13 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
           aria-hidden={done ? undefined : true}
         >
           <Notice tone="success" className={styles.grow}>
-            {doneMessage(room, m)}
+            {/* Its words arrive with Done, so the status is announced; until
+                then they only hold the row's height, out of sight. */}
+            {done ? (
+              doneMessage(room, m)
+            ) : (
+              <span aria-hidden="true">{doneMessage(room, m)}</span>
+            )}
           </Notice>
           <Button
             ref={keepEditing}
