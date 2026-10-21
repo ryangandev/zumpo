@@ -924,7 +924,7 @@ test('Make 24 on your own', async ({ player }) => {
     }
   }
   await expect(
-    maya.getByRole('heading', { name: /^10 hands in / }),
+    maya.getByRole('heading', { name: /^Solved 9 of 10 in / }),
   ).toBeVisible();
   await shot(maya, 'T05');
 
