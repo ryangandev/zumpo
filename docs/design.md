@@ -298,6 +298,7 @@ Code differs from Figma on purpose in a few places:
 - Until `j-fig-8-phone-turn-meta-line.js` runs, the Phone turn bar sets the tag, the label and the meta on one first line; at 560 px or narrower code gives the tag and the meta a line of their own under the main line, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
   On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
+- Until `j-fig-9-hush-phone-panel-gap.js` runs, HU10 and HU11 set the phone table's parts 24 apart; code sets them 16 apart, which gives back most of the height the turn bar's meta line takes on a 360 by 640 phone.
 - The Phone room bar's line under the game is one text in Figma; code keeps its phase whole and ends only a room's name too long for the rest of the line in an ellipsis, so "Game over" is never cut to "Game ov…" at 360 px.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
