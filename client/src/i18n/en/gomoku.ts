@@ -50,7 +50,7 @@ export const gomoku = {
   youPlayed: (point: string) => `You played ${point}`,
   passed: (name: string) => `${name}’s turn passed`,
   yourTurnPassed: 'Your turn passed',
-  firstMove: 'Black moves first, anywhere on the board',
+  firstMove: 'Black moves first, anywhere',
   /** A faint stone is down on a phone: the second tap places it. */
   tapAgain: 'Tap again to place',
   toMove: 'to move',

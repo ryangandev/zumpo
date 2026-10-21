@@ -39,7 +39,7 @@ export const gomoku: typeof en = {
   youPlayed: (point) => `你下在 ${point}`,
   passed: (name) => `${name} 超时，跳过一手`,
   yourTurnPassed: '你超时了，跳过一手',
-  firstMove: '黑方先走，可以下在任何位置',
+  firstMove: '黑方先走，随处可下',
   tapAgain: '再点一次落子',
   toMove: '落子',
   paused: '暂停',

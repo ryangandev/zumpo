@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type {
   Coordinate,
   DrawAndGuessRoomState,
@@ -19,6 +19,7 @@ import { useMessages, type Messages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { playColumn } from '../shell/play-board';
+import { focusQuietly } from '../shell/quiet-focus';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
@@ -207,6 +208,19 @@ function playerLine(
 const DEFAULT_COLOUR: BrushName = 'ink';
 const DEFAULT_SIZE: BrushSize = 10;
 
+/**
+ * Whether the viewer is busy elsewhere and keeps the focus: in a dialog, or
+ * part way through a line in the chat. An empty guess box gives it up.
+ */
+function busy(): boolean {
+  const active = document.activeElement;
+  const field =
+    active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement;
+  return (
+    (field && active.value !== '') || active?.closest('[role="dialog"]') != null
+  );
+}
+
 /** D04-D12: the turn bar, then the canvas or the word choices. */
 function Turn({ room }: { room: Room }) {
   const m = useMessages();
@@ -256,9 +270,31 @@ function Turn({ room }: { room: Room }) {
 
   const choose = (word: string) => socket.emit('dg:select-word', roomId, word);
 
+  // The drawer's turn begins on the choices: the first takes the focus, so
+  // the keyboard and a screen reader start there, even from the guess box of
+  // the turn before, unless the drawer is busy elsewhere.
+  const choicesBox = useRef<HTMLDivElement>(null);
+  const choosing = isDrawer && state.phase === 'choosing';
+  const choosingNow = choosing && state.wordChoices ? state.turn : null;
+  useEffect(() => {
+    if (choosingNow === null) return;
+    const first = choicesBox.current?.querySelector('button');
+    if (first && !busy()) focusQuietly(first);
+  }, [choosingNow]);
+  // The choice pressed, or picked when time ran out, goes with the choices:
+  // the turn, which now says the word, takes the focus they had.
+  const turnBox = useRef<HTMLElement>(null);
+  const drawingNow = isDrawer && state.phase === 'drawing' ? state.turn : null;
+  useEffect(() => {
+    if (drawingNow === null) return;
+    const active = document.activeElement;
+    if (active && active !== document.body) return;
+    if (turnBox.current) focusQuietly(turnBox.current);
+  }, [drawingNow]);
+
   const choices =
-    isDrawer && state.phase === 'choosing' && state.wordChoices ? (
-      <div className={styles.choices}>
+    choosing && state.wordChoices ? (
+      <div ref={choicesBox} className={styles.choices}>
         {state.wordChoices.map((word) => (
           <WordChoice key={word} word={word} onChoose={() => choose(word)} />
         ))}
@@ -267,7 +303,10 @@ function Turn({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, drawerName, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, drawerName, phone, m)}
+        ref={turnBox}
+      />
       {canDraw && (
         <DrawingToolbar
           colour={colour}
