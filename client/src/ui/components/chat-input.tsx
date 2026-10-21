@@ -40,10 +40,13 @@ export function ChatInput({
   const box = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (focusKey === undefined || !box.current) return;
+    // Never from under the viewer: not while they type somewhere else, nor
+    // while a dialog (How to play, a name) has the focus.
     const typing = document.activeElement;
     if (
       typing instanceof HTMLInputElement ||
-      typing instanceof HTMLTextAreaElement
+      typing instanceof HTMLTextAreaElement ||
+      typing?.closest('[role="dialog"]')
     ) {
       return;
     }
