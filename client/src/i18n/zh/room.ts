@@ -30,6 +30,8 @@ export const room: typeof en = {
     `正在重新连接“${name}”…你的座位和得分会保留 ${seconds} 秒。`,
   board: '棋盘',
   nowHost: '你现在是房主了。',
+  playerAway: (name) => `${name} 暂离了。`,
+  playerLeft: (name) => `${name} 离开了房间。`,
   players: (count) => `玩家 · ${count}`,
   chat: '聊天',
   turnTitle: '(!) 轮到你了 · Zumpo',

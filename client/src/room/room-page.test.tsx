@@ -149,6 +149,46 @@ describe('a room page', () => {
     ).toBeInTheDocument();
   });
 
+  it('says over a phone’s board who went away, came back, watched or left', async () => {
+    onPhone();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const seats = (maya: boolean, sam: boolean) => ({
+      p1: { username: 'Ryan', points: 0, isConnected: true },
+      p2: { username: 'Maya', points: 0, isConnected: maya },
+      ...(sam && { p3: { username: 'Sam', points: 0, isConnected: true } }),
+    });
+    const emit = (state: Parameters<typeof minesweeperState>[0]) =>
+      act(() =>
+        fake.serverEmits(
+          'room:state',
+          minesweeperState({ isGameStarted: true, ...state }),
+        ),
+      );
+    emit({ playerList: seats(true, true) });
+    const board = screen.getByRole('tabpanel', { name: 'Board' });
+    expect(within(board).queryByRole('status')).not.toBeInTheDocument();
+
+    emit({ playerList: seats(false, true) });
+    expect(within(board).getByRole('status')).toHaveTextContent(
+      'Maya is away.',
+    );
+    emit({ playerList: seats(true, true) });
+    expect(within(board).queryByRole('status')).not.toBeInTheDocument();
+
+    // Moving to the stands is not leaving.
+    emit({
+      playerList: seats(true, false),
+      spectators: { p3: { username: 'Sam', isConnected: true } },
+    });
+    expect(within(board).queryByRole('status')).not.toBeInTheDocument();
+    emit({ playerList: seats(true, true) });
+    emit({ playerList: seats(true, false) });
+    expect(within(board).getByRole('status')).toHaveTextContent(
+      'Sam left the room.',
+    );
+  });
+
   it('asks for a password straight on the page on a phone', async () => {
     onPhone();
     await renderApp(ROOM, { fake: server({ password: 'turtle' }) });

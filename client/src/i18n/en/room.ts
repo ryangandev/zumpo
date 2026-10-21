@@ -30,6 +30,8 @@ export const room = {
     `Reconnecting to ${name}… Your seat and score are kept for ${seconds} seconds.`,
   board: 'Board',
   nowHost: 'You’re the host now.',
+  playerAway: (name: string): string => `${name} is away.`,
+  playerLeft: (name: string): string => `${name} left the room.`,
   players: (count: number) => `Players · ${count}`,
   chat: 'Chat',
   /** The browser tab's title while it is in the background and it is your go. */

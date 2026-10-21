@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
+import type { PlayerInfo, SpectatorInfo } from '../../../shared/wire-types';
 import {
   ChatInput,
   MobileTabs,
@@ -74,8 +75,8 @@ export interface RoomLayoutProps {
   standings?: boolean;
 }
 
-/** How long a phone says "You're the host now" over the board. */
-const HOST_NOTICE_MS = 5000;
+/** How long a phone says "You're the host now", or who went, over the board. */
+const NOTICE_MS = 5000;
 
 type View = 'board' | 'players' | 'chat';
 
@@ -111,6 +112,7 @@ export function RoomLayout({
     seatName: room.me.username,
   });
   const newHost = useBecameHost(state.owner.playerId === room.playerId);
+  const gone = usePlayerGone(state.playerList, state.spectators, room.playerId);
 
   const input = {
     onSend: room.sendChat,
@@ -237,11 +239,21 @@ export function RoomLayout({
                   {stage}
                   {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
-                  {newHost && (
+                  {newHost ? (
                     // Over the top of the board, so nothing under it moves.
                     <div className={styles.toast}>
                       <Notice tone="success">{m.room.nowHost}</Notice>
                     </div>
+                  ) : (
+                    gone && (
+                      <div className={styles.toast}>
+                        <Notice>
+                          {gone.left
+                            ? m.room.playerLeft(gone.name)
+                            : m.room.playerAway(gone.name)}
+                        </Notice>
+                      </div>
+                    )
                   )}
                 </div>
               ),
@@ -293,8 +305,53 @@ function useBecameHost(host: boolean): boolean {
   }
   useEffect(() => {
     if (!shown) return;
-    const timer = setTimeout(() => setShown(false), HOST_NOTICE_MS);
+    const timer = setTimeout(() => setShown(false), NOTICE_MS);
     return () => clearTimeout(timer);
   }, [shown]);
   return shown;
+}
+
+interface Gone {
+  name: string;
+  /** Left the room, rather than lost the connection for now. */
+  left: boolean;
+}
+
+/**
+ * The player who last went, for a few seconds: their connection dropped, or
+ * they left the room. A phone's Players tab and chat are out of sight, so it
+ * says so over the board. A player who comes back clears it, and one who
+ * only moved to the stands has not gone anywhere.
+ */
+function usePlayerGone(
+  players: Record<string, PlayerInfo>,
+  spectators: Record<string, SpectatorInfo>,
+  me: string,
+): Gone | null {
+  const [was, setWas] = useState(players);
+  const [gone, setGone] = useState<(Gone & { playerId: string }) | null>(null);
+  // Worked out as the seats change, not after: the notice shows with them.
+  if (players !== was) {
+    setWas(players);
+    let news = gone;
+    for (const [playerId, seat] of Object.entries(was)) {
+      if (playerId === me) continue;
+      const now = players[playerId];
+      if (!now && !(playerId in spectators)) {
+        news = { playerId, name: seat.username, left: true };
+      } else if (now && seat.isConnected && !now.isConnected) {
+        news = { playerId, name: now.username, left: false };
+      }
+    }
+    if (news && news === gone && players[news.playerId]?.isConnected) {
+      news = null;
+    }
+    if (news !== gone) setGone(news);
+  }
+  useEffect(() => {
+    if (!gone) return;
+    const timer = setTimeout(() => setGone(null), NOTICE_MS);
+    return () => clearTimeout(timer);
+  }, [gone]);
+  return gone;
 }
