@@ -234,6 +234,7 @@ function Reveal({ room }: { room: Room }) {
   return (
     <>
       <TurnBar
+        wordLine
         label={m.doodleChain.revealOf(chain + 1, chains.length)}
         kind="status"
         main={m.doodleChain.chainOf(owner)}

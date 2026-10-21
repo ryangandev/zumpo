@@ -307,6 +307,7 @@ function Turn({ room }: { room: Room }) {
     <>
       <TurnBar
         {...turnBar(room, seconds, drawerName, phone, m)}
+        wordLine
         ref={turnBox}
       />
       {canDraw && (

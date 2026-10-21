@@ -125,7 +125,7 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const task = room.spectating ? undefined : state.task;
   return (
     <>
-      <TurnBar {...turnBar(room, task, seconds, m)} />
+      <TurnBar {...turnBar(room, task, seconds, m)} wordLine />
       {state.phase === 'draw' && task && !task.sitsOut ? (
         <Drawing room={room} desk={desk} onDesk={onDesk} />
       ) : (
