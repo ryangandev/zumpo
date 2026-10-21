@@ -66,7 +66,7 @@ export function RoomBar({
             {room && <span className={styles.room}>{room}</span>}
             <span className={styles.phase}>
               {room && m.ui.room.contextSeparator}
-              {phase.label}
+              <span>{phase.label}</span>
             </span>
           </p>
         ) : (

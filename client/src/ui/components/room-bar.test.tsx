@@ -35,11 +35,9 @@ describe('RoomBar on a phone', () => {
 
   it('keeps the phase, with its separator, apart from the room, so a long name gives way and the phase is never cut', () => {
     render(phone('Friday night games with the family'));
-    const phase = screen.getByText(
-      (_, el) => el?.textContent === ' · Game over',
-    );
-    expect(phase.tagName).toBe('SPAN');
-    expect(phase.previousElementSibling).toHaveTextContent(
+    const phase = screen.getByText('Game over', { exact: true });
+    expect(phase.parentElement).toHaveTextContent(/^· Game over$/);
+    expect(phase.parentElement!.previousElementSibling).toHaveTextContent(
       'Friday night games with the family',
     );
   });
