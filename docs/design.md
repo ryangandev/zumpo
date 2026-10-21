@@ -177,6 +177,8 @@ The board sits in [`PlayBoard`](../client/src/shell/play-board.tsx), which scale
 So the keypad, the keyboard, the picker or the button that acts now is on screen from the first move and never moves during a game.
 A row that comes and goes, such as Trios's last trio or Make 24's signs, keeps its room out of sight while it is not there.
 A window 500 px tall or less and wider than a phone, such as a phone turned sideways, keeps the one-column layout and scrolls, but caps the board and the canvas at the window's height.
+There the turn bar takes its compact Phone row, and Gomoku sets its board beside the turn, so the whole board is in sight.
+Wider and taller, a Draw & Guess sheet is no taller than the window leaves below its top, so the sheet and the chat's input are in sight together.
 [The phone spec](../e2e/phone-play.spec.ts) plays every game at 360 by 640 and 390 by 844 and checks that the input is on screen, the page does not scroll, and the input stays where it was through a game.
 
 Figma gives each sample player an avatar tone by hand; code picks one from a hash of the player's name, so a player keeps one colour in the header, the scoreboard and the results, on every screen.
@@ -217,6 +219,7 @@ Code differs from Figma on purpose in a few places:
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.
 - Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat or Watch instead is a secondary Button among a panel's actions.
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
+  Beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat keeps its height; a phone's Players tab keeps it open.
 - Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
   It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
 - A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
@@ -230,6 +233,10 @@ Code differs from Figma on purpose in a few places:
 - A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
 - A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game among the seats: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board and the seats stay under it exactly as GM08 draws them.
+- A Draw & Guess sheet on a desktop keeps its 798 × 598 proportions in the height the window leaves below its top, never narrower than half its column, and stands centred in it, so the whole sheet and the chat's input are in sight at 1280 × 720 and 1440 × 900; D01 to D06 draw it the column's full width, taller than such a window.
+- A short screen wider than a phone, 500 px tall or less, as a phone turned on its side is, takes the Turn bar's Phone row, which Figma draws only at phone widths, and a game in play sits 12 px from the header.
+  There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact two to a row, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
+- A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 
 ## Editing the Figma file
