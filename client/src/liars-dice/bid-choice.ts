@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMessages, type Messages } from '../i18n';
 import {
   BID_FACES,
+  counts,
   smallestCountFor,
   smallestRaise,
   type Bid,
@@ -9,18 +10,45 @@ import {
 import type { BidPickerProps, DieFace } from '../ui';
 
 /**
+ * Where the picker opens: on the face you hold most of, your wild ones
+ * counted, at the smallest count that face may be bid at; on a tie, the
+ * higher face. Without dice of your own to go by, the smallest raise. Null
+ * when there is no raise left, only a call.
+ */
+export function openingBid(
+  previous: Bid | null,
+  diceOnTable: number,
+  mine: readonly number[],
+): Bid | null {
+  const open = BID_FACES.filter(
+    (face) => smallestCountFor(face, previous) <= diceOnTable,
+  );
+  if (mine.length === 0 || open.length === 0) {
+    return smallestRaise(previous, diceOnTable);
+  }
+  const held = (face: number) => mine.filter((die) => counts(die, face)).length;
+  const face = open.reduce((best, next) =>
+    held(next) >= held(best) ? next : best,
+  );
+  return { face, count: smallestCountFor(face, previous) };
+}
+
+/**
  * The picker's choice, kept to a raise: picking a face lifts the count to the
- * smallest that face allows, and Fewer stops there. It opens on the smallest
- * raise, and starts over whenever the bid in front of you changes.
+ * smallest that face allows, and Fewer stops there. It opens on your
+ * strongest face (`openingBid`), and starts over whenever the bid in front of
+ * you changes.
  */
 export function useBidChoice(
   previous: Bid | null,
   diceOnTable: number,
+  /** Your own dice this round, to open on what you hold. */
+  mine: readonly number[],
   onBid: (bid: Bid) => void,
 ): Omit<BidPickerProps, 'onCall' | 'className'> | null {
   const m = useMessages();
-  const key = previous ? `${previous.count}×${previous.face}` : 'open';
-  const opening = smallestRaise(previous, diceOnTable);
+  const key = `${previous ? `${previous.count}×${previous.face}` : 'open'}/${mine.join()}`;
+  const opening = openingBid(previous, diceOnTable, mine);
   const [choice, setChoice] = useState({ key, bid: opening });
   let bid = choice.bid;
   if (choice.key !== key) {

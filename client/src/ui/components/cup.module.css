@@ -85,3 +85,28 @@
 .slot {
   display: flex;
 }
+
+/* Dice just rolled give a short shake, done well before anybody bids. */
+@media (prefers-reduced-motion: no-preference) {
+  .rolled {
+    animation: roll 400ms ease-out;
+  }
+}
+
+@keyframes roll {
+  20% {
+    transform: rotate(-14deg);
+  }
+
+  45% {
+    transform: rotate(10deg);
+  }
+
+  70% {
+    transform: rotate(-5deg);
+  }
+
+  to {
+    transform: none;
+  }
+}

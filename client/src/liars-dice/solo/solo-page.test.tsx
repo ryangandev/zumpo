@@ -21,6 +21,13 @@ const { reseed } = (await import('./random')) as unknown as {
 };
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+/** The chip picked in a group of the table picker, by its name. */
+const picked = (group: string) => {
+  const chip = within(
+    screen.getByRole('radiogroup', { name: group }),
+  ).getByRole('radio', { checked: true });
+  return chip.getAttribute('aria-label') ?? chip.textContent;
+};
 
 let user: ReturnType<typeof userEvent.setup>;
 
@@ -50,9 +57,9 @@ describe('Liar’s Dice on your own', () => {
     });
     expect(router.state.location.pathname).toBe('/games/liars-dice/solo');
     expect(screen.getByText('Pick a table.')).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Bots' })).toHaveTextContent(
-      '3 bots',
-    );
+    expect(picked('Bots')).toBe('3 bots');
+    expect(picked('Dice each')).toBe('3 dice');
+    expect(screen.queryByText(/^Taken from/)).toBeNull();
 
     await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(screen.getByText('Round 1')).toBeInTheDocument();
@@ -64,7 +71,9 @@ describe('Liar’s Dice on your own', () => {
       name: string;
     };
     const yours = within(screen.getByRole('region', { name: `${name} (you)` }));
-    expect(yours.getAllByRole('img', { name: /^[1-6]$/ })).toHaveLength(3);
+    expect(
+      yours.getAllByRole('img', { name: /^[1-6](, wild)?$/ }),
+    ).toHaveLength(3);
     for (const cup of cups) {
       expect(
         within(cup).getAllByRole('img', { name: 'Hidden die' }),
@@ -99,12 +108,27 @@ describe('Liar’s Dice on your own', () => {
   it('offers the last table picked first', async () => {
     writePicks({ bots: 5, dicePerPlayer: 5 });
     await renderApp('/games/liars-dice/solo');
-    expect(screen.getByRole('combobox', { name: 'Bots' })).toHaveTextContent(
-      '5 bots',
-    );
+    expect(picked('Bots')).toBe('5 bots');
+    expect(picked('Dice each')).toBe('5 dice');
+    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
+  });
+
+  it('picks a table with one tap each', async () => {
+    await renderApp('/games/liars-dice/solo', { firstVisit: true });
+    await user.click(screen.getByRole('radio', { name: '1 bot' }));
+    await user.click(screen.getByRole('radio', { name: '5 dice' }));
+    expect(picked('Bots')).toBe('1 bot');
+    expect(screen.getByText('The classic: a longer game.')).toBeInTheDocument();
+    await user.click(screen.getByRole('radio', { name: '1 bot' }));
+    await user.keyboard('{ArrowRight}');
+    expect(picked('Bots')).toBe('2 bots');
+    expect(screen.getByRole('radio', { name: '2 bots' })).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(picked('Bots')).toBe('1 bot');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(
-      screen.getByRole('combobox', { name: 'Dice each' }),
-    ).toHaveTextContent('5 dice');
+      screen.getAllByRole('region', { name: /^(Pip|Juno|Otto|Remy|Wren)$/ }),
+    ).toHaveLength(1);
   });
 
   it('plays a game to its end, and keeps it on this device', async () => {
@@ -129,6 +153,10 @@ describe('Liar’s Dice on your own', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('The last call')).toBeInTheDocument();
     expect(readRecord().games).toBe(1);
+    // Only a win bursts into confetti.
+    expect(document.querySelector('canvas') !== null).toBe(
+      readRecord().wins === 1,
+    );
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(screen.getByText('Round 1')).toBeInTheDocument();
   });
@@ -142,6 +170,45 @@ describe('Liar’s Dice on your own', () => {
     }
     expect(turn().getByText('Your turn')).toBeInTheDocument();
     expect(screen.queryByRole('timer')).toBeNull();
+  });
+
+  it('asks before leaving a game under way, and not after it', async () => {
+    const { router } = await renderApp('/games/liars-dice/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Leave this game?' }),
+    );
+    expect(
+      dialog.getByText('This game ends here, and it is not counted.'),
+    ).toBeInTheDocument();
+    await user.click(dialog.getByRole('button', { name: 'Leave' }));
+    expect(router.state.location.pathname).toBe('/games/liars-dice');
+    expect(readRecord().games).toBe(0);
+  });
+
+  it('holds the bots while it asks before leaving, so staying costs nothing', async () => {
+    await renderApp('/games/liars-dice/solo');
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    for (let step = 0; step < 6; step++) {
+      if (screen.queryByRole('group', { name: 'Your bid' })) break;
+      await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    }
+    await user.click(screen.getAllByRole('button', { name: /^Bid / })[0]!);
+    const botsTurn = screen.getByRole('region', { name: 'Turn' }).textContent;
+
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS * 3));
+    const dialog = screen.getByRole('dialog', { name: 'Leave this game?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Stay' }));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).toBe(
+      botsTurn,
+    );
+
+    await act(() => vi.advanceTimersByTime(BOT_TURN_MS));
+    expect(screen.getByRole('region', { name: 'Turn' }).textContent).not.toBe(
+      botsTurn,
+    );
   });
 
   it('holds the bots while How to play is open', async () => {

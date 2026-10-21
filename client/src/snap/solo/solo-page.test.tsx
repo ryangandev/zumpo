@@ -22,6 +22,9 @@ const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const card = (name: string) =>
   within(screen.getByRole('group', { name: new RegExp(`^${name}`) }));
 const nameOf = (symbol: number) => en.ui.snap.symbol(symbol);
+/** A value on the side's This run card. */
+const stat = (label: string) =>
+  screen.getByText(label, { selector: 'dt' }).nextElementSibling?.textContent;
 
 let user: ReturnType<typeof userEvent.setup>;
 /** The run as the page plays it, to know where the match is. */
@@ -122,9 +125,43 @@ describe('Snap on your own', () => {
       }),
     ).toBeInTheDocument();
 
+    // The mark goes, but which card the symbol is on stays until the next tap.
     await pause(WRONG_FLASH_MS);
-    expect(turn().getByText('Spot the match')).toBeInTheDocument();
+    expect(
+      card('Middle card').queryByRole('button', { name: /, not a match$/ }),
+    ).toBeNull();
+    expect(turn().getByText('Not a match, +3 s')).toBeInTheDocument();
+    expect(
+      turn().getByText(en.snap.onlyOn(wrong, 'middle')),
+    ).toBeInTheDocument();
     expect(screen.getByText('1, +0:03')).toBeInTheDocument();
+    await user.click(
+      card('Middle card').getByRole('button', {
+        name: nameOf(matchNow(model)!),
+      }),
+    );
+    expect(turn().getByText('A match!')).toBeInTheDocument();
+    await pause(MATCH_FLASH_MS);
+    expect(turn().getByText('Spot the match')).toBeInTheDocument();
+  });
+
+  it('counts a taken card’s wrong tap once while the match is up', async () => {
+    await startRun();
+    const wrong = middleOf(model).find((s) => !model.mine.includes(s))!;
+    await user.click(
+      card('Middle card').getByRole('button', { name: nameOf(wrong) }),
+    );
+    await pause(WRONG_FLASH_MS);
+    expect(stat('Wrong taps')).toBe('1, +0:03');
+    await user.click(
+      card('Middle card').getByRole('button', {
+        name: nameOf(matchNow(model)!),
+      }),
+    );
+    expect(turn().getByText('A match!')).toBeInTheDocument();
+    expect(stat('Wrong taps')).toBe('1, +0:03');
+    await pause(MATCH_FLASH_MS);
+    expect(stat('Wrong taps')).toBe('1, +0:03');
   });
 
   it('ends after thirty cards, keeps the best and copies a challenge', async () => {

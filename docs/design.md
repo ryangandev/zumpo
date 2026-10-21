@@ -23,9 +23,9 @@ They are not copied here, so there is one place to change them.
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
 | 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px                                      |
 | 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone                                             |
-| 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 solo, PR05-PR08 room, PR09-PR10 phone                                       |
+| 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 and PR11 solo, PR05-PR08 room, PR09-PR10 phone                              |
 | 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone                                       |
-| 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 solo, LD07-LD12 room, LD13-LD15 phone                                       |
+| 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 and LD16 solo, LD07-LD12 room, LD13-LD15 phone                              |
 | 09 / Hush / complete flow            | `43:61072`  | HU01-HU09 room, HU10-HU11 phone                                                       |
 | 10 / Daily Word / complete flow      | `43:61073`  | DW01-DW06 solo, DW07-DW11 room, DW12-DW16 phone                                       |
 | 11 / Snap / complete flow            | `162:86002` | SN01-SN04 solo, SN05-SN09 and SN13 room, SN10 create, SN11-SN12 phone, SN14 game page |
@@ -112,6 +112,10 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
   Changing your name is not a way out: it happens in place, so it never asks.
   Mid-game the dialog names the points that go (P11); between games only the seat (P16).
 - While reconnecting the bar has no Leave room; the notice under it says what is happening (P07).
+- On your own the bar says On your own in place of the room, and Leave goes to the game's page, where the game starts again with other settings.
+  It asks first only where leaving throws away minutes of play: a Liar's Dice game under way, and a Trios run once a trio is found (LD16).
+  While it asks, the game's time stands still and the board is put away, as under How to play, so staying costs nothing.
+  A Pairs board, a Snap run and the puzzles leave at once: each is a minute or two to play again, and a question on every way out would cost more than it saves.
 - The room screens' hidden notice layers are gone; the visible notices, such as D10's pending one, stay.
 
 ### Names
@@ -194,6 +198,9 @@ Code differs from Figma on purpose in a few places:
   The invite link's box grows to the whole link: two lines at P12's width, three on a phone, which Figma does not draw.
 - A game that ends while the room is open bursts into confetti in the brand accents and the sun brush's gold, at Ryan's request; Figma draws the results still, and a game found finished on arrival or after a refresh is not celebrated.
   It stays off when the system asks for reduced motion, and a Hush game the team lost is not celebrated.
+  On your own the same confetti marks a new best on this device in Pairs, Trios and Snap, and a Liar's Dice win against the bots; a first finish is a new best too, so it is celebrated, and only a finish short of the best is not.
+- Pairs, Snap and Liar's Dice move a little, as the descriptions of `Zumpo/Pairs card`, `Zumpo/Snap card` and `Zumpo/Cup` say and Figma cannot draw: a card turned over flips open, the middle card you win slides into yours, and dice shake as a round starts.
+  Each takes 0.4 s or less, inside the moment a flash already stays up, and none moves when the system asks for reduced motion.
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
 - The footer carries a language switch, English and 中文 in the footer's small text, which the Figma file does not draw: the design is English, and the switch is the one control that lets a reader choose otherwise ([languages](architecture.md#languages)).
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.

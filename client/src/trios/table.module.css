@@ -41,6 +41,12 @@
   gap: var(--zumpo-space-12);
 }
 
+/* Out of sight, out of the tab order and the accessibility tree, but still
+   taking its room. */
+.hiddenTools {
+  visibility: hidden;
+}
+
 /* The turn bar's lines: what it says, and the meta under it. */
 .turnBar {
   --lines: 1;

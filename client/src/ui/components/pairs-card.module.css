@@ -15,6 +15,12 @@
   border-radius: var(--zumpo-radius-8);
 }
 
+.large {
+  width: 124px;
+  height: 124px;
+  border-radius: var(--zumpo-radius-16);
+}
+
 /* Face down reads as a Minesweeper cell nobody has opened. */
 .down {
   background: var(--zumpo-blue);
@@ -60,4 +66,23 @@
   z-index: 1;
   outline: 2px solid var(--zumpo-ink);
   outline-offset: 2px;
+}
+
+/* Turning a card over: it opens from edge on, about its middle, well inside
+   the second a miss stays up. A card turned back just goes. */
+@media (prefers-reduced-motion: no-preference) {
+  .up,
+  .matched {
+    animation: turn-over 250ms ease-out;
+  }
+}
+
+@keyframes turn-over {
+  from {
+    transform: perspective(600px) rotateY(90deg);
+  }
+
+  to {
+    transform: none;
+  }
 }

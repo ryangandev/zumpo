@@ -19,6 +19,9 @@ const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const table = () => within(screen.getByRole('group', { name: 'Table' }));
 /** The cards on the table, in their places. */
 const places = () => table().getAllByRole('button');
+/** A value on the side's This run card. */
+const stat = (label: string) =>
+  screen.getByText(label, { selector: 'dt' }).nextElementSibling?.textContent;
 const chineseCards = () =>
   within(screen.getByRole('group', { name: '牌桌' })).getAllByRole('button');
 
@@ -111,6 +114,33 @@ describe('Trios on your own', () => {
     expect(places()).toHaveLength(12);
   });
 
+  it('leaves for the game’s page, asking first once a trio is found', async () => {
+    const { router } = await startRun();
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    expect(router.state.location.pathname).toBe('/games/trios');
+
+    await act(() => router.navigate(`/games/trios/solo?seed=${SEED}`));
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await findTrio();
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    const dialog = within(
+      screen.getByRole('dialog', { name: 'Leave this game?' }),
+    );
+    expect(
+      dialog.getByText('This run ends here, and its time is not kept.'),
+    ).toBeInTheDocument();
+    expect(dialog.getByRole('button', { name: 'Stay' })).toHaveFocus();
+    await user.click(dialog.getByRole('button', { name: 'Stay' }));
+    expect(router.state.location.pathname).toBe('/games/trios/solo');
+    expect(turn().getByText('Trio 2 of 10')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'Leave' }),
+    );
+    expect(router.state.location.pathname).toBe('/games/trios');
+  });
+
   it('plays a challenge’s own deal', async () => {
     await renderApp(`/games/trios/solo?seed=${SEED}`);
     expect(
@@ -137,17 +167,55 @@ describe('Trios on your own', () => {
       table().getByRole('img', { name: `${cardName(t[0]!)}, not a trio` }),
     ).toBeInTheDocument();
 
+    // The cards go back, but why they were not a trio stays until the next pick.
     await pause(FLASH_MS);
-    expect(turn().getByText('Find a trio')).toBeInTheDocument();
+    expect(table().queryByRole('button', { name: /, not a trio$/ })).toBeNull();
+    expect(turn().getByText('Not a trio, +5 s')).toBeInTheDocument();
+    expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
     expect(screen.getByText('1, +0:05')).toBeInTheDocument();
+    await pause(5000);
+    expect(turn().getByText(/^Two (are|have) /)).toBeInTheDocument();
+    await pickPlaces([0]);
+    expect(turn().getByText('Pick two more')).toBeInTheDocument();
+  });
+
+  it('counts a found trio’s wrong pick and hints once while it is up', async () => {
+    await startRun();
+    const t = model.deal.table;
+    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0]!, t[1]!, t[c]!));
+    await pickPlaces([0, 1, third]);
+    await pause(FLASH_MS);
+    model = afterFlash(model, 0);
+    await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
+    await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
+
+    await pickPlaces(findTrios(model.deal.table)[0]!);
+    expect(turn().getByText('A trio!')).toBeInTheDocument();
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
+    await pause(FLASH_MS);
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
   });
 
   it('marks a card of a trio for 10 seconds, twice at most', async () => {
     await startRun();
     await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
     expect(table().getAllByRole('button', { name: /, hint$/ })).toHaveLength(1);
+    expect(
+      turn().getByText('One card of a trio is marked'),
+    ).toBeInTheDocument();
+    expect(
+      turn().getByText('Find the two that go with it'),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
     expect(table().getAllByRole('button', { name: /, hint$/ })).toHaveLength(2);
+    expect(
+      turn().getByText('Two cards of a trio are marked'),
+    ).toBeInTheDocument();
+    expect(turn().getByText('Find the third card')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Hint, +10 s' })).toBeNull();
     expect(turn().getByRole('timer')).toHaveTextContent(/^0:2[0-1]/);
   });

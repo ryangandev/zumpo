@@ -37,7 +37,8 @@ A game on your own needs no name, no room and no server: it runs in the browser.
   It also stops while **How to play** is open, and the cards are put away behind it until it closes; a miss stays up until then too.
 - Two cards that do not match turn back after **1 second**, or at once when you turn over another card.
 - **Turns** count every two cards turned over, pairs included.
-- After the last pair: the turns, the time, the longest streak of pairs found in a row, and the best on this device for each board.
+- After the last pair: the turns, the time, the longest streak of pairs found in a row, and the best on this device for each board, with Play again, Change board and Challenge a friend.
+- **Leave** goes to the game's page at once: a board is a minute or two to play again.
 - **Fewer turns is better; for the same turns, the quicker time is.**
   The best for each board is kept **on this device** (in `localStorage`).
 

@@ -28,7 +28,9 @@
   outline-offset: 2px;
 }
 
-.chip[aria-pressed='true'] {
+/* A filter chip is pressed; a chip in a Chip field is a checked radio. */
+.chip[aria-pressed='true'],
+.chip[data-checked] {
   border-color: var(--zumpo-ink);
   background: var(--zumpo-ink);
   color: var(--zumpo-cream);

@@ -8,7 +8,7 @@ import {
   Button,
   ButtonLink,
   Card,
-  SelectField,
+  ChipField,
   StatList,
   TurnBar,
   type TurnBarProps,
@@ -25,7 +25,6 @@ import { useBidChoice } from '../bid-choice';
 import { Table, type TableSeat } from '../table';
 import { bidLine, naming, revealBar, type Naming } from '../words';
 import {
-  BOT_NAMES,
   BOT_TURN_MS,
   bid,
   call,
@@ -125,18 +124,17 @@ function TablePicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
         </>
       }
     >
-      <SelectField
+      <ChipField
         label={m.liarsDice.solo.bots}
-        helper={m.liarsDice.solo.botsHelper(BOT_NAMES)}
         options={BOT_COUNTS.map((count) => ({
           value: count,
-          label: m.liarsDice.solo.botCount(count),
+          label: String(count),
+          name: m.liarsDice.solo.botCount(count),
         }))}
         value={picks.bots}
         onValueChange={(bots: number) => setPicks({ ...picks, bots })}
-        name="bots"
       />
-      <SelectField
+      <ChipField
         label={m.liarsDice.solo.diceEach}
         helper={
           picks.dicePerPlayer === 3
@@ -151,7 +149,6 @@ function TablePicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
         onValueChange={(dicePerPlayer: DicePerPlayer) =>
           setPicks({ ...picks, dicePerPlayer })
         }
-        name="dicePerPlayer"
       />
     </FormPage>
   );
@@ -218,6 +215,7 @@ function SoloTable({
     <SoloLayout
       gameType="liars-dice"
       time={over ? undefined : clock}
+      leaveWarning={over ? null : m.liarsDice.solo.leaveWarning}
       phase={
         over
           ? youWon(game)
@@ -229,6 +227,7 @@ function SoloTable({
         <>
           {over ? (
             <SoloResult
+              celebrate={youWon(game)}
               title={
                 youWon(game)
                   ? m.liarsDice.solo.wonIn(game.round)
@@ -271,6 +270,7 @@ function SoloTable({
           )}
           <Table
             seats={seatsOf(game, name)}
+            round={game.round}
             youId={YOU}
             dicePerPlayer={game.dicePerPlayer}
             turnId={game.turnId}
@@ -357,7 +357,8 @@ function YourMove({
 }) {
   const m = useMessages();
   const latest = currentBid(game);
-  const picker = useBidChoice(latest, diceOnTable(game), (raise) =>
+  const mine = game.seats.find((seat) => seat.id === YOU)?.dice ?? [];
+  const picker = useBidChoice(latest, diceOnTable(game), mine, (raise) =>
     onMove(bid(game, YOU, raise)),
   );
   const onCall = latest ? () => onMove(call(game, YOU)) : undefined;
@@ -385,7 +386,10 @@ function turnBar(game: SoloGame, m: Messages): TurnBarProps {
       label: m.liarsDice.yourTurn,
       kind: 'status',
       main: latest ? m.liarsDice.raiseOrCall : m.liarsDice.openBidding,
-      meta: bidMeta ?? m.liarsDice.onTable(diceOnTable(game)),
+      // What beats the bid in front of you, the raise rule in a line.
+      meta: latest
+        ? m.liarsDice.beat(latest)
+        : m.liarsDice.onTable(diceOnTable(game)),
     };
   }
   const bot = game.turnId ?? '';

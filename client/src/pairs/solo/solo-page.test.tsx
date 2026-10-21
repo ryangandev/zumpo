@@ -158,6 +158,8 @@ describe('Pairs on your own', () => {
     expect(
       screen.getByText('Your first Small board cleared on this device.'),
     ).toBeInTheDocument();
+    // A first clear is a new best too, so it is celebrated.
+    expect(document.querySelector('canvas')).not.toBeNull();
     expect(screen.getByText('Board cleared')).toBeInTheDocument();
     expect(screen.getByText('8 pairs in a row')).toBeInTheDocument();
     expect(
@@ -178,6 +180,53 @@ describe('Pairs on your own', () => {
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(turn().getByText('Turn 1')).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
+  });
+
+  it('celebrates a new best', async () => {
+    localStorage.setItem(
+      'zumpo:solo:best:pairs:Small',
+      JSON.stringify({ turns: 12, ms: 60_000 }),
+    );
+    await startChallenge();
+    for (const [a, b] of pairs) {
+      await flipCard(a!);
+      await flipCard(b!);
+    }
+    expect(screen.getByText(/^A new best on this device/)).toBeInTheDocument();
+    expect(document.querySelector('canvas')).not.toBeNull();
+  });
+
+  it('does not celebrate a board cleared short of the best', async () => {
+    localStorage.setItem(
+      'zumpo:solo:best:pairs:Small',
+      JSON.stringify({ turns: 4, ms: 30_000 }),
+    );
+    await startChallenge();
+    for (const [a, b] of pairs) {
+      await flipCard(a!);
+      await flipCard(b!);
+    }
+    expect(screen.queryByText(/^A new best on this device/)).toBeNull();
+    expect(document.querySelector('canvas')).toBeNull();
+  });
+
+  it('goes back to the boards from the end, and leaves without asking', async () => {
+    const { router } = await startChallenge();
+    for (const [a, b] of pairs) {
+      await flipCard(a!);
+      await flipCard(b!);
+    }
+    await user.click(screen.getByRole('button', { name: 'Change board' }));
+    expect(screen.getByText('Pick a board.')).toBeInTheDocument();
+    // A challenge is played once: every board is offered again.
+    expect(router.state.location.search).toBe('');
+    expect(screen.getByRole('radio', { name: /Large · 6 × 6/ })).toBeVisible();
+
+    await user.click(screen.getByRole('button', { name: 'Start' }));
+    await flipCard(0);
+    await user.click(screen.getByRole('button', { name: 'Leave' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(router.state.location.pathname).toBe('/games/pairs');
   });
 
   it('puts the pairs found on the turn bar on a phone', async () => {
