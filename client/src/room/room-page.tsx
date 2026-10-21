@@ -404,6 +404,7 @@ function SeatedRoom({
       seat,
       connection.chat,
       connection.canvas,
+      connection.drawings,
       socket,
       navigate,
       startGame,

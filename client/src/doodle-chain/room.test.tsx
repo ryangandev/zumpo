@@ -173,7 +173,7 @@ describe('a Doodle Chain room', () => {
 
     expect(turn().getByText('Draw this')).toBeInTheDocument();
     expect(turn().getByText('A turtle on a skateboard')).toBeInTheDocument();
-    expect(turn().getByText('Ryan describes it next.')).toBeInTheDocument();
+    expect(turn().getByText('Maya describes it next.')).toBeInTheDocument();
     expect(screen.getByLabelText('Drawing canvas')).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -256,7 +256,7 @@ describe('a Doodle Chain room', () => {
     expect(screen.getByText('Nothing to draw')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Leo left the game, so Leo’s chain skips this step and goes on to Ryan.',
+        'Leo left the game, so Leo’s chain skips this step and goes on to Maya.',
       ),
     ).toBeInTheDocument();
     expect(screen.queryByLabelText('Drawing canvas')).toBeNull();

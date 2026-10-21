@@ -147,7 +147,6 @@ export const doodleChain: typeof en = {
   sitsOut: '这一步轮空',
   passingStatus: '往下传',
   away: '离开',
-  awayBackIn: (seconds) => `离开 · ${seconds} 秒内可回来`,
   showing: '在揭晓传话',
   watching: '在看',
   favourite: '最受欢迎',

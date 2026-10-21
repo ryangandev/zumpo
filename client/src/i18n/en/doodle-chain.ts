@@ -184,7 +184,6 @@ export const doodleChain = {
   sitsOut: 'Sits this step out',
   passingStatus: 'Passing',
   away: 'Away',
-  awayBackIn: (seconds: number) => `Away · back in ${seconds}s`,
   showing: 'Showing the chains',
   watching: 'Watching',
   favourite: 'Crowd favourite',
