@@ -3,7 +3,7 @@ import { HeroArt } from '../games/hero-art';
 import { useMessages } from '../i18n';
 import { Page } from '../shell/page';
 import { PageHeading } from '../shell/page-heading';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { PHONE, SHORT_SCREEN, useMediaQuery } from '../shell/use-media-query';
 import styles from './home.module.css';
 
 /**
@@ -12,15 +12,18 @@ import styles from './home.module.css';
  */
 export default function HomePage() {
   const m = useMessages();
-  // A phone keeps shorter copy, so the games show sooner.
+  // A phone keeps shorter copy, so the games show sooner, and so does a
+  // phone on its side.
   const phone = useMediaQuery(PHONE);
+  const short = useMediaQuery(SHORT_SCREEN);
+  const compact = phone || short;
   return (
     <Page>
       <div className={styles.hero}>
         <PageHeading
-          eyebrow={phone ? m.home.eyebrowPhone : m.home.eyebrow}
+          eyebrow={compact ? m.home.eyebrowPhone : m.home.eyebrow}
           title={m.home.title}
-          subtitle={phone ? m.home.subtitlePhone : m.home.subtitle}
+          subtitle={compact ? m.home.subtitlePhone : m.home.subtitle}
           hero
         />
         {!phone && <HeroArt className={styles.art} />}
