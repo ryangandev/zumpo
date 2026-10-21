@@ -110,6 +110,7 @@ export const room: typeof en = {
   short: {
     ready: '准备好下一局了吗？',
     waitingFor: (names) => `等待 ${names}`,
+    areReady: (names) => `${names} 已准备`,
     standIn: (host) => `${host} 不在，由你开始`,
   },
   gameOver: '游戏结束。',

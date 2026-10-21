@@ -292,7 +292,7 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
   });
 
-  it('on a phone, says what the next game waits on in the turn bar, with only buttons under the board', async () => {
+  it('on a phone, says the next game’s colour and what it waits on in the turn bar, with only buttons under the board', async () => {
     onPhone();
     const results = gomokuState({
       owner: { username: 'Maya', playerId: 'p2' },
@@ -313,13 +313,20 @@ describe('a Gomoku room', () => {
     });
     const { update } = await renderSeated(results);
 
-    expect(turn().getByText('Ready for the next game?')).toBeInTheDocument();
+    // The same pair swaps colours: Ryan played Black, so White is next.
+    expect(turn().getByText('You play White next. Ready?')).toBeInTheDocument();
     expect(screen.queryByText(/^The next game starts once/)).toBeNull();
     expect(screen.getByRole('button', { name: 'Ready' })).toBeInTheDocument();
 
     update({ ...results, ready: [ME] });
-    expect(turn().getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(
+      turn().getByText('Waiting for Maya · you play White'),
+    ).toBeInTheDocument();
     expect(screen.queryByText(/^You’re ready\./)).toBeNull();
+
+    // A new pair's colours are drawn when the game starts.
+    update({ ...results, samePair: false });
+    expect(turn().getByText('Ready for the next game?')).toBeInTheDocument();
   });
 
   it('frees the seat of a player who left, and counts only the stones placed', async () => {
@@ -419,11 +426,11 @@ describe('a Gomoku room', () => {
     // Place stone is always there, live only once a faint stone is down,
     // and the turn bar says the second tap places it.
     expect(placeStone()).toBeDisabled();
-    expect(turn().queryByText('Tap again')).toBeNull();
+    expect(turn().queryByText('Tap again to place')).toBeNull();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([]);
     expect(placeStone()).toBeEnabled();
-    expect(turn().getByText('Tap again')).toBeInTheDocument();
+    expect(turn().getByText('Tap again to place')).toBeInTheDocument();
     await tap('F8');
     expect(fake.sentArgs('gomoku:place')).toEqual([['r1', F8]]);
   });

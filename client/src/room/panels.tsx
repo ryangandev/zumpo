@@ -403,9 +403,17 @@ function NextGame() {
  * What a finished game's actions would say in words, short, for a phone's
  * results turn bar to say instead (`ResultsActions` with `words={false}`):
  * who the next game waits on, or that it is starting. Null when there is
- * nothing to say.
+ * nothing to say. Its kind lets a game add to it: `ask` while the viewer has
+ * not said Ready, `wait` while they wait on others or others are ready.
  */
-export function useResultsNote(starting: boolean): string | null {
+export interface ResultsNote {
+  kind: 'ask' | 'wait' | 'other';
+  text: string;
+}
+
+const other = (text: string): ResultsNote => ({ kind: 'other', text });
+
+export function useResultsNote(starting: boolean): ResultsNote | null {
   const { state, playerId, canStart, isHost, starterName, spectating } =
     useRoomContext();
   const m = useMessages();
@@ -415,19 +423,26 @@ export function useResultsNote(starting: boolean): string | null {
       m,
     );
   if (canStart) {
-    if (starting) return m.room.starting;
+    if (starting) return other(m.room.starting);
     const ready = state.ready.filter(
       (id) => id !== playerId && state.playerList[id],
     );
-    if (ready.length > 0) return m.room.areReady(names(ready), ready.length);
-    return isHost ? null : m.room.short.standIn(state.owner.username);
+    if (ready.length > 0) {
+      return { kind: 'wait', text: m.room.short.areReady(names(ready)) };
+    }
+    return isHost ? null : other(m.room.short.standIn(state.owner.username));
   }
-  if (spectating) return m.room.short.waitingFor(starterName);
-  if (!state.ready.includes(playerId)) return m.room.short.ready;
+  if (spectating) return other(m.room.short.waitingFor(starterName));
+  if (!state.ready.includes(playerId)) {
+    return { kind: 'ask', text: m.room.short.ready };
+  }
   const waiting = waitingOn(state, state.ready).filter((id) => id !== playerId);
-  return m.room.short.waitingFor(
-    waiting.length > 0 ? names(waiting) : starterName,
-  );
+  return {
+    kind: 'wait',
+    text: m.room.short.waitingFor(
+      waiting.length > 0 ? names(waiting) : starterName,
+    ),
+  };
 }
 
 /**

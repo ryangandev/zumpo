@@ -131,6 +131,7 @@ export const room = {
   short: {
     ready: 'Ready for the next game?',
     waitingFor: (names: string) => `Waiting for ${names}`,
+    areReady: (names: string) => `${names} ready`,
     standIn: (host: string) => `${host} is away: you start`,
   },
   /** For the player the right to start passed to while the host is away or watching. */

@@ -267,8 +267,8 @@ Code differs from Figma on purpose in a few places:
 - Until `j-fig-5-chat-byline.js` runs and the tokens are exported, a chat line's sender is in Label, 14 px beside the 16 px message; the script adds the Zumpo/Body strong text style for it, which `chat-message.module.css` already asks for and takes once `--zumpo-text-body-strong` exists.
 - Until `j-fig-3-artwork-words.js` runs, `Zumpo/Game artwork`'s words are fixed text; code takes them from the catalog, so a Chinese page shows Doodle Chain's 乌龟 and 汉堡？.
 - Until `j-fig-6-mines-phone-turn.js` runs, MO11 and MO12 draw the board's tag in the Minesweeper turn bar; on a phone code leaves it out and says the mines short ("10 mines · 1 hit"), since the tag, the round and the mines do not fit one row at 360 px. The phone board also sits under the turn bar rather than centred in the height left, so the spare height is under it, where a round's results lie.
-- A phone's Gomoku results say what the next game waits on in the turn bar's meta, short ("Ready for the next game?", "Waiting for Maya"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
-  On a phone the in-play turn bar has no first-move meta, and a faint stone's meta is "Tap again", so nothing in its one row is cut beside the clock at 360 px.
+- A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
+  On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 
 ## Editing the Figma file
 

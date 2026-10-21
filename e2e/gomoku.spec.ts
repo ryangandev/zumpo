@@ -147,8 +147,9 @@ test('a phone puts a faint stone down first, and places it on a second tap', asy
     'H8, white stone, last placed',
   );
 
-  // After the game a guest's line about the next one is in the turn bar,
-  // and only buttons are under the board, which keeps its size and place.
+  // After the game a guest's line about the next one, with the colour they
+  // play in it, is in the turn bar, and only buttons are under the board,
+  // which keeps its size and place.
   const board = leo.getByRole('grid', { name: 'Gomoku board' });
   const during = (await board.boundingBox())!;
   await black.getByRole('button', { name: 'Resign' }).click();
@@ -156,7 +157,10 @@ test('a phone puts a faint stone down first, and places it on a second tap', asy
     .getByRole('dialog')
     .getByRole('button', { name: 'Resign' })
     .click();
-  await expect(turnOf(leo).getByText('Ready for the next game?')).toBeVisible();
+  const leoNext = leo === black ? 'White' : 'Black';
+  await expect(
+    turnOf(leo).getByText(`You play ${leoNext} next. Ready?`),
+  ).toBeVisible();
   await expect(
     leo.getByRole('button', { name: 'Ready', exact: true }),
   ).toBeVisible();

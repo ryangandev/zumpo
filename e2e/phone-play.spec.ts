@@ -302,7 +302,7 @@ for (const size of SIZES) {
       await expect(placeStone(black)).toBeDisabled();
 
       await pointOf(black, 'H8').tap();
-      await expect(turnOf(black).getByText('Tap again')).toBeVisible();
+      await expect(turnOf(black).getByText('Tap again to place')).toBeVisible();
       await expect(placeStone(black)).toBeEnabled();
       await blackStill('a faint stone down');
       await placeStone(black).click();
