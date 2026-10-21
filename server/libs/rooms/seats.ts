@@ -5,7 +5,12 @@ import type {
   RoomStatus,
   SpectatorInfo,
 } from '../../../shared/wire-types.js';
-import { heirOf, MAX_SPECTATORS, starterOf } from '../../../shared/room.js';
+import {
+  heirOf,
+  MAX_SPECTATORS,
+  mayStart,
+  starterOf,
+} from '../../../shared/room.js';
 import { getRemainingPhaseMs } from '../utils.js';
 import type { Room } from './types.js';
 
@@ -105,6 +110,7 @@ export {
   seatOf,
   isSpectator,
   heirOf,
+  mayStart,
   starterOf,
   lobbyBasics,
   roomBasics,

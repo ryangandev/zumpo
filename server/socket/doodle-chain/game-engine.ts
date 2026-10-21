@@ -4,7 +4,7 @@ import type {
   DoodleChainDraft,
   DoodleChainStepEnd,
 } from '../../models/types.js';
-import { departureFrom, starterOf } from '../../../shared/room.js';
+import { departureFrom, mayStart } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import {
   emitToPlayer,
@@ -321,7 +321,7 @@ const createDoodleChainGameEngine = (
    */
   const next = (roomId: string, playerId: string, total: number) => {
     const room = roomOf(roomId);
-    if (!room?.isGameStarted || starterOf(room) !== playerId) return;
+    if (!room?.isGameStarted || !mayStart(room, playerId)) return;
     const game = room.game;
     if (game.phase !== 'reveal' || !game.reveal) return;
     if (total !== revealTotal(game)) return;

@@ -152,6 +152,34 @@ describe('getting ready for the next game', () => {
     expect(room().owner.playerId).toBe(ryan.playerId);
   });
 
+  it('never lets a host who is watching start, change settings or say Ready', async () => {
+    harness = await startTestServer();
+    const ryan = await harness.connect();
+    const roomId = await createSnapRoom(ryan, { username: 'Ryan' });
+    // The only player goes to watch; then two others sit down.
+    expect(await request(ryan, 'room:watch', roomId)).toEqual({ ok: true });
+    const maya = await harness.connect();
+    const leo = await harness.connect();
+    await joinRoom(maya, roomId, 'Maya');
+    await joinRoom(leo, roomId, 'Leo');
+    const room = () => harness.server.rooms.get(roomId)!;
+    expect(room().spectators[ryan.playerId]).toBeDefined();
+
+    expect((await request(ryan, 'room:settings', roomId, {})).error?.type).toBe(
+      'notRoomOwner',
+    );
+    expect((await request(ryan, 'game:start', roomId)).error?.type).toBe(
+      'notRoomOwner',
+    );
+    expect((await request(ryan, 'room:ready', roomId, true)).error?.type).toBe(
+      'notRoomMember',
+    );
+    expect(room().isGameStarted).toBe(false);
+
+    // The first player at the table starts in their place.
+    expect(await request(maya, 'game:start', roomId)).toEqual({ ok: true });
+  });
+
   it('gives the right back to a host who returns', async () => {
     harness = await startTestServer(undefined, 5);
     const {

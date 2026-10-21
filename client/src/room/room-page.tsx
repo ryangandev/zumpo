@@ -21,7 +21,7 @@ import type {
   GameType,
   Result,
 } from '../../../shared/wire-types';
-import { starterOf } from '../../../shared/room';
+import { mayStart, starterOf } from '../../../shared/room';
 import { Button, ButtonLink, Card, TextField } from '../ui';
 import { gameInfo, gamePath, roomPath } from '../games/catalog';
 import { useMessages, type Messages } from '../i18n';
@@ -467,7 +467,7 @@ function SeatedRoom({
             me,
             spectating: !seat,
             isHost: state.owner.playerId === playerId,
-            canStart: starter === playerId,
+            canStart: mayStart(state, playerId),
             starterName: memberName(state, starter),
             becameHost:
               state.owner.playerId === playerId && startedBy !== playerId,

@@ -5,7 +5,7 @@ import {
   isSpectator,
   memberOf,
   roomStatus,
-  starterOf,
+  mayStart,
 } from './seats.js';
 import {
   joinRoomRequest,
@@ -311,7 +311,7 @@ const roomEventsHandler = (
 
     // What every game asks before it starts, asked once, here. The host
     // starts, or while they are away whoever the crown would pass to.
-    if (starterOf(room) !== playerId) {
+    if (!mayStart(room, playerId)) {
       reply(failure('notRoomOwner', 'Only the host can start the game.'));
       return;
     }
@@ -395,7 +395,7 @@ const roomEventsHandler = (
       reply(failure('roomNotExist', 'Room does not exist.'));
       return;
     }
-    if (starterOf(room) !== playerId) {
+    if (!mayStart(room, playerId)) {
       reply(failure('notRoomOwner', 'Only the host can change the game.'));
       return;
     }

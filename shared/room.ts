@@ -111,21 +111,32 @@ export function heirOf(
   );
 }
 
-/**
- * Who may start the next game and change its settings: the host while they
- * are here, and while they are away the player the crown would pass to, at
- * once rather than when the host's seat is given up. A room never waits on a
- * host who is not there.
- */
-export function starterOf(room: {
+type StartingRoom = {
   owner: { playerId: string };
   playerList: Readonly<Record<string, { isConnected: boolean }>>;
   spectators: Readonly<Record<string, { isConnected: boolean }>>;
-}): string {
+};
+
+/**
+ * Who may start the next game, change its settings and step a reveal: the
+ * host while they are here at the table, and otherwise (away, or watching)
+ * the player the crown would pass to, at once rather than when the host's
+ * seat is given up. A room never waits on a host who is not there. With
+ * nobody at the table here, the host is named, though they may do none of it
+ * from the spectator seats (`mayStart`).
+ */
+export function starterOf(room: StartingRoom): string {
   const { playerId } = room.owner;
-  const host = room.playerList[playerId] ?? room.spectators[playerId];
-  if (host?.isConnected) return playerId;
+  if (room.playerList[playerId]?.isConnected) return playerId;
   return heirOf(room, { playersOnly: true }) ?? playerId;
+}
+
+/**
+ * Whether `playerId` may start, change the settings and step a reveal now:
+ * they are the starter, and seated. A spectator never may.
+ */
+export function mayStart(room: StartingRoom, playerId: string): boolean {
+  return playerId in room.playerList && starterOf(room) === playerId;
 }
 
 /**
