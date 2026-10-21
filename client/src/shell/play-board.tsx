@@ -45,6 +45,7 @@ export function PlayBoard({
 }: PlayBoardProps) {
   const box = useRef<HTMLDivElement>(null);
   const piece = useRef<HTMLDivElement>(null);
+  const following = current !== undefined;
 
   useLayoutEffect(() => {
     const outer = box.current;
@@ -61,26 +62,25 @@ export function PlayBoard({
       const byHeight = height / neededHeight;
       const scale = Math.min(1, byWidth, Math.max(byHeight, min));
       if (scale < 1) inner.style.setProperty('zoom', String(scale));
-      outer.toggleAttribute('data-scroll', byHeight < min);
+      const scrolls = byHeight < min;
+      const began = scrolls && !outer.hasAttribute('data-scroll');
+      outer.toggleAttribute('data-scroll', scrolls);
+      // The row that made it scroll arrived before the board knew it would:
+      // bring it into view now.
+      if (began && following) keepInView(outer);
     };
     fit();
     const observer = new ResizeObserver(fit);
     observer.observe(outer);
     observer.observe(inner);
     return () => observer.disconnect();
-  }, [min, fitWidth]);
+  }, [min, fitWidth, following]);
 
   // A board that scrolls keeps the row being played in view.
   useLayoutEffect(() => {
     const outer = box.current;
     if (current === undefined || !outer?.hasAttribute('data-scroll')) return;
-    const target = outer.querySelector<HTMLElement>('[data-play-current]');
-    if (!target) return;
-    const room = outer.getBoundingClientRect();
-    const rect = target.getBoundingClientRect();
-    if (rect.top < room.top) outer.scrollTop -= room.top - rect.top;
-    else if (rect.bottom > room.bottom)
-      outer.scrollTop += rect.bottom - room.bottom;
+    keepInView(outer);
   }, [current]);
 
   return (
@@ -90,6 +90,17 @@ export function PlayBoard({
       </div>
     </div>
   );
+}
+
+/** Scrolls a board just enough to show its `data-play-current` whole. */
+function keepInView(outer: HTMLElement): void {
+  const target = outer.querySelector<HTMLElement>('[data-play-current]');
+  if (!target) return;
+  const room = outer.getBoundingClientRect();
+  const rect = target.getBoundingClientRect();
+  if (rect.top < room.top) outer.scrollTop -= room.top - rect.top;
+  else if (rect.bottom > room.bottom)
+    outer.scrollTop += rect.bottom - room.bottom;
 }
 
 /** Between a play screen's stage and its board: passes the height left on. */
