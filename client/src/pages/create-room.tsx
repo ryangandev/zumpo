@@ -1,4 +1,5 @@
-import { useRef, useState, type FormEvent } from 'react';
+import { useId, useRef, useState, type FormEvent } from 'react';
+import { flushSync } from 'react-dom';
 import { useNavigate } from 'react-router';
 import type {
   GameType,
@@ -27,9 +28,10 @@ import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { ConnectionLost } from '../shell/connection-lost';
 import { FormPage } from '../shell/form-page';
 import { Page } from '../shell/page';
+import { PageHeading } from '../shell/page-heading';
 import { Stage } from '../shell/stage';
 import { StatusLine } from '../shell/status-line';
-import { LobbyHeading, lobbyHeading } from './lobby-heading';
+import styles from './create-room.module.css';
 
 /** The server's limits. */
 const ROOM_NAME_MAX_LENGTH = 40;
@@ -41,7 +43,10 @@ const CODES = [1, 3] as const;
 
 /**
  * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, LD07, HU09,
- * DW11, DC02, GM07: a new room, with its settings.
+ * DW11, SN10, DC02, CB14, GM07: a new room. The game's own setting is in view
+ * and every other has a sensible default, so Create room is one click away;
+ * More options holds the room's name, its seats and a password. Hush's seats
+ * are its length, so they stay in view.
  */
 export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const game = gameInfo(gameType);
@@ -55,6 +60,8 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   );
   const [nameMissing, setNameMissing] = useState(false);
   const nameField = useRef<HTMLInputElement>(null);
+  const [more, setMore] = useState(false);
+  const moreId = useId();
   const [seats, setSeats] = useState(game.maxPlayers);
   const [rounds, setRounds] = useState(2);
   const [difficulty, setDifficulty] = useState<MinesweeperDifficulty>('Small');
@@ -76,7 +83,11 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
     if (pending) return;
     const trimmed = roomName.trim();
     if (!trimmed) {
-      setNameMissing(true);
+      // The name is under More options: open them to show what is wrong.
+      flushSync(() => {
+        setMore(true);
+        setNameMissing(true);
+      });
       nameField.current?.focus();
       return;
     }
@@ -124,31 +135,48 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
     setPending(false);
   };
 
-  const subtitle = m.createRoom.subtitle;
+  const title = m.createRoom.title(text.name);
   if (lost) {
     return (
       <Page>
-        <LobbyHeading game={game} subtitle={subtitle} />
+        <PageHeading title={title} subtitle={text.createDescription} />
         <Stage>
           <ConnectionLost />
         </Stage>
       </Page>
     );
   }
+
+  // Hush has no settings of its own: its length is its seats, so they stay
+  // in view. A room of exactly two, as Gomoku's, has no seats to pick.
+  const hasSeats = game.minPlayers < game.maxPlayers;
+  const seatsInView = gameType === 'hush';
+  const seatsField = hasSeats && (
+    <SelectField
+      label={m.createRoom.seats}
+      helper={
+        seatsInView
+          ? m.createRoom.hushSeatsHelper(
+              game.maxPlayers,
+              levelsFor(2),
+              levelsFor(game.maxPlayers),
+            )
+          : undefined
+      }
+      options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
+        value: count,
+        label: m.createRoom.players(count),
+      }))}
+      value={seats}
+      onValueChange={setSeats}
+      name="seats"
+    />
+  );
+
   return (
     <FormPage
-      heading={lobbyHeading(game, subtitle, m)}
-      phone={{
-        eyebrow: m.createRoom.eyebrow,
-        title: (
-          <>
-            {m.createRoom.titleLines[0]} <br />
-            {m.createRoom.titleLines[1]}
-          </>
-        ),
-        subtitle: m.createRoom.settings(text.name),
-      }}
-      title={m.createRoom.title}
+      phone={{ title, subtitle: text.createDescription }}
+      title={title}
       description={text.createDescription}
       onSubmit={submit}
       actions={
@@ -167,49 +195,10 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
           {failed === 'full' ? m.createRoom.full : m.createRoom.failed}
         </Notice>
       )}
-      <TextField
-        label={m.createRoom.roomName}
-        ref={nameField}
-        helper={m.createRoom.nameHelper(ROOM_NAME_MAX_LENGTH)}
-        error={nameMissing ? m.createRoom.nameMissing : undefined}
-        value={roomName}
-        onValueChange={(next: string) => {
-          setRoomName(next);
-          if (nameMissing && next.trim()) setNameMissing(false);
-        }}
-        maxLength={ROOM_NAME_MAX_LENGTH}
-        autoComplete="off"
-        name="roomName"
-      />
-      {/* A room of exactly two, as Gomoku's, has no seats to pick. */}
-      {game.minPlayers < game.maxPlayers && (
-        <SelectField
-          label={m.createRoom.seats}
-          helper={
-            gameType === 'hush'
-              ? // Hush has no settings of its own; its length is its seats.
-                m.createRoom.hushSeatsHelper(
-                  game.maxPlayers,
-                  levelsFor(2),
-                  levelsFor(game.maxPlayers),
-                )
-              : m.createRoom.seatsHelper(game.minPlayers, game.maxPlayers)
-          }
-          options={seatCounts(game.minPlayers, game.maxPlayers).map(
-            (count) => ({
-              value: count,
-              label: m.createRoom.players(count),
-            }),
-          )}
-          value={seats}
-          onValueChange={setSeats}
-          name="seats"
-        />
-      )}
+      {seatsInView && seatsField}
       {gameType === 'draw-and-guess' ? (
         <SelectField
           label={m.createRoom.rounds}
-          helper={m.createRoom.roundsHelper}
           options={ROUNDS.map((count) => ({
             value: count,
             label: m.createRoom.roundCount(count),
@@ -259,7 +248,6 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
       ) : gameType === 'trios' ? (
         <SelectField
           label={m.createRoom.trios}
-          helper={m.createRoom.triosHelper}
           options={TRIOS_LENGTHS.map((count) => ({
             value: count,
             label: m.createRoom.trioCount(count),
@@ -318,16 +306,44 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
           name="board"
         />
       ) : null}
-      <TextField
-        label={m.createRoom.password}
-        helper={m.createRoom.passwordHelper(PASSWORD_MAX_LENGTH)}
-        type="password"
-        value={password}
-        onValueChange={(next: string) => setPassword(next)}
-        maxLength={PASSWORD_MAX_LENGTH}
-        autoComplete="new-password"
-        name="password"
-      />
+      {/* While the room is being made, nothing more is to be chosen. */}
+      {!pending && (
+        <Button
+          variant="quiet"
+          icon="chevron-down"
+          className={styles.moreButton}
+          aria-expanded={more}
+          aria-controls={moreId}
+          onClick={() => setMore(!more)}
+        >
+          {m.createRoom.moreOptions}
+        </Button>
+      )}
+      <div id={moreId} className={styles.more} hidden={!more}>
+        <TextField
+          label={m.createRoom.roomName}
+          ref={nameField}
+          error={nameMissing ? m.createRoom.nameMissing : undefined}
+          value={roomName}
+          onValueChange={(next: string) => {
+            setRoomName(next);
+            if (nameMissing && next.trim()) setNameMissing(false);
+          }}
+          maxLength={ROOM_NAME_MAX_LENGTH}
+          autoComplete="off"
+          name="roomName"
+        />
+        {!seatsInView && seatsField}
+        <TextField
+          label={m.createRoom.password}
+          type="password"
+          value={password}
+          onValueChange={(next: string) => setPassword(next)}
+          maxLength={PASSWORD_MAX_LENGTH}
+          autoComplete="new-password"
+          name="password"
+        />
+      </div>
       {pending && <StatusLine>{m.createRoom.creating}</StatusLine>}
     </FormPage>
   );

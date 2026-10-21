@@ -14,7 +14,6 @@ import { SessionProvider } from './net/session';
 import CreateRoomPage from './pages/create-room';
 import GamePage from './pages/game';
 import HomePage from './pages/home';
-import HowToPlayPage from './pages/how-to-play';
 import NotFoundPage from './pages/not-found';
 import CrashedPage from './pages/crashed';
 import RoomPage from './room/room-page';
@@ -60,9 +59,10 @@ export const routes: RouteObject[] = [
         errorElement: <CrashedPage />,
         children: [
           { path: '/', element: <HomePage /> },
-          { path: '/how-to-play', element: <HowToPlayPage /> },
           // Every game is on the home page; old links to the games page land there.
           { path: '/games', element: <Navigate to="/" replace /> },
+          // Each game's rules are on its page now; old links land on the games.
+          { path: '/how-to-play', element: <Navigate to="/" replace /> },
           { path: '/games/:game', element: <GameRoute page={GamePage} /> },
           {
             path: '/games/:game/new',

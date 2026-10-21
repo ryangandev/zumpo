@@ -9,7 +9,7 @@ import type { Messages } from '../i18n';
 export type GameKind = 'party' | 'puzzles' | 'spot-and-remember' | 'strategy';
 
 /** The kinds, alphabetically; what each says of itself is in the catalog. */
-export const GAME_KINDS: readonly GameKind[] = [
+const KINDS: readonly GameKind[] = [
   'party',
   'puzzles',
   'spot-and-remember',
@@ -95,6 +95,19 @@ export const GAMES: readonly GameInfo[] = ENTRIES.map((game) => ({
   maxPlayers: SEATS[game.type].max,
 }));
 
+/**
+ * The kinds in the order the home page lists them: first the kinds whose every
+ * game can be played on your own, because most visits are one person who
+ * wants to play now, then the rest; alphabetically within each.
+ */
+export const GAME_KINDS: readonly GameKind[] = KINDS.toSorted(
+  (a, b) => Number(!allSolo(a)) - Number(!allSolo(b)),
+);
+
+function allSolo(kind: GameKind): boolean {
+  return GAMES.every((game) => game.kind !== kind || game.solo);
+}
+
 /** A kind's games, alphabetically by their names in the player's language. */
 export function gamesOfKind(
   kind: GameKind,
@@ -107,7 +120,7 @@ export function gamesOfKind(
 }
 
 export function isGameKind(value: string | null): value is GameKind {
-  return GAME_KINDS.some((kind) => kind === value);
+  return KINDS.some((kind) => kind === value);
 }
 
 export function gameInfo(type: GameType): GameInfo {
