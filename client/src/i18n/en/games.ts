@@ -17,7 +17,7 @@ export interface GameText {
   /** The lobby's "How to play" card: a summary, then one fact per line. */
   lobbySummary: string;
   lobbyFacts: readonly string[];
-  /** The rules page's full text; blank lines separate paragraphs. */
+  /** Every rule, under Full rules on the game's page; blank lines separate paragraphs. */
   rules: string;
   /** The create-room card's description. */
   createDescription: string;
@@ -51,7 +51,15 @@ export const games = {
   solo: 'Solo',
   /** The ways into a game. */
   playSolo: 'Play solo',
-  findRoom: 'Find a room',
+  /** Where today's puzzle of a daily game stands, in place of Solo. */
+  today: {
+    guess: (guess: number, of: number) => `Guess ${guess} of ${of}`,
+    done: 'Done today',
+    /** On the game's page, beside its Continue or See today's result. */
+    doneStreak: (days: number) => `Done today · ${days}-day streak`,
+    continue: 'Continue',
+    seeResult: 'See today’s result',
+  },
   /** The setting a room was made with, counted: "2 rounds", "10 hands". */
   counts: <Record<CountedGame, (count: number) => string>>{
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
@@ -68,7 +76,7 @@ export const games = {
     'draw-and-guess': {
       name: 'Draw & Guess',
       tagline: 'One draws. Everyone else tries to get there first.',
-      facts: '2–8 players · 1–4 rounds',
+      facts: '2–8 players',
       lobbySummary:
         'Take turns drawing a word while everyone else races to guess it in the chat. Faster guesses score more.',
       lobbyFacts: [
