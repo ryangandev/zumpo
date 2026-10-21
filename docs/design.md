@@ -105,6 +105,7 @@ Decisions from the design review rounds (their reports are in git history):
 - Example data follows one story with four players (Maya, Ryan, Leo, Sam), each with a fixed avatar colour, and every score is computed with the real formula.
 - Text on a tinted surface (peach, blue, lime) is ink; muted text is only for cream, paper and sand, where it passes WCAG AA.
 - Keyboard focus is a 2 px ink ring 2 px outside the control, distinct from hover's border.
+  A focus moved by script, as a game starts, a result comes, a page is gone to or How to play opens on its title, draws no ring until the next key (`focusQuietly`), so a touch or a click never leaves a frame nobody asked for.
 - A line of metadata has at most one middle dot.
 - An icon beside text is centred on the text's first line, never top-aligned: a leading icon sits in a slot one line-height tall (`height: 1lh` in code), so a wrapped message keeps it level with line one.
   Trailing indicators, like the check on a selected option, centre on the whole row.

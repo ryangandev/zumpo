@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useRef, type ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { onTouch } from '../tests/phone';
+import { LANDING } from './quiet-focus';
 import { useStartFocus } from './use-start-focus';
 
 /** A stage with whatever controls a test gives it, and a chat and a dialog. */
@@ -145,15 +146,51 @@ describe('useStartFocus', () => {
     expect(screen.getByRole('group', { name: 'Board' })).toHaveFocus();
   });
 
+  it('holds the focus on the turn while there is no control, then gives it to the first', () => {
+    const turn = (
+      <section aria-label="Turn" tabIndex={-1} data-start-fallback>
+        Maya is choosing a word
+      </section>
+    );
+    const { rerender } = render(<Stage started controls={turn} />);
+    expect(screen.getByRole('region', { name: 'Turn' })).toHaveFocus();
+
+    rerender(
+      <Stage
+        started
+        controls={
+          <>
+            {turn}
+            <button>Apple</button>
+          </>
+        }
+      />,
+    );
+    expect(screen.getByRole('button', { name: 'Apple' })).toHaveFocus();
+  });
+
+  it('takes the focus from the heading a page landed on', () => {
+    const { rerender } = render(<Stage started={false} controls={card} />);
+    const heading = document.createElement('h1');
+    heading.tabIndex = -1;
+    heading.setAttribute(LANDING, '');
+    document.body.prepend(heading);
+    heading.focus();
+
+    rerender(<Stage started controls={card} />);
+    expect(screen.getByRole('button', { name: 'Card' })).toHaveFocus();
+    heading.remove();
+  });
+
   it('hands the focus over on a touch screen too, its ring hidden until a key', () => {
     onTouch();
     render(<Stage started controls={card} />);
     const button = screen.getByRole('button', { name: 'Card' });
     expect(button).toHaveFocus();
-    expect(button).toHaveAttribute('data-start-quiet');
+    expect(button).toHaveAttribute('data-quiet-focus');
 
     // The first key shows where the focus is.
     fireEvent.keyDown(window, { key: 'Tab' });
-    expect(button).not.toHaveAttribute('data-start-quiet');
+    expect(button).not.toHaveAttribute('data-quiet-focus');
   });
 });
