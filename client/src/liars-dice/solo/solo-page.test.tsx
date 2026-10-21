@@ -72,7 +72,9 @@ describe('Liar’s Dice on your own', () => {
       name: string;
     };
     const yours = within(screen.getByRole('region', { name: `${name} (you)` }));
-    expect(yours.getAllByRole('img', { name: /^[1-6]$/ })).toHaveLength(3);
+    expect(
+      yours.getAllByRole('img', { name: /^[1-6](, wild)?$/ }),
+    ).toHaveLength(3);
     for (const cup of cups) {
       expect(
         within(cup).getAllByRole('img', { name: 'Hidden die' }),
