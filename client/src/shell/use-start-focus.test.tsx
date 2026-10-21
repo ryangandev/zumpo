@@ -145,9 +145,15 @@ describe('useStartFocus', () => {
     expect(screen.getByRole('group', { name: 'Board' })).toHaveFocus();
   });
 
-  it('leaves the focus alone on a touch screen, which has no keys to send', () => {
+  it('hands the focus over on a touch screen too, its ring hidden until a key', () => {
     onTouch();
     render(<Stage started controls={card} />);
-    expect(document.body).toHaveFocus();
+    const button = screen.getByRole('button', { name: 'Card' });
+    expect(button).toHaveFocus();
+    expect(button).toHaveAttribute('data-start-quiet');
+
+    // The first key shows where the focus is.
+    fireEvent.keyDown(window, { key: 'Tab' });
+    expect(button).not.toHaveAttribute('data-start-quiet');
   });
 });

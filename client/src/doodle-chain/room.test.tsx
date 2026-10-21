@@ -135,14 +135,14 @@ describe('a Doodle Chain room', () => {
 
   it('starts a touch screen with the focus off the line, so its keyboard stays down', async () => {
     // A touch screen's line is not focused for it, as a desktop's is, and
-    // the start leaves the focus where it is: there are no keys to send.
+    // the start's own focus passes over it too.
     onTouch();
     const { update } = await renderSeated(doodleChainState());
 
     update(writing);
     const field = screen.getByRole('textbox', { name: 'Your first line' });
     expect(field).not.toHaveFocus();
-    expect(document.activeElement).toBe(document.body);
+    expect(document.activeElement).not.toBe(document.body);
   });
 
   it('writes the first line, sends it as it is typed, and is done with it', async () => {
