@@ -111,3 +111,61 @@
   width: 76.8px;
   height: 51.2px;
 }
+
+/* A corner of a Gomoku board: 36 px points on peach, the lines through
+   their middles, with --pad of board before the first. */
+.boardCrop {
+  --cell: calc(var(--zumpo-space-32) + var(--zumpo-space-4));
+  --at: calc(var(--pad) + var(--cell) / 2 - 0.5px);
+
+  position: relative;
+  display: grid;
+  flex: none;
+  grid-auto-columns: var(--cell);
+  grid-auto-rows: var(--cell);
+  align-content: start;
+  box-sizing: border-box;
+  padding: var(--pad);
+  overflow: hidden;
+  background:
+    linear-gradient(to right, var(--zumpo-muted) 1px, transparent 1px) var(--at)
+      0 / var(--cell) 100%,
+    linear-gradient(to bottom, var(--zumpo-muted) 1px, transparent 1px) 0
+      var(--at) / 100% var(--cell),
+    var(--zumpo-peach);
+}
+
+.spot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The tile's crop: two rows of seven points, the first 27 px in. */
+.gomoku {
+  --pad: 9px;
+
+  width: 234px;
+  height: 90px;
+  border-radius: var(--zumpo-radius-12);
+}
+
+/* Zumpo/Win line through the five, from edge to edge of its end stones. */
+.gomokuLine {
+  position: absolute;
+  top: calc(var(--pad) + var(--cell) / 2 - var(--zumpo-space-6) / 2);
+  left: calc(var(--pad) + (var(--cell) - var(--zumpo-space-32)) / 2);
+  width: calc(4 * var(--cell) + var(--zumpo-space-32));
+  height: var(--zumpo-space-6);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-coral);
+}
+
+/* The icon's crop: two points by two, filling the icon. */
+.iconGomoku {
+  --pad: var(--zumpo-space-4);
+
+  width: 100%;
+  height: 100%;
+  border-radius: var(--zumpo-radius-16);
+}

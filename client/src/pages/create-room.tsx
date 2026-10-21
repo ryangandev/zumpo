@@ -40,7 +40,7 @@ const WORDS = [3, 5] as const;
 
 /**
  * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, LD07, HU09,
- * DW11, DC02: a new room, with its settings.
+ * DW11, DC02, GM07: a new room, with its settings.
  */
 export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const game = gameInfo(gameType);
@@ -177,26 +177,29 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
         autoComplete="off"
         name="roomName"
       />
-      <SelectField
-        label={m.createRoom.seats}
-        helper={
-          gameType === 'hush'
-            ? // Hush has no settings of its own; its length is its seats.
-              m.createRoom.hushSeatsHelper(
-                game.maxPlayers,
-                levelsFor(2),
-                levelsFor(game.maxPlayers),
-              )
-            : m.createRoom.seatsHelper(game.minPlayers, game.maxPlayers)
-        }
-        options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
-          value: count,
-          label: m.createRoom.players(count),
-        }))}
-        value={seats}
-        onValueChange={setSeats}
-        name="seats"
-      />
+      {/* A room of exactly two, as Gomoku's, has no seats to pick. */}
+      {game.minPlayers < game.maxPlayers && (
+        <SelectField
+          label={m.createRoom.seats}
+          helper={
+            gameType === 'hush'
+              ? // Hush has no settings of its own; its length is its seats.
+                m.createRoom.hushSeatsHelper(
+                  game.maxPlayers,
+                  levelsFor(2),
+                  levelsFor(game.maxPlayers),
+                )
+              : m.createRoom.seatsHelper(game.minPlayers, game.maxPlayers)
+          }
+          options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
+            value: count,
+            label: m.createRoom.players(count),
+          }))}
+          value={seats}
+          onValueChange={setSeats}
+          name="seats"
+        />
+      )}
       {gameType === 'draw-and-guess' ? (
         <SelectField
           label={m.createRoom.rounds}

@@ -1,0 +1,111 @@
+/* Zumpo/Gomoku board: 15 points of --cell a side inside --pad of peach. A
+   point is 36 px on a desktop and 22 px on a phone, or less where the column
+   is narrower, and a stone is 4 px less than its point. */
+.frame {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.board {
+  --cell: min(
+    var(--zumpo-space-32) + var(--zumpo-space-4),
+    (100cqi - 2 * var(--pad)) / 15
+  );
+  --pad: var(--zumpo-space-12);
+  --stone: calc(var(--cell) - var(--zumpo-space-4));
+  --star: var(--zumpo-space-6);
+  --line: var(--zumpo-space-6);
+
+  position: relative;
+  box-sizing: border-box;
+  width: calc(15 * var(--cell) + 2 * var(--pad));
+  padding: var(--pad);
+  border-radius: var(--zumpo-radius-16);
+  background: var(--zumpo-peach);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.small {
+  --cell: min(
+    var(--zumpo-space-18) + var(--zumpo-space-4),
+    (100cqi - 2 * var(--pad)) / 15
+  );
+  --pad: var(--zumpo-space-10);
+  --star: var(--zumpo-space-4);
+  --line: var(--zumpo-space-4);
+
+  border-radius: var(--zumpo-radius-12);
+}
+
+/* The lines: 1 px through the middle of every point. */
+.lines {
+  position: absolute;
+  top: calc(var(--pad) + var(--cell) / 2 - 0.5px);
+  left: calc(var(--pad) + var(--cell) / 2 - 0.5px);
+  width: calc(14 * var(--cell) + 1px);
+  height: calc(14 * var(--cell) + 1px);
+  background:
+    repeating-linear-gradient(
+      to right,
+      var(--zumpo-muted) 0 1px,
+      transparent 1px var(--cell)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--zumpo-muted) 0 1px,
+      transparent 1px var(--cell)
+    );
+  pointer-events: none;
+}
+
+.row {
+  display: flex;
+}
+
+.point {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  height: var(--cell);
+  outline: none;
+}
+
+.open {
+  cursor: pointer;
+}
+
+.star {
+  width: var(--star);
+  height: var(--star);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-ink);
+}
+
+/* Zumpo/Point focus: 2 px of ink outside a stone's circle. */
+.point:focus-visible::after {
+  position: absolute;
+  width: var(--stone);
+  height: var(--stone);
+  border-radius: var(--zumpo-radius-999);
+  box-shadow: 0 0 0 var(--zumpo-space-2) var(--zumpo-ink);
+  content: '';
+}
+
+.winLine {
+  position: absolute;
+  top: calc(var(--pad) + (var(--row) + 0.5) * var(--cell) - var(--line) / 2);
+  left: calc(
+    var(--pad) + (var(--column) + 0.5) * var(--cell) - var(--stone) / 2
+  );
+  width: calc(var(--span) * var(--cell) + var(--stone));
+  height: var(--line);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-coral);
+  transform: rotate(var(--angle));
+  transform-origin: calc(var(--stone) / 2) 50%;
+  pointer-events: none;
+}

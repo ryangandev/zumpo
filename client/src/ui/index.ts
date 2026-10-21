@@ -59,6 +59,12 @@ export {
   type DrawingToolbarProps,
 } from './components/drawing-toolbar';
 export { FilterChip, type FilterChipProps } from './components/filter-chip';
+export { GomokuBoard, type GomokuBoardProps } from './components/gomoku-board';
+export {
+  GomokuSeat,
+  type GomokuSeatProps,
+  type GomokuSeatState,
+} from './components/gomoku-seat';
 export {
   Header,
   type HeaderLink,
@@ -160,6 +166,12 @@ export {
   type SnapSpotMark,
 } from './components/snap-card';
 export { SnapSymbol, type SnapSymbolProps } from './components/snap-symbol';
+export {
+  Stone,
+  type StoneColor,
+  type StoneMark,
+  type StoneProps,
+} from './components/stone';
 export { StatList, type Stat } from './components/stat-list';
 export { Tag, type TagProps, type TagTone } from './components/tag';
 export { TextField, type TextFieldProps } from './components/text-field';

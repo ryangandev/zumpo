@@ -28,7 +28,7 @@ export interface GameText {
 }
 
 /** A game whose room setting is a count, not a board. */
-export type CountedGame = Exclude<GameType, 'minesweeper' | 'pairs'>;
+export type CountedGame = Exclude<GameType, 'minesweeper' | 'pairs' | 'gomoku'>;
 
 export const games = {
   kinds: {
@@ -41,6 +41,7 @@ export const games = {
       name: 'Spot & remember',
       about: 'Sharp eyes and a good memory.',
     },
+    strategy: { name: 'Strategy', about: 'Think a few moves ahead.' },
   } satisfies Record<GameKind, { name: string; about: string }>,
   /** The filter chips' group, and its first chip. */
   kindOfGame: 'Kind of game',
@@ -384,6 +385,36 @@ On your own, there is one word a day, the same for everybody, and a new one at y
         ],
       },
       score: (points) => plural(points, 'point'),
+    },
+    gomoku: {
+      name: 'Gomoku',
+      tagline: 'Take turns placing stones. Five in a row wins.',
+      facts: '2 players',
+      lobbySummary:
+        'Take turns placing a stone on any empty point. The first to make five in a row, across, down or diagonally, wins.',
+      lobbyFacts: [
+        '2 players, and up to 5 watching',
+        'Black moves first; colours swap every game',
+        '30s a move; run out twice in a row and you lose',
+        'A full board is a draw',
+      ],
+      rules: `2 players · a 15 × 15 board
+
+Black and White take turns placing one stone on any empty point, Black first. The first to make five or more in a row, across, down or diagonally, wins. A full board with no five is a draw.
+
+You have 30 seconds a move; run out and the turn passes, and miss two turns in a row and you lose the game. You can resign at any time. Colours are drawn for the first game and swap every game after it, and every game won is a point. Up to 5 more can watch.
+
+On your own, play the computer at Easy, Medium or Hard, as Black or White. Your wins are kept on this device.`,
+      createDescription:
+        'Two players take turns, black first, and five in a row wins. Up to five more can watch.',
+      solo: {
+        summary: 'Take turns placing stones. Five in a row wins.',
+        facts: [
+          'Against the computer: Easy, Medium or Hard',
+          'No clock: your turn waits for you',
+        ],
+      },
+      score: (wins) => plural(wins, 'win'),
     },
   },
 };
