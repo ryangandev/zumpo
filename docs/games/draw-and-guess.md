@@ -97,7 +97,7 @@ Chat is also where guesses arrive, so every message passes the game before it is
   During word select and drawing, nothing the drawer types is shown to anyone, because anything they type could be the word or a hint at it.
   They can talk again in the review phase and between games.
 - **During drawing, a guesser's message is a guess.**
-  A correct one is never shown: it is scored, and the room is told `<name> guessed the correct word! (+<points>)` as a `success` message.
+  A correct one is never shown: it is scored, and the room is told `<name> guessed the word, +<points>.` as a `success` message.
   A wrong one is ordinary chat.
 - **A player who has scored is silent until the next turn starts**, the review phase included, because they know the word and could type it.
 - **Everyone else may say anything in the other phases**, spectators included.

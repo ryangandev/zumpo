@@ -40,7 +40,7 @@ test('two players race for trios until the game is over', async ({
     await expect(page.getByText('1 of 10 trios')).toBeVisible();
   }
   await expect(leo.getByText('Last trio: Maya')).toBeVisible();
-  await expect(leo.getByText('Maya found a trio! (+1)')).toBeVisible();
+  await expect(leo.getByText('Maya found a trio, +1.')).toBeVisible();
 
   // Maya takes six in all and Leo four; the lockout is long over by then.
   for (let trio = 2; trio <= 10; trio++) {

@@ -123,7 +123,7 @@ export const gomoku: typeof en = {
     fromTo: (from, to) => `从 ${from} 到 ${to}`,
     takeBack: '悔棋',
     changeLevel: '换难度',
-    onDevice: '这台设备上',
+    onDevice: '本机记录',
     gamesWonAt: (level) => `${level}难度胜局`,
     gamesWonCount: (wins, games) => `${games} 局胜 ${wins}`,
     currentRun: '当前连胜',

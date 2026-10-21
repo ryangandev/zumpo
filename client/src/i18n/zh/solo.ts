@@ -9,7 +9,7 @@ export const solo: typeof en = {
   cancel: '取消',
   linkCopied: '链接已复制',
   challenge: '挑战',
-  challengeFriend: '挑战朋友',
+  challengeFriend: '挑战好友',
   copyChallengeLink: '复制挑战链接',
   today: '今天',
   yesterday: '昨天',

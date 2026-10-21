@@ -352,9 +352,7 @@ export async function playSolo(page: Page, game: string) {
   ).toBeVisible();
   // The rooms, or that there are none, arrive: the page has subscribed.
   await expect(
-    page
-      .getByText('Updates live')
-      .or(page.getByText('A little quiet in here.')),
+    page.getByText('Updates live').or(page.getByText('No rooms yet.')),
   ).toBeVisible();
   await page.getByRole('link', { name: 'Play solo' }).click();
   // Left, the page's last word is that it no longer wants the rooms.

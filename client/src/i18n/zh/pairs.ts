@@ -24,7 +24,7 @@ export const pairs: typeof en = {
   waitingRoom: '等待室',
   messagePlaceholder: '说点什么…',
   resultsDetail: (board, total) => `${SIZES[board]}棋盘，${total} 对。`,
-  aloneTitle: '叫上朋友更好玩。',
+  aloneTitle: '叫上好友更好玩。',
   setup: (players, board) =>
     `${players} 人，${board}。轮流翻两张牌，找到一对就继续翻。`,
   guestSetup: (players, board) => `${players} 人，${board}。`,
@@ -68,7 +68,7 @@ export const pairs: typeof en = {
     changeBoard: '换个棋盘',
     bestOnDevice: '本机最佳成绩',
     challengeDescription: (turns) =>
-      `朋友拿到相同的牌，挑战你的 ${turns} 次翻牌成绩。`,
+      `好友拿到相同的牌，挑战你的 ${turns} 次翻牌成绩。`,
     thisGame: '本局',
     pairs: '配对数',
     pairProgress: (found, total) => `${found} / ${total}`,

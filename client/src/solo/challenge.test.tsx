@@ -14,12 +14,12 @@ describe('a solo challenge in Chinese', () => {
   it('labels the challenge card and copy action in Chinese', () => {
     render(
       <LocaleProvider>
-        <ChallengeCard description="朋友会拿到相同的棋盘。" text={link} />
+        <ChallengeCard description="好友会拿到相同的棋盘。" text={link} />
       </LocaleProvider>,
     );
-    const card = screen.getByRole('region', { name: '挑战朋友' });
+    const card = screen.getByRole('region', { name: '挑战好友' });
     expect(
-      within(card).getByText('朋友会拿到相同的棋盘。'),
+      within(card).getByText('好友会拿到相同的棋盘。'),
     ).toBeInTheDocument();
     expect(
       within(card).getByRole('button', { name: '复制挑战链接' }),
@@ -30,7 +30,7 @@ describe('a solo challenge in Chinese', () => {
     const user = userEvent.setup();
     render(
       <LocaleProvider>
-        <ChallengeCard description="朋友会拿到相同的棋盘。" text={link} />
+        <ChallengeCard description="好友会拿到相同的棋盘。" text={link} />
       </LocaleProvider>,
     );
     await user.click(screen.getByRole('button', { name: '复制挑战链接' }));

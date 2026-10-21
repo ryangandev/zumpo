@@ -360,7 +360,7 @@ describe('the game engine', () => {
     );
     const announced = waitForChat(
       alice,
-      (m) => textOf(m) === 'Game has ended!',
+      (m) => textOf(m) === 'Game has ended.',
       9000,
     );
 

@@ -386,7 +386,7 @@ for (const size of SIZES) {
         await guess.fill(word);
         await guess.press('Enter');
         await expect(
-          maya.getByText(/guessed the correct word!/).nth(turn - 1),
+          maya.getByText(/guessed the word, \+\d+\./).nth(turn - 1),
         ).toBeVisible();
       }
       await expect(leo.getByRole('list', { name: 'Standings' })).toBeVisible();

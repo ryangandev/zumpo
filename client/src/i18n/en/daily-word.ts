@@ -18,7 +18,7 @@ export const dailyWord = {
   waitingRoom: 'Waiting room',
   wordsDetail: (words: number) => `${plural(words, 'word')}.`,
   wordsFound: (words: number) => `${plural(words, 'word')} found`,
-  alone: 'A little better with company.',
+  alone: 'Better with company.',
   setup: (players: number, words: number) =>
     `${plural(players, 'player')}, ${plural(words, 'word')}. Everyone guesses the same hidden word at once, and fewer guesses score more.`,
   guestSetup: (players: number, words: number) =>

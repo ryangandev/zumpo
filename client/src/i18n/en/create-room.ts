@@ -15,7 +15,7 @@ export const createRoom = {
   moreOptions: 'More options',
   create: 'Create room',
   cancel: 'Cancel',
-  full: 'Zumpo is full right now. Join a room, or try again in a little while.',
+  full: 'Zumpo is full right now. Join a room, or try again soon.',
   failed: 'We couldn’t create the room. Please try again.',
   roomName: 'Room name',
   nameMissing: 'Give your room a name.',

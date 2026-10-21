@@ -27,7 +27,7 @@ export const pairs = {
   messagePlaceholder: 'Say something…',
   resultsDetail: (board: PairsBoard, total: number) =>
     `${SIZES[board]} board, ${plural(total, 'pair')}.`,
-  aloneTitle: 'A little better with company.',
+  aloneTitle: 'Better with company.',
   setup: (players: number, board: string) =>
     `${plural(players, 'player')}, ${board}. Take turns flipping two cards; find a pair and you go again.`,
   guestSetup: (players: number, board: string) =>

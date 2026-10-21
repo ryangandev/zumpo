@@ -98,7 +98,7 @@ describe('guess authority', () => {
       [drawer.playerId]: drawerPoints,
     });
     expect(textOf(await announced)).toBe(
-      `${guesserName} guessed the correct word! (+${guesserPoints})`,
+      `${guesserName} guessed the word, +${guesserPoints}.`,
     );
   });
 

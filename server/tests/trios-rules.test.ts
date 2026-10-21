@@ -64,7 +64,7 @@ describe('the cards', () => {
         }),
       ),
     ).toBe('Two blue striped triangles');
-    expect(cardName(80)).toBe('Three ink outlined squares');
+    expect(cardName(80)).toBe('Three black outlined squares');
   });
 });
 

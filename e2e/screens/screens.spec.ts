@@ -362,7 +362,7 @@ async function lobbyScreens(
 ) {
   const sam = await player('Sam', desktop);
   await sam.goto(`/games/${game}`);
-  await expect(sam.getByText('A little quiet in here.')).toBeVisible();
+  await expect(sam.getByText('No rooms yet.')).toBeVisible();
   await shot(sam, codes.empty);
 
   const maya = await player('Maya', desktop);

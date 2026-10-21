@@ -62,7 +62,7 @@ async function say(page: Page, text: string, box = 'Message') {
 async function expectScored(watcher: Page, guesser: Seat) {
   await expect(
     watcher.getByText(
-      new RegExp(`^${guesser.name} guessed the correct word! \\(\\+\\d+\\)$`),
+      new RegExp(`^${guesser.name} guessed the word, \\+\\d+\\.$`),
     ),
   ).toBeVisible();
 }

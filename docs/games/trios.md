@@ -20,6 +20,7 @@ There are **81 cards**, one for every combination of four features with three va
 
 Coral is the brand's accent; the pale accents (lime, blue, peach) would vanish as an outline on a paper card, so the other two colours are the brand's deep blue and its ink.
 The three `color/trios/*` tokens alias `color/coral`, `color/number/1` and `color/ink`, so the cards name what they mean and can change on their own.
+Players read the token `ink` as "black": `COLOUR_WORDS` in `shared/trios.ts` says so for the card names and the wrong-pick reasons, and the rules say black too.
 The three are far apart in lightness as well as in hue (light, middle, dark), so they stay apart for colour-blind players and even in greyscale.
 
 A card is a number from 0 to 80, its four features read as base-3 digits: `card = colour × 27 + shape × 9 + (count − 1) × 3 + fill`, each value counted from 0 in the order of the table above.
@@ -152,7 +153,7 @@ The finished table stays under the results until the next game is dealt, its las
 **The winner is whoever found the most trios.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody finds a trio ("Maya found a trio! (+1)"), as a quiet score line, and who won.
+The chat says when somebody finds a trio ("Maya found a trio, +1."), as a quiet score line, and who won.
 
 ## Rules the server enforces
 
