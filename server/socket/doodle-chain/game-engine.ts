@@ -71,17 +71,17 @@ const workOf = (room: DoodleChainRoom, playerId: string) => {
   return work ? { task, work } : null;
 };
 
+/** The hearts the entries `playerId` made were given. */
+const heartsOf = (game: DoodleChainState, playerId: string) =>
+  game.chains
+    .flat()
+    .filter((entry) => entry.author.playerId === playerId)
+    .reduce((sum, entry) => sum + heartsFor(game, entry.chain, entry.step), 0);
+
 /** Every player's points: the hearts their entries were given. */
 const countHearts = (room: DoodleChainRoom) => {
-  const game = room.game;
   for (const [playerId, player] of Object.entries(room.playerList)) {
-    player.points = game.chains
-      .flat()
-      .filter((entry) => entry.author.playerId === playerId)
-      .reduce(
-        (sum, entry) => sum + heartsFor(game, entry.chain, entry.step),
-        0,
-      );
+    player.points = heartsOf(room.game, playerId);
   }
 };
 
@@ -321,7 +321,6 @@ const createDoodleChainGameEngine = (
     ctx.rooms.emitState(room);
   };
 
-  /** A player's score is the hearts their entries were given this game. */
   /**
    * `playerId` gives the chain's one heart to the entry made at `step`, which
    * moves it from any other, or takes it back with null.
@@ -360,17 +359,12 @@ const createDoodleChainGameEngine = (
     const game = room.game;
     ctx.rooms.stopPhase(room);
     countHearts(room);
+    // Everybody who played, including anybody who has since left.
     const standings = game.order
       .map(({ playerId, username }) => ({
         playerId,
         username,
-        points: game.chains
-          .flat()
-          .filter((entry) => entry.author.playerId === playerId)
-          .reduce(
-            (sum, entry) => sum + heartsFor(game, entry.chain, entry.step),
-            0,
-          ),
+        points: heartsOf(game, playerId),
       }))
       .toSorted((a, b) => b.points - a.points);
     const chains = game.chains.map((entries, index) => ({
