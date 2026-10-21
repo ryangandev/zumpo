@@ -128,6 +128,8 @@ Variables, text styles and effect styles reach code only through the generated `
 
 To review the design system, run `npm run dev -w client` (it needs no server) and open [`/design`](http://localhost:3001/design).
 Every specimen is captioned with its Figma variant, uses that variant's sample copy, and shows its size beside Figma's, in red when they differ by more than half a pixel.
+It compares only in a window wider than 640 px: narrower, the mine cell, the header, the name menu and the cup take their phone sizes, which Figma draws only inside its 390 px screens, so the page says nothing is compared.
+A hidden browser pane reports a width of 0, so give it a desktop size before reading `[data-mismatch]`.
 Each family's Figma preview sits under it at the same scale.
 
 `Zumpo/Card` is every focused surface: the one card of a create-room, password or error page (Kind=Focused), a dialog over a room (Dialog), and a panel in a page's column, such as a game page's empty or loading room list (Panel).

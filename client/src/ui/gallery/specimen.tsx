@@ -5,6 +5,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from 'react';
+import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import styles from './gallery.module.css';
 
 interface FigmaNode {
@@ -52,7 +53,9 @@ export interface SpecimenProps {
 
 /**
  * One component state, captioned with its Figma variant, and measured against
- * the export: a mismatch of more than half a pixel is flagged.
+ * the export: a mismatch of more than half a pixel is flagged. In a phone-wide
+ * window components take their phone sizes, which Figma has no variants for,
+ * so there the size is shown but not compared.
  */
 export function Specimen({
   family,
@@ -64,9 +67,12 @@ export function Specimen({
   children,
 }: SpecimenProps) {
   const slot = useRef<HTMLDivElement>(null);
+  const phone = useMediaQuery(PHONE);
   const [check, setCheck] = useState<{
     figma: FigmaNode;
     code: FigmaNode;
+    /** Measured at phone width, where Figma has nothing to compare with. */
+    phone: boolean;
   } | null>(null);
 
   useEffect(() => {
@@ -86,16 +92,17 @@ export function Specimen({
           : data.node;
         if (!figma) return;
         const rect = element.getBoundingClientRect();
-        setCheck({ figma, code: { w: rect.width, h: rect.height } });
+        setCheck({ figma, code: { w: rect.width, h: rect.height }, phone });
       },
     );
     return () => {
       live = false;
     };
-  }, [family, variant]);
+  }, [family, variant, phone]);
 
   const differs =
     check != null &&
+    !check.phone &&
     ((!heightOnly && widthOff(check.figma.w, check.code.w)) ||
       Math.abs(check.figma.h - check.code.h) > 0.5);
   const mismatch = differs && !deviation;
@@ -122,7 +129,7 @@ export function Specimen({
           <span className={styles.size}>
             {differs
               ? `Figma ${check.figma.w} × ${check.figma.h} · code ${round(check.code.w)} × ${round(check.code.h)}`
-              : `${round(check.code.w)} × ${round(check.code.h)} ✓`}
+              : `${round(check.code.w)} × ${round(check.code.h)}${check.phone ? '' : ' ✓'}`}
           </span>
         )}
         {differs && deviation && (

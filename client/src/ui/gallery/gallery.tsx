@@ -65,6 +65,7 @@ import { GameArtwork } from '../../games/artwork';
 import { GameCard } from '../../games/game-card';
 import { GameIntro } from '../../games/game-intro';
 import { useMessages } from '../../i18n';
+import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { glyphs } from '../generated/glyphs';
 import { pairsSymbols } from '../generated/pairs-symbols';
 import { Specimen } from './specimen';
@@ -127,6 +128,19 @@ function Family({
 }
 
 function Mismatches() {
+  const phone = useMediaQuery(PHONE);
+  if (phone)
+    return (
+      <p className={styles.summary}>
+        Nothing is compared with Figma in a window this narrow: under 641 px
+        every component takes its phone size, which Figma draws only inside its
+        390 px screens. Widen the window to compare.
+      </p>
+    );
+  return <MismatchCount />;
+}
+
+function MismatchCount() {
   const [count, setCount] = useState<number | null>(null);
   useEffect(() => {
     const timer = window.setTimeout(
