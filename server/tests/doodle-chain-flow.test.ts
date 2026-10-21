@@ -485,6 +485,42 @@ describe('Doodle Chain', () => {
       expect(strokes.map((stroke) => stroke.points.length)).toEqual([2]);
     });
 
+    it('does not end early when the last leave as the last step passes on', async () => {
+      // A pause long enough to leave in.
+      await harness.teardown();
+      harness = await startTestServer(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {
+          doodleChainDurations: { write: 2, describe: 2, draw: 2, passing: 1 },
+        },
+      );
+      const { roomId, players, owner } = await playToWrite(harness, THREE);
+      const [maya, ryan, leo] = players;
+      writeAll(players, roomId, ['one', 'two', 'three']);
+      await at(owner, 'draw', 2);
+      drawAll(players, roomId, [true, true, true]);
+      await at(owner, 'describe', 3);
+      const passing = at(owner, 'passing', 3);
+      writeAll(players, roomId, ['eins', 'zwei', 'drei']);
+      await passing;
+
+      // Every step has been played, so the reveal comes as it would have.
+      const reveal = at(maya, 'reveal');
+      ryan.emit('room:leave', roomId);
+      leo.emit('room:leave', roomId);
+      await settle();
+      expect(doodleChainRoom(harness, roomId).game.phase).toBe('passing');
+      const state = await reveal;
+      expect(doodleChainRoom(harness, roomId).game.endedEarly).toBe(false);
+      expect(state.reveal?.chains.map((chain) => chain.length)).toEqual([
+        3, 3, 3,
+      ]);
+    });
+
     it('goes straight to the reveal when fewer than two are left', async () => {
       const { roomId, players } = await playToWrite(harness, THREE);
       const [maya, ryan, leo] = players;

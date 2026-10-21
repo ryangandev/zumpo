@@ -548,6 +548,9 @@ const createDoodleChainGameEngine = (
       return;
     }
     if (seatCount(room) < FEWEST_TO_PLAY_ON) {
+      // Passing on from the last step, every step has been played, and the
+      // reveal comes anyway: nothing ends early.
+      if (game.phase === 'passing' && game.step >= game.steps) return;
       endEarly(room);
       return;
     }
