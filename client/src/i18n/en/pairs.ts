@@ -74,6 +74,7 @@ export const pairs = {
     longestStreak: 'Longest streak',
     streak: (total: number) => `${plural(total, 'pair')} in a row`,
     playAgain: 'Play again',
+    changeBoard: 'Change board',
     bestOnDevice: 'Best on this device',
     challengeDescription: (turns: number) =>
       `They get this same deck and try to beat ${plural(turns, 'turn')}.`,

@@ -1,6 +1,8 @@
 export const solo = {
   onYourOwn: 'On your own',
   leave: 'Leave',
+  leaveTitle: 'Leave this game?',
+  stay: 'Stay',
   linkCopied: 'Link copied',
   challengeFriend: 'Challenge a friend',
   copyChallengeLink: 'Copy challenge link',

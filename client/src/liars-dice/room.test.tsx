@@ -53,7 +53,9 @@ describe('a Liar’s Dice room', () => {
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(screen.getByText('第 3 轮')).toBeInTheDocument();
     expect(bar.getByText('轮到你了')).toBeInTheDocument();
-    expect(bar.getByText('Leo 叫了 5 个 5')).toBeInTheDocument();
+    expect(
+      bar.getByText('要大过 5 个 5：多叫几个，或叫更大的点数'),
+    ).toBeInTheDocument();
     expect(screen.getByRole('group', { name: '你的叫点' })).toBeInTheDocument();
     await user.click(screen.getByRole('radio', { name: '3 点' }));
     await user.click(screen.getByRole('button', { name: '叫 6 个 3' }));
@@ -75,24 +77,29 @@ describe('a Liar’s Dice room', () => {
     await renderSeated(myTurn);
 
     expect(cupOf('Ryan (you)').getByRole('img', { name: '5' })).toBeVisible();
-    expect(cupOf('Ryan (you)').getByRole('img', { name: '1' })).toBeVisible();
+    expect(
+      cupOf('Ryan (you)').getByRole('img', { name: '1, wild' }),
+    ).toBeVisible();
     expect(
       cupOf('Maya').getAllByRole('img', { name: 'Hidden die' }),
     ).toHaveLength(3);
     expect(cupOf('Leo').queryByRole('img', { name: '5' })).toBeNull();
   });
 
-  it('raises from the smallest raise on your turn', async () => {
+  it('opens on your strongest face, and says what beats the bid', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(myTurn);
 
     expect(screen.getByText('Round 3')).toBeInTheDocument();
     expect(turn().getByText('Your turn')).toBeInTheDocument();
     expect(turn().getByText('Raise, or call Liar')).toBeInTheDocument();
-    expect(turn().getByText('Leo bid five 5s')).toBeInTheDocument();
+    expect(
+      turn().getByText('Beat five 5s: more dice, or a higher face'),
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Fewer' })).toBeDisabled();
     expect(
-      screen.getByRole('button', { name: 'Bid five 6s' }),
+      // A 5 and a wild 1: two 5s, the most of any face.
+      screen.getByRole('button', { name: 'Bid six 5s' }),
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole('radio', { name: '3s' }));
@@ -116,7 +123,7 @@ describe('a Liar’s Dice room', () => {
     expect(turn().getByText('Open the bidding')).toBeInTheDocument();
     expect(turn().getByText('8 dice on the table')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Bid one 2' }),
+      screen.getByRole('button', { name: 'Bid one 5' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Call Liar' })).toBeNull();
   });

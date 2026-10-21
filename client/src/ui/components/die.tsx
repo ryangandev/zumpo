@@ -6,8 +6,9 @@ import styles from './die.module.css';
 export type DieFace = 1 | 2 | 3 | 4 | 5 | 6;
 
 /**
- * Default: a die as rolled. In a reveal, Counted matches the bid, Wild is a
- * one counted as the bid's face, and Dim does not count.
+ * Default: a die as rolled. Wild is a one, which counts as any face bid: in
+ * your own cup while bidding, and in a reveal. In a reveal, Counted matches
+ * the bid and Dim does not count.
  */
 export type DieState = 'default' | 'counted' | 'wild' | 'dim';
 

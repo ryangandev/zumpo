@@ -1,4 +1,9 @@
-import { bidWords, numberWord, type Bid } from '../../../../shared/liars-dice';
+import {
+  bidWords,
+  HIGHEST_FACE,
+  numberWord,
+  type Bid,
+} from '../../../../shared/liars-dice';
 import type { LiarsDiceReveal } from '../../../../shared/wire-types';
 import type { Who, Naming } from '../../liars-dice/words';
 import { plural } from './plural';
@@ -20,6 +25,11 @@ export const liarsDice = {
   bid: (bid: Bid) => bidWords(bid),
   bidLabel: (bid: Bid) => `Bid ${bidWords(bid)}`,
   bidLine: (who: Who, bid: Bid) => `${capital(who.name)} bid ${bidWords(bid)}`,
+  /** What a raise must do, on your turn: "Beat four 5s: more dice, or a higher face". */
+  beat: (bid: Bid) =>
+    bid.face < HIGHEST_FACE
+      ? `Beat ${bidWords(bid)}: more dice, or a higher face`
+      : `Beat ${bidWords(bid)}: more dice`,
   countDetail: (reveal: LiarsDiceReveal) => {
     const wild =
       reveal.wild === 0
@@ -89,10 +99,9 @@ export const liarsDice = {
     description:
       'Bid on the whole table, bluff a little, and call the bots’ bluffs.',
     pickTable: 'Pick a table.',
+    leaveWarning: 'This game ends here, and it is not counted.',
     start: 'Start',
     bots: 'Bots',
-    botsHelper: (names: readonly string[]) =>
-      `Taken from ${names.slice(0, -1).join(', ')} and ${names.at(-1)}.`,
     botCount: (count: number) => plural(count, 'bot'),
     diceEach: 'Dice each',
     quick: 'The quick game.',

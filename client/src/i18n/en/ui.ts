@@ -143,7 +143,11 @@ export const ui = {
   },
   trios: {
     card: (card: number) => cardName(card),
-    states: { selected: ', picked', found: ', found', wrong: ', not a trio' },
+    states: {
+      selected: ', picked',
+      found: ', found',
+      wrong: ', not a trio',
+    },
     badge: (name: string, badge: string) => `${name}, ${badge}`,
   },
   snap: {

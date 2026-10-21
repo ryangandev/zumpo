@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react';
 import type { Card } from '../../../shared/snap';
 import {
   SnapCard,
@@ -42,34 +43,97 @@ export interface SnapBoardProps {
 export function SnapBoard({ middle, mine, onTap, disabled }: SnapBoardProps) {
   const phone = useMediaQuery(PHONE);
   const size = phone ? 'compact' : 'regular';
+  const boxes = useRef<(HTMLDivElement | null)[]>([]);
+  useCardMotion(boxes, middle.symbols, mine?.symbols ?? null);
   return (
     <div className={styles.panel}>
       <div className={styles.cards}>
         {[middle, mine].map(
-          (view) =>
+          (view, index) =>
             view && (
               <section key={view.label} className={styles.column}>
                 <h2 className={styles.label}>
                   {view.label}
                   {view.tag !== undefined && <Tag>{view.tag}</Tag>}
                 </h2>
-                <SnapCard
-                  symbols={view.symbols}
-                  size={size}
-                  state={view.state}
-                  marks={view.marks}
-                  badge={view.badge}
-                  badgeLabel={view.badgeLabel}
-                  label={view.label}
-                  onTap={onTap}
-                  disabled={disabled}
-                />
+                <div
+                  ref={(box) => {
+                    boxes.current[index] = box;
+                  }}
+                  className={styles.cardBox}
+                >
+                  <SnapCard
+                    symbols={view.symbols}
+                    size={size}
+                    state={view.state}
+                    marks={view.marks}
+                    badge={view.badge}
+                    badgeLabel={view.badgeLabel}
+                    label={view.label}
+                    onTap={onTap}
+                    disabled={disabled}
+                  />
+                </div>
               </section>
             ),
         )}
       </div>
     </div>
   );
+}
+
+const SLIDE_MS = 250;
+const DEAL_MS = 200;
+const sameCard = (a: Card | null, b: Card | null) =>
+  a !== null && b !== null && a.join() === b.join();
+
+/**
+ * Moves the cards as the game does: the middle card you won slides over into
+ * yours, and a new middle card is dealt in. Both take a quarter of a second
+ * or less, so the next tap is never kept waiting, and neither moves when the
+ * system asks for reduced motion.
+ */
+function useCardMotion(
+  boxes: { current: (HTMLDivElement | null)[] },
+  middle: Card,
+  mine: Card | null,
+) {
+  const last = useRef<{ middle: Card; mine: Card | null } | null>(null);
+  useLayoutEffect(() => {
+    const before = last.current;
+    last.current = { middle, mine };
+    if (!before) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const [middleBox, mineBox] = boxes.current;
+    if (!middleBox || typeof middleBox.animate !== 'function') return;
+    if (!sameCard(middle, before.middle)) {
+      middleBox.animate(
+        [
+          { opacity: 0, transform: 'scale(0.9)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: DEAL_MS, easing: 'ease-out' },
+      );
+    }
+    if (
+      mineBox &&
+      sameCard(mine, before.middle) &&
+      !sameCard(mine, before.mine)
+    ) {
+      const from = middleBox.getBoundingClientRect();
+      const to = mineBox.getBoundingClientRect();
+      const scale = from.width / to.width;
+      mineBox.animate(
+        [
+          {
+            transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${scale})`,
+          },
+          { transform: 'none' },
+        ],
+        { duration: SLIDE_MS, easing: 'ease-out' },
+      );
+    }
+  }, [boxes, middle, mine]);
 }
 
 /**

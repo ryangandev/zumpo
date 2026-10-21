@@ -45,6 +45,14 @@ After three 5s, three 6s or four 2s are raises; three 4s is not.
 There is no **Spot on** (exact) call.
 Liar's Dice is complete without it; leaving it out keeps every turn a choice of two (raise or call), keeps the bid picker small on a phone, and keeps games short, since Spot on's usual reward is a die back.
 
+### Your turn
+
+The bid picker, on your own and in a room, opens on the face you hold most of, your ones counted, at the smallest count that face may be bid at; on a tie, the higher face.
+So pressing Bid straight away makes a bid about your own dice, never an unrelated one 2.
+The picker only ever offers raises; where it opens changes nothing else.
+Your ones show as wild in your cup while you bid, as they do at the reveal.
+The turn bar says what beats the bid in front of you: "Beat four 5s: more dice, or a higher face", or only more dice after a bid of 6s.
+
 ### How long a game takes
 
 One die is lost a round, so a game is at most one round fewer than the dice on the table: four players with 3 dice each play at most 11 rounds, about six to eight minutes.
@@ -64,6 +72,8 @@ A game on your own needs no name, no room and no server: it runs in the browser,
 - If you lose your last die the game ends for you, with your place ("You finished 3rd of 4"); the bots' game is not played out.
 - Your **wins and games played**, and your current run of wins, are kept **on this device** (in `localStorage`).
   A game left unfinished does not count.
+- **Leave** goes to the game's page; while a game is under way, any way out asks first, since it ends the game uncounted.
+  The bots wait while it asks, and the table is put away, so staying costs nothing.
 
 There is no Challenge a friend: the bots answer what you bid, so the same dice would not make the same game for a friend.
 A room, made or joined from the game's page, is the way to play with friends.

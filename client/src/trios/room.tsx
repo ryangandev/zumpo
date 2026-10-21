@@ -159,7 +159,11 @@ function Play({ room }: { room: Room }) {
 
   const places: Record<number, PlaceView> = {};
   for (const place of state.hint) {
-    places[place] = { badge: m.trios.hint, badgeLabel: m.trios.hintBadge };
+    places[place] = {
+      state: 'hinted',
+      badge: m.trios.hint,
+      badgeLabel: m.trios.hintBadge,
+    };
   }
   // Your picks stay shown while a trio is taken, so you see what is still picked.
   for (const card of picked) {
