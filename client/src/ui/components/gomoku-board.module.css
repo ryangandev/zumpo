@@ -38,6 +38,32 @@
   border-radius: var(--zumpo-radius-12);
 }
 
+/* Whole pixels a point, so every line falls on the same part of a pixel and
+   the lines are drawn alike where the board is narrower than its 36 px. */
+@supports (width: round(down, 1.5px, 1px)) {
+  .board {
+    --cell: round(
+      down,
+      min(
+        var(--zumpo-space-32) + var(--zumpo-space-4),
+        (100cqi - 2 * var(--pad)) / 15
+      ),
+      1px
+    );
+  }
+
+  .small {
+    --cell: round(
+      down,
+      min(
+        var(--zumpo-space-18) + var(--zumpo-space-4),
+        (100cqi - 2 * var(--pad)) / 15
+      ),
+      1px
+    );
+  }
+}
+
 /* The lines: 1 px through the middle of every point. */
 .lines {
   position: absolute;
