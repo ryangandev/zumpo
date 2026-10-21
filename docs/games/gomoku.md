@@ -127,7 +127,7 @@ Everybody may chat at any time, spectators included.
 ### Spectators
 
 A spectator sees the board, both players and their colours, the clock and the last stone, live, exactly as the players do, and nothing of a move before it is placed.
-They cannot place a stone, and a Notice under the board says they can take a seat once the game ends.
+They cannot place a stone, and a Notice under the board says they can take a seat once the game ends. ([on purpose](../design.md#on-purpose)), as in every room with spectators.
 
 ## Placing a stone
 
@@ -170,7 +170,8 @@ Nothing in Gomoku is hidden, so every viewer, spectators included, is sent the s
 | `moves`        | This game's turns in order: the colour, and the point, or `null` for a turn lost to the clock; between games, the last game's |
 | `turnPlayerId` | Whose turn it is; `null` between games                                                                                        |
 | `missedTurns`  | Each player's lost turns in a row, 0 or 1, so the screen can warn that the next one loses                                     |
-| `winLine`      | When a game was won by five: the points of each winning line, in order along it; otherwise `null`                             |
+| `gameNumber`   | Which of this pair's games this is, or the last was, counted from 1 for each new pair; 0 before any                           |
+| `winLines`     | When a game was won by five: the points of each winning line, in order along it; otherwise `null`                             |
 | `lastGame`     | The summary of the last finished game until the next one starts: the winner or a draw, how it ended, and how many stones      |
 
 How a game ended is one of `five`, `draw`, `resigned`, `timeout` (two turns in a row) and `left`.
@@ -187,19 +188,23 @@ Gomoku's two events of its own are `gomoku:place`, with the room and the point, 
 
 ## Where the code lives
 
-Planned, before the code exists:
+| File                                                                  | Responsibility                                                                     |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [`shared/gomoku.ts`](../../shared/gomoku.ts)                          | The board, points and their names, and finding five: the rules both sides run      |
+| [`module.ts`](../../server/socket/gomoku/module.ts)                   | What the room layer calls, and all it calls                                        |
+| [`game-engine.ts`](../../server/socket/gomoku/game-engine.ts)         | Turns, the clock, lost turns, colours, the win and the draw                        |
+| [`state.ts`](../../server/socket/gomoku/state.ts)                     | The game's state, and the snapshot each viewer is sent                             |
+| [`validation.ts`](../../server/socket/gomoku/validation.ts)           | Checking what a client sends before the engine sees it                             |
+| [`gomoku/solo/`](../../client/src/gomoku/solo/)                       | A game on your own, the computer and its worker, and the record                    |
+| [`gomoku-board.tsx`](../../client/src/ui/components/gomoku-board.tsx) | The board, the faint stone, the last stone, the win line and moving between points |
+| [`stone.tsx`](../../client/src/ui/components/stone.tsx)               | A stone of either colour, faint, last placed or in the winning line                |
+| [`gomoku-seat.tsx`](../../client/src/ui/components/gomoku-seat.tsx)   | A player's seat beside the board: stone, name, clock and what they are doing       |
+| [`gomoku/table.tsx`](../../client/src/gomoku/table.tsx)               | The board and the seats together, side by side or one under the other              |
+| [`gomoku/room.tsx`](../../client/src/gomoku/room.tsx)                 | A room's screens                                                                   |
 
-| File                                                          | Responsibility                                                                |
-| ------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [`shared/gomoku.ts`](../../shared/gomoku.ts)                  | The board, points and their names, and finding five: the rules both sides run |
-| [`module.ts`](../../server/socket/gomoku/module.ts)           | What the room layer calls, and all it calls                                   |
-| [`game-engine.ts`](../../server/socket/gomoku/game-engine.ts) | Turns, the clock, lost turns, colours, the win and the draw                   |
-| [`state.ts`](../../server/socket/gomoku/state.ts)             | The game's state, and the snapshot each viewer is sent                        |
-| [`gomoku/solo/`](../../client/src/gomoku/solo/)               | A game on your own, the computer and its worker, and the record               |
-| [`gomoku/board.tsx`](../../client/src/gomoku/board.tsx)       | The board, stones, the faint stone, the last stone and the win line           |
-| [`gomoku/room.tsx`](../../client/src/gomoku/room.tsx)         | A room's screens                                                              |
-
-The rules will be covered by `gomoku-rules.test.ts` and `gomoku-flow.test.ts` in `server/tests/`, and the computer by tests that it plays a five, blocks a four, and at Hard finds a forced win by fours.
+The rules are covered by [`gomoku-rules.test.ts`](../../server/tests/gomoku-rules.test.ts) (five in every direction and along the edges, overlines, the full board) and [`gomoku-flow.test.ts`](../../server/tests/gomoku-flow.test.ts) (turns, seats, the clock, resigning, leaving and dropping mid-game, and spectators).
+The computer is covered by [`computer.test.ts`](../../client/src/gomoku/solo/computer.test.ts): it plays a five, blocks a four, and at Hard finds a forced win by fours.
+The screens are covered by [`room.test.tsx`](../../client/src/gomoku/room.test.tsx) and [`solo-page.test.tsx`](../../client/src/gomoku/solo/solo-page.test.tsx), and two players in a browser by [`gomoku.spec.ts`](../../e2e/gomoku.spec.ts).
 The screens are GM01-GM21 in [the Figma file](../design.md), section 14: the game page (GM01, GM20), solo (GM02-GM06, GM17), a room (GM07-GM16, GM18, GM19) and every state a point can show (GM21).
 Its pieces are in Shared pieces' Gomoku pieces: `Zumpo/Gomoku board` (Desktop: 36 px points, Phone: 22 px), `Zumpo/Stone` (32 px, or 18 px on a phone), `Zumpo/Last move marker`, `Zumpo/Win line`, `Zumpo/Point focus` and `Zumpo/Gomoku seat`.
 Its artwork, card and intro are the Gomoku variants of `Zumpo/Game artwork`, `Zumpo/Game card` and `Zumpo/Game intro`, and its rules card is on P14 / How to play.

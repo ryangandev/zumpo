@@ -24,6 +24,10 @@ It was designed in Figma first (section 11), and plays on your own, thirty cards
 A tenth game, Doodle Chain (传话画画), was added the same week: a drawing telephone where everybody writes a line, the next player draws it and the next says what the drawing shows, until the host reveals every chain ([rules](games/doodle-chain.md)).
 It was designed in Figma first (section 12), and is rooms only, for three to eight players.
 
+Gomoku (五子棋) followed: two players take turns placing Black and White stones on a 15 by 15 board, and the first to make five in a row wins ([rules](games/gomoku.md)).
+It was designed in Figma first (section 14), and plays on your own against the computer at three levels, and in rooms of two with spectators.
+It brought a fourth kind of game to the home filter, Strategy.
+
 On 2026-10-05 Ryan chose to host it for a few testers on Render's free plan, and it is live at `zumpo.ryangan.me` ([architecture](architecture.md#deployment)).
 The server was hardened for that the same day ([#30](https://github.com/ryangandev/zumpo/pull/30)): a restart tells each room it closed, a duplicated tab takes over its player, what a client can make the server hold is bounded, and Render checks `/healthz`.
 
@@ -58,8 +62,8 @@ Decided by Ryan, and the frame for every design and implementation choice:
 ## Next
 
 Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
-Snap and Doodle Chain are built; the other two come next.
-Gomoku brings a fourth kind of game, Strategy.
+Snap, Doodle Chain and Gomoku are built; Code Breaker comes next.
+Gomoku brought a fourth kind of game, Strategy.
 Each game's behaviour contract lands in `docs/games/` with its implementation.
 After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
 

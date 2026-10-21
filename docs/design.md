@@ -184,6 +184,7 @@ Code differs from Figma on purpose in a few places:
   Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
 - Draw & Guess's round results are not in Figma either: a paper panel under the canvas, like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
+- Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game among the seats: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board and the seats stay under it exactly as GM08 draws them.
 
 ## Editing the Figma file
 
