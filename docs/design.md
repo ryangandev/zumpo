@@ -183,7 +183,7 @@ Code differs from Figma on purpose in a few places:
   The invite link's box grows to the whole link: two lines at P12's width, three on a phone, which Figma does not draw.
 - A game that ends while the room is open bursts into confetti in the brand accents and the sun brush's gold, at Ryan's request; Figma draws the results still, and a game found finished on arrival or after a refresh is not celebrated.
   It stays off when the system asks for reduced motion, and a Hush game the team lost is not celebrated.
-  On your own the same confetti marks a new best on this device in Pairs, Trios and Snap, and a Liar's Dice win against the bots; a first finish has no best to beat, so it is not celebrated.
+  On your own the same confetti marks a new best on this device in Pairs, Trios and Snap, and a Liar's Dice win against the bots; a first finish is a new best too, so it is celebrated, and only a finish short of the best is not.
 - Pairs, Snap and Liar's Dice move a little, as the descriptions of `Zumpo/Pairs card`, `Zumpo/Snap card` and `Zumpo/Cup` say and Figma cannot draw: a card turned over flips open, the middle card you win slides into yours, and dice shake as a round starts.
   Each takes 0.4 s or less, inside the moment a flash already stays up, and none moves when the system asks for reduced motion.
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
