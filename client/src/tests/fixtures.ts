@@ -1,5 +1,6 @@
 import type {
   DailyWordRoomState,
+  DoodleChainRoomState,
   DrawAndGuessRoomState,
   LiarsDiceRoomState,
   HushRoomState,
@@ -194,6 +195,33 @@ export function dailyWordState(
     round: 0,
     boards: [],
     lastRound: null,
+    lastGame: null,
+    ...overrides,
+  };
+}
+
+/** Ryan, Maya and Leo: Doodle Chain needs three. */
+export function doodleChainState(
+  overrides: Partial<DoodleChainRoomState> = {},
+): DoodleChainRoomState {
+  return {
+    ...room,
+    currentPlayerCount: 3,
+    playerList: {
+      ...players,
+      p3: { username: 'Leo', points: 0, isConnected: true },
+    },
+    gameType: 'doodle-chain',
+    phase: 'waiting',
+    step: 0,
+    steps: 3,
+    drawingSeconds: 60,
+    order: [
+      { playerId: 'p1', username: 'Ryan' },
+      { playerId: 'p2', username: 'Maya' },
+      { playerId: 'p3', username: 'Leo' },
+    ],
+    table: {},
     lastGame: null,
     ...overrides,
   };

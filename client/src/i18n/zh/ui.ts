@@ -25,6 +25,8 @@ export const ui: typeof en = {
     watch: '观战',
   },
   drawing: {
+    canvas: '绘画画布',
+    image: '当前画作',
     tools: '绘图工具',
     colour: '颜色',
     size: '画笔大小',
@@ -45,6 +47,13 @@ export const ui: typeof en = {
       violet: '紫色',
       brown: '棕色',
     },
+  },
+  chain: {
+    suggest: '换个点子',
+    done: '完成',
+    keepEditing: '继续修改',
+    heart: (count) => `送一颗爱心，已有 ${count} 颗`,
+    hearts: (count) => `${count} 颗爱心`,
   },
   dice: {
     title: '骰子',

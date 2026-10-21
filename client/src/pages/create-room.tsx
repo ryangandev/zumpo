@@ -16,6 +16,11 @@ import { gameInfo, gamePath, roomPath } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { DIFFICULTIES } from '../../../shared/minesweeper';
 import { levelsFor } from '../../../shared/hush';
+import {
+  DEFAULT_DRAWING_SECONDS,
+  DRAWING_SECONDS,
+  type DrawingSeconds,
+} from '../../../shared/doodle-chain';
 import { BOARDS as PAIRS_BOARDS } from '../../../shared/pairs';
 import { useConnectedSession } from '../net/session';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
@@ -34,10 +39,8 @@ const HANDS = [5, 10] as const;
 const WORDS = [3, 5] as const;
 
 /**
- * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, HU09, DW11: a
- * new room, with its settings.
- * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, LD07, HU09, DW11:
- * a new room, with its settings.
+ * DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, T10, PR08, TS10, LD07, HU09,
+ * DW11, DC02: a new room, with its settings.
  */
 export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const game = gameInfo(gameType);
@@ -59,6 +62,9 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const [trios, setTrios] = useState<number>(TRIOS_LENGTHS[0]);
   const [dicePerPlayer, setDicePerPlayer] = useState<DicePerPlayer>(3);
   const [words, setWords] = useState(3);
+  const [drawingSeconds, setDrawingSeconds] = useState<DrawingSeconds>(
+    DEFAULT_DRAWING_SECONDS,
+  );
   const [password, setPassword] = useState('');
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState<'error' | 'full' | null>(null);
@@ -93,7 +99,9 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
                     ? { dicePerPlayer }
                     : gameType === 'daily-word'
                       ? { rounds: words }
-                      : {},
+                      : gameType === 'doodle-chain'
+                        ? { drawingSeconds }
+                        : {},
     };
     setPending(true);
     setFailed(null);
@@ -179,7 +187,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
                 levelsFor(2),
                 levelsFor(game.maxPlayers),
               )
-            : m.createRoom.seatsHelper(game.maxPlayers)
+            : m.createRoom.seatsHelper(game.minPlayers, game.maxPlayers)
         }
         options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
           value: count,
@@ -262,6 +270,18 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
           value={words}
           onValueChange={setWords}
           name="words"
+        />
+      ) : gameType === 'doodle-chain' ? (
+        <SelectField
+          label={m.createRoom.drawingTime}
+          helper={m.createRoom.drawingTimeHelper}
+          options={DRAWING_SECONDS.map((count) => ({
+            value: count,
+            label: m.createRoom.secondCount(count),
+          }))}
+          value={drawingSeconds}
+          onValueChange={setDrawingSeconds}
+          name="drawingSeconds"
         />
       ) : gameType === 'minesweeper' ? (
         <SelectField

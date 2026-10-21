@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { SUGGESTION_COUNT } from '../../../shared/doodle-chain';
 import { renderApp } from '../tests/render-app';
 import { en } from './en';
 import { detectLocale } from './locale';
@@ -49,6 +50,11 @@ describe('the catalogs', () => {
       )
       .map(([key]) => key);
     expect(blank).toEqual([]);
+  });
+
+  it('suggest the same number of Doodle Chain lines as the server picks from', () => {
+    expect(en.doodleChain.suggestions).toHaveLength(SUGGESTION_COUNT);
+    expect(zh.doodleChain.suggestions).toHaveLength(SUGGESTION_COUNT);
   });
 });
 
@@ -115,6 +121,6 @@ describe('the language switch', () => {
     await renderApp('/how-to-play', { locale: 'zh' });
     expect(document.documentElement.lang).toBe('zh-CN');
     expect(screen.getByRole('heading', { name: '扫雷' })).toBeVisible();
-    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(8);
+    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(9);
   });
 });

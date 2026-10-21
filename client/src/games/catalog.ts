@@ -66,6 +66,7 @@ const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
     solo: true,
   },
   { type: 'hush', kind: 'party', tone: 'sand', solo: false },
+  { type: 'doodle-chain', kind: 'party', tone: 'blue', solo: false },
   {
     type: 'daily-word',
     kind: 'puzzles',

@@ -1,4 +1,5 @@
 import { cardName } from '../../../../shared/trios';
+import { plural } from './plural';
 
 export const ui = {
   chat: {
@@ -26,6 +27,8 @@ export const ui = {
     watch: 'Watch',
   },
   drawing: {
+    canvas: 'Drawing canvas',
+    image: 'The drawing',
     tools: 'Drawing tools',
     colour: 'Colour',
     size: 'Brush size',
@@ -46,6 +49,13 @@ export const ui = {
       violet: 'Violet',
       brown: 'Brown',
     },
+  },
+  chain: {
+    suggest: 'Suggest',
+    done: 'Done',
+    keepEditing: 'Keep editing',
+    heart: (count: number) => `Give a heart, ${plural(count, 'heart')} so far`,
+    hearts: (count: number) => plural(count, 'heart'),
   },
   dice: {
     title: 'Dice',

@@ -53,6 +53,8 @@ export interface RoomLayoutProps {
    * whose team scores together and whose rows say what each player holds.
    */
   showScores?: boolean;
+  /** The scoreboard's title, where its scores are not points: "Hearts". */
+  scoreTitle?: string;
   /** On a phone, more under the scoreboard on the Players tab: the race. */
   playersAside?: ReactNode;
 }
@@ -74,6 +76,7 @@ export function RoomLayout({
   chat,
   boardInput,
   showScores = true,
+  scoreTitle,
   playersAside,
 }: RoomLayoutProps) {
   const room = useRoomContext();
@@ -95,7 +98,11 @@ export function RoomLayout({
   };
 
   const scoreboard = (
-    <Scoreboard players={players.length} seats={state.maxPlayers}>
+    <Scoreboard
+      title={scoreTitle}
+      players={players.length}
+      seats={state.maxPlayers}
+    >
       {players.map(({ seat, status, statusIcon, state: rowState }) => (
         <PlayerRow
           key={seat.playerId}

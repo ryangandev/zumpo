@@ -130,6 +130,7 @@ function usePickedName(): { notice?: string; change?: ReactNode } {
  */
 export function WaitingPanel({
   aloneTitle,
+  aloneDetail,
   setup,
   guestSetup,
   onStart,
@@ -137,6 +138,8 @@ export function WaitingPanel({
 }: {
   /** The host's title while alone. */
   aloneTitle: string;
+  /** Why the game needs more players, where it says more than the count. */
+  aloneDetail?: string;
   /** For the host: "4 players, 2 rounds. The word category is…". */
   setup: string;
   /** For a guest: "4 players, 2 rounds." */
@@ -182,7 +185,7 @@ export function WaitingPanel({
           </>
         }
       >
-        {m.room.needsPlayers(gameName, minPlayers)}
+        {aloneDetail ?? m.room.needsPlayers(gameName, minPlayers)}
       </RoomPanel>
     );
   }
@@ -238,6 +241,46 @@ export function EndedEarlyPanel() {
 }
 
 /**
+ * A finished game's actions: Play again for the host while there are enough
+ * players, Invite while there are not, or a guest's wait for the host.
+ */
+export function ResultsActions({
+  onPlayAgain,
+  starting,
+}: {
+  onPlayAgain: () => void;
+  starting: boolean;
+}) {
+  const { state, isHost, spectating } = useRoomContext();
+  const m = useMessages();
+  const count = Object.keys(state.playerList).length;
+  if (!isHost) {
+    return (
+      <>
+        <StatusLine>{m.room.waitingForAgain(state.owner.username)}</StatusLine>
+        <SeatMove primary={spectating} />
+      </>
+    );
+  }
+  if (starting) return <StatusLine>{m.room.starting}</StatusLine>;
+  if (count >= gameInfo(state.gameType).minPlayers) {
+    return (
+      <>
+        <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
+        <InviteButton />
+        <SeatMove />
+      </>
+    );
+  }
+  return (
+    <>
+      <InviteButton primary />
+      <SeatMove />
+    </>
+  );
+}
+
+/**
  * A finished game's panel: what happened, the game's own account of it, and
  * Play again for the host, or a guest's wait for them.
  */
@@ -254,29 +297,6 @@ export function ResultsFrame({
   onPlayAgain: () => void;
   starting: boolean;
 }) {
-  const { state, isHost, spectating } = useRoomContext();
-  const m = useMessages();
-  const count = Object.keys(state.playerList).length;
-  const actions = !isHost ? (
-    <>
-      <StatusLine>{m.room.waitingForAgain(state.owner.username)}</StatusLine>
-      <SeatMove primary={spectating} />
-    </>
-  ) : starting ? (
-    <StatusLine>{m.room.starting}</StatusLine>
-  ) : count >= gameInfo(state.gameType).minPlayers ? (
-    <>
-      <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-      <InviteButton />
-      <SeatMove />
-    </>
-  ) : (
-    <>
-      <InviteButton primary />
-      <SeatMove />
-    </>
-  );
-
   return (
     <section className={styles.results} aria-labelledby="results-title">
       <div className={styles.resultHeading}>
@@ -286,7 +306,9 @@ export function ResultsFrame({
         <p className={styles.body}>{detail}</p>
       </div>
       {children}
-      <div className={styles.actions}>{actions}</div>
+      <div className={styles.actions}>
+        <ResultsActions onPlayAgain={onPlayAgain} starting={starting} />
+      </div>
     </section>
   );
 }

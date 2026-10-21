@@ -8,6 +8,7 @@ import type {
   Result,
 } from '../../../shared/wire-types';
 import { CanvasStream } from './canvas-stream';
+import { DrawingStore } from './drawing-store';
 import { useConnectedSession, type ConnectionStatus } from './session';
 import { REQUEST_TIMEOUT_MS } from './socket';
 
@@ -54,6 +55,7 @@ export interface RoomConnection {
   stage: RoomStage;
   chat: readonly ChatMessage[];
   canvas: CanvasStream;
+  drawings: DrawingStore;
   submitPassword: (password: string) => void;
   /** Gives up the seat. The page navigates away itself. */
   leave: () => void;
@@ -72,6 +74,7 @@ export function useRoom(roomId: string): RoomConnection {
   const [problem, setProblem] = useState<RoomStage | null>(null);
   const [chat, setChat] = useState<readonly ChatMessage[]>([]);
   const [canvas] = useState(() => new CanvasStream());
+  const [drawings] = useState(() => new DrawingStore());
   /** Whether this page has held a seat, which turns "not a member" into "expired". */
   const seated = useRef(false);
   const left = useRef(false);
@@ -196,6 +199,13 @@ export function useRoom(roomId: string): RoomConnection {
     const onCanvasClear = (id: string) => {
       if (id === roomId) canvas.clear();
     };
+    const onDrawing = (
+      id: string,
+      drawing: string,
+      strokes: CanvasStroke[],
+    ) => {
+      if (id === roomId) drawings.add(drawing, strokes);
+    };
     // Rooms live in the server's memory, so they end with it. The page says so
     // now, rather than reconnecting to a server that has never heard of it.
     const onClosing = () => {
@@ -212,6 +222,9 @@ export function useRoom(roomId: string): RoomConnection {
     socket.on('dg:canvas:end', onCanvasEnd);
     socket.on('dg:canvas:undo', onCanvasUndo);
     socket.on('dg:canvas:clear', onCanvasClear);
+    // A Doodle Chain player's own drawing comes back after a reload.
+    socket.on('dc:canvas:sync', onCanvasSync);
+    socket.on('dc:drawing', onDrawing);
     socket.on('server:closing', onClosing);
 
     void (async () => {
@@ -243,9 +256,11 @@ export function useRoom(roomId: string): RoomConnection {
       socket.off('dg:canvas:end', onCanvasEnd);
       socket.off('dg:canvas:undo', onCanvasUndo);
       socket.off('dg:canvas:clear', onCanvasClear);
+      socket.off('dc:canvas:sync', onCanvasSync);
+      socket.off('dc:drawing', onDrawing);
       socket.off('server:closing', onClosing);
     };
-  }, [connection, socket, roomId, canvas, sync, join, settle]);
+  }, [connection, socket, roomId, canvas, drawings, sync, join, settle]);
 
   const submitPassword = useCallback(
     (password: string) => {
@@ -267,6 +282,7 @@ export function useRoom(roomId: string): RoomConnection {
     stage: stageOf(status, snapshot, problem),
     chat,
     canvas,
+    drawings,
     submitPassword,
     leave,
   };
