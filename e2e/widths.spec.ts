@@ -228,6 +228,20 @@ test('trios fits every width', async ({ player }) => {
   await fitsEveryWidth(maya, 'a table in a room');
 });
 
+test('snap fits every width', async ({ player }) => {
+  const sam = await player('Sam');
+  await sam.goto('/games/snap/solo');
+  await startSolo(sam);
+  await expect(sam.getByText('Card 1 of 30').first()).toBeVisible();
+  await fitsEveryWidth(sam, 'two cards on your own');
+  const maya = await player('Maya');
+  const leo = await player('Leo');
+  await joinRoom(leo, await createRoom(maya, 'snap', { seats: 2 }));
+  await start(maya);
+  await expect(maya.getByText('0 of 29 cards').first()).toBeVisible();
+  await fitsEveryWidth(maya, 'two cards in a room');
+});
+
 test("liar's dice fits every width", async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/liars-dice/solo');

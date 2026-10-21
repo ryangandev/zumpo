@@ -49,6 +49,8 @@ import {
   StatList,
   Tag,
   TextField,
+  SnapCard,
+  SnapSymbol,
   TriosCard,
   TriosShape,
   TurnBar,
@@ -71,10 +73,17 @@ import { useMessages } from '../../i18n';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { glyphs } from '../generated/glyphs';
 import { pairsSymbols } from '../generated/pairs-symbols';
+import { snapSymbols } from '../generated/snap-symbols';
 import { Specimen } from './specimen';
 import styles from './gallery.module.css';
 
 const noop = () => {};
+
+/** The symbols every Zumpo/Snap card variant shows, spot by spot. */
+const SNAP_SAMPLE = ['Star', 'Heart', 'Cloud', 'Crown', 'Fish', 'Leaf'].map(
+  (name) => snapSymbols.findIndex((symbol) => symbol.name === name),
+);
+const SNAP_STAR = snapSymbols.findIndex((symbol) => symbol.name === 'Star');
 
 /** Who made each kind of entry in the chain the gallery shows. */
 const CHAIN_AUTHORS = {
@@ -965,6 +974,71 @@ export default function Gallery() {
               label={symbolName(symbol)}
             >
               <PairsSymbol symbol={symbol} />
+            </Specimen>
+          ))}
+        </div>
+      </Family>
+
+      <Family
+        name="Snap card"
+        file="snap-card"
+        note="Six spots, one in the middle and five around it; a spot is marked as the match, a wrong tap, or dim while you are locked out."
+      >
+        {(
+          [
+            ['regular', 'Regular'],
+            ['compact', 'Compact'],
+            ['mini', 'Mini'],
+          ] as const
+        ).map(([cardSize, sizeName]) => (
+          <div key={cardSize} className={styles.cellRow}>
+            {(['Default', 'Taken', 'Locked'] as const).map((state) => (
+              <Specimen
+                key={state}
+                family="snap-card"
+                variant={`State=${state}, Size=${sizeName}`}
+                label={`${state}, ${sizeName}`}
+              >
+                <SnapCard
+                  symbols={SNAP_SAMPLE}
+                  size={cardSize}
+                  state={state.toLowerCase() as Lowercase<typeof state>}
+                  badge={
+                    state === 'Taken' && cardSize !== 'mini' ? 'MA' : undefined
+                  }
+                  onTap={state === 'Default' ? noop : undefined}
+                />
+              </Specimen>
+            ))}
+          </div>
+        ))}
+        <div className={styles.cellRow}>
+          {(['match', 'miss'] as const).map((mark) => (
+            <Specimen key={mark} label={`Spot marked ${mark}`}>
+              <SnapCard
+                symbols={SNAP_SAMPLE}
+                size="compact"
+                marks={{ [SNAP_STAR]: mark }}
+              />
+            </Specimen>
+          ))}
+        </div>
+      </Family>
+
+      <Family
+        name="Snap symbol"
+        file="snap-symbol"
+        note="31 shapes, each in one brush colour; no two share a shape."
+      >
+        <div className={styles.cellRow}>
+          {snapSymbols.map(({ name }, symbol) => (
+            <Specimen
+              key={name}
+              family="snap-symbol"
+              variant={`Symbol=${name}`}
+              label={name}
+            >
+              <SnapSymbol symbol={symbol} />
             </Specimen>
           ))}
         </div>

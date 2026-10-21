@@ -32,6 +32,7 @@ type GameType =
   | 'make-24'
   | 'pairs'
   | 'trios'
+  | 'snap'
   | 'liars-dice'
   | 'hush'
   | 'daily-word'
@@ -156,6 +157,7 @@ interface RoomCreateRequest {
     | Make24Settings
     | PairsSettings
     | TriosSettings
+    | SnapSettings
     | LiarsDiceSettings
     | HushSettings
     | DailyWordSettings
@@ -188,6 +190,9 @@ interface TriosSettings {
   /** Trios in a game: 10 or 20. */
   trios: number;
 }
+
+/** Snap has nothing to choose but the seats; the deck is always 31 cards. */
+type SnapSettings = Record<string, never>;
 
 interface LiarsDiceSettings {
   /** Dice each player starts a game with: 3 or 5. */
@@ -252,6 +257,10 @@ interface TriosLobbyRoomInfo extends LobbyRoomInfo {
   trios: number;
 }
 
+interface SnapLobbyRoomInfo extends LobbyRoomInfo {
+  gameType: 'snap';
+}
+
 interface LiarsDiceLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'liars-dice';
   dicePerPlayer: number;
@@ -277,6 +286,7 @@ type AnyLobbyRoomInfo =
   | Make24LobbyRoomInfo
   | PairsLobbyRoomInfo
   | TriosLobbyRoomInfo
+  | SnapLobbyRoomInfo
   | LiarsDiceLobbyRoomInfo
   | HushLobbyRoomInfo
   | DailyWordLobbyRoomInfo
@@ -597,6 +607,72 @@ interface TriosRoomState extends RoomState {
   /** This player's three cards that were not a trio, while locked out. */
   myMiss: number[];
   lastGame: TriosGameSummary | null;
+}
+
+/**
+ * waiting: no game; finding: everybody looks for their match with the middle
+ * card; taken: the middle card just taken stays for everybody, before the
+ * next is turned up.
+ */
+type SnapPhase = 'waiting' | 'finding' | 'taken';
+
+/** A Snap card: its six symbols in spot order, the first in the centre. */
+type SnapCard = number[];
+
+/** The middle card, and which card of the game it is, from 0. */
+interface SnapMiddle {
+  number: number;
+  symbols: SnapCard;
+}
+
+/** A middle card somebody took: who, which, and the symbol they matched. */
+interface SnapTake {
+  playerId: string;
+  username: string;
+  number: number;
+  symbol: number;
+}
+
+/** A symbol on only one of the two cards: which card it is on. */
+interface SnapMiss {
+  symbol: number;
+  on: 'mine' | 'middle';
+}
+
+interface SnapGameSummary extends GameSummary {
+  /** Cards a game has to take: 31 less the players dealt in. */
+  cards: number;
+  /** Cards taken; fewer when the game ended early. */
+  taken: number;
+}
+
+/**
+ * A Snap room, as one player may see it. Points are cards taken. The pile's
+ * order and everybody else's card never leave the server; a lockout and its
+ * symbol are the viewer's own.
+ */
+interface SnapRoomState extends RoomState {
+  gameType: 'snap';
+  phase: SnapPhase;
+  /** Cards this game has to take; 0 before the first game. */
+  cards: number;
+  taken: number;
+  /** The middle card in play, or the last game's as it ended; null before. */
+  middle: SnapMiddle | null;
+  /** This player's own card; null for a spectator or before the first game. */
+  myCard: SnapCard | null;
+  /** The latest card taken this game, kept after the next is turned up. */
+  lastTake: SnapTake | null;
+  /** How long the middle card has been in play, during `finding`; 0 otherwise. */
+  cardMs: number;
+  /** How long this player is still locked out after a wrong claim; 0 if not. */
+  lockedOutMs: number;
+  /**
+   * This player's symbol that was not a match, while locked out and the
+   * middle card it was about is still in play.
+   */
+  myMiss: SnapMiss | null;
+  lastGame: SnapGameSummary | null;
 }
 
 /**
@@ -970,6 +1046,7 @@ type AnyRoomState =
   | Make24RoomState
   | PairsRoomState
   | TriosRoomState
+  | SnapRoomState
   | LiarsDiceRoomState
   | HushRoomState
   | DailyWordRoomState
@@ -1007,7 +1084,7 @@ type RoomNotice =
       type: 'game:over';
       names: string[];
       points: number;
-      unit: 'point' | 'pair' | 'trio' | 'die';
+      unit: 'point' | 'pair' | 'trio' | 'card' | 'die';
     }
   | { type: 'dg:started'; category: WordCategory }
   | { type: 'dg:drawer-left' }
@@ -1024,6 +1101,8 @@ type RoomNotice =
   | { type: 'pairs:found'; name: string }
   | { type: 'trios:started'; trios: number }
   | { type: 'trios:found'; name: string }
+  | { type: 'snap:started'; cards: number }
+  | { type: 'snap:took'; name: string }
   | { type: 'ld:started'; dice: number; seconds: number }
   | {
       type: 'ld:auto-bid';
@@ -1164,6 +1243,8 @@ interface ClientToServerEvents {
 
   /** Three cards claimed as a trio, by their numbers, on the third pick. */
   'trios:claim': (roomId: string, cards: number[]) => void;
+  /** A tapped symbol, for the middle card numbered `card`. */
+  'snap:claim': (roomId: string, card: number, symbol: number) => void;
   /** Raising to at least `count` dice showing `face`, on your turn. */
   'ld:bid': (roomId: string, count: number, face: number) => void;
   /** Calling Liar on the bid in front of you, on your turn. */
@@ -1309,6 +1390,15 @@ export type {
   TriosTrio,
   TriosGameSummary,
   TriosRoomState,
+  SnapSettings,
+  SnapLobbyRoomInfo,
+  SnapPhase,
+  SnapCard,
+  SnapMiddle,
+  SnapTake,
+  SnapMiss,
+  SnapGameSummary,
+  SnapRoomState,
   LiarsDiceSettings,
   LiarsDiceLobbyRoomInfo,
   LiarsDicePhase,

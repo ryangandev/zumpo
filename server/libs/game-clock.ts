@@ -189,6 +189,23 @@ const triosDurationsInSeconds: TriosDurationsInSeconds = {
 };
 
 /**
+ * Snap's clock. A middle card has no deadline: nothing ends while everybody
+ * looks, so these are the pause after a card is taken and the cost of a
+ * wrong claim.
+ */
+interface SnapDurationsInSeconds {
+  /** How long a taken middle card stays in play before the next is turned. */
+  taken: number;
+  /** How long a wrong claim locks its player out. */
+  lockout: number;
+}
+
+const snapDurationsInSeconds: SnapDurationsInSeconds = {
+  taken: readSecondsFromEnv('SNAP_TAKEN_SECONDS', 1.5),
+  lockout: readSecondsFromEnv('SNAP_LOCKOUT_SECONDS', 2),
+};
+
+/**
  * How long a disconnected player keeps their seat, their score and their place
  * in the round before the room gives up on them.
  *
@@ -208,6 +225,7 @@ export {
   make24DurationsInSeconds,
   pairsDurationsInSeconds,
   triosDurationsInSeconds,
+  snapDurationsInSeconds,
   liarsDiceDurationsInSeconds,
   hushDurationsInSeconds,
   dailyWordDurationsInSeconds,
@@ -220,6 +238,7 @@ export type {
   Make24DurationsInSeconds,
   PairsDurationsInSeconds,
   TriosDurationsInSeconds,
+  SnapDurationsInSeconds,
   LiarsDiceDurationsInSeconds,
   HushDurationsInSeconds,
   DailyWordDurationsInSeconds,

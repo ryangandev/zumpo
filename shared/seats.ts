@@ -13,6 +13,7 @@ export const SEATS: Readonly<Record<GameType, { min: number; max: number }>> = {
   'make-24': { min: 2, max: 8 },
   pairs: { min: 2, max: 6 },
   trios: { min: 2, max: 8 },
+  snap: { min: 2, max: 6 },
   'liars-dice': { min: 2, max: 6 },
   hush: { min: MIN_PLAYERS, max: MAX_PLAYERS },
   'daily-word': { min: 2, max: 8 },

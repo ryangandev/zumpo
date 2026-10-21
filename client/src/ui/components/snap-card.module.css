@@ -1,0 +1,99 @@
+/* Zumpo/Snap card. Outlines are inset shadows, so a taken card keeps its
+   size. The spots are placed in fractions of the card (shared/snap.ts), so
+   where less room is left the card shrinks, its spots with it. */
+.card {
+  position: relative;
+  flex: none;
+  width: 320px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--zumpo-radius-999);
+  box-shadow:
+    var(--zumpo-shadow-cell-edge),
+    inset 0 0 0 1px var(--zumpo-line);
+  background: var(--zumpo-paper);
+}
+
+.compact {
+  width: 224px;
+}
+
+.mini {
+  width: 72px;
+}
+
+.taken {
+  box-shadow:
+    var(--zumpo-shadow-cell-edge),
+    inset 0 0 0 3px var(--zumpo-green);
+}
+
+/* Zumpo/Snap spot: the symbol at 80% of its circle. */
+.spot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--zumpo-radius-999);
+  background: transparent;
+}
+
+.symbol {
+  width: 80%;
+  height: 80%;
+}
+
+.match {
+  box-shadow: inset 0 0 0 3px var(--zumpo-green);
+  background: var(--zumpo-lime);
+}
+
+.miss {
+  box-shadow: inset 0 0 0 3px var(--zumpo-danger);
+  background: var(--zumpo-peach);
+}
+
+.dim .symbol {
+  opacity: 0.3;
+}
+
+.button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Only where there is a pointer to hover with: on a touch screen the hover
+   sticks after a tap. */
+@media (hover: hover) {
+  .button:hover:not([aria-disabled='true'], .match, .miss) {
+    box-shadow: inset 0 0 0 2px var(--zumpo-ink);
+  }
+}
+
+.button:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--zumpo-ink);
+  outline-offset: 2px;
+}
+
+.button[aria-disabled='true'] {
+  cursor: default;
+}
+
+/* The taker's initials, on the card's top edge. */
+.badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  padding: var(--zumpo-space-1) var(--zumpo-space-8);
+  transform: translateX(-50%);
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-green);
+  color: var(--zumpo-paper);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  white-space: nowrap;
+}

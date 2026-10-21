@@ -1,5 +1,6 @@
 import { cardFeatures } from '../../../../shared/trios';
 import type { ui as en } from '../en/ui';
+import { symbols as snapSymbols } from './snap';
 
 export const ui: typeof en = {
   chat: {
@@ -128,5 +129,12 @@ export const ui: typeof en = {
     },
     states: { selected: '，已选中', found: '，已找到', wrong: '，不成一组' },
     badge: (name, badge) => `${name}，${badge}`,
+  },
+  snap: {
+    symbol: (symbol) => snapSymbols[symbol] ?? '',
+    marks: { match: '，两张牌都有', miss: '，不是这个' },
+    note: (name, note) => `${name}，${note}`,
+    takenBy: (who) => `被 ${who} 抢走`,
+    locked: '锁定中',
   },
 };

@@ -15,6 +15,7 @@ import { pairs } from './pairs';
 import { room } from './room';
 import { shell } from './shell';
 import { solo } from './solo';
+import { snap } from './snap';
 import { trios } from './trios';
 import { ui } from './ui';
 
@@ -40,6 +41,7 @@ export const en = {
   make24,
   pairs,
   trios,
+  snap,
   liarsDice,
   hush,
   doodleChain,

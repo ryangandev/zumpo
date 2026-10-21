@@ -60,6 +60,12 @@ const ENTRIES: readonly Omit<GameInfo, 'minPlayers' | 'maxPlayers'>[] = [
     solo: true,
   },
   {
+    type: 'snap',
+    kind: 'spot-and-remember',
+    tone: 'blue',
+    solo: true,
+  },
+  {
     type: 'liars-dice',
     kind: 'party',
     tone: 'lime',

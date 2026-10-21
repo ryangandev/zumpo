@@ -7,6 +7,7 @@ import {
   NumberCard,
   PairsCard,
   PickMarker,
+  SnapCard,
   symbolNamed,
   Tag,
   TriosCard,
@@ -18,6 +19,7 @@ import {
   type ChainDrawingName,
   type ChainDrawingPart,
 } from '../ui/generated/chain-drawings';
+import { SYMBOLS, type SymbolName } from '../../../shared/snap';
 import type { GameType } from '../../../shared/wire-types';
 import { cx } from '../ui/cx';
 import styles from './artwork.module.css';
@@ -218,6 +220,36 @@ function TriosArtwork() {
   );
 }
 
+const snapSymbols = (...names: SymbolName[]) =>
+  names.map((name) => SYMBOLS.indexOf(name));
+/** Two Snap cards that share the star, marked on both. */
+const SNAP_A = snapSymbols(
+  'tree',
+  'star',
+  'plus',
+  'heart',
+  'diamond',
+  'triangle',
+);
+const SNAP_B = snapSymbols('star', 'bolt', 'crown', 'note', 'moon', 'cloud');
+const STAR_MATCH = { [SYMBOLS.indexOf('star')]: 'match' } as const;
+
+/** Two cards and the one symbol they share. */
+function SnapArtwork() {
+  return (
+    <div className={styles.snap}>
+      {[SNAP_A, SNAP_B].map((symbols) => (
+        <SnapCard
+          key={symbols.join()}
+          symbols={symbols}
+          size="mini"
+          marks={STAR_MATCH}
+        />
+      ))}
+    </div>
+  );
+}
+
 /** The top of a pile mid-level: two cards played, and the one on top. */
 function PileArtwork() {
   return (
@@ -268,6 +300,7 @@ const TILES: Readonly<Record<GameType, () => ReactNode>> = {
   'make-24': HandArtwork,
   pairs: PairsArtwork,
   trios: TriosArtwork,
+  snap: SnapArtwork,
   'liars-dice': DiceArtwork,
   hush: PileArtwork,
   'doodle-chain': ChainArtwork,
@@ -310,6 +343,7 @@ const ICONS: Readonly<Record<GameType, () => ReactNode>> = {
   ),
   // Two coral solid circles (shared/trios.ts)
   trios: () => <TriosCard card={3} state="found" size="mini" />,
+  snap: () => <SnapCard symbols={SNAP_B} size="mini" marks={STAR_MATCH} />,
   'liars-dice': () => (
     <div className={styles.iconGrid}>
       <Die face={5} state="counted" size="compact" label={null} />

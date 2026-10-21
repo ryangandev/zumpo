@@ -44,6 +44,12 @@ import {
   twoBesides,
 } from '../play/trios';
 import {
+  readyToTap,
+  tapMatch,
+  tapMiss,
+  turnOf as snapTurnOf,
+} from '../play/snap';
+import {
   bidCount,
   bidsOf,
   bidSurelyStands,
@@ -1152,6 +1158,143 @@ test('a Trios game', async ({ player }) => {
   await pickTrio(maya);
   await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
   await shot(sam, 'TS09');
+});
+
+test('Snap on your own', async ({ player }) => {
+  test.setTimeout(300_000);
+  const maya = await player('Maya', desktop);
+  await keepOnDevice(maya, {
+    'best:snap:thirty-cards': '112000',
+    'days:snap:thirty-cards': JSON.stringify([
+      { day: daysAgo(1), result: 112_000 },
+      { day: daysAgo(2), result: 125_000 },
+    ]),
+  });
+  // "Not a match" is on show for only a moment.
+  await maya.clock.install();
+  await maya.goto('/games/snap/solo');
+  await shot(maya, 'SN01');
+  await maya.getByRole('button', { name: 'Start' }).click();
+
+  const turn = snapTurnOf(maya);
+  const miss = turn.getByText('Not a match, +3 s');
+  for (let card = 1; card <= 30; card++) {
+    await expect(turn.getByText(`Card ${card} of 30`)).toBeVisible();
+    await readyToTap(maya);
+    // A wrong tap on the way to the fifth card and the twelfth, as Figma's
+    // run has.
+    if (card === 5) {
+      await tapMiss(maya);
+      await expect(miss).toBeVisible();
+      await readyToTap(maya);
+    }
+    if (card === 12) {
+      await shot(maya, 'SN02');
+      const missShown = await paused(maya, async () => {
+        await tapMiss(maya);
+        return shotWhile(maya, 'SN03', miss);
+      });
+      expect(missShown, 'a miss captured').toBe(true);
+      await readyToTap(maya);
+    }
+    await tapMatch(maya);
+  }
+  await expect(
+    maya.getByRole('heading', { name: /^30 cards in \d+:\d\d\.$/ }),
+  ).toBeVisible();
+  await shot(maya, 'SN04');
+
+  const onPhone = await player('Maya', phone);
+  await onPhone.goto('/games/snap/solo');
+  await onPhone.getByRole('button', { name: 'Start' }).click();
+  for (let card = 1; card <= 11; card++) {
+    await readyToTap(onPhone);
+    await tapMatch(onPhone);
+  }
+  await expect(snapTurnOf(onPhone).getByText('Card 12 of 30')).toBeVisible();
+  await readyToTap(onPhone);
+  await shot(onPhone, 'SN11');
+});
+
+test('a Snap game', async ({ player }) => {
+  test.setTimeout(600_000);
+  const maya = await player('Maya', desktop);
+  const sam = await player('Sam', desktop);
+  const leo = await player('Leo', phone);
+  const ryan = await player('Ryan', desktop);
+  const seats = [maya, sam, leo, ryan];
+
+  await maya.goto('/games/snap/new');
+  await maya.getByLabel('Password (optional)').fill('otters');
+  await shot(maya, 'SN10');
+  const link = await createRoom(maya, 'snap');
+  for (const seat of [sam, leo, ryan]) await joinRoom(seat, link);
+  await startGame(maya);
+
+  /** `taker` takes the `taken`th card, and everybody sees it taken. */
+  const take = async (taker: Page, taken: number) => {
+    await readyToTap(taker);
+    await tapMatch(taker);
+    for (const seat of seats) {
+      await expect(
+        seat.getByText(`${taken} of 27 cards`, { exact: true }),
+      ).toBeVisible();
+    }
+  };
+
+  // Nine cards in, scored as Figma's are: Maya 3, Sam 2, Leo 3, Ryan 1.
+  const order = [leo, maya, sam, leo, maya, ryan, sam, leo, maya];
+  for (const [index, taker] of order.entries()) await take(taker, index + 1);
+
+  for (const seat of seats) await readyToTap(seat);
+  await shot(sam, 'SN05');
+  await shot(leo, 'SN12');
+
+  // Jo comes in after the start, and watches; only SN13 has Jo.
+  const jo = await player('Jo', desktop);
+  await joinRoom(jo, link);
+  await expect(snapTurnOf(jo).getByText('Everyone is looking')).toBeVisible();
+  await shot(jo, 'SN13');
+  // Leaving while watching asks nothing.
+  await jo.getByRole('button', { name: 'Leave room' }).click();
+  await expect(sam.getByRole('region', { name: /^Watching/ })).toBeHidden();
+
+  // Maya takes the tenth, as Sam sees it.
+  await tapMatch(maya);
+  const taken = snapTurnOf(sam).getByText('Maya took it');
+  await expect(taken).toBeVisible();
+  expect(await shotWhile(sam, 'SN06', taken)).toBe(true);
+
+  // Sam taps a symbol only on their card, and is locked out.
+  await readyToTap(sam);
+  await tapMiss(sam);
+  const locked = snapTurnOf(sam).getByText('locked out', { exact: true });
+  await expect(locked).toBeVisible();
+  expect(await shotWhile(sam, 'SN07', locked)).toBe(true);
+
+  // Once it is over, Sam takes the eleventh.
+  await readyToTap(sam);
+  await tapMatch(sam);
+  const yours = snapTurnOf(sam).getByText('You took it!');
+  await expect(yours).toBeVisible();
+  expect(await shotWhile(sam, 'SN08', yours)).toBe(true);
+
+  // Then the rest, to Maya 9, Sam 7, Leo 6 and Ryan 5, Maya taking the last.
+  const rest = [
+    ...Array<Page>(4).fill(ryan),
+    ...Array<Page>(3).fill(leo),
+    ...Array<Page>(4).fill(maya),
+    ...Array<Page>(4).fill(sam),
+    maya,
+  ];
+  for (const [index, taker] of rest.entries()) {
+    if (index === rest.length - 1) {
+      await readyToTap(taker);
+      await tapMatch(taker);
+    } else await take(taker, index + 12);
+  }
+  await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
+  await shot(sam, 'SN09');
 });
 
 /** What a table of bots keeps on this device before each game: 5 of 10 won. */

@@ -17,11 +17,13 @@ import type {
   PairsDurationsInSeconds,
   PhaseDurationsInSeconds,
   TriosDurationsInSeconds,
+  SnapDurationsInSeconds,
 } from '../../libs/game-clock.js';
 import type { MinesweeperState } from '../../socket/minesweeper/index.js';
 import type { Make24State } from '../../socket/make-24/index.js';
 import type { PairsState } from '../../socket/pairs/index.js';
 import type { TriosState } from '../../socket/trios/index.js';
+import type { SnapState } from '../../socket/snap/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
@@ -47,6 +49,7 @@ import type {
   PlayerIdentity,
   RoomSeat,
   TriosRoomState,
+  SnapRoomState,
   ServerToClientEvent,
   ServerToClientEvents,
 } from '../../models/types.js';
@@ -104,6 +107,15 @@ const FAST_TRIOS: TriosDurationsInSeconds = {
   taken: 0.3,
   lockout: 0.5,
   hint: 0.8,
+};
+
+/**
+ * A taken card on show long enough to assert on, and a lockout that outlasts
+ * a second claim.
+ */
+const FAST_SNAP: SnapDurationsInSeconds = {
+  taken: 0.2,
+  lockout: 1,
 };
 
 /**
@@ -202,6 +214,7 @@ const startTestServer = async (
     make24Durations,
     pairsDurations,
     triosDurations: FAST_TRIOS,
+    snapDurations: FAST_SNAP,
     liarsDiceDurations: FAST_LIARS_DICE,
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
@@ -358,6 +371,13 @@ const waitForTriosState = (
   predicate: (state: TriosRoomState) => boolean = () => true,
   timeoutMs = 3000,
 ) => waitForState<TriosRoomState>(client, predicate, timeoutMs);
+
+/** And for Snap. */
+const waitForSnapState = (
+  client: ClientSocket,
+  predicate: (state: SnapRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<SnapRoomState>(client, predicate, timeoutMs);
 
 /** And for Liar's Dice. */
 const waitForLiarsDiceState = (
@@ -556,6 +576,23 @@ const createTriosRoom = async (
     maxPlayers: options.maxPlayers ?? 4,
     password: '',
     settings: { trios: options.trios ?? 10 },
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/** Creates a Snap room, with its creator seated, and returns its id. */
+const createSnapRoom = async (
+  client: ClientSocket,
+  options: { username?: string; maxPlayers?: number } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'snap',
+    roomName: 'Spot on',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 4,
+    password: '',
+    settings: {},
   });
   if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
   return answer.roomId;
@@ -826,6 +863,13 @@ const triosRoom = (harness: TestServer, roomId: string): Room<TriosState> =>
   harness.server.rooms.get(roomId) as Room<TriosState>;
 
 /**
+ * The server's own Snap room. Tests read the pile and the hands through it to
+ * know what is coming and what another player holds, which no client is sent.
+ */
+const snapRoom = (harness: TestServer, roomId: string): Room<SnapState> =>
+  harness.server.rooms.get(roomId) as Room<SnapState>;
+
+/**
  * The server's own Liar's Dice room. Tests read and set the dice through it on
  * purpose: a call can only be played deliberately by knowing what the cups
  * hold, which is exactly what a client is never sent.
@@ -920,6 +964,7 @@ export {
   FAST_MAKE24,
   FAST_PAIRS,
   FAST_TRIOS,
+  FAST_SNAP,
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
@@ -932,6 +977,7 @@ export {
   waitForMake24State,
   waitForPairsState,
   waitForTriosState,
+  waitForSnapState,
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
@@ -947,6 +993,7 @@ export {
   createMake24Room,
   createPairsRoom,
   createTriosRoom,
+  createSnapRoom,
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
@@ -966,6 +1013,7 @@ export {
   playToFirstHand,
   pairsRoom,
   triosRoom,
+  snapRoom,
   liarsDiceRoom,
   hushRoom,
   dailyWordRoom,

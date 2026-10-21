@@ -12,6 +12,7 @@ import type {
   MinesweeperDurationsInSeconds,
   PairsDurationsInSeconds,
   PhaseDurationsInSeconds,
+  SnapDurationsInSeconds,
   TriosDurationsInSeconds,
 } from './libs/game-clock.js';
 import { createRoomRegistry } from './libs/rooms/registry.js';
@@ -25,6 +26,7 @@ import { createMinesweeperModule } from './socket/minesweeper/index.js';
 import { createMake24Module } from './socket/make-24/index.js';
 import { createPairsModule } from './socket/pairs/index.js';
 import { createTriosModule } from './socket/trios/index.js';
+import { createSnapModule } from './socket/snap/index.js';
 import { createLiarsDiceModule } from './socket/liars-dice/index.js';
 import { createHushModule } from './socket/hush/index.js';
 import { createDailyWordModule } from './socket/daily-word/index.js';
@@ -123,6 +125,8 @@ interface CreateZumpoServerOptions {
   pairsDurations?: PairsDurationsInSeconds;
   /** A taken trio's pause, a lockout and the hint clock. Shortened by tests. */
   triosDurations?: TriosDurationsInSeconds;
+  /** A taken middle card's pause and a lockout. Shortened by tests. */
+  snapDurations?: SnapDurationsInSeconds;
   /** A Liar's Dice turn and a call's reveal. Shortened by tests. */
   liarsDiceDurations?: LiarsDiceDurationsInSeconds;
   /** Hush's countdown, mistake pause and cleared level. Shortened by tests. */
@@ -189,6 +193,7 @@ const createZumpoServer = (
     make24Durations,
     pairsDurations,
     triosDurations,
+    snapDurations,
     liarsDiceDurations,
     hushDurations,
     dailyWordDurations,
@@ -250,6 +255,7 @@ const createZumpoServer = (
   registry.register(createMake24Module(registry.context, make24Durations));
   registry.register(createPairsModule(registry.context, pairsDurations));
   registry.register(createTriosModule(registry.context, triosDurations));
+  registry.register(createSnapModule(registry.context, snapDurations));
   // A Hush level waits for a dropped player as long as their seat is held,
   // and shows that wait as its clock.
   registry.register(

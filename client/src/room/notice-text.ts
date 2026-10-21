@@ -60,6 +60,10 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['trios:started'](notice);
     case 'trios:found':
       return m.notices['trios:found'](notice);
+    case 'snap:started':
+      return m.notices['snap:started'](notice);
+    case 'snap:took':
+      return m.notices['snap:took'](notice);
     case 'ld:started':
       return m.notices['ld:started'](notice);
     case 'ld:auto-bid':

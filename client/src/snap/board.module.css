@@ -1,0 +1,79 @@
+/* SN02, SN05: the middle card and yours on a paper panel, 48 px apart. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--zumpo-space-48);
+  width: 100%;
+}
+
+/* Beside the side column a stage can be narrower than two regular cards:
+   the columns shrink, and the cards in them. */
+.column {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+  min-width: 0;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  margin: 0;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+}
+
+/* The lines of what the turn bar says, and the meta under them. */
+.turnBar {
+  --lines: 1;
+}
+
+/* Beside the clock, what the turn bar says and its meta share a line where
+   they fit. Narrower, a long name pushes the meta under it, so the bar keeps
+   room for both; the 4 px is the answer's own gap between its lines. */
+@container (max-width: 860px) {
+  .turnBar p {
+    min-height: calc(
+      var(--lines) * var(--zumpo-text-heading-line) + var(--zumpo-space-4) +
+        var(--zumpo-text-small-line)
+    );
+  }
+}
+
+/* Stacked, as on a phone, "… took it" takes two lines for a long name, as
+   SN12 keeps room for. */
+@container (max-width: 560px) {
+  .names p {
+    --lines: 2;
+  }
+}
+
+/* SN11, SN12: on a phone, the two compact cards one above the other, on the
+   page itself. */
+@media (max-width: 640px) {
+  .panel {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .cards {
+    flex-direction: column;
+    gap: var(--zumpo-space-16);
+  }
+}

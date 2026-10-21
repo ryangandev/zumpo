@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 170 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 247 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).
@@ -17,6 +17,12 @@ Both sides speak the snapshot-driven wire contract in `shared/wire-types.d.ts` (
 Four more games, chosen by Ryan on 2026-10-05, were designed in Figma (sections 07-10) and merged the same day ([#34](https://github.com/ryangandev/zumpo/pull/34)-[#38](https://github.com/ryangandev/zumpo/pull/38)): Trios, Liar's Dice, Hush and Daily Word, eight games in all.
 Trios, Liar's Dice and Daily Word play on your own and in rooms; Hush is rooms only, because it needs at least two players.
 Their behaviour contracts are in `docs/games/`.
+
+A ninth game, Snap (找相同), was added on 2026-10-20: a spot-the-match race in the style of Spot It, where every two cards share exactly one symbol and the first to tap it takes the middle card ([rules](games/snap.md)).
+It was designed in Figma first (section 11), and plays on your own, thirty cards against one clock, and in rooms of two to six.
+
+A tenth game, Doodle Chain (传话画画), was added the same week: a drawing telephone where everybody writes a line, the next player draws it and the next says what the drawing shows, until the host reveals every chain ([rules](games/doodle-chain.md)).
+It was designed in Figma first (section 12), and is rooms only, for three to eight players.
 
 On 2026-10-05 Ryan chose to host it for a few testers on Render's free plan, and it is live at `zumpo.ryangan.me` ([architecture](architecture.md#deployment)).
 The server was hardened for that the same day ([#30](https://github.com/ryangandev/zumpo/pull/30)): a restart tells each room it closed, a duplicated tab takes over its player, what a client can make the server hold is bounded, and Render checks `/healthz`.
@@ -52,9 +58,9 @@ Decided by Ryan, and the frame for every design and implementation choice:
 ## Next
 
 Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
+Snap and Doodle Chain are built; the other two come next.
 Gomoku brings a fourth kind of game, Strategy.
 Each game's behaviour contract lands in `docs/games/` with its implementation.
-Doodle Chain is built: rooms only, for three to eight players ([contract](games/doodle-chain.md)).
 After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
 
 ## Open decisions
