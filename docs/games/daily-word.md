@@ -45,6 +45,7 @@ Six guesses without finding it, and it is **missed**.
 ### Typing
 
 An on-screen keyboard (three rows, QWERTY, with Enter and a delete key) and a physical keyboard both type into the next empty tile; Enter submits and Backspace deletes.
+On your own on a short wide window, such as a laptop's at 1280 × 720, the keyboard stands beside the board instead of under it, so the board stays near its full size.
 Each key shows the best mark its letter has had so far (`correct` over `present` over `absent`), and an unused letter is plain.
 In a room the physical keyboard types into the board unless the chat input has focus.
 

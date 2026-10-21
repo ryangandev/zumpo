@@ -59,6 +59,7 @@ The marks are the game's whole language: the board is digits and pegs, so the ga
 ### Typing
 
 A pad of the ten digits, with Enter and a delete key, and a physical keyboard's digit keys (top row and number pad) both type into the next empty tile; Enter submits and Backspace deletes.
+On your own on a short wide window, such as a laptop's at 1280 × 720, the pad, in its two rows, stands beside the board instead of under it, so the ten rows shrink less.
 A digit already in the row cannot be typed again: the key does nothing, and the tile that holds that digit gives a short nudge, so a repeated digit never reaches Enter.
 In a room the physical keyboard types into the board unless the chat input has focus.
 
