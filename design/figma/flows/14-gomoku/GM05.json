@@ -166,11 +166,11 @@
                         "type": "TEXT",
                         "id": "162:69264",
                         "name": "Heading",
-                        "w": 375,
+                        "w": 368,
                         "h": 42,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "You won in 21 moves.",
+                        "text": "You won on move 21.",
                         "textStyle": "Zumpo/Title",
                         "fills": [
                           "$Zumpo · UI:color/ink"

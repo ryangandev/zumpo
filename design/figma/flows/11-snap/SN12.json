@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 3050,
     "w": 390,
-    "h": 1012,
+    "h": 891,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:86427",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,28 +46,9 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "9 of 27 cards",
           "Game": "Snap"
-        },
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "9 of 27 cards",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        }
       },
       {
         "type": "INSTANCE",
@@ -94,7 +75,7 @@
         "id": "162:86429",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 196,
+        "h": 95,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -112,12 +93,12 @@
         "overrides": [
           {
             "path": ".",
-            "height": 196,
+            "height": 95,
             "paddingBottom": 31,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -126,15 +107,16 @@
             }
           },
           {
-            "path": "Answer",
+            "path": "Text / Answer",
             "counterAxisSizingMode": "AUTO",
             "counterAxisSpacing": 19
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "on this card",
-              "Time": "00:02",
+              "Time": "0:02",
               "Tone": "Waiting"
             }
           }

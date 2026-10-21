@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 3050,
     "w": 1440,
-    "h": 1248,
+    "h": 1103,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -67,72 +67,6 @@
       },
       {
         "type": "FRAME",
-        "id": "79:88751",
-        "name": "Page heading",
-        "w": 1312,
-        "h": 121,
-        "hSize": "hug",
-        "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "79:88752",
-            "name": "Tag / PLAY TOGETHER",
-            "w": 117,
-            "h": 30,
-            "wSize": "hug",
-            "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
-            },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "PLAY TOGETHER"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 30,
-                "width": 117
-              }
-            ]
-          },
-          {
-            "type": "TEXT",
-            "id": "79:88753",
-            "name": "Minesweeper rooms",
-            "w": 1312,
-            "h": 42,
-            "hSize": "hug",
-            "text": "Trios rooms",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "79:88754",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Make a little space for your next game.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
         "id": "79:88755",
         "name": "Dialog stage",
         "w": 1312,
@@ -151,9 +85,9 @@
           {
             "type": "INSTANCE",
             "id": "79:88756",
-            "name": "A little room for you.",
+            "name": "New Trios room",
             "w": 560,
-            "h": 790,
+            "h": 425,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -161,12 +95,13 @@
             },
             "componentId": "9:400",
             "props": {
-              "Description": "Everybody looks at the same twelve cards, and the first to pick a trio takes it. 10 trios is about three minutes."
+              "Description": "Everybody looks at the same twelve cards, and the first to pick a trio takes it. 10 trios is about three minutes.",
+              "Title": "New Trios room"
             },
             "overrides": [
               {
                 "path": ".",
-                "height": 790,
+                "height": 425,
                 "width": 560
               }
             ],
@@ -174,47 +109,10 @@
               "Content": [
                 {
                   "type": "INSTANCE",
-                  "id": "I79:88756;35:13433;79:88761",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Up to 40 characters.",
-                    "Value": "Maya’s room",
-                    "Label": "Room name"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I79:88756;35:13433;79:88762",
-                  "name": "Zumpo/Input",
-                  "w": 496,
-                  "h": 113,
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Choose 2–8 seats.",
-                    "Value": "8 players",
-                    "Label": "Seats"
-                  }
-                },
-                {
-                  "type": "INSTANCE",
                   "id": "I79:88756;35:13433;79:88763",
                   "name": "Zumpo/Input",
                   "w": 496,
-                  "h": 113,
+                  "h": 87,
                   "hSize": "hug",
                   "component": "Zumpo/Input",
                   "variant": {
@@ -225,26 +123,58 @@
                     "Select": true,
                     "Helper": "10 or 20 trios a game.",
                     "Value": "10 trios",
+                    "Show helper": false,
                     "Label": "Trios"
-                  }
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 87,
+                      "width": 496
+                    }
+                  ]
                 },
                 {
-                  "type": "INSTANCE",
-                  "id": "I79:88756;35:13433;79:88764",
-                  "name": "Zumpo/Input",
+                  "type": "FRAME",
+                  "id": "163:62968",
+                  "name": "More options",
                   "w": 496,
-                  "h": 113,
+                  "h": 48,
                   "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
                   },
-                  "componentId": "9:204",
-                  "props": {
-                    "Helper": "Leave blank for an open room. Up to 20 characters.",
-                    "Value": "••••••",
-                    "Label": "Password (optional)"
-                  }
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "163:62970",
+                      "name": "Action / More options",
+                      "w": 159,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Quiet",
+                        "State": "Default"
+                      },
+                      "componentId": "4:21",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                        "Show icon": true,
+                        "Label": "More options"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 48,
+                          "width": 159
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "type": "FRAME",

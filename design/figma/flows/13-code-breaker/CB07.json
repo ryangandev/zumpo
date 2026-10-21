@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 1550,
     "w": 1440,
-    "h": 1123,
+    "h": 1163,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -104,7 +104,7 @@
         "id": "162:81857",
         "name": "Board & room",
         "w": 1312,
-        "h": 953,
+        "h": 993,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "162:81858",
             "name": "Board stage",
             "w": 944,
-            "h": 953,
+            "h": 993,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -130,7 +130,7 @@
                 "id": "162:81859",
                 "name": "Final scores",
                 "w": 944,
-                "h": 335,
+                "h": 375,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -152,8 +152,8 @@
                     "type": "FRAME",
                     "id": "162:81860",
                     "name": "Result heading",
-                    "w": 373,
-                    "h": 75,
+                    "w": 238,
+                    "h": 115,
                     "wSize": "hug",
                     "hSize": "hug",
                     "layout": {
@@ -176,13 +176,94 @@
                         ]
                       },
                       {
+                        "type": "FRAME",
+                        "id": "163:66633",
+                        "name": "Answer",
+                        "w": 140,
+                        "h": 32,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/4",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "163:66634",
+                            "name": "Digit 8",
+                            "w": 32,
+                            "h": 32,
+                            "component": "Zumpo/Digit tile",
+                            "variant": {
+                              "State": "Cracked",
+                              "Size": "Small"
+                            },
+                            "componentId": "162:62563",
+                            "props": {
+                              "Digit": "8"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "163:66636",
+                            "name": "Digit 3",
+                            "w": 32,
+                            "h": 32,
+                            "component": "Zumpo/Digit tile",
+                            "variant": {
+                              "State": "Cracked",
+                              "Size": "Small"
+                            },
+                            "componentId": "162:62563",
+                            "props": {
+                              "Digit": "3"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "163:66638",
+                            "name": "Digit 5",
+                            "w": 32,
+                            "h": 32,
+                            "component": "Zumpo/Digit tile",
+                            "variant": {
+                              "State": "Cracked",
+                              "Size": "Small"
+                            },
+                            "componentId": "162:62563",
+                            "props": {
+                              "Digit": "5"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "163:66640",
+                            "name": "Digit 2",
+                            "w": 32,
+                            "h": 32,
+                            "component": "Zumpo/Digit tile",
+                            "variant": {
+                              "State": "Cracked",
+                              "Size": "Small"
+                            },
+                            "componentId": "162:62563",
+                            "props": {
+                              "Digit": "2"
+                            }
+                          }
+                        ]
+                      },
+                      {
                         "type": "TEXT",
                         "id": "162:81862",
-                        "w": 373,
+                        "name": "The code was 8352. A new streak starts tomorrow.",
+                        "w": 221,
                         "h": 25,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "The code was 8352. A new streak starts tomorrow.",
+                        "text": "A new streak starts tomorrow.",
                         "textStyle": "Zumpo/Body",
                         "fills": [
                           "$Zumpo · UI:color/muted"
@@ -1437,7 +1518,7 @@
                         },
                         {
                           "type": "FRAME",
-                          "id": "162:82241",
+                          "id": "I162:81877;35:13441;162:82245",
                           "name": "Guesses / 10",
                           "w": 278,
                           "h": 24,

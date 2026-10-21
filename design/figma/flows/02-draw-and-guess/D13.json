@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 6851,
     "w": 1440,
-    "h": 934,
+    "h": 952,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "9:2306",
         "name": "Game & room",
         "w": 1312,
-        "h": 764,
+        "h": 782,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -553,7 +553,7 @@
             "id": "9:2317",
             "name": "Room sidebar",
             "w": 344,
-            "h": 764,
+            "h": 782,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -574,6 +574,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -595,6 +596,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -609,6 +611,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -630,6 +633,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -655,14 +659,14 @@
                 "id": "9:2348",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 436,
+                "h": 454,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 436,
+                    "height": 454,
                     "width": 344
                   },
                   {
@@ -698,7 +702,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game has ended!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

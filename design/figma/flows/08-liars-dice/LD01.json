@@ -6,7 +6,7 @@
   "section": "08 / Liar's Dice / complete flow",
   "reviewNotes": [
     "08 / Liar’s Dice / complete flow",
-    "LD01 · On your own nothing reaches the server. Pick 1 to 5 bots (taken from Pip, Juno, Otto, Remy and Wren) and 3 or 5 dice each; the last table picked is offered again. The description is the record on this device, or a line about the game before the first one."
+    "LD01 · On your own nothing reaches the server. Pick 1 to 5 bots and 3 or 5 dice each, one tap each on Filter chips; the last table picked is offered again. The description is the record on this device, or a line about the game before the first one."
   ],
   "frame": {
     "type": "FRAME",
@@ -15,7 +15,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 974,
+    "h": 893,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -138,7 +138,7 @@
         "id": "75:82410",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 603,
+        "h": 522,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -156,7 +156,7 @@
             "id": "75:82411",
             "name": "Pick a table.",
             "w": 560,
-            "h": 491,
+            "h": 410,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -170,63 +170,290 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 491,
+                "height": 410,
                 "width": 560
               }
             ],
             "slots": {
               "Content": [
                 {
-                  "type": "INSTANCE",
-                  "id": "I75:82411;35:13433;75:82472",
-                  "name": "Zumpo/Input",
+                  "type": "FRAME",
+                  "id": "164:69267",
+                  "name": "Field / Bots",
                   "w": 494,
-                  "h": 113,
+                  "h": 61,
                   "wSize": "fill",
                   "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
+                  "clip": true,
+                  "layout": {
+                    "mode": "column",
+                    "gap": "$Zumpo · UI:space/8",
+                    "strokesIncluded": true
                   },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Taken from Pip, Juno, Otto, Remy and Wren.",
-                    "Value": "3 bots",
-                    "Label": "Bots"
-                  },
-                  "overrides": [
+                  "children": [
                     {
-                      "path": ".",
-                      "height": 113,
-                      "width": 494
+                      "type": "TEXT",
+                      "id": "164:69268",
+                      "name": "Label",
+                      "w": 26,
+                      "h": 15,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "text": "Bots",
+                      "font": "Inter Regular",
+                      "size": 12,
+                      "fills": [
+                        "$Zumpo · UI:color/ink"
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "164:69269",
+                      "name": "Chips",
+                      "w": 245,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "clip": true,
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/8",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69270",
+                          "name": "Chip / 1",
+                          "w": 40,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Default"
+                          },
+                          "componentId": "90:107171",
+                          "props": {
+                            "Label": "1"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 40
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69272",
+                          "name": "Chip / 2",
+                          "w": 43,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Default"
+                          },
+                          "componentId": "90:107171",
+                          "props": {
+                            "Label": "2"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 43
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69274",
+                          "name": "Chip / 3",
+                          "w": 43,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Selected"
+                          },
+                          "componentId": "90:107175",
+                          "props": {
+                            "Label": "3"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 43
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69277",
+                          "name": "Chip / 4",
+                          "w": 44,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Default"
+                          },
+                          "componentId": "90:107171",
+                          "props": {
+                            "Label": "4"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 44
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69279",
+                          "name": "Chip / 5",
+                          "w": 43,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Default"
+                          },
+                          "componentId": "90:107171",
+                          "props": {
+                            "Label": "5"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 43
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
                 {
-                  "type": "INSTANCE",
-                  "id": "I75:82411;35:13433;76:82480",
-                  "name": "Zumpo/Input",
+                  "type": "FRAME",
+                  "id": "164:69281",
+                  "name": "Field / Dice each",
                   "w": 494,
-                  "h": 113,
+                  "h": 84,
                   "wSize": "fill",
                   "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
+                  "clip": true,
+                  "layout": {
+                    "mode": "column",
+                    "gap": "$Zumpo · UI:space/8",
+                    "strokesIncluded": true
                   },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "The quick game.",
-                    "Value": "3 dice",
-                    "Label": "Dice each"
-                  },
-                  "overrides": [
+                  "children": [
                     {
-                      "path": ".",
-                      "height": 113,
-                      "width": 494
+                      "type": "TEXT",
+                      "id": "164:69282",
+                      "name": "Label",
+                      "w": 57,
+                      "h": 15,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "text": "Dice each",
+                      "font": "Inter Regular",
+                      "size": 12,
+                      "fills": [
+                        "$Zumpo · UI:color/ink"
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "164:69283",
+                      "name": "Chips",
+                      "w": 160,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "clip": true,
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/8",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69284",
+                          "name": "Chip / 3 dice",
+                          "w": 76,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Selected"
+                          },
+                          "componentId": "90:107175",
+                          "props": {
+                            "Label": "3 dice"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 76
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "164:69287",
+                          "name": "Chip / 5 dice",
+                          "w": 76,
+                          "h": 38,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "component": "Zumpo/Filter chip",
+                          "variant": {
+                            "State": "Default"
+                          },
+                          "componentId": "90:107171",
+                          "props": {
+                            "Label": "5 dice"
+                          },
+                          "overrides": [
+                            {
+                              "path": "",
+                              "height": 38,
+                              "width": 76
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "TEXT",
+                      "id": "164:69289",
+                      "name": "Helper",
+                      "w": 94,
+                      "h": 15,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "text": "The quick game.",
+                      "font": "Inter Regular",
+                      "size": 12,
+                      "fills": [
+                        "$Zumpo · UI:color/muted"
+                      ]
                     }
                   ]
                 },

@@ -4,7 +4,16 @@
   "id": "9:16089",
   "type": "COMPONENT_SET",
   "key": "305aebac6b9c948d573b862b514c85c200f115f3",
+  "description": "Zumpo/Mobile tabs: a phone room shows one of board, players and chat at a time. Chat unread marks lines that arrived while another tab was open (Unread count, 9+ at most); opening Chat clears it.",
   "properties": {
+    "Chat unread": {
+      "type": "boolean",
+      "default": false
+    },
+    "Unread count": {
+      "type": "text",
+      "default": "3"
+    },
     "View": {
       "type": "variant",
       "default": "Board",
@@ -141,6 +150,53 @@
                 "fills": [
                   "$Zumpo · UI:color/ink"
                 ]
+              },
+              {
+                "type": "FRAME",
+                "id": "163:62647",
+                "name": "Unread",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Chat unread"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/coral"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "163:62648",
+                    "name": "Count",
+                    "w": 8,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Unread count"
+                    },
+                    "text": "3",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -271,6 +327,53 @@
                 "fills": [
                   "$Zumpo · UI:color/ink"
                 ]
+              },
+              {
+                "type": "FRAME",
+                "id": "163:62649",
+                "name": "Unread",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Chat unread"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/coral"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "163:62650",
+                    "name": "Count",
+                    "w": 8,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Unread count"
+                    },
+                    "text": "3",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -400,6 +503,53 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/white"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "163:62651",
+                "name": "Unread",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Chat unread"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/coral"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "163:62652",
+                    "name": "Count",
+                    "w": 8,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "propRefs": {
+                      "characters": "Unread count"
+                    },
+                    "text": "3",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
                 ]
               }
             ]

@@ -106,8 +106,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "40 mines · 2 hit so far",
-                  "Label": "Round 2",
-                  "Main": "Pick a cell"
+                  "Main": "Pick a cell",
+                  "Label": "Round 2"
                 },
                 "overrides": [
                   {
@@ -122,8 +122,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to pick",
-                      "Time": "00:12",
+                      "Time": "0:12",
                       "Tone": "Running"
                     }
                   }
@@ -1731,7 +1732,7 @@
             "id": "9:7732",
             "name": "Room sidebar",
             "w": 344,
-            "h": 619,
+            "h": 553,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1752,6 +1753,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -1785,6 +1787,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Picking",
@@ -1806,6 +1809,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Picking",
@@ -1827,6 +1831,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Picking",
@@ -1845,14 +1850,14 @@
                 "id": "9:7763",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 291,
+                "h": 225,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 291,
+                    "height": 225,
                     "width": 344
                   },
                   {
@@ -1869,8 +1874,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Ryan hit a mine (16% risk): −104",
-                      "Kind": "Alert"
+                      "Message": "Round 1: Ryan (−104) and Sam (−104) hit mines.",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1880,7 +1885,8 @@
                       "Alert icon": "24:5071",
                       "Message": "Sam hit a mine (16% risk): −104",
                       "Kind": "Alert"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 4",

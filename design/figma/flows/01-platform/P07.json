@@ -135,8 +135,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "paused",
-                      "Time": "00:58",
+                      "Time": "0:58",
                       "Tone": "Waiting"
                     }
                   }
@@ -207,6 +208,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5053",
                       "Status icon": true,
