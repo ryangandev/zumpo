@@ -257,6 +257,8 @@ Code differs from Figma on purpose in a few places:
 - The turn bar's meta names who has locked in on a Minesweeper round ("Maya locked in"), and who has solved a Make 24 hand while you undo; M04, M11 to M13 and T04 draw the lines from before anybody has.
   A Pairs turn that ran out says so in the meta for the next turn ("Maya ran out of time · your turn"), and no Pairs screen draws it.
 - Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.
+- A Doodle Chain album's Play again, or Ready, is never below every chain: on a phone it sits under the album's title, where DC20 says how the next game starts, and on a wider screen it stays at the foot, as DC14 draws it, but held on screen on the panel's paper while the chains scroll by.
+  Each entry the reveal shows scrolls into view with Next under it, at once when the system asks for reduced motion; Figma draws still screens.
 
 ## Editing the Figma file
 
