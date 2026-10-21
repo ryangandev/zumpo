@@ -4,7 +4,7 @@ import type {
   RoomNotice,
 } from '../../../shared/wire-types.js';
 import type { DrawAndGuessState } from '../../models/types.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { isSpectator, seatCount } from '../../libs/rooms/seats.js';
 import type { ChatVerdict, GameContext, Room } from '../../libs/rooms/types.js';
 import { emitToRoom } from '../../libs/rooms/emit.js';
 import {
@@ -264,6 +264,11 @@ const createDrawAndGuessGameEngine = (
     room.game.turn += 1;
     room.game.phase = 'choosing';
     room.game.currentDrawer = newDrawer;
+    announce(room.roomId, 'divider', {
+      type: 'dg:turn',
+      round: room.game.currentRound,
+      drawer: room.playerList[newDrawer]?.username ?? '',
+    });
     room.game.drawerQueue.delete(newDrawer);
     room.game.word = '';
     room.game.hint = '';
@@ -394,7 +399,7 @@ const createDrawAndGuessGameEngine = (
 
     emitState(room);
     // A game cut short has no result: game:interrupted already said so.
-    if (!endedEarly) announce(room.roomId, 'system', { type: 'game:ended' });
+    if (!endedEarly) announce(room.roomId, 'success', { type: 'game:ended' });
     emitLobbyRoomList();
   };
 
@@ -479,6 +484,9 @@ const createDrawAndGuessGameEngine = (
    *   starts, the reveal included: they know the word, and could type it.
    * - During drawing, a guesser's message is a guess. A correct one is scored
    *   and announced instead of shown; a wrong one is ordinary chat.
+   * - During drawing, a spectator talks only to the other spectators: they
+   *   cannot score, but they could hint at the word to the players. A
+   *   spectator who types the word is swallowed.
    *
    * Matching ignores case and surrounding spaces.
    */
@@ -496,7 +504,7 @@ const createDrawAndGuessGameEngine = (
 
     const isCorrect =
       text.trim().toLowerCase() === game.word.trim().toLowerCase();
-    if (!isCorrect) return 'chat';
+    if (!isCorrect) return isSpectator(room, playerId) ? 'spectators' : 'chat';
 
     // A correct guess must never be posted as chat, so a turn without a
     // drawer to credit swallows it rather than letting the word through.

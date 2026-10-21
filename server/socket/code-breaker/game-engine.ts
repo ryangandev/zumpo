@@ -137,7 +137,7 @@ const createCodeBreakerGameEngine = (
       game.cracked.set(playerId, (game.cracked.get(playerId) ?? 0) + 1);
 
       ctx.rooms.emitState(room);
-      ctx.rooms.announce(room.roomId, 'success', {
+      ctx.rooms.announce(room.roomId, 'score', {
         type: 'cb:cracked',
         name: player.username,
         guesses: board.guesses.length,
@@ -231,7 +231,7 @@ const createCodeBreakerGameEngine = (
     ctx.rooms.emitState(room);
     // A game cut short has no result: game:interrupted already said so.
     if (!endedEarly) {
-      ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+      ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
     }
     ctx.rooms.emitLobby('code-breaker');
   };

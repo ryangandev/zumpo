@@ -290,28 +290,62 @@ describe('spectators', () => {
     expect(view.hint).not.toBe(word);
   });
 
-  it('lets a spectator talk, but swallows a right guess and scores nobody', async () => {
-    const { roomId, guesser, word } = await playToDrawingPhase(harness);
+  it('lets spectators talk among themselves while the word is drawn, swallows a right guess and scores nobody', async () => {
+    const { roomId, drawer, guesser, word } = await playToDrawingPhase(harness);
     const carol = await harness.connect();
     await joinRoom(carol, roomId, 'Carol');
-    const heard = collectChat(guesser);
+    const dave = await harness.connect();
+    await joinRoom(dave, roomId, 'Dave');
+    const heardByGuesser = collectChat(guesser);
+    const heardByDrawer = collectChat(drawer);
 
-    const hello = waitForChat(guesser, (m) => m.kind === 'player');
-    carol.emit('chat:send', roomId, 'hello');
-    expect(await hello).toMatchObject({
+    // A hint from the stands reaches the stands, and nobody at the table.
+    const toDave = waitForChat(dave, (m) => m.kind === 'player');
+    const toCarol = waitForChat(carol, (m) => m.kind === 'player');
+    carol.emit('chat:send', roomId, 'it is a house!');
+    const said = {
       kind: 'player',
       playerId: carol.playerId,
       username: 'Carol',
-      text: 'hello',
-    });
+      text: 'it is a house!',
+      audience: 'spectators',
+    };
+    expect(await toDave).toMatchObject(said);
+    expect(await toCarol).toMatchObject(said);
 
     carol.emit('chat:send', roomId, word);
     await settle();
-    expect(heard.some((m) => m.text === word)).toBe(false);
-    expect(heard.some((m) => m.notice?.type === 'dg:guessed')).toBe(false);
+    for (const heard of [heardByGuesser, heardByDrawer]) {
+      expect(heard.some((m) => m.kind === 'player')).toBe(false);
+    }
+    expect(heardByGuesser.some((m) => m.notice?.type === 'dg:guessed')).toBe(
+      false,
+    );
     expect(
       serverRoom(harness, roomId).game.scoredThisTurn.has(carol.playerId),
     ).toBe(false);
+
+    // Nor does a refresh bring it to the table; it does to the stands.
+    const atTable = await syncRoom(guesser, roomId);
+    expect(atTable.messages.some((m) => m.kind === 'player')).toBe(false);
+    const inStands = await syncRoom(dave, roomId);
+    expect(inStands.messages).toContainEqual(expect.objectContaining(said));
+  });
+
+  it('lets a spectator talk to everybody once the word is out', async () => {
+    const { roomId, guesser, word } = await playToDrawingPhase(harness);
+    const carol = await harness.connect();
+    await joinRoom(carol, roomId, 'Carol');
+
+    const reveal = waitForDrawState(guesser, (s) => s.phase === 'reveal', 5000);
+    guesser.emit('chat:send', roomId, word);
+    await reveal;
+
+    const hello = waitForChat(guesser, (m) => m.kind === 'player');
+    carol.emit('chat:send', roomId, 'nice drawing');
+    const message = await hello;
+    expect(message).toMatchObject({ username: 'Carol', text: 'nice drawing' });
+    expect(message.audience).toBeUndefined();
   });
 
   it('hands the room to a spectator once the last player leaves, and ends it with the last spectator', async () => {

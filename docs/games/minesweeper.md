@@ -22,7 +22,7 @@ A **round** is one window, the same for everyone:
 
 Between games the room is in `waiting`.
 The pick window ends early the moment everybody has locked in.
-Every pick that hits a mine is also told to the room as an `alert` chat message, `<name> hit a mine (<risk>% risk): −<points>`.
+When a round ends with a mine hit, the room is told in one quiet chat line for the round, `Round <n>: <name> hit a mine (−<points>).`, or `Round <n>: <name> (−<points>) and <name> (−<points>) hit mines.`
 
 Rounds repeat until the board is resolved.
 That always happens: every round uncovers at least one cell, so a finite board runs out.

@@ -166,16 +166,12 @@ describe('a hand', () => {
     await settle();
     expect((alice.state as Make24RoomState).solved).toEqual([]);
 
-    const announced = waitForChat(bob, (m) => m.kind === 'success');
+    const bobHears = collectChat(bob);
     const aliceSees = waitForMake24State(alice, (s) => s.mySolve !== null);
     const bobSees = waitForMake24State(bob, (s) => s.solved.length === 1);
     solveHand(alice, roomId, first);
 
-    const [mine, theirs, message] = await Promise.all([
-      aliceSees,
-      bobSees,
-      announced,
-    ]);
+    const [mine, theirs] = await Promise.all([aliceSees, bobSees]);
     expect(mine.mySolve).toMatchObject({ playerId: alice.playerId });
     expect(mine.mySolve!.expression).not.toBe('');
     expect(mine.mySolve!.points).toBeGreaterThan(50);
@@ -189,9 +185,24 @@ describe('a hand', () => {
     // Bob is told that Alice solved it, never her expression.
     expect(theirs.mySolve).toBeNull();
     expect(JSON.stringify(theirs)).not.toContain(mine.mySolve!.expression);
-    expect(textOf(message)).toBe(`Alice solved it! (+${mine.mySolve!.points})`);
     expect(theirs.playerList[alice.playerId]!.points).toBe(
       mine.mySolve!.points,
+    );
+    // The chat hears of it once, when the hand is over, as one quiet line.
+    expect(bobHears).toEqual([]);
+  });
+
+  it('says who solved a hand in one line once it is over', async () => {
+    const { roomId, alice, bob, first } = await playToFirstHand(harness);
+    const line = waitForChat(bob, (m) => m.notice?.type === 'make24:hand');
+    solveHand(alice, roomId, first);
+    solveHand(bob, roomId, first);
+
+    const message = await line;
+    const { lastHand } = make24Room(harness, roomId).game;
+    expect(message.kind).toBe('score');
+    expect(textOf(message)).toBe(
+      `Hand 1: ${lastHand.map((r) => `${r.username} +${r.points}`).join(', ')}`,
     );
   });
 

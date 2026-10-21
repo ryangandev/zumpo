@@ -146,7 +146,7 @@ describe('a claim', () => {
     const [alice, bob] = players;
     const cards = aTrio(first);
     const places = cards.map((card) => first.table.indexOf(card));
-    const chat = waitForChat(alice, (m) => m.kind === 'success');
+    const chat = waitForChat(alice, (m) => m.kind === 'score');
 
     const taken = waitForTriosState(alice, (s) => s.phase === 'taken');
     bob.emit('trios:claim', roomId, cards);
@@ -347,7 +347,8 @@ describe('a Trios game', () => {
       { playerId: alice.playerId, username: 'Alice', points: 3 },
     ]);
     await settle();
-    expect(messages.filter((m) => m.kind === 'success')).toHaveLength(10);
+    expect(messages.filter((m) => m.kind === 'score')).toHaveLength(10);
+    expect(messages.at(-1)!.kind).toBe('success');
     expect(textOf(messages.at(-1)!)).toBe('Game over: Bob wins with 7 trios!');
   });
 

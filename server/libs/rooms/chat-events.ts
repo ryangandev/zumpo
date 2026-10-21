@@ -12,7 +12,7 @@ import { onClientEvent, type IoSocket } from './emit.js';
  * correct Draw & Guess guess is scored, not shown) or refuse it (a drawer
  * typing while the word is in play would be giving it away). Whatever the game
  * leaves as chat is posted to the whole room, the sender included, under the
- * name they go by in the room.
+ * name they go by in the room, or only to its spectators if the game says so.
  *
  * A spectator talks too. The game is offered their message like anybody's,
  * and sees an id in no `playerList`: a spectator never scores, and a guess at
@@ -31,9 +31,10 @@ const chatEventsHandler = (socket: IoSocket, registry: RoomRegistry) => {
 
     const verdict =
       registry.moduleOf(room)?.handleChat?.(room, playerId, text) ?? 'chat';
-    if (verdict !== 'chat') return;
-
-    registry.say(room, playerId, text);
+    if (verdict === 'chat') registry.say(room, playerId, text);
+    if (verdict === 'spectators') {
+      registry.say(room, playerId, text, 'spectators');
+    }
   });
 };
 

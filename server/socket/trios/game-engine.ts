@@ -139,7 +139,7 @@ const createTriosGameEngine = (
     game.phase = 'taken';
     ctx.rooms.startPhase(room, durations.taken, () => refill(room, inOrder));
 
-    ctx.rooms.announce(room.roomId, 'success', {
+    ctx.rooms.announce(room.roomId, 'score', {
       type: 'trios:found',
       name: player.username,
     });
@@ -208,7 +208,7 @@ const createTriosGameEngine = (
     if (!endedEarly) {
       ctx.rooms.announce(
         room.roomId,
-        'system',
+        'success',
         gameOverNotice(standings, 'trio'),
       );
     }

@@ -120,12 +120,6 @@ const createMake24GameEngine = (
     player.points += points;
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(room.roomId, 'success', {
-      type: 'make24:solved',
-      name: player.username,
-      points,
-    });
-
     maybeEndEarly(room);
   };
 
@@ -165,6 +159,20 @@ const createMake24GameEngine = (
     );
 
     game.lastHand = results.toSorted((a, b) => b.points - a.points);
+
+    // One quiet line a hand, rather than one per solve while it is open: the
+    // scoreboard already says who has solved it, and the chat is for talking.
+    const solved = game.lastHand.filter((result) => result.solved);
+    if (solved.length > 0) {
+      ctx.rooms.announce(room.roomId, 'score', {
+        type: 'make24:hand',
+        hand: game.hand,
+        solved: solved.map(({ username, points }) => ({
+          name: username,
+          points,
+        })),
+      });
+    }
     game.lastDeal = currentDeal(game);
     // Every hand is dealt solvable.
     game.lastSolution = formatExpression(solve(currentDeal(game))!);
@@ -203,7 +211,7 @@ const createMake24GameEngine = (
     ctx.rooms.emitState(room);
     // A game cut short has no result: game:interrupted already said so.
     if (!endedEarly) {
-      ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+      ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
     }
     ctx.rooms.emitLobby('make-24');
   };

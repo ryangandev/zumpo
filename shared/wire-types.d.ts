@@ -1229,11 +1229,20 @@ type AnyRoomState =
 // Chat and the drawing
 
 /**
- * player: somebody talking (or guessing wrong); system: neutral news, like a
- * join; alert: something went wrong for somebody, like a departure or a mine;
- * success: somebody scored.
+ * How loudly a line is said, from quiet to loud:
+ *
+ * - player: somebody talking (or guessing wrong).
+ * - system: neutral news, like a join or a round's mines.
+ * - score: somebody scored, said as quietly, like a pair found.
+ * - divider: a new turn or step begins.
+ * - alert: something went wrong for somebody, like a departure mid-game.
+ * - success: a moment that matters: a word guessed, a game won.
+ *
+ * Only alert and success stand out, so a fast game's scores do not drown out
+ * the people talking.
  */
-type ChatMessageKind = 'player' | 'system' | 'alert' | 'success';
+type ChatMessageKind =
+  'player' | 'system' | 'score' | 'divider' | 'alert' | 'success';
 
 /** A room announcement, containing facts rather than a chosen language. */
 type RoomNotice =
@@ -1266,16 +1275,27 @@ type RoomNotice =
   | { type: 'dg:drawer-returned' }
   | { type: 'dg:all-guessed' }
   | { type: 'dg:guessed'; name: string; points: number }
+  /** A turn begins: who draws, in which round. */
+  | { type: 'dg:turn'; round: number; drawer: string }
   | { type: 'ms:started'; mines: number; width: number; height: number }
-  | { type: 'ms:mine'; name: string; risk: number; points: number }
+  /** A round's mine hits, together, once it is resolved; `points` below 0. */
+  | {
+      type: 'ms:mines';
+      round: number;
+      hits: { name: string; points: number }[];
+    }
   | { type: 'make24:started'; hands: number; seconds: number }
-  | { type: 'make24:solved'; name: string; points: number }
+  /** A hand's solves, together, best first, once it ends. */
+  | {
+      type: 'make24:hand';
+      hand: number;
+      solved: { name: string; points: number }[];
+    }
   | { type: 'pairs:started'; pairs: number; seconds: number }
   | { type: 'pairs:found'; name: string }
   | { type: 'trios:started'; trios: number }
   | { type: 'trios:found'; name: string }
   | { type: 'snap:started'; cards: number }
-  | { type: 'snap:took'; name: string }
   | { type: 'ld:started'; dice: number; seconds: number }
   | {
       type: 'ld:auto-bid';
@@ -1330,6 +1350,11 @@ type ChatMessage =
       playerId: string;
       username: string;
       text: string;
+      /**
+       * Sent only to the spectators: one talking while a Draw & Guess word is
+       * being drawn, who could hint at it. Absent for everybody.
+       */
+      audience?: 'spectators';
       notice?: never;
     }
   | {
@@ -1339,6 +1364,7 @@ type ChatMessage =
       text?: never;
       playerId?: never;
       username?: never;
+      audience?: never;
     };
 
 interface Coordinate {

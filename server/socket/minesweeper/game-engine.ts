@@ -222,14 +222,14 @@ const createMinesweeperGameEngine = (
     );
     ctx.rooms.emitState(room);
 
-    for (const result of results) {
-      if (!result.hitMine) continue;
-      // U+2212, a true minus: a hyphen reads as a dash beside a number.
-      ctx.rooms.announce(room.roomId, 'alert', {
-        type: 'ms:mine',
-        name: result.username,
-        risk: result.risk,
-        points: result.points,
+    // A round's mines are one quiet line, not one alert a hit: in a game of
+    // many rounds they would bury the chat, and the reveal already shows them.
+    const hits = results.filter((result) => result.hitMine);
+    if (hits.length > 0) {
+      ctx.rooms.announce(room.roomId, 'system', {
+        type: 'ms:mines',
+        round: game.round,
+        hits: hits.map(({ username, points }) => ({ name: username, points })),
       });
     }
   };
@@ -263,7 +263,7 @@ const createMinesweeperGameEngine = (
     ctx.rooms.emitState(room);
     // A game cut short has no result: game:interrupted already said so.
     if (!endedEarly) {
-      ctx.rooms.announce(room.roomId, 'system', gameOverNotice(standings));
+      ctx.rooms.announce(room.roomId, 'success', gameOverNotice(standings));
     }
     ctx.rooms.emitLobby('minesweeper');
   };

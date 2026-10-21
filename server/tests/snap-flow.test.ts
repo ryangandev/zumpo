@@ -160,7 +160,7 @@ describe('a claim', () => {
     const [alice, bob] = players;
     const bobFirst = firsts[1]!;
     const symbol = matchFor(bobFirst);
-    const chat = waitForChat(alice, (m) => m.kind === 'success');
+    const heard = collectChat(alice);
 
     const taken = waitForSnapState(alice, (s) => s.phase === 'taken');
     bob.emit('snap:claim', roomId, 0, symbol);
@@ -177,7 +177,8 @@ describe('a claim', () => {
     // The taken card stays in the middle while it is on show.
     expect(view.middle).toEqual(bobFirst.middle);
     expect(view.phaseEndsInMs).toBeGreaterThan(0);
-    expect(textOf(await chat)).toBe('Bob took a card! (+1)');
+    // A take shows on the table; the chat is not told about it.
+    expect(heard).toEqual([]);
 
     const [aliceNext, bobNext] = await Promise.all([
       waitForSnapState(alice, (s) => s.phase === 'finding' && s.taken === 1),
@@ -356,7 +357,8 @@ describe('a Snap game', () => {
       { playerId: alice.playerId, username: 'Alice', points: 10 },
     ]);
     await settle();
-    expect(messages.filter((m) => m.kind === 'success')).toHaveLength(29);
+    // A take is never a chat line: only the start and the end are.
+    expect(messages.filter((m) => m.kind === 'success')).toHaveLength(1);
     expect(textOf(messages.at(-1)!)).toBe('Game over: Bob wins with 19 cards!');
     expect(snapRoom(harness, roomId).game.pile).toEqual([]);
   });

@@ -66,16 +66,16 @@ Each game registers a module implementing `GameModule` in [`libs/rooms/types.ts`
 A module reaches the layer through the `GameContext` it is handed: the typed Socket.IO server and a `RoomLookup` that finds rooms (`ofType` refuses a room of another game), rebroadcasts a lobby (`emitLobby`), sends snapshots (`emitState`), posts to the chat (`announce`), and runs the room's clock (`startPhase`, `stopPhase`) and any other timers (`timers()`).
 `GameModule` is what the layer calls back:
 
-| Member                                    | Called when                                                         |
-| ----------------------------------------- | ------------------------------------------------------------------- |
-| `parseSettings`, `createState`            | A room is created; `null` from `parseSettings` refuses it           |
-| `toLobbyInfo(room)`                       | The lobby list is rebuilt                                           |
-| `toRoomState(room, viewerId)`             | A snapshot is sent to one player                                    |
-| `syncTo(socket, room, playerId)`          | A page syncs, after its snapshot and chat: anything streamed        |
-| `handleChat?(room, playerId, text)`       | A seated player sends chat; answers `chat`, `consumed` or `blocked` |
-| `startGame(room)`                         | The owner presses start, once the layer has let them (see below)    |
-| `onDeparture`, `onDisconnect`, `onReturn` | A seat is given up, held, or taken back                             |
-| `registerHandlers(socket)`                | A connection arrives: wire up the game's own events                 |
+| Member                                    | Called when                                                                |
+| ----------------------------------------- | -------------------------------------------------------------------------- |
+| `parseSettings`, `createState`            | A room is created; `null` from `parseSettings` refuses it                  |
+| `toLobbyInfo(room)`                       | The lobby list is rebuilt                                                  |
+| `toRoomState(room, viewerId)`             | A snapshot is sent to one player                                           |
+| `syncTo(socket, room, playerId)`          | A page syncs, after its snapshot and chat: anything streamed               |
+| `handleChat?(room, playerId, text)`       | A member sends chat; answers `chat`, `consumed`, `blocked` or `spectators` |
+| `startGame(room)`                         | The owner presses start, once the layer has let them (see below)           |
+| `onDeparture`, `onDisconnect`, `onReturn` | A seat is given up, held, or taken back                                    |
+| `registerHandlers(socket)`                | A connection arrives: wire up the game's own events                        |
 
 The layer decides who may start, the same way for every game: only the owner, only while no game is on, and only with `minPlayers` seated.
 Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
@@ -117,6 +117,7 @@ A spectator is a member of the room but not of the game: `Room.spectators` holds
 Anyone joining an open room may pick a seat or a spectator seat (`room:join`'s `seat`); somebody arriving at a game under way, or at a full table, watches it.
 Between games a player may move to watch (`room:watch`) and a spectator may take a free seat (`room:sit`); during a game everybody stays where they are, so a game never gains or loses a player except by leaving.
 A spectator can talk, through the module's `handleChat` like anybody, so a right guess from the spectator seats is swallowed and scores nobody, and Make 24 keeps spectators quiet while a hand is being solved.
+A module may also answer `spectators`, as Draw & Guess does while a word is drawn: the line is posted with `audience: 'spectators'`, sent to the spectator seats alone, and left out of the history (`registry.chatFor`) anybody at the table gets on a refresh.
 A spectator's place is held through a refresh like a seat, but quietly: nobody is told they dropped or came back, and the game is never paused for them.
 When the owner leaves, the crown passes to a player here, then a player away, and to a spectator only when no player is left; a host who moves to watch hands it to a player at the table if there is one, and a room ends with its last member.
 The client offers Watch instead only to a guest, because for a host it is a one-way step.
@@ -303,6 +304,8 @@ A game's terms are the ones its rules in `zh/games.ts` already use (喊“吹牛
 The server posts to a room's chat, and it has players reading two languages, so it never words anything.
 A line nobody said is a `RoomNotice` in `shared/wire-types.d.ts`: what happened and its facts (`{ type: 'room:joined', name }`, `{ type: 'dg:guessed', name, points }`), namespaced like the events, and each client words it from its own catalog with an exhaustive discriminant switch in [`room/notice-text.ts`](../client/src/room/notice-text.ts).
 `ChatMessage` is a union: a player's line carries `text`, a notice line carries `notice`, so a client cannot render one as the other.
+A notice's `kind` says how loud it is, quietest first: `divider` starts a turn or a step, `system` and `score` are one quiet line (a join, a find, a hand's results), and `success` and `alert` are kept for what matters, a game over, a correct Draw & Guess guess, a mistake or a game cut short.
+A game merges what happens at once into one notice, as Make 24 does for a hand and Minesweeper for a round, and the client folds a run of joins into one line ([`room/chat-lines.ts`](../client/src/room/chat-lines.ts)).
 Errors stay typed by `RoomError.type` and are worded by the client; `message` is for logs.
 The notice payload carries only public facts: Hush cards already discarded, a called bid and count after its reveal, and game standings after the game ends.
 Player chat is rendered verbatim in both languages.

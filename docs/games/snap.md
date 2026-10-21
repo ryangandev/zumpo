@@ -148,7 +148,8 @@ The last middle card stays under the results, with its taker, until the next gam
 **The winner is whoever took the most cards.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 
-The chat says when somebody takes a card ("Leo took a card! (+1)"), how many cards a game has when it starts, and who won.
+The chat says how many cards a game has when it starts, and who won.
+A take is not a chat line: it shows on the table and in the scores, and with 28 cards a game a line for each would drown out the talk.
 
 ## Rules the server enforces
 

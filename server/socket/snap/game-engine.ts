@@ -120,10 +120,6 @@ const createSnapGameEngine = (
     game.phase = 'taken';
     ctx.rooms.startPhase(room, durations.taken, () => turnNext(room, playerId));
 
-    ctx.rooms.announce(room.roomId, 'success', {
-      type: 'snap:took',
-      name: player.username,
-    });
     ctx.rooms.emitState(room);
   };
 
@@ -192,7 +188,7 @@ const createSnapGameEngine = (
     if (!endedEarly) {
       ctx.rooms.announce(
         room.roomId,
-        'system',
+        'success',
         gameOverNotice(standings, 'card'),
       );
     }

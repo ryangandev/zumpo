@@ -58,19 +58,22 @@ export const notices: typeof en = {
   'dg:drawer-returned': (_n) => '画画的玩家回来了，继续吧！',
   'dg:all-guessed': (_n) => '大家都猜中了！',
   'dg:guessed': (n) => `${who(n.name)} 猜中了！(+${n.points})`,
+  'dg:turn': (n) => `第 ${n.round} 轮 · ${who(n.drawer)} 来画`,
   'ms:started': (n) =>
     `游戏开始！${n.width} × ${n.height} 的棋盘上有 ${n.mines} 颗雷。`,
-  'ms:mine': (n) =>
-    `${who(n.name)} 踩到了雷（风险 ${Math.round(n.risk * 100)}%）：−${Math.abs(n.points)}`,
+  'ms:mines': (n) =>
+    n.hits.length === 1
+      ? `第 ${n.round} 轮：${who(n.hits[0]!.name)} 踩到了雷（−${Math.abs(n.hits[0]!.points)}）。`
+      : `第 ${n.round} 轮：${list(n.hits.map((h) => `${who(h.name)}（−${Math.abs(h.points)}）`))} 踩到了雷。`,
   'make24:started': (n) => `游戏开始！共 ${n.hands} 手，每手 ${n.seconds} 秒。`,
-  'make24:solved': (n) => `${who(n.name)} 算出来了！(+${n.points})`,
+  'make24:hand': (n) =>
+    `第 ${n.hand} 手：${n.solved.map((s) => `${who(s.name)} +${s.points}`).join('、')}`,
   'pairs:started': (n) =>
     `游戏开始！共 ${n.pairs} 对，每回合 ${n.seconds} 秒。`,
   'pairs:found': (n) => `${who(n.name)} 找到了一对！(+1)`,
   'trios:started': (n) => `游戏开始！共 ${n.trios} 组等你找。`,
   'trios:found': (n) => `${who(n.name)} 找到了一组！(+1)`,
   'snap:started': (n) => `游戏开始！共 ${n.cards} 张牌等你抢。`,
-  'snap:took': (n) => `${who(n.name)} 抢到了一张牌！(+1)`,
   'ld:started': (n) =>
     `游戏开始！每人 ${n.dice} 颗骰子，每回合 ${n.seconds} 秒。`,
   'ld:auto-bid': (n) =>
@@ -108,11 +111,7 @@ export const notices: typeof en = {
     `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
   'cb:revealed': (n) => `答案是 ${n.code}。`,
   'dc:step': (n) =>
-    n.kind === 'prompt'
-      ? `第 ${n.step} 步：写下第一句。`
-      : n.kind === 'drawing'
-        ? `第 ${n.step} 步：把收到的句子画出来。`
-        : `第 ${n.step} 步：说说收到的画是什么。`,
+    `第 ${n.step} 步 · ${{ prompt: '写', drawing: '画', description: '描述' }[n.kind]}`,
   'dc:reveal': (n) => `揭晓时间！${who(n.host)} 来逐条展示每条传话。`,
   'dc:album': (_n) => '所有传话都收进画册了。',
   'gomoku:started': (n) =>

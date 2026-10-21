@@ -17,7 +17,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { RulesDialog } from './dialogs';
-import { RoomChat } from './room-chat';
+import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
 import { roomNameOf, type Seat } from './players';
 import styles from './room-layout.module.css';
@@ -49,6 +49,12 @@ export interface RoomLayoutProps {
    */
   boardInput?: string;
   /**
+   * On a phone, the newest few chat lines under the board, read-only, so
+   * guesses can be watched without leaving it: Draw & Guess's, for the drawer
+   * as much as for the guessers.
+   */
+  recentChat?: boolean;
+  /**
    * The scoreboard's points; off where everybody's are the same, as in Hush,
    * whose team scores together and whose rows say what each player holds.
    */
@@ -75,6 +81,7 @@ export function RoomLayout({
   players,
   chat,
   boardInput,
+  recentChat = false,
   showScores = true,
   scoreTitle,
   playersAside,
@@ -151,6 +158,11 @@ export function RoomLayout({
     ) : null;
 
   const chatPanel = <RoomChat input={input} alertIcon={chat.alertIcon} />;
+  // The chat is read wherever it shows: always beside a desktop room, on a
+  // phone in its tab or in the lines under the board.
+  const unread = useUnreadChat(
+    !phone || view === 'chat' || (view === 'board' && recentChat),
+  );
 
   const seconds = Math.round(reconnectGraceMs / 1000);
 
@@ -192,6 +204,7 @@ export function RoomLayout({
               panel: (
                 <div className={styles.stage}>
                   {stage}
+                  {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
                 </div>
               ),
@@ -210,7 +223,7 @@ export function RoomLayout({
                   scoreboard
                 ),
             },
-            { value: 'chat', label: m.room.chat, panel: chatPanel },
+            { value: 'chat', label: m.room.chat, panel: chatPanel, unread },
           ]}
         />
       ) : (

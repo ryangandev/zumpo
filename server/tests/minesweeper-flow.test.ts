@@ -241,13 +241,13 @@ describe('a round', () => {
     expect(outcome.board[cell]).toBe(9);
     expect(outcome.minesFound).toBe(1);
 
+    // One quiet line for the round, however many stepped on one.
     expect(await announced).toMatchObject({
-      kind: 'alert',
+      kind: 'system',
       notice: {
-        type: 'ms:mine',
-        name: 'Alice',
-        risk: hit.risk,
-        points: hit.points,
+        type: 'ms:mines',
+        round: 1,
+        hits: [{ name: 'Alice', points: hit.points }],
       },
     });
   });
@@ -541,7 +541,7 @@ describe('a Minesweeper game', () => {
     }
 
     expect(message).toMatchObject({
-      kind: 'system',
+      kind: 'success',
       notice: gameOverNotice(summary.standings),
     });
     expect(hiddenIndexes(minesweeperRoom(harness, roomId).game.board)).toEqual(

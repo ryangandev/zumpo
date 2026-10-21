@@ -122,6 +122,21 @@ describe('the game engine', () => {
     );
   });
 
+  it('marks the start of every turn in the chat with whose it is', async () => {
+    const { alice, bob, roomId } = await seatTwoPlayers(harness);
+    const divider = waitForChat(bob, (m) => m.kind === 'divider');
+    const { drawer } = await startAndAwaitChoosing(alice, bob, roomId);
+
+    expect(await divider).toMatchObject({
+      kind: 'divider',
+      notice: {
+        type: 'dg:turn',
+        round: 1,
+        drawer: drawer === alice ? 'Alice' : 'Bob',
+      },
+    });
+  });
+
   it('opens with a choosing phase and a countdown, the choices for the drawer alone', async () => {
     const { alice, bob, roomId } = await seatTwoPlayers(harness);
     const { drawer, drawerView, guesserView } = await startAndAwaitChoosing(
@@ -367,7 +382,7 @@ describe('the game engine', () => {
       phaseEndsInMs: 0,
     });
     expect(finalState).not.toHaveProperty('word');
-    expect((await announced).kind).toBe('system');
+    expect((await announced).kind).toBe('success');
     expect(harness.server.rooms.get(roomId)?.phaseEndsAt).toBe(0);
   });
 

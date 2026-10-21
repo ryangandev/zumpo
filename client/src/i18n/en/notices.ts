@@ -68,16 +68,20 @@ export const notices = {
   ): string => 'Everybody guessed the word!',
   'dg:guessed': (n: Extract<RoomNotice, { type: 'dg:guessed' }>): string =>
     `${who(n.name)} guessed the correct word! (+${n.points})`,
+  'dg:turn': (n: Extract<RoomNotice, { type: 'dg:turn' }>): string =>
+    `Round ${n.round} · ${who(n.drawer)} draws`,
   'ms:started': (n: Extract<RoomNotice, { type: 'ms:started' }>): string =>
     `Game has started! ${n.mines} mines on a ${n.width}×${n.height} board.`,
-  'ms:mine': (n: Extract<RoomNotice, { type: 'ms:mine' }>): string =>
-    `${who(n.name)} hit a mine (${Math.round(n.risk * 100)}% risk): −${Math.abs(n.points)}`,
+  // U+2212, a true minus: a hyphen reads as a dash beside a number.
+  'ms:mines': (n: Extract<RoomNotice, { type: 'ms:mines' }>): string =>
+    n.hits.length === 1
+      ? `Round ${n.round}: ${who(n.hits[0]!.name)} hit a mine (−${Math.abs(n.hits[0]!.points)}).`
+      : `Round ${n.round}: ${list(n.hits.map((h) => `${who(h.name)} (−${Math.abs(h.points)})`))} hit mines.`,
   'make24:started': (
     n: Extract<RoomNotice, { type: 'make24:started' }>,
   ): string => `Game has started! ${n.hands} hands, ${n.seconds} seconds each.`,
-  'make24:solved': (
-    n: Extract<RoomNotice, { type: 'make24:solved' }>,
-  ): string => `${who(n.name)} solved it! (+${n.points})`,
+  'make24:hand': (n: Extract<RoomNotice, { type: 'make24:hand' }>): string =>
+    `Hand ${n.hand}: ${n.solved.map((s) => `${who(s.name)} +${s.points}`).join(', ')}`,
   'pairs:started': (
     n: Extract<RoomNotice, { type: 'pairs:started' }>,
   ): string =>
@@ -91,8 +95,6 @@ export const notices = {
     `${who(n.name)} found a trio! (+1)`,
   'snap:started': (n: Extract<RoomNotice, { type: 'snap:started' }>): string =>
     `Game has started! ${n.cards} cards to win.`,
-  'snap:took': (n: Extract<RoomNotice, { type: 'snap:took' }>): string =>
-    `${who(n.name)} took a card! (+1)`,
   'ld:started': (n: Extract<RoomNotice, { type: 'ld:started' }>): string =>
     `Game has started! ${n.dice} dice each, ${n.seconds} seconds a turn.`,
   'ld:auto-bid': (n: Extract<RoomNotice, { type: 'ld:auto-bid' }>): string =>
@@ -138,11 +140,7 @@ export const notices = {
   'cb:revealed': (n: Extract<RoomNotice, { type: 'cb:revealed' }>): string =>
     `The code was ${n.code}.`,
   'dc:step': (n: Extract<RoomNotice, { type: 'dc:step' }>): string =>
-    n.kind === 'prompt'
-      ? `Step ${n.step}: write the first line.`
-      : n.kind === 'drawing'
-        ? `Step ${n.step}: draw the words you were given.`
-        : `Step ${n.step}: describe the drawing you were given.`,
+    `Step ${n.step} · ${{ prompt: 'Write', drawing: 'Draw', description: 'Describe' }[n.kind]}`,
   'dc:reveal': (n: Extract<RoomNotice, { type: 'dc:reveal' }>): string =>
     `Time for the reveal! ${who(n.host)} shows the chains.`,
   'dc:album': (_n: Extract<RoomNotice, { type: 'dc:album' }>): string =>

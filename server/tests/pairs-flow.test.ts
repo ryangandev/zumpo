@@ -179,7 +179,7 @@ describe('a turn', () => {
       await playToFirstTurn(harness);
     const mover = byId(first.turnPlayerId);
     const [a, b] = placesOf(harness, roomId)[0]!;
-    const chat = waitForChat(owner, (m) => m.kind === 'success');
+    const chat = waitForChat(owner, (m) => m.kind === 'score');
 
     const found = waitForPairsState(owner, (s) => s.pairsFound === 1);
     mover.emit('pairs:flip', roomId, a);
@@ -315,7 +315,8 @@ describe('a Pairs game', () => {
       points: 8,
     });
     await settle();
-    expect(messages.filter((m) => m.kind === 'success')).toHaveLength(8);
+    expect(messages.filter((m) => m.kind === 'score')).toHaveLength(8);
+    expect(messages.at(-1)!.kind).toBe('success');
     expect(textOf(messages.at(-1)!)).toBe(
       `Game over: ${nameOf(mover)} wins with 8 pairs!`,
     );
