@@ -63,12 +63,26 @@
   gap: 0;
 }
 
-/* The room and its phase under the game, in one line however long. */
+/* The room and its phase under the game, in one line however long: the
+   phase, a word or two saying where the game is, is always whole, and a
+   room's name too long for the rest of the line ends in an ellipsis. */
 .context {
-  overflow: hidden;
+  display: flex;
+  min-width: 0;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
-  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.room {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+/* Pre, so the separator's spaces are kept at the start of its box. */
+.phase {
+  flex: none;
+  white-space: pre;
 }
