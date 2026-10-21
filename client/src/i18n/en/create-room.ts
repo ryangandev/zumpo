@@ -53,7 +53,7 @@ export const createRoom = {
   codesHelper: '3 minutes a code.',
   codeCount: (count: number) => plural(count, 'code'),
   drawingTime: 'Drawing time',
-  drawingTimeHelper: 'Writing and describing take 30s.',
+  drawingTimeHelper: 'Writing takes 30s, describing 45s.',
   secondCount: (count: number) => `${count} seconds`,
   password: 'Password (optional)',
   creating: 'Creating your room…',

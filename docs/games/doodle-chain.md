@@ -220,7 +220,8 @@ There is no setting for the number of steps: the players are the length, as in H
   The clock is the server's; a client is told how many milliseconds are left and renders a countdown from it.
 - **Only the host steps the reveal**, one entry at a time, and only to the entry it names.
 - **A heart is a player's,** only during the reveal, only on a shown entry, never on their own, and one per chain.
-- **Only the room owner may start a game**, and only with three or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with three or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

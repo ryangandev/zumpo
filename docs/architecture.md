@@ -68,16 +68,19 @@ A module reaches the layer through the `GameContext` it is handed: the typed Soc
 
 | Member                                    | Called when                                                                |
 | ----------------------------------------- | -------------------------------------------------------------------------- |
-| `parseSettings`, `createState`            | A room is created; `null` from `parseSettings` refuses it                  |
+| `parseSettings`, `createState`            | A room is created, or the next game's settings change; `null` refuses it   |
 | `toLobbyInfo(room)`                       | The lobby list is rebuilt                                                  |
 | `toRoomState(room, viewerId)`             | A snapshot is sent to one player                                           |
 | `syncTo(socket, room, playerId)`          | A page syncs, after its snapshot and chat: anything streamed               |
 | `handleChat?(room, playerId, text)`       | A member sends chat; answers `chat`, `consumed`, `blocked` or `spectators` |
-| `startGame(room)`                         | The owner presses start, once the layer has let them (see below)           |
+| `startGame(room)`                         | The starter presses start, or the table is all ready (see below)           |
 | `onDeparture`, `onDisconnect`, `onReturn` | A seat is given up, held, or taken back                                    |
 | `registerHandlers(socket)`                | A connection arrives: wire up the game's own events                        |
 
-The layer decides who may start, the same way for every game: only the owner, only while no game is on, and only with `minPlayers` seated.
+The layer decides who may start, the same way for every game: only the starter, only while no game is on, and only with `minPlayers` seated.
+The starter is the host, or while the host is away the player the crown would pass to (`starterOf` in [`shared/room.ts`](../shared/room.ts)), at once rather than once the host's seat is given up: a room never waits on a host who is not there.
+Between games anybody at the table may say Ready (`room:ready`), and once everybody here but the starter has, the layer starts the next game itself ([`ready.ts`](../server/libs/rooms/ready.ts)); a player away holds nothing up, and the Readies are forgotten when a game starts.
+Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21).
 Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
 
 A room's chat is a log on the room (`Room.chat`), not a stream: every message gets the next id in that room, the last 100 are kept, and a page that syncs is sent them as `chat:history`.
@@ -148,7 +151,7 @@ The server decides everything a player could gain by lying about.
   When that header is missing, only the totals apply: one bucket shared by everybody would shut the site.
 - **Every response says what a page may load.** A Content Security Policy allows only this origin (inline styles aside, for React's `style` attributes) and no framing, with `nosniff` and a strict referrer, and Express no longer names itself.
   A built file under `/assets` carries a hash in its name and is cached for a year as immutable; the page is `no-cache`, so the visit after a deploy loads the new build.
-- **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the owner may start; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
+- **The UI's rules are enforced, not assumed.** Only the drawer may draw, and only while drawing; only the starter may start, or change the next game; only a member, at the table or in the spectator seats, may read a room's state or talk in it; a guess is checked by the game's `handleChat` for phase, not-the-drawer and not-already-scored.
 - **The drawing is server state too.** The stroke list every client builds is built once more on the server, so a player arriving mid-turn gets the board, and undo is "drop the last stroke" rather than a full-canvas image.
 
 ## Identity and reconnection

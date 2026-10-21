@@ -50,6 +50,17 @@
   padding-top: 0;
 }
 
+/* A line of the actions row that is not a button: on its own line, above them. */
+.line {
+  flex: 1 0 100%;
+  margin: 0;
+}
+
+/* The next game's setting, as wide as a create form's field. */
+.setting {
+  max-width: 320px;
+}
+
 .resultHeading {
   display: flex;
   flex-direction: column;

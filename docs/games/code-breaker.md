@@ -200,7 +200,8 @@ The chat says when somebody cracks the code ("Maya cracked it in 5! (+633)"), as
   A player who is out of guesses does not know the code and can talk.
   Leaving and coming back to watch does not open it early.
 - **The deal, the clock and the score are the server's.**
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Spectators
 

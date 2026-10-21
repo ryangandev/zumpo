@@ -55,6 +55,7 @@ export const room: typeof en = {
   refused: {
     notEnoughPlayers: '还需要更多玩家才能开始。',
     notRoomOwner: '只有房主可以开始游戏。',
+    notStarter: '只有房主可以更改下一局。',
     gameAlreadyStarted: '游戏已经开始了。',
     seatsTaken: '牌桌上的座位都满了。',
     spectatorSeatsTaken: '观战席已经满了。',
@@ -92,6 +93,16 @@ export const room: typeof en = {
     `${game}至少需要 2 人，因此这一局已结束。你现在是房主，邀请朋友开始新的一局吧。`,
   waitingForAgain: (name) => `等待 ${name} 开始下一局。`,
   playAgain: '再玩一局',
+  nextGame: '下一局',
+  nextGameIs: (setting) => `下一局：${setting}`,
+  ready: '准备',
+  notReady: '取消准备',
+  readyHint: (starter) =>
+    `大家都准备好就开始下一局，${starter} 也可以直接开始。`,
+  waitingOnReady: (names, starter) =>
+    `你已准备。等待 ${names}，或由 ${starter} 开始。`,
+  areReady: (names) => `${names} 已准备。`,
+  standIn: (host) => `${host} 暂时不在，由你来开始下一局。`,
   gameOver: '游戏结束。',
   wins: (name, score) => `${name} 以 ${score}获胜。`,
   ties: (names, score) => `${names} 以 ${score}并列获胜。`,

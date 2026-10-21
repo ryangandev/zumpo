@@ -135,7 +135,8 @@ Everybody may chat at any time: table talk is part of bluffing.
 - **A bid must be a raise:** a face from 2 to 6, a count from 1 to the dice on the table, higher than the bid in front of it.
   Liar needs a bid to call.
 - **The clock, the count and who loses a die are the server's.**
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

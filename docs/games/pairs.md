@@ -77,7 +77,8 @@ The chat says when somebody finds a pair ("Maya found a pair! (+1)"), as a quiet
   A client is sent the symbol of a card only while it is face up or matched; where the others lie is never sent.
 - **Only the player whose turn it is may turn a card over,** and only during `flipping`, two cards a turn.
 - **The clock and the score are the server's.**
-- **Only the room owner may start a game**, and only with two or more players.
+- **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
+  Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
 
 ## Leaving, dropping and coming back
 

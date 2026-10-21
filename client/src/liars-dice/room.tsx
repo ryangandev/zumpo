@@ -110,7 +110,8 @@ function BetweenGames({ room }: { room: Room }) {
           <Table
             seats={seatsOf(state, m)}
             youId={room.playerId}
-            dicePerPlayer={state.dicePerPlayer}
+            // The last game's, as the next game's may have been changed.
+            dicePerPlayer={summary.dicePerPlayer}
             turnId={null}
             nextId={null}
             bids={[]}

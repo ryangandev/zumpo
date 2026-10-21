@@ -61,6 +61,7 @@ export const room = {
   refused: {
     notEnoughPlayers: 'The game needs more players before it can start.',
     notRoomOwner: 'Only the host can start the game.',
+    notStarter: 'Only the host can change the next game.',
     gameAlreadyStarted: 'The game has already started.',
     seatsTaken: 'Every seat at the table is taken.',
     spectatorSeatsTaken: 'Every spectator seat is taken.',
@@ -106,6 +107,19 @@ export const room = {
   waitingForAgain: (name: string) =>
     `Waiting for ${name} to start another game.`,
   playAgain: 'Play again',
+  /** Between games: the next game's setting, chosen by the host. */
+  nextGame: 'Next game',
+  nextGameIs: (setting: string) => `Next game: ${setting}`,
+  ready: 'Ready',
+  notReady: 'Not ready',
+  readyHint: (starter: string) =>
+    `The next game starts once everyone is ready, or when ${starter} starts it.`,
+  waitingOnReady: (names: string, starter: string) =>
+    `You’re ready. Waiting for ${names}, or for ${starter} to start.`,
+  areReady: (names: string, count: number) =>
+    `${names} ${count === 1 ? 'is' : 'are'} ready.`,
+  /** For the player the right to start passed to while the host is away. */
+  standIn: (host: string) => `${host} is away, so you can start the next game.`,
   gameOver: 'Game over.',
   wins: (name: string, score: string) => `${name} wins with ${score}.`,
   ties: (names: string, score: string) => `${names} tie with ${score}.`,
