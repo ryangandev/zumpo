@@ -1,6 +1,7 @@
 import { chat } from './chat';
 import { createRoom } from './create-room';
 import { dailyWord } from './daily-word';
+import { doodleChain } from './doodle-chain';
 import { drawAndGuess } from './draw-and-guess';
 import { games } from './games';
 import { home, howToPlay } from './home';
@@ -43,6 +44,7 @@ export const en = {
   snap,
   liarsDice,
   hush,
+  doodleChain,
   dailyWord,
 };
 

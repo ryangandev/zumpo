@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { SUGGESTION_COUNT } from '../../../shared/doodle-chain';
 import { SYMBOLS } from '../../../shared/snap';
 import { renderApp } from '../tests/render-app';
 import { en } from './en';
@@ -52,6 +53,11 @@ describe('the catalogs', () => {
       )
       .map(([key]) => key);
     expect(blank).toEqual([]);
+  });
+
+  it('suggest the same number of Doodle Chain lines as the server picks from', () => {
+    expect(en.doodleChain.suggestions).toHaveLength(SUGGESTION_COUNT);
+    expect(zh.doodleChain.suggestions).toHaveLength(SUGGESTION_COUNT);
   });
 
   it('name every Snap symbol', () => {
@@ -123,6 +129,6 @@ describe('the language switch', () => {
     await renderApp('/how-to-play', { locale: 'zh' });
     expect(document.documentElement.lang).toBe('zh-CN');
     expect(screen.getByRole('heading', { name: '扫雷' })).toBeVisible();
-    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(9);
+    expect(screen.getAllByRole('link', { name: '找房间' })).toHaveLength(10);
   });
 });

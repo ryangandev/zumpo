@@ -65,6 +65,4 @@ export const drawAndGuess: typeof en = {
   playerPoints: (name, points) => `${name} +${points}`,
   drawingChatLocked: '你正在画画，回合结束后才能聊天。',
   guessedChatLocked: '你猜中了，下一回合才能聊天。',
-  drawingCanvas: '绘画画布',
-  drawingImage: '当前画作',
 };

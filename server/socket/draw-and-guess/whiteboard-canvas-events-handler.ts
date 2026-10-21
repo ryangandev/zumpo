@@ -6,13 +6,16 @@ import {
   type IoSocket,
 } from '../../libs/rooms/emit.js';
 import { parseArgs, roomIdOnly } from '../../libs/validation.js';
-import { continueDrawingRequest, startDrawingRequest } from './validation.js';
+import {
+  continueDrawingRequest,
+  startDrawingRequest,
+} from '../../libs/drawing/validation.js';
 import {
   beginStroke,
   clearCanvas,
   extendStroke,
   undoStroke,
-} from './canvas.js';
+} from '../../libs/drawing/canvas.js';
 
 /**
  * The canvas relay.

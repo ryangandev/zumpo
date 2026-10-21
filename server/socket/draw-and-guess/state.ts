@@ -6,7 +6,7 @@ import type {
 } from '../../models/types.js';
 import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
-import { createRoomCanvas } from './canvas.js';
+import { createRoomCanvas } from '../../libs/drawing/canvas.js';
 
 /** A room that has been created but not yet played in. */
 const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({

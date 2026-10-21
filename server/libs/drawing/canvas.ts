@@ -1,7 +1,8 @@
 import type { Coordinate, RoomCanvas } from '../../models/types.js';
 
 /**
- * The drawing, kept where a late arrival can be told about it.
+ * A drawing, kept where a late arrival can be told about it: Draw & Guess's
+ * one per room, and each of Doodle Chain's entries.
  *
  * The canvas used to live only in each client's memory: the server relayed
  * stroke events and kept none of them, so anyone who arrived after a stroke was
@@ -16,7 +17,7 @@ import type { Coordinate, RoomCanvas } from '../../models/types.js';
  */
 
 /**
- * How many points a single room's drawing may hold before further ones are
+ * How many points a single drawing may hold before further ones are
  * dropped, by the drawer and by the relay alike.
  *
  * A full-tilt 90-second phase is on the order of 5,000 points, so this is well

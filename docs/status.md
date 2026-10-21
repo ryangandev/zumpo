@@ -21,6 +21,9 @@ Their behaviour contracts are in `docs/games/`.
 A ninth game, Snap (找相同), was added on 2026-10-20: a spot-the-match race in the style of Spot It, where every two cards share exactly one symbol and the first to tap it takes the middle card ([rules](games/snap.md)).
 It was designed in Figma first (section 11), and plays on your own, thirty cards against one clock, and in rooms of two to six.
 
+A tenth game, Doodle Chain (传话画画), was added the same week: a drawing telephone where everybody writes a line, the next player draws it and the next says what the drawing shows, until the host reveals every chain ([rules](games/doodle-chain.md)).
+It was designed in Figma first (section 12), and is rooms only, for three to eight players.
+
 On 2026-10-05 Ryan chose to host it for a few testers on Render's free plan, and it is live at `zumpo.ryangan.me` ([architecture](architecture.md#deployment)).
 The server was hardened for that the same day ([#30](https://github.com/ryangandev/zumpo/pull/30)): a restart tells each room it closed, a duplicated tab takes over its player, what a client can make the server hold is bounded, and Render checks `/healthz`.
 
@@ -31,7 +34,7 @@ Every game has its own page, at Ryan's request on 2026-10-08, so you pick a game
 A home card opens the game's page, which holds its ways in (Play solo, Create a room), its open rooms and its rules at a glance; the old room list at the same address became that page.
 
 The interface supports English and simplified Chinese, chosen from the footer and remembered for the browser ([languages](architecture.md#languages)).
-The catalogs cover room flows, all nine games, solo records and accessible labels; each player renders room announcements in their own language.
+The catalogs cover room flows, every game, solo records and accessible labels; each player renders room announcements in their own language.
 The wordmark, footer slogan and English gameplay words retain their original language.
 It was reviewed and played through in both languages, two players in one room, on 2026-10-07 (this session's branch), and Chinese terms now read the same across games (喊“吹牛”, 条命, 颗雷, 单人模式).
 
@@ -55,7 +58,7 @@ Decided by Ryan, and the frame for every design and implementation choice:
 ## Next
 
 Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
-Snap is built; the other three come next.
+Snap and Doodle Chain are built; the other two come next.
 Gomoku brings a fourth kind of game, Strategy.
 Each game's behaviour contract lands in `docs/games/` with its implementation.
 After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.

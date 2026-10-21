@@ -6,6 +6,7 @@ import path from 'node:path';
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
@@ -29,6 +30,7 @@ import { createSnapModule } from './socket/snap/index.js';
 import { createLiarsDiceModule } from './socket/liars-dice/index.js';
 import { createHushModule } from './socket/hush/index.js';
 import { createDailyWordModule } from './socket/daily-word/index.js';
+import { createDoodleChainModule } from './socket/doodle-chain/index.js';
 import { clientDepartureOnDisconnectHandler } from './socket/client-disconnect-handler.js';
 import { playerSessionHandler } from './socket/player-session-handler.js';
 import {
@@ -131,6 +133,8 @@ interface CreateZumpoServerOptions {
   hushDurations?: HushDurationsInSeconds;
   /** A Daily Word round and its results. Shortened by tests. */
   dailyWordDurations?: DailyWordDurationsInSeconds;
+  /** Doodle Chain's steps and the pause between them. Shortened by tests. */
+  doodleChainDurations?: DoodleChainDurationsInSeconds;
   /**
    * Deals every Daily Word game's words from this seed instead of at random,
    * so a test run plays the same words each time. Defaults to
@@ -193,6 +197,7 @@ const createZumpoServer = (
     liarsDiceDurations,
     hushDurations,
     dailyWordDurations,
+    doodleChainDurations,
     dailyWordSeed = process.env.DAILY_WORD_SEED || undefined,
     graceInSeconds,
     maxRooms = DEFAULT_MAX_ROOMS,
@@ -261,6 +266,9 @@ const createZumpoServer = (
   );
   registry.register(
     createDailyWordModule(registry.context, dailyWordDurations, dailyWordSeed),
+  );
+  registry.register(
+    createDoodleChainModule(registry.context, doodleChainDurations),
   );
 
   const membership = createRoomMembership(

@@ -58,6 +58,4 @@ export const drawAndGuess = {
   playerPoints: (name: string, points: number) => `${name} +${points}`,
   drawingChatLocked: 'You’re drawing. Chat opens after your turn.',
   guessedChatLocked: 'You got it. Chat opens next turn.',
-  drawingCanvas: 'Drawing canvas',
-  drawingImage: 'The drawing',
 };

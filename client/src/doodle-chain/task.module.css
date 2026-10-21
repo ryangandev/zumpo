@@ -1,0 +1,119 @@
+/* DC05-DC11: the step in hand, on a paper panel under the turn bar. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--zumpo-space-24);
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+.composer,
+.notice,
+.progress {
+  align-self: stretch;
+}
+
+/* A drawing to describe, or the one just made: the canvas's ratio, 600 px
+   wide at most. */
+.frame {
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 600px;
+  max-width: 100%;
+  aspect-ratio: 798 / 598;
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-16);
+  background: var(--zumpo-white);
+}
+
+.frame > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* The words just written, as the chain will show them. */
+.words {
+  box-sizing: border-box;
+  width: 600px;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--zumpo-space-12) var(--zumpo-space-16);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-4) var(--zumpo-radius-16)
+    var(--zumpo-radius-16) var(--zumpo-radius-16);
+  background: var(--zumpo-paper);
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+  overflow-wrap: anywhere;
+}
+
+/* Under the canvas: what the clock does, and Done. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+.hint {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* DC10: where the entry to work from would be. */
+.nothing {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--zumpo-space-8);
+  width: 600px;
+  max-width: 100%;
+  min-height: 300px;
+  padding: var(--zumpo-space-24);
+  border: 1px dashed var(--zumpo-line);
+  border-radius: var(--zumpo-radius-16);
+  text-align: center;
+}
+
+.nothingTitle {
+  margin: 0;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+}
+
+.nothingDetail,
+.progressDetail {
+  margin: 0;
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+/* DC11: how many are done. */
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--zumpo-space-4) var(--zumpo-space-12);
+  margin: 0;
+}
+
+.progressTitle {
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+}

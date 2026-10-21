@@ -22,7 +22,7 @@ export const createRoom = {
   nameHelper: (max: number) => `Up to ${max} characters.`,
   nameMissing: 'Give your room a name.',
   seats: 'Seats',
-  seatsHelper: (max: number) => `Choose 2–${max} seats.`,
+  seatsHelper: (min: number, max: number) => `Choose ${min}–${max} seats.`,
   hushSeatsHelper: (max: number, twoLevels: number, maxLevels: number) =>
     `Choose 2–${max} seats. 2 players play ${twoLevels} levels, ${max} play ${maxLevels}.`,
   players: (count: number) => plural(count, 'player'),
@@ -54,6 +54,10 @@ export const createRoom = {
   words: 'Words',
   wordsHelper: '3 or 5 words, 2 minutes each.',
   wordCount: (count: number) => plural(count, 'word'),
+  drawingTime: 'Drawing time',
+  drawingTimeHelper:
+    '45, 60 or 90 seconds a drawing. Writing and describing take 30s.',
+  secondCount: (count: number) => `${count} seconds`,
   password: 'Password (optional)',
   passwordHelper: (max: number) =>
     `Leave blank for an open room. Up to ${max} characters.`,

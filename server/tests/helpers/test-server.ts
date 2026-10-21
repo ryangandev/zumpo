@@ -10,6 +10,7 @@ import {
 import type {
   LiarsDiceDurationsInSeconds,
   DailyWordDurationsInSeconds,
+  DoodleChainDurationsInSeconds,
   HushDurationsInSeconds,
   Make24DurationsInSeconds,
   MinesweeperDurationsInSeconds,
@@ -26,12 +27,14 @@ import type { SnapState } from '../../socket/snap/index.js';
 import type { LiarsDiceState } from '../../socket/liars-dice/index.js';
 import type { HushState } from '../../socket/hush/index.js';
 import type { DailyWordState } from '../../socket/daily-word/index.js';
+import type { DoodleChainState } from '../../socket/doodle-chain/index.js';
 import type {
   AnyLobbyRoomInfo,
   AnyRoomState,
   ChatMessage,
   ClientToServerEvents,
   DailyWordRoomState,
+  DoodleChainRoomState,
   DrawAndGuessRoomState,
   DrawAndGuessState,
   GameType,
@@ -143,6 +146,17 @@ const FAST_DAILY_WORD: DailyWordDurationsInSeconds = {
   reveal: 0.1,
 };
 
+/**
+ * Steps long enough to write, draw and press Done deliberately inside them,
+ * which is how most tests end a step, and a short pause between them.
+ */
+const FAST_DOODLE_CHAIN: DoodleChainDurationsInSeconds = {
+  write: 2,
+  describe: 2,
+  draw: 2,
+  passing: 0.15,
+};
+
 /** A client socket typed on the contract, from the client's side of it. */
 type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -204,6 +218,7 @@ const startTestServer = async (
     liarsDiceDurations: FAST_LIARS_DICE,
     hushDurations: FAST_HUSH,
     dailyWordDurations: FAST_DAILY_WORD,
+    doodleChainDurations: FAST_DOODLE_CHAIN,
     graceInSeconds,
     // Every test client comes from this machine; the limits' own tests turn
     // them back on.
@@ -384,6 +399,13 @@ const waitForDailyWordState = (
   predicate: (state: DailyWordRoomState) => boolean = () => true,
   timeoutMs = 3000,
 ) => waitForState<DailyWordRoomState>(client, predicate, timeoutMs);
+
+/** And for Doodle Chain. */
+const waitForDoodleChainState = (
+  client: ClientSocket,
+  predicate: (state: DoodleChainRoomState) => boolean = () => true,
+  timeoutMs = 3000,
+) => waitForState<DoodleChainRoomState>(client, predicate, timeoutMs);
 
 /** Resolves with the next chat message that satisfies `predicate`. */
 const waitForChat = async (
@@ -613,6 +635,38 @@ const createHushRoom = async (
   if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
   return answer.roomId;
 };
+
+/** Creates a Doodle Chain room, with its creator seated, and returns its id. */
+const createDoodleChainRoom = async (
+  client: ClientSocket,
+  options: {
+    username?: string;
+    drawingSeconds?: number;
+    maxPlayers?: number;
+  } = {},
+): Promise<string> => {
+  const answer = await client.timeout(3000).emitWithAck('room:create', {
+    gameType: 'doodle-chain',
+    roomName: 'Sketchbook',
+    username: options.username ?? 'Owner',
+    maxPlayers: options.maxPlayers ?? 8,
+    password: '',
+    settings: { drawingSeconds: options.drawingSeconds ?? 60 },
+  });
+  if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
+  return answer.roomId;
+};
+
+/**
+ * The server's own Doodle Chain room. Tests read the chains through it on
+ * purpose: what everybody made is exactly what no client is sent before the
+ * reveal.
+ */
+const doodleChainRoom = (
+  harness: TestServer,
+  roomId: string,
+): Room<DoodleChainState> =>
+  harness.server.rooms.get(roomId) as Room<DoodleChainState>;
 
 /**
  * Takes a seat, or a spectator seat, and fails the test if the server
@@ -914,6 +968,7 @@ export {
   FAST_LIARS_DICE,
   FAST_HUSH,
   FAST_DAILY_WORD,
+  FAST_DOODLE_CHAIN,
   startTestServer,
   waitFor,
   waitForState,
@@ -926,6 +981,7 @@ export {
   waitForLiarsDiceState,
   waitForHushState,
   waitForDailyWordState,
+  waitForDoodleChainState,
   waitForChat,
   collect,
   collectChat,
@@ -941,6 +997,7 @@ export {
   createLiarsDiceRoom,
   createHushRoom,
   createDailyWordRoom,
+  createDoodleChainRoom,
   joinRoom,
   seatTable,
   TWO_NAMES,
@@ -961,6 +1018,7 @@ export {
   hushRoom,
   dailyWordRoom,
   playToFirstWord,
+  doodleChainRoom,
 };
 export type { TestServer, TestClient, ClientSocket, ClientsFor };
 

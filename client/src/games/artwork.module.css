@@ -91,3 +91,23 @@
   align-items: center;
   gap: var(--zumpo-space-16);
 }
+
+/* A chain: its first line, the drawing at 0.2 of its canvas, its last line. */
+.chain {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+}
+
+.chainDrawing {
+  flex: none;
+  width: 96px;
+  height: 64px;
+}
+
+/* An icon's drawing at 0.16 of its canvas. */
+.iconChain {
+  flex: none;
+  width: 76.8px;
+  height: 51.2px;
+}
