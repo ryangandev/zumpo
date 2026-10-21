@@ -118,8 +118,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Get ready to guess",
-                  "Label": "Next up",
-                  "Main": "Maya is choosing a word"
+                  "Main": "Maya is choosing a word",
+                  "Label": "Next up"
                 }
               },
               {
@@ -210,7 +210,7 @@
             "id": "9:1628",
             "name": "Room sidebar",
             "w": 344,
-            "h": 604,
+            "h": 634,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -231,6 +231,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5053",
                       "Status icon": true,
@@ -245,6 +246,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -259,6 +261,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -273,6 +276,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -291,14 +295,14 @@
                 "id": "9:1659",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 276,
+                "h": 306,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 276,
+                    "height": 306,
                     "width": 344
                   },
                   {
@@ -322,6 +326,15 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Name": "Maya",
+                      "Alert icon": "24:4999",
+                      "Message": "Round 2 · Maya draws",
+                      "Kind": "Divider"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "my turn, brace yourselves",
                       "Name": "Maya",
@@ -329,17 +342,14 @@
                     }
                   },
                   {
-                    "path": "Messages / Message 4",
+                    "path": "Messages / Message 5",
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gl",
                       "Name": "Ryan",
                       "Kind": "Player"
-                    }
-                  },
-                  {
-                    "path": "Messages / Message 5",
-                    "visible": false
+                    },
+                    "visible": true
                   },
                   {
                     "path": "Messages / Message 6",

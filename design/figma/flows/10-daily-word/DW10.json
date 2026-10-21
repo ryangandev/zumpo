@@ -613,7 +613,7 @@
                         "id": "79:102133",
                         "name": "Race board / Ryan",
                         "w": 208,
-                        "h": 294,
+                        "h": 186,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -628,6 +628,11 @@
                           "Name": "Ryan"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 186,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -747,6 +752,18 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 4",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -755,7 +772,7 @@
                         "id": "79:102189",
                         "name": "Race board / Sam",
                         "w": 208,
-                        "h": 294,
+                        "h": 222,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -770,6 +787,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 222,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -929,6 +951,14 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 5",
+                            "visible": false
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -937,7 +967,7 @@
                         "id": "79:102250",
                         "name": "Race board / Maya",
                         "w": 208,
-                        "h": 294,
+                        "h": 258,
                         "wSize": "hug",
                         "hSize": "hug",
                         "component": "Zumpo/Race board",
@@ -951,6 +981,11 @@
                           "Status": "Found in 5 · +208"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 258,
+                            "width": 208
+                          },
                           {
                             "path": "Board / Row 1 / Tile 1",
                             "componentProperties": {
@@ -1150,6 +1185,10 @@
                               "State": "Correct",
                               "Size": "Small"
                             }
+                          },
+                          {
+                            "path": "Board / Row 6",
+                            "visible": false
                           }
                         ]
                       },
@@ -1426,7 +1465,7 @@
             "id": "79:102006",
             "name": "Room sidebar",
             "w": 344,
-            "h": 686,
+            "h": 688,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1447,6 +1486,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1468,6 +1508,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1489,6 +1530,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1510,6 +1552,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1535,14 +1578,14 @@
                 "id": "79:102008",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 358,
+                "h": 360,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 358,
+                    "height": 360,
                     "width": 344
                   },
                   {
@@ -1551,7 +1594,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya got it in 5! (+208)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1560,7 +1603,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo got it in 6! (+101)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1578,7 +1621,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 964 points!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

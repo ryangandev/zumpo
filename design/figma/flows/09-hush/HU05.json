@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Waiting for Leo, who still holds 2 cards.",
-                  "Label": "Level 3 of 5",
                   "Main": "Paused",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 3 of 5"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "seat held",
-                      "Time": "00:24",
+                      "Time": "0:24",
                       "Tone": "Waiting"
                     }
                   }
@@ -507,7 +508,7 @@
             "id": "60:74549",
             "name": "Room sidebar",
             "w": 344,
-            "h": 578,
+            "h": 560,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -532,6 +533,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "2 cards",
@@ -565,6 +567,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "2 cards",
@@ -598,6 +601,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "2 cards",
@@ -679,6 +683,7 @@
                       "Host": false,
                       "Status": "Away, 2 cards",
                       "You": false,
+                      "Show status": true,
                       "Score": "",
                       "Name": "Leo",
                       "State": "Away"
@@ -726,6 +731,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -739,6 +745,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -753,6 +760,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -767,6 +775,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -785,14 +794,14 @@
                 "id": "60:74551",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 250,
+                "h": 232,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 250,
+                    "height": 232,
                     "width": 344
                   },
                   {
@@ -801,7 +810,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 2 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

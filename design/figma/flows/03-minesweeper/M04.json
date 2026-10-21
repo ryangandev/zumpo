@@ -115,8 +115,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "10 mines · your pick locks when you click",
-                  "Label": "Round 1",
-                  "Main": "Pick a cell"
+                  "Main": "Pick a cell",
+                  "Label": "Round 1"
                 },
                 "overrides": [
                   {
@@ -131,8 +131,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to pick",
-                      "Time": "00:11",
+                      "Time": "0:11",
                       "Tone": "Running"
                     }
                   }
@@ -261,6 +262,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -294,6 +296,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Picking",
@@ -308,6 +311,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Locked in",
@@ -334,6 +338,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Picking",

@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 224,
     "w": 1440,
-    "h": 581,
+    "h": 604,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "162:97722",
         "name": "Game & room",
         "w": 1312,
-        "h": 411,
+        "h": 434,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -101,7 +101,7 @@
             "id": "162:97723",
             "name": "Game stage",
             "w": 944,
-            "h": 233,
+            "h": 434,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -114,7 +114,7 @@
                 "id": "162:97724",
                 "name": "Waiting room",
                 "w": 944,
-                "h": 233,
+                "h": 434,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -282,6 +282,63 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "164:67235",
+                    "name": "How to play",
+                    "w": 862,
+                    "h": 189,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/24",
+                      "pad": [
+                        "$Zumpo · UI:space/12",
+                        0,
+                        0,
+                        0
+                      ],
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "RECTANGLE",
+                        "id": "164:67236",
+                        "name": "Divider",
+                        "w": 862,
+                        "h": 1,
+                        "wSize": "fill",
+                        "fills": [
+                          "$Zumpo · UI:color/line"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "164:67237",
+                        "name": "How to play",
+                        "w": 862,
+                        "h": 152,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/How to play",
+                        "componentId": "163:65908",
+                        "props": {
+                          "Step 3": "You only ever see the step before yours.",
+                          "Step 2": "Then draw the line you are given, or say in words what the drawing shows.",
+                          "Step 1": "Everyone starts a chain by writing a line: anything drawable.",
+                          "Goal": "Pass a line round the table as drawings and words, and watch it change."
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 152,
+                            "width": 862
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -322,6 +379,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": false,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -343,6 +401,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": false,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -357,7 +416,8 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": false,
@@ -372,7 +432,8 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": false,
@@ -383,6 +444,66 @@
                       "State": "Default"
                     },
                     "visible": false
+                  },
+                  {
+                    "path": "Player 5",
+                    "componentProperties": {
+                      "Icon": "24:5053",
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": true,
+                      "You": false,
+                      "Name": "Maya",
+                      "Status": "Drawing",
+                      "Host": true,
+                      "Score": "460",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 6",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "320",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 7",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "240",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 8",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "180",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
                   }
                 ]
               },

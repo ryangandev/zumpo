@@ -14,7 +14,7 @@
     "x": 40,
     "y": 224,
     "w": 1440,
-    "h": 1107,
+    "h": 1035,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -62,119 +62,6 @@
               "Initials": "SA",
               "Tone": "Sand"
             }
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "162:101197",
-        "name": "Lobby actions",
-        "w": 1312,
-        "h": 48,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/16",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "162:101198",
-            "name": "Action / Back to games",
-            "w": 171,
-            "h": 48,
-            "wSize": "hug",
-            "component": "Zumpo/Button",
-            "variant": {
-              "Style": "Secondary",
-              "State": "Default"
-            },
-            "componentId": "4:18",
-            "props": {
-              "Icon": "Zumpo/Icon / Glyph=back",
-              "Show icon": true,
-              "Label": "Back to games"
-            },
-            "overrides": [
-              {
-                "path": ".",
-                "height": 48,
-                "reactions": [
-                  {
-                    "on": "on_click",
-                    "do": [
-                      {
-                        "nav": "navigate",
-                        "to": "9:433",
-                        "toName": "P01 / Home",
-                        "transition": "dissolve"
-                      }
-                    ]
-                  }
-                ],
-                "width": 171
-              }
-            ],
-            "reactions": [
-              {
-                "on": "on_click",
-                "do": [
-                  {
-                    "nav": "navigate",
-                    "to": "9:433",
-                    "toName": "P01 / Home",
-                    "transition": "dissolve"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "162:101199",
-            "name": "End",
-            "w": 170,
-            "h": 48,
-            "wSize": "hug",
-            "hSize": "hug",
-            "clip": true,
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "align": "center",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "162:101200",
-                "name": "Action / Playing as",
-                "w": 170,
-                "h": 48,
-                "wSize": "hug",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Quiet",
-                  "State": "Default"
-                },
-                "componentId": "4:21",
-                "props": {
-                  "Icon": "Zumpo/Icon / Glyph=edit",
-                  "Show icon": true,
-                  "Label": "Playing as Sam"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "width": 170
-                  }
-                ]
-              }
-            ]
           }
         ]
       },
@@ -263,7 +150,7 @@
                     "componentId": "9:252",
                     "props": {
                       "Players": "3 / 8",
-                      "Details": "Hosted by Maya · 60s to draw"
+                      "Details": "60s to draw"
                     },
                     "overrides": [
                       {
@@ -424,7 +311,7 @@
             "id": "162:101211",
             "name": "How to play",
             "w": 368,
-            "h": 466,
+            "h": 478,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -473,7 +360,7 @@
                 "id": "162:101214",
                 "name": "Play together",
                 "w": 302,
-                "h": 174,
+                "h": 186,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -501,11 +388,13 @@
                     "id": "162:101216",
                     "name": "Rules at a glance",
                     "w": 302,
-                    "h": 150,
+                    "h": 162,
                     "wSize": "fill",
                     "hSize": "hug",
                     "text": "3–8 players\nUp to 6 steps: write, then draw and describe in turn\n30s to write · 60s to draw · 30s to describe\nThe host steps through the reveal",
-                    "textStyle": "Zumpo/Body",
+                    "font": "DM Sans Regular",
+                    "size": 16,
+                    "lineHeight": "25px",
                     "fills": [
                       "$Zumpo · UI:color/ink"
                     ],
@@ -517,7 +406,7 @@
                 "type": "INSTANCE",
                 "id": "162:101217",
                 "name": "Action / Full rules",
-                "w": 104,
+                "w": 132,
                 "h": 48,
                 "wSize": "hug",
                 "component": "Zumpo/Button",
@@ -527,13 +416,15 @@
                 },
                 "componentId": "4:18",
                 "props": {
+                  "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                  "Show icon": true,
                   "Label": "Full rules"
                 },
                 "overrides": [
                   {
                     "path": ".",
                     "height": 48,
-                    "width": 104
+                    "width": 132
                   }
                 ]
               }

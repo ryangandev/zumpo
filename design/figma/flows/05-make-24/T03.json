@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 150,
     "w": 1440,
-    "h": 795,
+    "h": 582,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -104,7 +104,7 @@
         "id": "40:40650",
         "name": "Board & room",
         "w": 1312,
-        "h": 625,
+        "h": 412,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "40:40651",
             "name": "Board stage",
             "w": 944,
-            "h": 625,
+            "h": 399,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Solved in 0:21",
-                  "Label": "Hand 3 of 10",
                   "Main": "24! Nice.",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Hand 3 of 10"
                 },
                 "overrides": [
                   {
@@ -163,8 +163,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "00:39",
+                      "Time": "0:39",
                       "Tone": "Waiting"
                     }
                   }
@@ -175,7 +176,7 @@
                 "id": "40:40653",
                 "name": "Table panel",
                 "w": 944,
-                "h": 517,
+                "h": 291,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -260,209 +261,6 @@
                         "textStyle": "Zumpo/Body",
                         "fills": [
                           "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "40:40821",
-                    "name": "Steps",
-                    "w": 894,
-                    "h": 206,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "40:40822",
-                        "name": "Heading space",
-                        "w": 122,
-                        "h": 38,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "column",
-                          "pad": [
-                            0,
-                            0,
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40823",
-                            "w": 122,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Your steps",
-                            "textStyle": "Zumpo/Heading",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "40:40824",
-                        "name": "Step 1",
-                        "w": 894,
-                        "h": 48,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "fills": [
-                          "$Zumpo · UI:color/cream"
-                        ],
-                        "radius": "$Zumpo · UI:radius/12",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/12",
-                          "pad": [
-                            "$Zumpo · UI:space/12",
-                            "$Zumpo · UI:space/16"
-                          ],
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40825",
-                            "w": 6,
-                            "h": 20,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "1",
-                            "textStyle": "Zumpo/Label",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:40826",
-                            "w": 73,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "8 − 4 = 4",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "40:40827",
-                        "name": "Step 2",
-                        "w": 894,
-                        "h": 48,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "fills": [
-                          "$Zumpo · UI:color/cream"
-                        ],
-                        "radius": "$Zumpo · UI:radius/12",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/12",
-                          "pad": [
-                            "$Zumpo · UI:space/12",
-                            "$Zumpo · UI:space/16"
-                          ],
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40828",
-                            "w": 9,
-                            "h": 20,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "2",
-                            "textStyle": "Zumpo/Label",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:40829",
-                            "w": 66,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "7 − 1 = 6",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "40:40830",
-                        "name": "Step 3",
-                        "w": 894,
-                        "h": 48,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "fills": [
-                          "$Zumpo · UI:color/cream"
-                        ],
-                        "radius": "$Zumpo · UI:radius/12",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/12",
-                          "pad": [
-                            "$Zumpo · UI:space/12",
-                            "$Zumpo · UI:space/16"
-                          ],
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:40831",
-                            "w": 9,
-                            "h": 20,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "3",
-                            "textStyle": "Zumpo/Label",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:40832",
-                            "w": 83,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "4 × 6 = 24",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
                         ]
                       }
                     ]

@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "They flip back in a moment",
-                  "Label": "Turn 15",
                   "Main": "Not a pair",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Turn 15"
                 },
                 "overrides": [
                   {
@@ -163,8 +163,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "01:14",
+                      "Time": "1:14",
                       "Tone": "Waiting"
                     }
                   }

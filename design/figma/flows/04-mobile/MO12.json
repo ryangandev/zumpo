@@ -14,7 +14,7 @@
     "x": 1510,
     "y": 5503,
     "w": 390,
-    "h": 760,
+    "h": 682,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20599",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -71,7 +71,7 @@
         "id": "27:22532",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 86,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -87,7 +87,12 @@
         },
         "overrides": [
           {
-            "path": "Top / Eyebrow / Category",
+            "path": ".",
+            "height": 86,
+            "width": 350
+          },
+          {
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -96,10 +101,11 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "to pick",
-              "Time": "00:09",
+              "Time": "0:09",
               "Tone": "Running"
             }
           }

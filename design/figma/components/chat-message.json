@@ -4,7 +4,7 @@
   "id": "26:16242",
   "type": "COMPONENT_SET",
   "key": "845e8f9707a251d4e4158e3156c51e41b59ae056",
-  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: joins, leaves, the game starting, the category. Success: a correct guess and what it paid. Alert: something went wrong, such as a mine hit or a mistake; Alert icon is the mine in Minesweeper. Use the player’s name with “(you)” for the viewer’s own lines.",
+  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: neutral news, said quietly: joins, the game starting, a word revealed, a round’s mines. Score: somebody scored, said as quietly, with a check: a pair or trio found, a hand’s solves, a level cleared. Divider: a new turn or step begins, such as “Round 2 · Ana draws” or “Step 2 · Draw”. Success: a moment that matters: a correct Draw & Guess guess, the game won. Alert: something went wrong, such as a departure or a mistake; Alert icon is the mine in Minesweeper. Use the player’s name with “(you)” for the viewer’s own lines.",
   "properties": {
     "Name": {
       "type": "text",
@@ -29,7 +29,9 @@
         "Player",
         "System",
         "Success",
-        "Alert"
+        "Alert",
+        "Score",
+        "Divider"
       ]
     }
   },
@@ -183,6 +185,159 @@
               "$Zumpo · UI:color/muted"
             ],
             "autoResize": "height"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Score",
+      "id": "163:62632",
+      "props": {
+        "Kind": "Score"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:62632",
+        "name": "Kind=Score",
+        "w": 296,
+        "h": 18,
+        "hSize": "hug",
+        "fills": [
+          "hidden #FFFFFF"
+        ],
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "163:62633",
+            "name": "Icon slot",
+            "w": 16,
+            "h": 18,
+            "wSize": "hug",
+            "layout": {
+              "mode": "column",
+              "justify": "center",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "163:62634",
+                "name": "Icon",
+                "w": 16,
+                "h": 16,
+                "component": "Zumpo/Icon",
+                "variant": {
+                  "Glyph": "check"
+                },
+                "componentId": "24:4994",
+                "overrides": [
+                  {
+                    "path": "check",
+                    "strokes": [
+                      "$Zumpo · Primitives:color/green"
+                    ]
+                  },
+                  {
+                    "path": "check",
+                    "strokes": [
+                      "$Zumpo · Primitives:color/green"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "163:62635",
+            "name": "Message",
+            "w": 272,
+            "h": 18,
+            "wSize": "fill",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Message"
+            },
+            "text": "a turtle?",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Divider",
+      "id": "163:62641",
+      "props": {
+        "Kind": "Divider"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:62641",
+        "name": "Kind=Divider",
+        "w": 296,
+        "h": 18,
+        "hSize": "hug",
+        "fills": [
+          "hidden #FFFFFF"
+        ],
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "163:62645",
+            "name": "Rule before",
+            "w": 116,
+            "h": "$Zumpo · UI:space/1",
+            "wSize": "fill",
+            "fills": [
+              "$Zumpo · Primitives:color/line"
+            ],
+            "clip": true
+          },
+          {
+            "type": "TEXT",
+            "id": "163:62644",
+            "name": "Message",
+            "w": 48,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Message"
+            },
+            "text": "a turtle?",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · Primitives:color/muted"
+            ],
+            "alignH": "center"
+          },
+          {
+            "type": "FRAME",
+            "id": "163:62646",
+            "name": "Rule after",
+            "w": 116,
+            "h": "$Zumpo · UI:space/1",
+            "wSize": "fill",
+            "fills": [
+              "$Zumpo · Primitives:color/line"
+            ],
+            "clip": true
           }
         ]
       }

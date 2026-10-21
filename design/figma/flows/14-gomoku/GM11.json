@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Your turn passed",
-                  "Label": "Maya’s turn",
                   "Main": "Maya is thinking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Maya’s turn"
                 },
                 "overrides": [
                   {
@@ -156,8 +156,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to move",
-                      "Time": "00:27",
+                      "Time": "0:27",
                       "Tone": "Waiting"
                     }
                   }
@@ -567,6 +568,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:4994",
                       "Status icon": false,
@@ -600,6 +602,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "White · missed a turn",
@@ -633,6 +636,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Up next",
@@ -709,6 +713,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Bid four 5s",
@@ -768,6 +773,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Watching",
@@ -801,6 +807,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Watching",
@@ -834,6 +841,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Up next",
@@ -910,6 +918,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Bid four 5s",

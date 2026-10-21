@@ -34,7 +34,7 @@
         "type": "FRAME",
         "id": "4:43",
         "name": "Navigation",
-        "w": 234,
+        "w": 121,
         "h": 40,
         "wSize": "hug",
         "hSize": "hug",
@@ -66,31 +66,6 @@
                     "nav": "navigate",
                     "to": "9:433",
                     "toName": "P01 / Home"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "TEXT",
-            "id": "4:45",
-            "w": 81,
-            "h": 20,
-            "wSize": "hug",
-            "hSize": "hug",
-            "text": "How to play",
-            "textStyle": "Zumpo/Label",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "reactions": [
-              {
-                "on": "on_click",
-                "do": [
-                  {
-                    "nav": "navigate",
-                    "to": "9:16004",
-                    "toName": "P14 / How to play"
                   }
                 ]
               }
