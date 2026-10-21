@@ -80,14 +80,18 @@ function playerLine(room: Room, seat: Seat, m: Messages): PlayerLine {
       ({ chain, step }) =>
         entryAt(summary, chain, step)?.author.playerId === seat.playerId,
     );
-    return favourite
-      ? {
-          seat,
-          status: m.doodleChain.favourite,
-          statusIcon: 'check',
-          state: 'scored',
-        }
-      : { seat, status: ordinal(placesOf(standings)[index] ?? 1, m) };
+    if (favourite) {
+      return {
+        seat,
+        status: m.doodleChain.favourite,
+        statusIcon: 'check',
+        state: 'scored',
+      };
+    }
+    // A place among players nobody gave a heart says nothing.
+    return standings[index]?.points
+      ? { seat, status: ordinal(placesOf(standings)[index] ?? 1, m) }
+      : { seat, status: m.doodleChain.heartless };
   }
   if (state.phase === 'reveal') {
     return seat.playerId === state.owner.playerId

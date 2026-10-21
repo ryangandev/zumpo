@@ -150,6 +150,7 @@ export const doodleChain: typeof en = {
   showing: '在揭晓传话',
   watching: '在看',
   favourite: '最受欢迎',
+  heartless: '没有爱心',
   hearts: '爱心',
 
   verb: {

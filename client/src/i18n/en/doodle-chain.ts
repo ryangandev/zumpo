@@ -188,6 +188,8 @@ export const doodleChain = {
   showing: 'Showing the chains',
   watching: 'Watching',
   favourite: 'Crowd favourite',
+  // After a game, in place of a place, for a player given no hearts.
+  heartless: 'No hearts',
   hearts: 'Hearts',
 
   // Entries.

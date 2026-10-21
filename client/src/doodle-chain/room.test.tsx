@@ -57,7 +57,7 @@ const stroke = {
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const scoreboard = () =>
-  within(screen.getByRole('region', { name: /^Players/ }));
+  within(screen.getByRole('region', { name: /^(Players|Hearts)/ }));
 
 /** Ryan's chain as far as the reveal has shown it, Maya's drawing last. */
 const ryansChain: DoodleChainEntry[] = [
@@ -475,6 +475,10 @@ describe('a Doodle Chain room', () => {
       ),
     ).toBeInTheDocument();
     expect(screen.getAllByText('Crowd favourite')).toHaveLength(2);
+    expect(scoreboard().getByText('2nd')).toBeInTheDocument();
+    // Leo was given no hearts, so he has no place.
+    expect(scoreboard().getByText('No hearts')).toBeInTheDocument();
+    expect(scoreboard().queryByText('3rd')).toBeNull();
     expect(screen.getByRole('img', { name: '1 heart' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Maya’s chain' }));
@@ -483,5 +487,26 @@ describe('a Doodle Chain room', () => {
     expect(
       screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();
+  });
+
+  it('gives nobody a place when nobody gave a heart', async () => {
+    await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+            { playerId: 'p3', username: 'Leo', points: 0 },
+          ],
+          chains: [{ owner: RYAN, entries: ryansChain }],
+          favourites: [],
+        },
+      }),
+    );
+
+    expect(screen.getByText(/Nobody gave a heart this time\.$/)).toBeVisible();
+    expect(scoreboard().getAllByText('No hearts')).toHaveLength(3);
+    expect(scoreboard().queryByText(/^1st$|Crowd favourite/)).toBeNull();
   });
 });

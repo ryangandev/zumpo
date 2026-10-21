@@ -177,6 +177,7 @@ When the reveal ends the game is over: the room is back in `waiting`, and the fi
 
 - Every member, spectators and anybody who joins later included, may read any chain, at their own pace, by picking it by whose it is.
 - The album shows every entry with its hearts, the crowd favourite marked, and each player's hearts, most first; players who share a count share a place (1, 1, 3).
+  A player given no hearts has no place, and reads "No hearts"; with no hearts at all, nobody is the crowd favourite.
 - The host's Start game plays again with whoever is seated.
 
 The album is the game's result, so a game that ended early has one too.
