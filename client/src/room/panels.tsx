@@ -2,14 +2,24 @@ import { itemAt } from '../../../shared/list';
 import type { ReactNode } from 'react';
 import type { GameSummary } from '../../../shared/wire-types';
 import { MAX_SPECTATORS } from '../../../shared/room';
-import { Button, ButtonLink, HowToPlay, Notice, PlayerRow } from '../ui';
+import {
+  Avatar,
+  Button,
+  ButtonLink,
+  HowToPlay,
+  Notice,
+  PlayerRow,
+} from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
 import { NameMenuButton } from '../shell/name-menu';
+import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
+import { SwapLabel } from '../shell/swap-label';
+import { useCopy } from '../shell/use-copy';
 import { StatusLine } from '../shell/status-line';
-import { listNames, ordinal, placesOf } from './players';
+import { listNames, ordinal, placesOf, roomNameOf } from './players';
 import { useRoomContext } from './room-context';
 import styles from './panels.module.css';
 
@@ -17,12 +27,15 @@ import styles from './panels.module.css';
 export function RoomPanel({
   title,
   children,
+  aside,
   notice,
   actions,
   footer,
 }: {
   title: ReactNode;
   children: ReactNode;
+  /** Under the text: who is here, on a phone's waiting card. */
+  aside?: ReactNode;
   /** Something for the viewer alone, between the text and the actions. */
   notice?: ReactNode;
   actions?: ReactNode;
@@ -36,6 +49,7 @@ export function RoomPanel({
         {title}
       </h2>
       <p className={styles.body}>{children}</p>
+      {aside}
       {refusal && (
         <Notice tone="error" className={styles.notice}>
           {refusal}
@@ -48,28 +62,61 @@ export function RoomPanel({
   );
 }
 
+/**
+ * Invite friends sends the link the way the device does: the system share
+ * sheet under a finger, the clipboard under a mouse, saying "Link copied" in
+ * place. Where neither works, the invite dialog shows the link to copy by
+ * hand. A share sheet closed without sharing is the player changing their
+ * mind, and opens nothing.
+ */
 function InviteButton({ primary = false }: { primary?: boolean }) {
   const m = useMessages();
-  const { openInvite } = useRoomContext();
+  const { state, inviteLink, openInvite } = useRoomContext();
+  const { copied, copy } = useCopy(inviteLink);
+  const touch = useMediaQuery(TOUCH);
+  const invite = async () => {
+    if (touch && typeof navigator.share === 'function') {
+      const room = roomNameOf(state, m);
+      try {
+        await navigator.share({
+          title: room,
+          text: m.room.shareText(m.games.of[state.gameType].name, room),
+          url: inviteLink,
+        });
+        return;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return;
+        }
+      }
+    } else if (await copy()) {
+      return;
+    }
+    openInvite();
+  };
   return (
     <Button
       variant={primary ? 'primary' : 'secondary'}
-      icon="link"
-      onClick={openInvite}
+      icon={copied ? 'check' : 'link'}
+      onClick={() => void invite()}
     >
-      {m.room.invite}
+      <SwapLabel second={copied} labels={[m.room.invite, m.room.linkCopied]} />
     </Button>
   );
 }
 
 /**
  * Between games, the way to the other kind of seat: Take a seat for a
- * spectator while one is free, Watch instead for a player while a spectator
+ * spectator while one is free, Watch instead for a guest while a spectator
  * seat is free, or nothing. A move under way says so instead.
+ *
+ * The host is never offered Watch instead: it would hand the crown to
+ * somebody at the table for good, and a host alone has nobody to hand it to.
+ * For a guest it is the quiet choice beside Invite, not one of equal weight.
  */
 function SeatMove({ primary = false }: { primary?: boolean }) {
   const m = useMessages();
-  const { state, spectating, watch, sit, moving } = useRoomContext();
+  const { state, spectating, isHost, watch, sit, moving } = useRoomContext();
   if (moving) return <StatusLine>{m.room.moving}</StatusLine>;
   if (spectating) {
     const seatFree = Object.keys(state.playerList).length < state.maxPlayers;
@@ -80,9 +127,10 @@ function SeatMove({ primary = false }: { primary?: boolean }) {
       </Button>
     );
   }
+  if (isHost) return null;
   if (Object.keys(state.spectators).length >= MAX_SPECTATORS) return null;
   return (
-    <Button variant="secondary" onClick={watch}>
+    <Button variant="quiet" onClick={watch}>
       {m.room.watch}
     </Button>
   );
@@ -127,6 +175,39 @@ function usePickedName(): { notice?: string; change?: ReactNode } {
     notice: m.room.pickedName(seat.username),
     change: <NameMenuButton>{m.shell.name.changeName}</NameMenuButton>,
   };
+}
+
+/**
+ * MO20: on a phone, where the scoreboard is on its own tab, the waiting card
+ * says who else is at the table, so "Everyone's here?" can be answered on
+ * the spot. Nothing while nobody else is.
+ */
+function WhoIsHere() {
+  const m = useMessages();
+  const { state, playerId } = useRoomContext();
+  const phone = useMediaQuery(PHONE);
+  const others = Object.entries(state.playerList).filter(
+    ([id]) => id !== playerId,
+  );
+  if (!phone || others.length === 0) return null;
+  const names = others.map(([, seat]) => seat.username);
+  return (
+    <div className={styles.here}>
+      <span className={styles.faces}>
+        {others.map(([id, seat]) => (
+          <Avatar
+            key={id}
+            initials={initialsOf(seat.username)}
+            tone={toneOf(seat.username)}
+            size="small"
+          />
+        ))}
+      </span>
+      <span className={styles.hereText}>
+        {m.room.here(listNames(names, m), names.length)}
+      </span>
+    </div>
+  );
 }
 
 /**
@@ -184,6 +265,7 @@ export function WaitingPanel({
     return (
       <RoomPanel
         title={m.room.waitingForHost(state.owner.username)}
+        aside={<WhoIsHere />}
         notice={picked.notice}
         footer={howTo}
         actions={
@@ -202,6 +284,7 @@ export function WaitingPanel({
     return (
       <RoomPanel
         title={aloneTitle}
+        aside={<WhoIsHere />}
         notice={picked.notice}
         footer={howTo}
         actions={
@@ -219,6 +302,7 @@ export function WaitingPanel({
   return (
     <RoomPanel
       title={m.room.everyoneHere}
+      aside={<WhoIsHere />}
       notice={picked.notice}
       footer={howTo}
       actions={
@@ -241,7 +325,7 @@ export function WaitingPanel({
 
 /** D15, M16: the game ended because everyone else left. */
 export function EndedEarlyPanel() {
-  const { state, spectating, isHost } = useRoomContext();
+  const { state, spectating, isHost, becameHost } = useRoomContext();
   const m = useMessages();
   const gameName = m.games.of[state.gameType].name;
   // Its words are for the player left at the table.
@@ -264,7 +348,9 @@ export function EndedEarlyPanel() {
         </>
       }
     >
-      {m.room.endedEarly(gameName)}
+      {becameHost
+        ? m.room.endedEarlyNewHost(gameName)
+        : m.room.endedEarly(gameName)}
     </RoomPanel>
   );
 }
@@ -276,12 +362,9 @@ export function EndedEarlyPanel() {
 export function ResultsActions({
   onPlayAgain,
   starting,
-  again,
 }: {
   onPlayAgain: () => void;
   starting: boolean;
-  /** Play again's label, where the game names the next one: "Start game 3". */
-  again?: string;
 }) {
   const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
@@ -298,7 +381,7 @@ export function ResultsActions({
   if (count >= gameInfo(state.gameType).minPlayers) {
     return (
       <>
-        <Button onClick={onPlayAgain}>{again ?? m.room.playAgain}</Button>
+        <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
         <InviteButton />
         <SeatMove />
       </>
@@ -322,14 +405,12 @@ export function ResultsFrame({
   children,
   onPlayAgain,
   starting,
-  again,
 }: {
   title: string;
   detail: string;
   children: ReactNode;
   onPlayAgain: () => void;
   starting: boolean;
-  again?: string;
 }) {
   return (
     <section className={styles.results} aria-labelledby="results-title">
@@ -341,11 +422,7 @@ export function ResultsFrame({
       </div>
       {children}
       <div className={styles.actions}>
-        <ResultsActions
-          onPlayAgain={onPlayAgain}
-          starting={starting}
-          again={again}
-        />
+        <ResultsActions onPlayAgain={onPlayAgain} starting={starting} />
       </div>
     </section>
   );
@@ -362,7 +439,6 @@ export function ResultsPanel<Summary extends GameSummary>({
   standingDetail,
   onPlayAgain,
   starting,
-  again,
   ranked = false,
   statusOf,
 }: {
@@ -378,8 +454,6 @@ export function ResultsPanel<Summary extends GameSummary>({
   standingDetail?: (playerId: string) => string;
   onPlayAgain: () => void;
   starting: boolean;
-  /** Play again's label, where the game names the next one. */
-  again?: string;
   /**
    * The standings are in finishing order and no two share a place, as in
    * Liar's Dice; otherwise an equal score shares one.
@@ -398,25 +472,32 @@ export function ResultsPanel<Summary extends GameSummary>({
   // A spectator has no place.
   const place = places[standings.findIndex((s) => s.playerId === playerId)];
   const [winner] = winners;
+  const score = winner && scoreOf(m, state.gameType, winner.points);
+  // The viewer's own win is theirs: "You win", not their name.
+  const others = winners
+    .filter((w) => w.playerId !== playerId)
+    .map((w) => w.username);
+  const won = others.length < winners.length;
 
   return (
     <ResultsFrame
       title={
         title ??
-        (winner === undefined
+        (winner === undefined || score === undefined
           ? m.room.gameOver
-          : winners.length === 1
-            ? m.room.wins(
-                winner.username,
-                scoreOf(m, state.gameType, winner.points),
-              )
-            : m.room.ties(
-                listNames(
-                  winners.map((w) => w.username),
-                  m,
-                ),
-                scoreOf(m, state.gameType, winner.points),
-              ))
+          : won
+            ? others.length === 0
+              ? m.room.youWin(score)
+              : m.room.youTie(listNames(others, m), score)
+            : winners.length === 1
+              ? m.room.wins(winner.username, score)
+              : m.room.ties(
+                  listNames(
+                    winners.map((w) => w.username),
+                    m,
+                  ),
+                  score,
+                ))
       }
       detail={
         title === undefined && place !== undefined && place > 1
@@ -425,7 +506,6 @@ export function ResultsPanel<Summary extends GameSummary>({
       }
       onPlayAgain={onPlayAgain}
       starting={starting}
-      again={again}
     >
       <ol className={styles.ranking} aria-label={m.room.standings}>
         {standings.map((standing, index) => {
@@ -437,6 +517,7 @@ export function ResultsPanel<Summary extends GameSummary>({
               <PlayerRow
                 as="div"
                 className={styles.row}
+                wrap
                 name={standing.username}
                 initials={initialsOf(standing.username)}
                 tone={toneOf(standing.username)}

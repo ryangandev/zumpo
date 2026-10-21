@@ -6,10 +6,11 @@ import { gameInfo, roomPath, type GameInfo } from '../games/catalog';
 import { FullRules } from '../games/full-rules';
 import { GameIntro } from '../games/game-intro';
 import { roomSetting } from '../games/room-setting';
-import { defaultRoomNames, useMessages, type Messages } from '../i18n';
+import { useMessages, type Messages } from '../i18n';
 import { useLobby } from '../net/use-lobby';
 import { useSession } from '../net/session';
 import { initialsOf, toneOf } from '../players/avatar';
+import { roomNameOf } from '../room/players';
 import { ConnectionLost } from '../shell/connection-lost';
 import { Page } from '../shell/page';
 import styles from './game.module.css';
@@ -58,16 +59,13 @@ function statusOf(room: AnyLobbyRoomInfo): RoomRowStatus {
 }
 
 /**
- * The host and the room's setting. A room that kept the name it was offered,
- * "Maya's room", says only its setting, since the name already says who
- * hosts it.
+ * Who hosts a room and how it is set up; a room named after its host says
+ * the host once, in its name.
  */
-function detailsOf(room: AnyLobbyRoomInfo, m: Messages): string {
-  const host = room.owner.username;
+function details(room: AnyLobbyRoomInfo, m: Messages): string {
   const setting = roomSetting(room, m);
-  return defaultRoomNames(host).includes(room.roomName)
-    ? setting
-    : m.lobby.hostedBy(host, setting);
+  if (room.roomName === '' && setting) return setting;
+  return m.lobby.hostedBy(room.owner.username, setting);
 }
 
 function RoomList({ rooms }: { rooms: AnyLobbyRoomInfo[] }) {
@@ -79,8 +77,8 @@ function RoomList({ rooms }: { rooms: AnyLobbyRoomInfo[] }) {
         {rooms.map((room) => (
           <RoomRow
             key={room.roomId}
-            name={room.roomName}
-            details={detailsOf(room, m)}
+            name={roomNameOf(room, m)}
+            details={details(room, m)}
             host={{
               initials: initialsOf(room.owner.username),
               tone: toneOf(room.owner.username),

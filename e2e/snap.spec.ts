@@ -73,14 +73,18 @@ test('two players race for the middle card while a third watches', async ({
   for (const page of [maya, leo, jo]) {
     await expect(page.getByText('Game over', { exact: true })).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Maya wins with 15 cards.' }),
+      page.getByRole('heading', {
+        name:
+          page === maya ? 'You win with 15 cards.' : 'Maya wins with 15 cards.',
+      }),
     ).toBeVisible();
   }
   // The last card stays up, with who took it.
   await expect(
     maya.getByRole('group', { name: 'Last card, taken by Leo' }),
   ).toBeVisible();
-  await expect(maya.getByText('15 won')).toBeVisible();
+  // Not your own card again: the standings count everybody's cards.
+  await expect(maya.getByText('15 won')).toBeHidden();
 });
 
 test('a player with no name races through thirty cards on their own', async ({

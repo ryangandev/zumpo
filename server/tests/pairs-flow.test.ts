@@ -14,6 +14,7 @@ import {
   waitForPairsState,
   type TestClient,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 
 /** The places of each symbol's two cards, read off the server's own deck. */
@@ -331,9 +332,13 @@ describe('a Pairs game', () => {
     mover.emit('pairs:flip', roomId, b);
     await found;
 
+    const endChat = collectChat(owner);
     const over = waitForPairsState(owner, (s) => s.lastGame !== null);
     players[1].emit('room:leave', roomId);
     const view: PairsRoomState = await over;
     expect(view.lastGame).toMatchObject({ endedEarly: true, pairs: 1 });
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
   });
 });

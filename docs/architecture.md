@@ -86,6 +86,7 @@ A player's message is posted under the name on their seat; anything else is an a
 A player's name is written wherever a room records them: the seat, the owner, and any `{ playerId, username }` record in a module's state, such as the last game's standings.
 `player:rename` changes it in every one of those at once through `renamePlayer` ([`names.ts`](../server/libs/rooms/names.ts)), which walks the room's plain data, so a module that keeps a player's name in that shape needs nothing else to follow a rename.
 The chat is left alone: what was said was said under the old name, and the room is told who became whom.
+A room whose creator kept the suggested name is stored without one (`roomName` is `''`), and each client words it after its host at the time ("Ben's room"), so the name follows the crown; a name somebody typed stays as typed.
 Two players in a room never go by one name, whatever its case: joining or renaming as a name somebody else has adds the first free number ("Sam 2"), shortening the name to keep it within 18 characters.
 
 Two boundaries had to be drawn for the layer to be an abstraction rather than Draw & Guess wearing a hat:
@@ -119,6 +120,8 @@ A spectator can talk, through the module's `handleChat` like anybody, so a right
 A module may also answer `spectators`, as Draw & Guess does while a word is drawn: the line is posted with `audience: 'spectators'`, sent to the spectator seats alone, and left out of the history (`registry.chatFor`) anybody at the table gets on a refresh.
 A spectator's place is held through a refresh like a seat, but quietly: nobody is told they dropped or came back, and the game is never paused for them.
 When the owner leaves, the crown passes to a player here, then a player away, and to a spectator only when no player is left; a host who moves to watch hands it to a player at the table if there is one, and a room ends with its last member.
+The client offers Watch instead only to a guest, because for a host it is a one-way step.
+A game left with too few players ends with one chat line, `game:interrupted`, and no result: nobody finished it, so nobody "wins with 0 points".
 A player holds one seat at a time: creating or joining a room gives up any other seat, as leaving it would.
 The client leaves a room on its way out, but only while connected, so without this a player who navigated away offline would hold the old seat through its grace period while playing somewhere else.
 
@@ -241,6 +244,9 @@ Routes live in [`app.tsx`](../client/src/app.tsx), on a data router so a room ca
 
 Every page opens without asking for anything first: a first visit is given a random name, changed in place from the Name menu ([design](design.md#names)).
 The room URL carries the game so that a page which cannot reach the room (a password, a room that moved on) still knows which game it belongs to; a link with the wrong game in it redirects to the right one.
+A locked room's invite link also carries its invite key after a `#key=`, which `room:join` takes in place of the password, so a friend with the link sits straight down; Ryan approved this in #62, and the password itself only keeps strangers from the lobby list out.
+The key is random, made with the room, and sent only in members' snapshots, so the password a host typed, which they may use elsewhere, never goes into a link or a browser history, and a fragment never reaches a server log.
+Once seated the page drops the fragment from the address.
 
 ### Talking to the server
 
@@ -251,7 +257,7 @@ The room URL carries the game so that a page which cannot reach the room (a pass
   `setName` saves a new name and sends `player:rename`, which Socket.IO holds until it is back online if it is not.
   Its status (`connecting`, `online`, `reconnecting`, `failed`) is what pages show, and `connection` numbers the live connection anew on every `session:ready` (null while offline), so anything the server keeps per connection is set up again by an effect keyed on it.
 - **`use-lobby.ts`** subscribes to one game's rooms while online.
-- **`use-room.ts`** takes a seat: `room:sync` first, then `room:join` when the server says this player has no seat, then the password page if the room has one.
+- **`use-room.ts`** takes a seat: `room:sync` first, then `room:join` when the server says this player has no seat, with the invite key when the link had one, then the password page if the room still asks for one.
   It keeps the latest snapshot and when it arrived, the chat, and the drawing as a `CanvasStream`, which lives outside React because a stroke grows dozens of times a second.
   A `notRoomMember` answer after the page has held a seat means the seat was released while away, which the page reports rather than quietly rejoining.
 - Requests use `emitWithAck` with a 10 second timeout, and a request that times out is treated as a failure the page can show.

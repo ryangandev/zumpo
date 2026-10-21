@@ -66,6 +66,20 @@ describe('a Minesweeper room', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
+  it('on a phone, says on the waiting card who else is here', async () => {
+    onPhone();
+    await renderSeated(
+      minesweeperState({
+        playerList: {
+          p1: { username: 'Ryan', points: 0, isConnected: true },
+          p2: { username: 'Maya', points: 0, isConnected: true },
+          p3: { username: 'Leo', points: 0, isConnected: true },
+        },
+      }),
+    );
+    expect(screen.getByText('Maya and Leo are here.')).toBeInTheDocument();
+  });
+
   it('asks a player still on a picked name for one their friends know', async () => {
     const user = userEvent.setup();
     const { fake } = await renderSeated(minesweeperState(), { picked: true });
@@ -227,6 +241,7 @@ describe('a Minesweeper room', () => {
 
   it('celebrates a game that ends while the room is open', async () => {
     const ended = minesweeperState({
+      lastRound: [pick],
       lastGame: {
         endedEarly: false,
         standings: [{ playerId: ME, username: 'Ryan', points: 120 }],
@@ -240,8 +255,12 @@ describe('a Minesweeper room', () => {
     update(picking);
     update(ended);
     expect(
-      screen.getByRole('heading', { name: 'Ryan wins with 120 points.' }),
+      screen.getByRole('heading', { name: 'You win with 120 points.' }),
     ).toBeInTheDocument();
+    // The standings count the last round: its results are not repeated.
+    expect(
+      screen.queryByRole('heading', { name: /^Round \d+ results$/ }),
+    ).toBeNull();
     expect(confetti()).not.toBeNull();
   });
 });

@@ -239,6 +239,10 @@ describe('a Code Breaker room', () => {
         { name: '4 0 7 1: 4 in place, 0 elsewhere' },
       ),
     ).toBeInTheDocument();
+    // A finished board draws only the rows played, or one empty row.
+    expect(
+      screen.getByRole('group', { name: 'Maya’s board' }).children,
+    ).toHaveLength(1);
   });
 
   it('counts the codes each player cracked at the end', async () => {

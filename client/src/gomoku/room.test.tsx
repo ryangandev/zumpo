@@ -65,23 +65,25 @@ describe('a Gomoku room', () => {
     expect(
       screen.getByText('Two players, a 15 × 15 board, 30 seconds a move.'),
     ).toBeInTheDocument();
-    expect(screen.getByText('Host · here')).toBeInTheDocument();
-    expect(screen.getByText('Here')).toBeInTheDocument();
+    // The scoreboard says who is here; no seats repeat it before a game.
+    expect(scoreboard().getByText('Maya')).toBeInTheDocument();
+    expect(scoreboard().queryByText('Waiting')).toBeNull();
+    expect(screen.queryByText('Host · here')).toBeNull();
     expect(point('H8')).toHaveAttribute('aria-disabled', 'true');
     await user.click(screen.getByRole('button', { name: 'Start game' }));
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
   });
 
-  it('shows a free seat while the host waits alone', async () => {
+  it('has the host wait alone for a second player', async () => {
     await renderSeated(
       gomokuState({
         playerList: { p1: { username: 'Ryan', points: 0, isConnected: true } },
       }),
     );
-    expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(
-      screen.getByText('Anybody watching can sit here'),
+      screen.getByRole('heading', { name: 'Waiting for a second player.' }),
     ).toBeInTheDocument();
+    expect(screen.getByText('1 / 2')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Start game' })).toBeNull();
   });
 
@@ -282,7 +284,7 @@ describe('a Gomoku room', () => {
     );
     expect(scoreboard().getByText('Won game 2')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Start game 3' }),
+      screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();
   });
 
@@ -317,6 +319,37 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^Start game/ })).toBeNull();
+  });
+
+  it('waits for a new game, not the old result, once a new opponent sits', async () => {
+    await renderSeated(
+      gomokuState({
+        colors,
+        gameNumber: 2,
+        moves: [
+          { color: 'black', point: E9 },
+          { color: 'white', point: E8 },
+        ],
+        playerList: {
+          p1: { username: 'Ryan', points: 2, isConnected: true },
+          p3: { username: 'Jo', points: 0, isConnected: true },
+        },
+        lastGame: {
+          endedEarly: true,
+          ending: 'left',
+          winner: 'black',
+          stones: 1,
+          standings: [{ playerId: ME, username: 'Ryan', points: 2 }],
+        },
+      }),
+    );
+    expect(screen.getByText('Waiting room')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /^You win/ })).toBeNull();
+    expect(scoreboard().queryByText('Won game 2')).toBeNull();
+    expect(
+      screen.getByRole('button', { name: 'Start game' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/^Black moves first\./)).toBeInTheDocument();
   });
 
   it('shows a spectator the game with nothing to place and no Resign', async () => {

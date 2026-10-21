@@ -36,6 +36,16 @@ export const room = {
   leaveTitle: (name: string) => `Leave ${name}?`,
   leaveInGame: (score: string) =>
     `The game carries on without you, and your seat and your ${score} go with you. You can join again while a seat is open.`,
+  leaveInGameNoScore:
+    'The game carries on without you, and your seat goes with you. You can join again while a seat is open.',
+  leaveEndsGame:
+    'Too few players would be left, so leaving ends the game for everyone.',
+  leaveResigns: (opponent: string) =>
+    `Leaving ends the game, and ${opponent} wins it.`,
+  leaveNextHost: (name: string) => `${name} becomes the host.`,
+  leaveCloses: 'Nobody else is here, so the room closes.',
+  /** Two sentences, one after the other. */
+  both: (first: string, second: string) => `${first} ${second}`,
   leaveBetweenGames:
     'Your seat goes with you. You can join again while a seat is open.',
   leaveSpectating:
@@ -69,6 +79,10 @@ export const room = {
   inviteDescription: (name: string) =>
     `Anyone with this link can join ${name} while a seat is open.`,
   copied: 'Copied',
+  linkCopied: 'Link copied',
+  /** With the link, in the share sheet: what the message says. */
+  shareText: (game: string, roomName: string) =>
+    `Join me for ${game} in ${roomName}.`,
   copy: 'Copy',
   done: 'Done',
   roomLink: 'Room link',
@@ -79,10 +93,15 @@ export const room = {
   needsPlayers: (game: string, fewest: number) =>
     `${game} needs at least ${fewest} players. Share the room so a friend can join, and the game can start.`,
   everyoneHere: 'Everyone’s here?',
+  /** On a phone's waiting card: the others at the table. */
+  here: (names: string, count: number) =>
+    count === 1 ? `${names} is here.` : `${names} are here.`,
   starting: 'Starting the game…',
   start: 'Start game',
   everyoneLeft: 'Everyone else left.',
   endedEarly: (game: string) =>
+    `${game} needs at least 2 players, so the game has ended. Invite friends to start a new one.`,
+  endedEarlyNewHost: (game: string) =>
     `${game} needs at least 2 players, so the game has ended. You are the host now: invite friends to start a new one.`,
   waitingForAgain: (name: string) =>
     `Waiting for ${name} to start another game.`,
@@ -90,6 +109,9 @@ export const room = {
   gameOver: 'Game over.',
   wins: (name: string, score: string) => `${name} wins with ${score}.`,
   ties: (names: string, score: string) => `${names} tie with ${score}.`,
+  youWin: (score: string) => `You win with ${score}.`,
+  youTie: (others: string, score: string) =>
+    `You tie with ${others} on ${score}.`,
   finished: (detail: string, place: string) =>
     `${detail} You finished ${place}.`,
   standings: 'Standings',

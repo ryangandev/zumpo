@@ -1,10 +1,10 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import { randomInt } from 'node:crypto';
 import type {
   LiarsDiceSettings,
   LiarsDiceStanding,
 } from '../../models/types.js';
-import { seatCount, seatOf } from '../../libs/rooms/seats.js';
+import { seatOf } from '../../libs/rooms/seats.js';
 import type { GameContext } from '../../libs/rooms/types.js';
 import {
   liarsDiceDurationsInSeconds as defaultDurations,
@@ -278,7 +278,8 @@ const createLiarsDiceGameEngine = (
 
     ctx.rooms.emitState(room);
     const [winner] = standings;
-    if (winner && winner.points > 0) {
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly && winner && winner.points > 0) {
       ctx.rooms.announce(room.roomId, 'success', {
         type: 'game:over',
         names: [winner.username],
@@ -294,7 +295,11 @@ const createLiarsDiceGameEngine = (
     if (!room.isGameStarted) return;
     const game = room.game;
 
-    if (seatCount(room) < SEATS['liars-dice'].min) {
+    const departure = departureFrom({
+      gameType: 'liars-dice',
+      seats: room.playerList,
+    });
+    if (departure.kind === 'cut-short') {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;
@@ -304,7 +309,8 @@ const createLiarsDiceGameEngine = (
     // in this round, so the bids still stand.
     const hadDice = Object.hasOwn(game.dice, playerId);
     delete game.dice[playerId];
-    if (playersIn(room).length <= 1) {
+    // The one player left with dice has won.
+    if (departure.kind === 'decided') {
       endGame(room, { endedEarly: false });
       return;
     }

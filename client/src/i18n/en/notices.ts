@@ -1,5 +1,6 @@
 import type { RoomNotice } from '../../../../shared/wire-types.js';
 import { bidWords, foundWords } from '../../../../shared/liars-dice.js';
+import { duration } from './plural.js';
 
 const who = (name: string): string => name || 'A player';
 
@@ -18,7 +19,7 @@ export const notices = {
     n: Extract<RoomNotice, { type: 'room:watching' }>,
   ): string =>
     n.owner
-      ? `${who(n.name)} is watching. ${who(n.owner)} is now the owner.`
+      ? `${who(n.name)} is watching. ${who(n.owner)} is now the host.`
       : `${who(n.name)} is watching.`,
   'room:seated': (n: Extract<RoomNotice, { type: 'room:seated' }>): string =>
     `${who(n.name)} took a seat.`,
@@ -27,7 +28,7 @@ export const notices = {
   'room:owner-left': (
     n: Extract<RoomNotice, { type: 'room:owner-left' }>,
   ): string =>
-    `Previous owner ${who(n.name)} has left the room. ${who(n.owner)} is now the owner.`,
+    `${who(n.name)} has left the room. ${who(n.owner)} is now the host.`,
   'room:left': (n: Extract<RoomNotice, { type: 'room:left' }>): string =>
     `${who(n.name)} has left the room.`,
   'room:disconnected': (
@@ -125,15 +126,15 @@ export const notices = {
   ): string =>
     `Their ${list(n.cards.map(String))} ${n.cards.length === 1 ? 'is' : 'are'} discarded, with no life lost.`,
   'dw:started': (n: Extract<RoomNotice, { type: 'dw:started' }>): string =>
-    `Game has started! ${n.rounds} words, ${n.seconds} seconds each.`,
+    `Game has started! ${n.rounds} words, ${duration(n.seconds)} each.`,
   'dw:solved': (n: Extract<RoomNotice, { type: 'dw:solved' }>): string =>
     `${who(n.name)} got it in ${n.guesses}! (+${n.points})`,
   'dw:revealed': (n: Extract<RoomNotice, { type: 'dw:revealed' }>): string =>
     `The word was ${n.word}.`,
   'cb:started': (n: Extract<RoomNotice, { type: 'cb:started' }>): string =>
     n.rounds === 1
-      ? `Game has started! 1 code, ${n.seconds} seconds.`
-      : `Game has started! ${n.rounds} codes, ${n.seconds} seconds each.`,
+      ? `Game has started! 1 code, ${duration(n.seconds)}.`
+      : `Game has started! ${n.rounds} codes, ${duration(n.seconds)} each.`,
   'cb:cracked': (n: Extract<RoomNotice, { type: 'cb:cracked' }>): string =>
     `${who(n.name)} cracked it in ${n.guesses}! (+${n.points})`,
   'cb:revealed': (n: Extract<RoomNotice, { type: 'cb:revealed' }>): string =>

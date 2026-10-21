@@ -17,6 +17,11 @@ export interface WordBoardProps {
   /** The letters typed into the next row. */
   typed?: string;
   size?: LetterTileSize;
+  /**
+   * Only the rows guessed, or one empty row where there are none: a finished
+   * board, whose empty rows would say nothing.
+   */
+  played?: boolean;
   /** The board's accessible name: "Your guesses", "Maya’s board". */
   label: string;
   className?: string;
@@ -30,6 +35,7 @@ export function WordBoard({
   rows,
   typed = '',
   size = 'regular',
+  played = false,
   label,
   className,
 }: WordBoardProps) {
@@ -39,33 +45,36 @@ export function WordBoard({
       aria-label={label}
       className={cx(styles.board, styles[size], className)}
     >
-      {Array.from({ length: ROWS }, (_, row) => {
-        const guess = rows[row];
-        const open = row === rows.length;
-        return (
-          <div key={row} className={styles.row}>
-            {Array.from({ length: LETTERS }, (_letter, index) => {
-              let state: LetterTileState = 'empty';
-              let letter: string | undefined;
-              if (guess) {
-                state = guess.marks[index] ?? 'empty';
-                letter = guess.word?.[index];
-              } else if (open && index < typed.length) {
-                state = 'typed';
-                letter = typed[index];
-              }
-              return (
-                <LetterTile
-                  key={index}
-                  letter={letter}
-                  state={state}
-                  size={size}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+      {Array.from(
+        { length: played ? Math.max(rows.length, 1) : ROWS },
+        (_, row) => {
+          const guess = rows[row];
+          const open = row === rows.length;
+          return (
+            <div key={row} className={styles.row}>
+              {Array.from({ length: LETTERS }, (_letter, index) => {
+                let state: LetterTileState = 'empty';
+                let letter: string | undefined;
+                if (guess) {
+                  state = guess.marks[index] ?? 'empty';
+                  letter = guess.word?.[index];
+                } else if (open && index < typed.length) {
+                  state = 'typed';
+                  letter = typed[index];
+                }
+                return (
+                  <LetterTile
+                    key={index}
+                    letter={letter}
+                    state={state}
+                    size={size}
+                  />
+                );
+              })}
+            </div>
+          );
+        },
+      )}
     </div>
   );
 }
