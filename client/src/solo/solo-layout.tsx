@@ -8,6 +8,7 @@ import { RulesDialog } from '../room/dialogs';
 import { Page, useViewer } from '../shell/page';
 import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { useStartFocus } from '../shell/use-start-focus';
 import { cx } from '../ui/cx';
 import type { SoloTime } from './solo-time';
 import styles from './solo-layout.module.css';
@@ -69,6 +70,9 @@ export function SoloLayout({
     time?.setPaused(away);
   }, [time, away]);
   const stageClass = cx(styles.stage, time?.paused && styles.away);
+  // A game on your own starts as it mounts, from Start or Play again alike.
+  const stageRef = useRef<HTMLDivElement>(null);
+  useStartFocus(true, stageRef);
 
   // A game opens at the top of the page, as a new page does, not where the
   // form it was started from had been scrolled to. A block body: browsers
@@ -94,10 +98,14 @@ export function SoloLayout({
       }
     >
       {phone || side == null ? (
-        <div className={cx(stageClass, playColumn)}>{stage}</div>
+        <div ref={stageRef} className={cx(stageClass, playColumn)}>
+          {stage}
+        </div>
       ) : (
         <div className={styles.solo}>
-          <div className={stageClass}>{stage}</div>
+          <div ref={stageRef} className={stageClass}>
+            {stage}
+          </div>
           <div className={styles.side}>{side}</div>
         </div>
       )}

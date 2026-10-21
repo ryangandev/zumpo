@@ -13,6 +13,12 @@
   min-width: 0;
 }
 
+/* The game within the stage, there only to be found: its pieces lay out as
+   the stage's own. */
+.game {
+  display: contents;
+}
+
 .side {
   display: flex;
   flex-direction: column;

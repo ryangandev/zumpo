@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import type { PlayerInfo, SpectatorInfo } from '../../../shared/wire-types';
 import {
@@ -19,6 +19,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
 import { playColumn } from '../shell/play-board';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { useStartFocus } from '../shell/use-start-focus';
 import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
@@ -195,6 +196,16 @@ export function RoomLayout({
 
   const seconds = Math.round(reconnectGraceMs / 1000);
 
+  // Start game and Play again go as they are pressed: the game takes the
+  // keyboard. Only the game itself, not a phone's standings strip over it.
+  const stageRef = useRef<HTMLDivElement>(null);
+  useStartFocus(state.isGameStarted, stageRef);
+  const gameView = (
+    <div ref={stageRef} className={styles.game}>
+      {stage}
+    </div>
+  );
+
   return (
     <Page
       header={
@@ -246,7 +257,7 @@ export function RoomLayout({
                       onOpen={() => setView('players')}
                     />
                   )}
-                  {stage}
+                  {gameView}
                   {recentChat && <RecentChat alertIcon={chat.alertIcon} />}
                   {boardInput && <ChatInput {...input} label={boardInput} />}
                   {newHost ? (
@@ -292,7 +303,7 @@ export function RoomLayout({
         />
       ) : (
         <div className={styles.room}>
-          <div className={styles.stage}>{stage}</div>
+          <div className={styles.stage}>{gameView}</div>
           <div className={styles.side}>
             {scoreboard}
             {watching}

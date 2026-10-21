@@ -1,3 +1,4 @@
+import { useRef, useState, type KeyboardEvent } from 'react';
 import { itemAt } from '../../../shared/list';
 import type {
   MinesweeperPickResult,
@@ -88,7 +89,9 @@ export type MineGridCell = Pick<
 /**
  * Any minefield, in a room or on your own. A Large board uses compact cells;
  * on a phone, a Small board is scaled to fit, and a wider one keeps
- * full-size cells and pans.
+ * full-size cells and pans. The board is one Tab stop: the arrow keys move
+ * between cells (Home and End along a row), and each cell takes Enter or
+ * Space to pick and F to flag.
  */
 export function MineGrid({
   width,
@@ -101,6 +104,38 @@ export function MineGrid({
   // Compact cells fit a Large board on a desktop; a phone pans instead.
   const size = width > 16 && !phone ? 'compact' : 'regular';
   const pans = width > 9;
+  const cells = useRef<(HTMLSpanElement | null)[]>([]);
+  // The one cell the Tab key reaches, where the arrow keys last left it.
+  const [cursor, setCursor] = useState(0);
+  const tabbable = cursor < width * height ? cursor : 0;
+
+  const move = (event: KeyboardEvent<HTMLSpanElement>, index: number) => {
+    const row = Math.floor(index / width);
+    const column = index % width;
+    const target = (() => {
+      switch (event.key) {
+        case 'ArrowLeft':
+          return column > 0 ? index - 1 : null;
+        case 'ArrowRight':
+          return column < width - 1 ? index + 1 : null;
+        case 'ArrowUp':
+          return row > 0 ? index - width : null;
+        case 'ArrowDown':
+          return row < height - 1 ? index + width : null;
+        case 'Home':
+          return row * width;
+        case 'End':
+          return row * width + width - 1;
+        default:
+          return undefined;
+      }
+    })();
+    if (target === undefined) return;
+    event.preventDefault();
+    if (target === null) return;
+    setCursor(target);
+    cells.current[target]?.focus();
+  };
 
   const grid = (
     <div
@@ -120,13 +155,20 @@ export function MineGrid({
         {Array.from({ length: height }, (_, row) => (
           <div key={row} className={styles.row} role="row">
             {Array.from({ length: width }, (_cell, column) => {
-              const { pick, ...props } = cell(row * width + column);
+              const index = row * width + column;
+              const { pick, ...props } = cell(index);
               return (
                 <MineCell
                   key={column}
+                  ref={(element) => {
+                    cells.current[index] = element;
+                  }}
                   row={row}
                   column={column}
                   size={size}
+                  tabIndex={index === tabbable ? 0 : -1}
+                  onKeyDown={(event) => move(event, index)}
+                  onFocus={() => setCursor(index)}
                   marker={
                     pick && (
                       <PickMarker

@@ -58,12 +58,18 @@ describe('a Minesweeper room', () => {
 
   it('lets the host start once two players are in', async () => {
     const user = userEvent.setup();
-    const { fake } = await renderSeated(minesweeperState());
+    const { fake, update } = await renderSeated(minesweeperState());
     fake.answer('game:start', () => ({ ok: true as const }));
 
     expect(screen.getByText('Everyone’s here?')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Start game' }));
     expect(fake.requests.at(-1)).toEqual({ event: 'game:start', args: ['r1'] });
+
+    // Start game goes with the waiting card; the board takes the focus.
+    update(picking);
+    expect(
+      screen.getByRole('gridcell', { name: 'Row 1, column 1: hidden' }),
+    ).toHaveFocus();
   });
 
   it('on a phone, says on the waiting card who else is here', async () => {
@@ -114,7 +120,7 @@ describe('a Minesweeper room', () => {
       screen.getByText('10 mines · your pick locks when you click'),
     ).toBeInTheDocument();
     await user.click(
-      screen.getByRole('button', { name: 'Row 1, column 3: hidden' }),
+      screen.getByRole('gridcell', { name: 'Row 1, column 3: hidden' }),
     );
     expect(fake.sentArgs('ms:pick')).toEqual([['r1', 2]]);
 
@@ -124,8 +130,8 @@ describe('a Minesweeper room', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Waiting for Maya')).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: /Row 1, column 1/ }),
-    ).toBeNull();
+      screen.getByRole('gridcell', { name: 'Row 1, column 1: hidden' }),
+    ).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('shows what each pick was worth', async () => {
