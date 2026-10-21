@@ -1,3 +1,4 @@
+/* Measured by TurnBar for its phone layout; its words never widen it. */
 .container {
   container-type: inline-size;
 }
@@ -105,71 +106,71 @@
 
 /* Phone: one compact row of fixed height. The tag, what to do and the meta
    share the first line, cut short with an ellipsis; the main line is under
-   them at Heading size; the clock shows its time beside both. */
-@container (max-width: 560px) {
-  .bar {
-    grid-template-areas:
-      'tag label meta clock'
-      'main main main clock';
-    grid-template-columns:
-      minmax(0, max-content) minmax(0, max-content) minmax(0, 1fr)
-      auto;
-    gap: 0 var(--zumpo-space-8);
-    padding: var(--zumpo-space-12) var(--zumpo-space-16);
-    border-radius: var(--zumpo-radius-20);
-  }
+   them at Heading size; the clock shows its time beside both. The bar takes
+   it when it is 560 px wide or less, and on a screen too short for two
+   lines, such as a phone on its side (TurnBar sets the class). */
+.phone .bar {
+  grid-template-areas:
+    'tag label meta clock'
+    'main main main clock';
+  grid-template-columns:
+    minmax(0, max-content) minmax(0, max-content) minmax(0, 1fr)
+    auto;
+  gap: 0 var(--zumpo-space-8);
+  padding: var(--zumpo-space-12) var(--zumpo-space-16);
+  border-radius: var(--zumpo-radius-20);
+}
 
-  .untagged,
-  .topless {
-    grid-template-areas:
-      'label label meta clock'
-      'main main main clock';
-  }
+.phone .untagged,
+.phone .topless {
+  grid-template-areas:
+    'label label meta clock'
+    'main main main clock';
+}
 
-  .answer {
-    display: contents;
-  }
+.phone .answer {
+  display: contents;
+}
 
-  /* Scaled down, a long main line is shorter, not the bar: the line keeps
-     its height and the words sit in the middle of it. */
-  .answer > .mainBox {
-    display: flex;
-    grid-area: main;
-    align-items: center;
-    width: 100%;
-    height: var(--zumpo-text-heading-line);
-  }
+/* Scaled down, a long main line is shorter, not the bar: the line keeps its
+   height and the words sit in the middle of it. */
+.phone .answer > .mainBox {
+  display: flex;
+  grid-area: main;
+  align-items: center;
+  width: 100%;
+  height: var(--zumpo-text-heading-line);
+}
 
-  .meta {
-    grid-area: meta;
-  }
+.phone .meta {
+  grid-area: meta;
+}
 
-  .tag {
-    margin-bottom: var(--zumpo-space-2);
-  }
+.phone .tag {
+  margin-bottom: var(--zumpo-space-2);
+}
 
-  .clock {
-    margin: 0 0 0 var(--zumpo-space-4);
-  }
+.phone .clock {
+  margin: 0 0 0 var(--zumpo-space-4);
+}
 
-  /* The clock says what it is for to a screen reader only. */
-  .clock [data-countdown-label] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
+/* The clock says what it is for to a screen reader only. */
+.phone .clock [data-countdown-label] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 
-  .word,
-  .status {
-    font: var(--zumpo-text-heading);
-    letter-spacing: var(--zumpo-text-heading-tracking);
-  }
+.phone .word,
+.phone .status {
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+}
 
-  .hint {
-    font: var(--zumpo-text-hint-compact);
-    letter-spacing: var(--zumpo-text-hint-compact-tracking);
-  }
+.phone .hint {
+  font: var(--zumpo-text-hint-compact);
+  letter-spacing: var(--zumpo-text-hint-compact-tracking);
 }
