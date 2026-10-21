@@ -61,9 +61,9 @@ export function departureFrom(table: TableLeft): Departure {
       const holding = seated.filter((id) => (table.seats[id]?.points ?? 0) > 0);
       if (holding.length > 1) return { kind: 'plays-on' };
       const [winner] = holding;
-      return winner === undefined
-        ? { kind: 'cut-short' }
-        : { kind: 'decided', winner };
+      // Defensive: two or more seats left holding no dice cannot happen.
+      if (winner === undefined) return { kind: 'cut-short' };
+      return { kind: 'decided', winner };
     }
     case 'doodle-chain': {
       if (table.phase === 'reveal') return { kind: 'plays-on' };
