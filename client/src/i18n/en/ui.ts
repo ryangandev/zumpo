@@ -26,8 +26,8 @@ export const ui = {
   room: {
     leave: 'Leave room',
     howToPlay: 'How to play',
-    /** The phone room bar's line under the game: "Maya's room · Round 2". */
-    context: (room: string, phase: string) => `${room} · ${phase}`,
+    /** Between the room and its phase under a phone's game: "Maya's room · Round 2". */
+    contextSeparator: ' · ',
     password: 'Password protected',
     players: (players: number, seats: number) =>
       `${players} of ${seats} players`,

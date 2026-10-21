@@ -58,9 +58,17 @@
    hugs its words and is scaled down (Fit) rather than wrap, and the meta
    beside it ends in an ellipsis. */
 .answer > .mainBox {
+  display: flex;
   flex: 0 1 auto;
+  align-items: center;
   width: auto;
   min-width: 0;
+  /* Scaled down, a long main line is shorter, not the bar. */
+  height: var(--zumpo-text-title-line);
+}
+
+.answer > .mainBox:has(.status) {
+  height: var(--zumpo-text-heading-line);
 }
 
 .main {
@@ -122,9 +130,14 @@
     display: contents;
   }
 
+  /* Scaled down, a long main line is shorter, not the bar: the line keeps
+     its height and the words sit in the middle of it. */
   .answer > .mainBox {
+    display: flex;
     grid-area: main;
+    align-items: center;
     width: 100%;
+    height: var(--zumpo-text-heading-line);
   }
 
   .meta {

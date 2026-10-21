@@ -14,9 +14,13 @@
   color: var(--zumpo-ink);
 }
 
+/* The edge is drawn twice as thick inside the hairline rather than as a
+   wider border, so the seat keeps its size from turn to turn and nothing
+   beside or under it moves. */
 .turn,
 .won {
-  border: var(--zumpo-space-2) solid var(--zumpo-ink);
+  border-color: var(--zumpo-ink);
+  box-shadow: inset 0 0 0 1px var(--zumpo-ink);
 }
 
 .turn {

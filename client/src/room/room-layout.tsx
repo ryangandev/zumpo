@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { MAX_SPECTATORS } from '../../../shared/room';
 import {
   ChatInput,
@@ -264,16 +264,17 @@ export function RoomLayout({
  * sight, says so over the board.
  */
 function useBecameHost(host: boolean): boolean {
+  const [was, setWas] = useState(host);
   const [shown, setShown] = useState(false);
-  const was = useRef(host);
+  // Worked out as the crown moves, not after: the notice shows with it.
+  if (host !== was) {
+    setWas(host);
+    setShown(host);
+  }
   useEffect(() => {
-    const became = host && !was.current;
-    was.current = host;
-    if (!host) setShown(false);
-    if (!became) return;
-    setShown(true);
+    if (!shown) return;
     const timer = setTimeout(() => setShown(false), HOST_NOTICE_MS);
     return () => clearTimeout(timer);
-  }, [host]);
+  }, [shown]);
   return shown;
 }

@@ -91,6 +91,7 @@ export function HandRow({
   cards,
   message,
   action,
+  held = false,
   status,
 }: {
   label: string;
@@ -99,6 +100,11 @@ export function HandRow({
   message?: string;
   /** The one button, when there is something to do. */
   action?: ReactNode;
+  /**
+   * The button keeps its room out of sight while it cannot be pressed, so
+   * it is where it was when it can again, and nothing around it moves.
+   */
+  held?: boolean;
   status?: string;
 }) {
   return (
@@ -118,11 +124,23 @@ export function HandRow({
       </section>
       {(action || status) && (
         <div className={styles.action}>
-          {action}
-          {status && (
-            <p className={action ? styles.smallStatus : styles.status}>
-              {status}
+          {held ? (
+            <div className={styles.held} aria-hidden>
+              {action}
+            </div>
+          ) : (
+            action
+          )}
+          {action ? (
+            // Under a button the line keeps its room when it says nothing.
+            <p
+              className={cx(styles.smallStatus, !status && styles.held)}
+              aria-hidden={!status || undefined}
+            >
+              {status ?? '\u00a0'}
             </p>
+          ) : (
+            <p className={styles.status}>{status}</p>
           )}
         </div>
       )}

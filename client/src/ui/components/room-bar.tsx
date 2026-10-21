@@ -63,7 +63,13 @@ export function RoomBar({
         <h1 className={styles.game}>{game}</h1>
         {phone ? (
           <p className={styles.context}>
-            {room ? m.ui.room.context(room, phase.label) : phase.label}
+            {room && (
+              <>
+                <span>{room}</span>
+                {m.ui.room.contextSeparator}
+              </>
+            )}
+            <span>{phase.label}</span>
           </p>
         ) : (
           <div className={styles.tags}>

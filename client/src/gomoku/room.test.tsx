@@ -49,6 +49,7 @@ const played = (
 };
 
 const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
+const placeStone = () => screen.getByRole('button', { name: 'Place stone' });
 const board = () => screen.getByRole('grid', { name: 'Gomoku board' });
 const point = (name: string) =>
   within(board()).getByRole('gridcell', { name: new RegExp(`^${name},`) });
@@ -351,8 +352,6 @@ describe('a Gomoku room', () => {
 
     // Place stone is always there, live only once a faint stone is down,
     // and the turn bar says the second tap places it.
-    const placeStone = () =>
-      screen.getByRole('button', { name: 'Place stone' });
     expect(placeStone()).toBeDisabled();
     expect(turn().queryByText('Tap again to place')).toBeNull();
     await tap('F8');

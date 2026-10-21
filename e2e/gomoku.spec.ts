@@ -124,20 +124,20 @@ test('a phone puts a faint stone down first, and places it on a second tap', asy
   await maya.getByRole('button', { name: 'Start game' }).click();
   const black = await blackOf([maya, leo]);
 
+  // Place stone is under the board from the start, and acts once a faint
+  // stone is down.
+  const placeStone = black.getByRole('button', { name: 'Place stone' });
+  await expect(placeStone).toBeDisabled();
   await pointOf(black, 'H8').tap();
   await expect(pointOf(black, 'H8')).toHaveAccessibleName('H8, empty');
-  await expect(
-    black.getByRole('button', { name: 'Place stone' }),
-  ).toBeVisible();
+  await expect(placeStone).toBeEnabled();
   // Another point moves the faint stone; Place stone places it.
   await pointOf(black, 'J9').tap();
-  await black.getByRole('button', { name: 'Place stone' }).click();
+  await placeStone.click();
   await expect(pointOf(black, 'J9')).toHaveAccessibleName(
     'J9, black stone, last placed',
   );
-  await expect(black.getByRole('button', { name: 'Place stone' })).toHaveCount(
-    0,
-  );
+  await expect(placeStone).toBeDisabled();
 
   // A second tap on the faint stone places it too.
   const white = black === maya ? leo : maya;

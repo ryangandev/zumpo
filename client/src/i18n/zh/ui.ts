@@ -23,7 +23,7 @@ export const ui: typeof en = {
   room: {
     leave: '离开房间',
     howToPlay: '玩法',
-    context: (room, phase) => `${room} · ${phase}`,
+    contextSeparator: ' · ',
     password: '需要密码',
     players: (players, seats) => `${players} / ${seats} 位玩家`,
     full: '已满',

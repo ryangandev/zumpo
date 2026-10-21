@@ -73,7 +73,7 @@ export function PlayBoard({
   // A board that scrolls keeps the row being played in view.
   useLayoutEffect(() => {
     const outer = box.current;
-    if (!outer?.hasAttribute('data-scroll')) return;
+    if (current === undefined || !outer?.hasAttribute('data-scroll')) return;
     const target = outer.querySelector<HTMLElement>('[data-play-current]');
     if (!target) return;
     const room = outer.getBoundingClientRect();
