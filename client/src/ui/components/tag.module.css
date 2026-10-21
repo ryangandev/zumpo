@@ -4,9 +4,9 @@
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 6px;
+  gap: var(--zumpo-space-6);
   max-width: 100%;
-  padding: 6px 12px;
+  padding: var(--zumpo-space-6) var(--zumpo-space-12);
   border-radius: var(--zumpo-radius-999);
   background: var(--zumpo-sand);
   color: var(--zumpo-ink);
@@ -44,5 +44,5 @@
 }
 
 .compact {
-  padding: 1px 8px;
+  padding: var(--zumpo-space-1) var(--zumpo-space-8);
 }

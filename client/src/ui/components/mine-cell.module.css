@@ -20,7 +20,7 @@
 .compact {
   --zumpo-cell-size: 26px;
 
-  border-radius: 6px;
+  border-radius: var(--zumpo-radius-6);
   font: var(--zumpo-text-label);
   letter-spacing: var(--zumpo-text-label-tracking);
 }

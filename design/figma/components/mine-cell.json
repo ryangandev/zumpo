@@ -652,7 +652,7 @@
         "fills": [
           "$Zumpo · UI:color/blue"
         ],
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "effects": [
           {
             "type": "inner_shadow",
@@ -696,7 +696,7 @@
         ],
         "strokeWeight": 2,
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -741,7 +741,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -772,7 +772,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -819,7 +819,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -866,7 +866,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -913,7 +913,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -960,7 +960,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1007,7 +1007,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1054,7 +1054,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1101,7 +1101,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1148,7 +1148,7 @@
           "$Zumpo · UI:color/danger"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1476,7 +1476,7 @@
                 "y": 1,
                 "w": 16,
                 "h": 16,
-                "svg": "svg/cross-8c173a.svg"
+                "svg": "svg/cross-6eab7f.svg"
               }
             ]
           }
@@ -1501,7 +1501,7 @@
         "fills": [
           "$Zumpo · UI:color/blue"
         ],
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "effects": [
           {
             "type": "inner_shadow",
@@ -1571,7 +1571,7 @@
         "fills": [
           "$Zumpo · UI:color/danger"
         ],
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1675,7 +1675,7 @@
           "$Zumpo · UI:color/line"
         ],
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "layout": {
           "mode": "row",
           "justify": "center",
@@ -1729,7 +1729,7 @@
                 "y": 1,
                 "w": 10,
                 "h": 10,
-                "svg": "svg/cross-cf3c6b.svg"
+                "svg": "svg/cross-079075.svg"
               }
             ]
           }

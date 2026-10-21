@@ -52,7 +52,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--zumpo-space-2);
 }
 
 /* Options with a second line sit flush, as on the Board menu. */
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   gap: var(--zumpo-space-12);
-  padding: 10px 12px;
+  padding: var(--zumpo-space-10) var(--zumpo-space-12);
   border-radius: var(--zumpo-radius-8);
   color: var(--zumpo-ink);
   cursor: pointer;
@@ -103,7 +103,7 @@
 }
 
 .choice.withDetail {
-  padding-block: 10px;
+  padding-block: var(--zumpo-space-10);
 }
 
 @media (hover: hover) {
@@ -121,7 +121,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--zumpo-space-2);
   min-width: 0;
 }
 

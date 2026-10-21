@@ -17,8 +17,8 @@ design in Figma, never these files.
 - svg/: icons and illustrations, deduplicated by content; svg/index.json lists
   where each is used.
 - previews/: PNG renders (flows at 1x, components at 2x), when enabled.
-- audit.json: hardcoded colours, text without a style, raster fills, components
-  from outside Shared pieces, hidden layers.
+- audit.json: hardcoded colours, spacing and radii, text without a style,
+  raster fills, components from outside Shared pieces, hidden layers.
 
 ## Conventions
 

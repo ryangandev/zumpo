@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -205,7 +205,7 @@
                               "hSize": "hug",
                               "layout": {
                                 "mode": "row",
-                                "gap": 4,
+                                "gap": "$Zumpo · UI:space/4",
                                 "strokesIncluded": true
                               }
                             },
@@ -418,7 +418,7 @@
                             "hSize": "hug",
                             "layout": {
                               "mode": "row",
-                              "gap": 4,
+                              "gap": "$Zumpo · UI:space/4",
                               "strokesIncluded": true
                             },
                             "children": [
@@ -551,7 +551,7 @@
                             "hSize": "hug",
                             "layout": {
                               "mode": "row",
-                              "gap": 4,
+                              "gap": "$Zumpo · UI:space/4",
                               "strokesIncluded": true
                             },
                             "children": [
@@ -633,7 +633,7 @@
                             "hSize": "hug",
                             "layout": {
                               "mode": "row",
-                              "gap": 4,
+                              "gap": "$Zumpo · UI:space/4",
                               "strokesIncluded": true
                             },
                             "children": [
@@ -715,7 +715,7 @@
                             "hSize": "hug",
                             "layout": {
                               "mode": "row",
-                              "gap": 4,
+                              "gap": "$Zumpo · UI:space/4",
                               "strokesIncluded": true
                             },
                             "children": [
@@ -787,7 +787,7 @@
                             "hSize": "hug",
                             "layout": {
                               "mode": "row",
-                              "gap": 4,
+                              "gap": "$Zumpo · UI:space/4",
                               "strokesIncluded": true
                             },
                             "children": [
@@ -880,7 +880,7 @@
                           "pad": [
                             0,
                             0,
-                            8,
+                            "$Zumpo · UI:space/8",
                             0
                           ],
                           "strokesIncluded": true

@@ -43,7 +43,7 @@
   top: -6px;
   right: 1px;
   display: flex;
-  padding: 1px 4px;
+  padding: var(--zumpo-space-1) var(--zumpo-space-4);
   border-radius: var(--zumpo-radius-999);
   background: currentColor;
 }

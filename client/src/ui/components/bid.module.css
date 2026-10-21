@@ -3,7 +3,8 @@
   flex: none;
   align-items: center;
   gap: var(--zumpo-space-8);
-  padding: 6px 6px 6px var(--zumpo-space-16);
+  padding: var(--zumpo-space-6) var(--zumpo-space-6) var(--zumpo-space-6)
+    var(--zumpo-space-16);
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-999);
   background: var(--zumpo-cream);

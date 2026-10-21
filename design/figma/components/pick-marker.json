@@ -67,8 +67,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },
@@ -134,8 +134,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },
@@ -205,8 +205,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },
@@ -253,7 +253,7 @@
         ],
         "strokeWeight": 2,
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "children": [
           {
             "type": "FRAME",
@@ -272,8 +272,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },
@@ -320,7 +320,7 @@
         ],
         "strokeWeight": 2,
         "strokeAlign": "inside",
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "children": [
           {
             "type": "FRAME",
@@ -339,8 +339,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },
@@ -391,7 +391,7 @@
           4,
           3
         ],
-        "radius": 6,
+        "radius": "$Zumpo · UI:radius/6",
         "children": [
           {
             "type": "FRAME",
@@ -410,8 +410,8 @@
             "layout": {
               "mode": "row",
               "pad": [
-                1,
-                4
+                "$Zumpo · UI:space/1",
+                "$Zumpo · UI:space/4"
               ],
               "strokesIncluded": true
             },

@@ -30,7 +30,7 @@
 .name {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--zumpo-space-6);
   min-width: 0;
   margin: 0;
   font: var(--zumpo-text-label);
@@ -60,7 +60,7 @@
   display: flex;
   grid-area: players;
   align-items: center;
-  gap: 6px;
+  gap: var(--zumpo-space-6);
   font: var(--zumpo-text-label);
   letter-spacing: var(--zumpo-text-label-tracking);
   white-space: nowrap;

@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -137,7 +137,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 40,
+                  "pad": "$Zumpo · UI:space/40",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -533,7 +533,7 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": 24,
+                  "pad": "$Zumpo · UI:space/24",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -550,7 +550,7 @@
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
                       "wrap": true,
-                      "crossGap": 16,
+                      "crossGap": "$Zumpo · UI:space/16",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -741,6 +741,11 @@
                           "Name": "Sam"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 144,
+                            "width": 220
+                          },
                           {
                             "path": "Player / Avatar",
                             "componentProperties": {

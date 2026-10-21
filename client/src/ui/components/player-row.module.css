@@ -3,7 +3,7 @@
   align-items: center;
   gap: var(--zumpo-space-12);
   min-height: 52px;
-  padding: 6px 8px;
+  padding: var(--zumpo-space-6) var(--zumpo-space-8);
   border-radius: var(--zumpo-radius-12);
   color: var(--zumpo-ink);
 }
@@ -16,7 +16,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--zumpo-space-2);
   min-width: 0;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .nameLine {
-  gap: 6px;
+  gap: var(--zumpo-space-6);
 }
 
 .statusLine {

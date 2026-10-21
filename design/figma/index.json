@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-08T18:56:32.897Z",
+  "exportedAt": "2026-10-21T04:08:55.368Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -17,7 +17,7 @@
     "componentFamilies": 54,
     "outsideComponents": 0,
     "svgs": 86,
-    "seconds": 31,
+    "seconds": 30,
     "nodes": 10738,
     "instances": 5847,
     "grids": 69,
@@ -34,7 +34,7 @@
       },
       {
         "name": "Zumpo · UI",
-        "variables": 52,
+        "variables": 63,
         "modes": [
           "Light"
         ]

@@ -43,12 +43,12 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 8,
+          "gap": "$Zumpo · UI:space/8",
           "pad": [
-            6,
-            8,
-            6,
-            14
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8",
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/14"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -86,7 +86,7 @@
             "radius": "$Zumpo · UI:radius/8",
             "layout": {
               "mode": "row",
-              "pad": 6,
+              "pad": "$Zumpo · UI:space/6",
               "justify": "center",
               "align": "center",
               "strokesIncluded": true
@@ -132,12 +132,12 @@
         "radius": "$Zumpo · UI:radius/12",
         "layout": {
           "mode": "row",
-          "gap": 8,
+          "gap": "$Zumpo · UI:space/8",
           "pad": [
-            6,
-            8,
-            6,
-            14
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/8",
+            "$Zumpo · UI:space/6",
+            "$Zumpo · UI:space/14"
           ],
           "align": "center",
           "strokesIncluded": true

@@ -4,7 +4,8 @@
   align-items: center;
   gap: var(--zumpo-space-8);
   height: 44px;
-  padding: 10px 18px 10px 14px;
+  padding: var(--zumpo-space-10) var(--zumpo-space-18) var(--zumpo-space-10)
+    var(--zumpo-space-14);
   border-radius: var(--zumpo-radius-999);
   background: var(--zumpo-lime);
   color: var(--zumpo-ink);

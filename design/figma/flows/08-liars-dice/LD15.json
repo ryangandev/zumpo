@@ -26,7 +26,7 @@
       "pad": [
         "$Zumpo · UI:space/20",
         "$Zumpo · UI:space/20",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -283,7 +283,7 @@
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/12",
                   "wrap": true,
-                  "crossGap": 12,
+                  "crossGap": "$Zumpo · UI:space/12",
                   "align": "center",
                   "strokesIncluded": true
                 },

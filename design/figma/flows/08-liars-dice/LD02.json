@@ -24,9 +24,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -207,7 +207,7 @@
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
                       "wrap": true,
-                      "crossGap": 16,
+                      "crossGap": "$Zumpo · UI:space/16",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -348,6 +348,11 @@
                           "Name": "Maya"
                         },
                         "overrides": [
+                          {
+                            "path": ".",
+                            "height": 144,
+                            "width": 220
+                          },
                           {
                             "path": "Player / Avatar",
                             "componentProperties": {

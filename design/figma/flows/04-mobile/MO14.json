@@ -26,7 +26,7 @@
       "pad": [
         "$Zumpo · UI:space/20",
         "$Zumpo · UI:space/20",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -160,7 +160,7 @@
                   "hSize": "hug",
                   "layout": {
                     "mode": "row",
-                    "gap": 4,
+                    "gap": "$Zumpo · UI:space/4",
                     "strokesIncluded": true
                   }
                 },
@@ -1683,7 +1683,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 4,
+                  "gap": "$Zumpo · UI:space/4",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -2089,7 +2089,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 4,
+                  "gap": "$Zumpo · UI:space/4",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -2495,7 +2495,7 @@
                 "hSize": "hug",
                 "layout": {
                   "mode": "row",
-                  "gap": 4,
+                  "gap": "$Zumpo · UI:space/4",
                   "strokesIncluded": true
                 },
                 "children": [

@@ -25,9 +25,9 @@
       "mode": "column",
       "gap": "$Zumpo · UI:space/24",
       "pad": [
-        24,
+        "$Zumpo · UI:space/24",
         "$Zumpo · UI:space/64",
-        32,
+        "$Zumpo · UI:space/32",
         "$Zumpo · UI:space/64"
       ],
       "strokesIncluded": true
@@ -76,7 +76,7 @@
         "layout": {
           "mode": "row",
           "pad": [
-            56,
+            "$Zumpo · UI:space/56",
             0
           ],
           "justify": "center",

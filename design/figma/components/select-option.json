@@ -48,10 +48,10 @@
         "radius": "$Zumpo · UI:radius/8",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            10,
-            12
+            "$Zumpo · UI:space/10",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -67,7 +67,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [
@@ -156,10 +156,10 @@
         "radius": "$Zumpo · UI:radius/8",
         "layout": {
           "mode": "row",
-          "gap": 12,
+          "gap": "$Zumpo · UI:space/12",
           "pad": [
-            10,
-            12
+            "$Zumpo · UI:space/10",
+            "$Zumpo · UI:space/12"
           ],
           "align": "center",
           "strokesIncluded": true
@@ -175,7 +175,7 @@
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": 2,
+              "gap": "$Zumpo · UI:space/2",
               "strokesIncluded": true
             },
             "children": [

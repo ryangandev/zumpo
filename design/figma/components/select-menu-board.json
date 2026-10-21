@@ -36,7 +36,7 @@
     "effectStyle": "Zumpo/Menu lift",
     "layout": {
       "mode": "column",
-      "pad": 8,
+      "pad": "$Zumpo · UI:space/8",
       "strokesIncluded": true
     },
     "children": [
@@ -62,8 +62,8 @@
           {
             "path": ".",
             "height": 56,
-            "paddingBottom": 8,
-            "paddingTop": 8,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]
@@ -89,8 +89,8 @@
           {
             "path": ".",
             "height": 56,
-            "paddingBottom": 8,
-            "paddingTop": 8,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]
@@ -117,8 +117,8 @@
           {
             "path": ".",
             "height": 56,
-            "paddingBottom": 8,
-            "paddingTop": 8,
+            "paddingBottom": "$Zumpo · UI:space/8",
+            "paddingTop": "$Zumpo · UI:space/8",
             "width": 478
           }
         ]

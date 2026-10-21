@@ -378,8 +378,8 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": 12,
-                "paddingRight": 12,
+                "paddingLeft": "$Zumpo · UI:space/12",
+                "paddingRight": "$Zumpo · UI:space/12",
                 "width": 46
               },
               {
@@ -409,8 +409,8 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": 12,
-                "paddingRight": 12,
+                "paddingLeft": "$Zumpo · UI:space/12",
+                "paddingRight": "$Zumpo · UI:space/12",
                 "width": 46
               },
               {

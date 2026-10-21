@@ -216,6 +216,19 @@ function fillOf(token) {
   return `var(--zumpo-${name.replaceAll('/', '-')})`;
 }
 
+// A size in the export: a number, or a bound float variable written as its
+// reference, which the path builders need as the number it stands for.
+function sizeOf(value, ui) {
+  if (typeof value === 'number') return value;
+  const variable = ui.variables.find(
+    (v) => typeof value === 'string' && value === `$${UI_COLLECTION}:${v.name}`,
+  );
+  if (variable?.type !== 'float') {
+    throw new Error(`${JSON.stringify(value)} is not a size`);
+  }
+  return variable.resolved ?? variable.value;
+}
+
 // The turtle sample drawing, the Draw & Guess artwork on the home and games
 // pages, one entry per Stage variant. Each part is a stroked vector or a
 // filled ellipse, placed as in the component.
@@ -336,7 +349,7 @@ function pairsSymbolsTs() {
     }
     if (shape.type === 'RECTANGLE') {
       return placed(
-        roundedRectPath(shape.w, shape.h, shape.radius ?? 0),
+        roundedRectPath(shape.w, shape.h, sizeOf(shape.radius ?? 0, ui)),
         fillOf(shape.fills[0]),
       );
     }
