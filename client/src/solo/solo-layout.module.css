@@ -5,9 +5,12 @@
   gap: var(--zumpo-space-24);
 }
 
-/* Nothing beside the game: a phone while it is played. */
+/* Nothing beside the game: a phone while it is played. Stretched, since on
+   a phone in play it is a flex column (playColumn), where `start` would
+   shrink the stage to its content's width. */
 .alone {
   grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
 }
 
 .stage {
