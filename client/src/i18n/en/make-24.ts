@@ -75,7 +75,7 @@ export const make24 = {
     skipped: 'Skipped',
     skippedPenalty: (skipped: number, time: string) => `${skipped}, +${time}`,
     fastestHand: 'Fastest hand',
-    none: 'Not yet',
+    none: 'None',
     playAgain: 'Play again',
     bestOnDevice: 'Best on this device',
     challengeDescription: (time: string) =>

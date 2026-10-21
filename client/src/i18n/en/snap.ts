@@ -50,7 +50,7 @@ export const snap = {
   waitingRoom: 'Waiting room',
   chat: 'Say something…',
   you: 'You',
-  resultDetail: (count: number) => `${plural(count, 'card')} taken.`,
+  resultDetail: (count: number) => `${plural(count, 'card')} taken in all.`,
   alone: 'Better with company.',
   setup: (players: number, cards: number) =>
     `${plural(players, 'player')}, ${plural(cards, 'card')} to win. Everybody races to spot the symbol their card shares with the middle card.`,

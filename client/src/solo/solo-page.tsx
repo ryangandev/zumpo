@@ -21,6 +21,23 @@ const DailyWordSolo = lazy(() =>
 
 /** /games/:game/solo: a game on your own, for the games that have one. */
 export default function SoloPage({ gameType }: { gameType: GameType }) {
+  if (!HAS_SOLO.has(gameType)) return <NotFoundPage />;
+  return <SoloGame gameType={gameType} />;
+}
+
+const HAS_SOLO: ReadonlySet<GameType> = new Set([
+  'minesweeper',
+  'make-24',
+  'pairs',
+  'trios',
+  'snap',
+  'liars-dice',
+  'gomoku',
+  'daily-word',
+  'code-breaker',
+]);
+
+function SoloGame({ gameType }: { gameType: GameType }) {
   usePageTitle(useMessages().games.of[gameType].name);
   switch (gameType) {
     case 'minesweeper':

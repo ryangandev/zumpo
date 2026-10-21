@@ -48,7 +48,7 @@ export const snap: typeof en = {
   waitingRoom: '等待室',
   chat: '聊点什么…',
   you: '你',
-  resultDetail: (count) => `共拿下 ${count} 张牌。`,
+  resultDetail: (count) => `共抢到 ${count} 张牌。`,
   alone: '叫上好友更好玩。',
   setup: (players, cards) =>
     `${players} 人，${cards} 张牌可抢。大家比谁先找到自己的牌和中间那张牌共有的图案。`,

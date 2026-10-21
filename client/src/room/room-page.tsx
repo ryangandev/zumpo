@@ -78,9 +78,8 @@ export default function RoomPage({
   const { stage } = connection;
   // The room's own name once seated, the game's until then.
   usePageTitle(
-    stage.kind === 'seated'
-      ? roomNameOf(stage.snapshot.state, m)
-      : m.games.of[gameType].name,
+    ...(stage.kind === 'seated' ? [roomNameOf(stage.snapshot.state, m)] : []),
+    m.games.of[gameType].name,
   );
 
   switch (stage.kind) {

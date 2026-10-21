@@ -504,7 +504,7 @@ test('the controls a phone taps often take a thumb', async ({ player }) => {
   }
   const leo = await player('Leo');
   await joinRoom(leo, await createRoom(maya, 'pairs', { seats: 2 }));
-  for (const name of ['Board', /^Players/, /^Chat/]) {
+  for (const name of ['Game', /^Players/, /^Chat/]) {
     const tab = maya.getByRole('tab', { name });
     expect(await takesAThumb(tab), String(name)).toBe(true);
   }

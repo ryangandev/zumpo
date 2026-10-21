@@ -2,18 +2,32 @@ import { useEffect } from 'react';
 
 const SITE = 'Zumpo';
 
-/** The browser tab's title for a page: "Daily Word · Zumpo", or "Zumpo" alone. */
-export function pageTitle(page?: string): string {
-  return page ? `${page} · ${SITE}` : SITE;
+/**
+ * The browser tab's title has one owner: the page says its parts, the turn
+ * signal says its prefix, and whichever changes the title is rebuilt from both.
+ */
+let parts: readonly string[] = [];
+let signal: string | null = null;
+
+function render(): void {
+  document.title = [signal, ...parts, SITE].filter(Boolean).join(' · ');
 }
 
 /**
- * Names the browser tab after the page, so a row of tabs tells the games
- * apart. Each page says its own name; the home page says none. The one place
- * `document.title` is set for a page (a background tab's turn signal aside).
+ * Names the browser tab after the page, most specific first ("Friday table ·
+ * Liar's Dice · Zumpo"), so a row of tabs tells the games apart. The home page
+ * says no parts and is plain "Zumpo".
  */
-export function usePageTitle(page?: string): void {
+export function usePageTitle(...page: string[]): void {
+  const key = page.join('\u0000');
   useEffect(() => {
-    document.title = pageTitle(page);
-  }, [page]);
+    parts = key ? key.split('\u0000') : [];
+    render();
+  }, [key]);
+}
+
+/** Puts a prefix on the title ("(!) Your turn"), or takes it off with null. */
+export function setTitleSignal(prefix: string | null): void {
+  signal = prefix;
+  render();
 }

@@ -1,5 +1,6 @@
 import { useEffect, useSyncExternalStore } from 'react';
 import { useMessages } from '../i18n';
+import { setTitleSignal } from '../shell/use-page-title';
 
 const subscribe = (onChange: () => void) => {
   document.addEventListener('visibilitychange', onChange);
@@ -10,9 +11,9 @@ const neverHidden = () => false;
 
 /**
  * While the page is in a background tab and it is this player's go, the tab's
- * title says so ("(!) Your turn · Zumpo"), because a turn clock runs out
- * whether anybody is looking or not. The title goes back as soon as the tab
- * is looked at or the turn passes. Only the title: it changes no timing.
+ * title says so ("(!) Your turn · Friday table · Zumpo"), because a turn
+ * clock runs out whether anybody is looking or not. The prefix goes as soon
+ * as the tab is looked at or the turn passes; the page owns the rest. Only the title: it changes no timing.
  */
 export function useTurnTitle(yourTurn: boolean): void {
   const m = useMessages();
@@ -21,10 +22,7 @@ export function useTurnTitle(yourTurn: boolean): void {
 
   useEffect(() => {
     if (!signal) return;
-    const before = document.title;
-    document.title = m.room.turnTitle;
-    return () => {
-      document.title = before;
-    };
+    setTitleSignal(m.room.turnTitle);
+    return () => setTitleSignal(null);
   }, [signal, m]);
 }

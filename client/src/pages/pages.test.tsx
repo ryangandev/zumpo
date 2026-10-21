@@ -145,6 +145,10 @@ describe('the browser tab title', () => {
 
     await act(() => router.navigate('/nowhere'));
     expect(document.title).toBe('Lost? · Zumpo');
+
+    // A game with no solo mode is a 404, and says so.
+    await act(() => router.navigate('/games/draw-and-guess/solo'));
+    expect(document.title).toBe('Lost? · Zumpo');
   });
 });
 
