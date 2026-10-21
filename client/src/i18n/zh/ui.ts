@@ -141,7 +141,6 @@ export const ui: typeof en = {
       selected: '，已选中',
       found: '，已找到',
       wrong: '，不成一组',
-      hinted: '',
     },
     badge: (name, badge) => `${name}，${badge}`,
   },

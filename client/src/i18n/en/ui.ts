@@ -146,8 +146,6 @@ export const ui = {
       selected: ', picked',
       found: ', found',
       wrong: ', not a trio',
-      // The Hint badge names a hinted card.
-      hinted: '',
     },
     badge: (name: string, badge: string) => `${name}, ${badge}`,
   },
