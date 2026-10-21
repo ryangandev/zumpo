@@ -144,11 +144,85 @@
   letter-spacing: var(--zumpo-text-small-tracking);
 }
 
-/* On a phone the action goes under the hand, across the panel, and the
-   hand's parts are spaced alike. */
+/* A card already played keeps its room on a phone only (HandRow). */
+.gone {
+  display: none;
+}
+
+/* The cards or the message; a phone gives them one room in every phase. */
+.slot {
+  display: contents;
+}
+
+/* On a phone the table is one screen (HU10, HU11): the head is two fixed
+   lines, the pile takes the height left, and the hand, its button and its
+   line keep one size in every phase, so nothing moves while a level is
+   played. The action goes under the hand, across the panel. */
 @media (max-width: 640px) {
   .panel {
+    gap: var(--zumpo-space-12);
     padding: var(--zumpo-space-16);
+  }
+
+  .titleGroup {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  /* In play the cards under the top one fold into the room beside it, as
+     high as the top card, and scroll; the newest stay in view (Pile). */
+  .live {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .live .trail {
+    flex: 1 1 0;
+    align-content: flex-start;
+    justify-content: flex-start;
+    min-width: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    contain: size;
+  }
+
+  .live .empty {
+    flex: 1 1 auto;
+    width: auto;
+  }
+
+  /* The pile is scaled to the room it has; its words keep their size. */
+  .live .emptyText {
+    zoom: calc(1 / var(--play-scale, 1));
+  }
+
+  .hand {
+    gap: var(--zumpo-space-8);
+  }
+
+  /* As high as a Small Hush card, the hand's size on a phone. */
+  .slot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80px;
+  }
+
+  .cards {
+    flex-wrap: nowrap;
+    gap: var(--zumpo-space-8);
+  }
+
+  .gone {
+    display: flex;
+    visibility: hidden;
+  }
+
+  .message {
+    font: var(--zumpo-text-small);
+    letter-spacing: var(--zumpo-text-small-tracking);
   }
 
   .handRow {
@@ -157,7 +231,7 @@
 
   .action {
     align-items: stretch;
-    gap: var(--zumpo-space-12);
+    gap: var(--zumpo-space-8);
     width: 100%;
     margin-left: 0;
   }

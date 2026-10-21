@@ -364,10 +364,13 @@ function Hand({ room }: { room: Room }) {
         />
       );
     case 'cleared':
+      // Ready comes back with the next level, where it was.
       return (
         <HandRow
           label={m.hush.nextUp}
           message={m.hush.nextLevel(state.level + 1)}
+          action={<Button disabled>{m.hush.readyButton}</Button>}
+          held
         />
       );
     default:
@@ -375,7 +378,15 @@ function Hand({ room }: { room: Room }) {
   }
 
   if (hand.length === 0) {
-    return <HandRow label={m.hush.hand} message={m.hush.handEmpty} />;
+    // Play keeps its room out of sight, so the table does not move.
+    return (
+      <HandRow
+        label={m.hush.hand}
+        message={m.hush.handEmpty}
+        action={<Button disabled>{m.hush.readyButton}</Button>}
+        held
+      />
+    );
   }
   // Play is held, not taken away, while it cannot be pressed: the cards
   // above it and the button stay where the thumb found them.
@@ -393,6 +404,7 @@ function Hand({ room }: { room: Room }) {
       <HandRow
         label={m.hush.hand}
         cards={hand}
+        dealt={state.level}
         action={play}
         status={m.hush.onlyLowest}
       />
@@ -405,6 +417,7 @@ function Hand({ room }: { room: Room }) {
     <HandRow
       label={m.hush.hand}
       cards={hand}
+      dealt={state.level}
       action={play}
       held
       status={
