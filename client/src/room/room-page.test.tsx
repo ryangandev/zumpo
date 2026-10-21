@@ -36,6 +36,15 @@ function server({ password = '' } = {}) {
 
 const players = () => within(screen.getByRole('region', { name: /^Players/ }));
 
+/** Ryan, Maya connected or not, and Sam at the table or not. */
+function seats(maya: boolean, sam: boolean) {
+  return {
+    p1: { username: 'Ryan', points: 0, isConnected: true },
+    p2: { username: 'Maya', points: 0, isConnected: maya },
+    ...(sam && { p3: { username: 'Sam', points: 0, isConnected: true } }),
+  };
+}
+
 describe('a room page', () => {
   it('renders tied results and the viewer’s place in Chinese', async () => {
     const fake = server();
@@ -219,11 +228,6 @@ describe('a room page', () => {
     onPhone();
     const fake = server();
     await renderApp(ROOM, { fake });
-    const seats = (maya: boolean, sam: boolean) => ({
-      p1: { username: 'Ryan', points: 0, isConnected: true },
-      p2: { username: 'Maya', points: 0, isConnected: maya },
-      ...(sam && { p3: { username: 'Sam', points: 0, isConnected: true } }),
-    });
     const emit = (state: Parameters<typeof minesweeperState>[0]) =>
       act(() =>
         fake.serverEmits(
