@@ -5,7 +5,7 @@ const CONTROLS = [
   'button',
   'a[href]',
   'select',
-  'input:not([type="hidden"]):not([type="text"])',
+  'input',
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
@@ -73,7 +73,24 @@ function firstControl(scope: HTMLElement | null): HTMLElement | null {
   return null;
 }
 
+/**
+ * Inputs a player types into. Base UI's field renders an input with no type
+ * at all, which is a text field too, so the type is read, not the attribute.
+ */
+const TYPED = new Set([
+  'text',
+  'search',
+  'email',
+  'url',
+  'tel',
+  'number',
+  'password',
+]);
+
 function isReachable(element: HTMLElement): boolean {
+  if (element instanceof HTMLInputElement) {
+    if (element.type === 'hidden' || TYPED.has(element.type)) return false;
+  }
   if (element.matches(':disabled')) return false;
   if (element.closest('[hidden], [inert], [aria-hidden="true"]')) return false;
   return typeof element.checkVisibility === 'function'

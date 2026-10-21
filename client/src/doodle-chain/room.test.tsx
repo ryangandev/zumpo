@@ -133,6 +133,15 @@ describe('a Doodle Chain room', () => {
     expect(screen.getByText(/Invite one more\.$/)).toBeInTheDocument();
   });
 
+  it('starts with the focus off the line, so a phone keeps its keyboard down', async () => {
+    const { update } = await renderSeated(doodleChainState());
+
+    update(writing);
+    const field = screen.getByRole('textbox', { name: 'Your first line' });
+    expect(field).not.toHaveFocus();
+    expect(document.activeElement).not.toBe(document.body);
+  });
+
   it('writes the first line, sends it as it is typed, and is done with it', async () => {
     const user = userEvent.setup();
     const { fake, update } = await renderSeated(writing);
