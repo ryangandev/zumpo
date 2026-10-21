@@ -1,6 +1,7 @@
-import type { FormEvent, Ref } from 'react';
+import { useRef, type FormEvent } from 'react';
 import { useMessages } from '../../i18n';
 import { cx } from '../cx';
+import { useFocusFollows } from '../use-focus-follows';
 import { Button } from './button';
 import { Notice } from './notice';
 import { TextField } from './text-field';
@@ -21,7 +22,6 @@ export interface ChainComposerProps {
   onKeepEditing: () => void;
   /** Fills the field with a suggested line; without it, no Suggest. */
   onSuggest?: () => void;
-  inputRef?: Ref<HTMLInputElement>;
   className?: string;
 }
 
@@ -39,20 +39,28 @@ export function ChainComposer({
   onDone,
   onKeepEditing,
   onSuggest,
-  inputRef,
   className,
 }: ChainComposerProps) {
   const m = useMessages();
+  const form = useRef<HTMLFormElement>(null);
+  const field = useRef<HTMLInputElement>(null);
+  const keepEditing = useRef<HTMLButtonElement>(null);
+  // Done takes the field and itself away, and Keep editing gives them back.
+  useFocusFollows(done, form, keepEditing, field);
   // Enter is Done, as a form's submit.
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!done) onDone();
   };
   return (
-    <form className={cx(styles.container, className)} onSubmit={submit}>
+    <form
+      ref={form}
+      className={cx(styles.container, className)}
+      onSubmit={submit}
+    >
       <div className={styles.composer}>
         <TextField
-          ref={inputRef}
+          ref={field}
           label={label}
           helper={helper}
           value={value}
@@ -67,6 +75,7 @@ export function ChainComposer({
               {doneMessage}
             </Notice>
             <Button
+              ref={keepEditing}
               type="button"
               variant="secondary"
               icon="edit"

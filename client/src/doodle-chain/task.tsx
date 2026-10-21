@@ -20,6 +20,7 @@ import {
   DrawingToolbar,
   Notice,
   TurnBar,
+  useFocusFollows,
   type BrushName,
   type BrushSize,
   type TurnBarProps,
@@ -363,6 +364,11 @@ function Drawing({ room }: { room: Room }) {
   const [size, setSize] = useState<BrushSize>(DEFAULT_SIZE);
   const done = state.table[playerId]?.done ?? false;
   const canDraw = !done && !reconnecting;
+  const actions = useRef<HTMLDivElement>(null);
+  const doneButton = useRef<HTMLButtonElement>(null);
+  const keepEditing = useRef<HTMLButtonElement>(null);
+  // The canvas takes no focus, so Keep editing hands it back to Done.
+  useFocusFollows(done, actions, keepEditing, doneButton);
   const brush: Brush | undefined = canDraw
     ? {
         color:
@@ -415,13 +421,14 @@ function Drawing({ room }: { room: Room }) {
         onMove={move}
         onEnd={end}
       />
-      <div className={styles.actions}>
+      <div ref={actions} className={styles.actions}>
         {done ? (
           <>
             <Notice tone="success" className={styles.grow}>
               {doneMessage(room, m)}
             </Notice>
             <Button
+              ref={keepEditing}
               variant="secondary"
               icon="edit"
               onClick={() => socket.emit('dc:done', roomId, false)}
@@ -434,6 +441,7 @@ function Drawing({ room }: { room: Room }) {
             <p className={styles.hint}>{m.doodleChain.asItIs}</p>
             {!reconnecting && (
               <Button
+                ref={doneButton}
                 icon="check"
                 onClick={() => socket.emit('dc:done', roomId, true)}
               >

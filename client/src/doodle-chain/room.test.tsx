@@ -155,8 +155,13 @@ describe('a Doodle Chain room', () => {
       screen.getByText('Done. Waiting for Maya and Leo.'),
     ).toBeInTheDocument();
     expect(scoreboard().getByText('Done')).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Keep editing' }));
+    // Done takes the field and itself away, so Keep editing has the focus.
+    const keepEditing = screen.getByRole('button', { name: 'Keep editing' });
+    expect(keepEditing).toHaveFocus();
+    await user.keyboard('{Enter}');
     expect(fake.sentArgs('dc:done').at(-1)).toEqual(['r1', false]);
+    update(writing);
+    expect(field).toHaveFocus();
   });
 
   it('names nobody next when the next player has left', async () => {
@@ -198,6 +203,23 @@ describe('a Doodle Chain room', () => {
 
     await user.click(screen.getByRole('button', { name: 'Done' }));
     expect(fake.sentArgs('dc:done')).toEqual([['r1', true]]);
+  });
+
+  it('keeps the focus through a drawing being done and edited again', async () => {
+    const user = userEvent.setup();
+    const { fake, update } = await renderSeated(drawing);
+    const finished = {
+      ...drawing,
+      table: { ...drawing.table, p1: { done: true, sitsOut: false } },
+    };
+
+    await user.click(screen.getByRole('button', { name: 'Done' }));
+    update(finished);
+    expect(screen.getByRole('button', { name: 'Keep editing' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(fake.sentArgs('dc:done').at(-1)).toEqual(['r1', false]);
+    update(drawing);
+    expect(screen.getByRole('button', { name: 'Done' })).toHaveFocus();
   });
 
   it('describes a drawing once its strokes have come, as the last step', async () => {

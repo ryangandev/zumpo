@@ -183,3 +183,4 @@ export {
 export { WordChoice, type WordChoiceProps } from './components/word-choice';
 export { Wordmark } from './components/wordmark';
 export { brushes, type BrushName } from './generated/brushes';
+export { useFocusFollows } from './use-focus-follows';
