@@ -255,6 +255,7 @@ function SoloGameView({
         <>
           {finish ? (
             <SoloResult
+              celebrate={finish.isBest && finish.previous !== null}
               title={m.pairs.solo.finishedIn(pairs, turns)}
               body={finishBody(board, turns, finish, m)}
               stats={[

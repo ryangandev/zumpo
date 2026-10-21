@@ -220,6 +220,7 @@ function RunView({
         stage={
           <>
             <SoloResult
+              celebrate={finish.isBest && finish.previous !== null}
               title={m.trios.solo.resultTitle(RUN_TRIOS, time)}
               body={finishBody(finish, m)}
               stats={[

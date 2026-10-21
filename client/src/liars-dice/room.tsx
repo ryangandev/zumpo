@@ -130,6 +130,7 @@ function Turn({ room }: { room: Room }) {
       <TurnBar {...turnBar(room, seconds, m)} />
       <Table
         seats={seatsOf(state, m)}
+        round={state.round}
         youId={playerId}
         dicePerPlayer={state.dicePerPlayer}
         turnId={state.turnPlayerId}

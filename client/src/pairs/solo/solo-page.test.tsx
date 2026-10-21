@@ -143,6 +143,8 @@ describe('Pairs on your own', () => {
     expect(
       screen.getByText('Your first Small board cleared on this device.'),
     ).toBeInTheDocument();
+    // A first clear is not a new best over anything, so it is not celebrated.
+    expect(document.querySelector('canvas')).toBeNull();
     expect(screen.getByText('Board cleared')).toBeInTheDocument();
     expect(screen.getByText('8 pairs in a row')).toBeInTheDocument();
     expect(
@@ -163,6 +165,20 @@ describe('Pairs on your own', () => {
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(turn().getByText('Turn 1')).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
+  });
+
+  it('celebrates a new best', async () => {
+    localStorage.setItem(
+      'zumpo:solo:best:pairs:Small',
+      JSON.stringify({ turns: 12, ms: 60_000 }),
+    );
+    await startChallenge();
+    for (const [a, b] of pairs) {
+      await flipCard(a!);
+      await flipCard(b!);
+    }
+    expect(screen.getByText(/^A new best on this device/)).toBeInTheDocument();
+    expect(document.querySelector('canvas')).not.toBeNull();
   });
 
   it('goes back to the boards from the end, and leaves without asking', async () => {

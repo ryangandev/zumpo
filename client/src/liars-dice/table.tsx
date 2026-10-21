@@ -30,6 +30,8 @@ export interface TableSeat {
 export interface TableProps {
   /** Everybody, in turn order; the viewer among them. */
   seats: readonly TableSeat[];
+  /** The round, whose start rolls everybody's dice; none for a last call kept under results. */
+  round?: number;
   youId: string;
   dicePerPlayer: number;
   /** Whose turn it is, and whose comes next; null outside bidding. */
@@ -134,6 +136,7 @@ function cupProps(
     you: seat.id === props.youId,
     size,
     dice: diceOf(seat, props.dicePerPlayer, props.reveal),
+    roll: props.round,
     ...line,
   };
 }

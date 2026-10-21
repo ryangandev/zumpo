@@ -152,6 +152,7 @@ export { OperatorKey, type OperatorKeyProps } from './components/operator-key';
 export {
   PairsCard,
   type PairsCardProps,
+  type PairsCardSize,
   type PairsCardState,
 } from './components/pairs-card';
 export {

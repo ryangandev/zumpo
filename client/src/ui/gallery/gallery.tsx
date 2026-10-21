@@ -951,8 +951,13 @@ export default function Gallery() {
       </Family>
 
       <Family name="Pairs card" file="pairs-card">
-        {(['regular', 'compact'] as const).map((cardSize) => {
-          const sizeName = cardSize === 'regular' ? 'Regular' : 'Compact';
+        {(
+          [
+            ['regular', 'Regular'],
+            ['compact', 'Compact'],
+            ['large', 'Large'],
+          ] as const
+        ).map(([cardSize, sizeName]) => {
           return (
             <div
               key={cardSize}

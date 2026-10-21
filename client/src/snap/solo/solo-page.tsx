@@ -224,6 +224,7 @@ function RunView({
         phase={{ tone: 'lime', label: m.snap.solo.complete }}
         stage={
           <SoloResult
+            celebrate={finish.isBest && finish.previous !== null}
             title={m.snap.solo.resultTitle(RUN_CARDS, time)}
             body={finishBody(finish, m)}
             stats={[

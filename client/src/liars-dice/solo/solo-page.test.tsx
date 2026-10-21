@@ -121,6 +121,10 @@ describe('Liar’s Dice on your own', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('The last call')).toBeInTheDocument();
     expect(readRecord().games).toBe(1);
+    // Only a win bursts into confetti.
+    expect(document.querySelector('canvas') !== null).toBe(
+      readRecord().wins === 1,
+    );
     await user.click(screen.getByRole('button', { name: 'Play again' }));
     expect(screen.getByText('Round 1')).toBeInTheDocument();
   });

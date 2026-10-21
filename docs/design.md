@@ -23,7 +23,7 @@ They are not copied here, so there is one place to change them.
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
 | 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px                                      |
 | 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone                                             |
-| 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 solo, PR05-PR08 room, PR09-PR10 phone                                       |
+| 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 and PR11 solo, PR05-PR08 room, PR09-PR10 phone                              |
 | 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone                                       |
 | 08 / Liar's Dice / complete flow     | `43:61071`  | LD01-LD06 and LD16 solo, LD07-LD12 room, LD13-LD15 phone                              |
 | 09 / Hush / complete flow            | `43:61072`  | HU01-HU09 room, HU10-HU11 phone                                                       |
@@ -180,6 +180,9 @@ Code differs from Figma on purpose in a few places:
   The invite link's box grows to the whole link: two lines at P12's width, three on a phone, which Figma does not draw.
 - A game that ends while the room is open bursts into confetti in the brand accents and the sun brush's gold, at Ryan's request; Figma draws the results still, and a game found finished on arrival or after a refresh is not celebrated.
   It stays off when the system asks for reduced motion, and a Hush game the team lost is not celebrated.
+  On your own the same confetti marks a new best on this device in Pairs, Trios and Snap, and a Liar's Dice win against the bots; a first finish has no best to beat, so it is not celebrated.
+- Pairs, Snap and Liar's Dice move a little, as the descriptions of `Zumpo/Pairs card`, `Zumpo/Snap card` and `Zumpo/Cup` say and Figma cannot draw: a card turned over flips open, the middle card you win slides into yours, and dice shake as a round starts.
+  Each takes 0.4 s or less, inside the moment a flash already stays up, and none moves when the system asks for reduced motion.
 - Where Daily Word has no line under the board, on a phone and in a room while guessing, as Figma draws them, the "Not in the word list" note is said over the board instead, across the row under the one being fixed; Figma draws it only on your own (DW03).
 - The footer carries a language switch, English and 中文 in the footer's small text, which the Figma file does not draw: the design is English, and the switch is the one control that lets a reader choose otherwise ([languages](architecture.md#languages)).
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.

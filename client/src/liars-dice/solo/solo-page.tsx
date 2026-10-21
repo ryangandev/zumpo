@@ -223,6 +223,7 @@ function SoloTable({
         <>
           {over ? (
             <SoloResult
+              celebrate={youWon(game)}
               title={
                 youWon(game)
                   ? m.liarsDice.solo.wonIn(game.round)
@@ -265,6 +266,7 @@ function SoloTable({
           )}
           <Table
             seats={seatsOf(game, name)}
+            round={game.round}
             youId={YOU}
             dicePerPlayer={game.dicePerPlayer}
             turnId={game.turnId}
