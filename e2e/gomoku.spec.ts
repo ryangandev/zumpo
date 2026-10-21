@@ -90,7 +90,7 @@ test('two players make five in a row while a third watches, then swap colours', 
   await expect(leo.getByText(`${blackName} made five in a row.`)).toBeVisible();
 
   // The colours swap for the same pair, and either may resign.
-  await maya.getByRole('button', { name: 'Start game 2' }).click();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   await expect(turnOf(white).getByText('Place a black stone')).toBeVisible();
   await expect(white.getByText('Game 2')).toBeVisible();
   await expect(

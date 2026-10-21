@@ -89,7 +89,6 @@ export const gomoku: typeof en = {
   fiveFrom: (from, to) => `五子连珠，${from} 到 ${to}`,
   drawStatus: '平局',
   both: (first, second) => `${first}${second}`,
-  startGame: (game) => `开始第 ${game} 局`,
 
   solo: {
     computer: '电脑',

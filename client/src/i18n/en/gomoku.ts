@@ -105,7 +105,6 @@ export const gomoku = {
   drawStatus: 'Draw',
   /** Two sentences of a result, one after the other. */
   both: (first: string, second: string) => `${first} ${second}`,
-  startGame: (game: number) => `Start game ${game}`,
 
   solo: {
     computer: 'Computer',

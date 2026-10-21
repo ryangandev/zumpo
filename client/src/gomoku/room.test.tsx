@@ -282,7 +282,7 @@ describe('a Gomoku room', () => {
     );
     expect(scoreboard().getByText('Won game 2')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Start game 3' }),
+      screen.getByRole('button', { name: 'Play again' }),
     ).toBeInTheDocument();
   });
 
@@ -317,6 +317,37 @@ describe('a Gomoku room', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^Start game/ })).toBeNull();
+  });
+
+  it('waits for a new game, not the old result, once a new opponent sits', async () => {
+    await renderSeated(
+      gomokuState({
+        colors,
+        gameNumber: 2,
+        moves: [
+          { color: 'black', point: E9 },
+          { color: 'white', point: E8 },
+        ],
+        playerList: {
+          p1: { username: 'Ryan', points: 2, isConnected: true },
+          p3: { username: 'Jo', points: 0, isConnected: true },
+        },
+        lastGame: {
+          endedEarly: true,
+          ending: 'left',
+          winner: 'black',
+          stones: 1,
+          standings: [{ playerId: ME, username: 'Ryan', points: 2 }],
+        },
+      }),
+    );
+    expect(screen.getByText('Waiting room')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /^You win/ })).toBeNull();
+    expect(scoreboard().queryByText('Won game 2')).toBeNull();
+    expect(
+      screen.getByRole('button', { name: 'Start game' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/^Black moves first\./)).toBeInTheDocument();
   });
 
   it('shows a spectator the game with nothing to place and no Resign', async () => {

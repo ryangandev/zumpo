@@ -254,12 +254,9 @@ export function EndedEarlyPanel() {
 export function ResultsActions({
   onPlayAgain,
   starting,
-  again,
 }: {
   onPlayAgain: () => void;
   starting: boolean;
-  /** Play again's label, where the game names the next one: "Start game 3". */
-  again?: string;
 }) {
   const { state, isHost, spectating } = useRoomContext();
   const m = useMessages();
@@ -276,7 +273,7 @@ export function ResultsActions({
   if (count >= gameInfo(state.gameType).minPlayers) {
     return (
       <>
-        <Button onClick={onPlayAgain}>{again ?? m.room.playAgain}</Button>
+        <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
         <InviteButton />
         <SeatMove />
       </>
@@ -300,14 +297,12 @@ export function ResultsFrame({
   children,
   onPlayAgain,
   starting,
-  again,
 }: {
   title: string;
   detail: string;
   children: ReactNode;
   onPlayAgain: () => void;
   starting: boolean;
-  again?: string;
 }) {
   return (
     <section className={styles.results} aria-labelledby="results-title">
@@ -319,11 +314,7 @@ export function ResultsFrame({
       </div>
       {children}
       <div className={styles.actions}>
-        <ResultsActions
-          onPlayAgain={onPlayAgain}
-          starting={starting}
-          again={again}
-        />
+        <ResultsActions onPlayAgain={onPlayAgain} starting={starting} />
       </div>
     </section>
   );
@@ -340,7 +331,6 @@ export function ResultsPanel<Summary extends GameSummary>({
   standingDetail,
   onPlayAgain,
   starting,
-  again,
   ranked = false,
   statusOf,
 }: {
@@ -356,8 +346,6 @@ export function ResultsPanel<Summary extends GameSummary>({
   standingDetail?: (playerId: string) => string;
   onPlayAgain: () => void;
   starting: boolean;
-  /** Play again's label, where the game names the next one. */
-  again?: string;
   /**
    * The standings are in finishing order and no two share a place, as in
    * Liar's Dice; otherwise an equal score shares one.
@@ -410,7 +398,6 @@ export function ResultsPanel<Summary extends GameSummary>({
       }
       onPlayAgain={onPlayAgain}
       starting={starting}
-      again={again}
     >
       <ol className={styles.ranking} aria-label={m.room.standings}>
         {standings.map((standing, index) => {
