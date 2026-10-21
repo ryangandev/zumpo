@@ -1468,6 +1468,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1489,6 +1490,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1510,6 +1512,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1531,6 +1534,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1572,7 +1576,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a pair! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1581,7 +1585,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 6 pairs!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

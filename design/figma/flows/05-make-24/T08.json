@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Solved with 27 seconds left",
-                  "Label": "Hand 3 of 5 results",
                   "Main": "+95 for you",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Hand 3 of 5 results"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next hand",
-                      "Time": "00:04",
+                      "Time": "0:04",
                       "Tone": "Waiting"
                     }
                   }
@@ -505,7 +506,7 @@
             "id": "40:43110",
             "name": "Room sidebar",
             "w": 344,
-            "h": 637,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -526,6 +527,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Solved · +127",
@@ -559,6 +561,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Solved · +95",
@@ -592,6 +595,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Solved · +65",
@@ -625,6 +629,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Out of time",
@@ -662,14 +667,14 @@
                 "id": "40:43112",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 309,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 309,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -677,26 +682,26 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Maya solved it! (+127)",
-                      "Kind": "Success"
+                      "Message": "Hand 1: Maya +127, Sam +95, Leo +65",
+                      "Kind": "Score"
                     }
                   },
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
                       "Alert icon": "24:4999",
-                      "Name": "System",
-                      "Message": "Sam solved it! (+95)",
-                      "Kind": "Success"
+                      "Message": "that one was fast",
+                      "Name": "Leo",
+                      "Kind": "Player"
                     }
                   },
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
                       "Alert icon": "24:4999",
-                      "Name": "System",
-                      "Message": "Leo solved it! (+65)",
-                      "Kind": "Success"
+                      "Message": "go go go",
+                      "Name": "Sam",
+                      "Kind": "Player"
                     }
                   },
                   {

@@ -4,7 +4,7 @@
   "id": "162:39153",
   "type": "COMPONENT_SET",
   "key": "ce26a645c850018ee74d7feba6efe30381c14934",
-  "description": "A Snap card: six symbols on a round card, one in the middle and five around it, Spot 1 to Spot 6 in the order a card lists them. Taken is the card just won, ringed in green with its winner’s initials; Locked dims your card while a wrong tap locks you out.",
+  "description": "A Snap card: six symbols on a round card, one in the middle and five around it, Spot 1 to Spot 6 in the order a card lists them. Taken is the card just won, ringed in green with its winner’s initials; Locked dims your card while a wrong tap locks you out.\nMotion: the middle card you win slides over into Your card in 0.25 s, and the next middle card is dealt in, from 90% and clear, in 0.2 s; none when the system asks for reduced motion.",
   "properties": {
     "Badge": {
       "type": "text",

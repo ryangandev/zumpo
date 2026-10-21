@@ -118,15 +118,16 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Maya +74 · Sam +112 · Ryan +72",
-                  "Label": "The word was",
-                  "Main": "Turtle"
+                  "Main": "Turtle",
+                  "Label": "The word was"
                 },
                 "overrides": [
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next turn",
-                      "Time": "00:08",
+                      "Time": "0:08",
                       "Tone": "Waiting"
                     }
                   }
@@ -197,6 +198,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Drew it · +74",
@@ -224,6 +226,7 @@
                       "Host": false,
                       "Name": "Ryan",
                       "Score": "392",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it · +72",
                       "State": "Scored"
@@ -257,6 +260,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "292",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it · +112",
                       "State": "Scored"
@@ -284,6 +288,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Missed it",

@@ -152,7 +152,7 @@
                     "type": "FRAME",
                     "id": "162:69511",
                     "name": "Result heading",
-                    "w": 552,
+                    "w": 546,
                     "h": 75,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -166,11 +166,11 @@
                         "type": "TEXT",
                         "id": "162:69512",
                         "name": "Heading",
-                        "w": 552,
+                        "w": 546,
                         "h": 42,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "The computer won in 21 moves.",
+                        "text": "The computer won on move 21.",
                         "textStyle": "Zumpo/Title",
                         "fills": [
                           "$Zumpo · UI:color/ink"

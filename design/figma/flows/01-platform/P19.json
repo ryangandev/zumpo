@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 8895,
     "w": 1440,
-    "h": 716,
+    "h": 674,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "90:112601",
         "name": "Game & room",
         "w": 1312,
-        "h": 546,
+        "h": 504,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -101,7 +101,7 @@
             "id": "90:112602",
             "name": "Game stage",
             "w": 944,
-            "h": 297,
+            "h": 498,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -114,7 +114,7 @@
                 "id": "90:112603",
                 "name": "Waiting room",
                 "w": 944,
-                "h": 297,
+                "h": 498,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -257,6 +257,57 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "164:67025",
+                    "name": "How to play",
+                    "w": 862,
+                    "h": 189,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/24",
+                      "pad": [
+                        "$Zumpo · UI:space/12",
+                        0,
+                        0,
+                        0
+                      ],
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "RECTANGLE",
+                        "id": "164:67026",
+                        "name": "Divider",
+                        "w": 862,
+                        "h": 1,
+                        "wSize": "fill",
+                        "fills": [
+                          "$Zumpo · UI:color/line"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "164:67027",
+                        "name": "How to play",
+                        "w": 862,
+                        "h": 152,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "component": "Zumpo/How to play",
+                        "componentId": "163:65908",
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 152,
+                            "width": 862
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -267,7 +318,7 @@
             "id": "90:112608",
             "name": "Room sidebar",
             "w": 344,
-            "h": 546,
+            "h": 504,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -288,7 +339,8 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": true,
@@ -309,7 +361,8 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": false,
@@ -323,7 +376,8 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": false,
@@ -337,7 +391,8 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Waiting",
                       "Host": false,
@@ -354,6 +409,66 @@
                       "Initials": "SO",
                       "Tone": "Coral"
                     }
+                  },
+                  {
+                    "path": "Player 5",
+                    "componentProperties": {
+                      "Icon": "24:5053",
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": true,
+                      "You": false,
+                      "Name": "Maya",
+                      "Status": "Drawing",
+                      "Host": true,
+                      "Score": "460",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 6",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "320",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 7",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "240",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 8",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "180",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
                   }
                 ]
               },
@@ -362,14 +477,14 @@
                 "id": "90:112610",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 218,
+                "h": 176,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 218,
+                    "height": 176,
                     "width": 344
                   },
                   {
@@ -377,7 +492,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan has joined the room.",
+                      "Message": "Ryan, Leo and Sleepy Otter have joined the room.",
                       "Kind": "System"
                     }
                   },
@@ -388,7 +503,8 @@
                       "Name": "System",
                       "Message": "Leo has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -397,7 +513,8 @@
                       "Name": "System",
                       "Message": "Sleepy Otter has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 4",

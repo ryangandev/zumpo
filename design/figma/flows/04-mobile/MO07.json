@@ -14,7 +14,7 @@
     "x": 1020,
     "y": 4254,
     "w": 390,
-    "h": 766,
+    "h": 688,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20457",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,18 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Round 2 of 2",
           "Game": "Draw & Guess"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 2 of 2",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -137,7 +129,7 @@
         "id": "27:22234",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 86,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -150,7 +142,14 @@
           "Main": "Pick a word",
           "Meta": "Only you can see these",
           "Label": "Your turn to draw"
-        }
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 86,
+            "width": 350
+          }
+        ]
       },
       {
         "type": "FRAME",

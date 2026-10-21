@@ -766,7 +766,7 @@
             "id": "73:80576",
             "name": "Room sidebar",
             "w": 344,
-            "h": 656,
+            "h": 694,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -791,6 +791,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -812,6 +813,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -833,6 +835,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -854,6 +857,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -879,14 +883,14 @@
                 "id": "73:80578",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 328,
+                "h": 366,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 328,
+                    "height": 366,
                     "width": 344
                   },
                   {
@@ -913,7 +917,7 @@
                       "Alert icon": "24:4999",
                       "Name": "Leo",
                       "Message": "Game over: Maya wins with 2 dice left!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

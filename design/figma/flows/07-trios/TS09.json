@@ -14,7 +14,7 @@
     "x": 40,
     "y": 3050,
     "w": 1440,
-    "h": 1186,
+    "h": 1114,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -97,7 +97,7 @@
         "id": "79:88035",
         "name": "Board & room",
         "w": 1312,
-        "h": 1016,
+        "h": 944,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -110,7 +110,7 @@
             "id": "79:88036",
             "name": "Board stage",
             "w": 944,
-            "h": 1016,
+            "h": 944,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -517,7 +517,7 @@
                 "id": "79:88057",
                 "name": "Board panel",
                 "w": 944,
-                "h": 538,
+                "h": 466,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -814,6 +814,7 @@
                     "type": "FRAME",
                     "id": "79:88592",
                     "name": "Last trio",
+                    "visible": false,
                     "w": 344,
                     "h": 48,
                     "wSize": "hug",
@@ -916,7 +917,7 @@
             "id": "79:88101",
             "name": "Room sidebar",
             "w": 344,
-            "h": 619,
+            "h": 601,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -941,6 +942,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -962,6 +964,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -983,6 +986,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1004,6 +1008,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1029,14 +1034,14 @@
                 "id": "79:88103",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 291,
+                "h": 273,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 291,
+                    "height": 273,
                     "width": 344
                   },
                   {
@@ -1045,7 +1050,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1054,7 +1059,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1063,7 +1068,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 4 trios!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

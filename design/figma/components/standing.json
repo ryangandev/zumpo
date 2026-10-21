@@ -1,0 +1,249 @@
+{
+  "format": 1,
+  "name": "Zumpo/Standing",
+  "id": "163:62758",
+  "type": "COMPONENT_SET",
+  "key": "ec29f9997ef8f267bfe7c9a8522183e69908894a",
+  "description": "One player in the phone's standings strip: their avatar and score, or what stands for one (guesses used, cards won). You marks the viewer; Away a player whose connection dropped.",
+  "properties": {
+    "Value": {
+      "type": "text",
+      "default": "295"
+    },
+    "State": {
+      "type": "variant",
+      "default": "Default",
+      "options": [
+        "Default",
+        "You",
+        "Away"
+      ]
+    }
+  },
+  "defaultVariant": "State=Default",
+  "variants": [
+    {
+      "name": "State=Default",
+      "id": "163:62746",
+      "props": {
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:62746",
+        "name": "State=Default",
+        "w": 80,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            0,
+            "$Zumpo · UI:space/12",
+            0,
+            0
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:62747",
+            "name": "Avatar",
+            "w": 32,
+            "h": 32,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "4:34",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 32,
+                "width": 32
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "163:62749",
+            "name": "Value",
+            "w": 26,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Value"
+            },
+            "text": "295",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=You",
+      "id": "163:62750",
+      "props": {
+        "State": "You"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:62750",
+        "name": "State=You",
+        "w": 80,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            0,
+            "$Zumpo · UI:space/12",
+            0,
+            0
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:62751",
+            "name": "Avatar",
+            "w": 32,
+            "h": 32,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "4:34",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 32,
+                "width": 32
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "163:62753",
+            "name": "Value",
+            "w": 26,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Value"
+            },
+            "text": "295",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Away",
+      "id": "163:62754",
+      "props": {
+        "State": "Away"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "163:62754",
+        "name": "State=Away",
+        "w": 80,
+        "h": 34,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            0,
+            "$Zumpo · UI:space/12",
+            0,
+            0
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:62755",
+            "name": "Avatar",
+            "w": 32,
+            "h": 32,
+            "component": "Zumpo/Avatar",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "4:34",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 32,
+                "opacity": 0.5,
+                "width": 32
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "163:62757",
+            "name": "Value",
+            "w": 26,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Value"
+            },
+            "text": "295",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

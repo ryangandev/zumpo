@@ -141,9 +141,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Two are striped and one is solid.",
-                  "Label": "Trio 4 of 10",
                   "Main": "Not a trio, +5 s",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Trio 4 of 10"
                 },
                 "overrides": [
                   {
@@ -163,8 +163,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "00:56",
+                      "Time": "0:56",
                       "Tone": "Waiting"
                     }
                   }

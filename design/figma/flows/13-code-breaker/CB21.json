@@ -14,7 +14,7 @@
     "x": 6060,
     "y": 4350,
     "w": 390,
-    "h": 2567,
+    "h": 1987,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:110184",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Final scores",
           "Game": "Code Breaker"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Show icon": false,
-              "Icon": "24:5010",
-              "Label": "Final scores",
-              "Tone": "Lime"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -514,7 +497,7 @@
         "id": "162:110207",
         "name": "Code results",
         "w": 350,
-        "h": 1827,
+        "h": 1267,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -570,7 +553,7 @@
             "id": "162:110211",
             "name": "Boards",
             "w": 350,
-            "h": 1748,
+            "h": 1188,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -584,7 +567,7 @@
                 "id": "162:110579",
                 "name": "Race board / Maya",
                 "w": 350,
-                "h": 428,
+                "h": 228,
                 "hSize": "hug",
                 "component": "Zumpo/Code race board",
                 "variant": {
@@ -597,6 +580,11 @@
                   "Status": "Cracked in 5 · +628"
                 },
                 "overrides": [
+                  {
+                    "path": ".",
+                    "height": 228,
+                    "width": 350
+                  },
                   {
                     "path": "Board / Guess 1 / Digits / Digit 1",
                     "componentProperties": {
@@ -756,6 +744,26 @@
                       "State": "Cracked",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Guess 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 7",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 8",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 9",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 10",
+                    "visible": false
                   }
                 ]
               },
@@ -764,7 +772,7 @@
                 "id": "162:110734",
                 "name": "Race board / Sam",
                 "w": 350,
-                "h": 428,
+                "h": 228,
                 "hSize": "hug",
                 "component": "Zumpo/Code race board",
                 "variant": {
@@ -779,6 +787,11 @@
                 },
                 "overrides": [
                   {
+                    "path": ".",
+                    "height": 228,
+                    "width": 350
+                  },
+                  {
                     "path": "Board / Guess 1 / Digits / Digit 1",
                     "componentProperties": {
                       "Digit": "0",
@@ -937,6 +950,26 @@
                       "State": "Cracked",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Guess 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 7",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 8",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 9",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 10",
+                    "visible": false
                   }
                 ]
               },
@@ -945,7 +978,7 @@
                 "id": "162:110889",
                 "name": "Race board / Ryan",
                 "w": 350,
-                "h": 428,
+                "h": 268,
                 "hSize": "hug",
                 "component": "Zumpo/Code race board",
                 "variant": {
@@ -959,6 +992,11 @@
                   "Name": "Ryan"
                 },
                 "overrides": [
+                  {
+                    "path": ".",
+                    "height": 268,
+                    "width": 350
+                  },
                   {
                     "path": "Board / Guess 1 / Digits / Digit 1",
                     "componentProperties": {
@@ -1150,6 +1188,22 @@
                       "State": "Cracked",
                       "Size": "Small"
                     }
+                  },
+                  {
+                    "path": "Board / Guess 7",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 8",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 9",
+                    "visible": false
+                  },
+                  {
+                    "path": "Board / Guess 10",
+                    "visible": false
                   }
                 ]
               },

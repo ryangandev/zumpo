@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Find a pair and you go again",
-                  "Label": "Your turn",
                   "Main": "Flip a second card",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Your turn"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to flip",
-                      "Time": "00:07",
+                      "Time": "0:07",
                       "Tone": "Running"
                     }
                   }
@@ -910,7 +911,7 @@
             "id": "40:52318",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -935,6 +936,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -968,6 +970,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:4994",
                       "Status icon": false,
@@ -1001,6 +1004,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1076,6 +1080,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1113,14 +1118,14 @@
                 "id": "40:52320",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -1138,7 +1143,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam found a pair! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
