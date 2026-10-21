@@ -81,7 +81,6 @@ export const games = {
     continue: 'Continue',
     seeResult: 'See today’s result',
   },
-  /** The setting a room was made with, counted: "2 rounds", "10 hands". */
   /** The words in the games' artwork, which show a game being played. */
   artwork: {
     /**
@@ -94,6 +93,7 @@ export const games = {
     /** Doodle Chain: what the next player made of the drawing. */
     chainGuess: 'burger?',
   },
+  /** The setting a room was made with, counted: "2 rounds", "10 hands". */
   counts: <Record<CountedGame, (count: number) => string>>{
     'draw-and-guess': (rounds) => plural(rounds, 'round'),
     'make-24': (hands) => plural(hands, 'hand'),
