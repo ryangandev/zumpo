@@ -184,6 +184,7 @@ describe('useStartFocus', () => {
 
   it('hands the focus over on a touch screen too, its ring hidden until a key', () => {
     onTouch();
+    fireEvent.pointerDown(window);
     render(<Stage started controls={card} />);
     const button = screen.getByRole('button', { name: 'Card' });
     expect(button).toHaveFocus();
