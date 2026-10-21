@@ -60,6 +60,51 @@ describe('TurnBar', () => {
     expect(section().className).not.toMatch(/unlabelled/);
   });
 
+  it('gives the meta a line of its own on a phone, kept while it is empty', () => {
+    barWidth(328);
+    const { container, rerender } = render(bar());
+    expect(container.firstElementChild!.className).toMatch(/narrow/);
+    const line = () => section().querySelector('[class*="meta"]');
+    expect(line()).toHaveTextContent('Six guesses. Practice keeps no stats.');
+
+    // Without a meta the line stays, so the board under the bar keeps its place.
+    rerender(
+      <TurnBar label="Your turn" kind="status" main="Place a black stone" />,
+    );
+    expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('scales a label a little too long to its line, and wraps one much too long', () => {
+    barWidth(200);
+    const scroll = vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get');
+    scroll.mockReturnValue(220);
+    const { rerender } = render(bar());
+    const label = screen.getByText('Practice word');
+    expect(label.style.transform).toMatch(/^scale\(0\.9/);
+    expect(label).not.toHaveAttribute('data-wrap');
+
+    // Shrunk past reading, it wraps instead, and is never cut.
+    scroll.mockReturnValue(400);
+    rerender(
+      <TurnBar
+        label="Time ran out, so this one was picked for you"
+        kind="word"
+        main="Teemo"
+      />,
+    );
+    const long = screen.getByText(/^Time ran out/);
+    expect(long.style.transform).toBe('');
+    expect(long).toHaveAttribute('data-wrap');
+  });
+
+  it('is where the focus waits while a game has nothing for the viewer to do', () => {
+    barWidth(784);
+    render(bar());
+    expect(section()).toHaveAttribute('data-start-fallback');
+    expect(section()).toHaveAttribute('tabindex', '-1');
+  });
+
   it('shows its label on a short wide window, in the compact row', () => {
     onShortScreen();
     barWidth(784);

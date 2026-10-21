@@ -193,6 +193,7 @@ On such a window 1240 px wide or more (`SHORT_WIDE`), Daily Word's keyboard and 
 [The widths spec](../e2e/widths.spec.ts) plays every game and checks, at seven widths from 1280 to 320 px, that nothing reaches out of what holds it.
 
 On a phone a game in play is one screen tall, as section 15 draws it: no footer, the Phone room bar, a turn bar of fixed height whose main line is scaled down rather than wrapped, the board, and at the foot what the player touches.
+The turn bar's meta, often the only instruction on screen, has a line of its own there, wrapped rather than cut, and kept while there is no meta.
 The board sits in [`PlayBoard`](../client/src/shell/play-board.tsx), which scales it to the height the rest leaves it, or, below a least scale, keeps that scale and scrolls, keeping the row in play in view.
 So the keypad, the keyboard, the picker or the button that acts now is on screen from the first move and never moves during a game.
 A row that comes and goes, such as Trios's last trio or Make 24's signs, keeps its room out of sight while it is not there.
@@ -289,6 +290,9 @@ Code differs from Figma on purpose in a few places:
 - A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 - Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
+- Until `j-fig-8-phone-turn-meta-line.js` runs, the Phone turn bar sets the tag, the label and the meta on one first line; at 560 px or narrower code gives the tag and the meta a line of their own under the main line, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
+  The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
+  On a short screen wider than that, as a phone on its side, the label and the meta keep the first line, and where they are too long for it together they share it and wrap rather than one being cut.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file
