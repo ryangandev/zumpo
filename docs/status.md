@@ -36,7 +36,7 @@ Rooms have spectator seats, at Ryan's request on 2026-10-20: up to five people w
 Draw & Guess sums up each round as it ends, also at Ryan's request that day ([rules](games/draw-and-guess.md#the-game-loop)).
 The same day Ryan decided that a Minesweeper refresh does not hold the round, so the room does not wait for a player who drops ([rules](games/minesweeper.md#leaving-dropping-and-coming-back)); that hosting stays on Render's free plan while testing; and that Draw & Guess's known issue and its word bank are left as they are for now.
 
-A full repository audit the same day found 26 issues (A1-A26), fixed in four PRs ([#50](https://github.com/ryangandev/zumpo/pull/50)-[#53](https://github.com/ryangandev/zumpo/pull/53)); A11's last sizes reached the tokens once Figma bound every padding, gap and radius to a variable (2026-10-21).
+A full repository audit the same day found 26 issues (A1-A26), fixed in [#50](https://github.com/ryangandev/zumpo/pull/50)-[#54](https://github.com/ryangandev/zumpo/pull/54); the last PR bound every padding, gap and radius in Figma to a variable, so A11's last raw sizes became tokens.
 They covered game flow, connection limits per address, a crash page, security headers, error logging, index safety, and shared start rules.
 
 ## Product direction
