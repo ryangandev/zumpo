@@ -105,7 +105,7 @@ const createSnapGameEngine = (
     const tap = judgeTap(mine, middle.symbols, symbol);
     if (tap === 'neither') return;
     if (tap !== 'match') {
-      lockOut(room, playerId, { symbol, on: tap });
+      lockOut(room, playerId, { symbol, on: tap }, middle.number);
       return;
     }
 
@@ -131,10 +131,12 @@ const createSnapGameEngine = (
     room: SnapRoom,
     playerId: string,
     miss: { symbol: number; on: 'mine' | 'middle' },
+    card: number,
   ) => {
     const lockout = {
       endsAt: Date.now() + durations.lockout * 1000,
       miss,
+      card,
     };
     room.game.lockouts.set(playerId, lockout);
     lockoutTimers.add(room.roomId, durations.lockout * 1000, () => {

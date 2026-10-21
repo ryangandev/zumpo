@@ -11,10 +11,15 @@ import { lobbyBasics, roomBasics } from '../../libs/rooms/seats.js';
 import type { Room } from '../../libs/rooms/types.js';
 import type { Card } from '../../../shared/snap.js';
 
-/** A wrong claim: until when its player may not claim, and what they tapped. */
+/**
+ * A wrong claim: until when its player may not claim, what they tapped, and
+ * the middle card it was on.
+ */
 interface Lockout {
   endsAt: number;
   miss: SnapMiss;
+  /** The number of the middle card the miss was about. */
+  card: number;
 }
 
 /** Everything Snap knows that no other game would. */
@@ -97,7 +102,11 @@ const toRoomState = (
     lastTake: game.lastTake,
     cardMs: game.phase === 'finding' ? Date.now() - game.cardSince : 0,
     lockedOutMs: lockout ? lockout.endsAt - Date.now() : 0,
-    myMiss: lockout ? { ...lockout.miss } : null,
+    // The miss is about the card it was on: under the next, it says nothing.
+    myMiss:
+      lockout && lockout.card === game.middle?.number
+        ? { ...lockout.miss }
+        : null,
     lastGame: game.lastGame,
   };
 };

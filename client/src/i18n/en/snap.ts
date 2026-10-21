@@ -73,6 +73,8 @@ export const snap = {
   onlyOn: (symbol: number, on: 'mine' | 'middle') =>
     `The ${symbols[symbol]} is only on ${on === 'mine' ? 'your card' : 'the middle card'}`,
   lockedOut: 'locked out',
+  stillLocked: 'Still locked out',
+  tapAfterLockout: 'A new card is up; tap when the lockout ends',
   away: 'Away',
   waiting: 'Waiting',
   tookCard: 'Took the card',

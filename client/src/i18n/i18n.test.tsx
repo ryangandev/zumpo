@@ -1,10 +1,13 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { SYMBOLS } from '../../../shared/snap';
 import { renderApp } from '../tests/render-app';
 import { en } from './en';
+import { symbols as englishSymbols } from './en/snap';
 import { detectLocale } from './locale';
 import { zh } from './zh';
+import { symbols as chineseSymbols } from './zh/snap';
 
 /** Every leaf's path, so two catalogs can be compared key for key. */
 function leaves(value: unknown, path = ''): Map<string, unknown> {
@@ -49,6 +52,11 @@ describe('the catalogs', () => {
       )
       .map(([key]) => key);
     expect(blank).toEqual([]);
+  });
+
+  it('name every Snap symbol', () => {
+    expect(englishSymbols).toHaveLength(SYMBOLS.length);
+    expect(chineseSymbols).toHaveLength(SYMBOLS.length);
   });
 });
 

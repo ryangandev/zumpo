@@ -124,6 +124,19 @@ describe('a Snap room', () => {
     expect(screen.queryAllByRole('button', { name: 'Note' })).toEqual([]);
   });
 
+  it('keeps you locked out once a new card is up, without the old miss', async () => {
+    await renderSeated({ ...finding, lockedOutMs: 2_000, myMiss: null });
+    expect(turn().getByText('Still locked out')).toBeInTheDocument();
+    expect(
+      turn().getByText('A new card is up; tap when the lockout ends'),
+    ).toBeInTheDocument();
+    expect(turn().queryByText('Not a match')).toBeNull();
+    expect(
+      card('Your card').queryByRole('img', { name: /not a match$/ }),
+    ).toBeNull();
+    expect(screen.queryAllByRole('button', { name: 'Note' })).toEqual([]);
+  });
+
   it('shows a spectator the middle card alone, with nothing to tap', async () => {
     await renderSeated({
       ...finding,
@@ -172,5 +185,34 @@ describe('a Snap room', () => {
       screen.getByRole('group', { name: 'Last card, taken by Maya' }),
     ).toBeInTheDocument();
     expect(screen.getByText('12 won')).toBeInTheDocument();
+  });
+
+  it('shows the taker of the last card only that card, theirs now', async () => {
+    await renderSeated(
+      snapState({
+        cards: 29,
+        taken: 29,
+        middle: { number: 28, symbols: MIDDLE },
+        myCard: MINE,
+        lastTake: { playerId: ME, username: 'Ryan', number: 28, symbol: 25 },
+        playerList: {
+          p1: { username: 'Ryan', points: 17, isConnected: true },
+          p2: { username: 'Maya', points: 12, isConnected: true },
+        },
+        lastGame: {
+          endedEarly: false,
+          cards: 29,
+          taken: 29,
+          standings: [
+            { playerId: ME, username: 'Ryan', points: 17 },
+            { playerId: 'p2', username: 'Maya', points: 12 },
+          ],
+        },
+      }),
+    );
+    expect(
+      screen.getByRole('group', { name: 'Last card, taken by You' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: /^Your card/ })).toBeNull();
   });
 });

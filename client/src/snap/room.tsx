@@ -99,7 +99,8 @@ function BetweenGames({ room }: { room: Room }) {
               badge: taker.initials,
               badgeLabel: taker.label,
             }}
-            mine={myView(room, m)}
+            // Its taker's card is the last card itself.
+            mine={taker.mine ? null : myView(room, m)}
           />
         )}
       </>
@@ -227,12 +228,14 @@ function turnBar(
       countdown: clock(m.snap.nextCard, seconds),
     };
   }
-  if (state.lockedOutMs > 0 && state.myMiss) {
+  if (state.lockedOutMs > 0) {
+    // Under a card turned up since, the miss is no longer about anything.
+    const miss = state.myMiss;
     return {
       label: m.snap.lockedTitle,
       kind: 'status',
-      main: m.snap.notMatch,
-      meta: m.snap.onlyOn(state.myMiss.symbol, state.myMiss.on),
+      main: miss ? m.snap.notMatch : m.snap.stillLocked,
+      meta: miss ? m.snap.onlyOn(miss.symbol, miss.on) : m.snap.tapAfterLockout,
       countdown: clock(m.snap.lockedOut, lockedSeconds, false),
     };
   }

@@ -280,6 +280,8 @@ describe('a claim', () => {
     alice.emit('snap:claim', roomId, 0, matchFor(firsts[0]!));
     const view = await next;
     expect(view.lockedOutMs).toBeGreaterThan(0);
+    // The miss was about the last card, so under this one it says nothing.
+    expect(view.myMiss).toBeNull();
     bob.emit('snap:claim', roomId, 1, matchFor(view));
     await settle(50);
     expect(snapRoom(harness, roomId).game.taken).toBe(1);
@@ -376,6 +378,47 @@ describe('a Snap game', () => {
     expect(snapRoom(harness, roomId).game.hands.has(players[1].playerId)).toBe(
       false,
     );
+  });
+
+  it('plays on without a player who leaves for good, and their card', async () => {
+    const { roomId, players, firsts } = await playToFirstCard(harness, [
+      'Alice',
+      'Bob',
+      'Cleo',
+    ] as const);
+    const [alice, bob, cleo] = players;
+    const gone = waitForSnapState(
+      alice,
+      (s) => !(cleo.playerId in s.playerList),
+    );
+    cleo.emit('room:leave', roomId);
+    expect(await gone).toMatchObject({ isGameStarted: true, phase: 'finding' });
+    expect(snapRoom(harness, roomId).game.hands.has(cleo.playerId)).toBe(false);
+
+    const taken = waitForSnapState(bob, (s) => s.taken === 1);
+    alice.emit('snap:claim', roomId, 0, matchFor(firsts[0]!));
+    expect((await taken).lastTake?.playerId).toBe(alice.playerId);
+  });
+
+  it('turns up the next card when its taker leaves while it is on show', async () => {
+    const { roomId, players, firsts } = await playToFirstCard(harness, [
+      'Alice',
+      'Bob',
+      'Cleo',
+    ] as const);
+    const [alice, , cleo] = players;
+    const next = waitForSnapState(
+      alice,
+      (s) => s.phase === 'finding' && s.taken === 1,
+    );
+    // In order on one socket: the claim is taken before the leave.
+    cleo.emit('snap:claim', roomId, 0, matchFor(firsts[2]!));
+    cleo.emit('room:leave', roomId);
+    const view = await next;
+    expect(view.isGameStarted).toBe(true);
+    expect(view.middle!.number).toBe(1);
+    expect(cleo.playerId in view.playerList).toBe(false);
+    expect(snapRoom(harness, roomId).game.hands.has(cleo.playerId)).toBe(false);
   });
 
   it('keeps a lockout and your card through a refresh', async () => {

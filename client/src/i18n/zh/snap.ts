@@ -70,6 +70,8 @@ export const snap: typeof en = {
   onlyOn: (symbol, on) =>
     `${name(symbol)}只在${on === 'mine' ? '你的牌' : '中间的牌'}上`,
   lockedOut: '锁定中',
+  stillLocked: '还在锁定中',
+  tapAfterLockout: '新牌已翻开，锁定结束后再点',
   away: '暂离',
   waiting: '等待中',
   tookCard: '拿到了牌',

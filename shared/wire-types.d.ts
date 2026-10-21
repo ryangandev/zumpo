@@ -654,7 +654,10 @@ interface SnapRoomState extends RoomState {
   cardMs: number;
   /** How long this player is still locked out after a wrong claim; 0 if not. */
   lockedOutMs: number;
-  /** This player's symbol that was not a match, while locked out. */
+  /**
+   * This player's symbol that was not a match, while locked out and the
+   * middle card it was about is still in play.
+   */
   myMiss: SnapMiss | null;
   lastGame: SnapGameSummary | null;
 }

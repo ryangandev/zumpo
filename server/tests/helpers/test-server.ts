@@ -112,7 +112,7 @@ const FAST_TRIOS: TriosDurationsInSeconds = {
  */
 const FAST_SNAP: SnapDurationsInSeconds = {
   taken: 0.2,
-  lockout: 0.5,
+  lockout: 1,
 };
 
 /**

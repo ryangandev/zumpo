@@ -124,6 +124,7 @@ The server takes claims in the order they arrive:
 - **Not a match**, a symbol on only one of the two cards: nothing is taken, and the claimant is **locked out for 2 seconds**: their card fades, the symbol shows as a miss where they tapped it, and they cannot tap until the lockout ends.
   Nobody else is told.
   A lockout runs on its own clock, and goes on through a card taken by somebody else.
+  Once the next card is up, the miss no longer shows, since it was about the last card; the player still waits out the lockout.
 - **Too late:** a claim for a middle card that is no longer in play, or one that arrives during `taken`, lost a race rather than made a mistake.
   It is dropped, with no lockout.
 - **Nonsense:** a symbol on neither card cannot be tapped, so a claim with one is a broken client's, and is dropped.
@@ -173,18 +174,18 @@ If the room falls below two players the game ends, and its summary says it ended
 
 Every change reaches a player as `room:state`, the whole room as that player may see it ([the wire contract](../architecture.md#the-wire-contract)).
 
-| Field         | What it is                                                                                                            |
-| ------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `phase`       | `waiting`, `finding` or `taken`                                                                                       |
-| `cards`       | How many cards there are to take this game: 31 less the players dealt in; 0 before the first game                     |
-| `taken`       | How many cards have been taken this game                                                                              |
-| `middle`      | The middle card: its number in the game, from 0, and its six symbols in spot order; `null` before the first game      |
-| `myCard`      | This player's own card, its six symbols in spot order; `null` for a spectator or before the first game                |
-| `lastTake`    | The latest card taken this game: who took it, its number and the match; `null` before one                             |
-| `cardMs`      | How long the middle card has been in play, during `finding`; 0 otherwise                                              |
-| `lockedOutMs` | How long this player is still locked out; 0 when they are not                                                         |
-| `myMiss`      | While the lockout lasts, the symbol that was not a match and the card it is on (`mine` or `middle`); `null` otherwise |
-| `lastGame`    | The summary of the last finished game, until the next one starts                                                      |
+| Field         | What it is                                                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `phase`       | `waiting`, `finding` or `taken`                                                                                                                      |
+| `cards`       | How many cards there are to take this game: 31 less the players dealt in; 0 before the first game                                                    |
+| `taken`       | How many cards have been taken this game                                                                                                             |
+| `middle`      | The middle card: its number in the game, from 0, and its six symbols in spot order; `null` before the first game                                     |
+| `myCard`      | This player's own card, its six symbols in spot order; `null` for a spectator or before the first game                                               |
+| `lastTake`    | The latest card taken this game: who took it, its number and the match; `null` before one                                                            |
+| `cardMs`      | How long the middle card has been in play, during `finding`; 0 otherwise                                                                             |
+| `lockedOutMs` | How long this player is still locked out; 0 when they are not                                                                                        |
+| `myMiss`      | While the lockout lasts and its middle card is in play, the symbol that was not a match and the card it is on (`mine` or `middle`); `null` otherwise |
+| `lastGame`    | The summary of the last finished game, until the next one starts                                                                                     |
 
 "18 left" above the middle card is `cards − taken`: the cards still to take, the middle card among them.
 During `taken`, `phaseEndsInMs` is what is left of the 1.5 seconds.
