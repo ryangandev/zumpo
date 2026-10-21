@@ -17,7 +17,11 @@
         "Trios",
         "Liar’s Dice",
         "Hush",
-        "Daily Word"
+        "Daily Word",
+        "Snap",
+        "Gomoku",
+        "Doodle Chain",
+        "Code Breaker"
       ]
     },
     "Size": {
@@ -1416,6 +1420,1053 @@
                 "componentId": "44:61334",
                 "props": {
                   "Letter": "D"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Size=Tile",
+      "id": "162:66216",
+      "props": {
+        "Game": "Snap",
+        "Size": "Tile"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66216",
+        "name": "Game=Snap, Size=Tile",
+        "x": 2424,
+        "y": 24,
+        "w": 276,
+        "h": 112,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:66217",
+            "name": "Cards",
+            "w": 160,
+            "h": 72,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:66253",
+                "name": "Snap card / Star found",
+                "w": 72,
+                "h": 72,
+                "component": "Zumpo/Snap card",
+                "variant": {
+                  "State": "Default",
+                  "Size": "Mini"
+                },
+                "componentId": "162:39096",
+                "overrides": [
+                  {
+                    "path": "Spot 1 / Symbol",
+                    "height": 17.28,
+                    "width": 17.28
+                  },
+                  {
+                    "path": "Spot 2",
+                    "height": 17.28,
+                    "width": 17.28
+                  },
+                  {
+                    "path": "Spot 2 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 3 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 4 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 5 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 6 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:66280",
+                "name": "Snap card / Star found",
+                "w": 72,
+                "h": 72,
+                "component": "Zumpo/Snap card",
+                "variant": {
+                  "State": "Default",
+                  "Size": "Mini"
+                },
+                "componentId": "162:39096",
+                "overrides": [
+                  {
+                    "path": "Spot 1",
+                    "height": 21.6,
+                    "width": 21.6
+                  },
+                  {
+                    "path": "Spot 2 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 3 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 4 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 5 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  },
+                  {
+                    "path": "Spot 6 / Symbol",
+                    "height": 13.82,
+                    "width": 13.82
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Snap, Size=Icon",
+      "id": "162:66306",
+      "props": {
+        "Game": "Snap",
+        "Size": "Icon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:66306",
+        "name": "Game=Snap, Size=Icon",
+        "x": 856,
+        "y": 184,
+        "w": 80,
+        "h": 80,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:66314",
+            "name": "Snap card / Star found",
+            "w": 72,
+            "h": 72,
+            "component": "Zumpo/Snap card",
+            "variant": {
+              "State": "Default",
+              "Size": "Mini"
+            },
+            "componentId": "162:39096",
+            "overrides": [
+              {
+                "path": "Spot 1",
+                "height": 21.6,
+                "width": 21.6
+              },
+              {
+                "path": "Spot 2 / Symbol",
+                "height": 13.82,
+                "width": 13.82
+              },
+              {
+                "path": "Spot 3 / Symbol",
+                "height": 13.82,
+                "width": 13.82
+              },
+              {
+                "path": "Spot 4 / Symbol",
+                "height": 13.82,
+                "width": 13.82
+              },
+              {
+                "path": "Spot 5 / Symbol",
+                "height": 13.82,
+                "width": 13.82
+              },
+              {
+                "path": "Spot 6 / Symbol",
+                "height": 13.82,
+                "width": 13.82
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Size=Tile",
+      "id": "162:111224",
+      "props": {
+        "Game": "Gomoku",
+        "Size": "Tile"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111224",
+        "name": "Game=Gomoku, Size=Tile",
+        "x": 3024,
+        "y": 24,
+        "w": 276,
+        "h": 112,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111225",
+            "name": "Board crop",
+            "w": 234,
+            "h": 90,
+            "fills": [
+              "$Zumpo · UI:color/peach"
+            ],
+            "radius": "$Zumpo · UI:radius/12",
+            "clip": true,
+            "children": [
+              {
+                "type": "RECTANGLE",
+                "id": "162:111226",
+                "name": "Row",
+                "x": 0,
+                "y": 26.5,
+                "w": 234,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111227",
+                "name": "Row",
+                "x": 0,
+                "y": 62.5,
+                "w": 234,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111228",
+                "name": "Row",
+                "x": 0,
+                "y": 98.5,
+                "w": 234,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111229",
+                "name": "Column",
+                "x": 26.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111230",
+                "name": "Column",
+                "x": 62.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111231",
+                "name": "Column",
+                "x": 98.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111232",
+                "name": "Column",
+                "x": 134.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111233",
+                "name": "Column",
+                "x": 170.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111234",
+                "name": "Column",
+                "x": 206.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111235",
+                "name": "Column",
+                "x": 242.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 90,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111236",
+                "name": "Zumpo/Stone",
+                "x": 47,
+                "y": 47,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "White",
+                  "Mark": "None",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62879"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111237",
+                "name": "Zumpo/Stone",
+                "x": 83,
+                "y": 47,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "White",
+                  "Mark": "None",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62879"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111238",
+                "name": "Zumpo/Stone",
+                "x": 155,
+                "y": 47,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "White",
+                  "Mark": "Last",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62880"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111239",
+                "name": "Zumpo/Stone",
+                "x": 11,
+                "y": 11,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Win",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62877"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111240",
+                "name": "Zumpo/Stone",
+                "x": 47,
+                "y": 11,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Win",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62877"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111241",
+                "name": "Zumpo/Stone",
+                "x": 83,
+                "y": 11,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Win",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62877"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111242",
+                "name": "Zumpo/Stone",
+                "x": 119,
+                "y": 11,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Win",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62877"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111243",
+                "name": "Zumpo/Stone",
+                "x": 155,
+                "y": 11,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Win",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62877"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111244",
+                "name": "Zumpo/Win line",
+                "x": 11,
+                "y": 24,
+                "w": 176,
+                "h": "$Zumpo · UI:space/6",
+                "component": "Zumpo/Win line",
+                "variant": {
+                  "Size": "Regular"
+                },
+                "componentId": "162:62898"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Gomoku, Size=Icon",
+      "id": "162:111245",
+      "props": {
+        "Game": "Gomoku",
+        "Size": "Icon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111245",
+        "name": "Game=Gomoku, Size=Icon",
+        "x": 1064,
+        "y": 184,
+        "w": 80,
+        "h": 80,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:111246",
+            "name": "Board crop",
+            "w": 80,
+            "h": 80,
+            "fills": [
+              "$Zumpo · UI:color/peach"
+            ],
+            "radius": "$Zumpo · UI:radius/16",
+            "clip": true,
+            "children": [
+              {
+                "type": "RECTANGLE",
+                "id": "162:111247",
+                "name": "Row",
+                "x": 0,
+                "y": 21.5,
+                "w": 80,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111248",
+                "name": "Row",
+                "x": 0,
+                "y": 57.5,
+                "w": 80,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111249",
+                "name": "Row",
+                "x": 0,
+                "y": 93.5,
+                "w": 80,
+                "h": "$Zumpo · UI:space/1",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111250",
+                "name": "Column",
+                "x": 21.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 80,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111251",
+                "name": "Column",
+                "x": 57.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 80,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "RECTANGLE",
+                "id": "162:111252",
+                "name": "Column",
+                "x": 93.5,
+                "y": 0,
+                "w": "$Zumpo · UI:space/1",
+                "h": 80,
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111253",
+                "name": "Zumpo/Stone",
+                "x": 6,
+                "y": 6,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "None",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62874"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111254",
+                "name": "Zumpo/Stone",
+                "x": 42,
+                "y": 6,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "White",
+                  "Mark": "None",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62879"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111255",
+                "name": "Zumpo/Stone",
+                "x": 6,
+                "y": 42,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "White",
+                  "Mark": "None",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62879"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:111256",
+                "name": "Zumpo/Stone",
+                "x": 42,
+                "y": 42,
+                "w": "$Zumpo · UI:space/32",
+                "h": "$Zumpo · UI:space/32",
+                "component": "Zumpo/Stone",
+                "variant": {
+                  "Color": "Black",
+                  "Mark": "Last",
+                  "State": "Placed",
+                  "Size": "Regular"
+                },
+                "componentId": "162:62875"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Size=Tile",
+      "id": "162:111257",
+      "props": {
+        "Game": "Doodle Chain",
+        "Size": "Tile"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111257",
+        "name": "Game=Doodle Chain, Size=Tile",
+        "x": 2724,
+        "y": 24,
+        "w": 276,
+        "h": 112,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111258",
+            "name": "First line",
+            "w": 56,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Lime"
+            },
+            "componentId": "24:6521",
+            "props": {
+              "Label": "turtle"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 56
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:111259",
+            "name": "Drawing",
+            "w": 96,
+            "h": 64,
+            "component": "Sample / Chain drawing",
+            "variant": {
+              "Drawing": "Turtle on skateboard"
+            },
+            "componentId": "162:65765"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:111260",
+            "name": "Last line",
+            "w": 68,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Peach"
+            },
+            "componentId": "24:6526",
+            "props": {
+              "Label": "burger?"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 68
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Doodle Chain, Size=Icon",
+      "id": "162:111261",
+      "props": {
+        "Game": "Doodle Chain",
+        "Size": "Icon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:111261",
+        "name": "Game=Doodle Chain, Size=Icon",
+        "x": 960,
+        "y": 184,
+        "w": 80,
+        "h": 80,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:111262",
+            "name": "Drawing",
+            "w": 76.8,
+            "h": 51.2,
+            "component": "Sample / Chain drawing",
+            "variant": {
+              "Drawing": "Burger on skates"
+            },
+            "componentId": "162:65782"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Size=Tile",
+      "id": "162:113170",
+      "props": {
+        "Game": "Code Breaker",
+        "Size": "Tile"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113170",
+        "name": "Game=Code Breaker, Size=Tile",
+        "x": 3324,
+        "y": 24,
+        "w": 276,
+        "h": 112,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:113171",
+            "name": "Zumpo/Digit tile",
+            "w": 64,
+            "h": 64,
+            "component": "Zumpo/Digit tile",
+            "variant": {
+              "State": "Guessed",
+              "Size": "Regular"
+            },
+            "componentId": "162:65713"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:113172",
+            "name": "Zumpo/Digit tile",
+            "w": 64,
+            "h": 64,
+            "component": "Zumpo/Digit tile",
+            "variant": {
+              "State": "Guessed",
+              "Size": "Regular"
+            },
+            "componentId": "162:65713",
+            "props": {
+              "Digit": "0"
+            }
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:113173",
+            "name": "Zumpo/Digit tile",
+            "w": 64,
+            "h": 64,
+            "component": "Zumpo/Digit tile",
+            "variant": {
+              "State": "Guessed",
+              "Size": "Regular"
+            },
+            "componentId": "162:65713",
+            "props": {
+              "Digit": "7"
+            }
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:113174",
+            "name": "Zumpo/Code marks",
+            "w": 36,
+            "h": 36,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks",
+            "variant": {
+              "Layout": "Grid"
+            },
+            "componentId": "162:62566"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Game=Code Breaker, Size=Icon",
+      "id": "162:113175",
+      "props": {
+        "Game": "Code Breaker",
+        "Size": "Icon"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:113175",
+        "name": "Game=Code Breaker, Size=Icon",
+        "x": 1168,
+        "y": 184,
+        "w": 80,
+        "h": 80,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:113176",
+            "name": "Tiles",
+            "w": 72,
+            "h": 72,
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "wrap": true,
+              "crossGap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:113177",
+                "name": "Zumpo/Digit tile",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Guessed",
+                  "Size": "Small"
+                },
+                "componentId": "162:62561"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113178",
+                "name": "Zumpo/Digit tile",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Guessed",
+                  "Size": "Small"
+                },
+                "componentId": "162:62561",
+                "props": {
+                  "Digit": "0"
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113179",
+                "name": "Zumpo/Digit tile",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Cracked",
+                  "Size": "Small"
+                },
+                "componentId": "162:62563",
+                "props": {
+                  "Digit": "7"
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:113180",
+                "name": "Zumpo/Digit tile",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Digit tile",
+                "variant": {
+                  "State": "Cracked",
+                  "Size": "Small"
+                },
+                "componentId": "162:62563",
+                "props": {
+                  "Digit": "1"
                 }
               }
             ]

@@ -1,0 +1,205 @@
+{
+  "format": 1,
+  "name": "Zumpo/Code marks",
+  "id": "162:62578",
+  "type": "COMPONENT_SET",
+  "key": "6998715d6d0a48e54532a5fa36f1671dd35b2076",
+  "description": "A guess's mark: four pegs, green squares for digits in place (right), then coral circles for digits elsewhere (moved), then grey squares for the rest; Empty pegs on a row not guessed yet. Override each Peg's State. Grid sits beside a guess so the order is never read as positions; Row is for the others' boards and the share grid.",
+  "properties": {
+    "Layout": {
+      "type": "variant",
+      "default": "Grid",
+      "options": [
+        "Grid",
+        "Row"
+      ]
+    }
+  },
+  "defaultVariant": "Layout=Grid",
+  "variants": [
+    {
+      "name": "Layout=Grid",
+      "id": "162:62566",
+      "props": {
+        "Layout": "Grid"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62566",
+        "name": "Layout=Grid",
+        "w": 36,
+        "h": 36,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/4",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:62567",
+            "name": "Top",
+            "w": 36,
+            "h": 16,
+            "wSize": "hug",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:62568",
+                "name": "Peg 1",
+                "w": 16,
+                "h": 16,
+                "component": "Zumpo/Letter tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Mini"
+                },
+                "componentId": "44:61340"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62569",
+                "name": "Peg 2",
+                "w": 16,
+                "h": 16,
+                "component": "Zumpo/Letter tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Mini"
+                },
+                "componentId": "44:61340"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:62570",
+            "name": "Bottom",
+            "w": 36,
+            "h": 16,
+            "wSize": "hug",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/4",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:62571",
+                "name": "Peg 3",
+                "w": 16,
+                "h": 16,
+                "component": "Zumpo/Letter tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Mini"
+                },
+                "componentId": "44:61340"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:62572",
+                "name": "Peg 4",
+                "w": 16,
+                "h": 16,
+                "component": "Zumpo/Letter tile",
+                "variant": {
+                  "State": "Empty",
+                  "Size": "Mini"
+                },
+                "componentId": "44:61340"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Layout=Row",
+      "id": "162:62573",
+      "props": {
+        "Layout": "Row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:62573",
+        "name": "Layout=Row",
+        "w": 76,
+        "h": 16,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/4",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:62574",
+            "name": "Peg 1",
+            "w": 16,
+            "h": 16,
+            "component": "Zumpo/Letter tile",
+            "variant": {
+              "State": "Empty",
+              "Size": "Mini"
+            },
+            "componentId": "44:61340"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62575",
+            "name": "Peg 2",
+            "w": 16,
+            "h": 16,
+            "component": "Zumpo/Letter tile",
+            "variant": {
+              "State": "Empty",
+              "Size": "Mini"
+            },
+            "componentId": "44:61340"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62576",
+            "name": "Peg 3",
+            "w": 16,
+            "h": 16,
+            "component": "Zumpo/Letter tile",
+            "variant": {
+              "State": "Empty",
+              "Size": "Mini"
+            },
+            "componentId": "44:61340"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:62577",
+            "name": "Peg 4",
+            "w": 16,
+            "h": 16,
+            "component": "Zumpo/Letter tile",
+            "variant": {
+              "State": "Empty",
+              "Size": "Mini"
+            },
+            "componentId": "44:61340"
+          }
+        ]
+      }
+    }
+  ]
+}

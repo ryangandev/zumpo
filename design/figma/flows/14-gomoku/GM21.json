@@ -1,0 +1,2332 @@
+{
+  "format": 1,
+  "code": "GM21",
+  "title": "Board · point states",
+  "id": "162:103805",
+  "section": "14 / Gomoku / complete flow",
+  "reviewNotes": [
+    "GM21 · Every state a point can show. A faint stone is the viewer’s own colour at 40%. The focus ring is 2 px of ink outside the stone. A sent stone stays faint until the server’s state arrives; the board takes no input meanwhile."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:103805",
+    "name": "GM21 / Board · point states",
+    "x": 2100,
+    "y": 5580,
+    "w": 1368,
+    "h": 576,
+    "wSize": "hug",
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/32",
+      "pad": "$Zumpo · UI:space/40",
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "TEXT",
+        "id": "162:103806",
+        "name": "Title",
+        "w": 140,
+        "h": 30,
+        "wSize": "hug",
+        "hSize": "hug",
+        "text": "Point states",
+        "textStyle": "Zumpo/Heading",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "TEXT",
+        "id": "162:103807",
+        "name": "Layout",
+        "w": 245,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "text": "Desktop · 36 px points, 32 px stones",
+        "textStyle": "Zumpo/Label",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103808",
+        "name": "States / Desktop",
+        "w": 1288,
+        "h": 170,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:103809",
+            "name": "Empty point",
+            "w": 140,
+            "h": 134,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103810",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103811",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103812",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103813",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103814",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103815",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103816",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103817",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Empty point",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103818",
+            "name": "Hover (mouse) or first tap: faint stone",
+            "w": 140,
+            "h": 152,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103819",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103820",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103821",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103822",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103823",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103824",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103825",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103826",
+                    "name": "Faint stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62878"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103827",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Hover (mouse) or first tap: faint stone",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103828",
+            "name": "Keyboard focus on an empty point",
+            "w": 140,
+            "h": 152,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103829",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103830",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103831",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103832",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103833",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103834",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103835",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103836",
+                    "name": "Focus",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Point focus",
+                    "variant": {
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62895"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103837",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Keyboard focus on an empty point",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103838",
+            "name": "Keyboard focus with the faint stone",
+            "w": 140,
+            "h": 152,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103839",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103840",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103841",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103842",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103843",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103844",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103845",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103846",
+                    "name": "Faint stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62878"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103847",
+                    "name": "Focus",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Point focus",
+                    "variant": {
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62895"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103848",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Keyboard focus with the faint stone",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103849",
+            "name": "Sent, waiting for the server: faint stone, no input",
+            "w": 140,
+            "h": 170,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103850",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103851",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103852",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103853",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103854",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103855",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103856",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103857",
+                    "name": "Faint stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62878"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103858",
+                "name": "Label",
+                "w": 140,
+                "h": 54,
+                "hSize": "hug",
+                "text": "Sent, waiting for the server: faint stone, no input",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103859",
+            "name": "Placed",
+            "w": 140,
+            "h": 134,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103860",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103861",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103862",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103863",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103864",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103865",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103866",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103867",
+                    "name": "Stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62874"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103868",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Placed",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103869",
+            "name": "Last stone placed",
+            "w": 140,
+            "h": 134,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103870",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103871",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103872",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103873",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103874",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103875",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103876",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103877",
+                    "name": "Stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "Last",
+                      "State": "Placed",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62880"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103879",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Last stone placed",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103880",
+            "name": "In the winning line",
+            "w": 140,
+            "h": 134,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103881",
+                "name": "Board crop",
+                "w": 108,
+                "h": 108,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103882",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 17.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103883",
+                    "name": "Column",
+                    "x": 17.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103884",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 53.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103885",
+                    "name": "Column",
+                    "x": 53.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103886",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 89.5,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103887",
+                    "name": "Column",
+                    "x": 89.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 108,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103888",
+                    "name": "Stone",
+                    "x": 38,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62877"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103889",
+                    "name": "Zumpo/Stone",
+                    "x": 2,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62877"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103890",
+                    "name": "Zumpo/Stone",
+                    "x": 74,
+                    "y": 38,
+                    "w": "$Zumpo · UI:space/32",
+                    "h": "$Zumpo · UI:space/32",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62877"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103891",
+                    "name": "Zumpo/Win line",
+                    "x": 0,
+                    "y": 51,
+                    "w": 108,
+                    "h": "$Zumpo · UI:space/6",
+                    "component": "Zumpo/Win line",
+                    "variant": {
+                      "Size": "Regular"
+                    },
+                    "componentId": "162:62898",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": "$Zumpo · UI:space/6",
+                        "width": 108
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103892",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "In the winning line",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TEXT",
+        "id": "162:103893",
+        "name": "Layout",
+        "w": 227,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "text": "Phone · 22 px points, 18 px stones",
+        "textStyle": "Zumpo/Label",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103894",
+        "name": "States / Phone",
+        "w": 1288,
+        "h": 128,
+        "wSize": "hug",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:103895",
+            "name": "Empty point",
+            "w": 140,
+            "h": 92,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103896",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103897",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103898",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103899",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103900",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103901",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103902",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103903",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Empty point",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103904",
+            "name": "Hover (mouse) or first tap: faint stone",
+            "w": 140,
+            "h": 110,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103905",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103906",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103907",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103908",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103909",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103910",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103911",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103912",
+                    "name": "Faint stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62888"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103913",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Hover (mouse) or first tap: faint stone",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103914",
+            "name": "Keyboard focus on an empty point",
+            "w": 140,
+            "h": 110,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103915",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103916",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103917",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103918",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103919",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103920",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103921",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103922",
+                    "name": "Focus",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Point focus",
+                    "variant": {
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62896"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103923",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Keyboard focus on an empty point",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103924",
+            "name": "Keyboard focus with the faint stone",
+            "w": 140,
+            "h": 110,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103925",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103926",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103927",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103928",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103929",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103930",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103931",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103932",
+                    "name": "Faint stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62888"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103933",
+                    "name": "Focus",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Point focus",
+                    "variant": {
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62896"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103934",
+                "name": "Label",
+                "w": 140,
+                "h": 36,
+                "hSize": "hug",
+                "text": "Keyboard focus with the faint stone",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103935",
+            "name": "Sent, waiting for the server: faint stone, no input",
+            "w": 140,
+            "h": 128,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103936",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103937",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103938",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103939",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103940",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103941",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103942",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103943",
+                    "name": "Faint stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62888"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103944",
+                "name": "Label",
+                "w": 140,
+                "h": 54,
+                "hSize": "hug",
+                "text": "Sent, waiting for the server: faint stone, no input",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103945",
+            "name": "Placed",
+            "w": 140,
+            "h": 92,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103946",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103947",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103948",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103949",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103950",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103951",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103952",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103953",
+                    "name": "Stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62884"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103954",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Placed",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103955",
+            "name": "Last stone placed",
+            "w": 140,
+            "h": 92,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103956",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103957",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103958",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103959",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103960",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103961",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103962",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103963",
+                    "name": "Stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "Last",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62890"
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103965",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "Last stone placed",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:103966",
+            "name": "In the winning line",
+            "w": 140,
+            "h": 92,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:103967",
+                "name": "Board crop",
+                "w": 66,
+                "h": 66,
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ],
+                "radius": "$Zumpo · UI:radius/8",
+                "clip": true,
+                "children": [
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103968",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 10.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103969",
+                    "name": "Column",
+                    "x": 10.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103970",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 32.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103971",
+                    "name": "Column",
+                    "x": 32.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103972",
+                    "name": "Row",
+                    "x": 0,
+                    "y": 54.5,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/1",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "RECTANGLE",
+                    "id": "162:103973",
+                    "name": "Column",
+                    "x": 54.5,
+                    "y": 0,
+                    "w": "$Zumpo · UI:space/1",
+                    "h": 66,
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103974",
+                    "name": "Stone",
+                    "x": 24,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103975",
+                    "name": "Zumpo/Stone",
+                    "x": 2,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103976",
+                    "name": "Zumpo/Stone",
+                    "x": 46,
+                    "y": 24,
+                    "w": "$Zumpo · UI:space/18",
+                    "h": "$Zumpo · UI:space/18",
+                    "component": "Zumpo/Stone",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "Win",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62887"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:103977",
+                    "name": "Zumpo/Win line",
+                    "x": 0,
+                    "y": 31,
+                    "w": 66,
+                    "h": "$Zumpo · UI:space/4",
+                    "component": "Zumpo/Win line",
+                    "variant": {
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62899",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": "$Zumpo · UI:space/4",
+                        "width": 66
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:103978",
+                "name": "Label",
+                "w": 140,
+                "h": 18,
+                "hSize": "hug",
+                "text": "In the winning line",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

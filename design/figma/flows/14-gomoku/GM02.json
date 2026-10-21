@@ -1,0 +1,349 @@
+{
+  "format": 1,
+  "code": "GM02",
+  "title": "Solo · pick a level",
+  "id": "162:96819",
+  "section": "14 / Gomoku / complete flow",
+  "reviewNotes": [
+    "GM02 · On your own: pick a level (Easy, Medium, Hard) and your stones (Black or White). The last picks come first next time; a first game is Medium, playing Black. The record line is for the level picked."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:96819",
+    "name": "GM02 / Solo · pick a level",
+    "x": 1580,
+    "y": 200,
+    "w": 1440,
+    "h": 974,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:96820",
+        "name": "Zumpo/Header",
+        "w": 1312,
+        "h": 104,
+        "component": "Zumpo/Header",
+        "componentId": "4:39",
+        "overrides": [
+          {
+            "path": "Navigation / Games",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Navigation / You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:96821",
+        "name": "Page heading",
+        "w": 1312,
+        "h": 121,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:96822",
+            "name": "Tag / COME ON IN",
+            "w": 109,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Sand"
+            },
+            "componentId": "24:6511",
+            "props": {
+              "Label": "ON YOUR OWN"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 109
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "162:96823",
+            "name": "Title",
+            "w": 1312,
+            "h": 42,
+            "hSize": "hug",
+            "text": "Gomoku",
+            "textStyle": "Zumpo/Title",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:96824",
+            "name": "Subtitle",
+            "w": 1312,
+            "h": 25,
+            "hSize": "hug",
+            "text": "Take turns placing stones. Five in a row wins.",
+            "textStyle": "Zumpo/Body",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:96825",
+        "name": "Dialog stage",
+        "w": 1312,
+        "h": 603,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "pad": [
+            "$Zumpo · UI:space/56",
+            0
+          ],
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:96826",
+            "name": "Pick a game.",
+            "w": 560,
+            "h": 491,
+            "hSize": "hug",
+            "component": "Zumpo/Card",
+            "variant": {
+              "Kind": "Focused"
+            },
+            "componentId": "9:400",
+            "props": {
+              "Description": "At Medium you have won 4 of 9 games. You are on a run of 2 wins.",
+              "Title": "Pick a game."
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 491,
+                "width": 560
+              }
+            ],
+            "slots": {
+              "Content": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:96826;35:13433;162:96831",
+                  "name": "Zumpo/Input",
+                  "w": 494,
+                  "h": 113,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "Blocks your open threes, but not a threat built two moves ahead.",
+                    "Value": "Medium",
+                    "Label": "Level"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 113,
+                      "width": 494
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:96826;35:13433;162:96832",
+                  "name": "Zumpo/Input",
+                  "w": 494,
+                  "h": 113,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "Play again swaps them, so the first move takes turns.",
+                    "Value": "Black, you move first",
+                    "Label": "Your stones"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 113,
+                      "width": 494
+                    }
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I162:96826;35:13433;162:96833",
+                  "name": "Actions",
+                  "w": 494,
+                  "h": 48,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:96826;35:13433;162:96834",
+                      "name": "Action / Start",
+                      "w": 75,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Primary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:15",
+                      "props": {
+                        "Label": "Start"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 75
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:96826;35:13433;162:96835",
+                      "name": "Action / Back to games",
+                      "w": 171,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Secondary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:18",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=back",
+                        "Show icon": true,
+                        "Label": "Back to games"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 171
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:96827",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:96828",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:96829",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

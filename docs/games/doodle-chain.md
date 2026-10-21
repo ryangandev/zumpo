@@ -309,4 +309,5 @@ Doodle Chain is not built yet; this is the plan, after [adding a game](../archit
 The canvas and the drawing toolbar are Draw & Guess's, moved from `client/src/draw-and-guess/` to a shared `client/src/drawing/` when this game first needs them.
 The rules will be covered by `doodle-chain-rules.test.ts` and `doodle-chain-flow.test.ts` in `server/tests/`.
 The screens are DC01-DC14 (game page, create room and room, desktop) and DC15-DC20 (phone) in [the Figma file](../design.md), section 12.
-Its new pieces are in Shared pieces under Doodle Chain pieces: `Zumpo/Chain entry` (one entry of a chain, by kind and layout), `Zumpo/Chain composer` (writing a line, and Done), `Zumpo/Heart button`, `Zumpo/Doodle Chain artwork` (to become Game artwork's Doodle Chain variant), and `Sample / Chain drawing`, the example drawings.
+Its new pieces are in Shared pieces under Doodle Chain pieces: `Zumpo/Chain entry` (one entry of a chain, by kind and layout), `Zumpo/Chain composer` (writing a line, and Done), `Zumpo/Heart button`, and `Sample / Chain drawing`, the example drawings.
+Its artwork is `Zumpo/Game artwork`'s `Game=Doodle Chain` variant, and its intro and card are the Doodle Chain variants of `Zumpo/Game intro` and `Zumpo/Game card`.

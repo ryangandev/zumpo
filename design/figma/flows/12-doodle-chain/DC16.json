@@ -1,0 +1,267 @@
+{
+  "format": 1,
+  "code": "DC16",
+  "title": "Phone · write the first line",
+  "id": "162:102928",
+  "section": "12 / Doodle Chain / complete flow",
+  "reviewNotes": [
+    "DC16 · Writing on a phone: Suggest and Done share the row. The turn bar’s label carries who is next, so a long line has the full width."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:102928",
+    "name": "DC16 / Phone · write the first line",
+    "x": 3560,
+    "y": 4082,
+    "w": 390,
+    "h": 625,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:102929",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Doodle Chain"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Step 1 of 4",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Sand"
+            },
+            "height": 32,
+            "width": 32
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:102930",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          },
+          {
+            "path": "Status / Board",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:10340",
+                    "toName": "MO09 / Guesser · canvas & guess input"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Players · 4",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13463",
+                    "toName": "MO15 / Room · players tab"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Chat",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13517",
+                    "toName": "MO16 / Room · chat tab"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:102931",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 144,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Main": "Write the first line",
+          "Category": false,
+          "Meta": "",
+          "Label": "Step 1 of 4 · Maya draws it next"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 144,
+            "width": 350
+          },
+          {
+            "path": "Answer",
+            "counterAxisAlignItems": "MIN"
+          },
+          {
+            "path": "Answer / Main",
+            "layoutGrow": 1,
+            "textAutoResize": "HEIGHT"
+          },
+          {
+            "path": "Answer / Meta",
+            "visible": false
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Label": "left",
+              "Time": "00:21",
+              "Tone": "Running"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:103050",
+        "name": "Step panel",
+        "w": 350,
+        "h": 213,
+        "wSize": "fill",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:103051",
+            "name": "Chain composer",
+            "w": 316,
+            "h": 179,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chain composer",
+            "variant": {
+              "State": "Editing",
+              "Layout": "Phone"
+            },
+            "componentId": "162:67647",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 179,
+                "width": 316
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:102935",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:102936",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}

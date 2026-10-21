@@ -1,0 +1,916 @@
+{
+  "format": 1,
+  "name": "Zumpo/Code race board",
+  "id": "162:64470",
+  "type": "COMPONENT_SET",
+  "key": "96b330991db900b0434f01a81a90232453866e64",
+  "description": "Another player's board. Board=Marks while the round runs: each row's Code marks only, never a digit. Board=Digits at the reveal and in the results, best first; Layout=Row on a phone. State: Guessing, Cracked (green), Out of guesses.",
+  "properties": {
+    "Name": {
+      "type": "text",
+      "default": "Maya"
+    },
+    "Status": {
+      "type": "text",
+      "default": "Cracked · +633"
+    },
+    "State": {
+      "type": "variant",
+      "default": "Guessing",
+      "options": [
+        "Guessing",
+        "Cracked",
+        "Out"
+      ]
+    },
+    "Board": {
+      "type": "variant",
+      "default": "Marks",
+      "options": [
+        "Marks",
+        "Digits"
+      ]
+    },
+    "Layout": {
+      "type": "variant",
+      "default": "Column",
+      "options": [
+        "Column",
+        "Row"
+      ]
+    }
+  },
+  "defaultVariant": "State=Guessing, Board=Marks, Layout=Column",
+  "variants": [
+    {
+      "name": "State=Guessing, Board=Marks, Layout=Column",
+      "id": "162:63162",
+      "props": {
+        "State": "Guessing",
+        "Board": "Marks",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63162",
+        "name": "State=Guessing, Board=Marks, Layout=Column",
+        "w": 109,
+        "h": 266,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": "$Zumpo · UI:space/12"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63163",
+            "name": "Head",
+            "w": 85,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63164",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63165",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:69809",
+            "name": "Board",
+            "w": 76,
+            "h": 196,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks board",
+            "componentId": "162:69758"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Board=Marks, Layout=Column",
+      "id": "162:63254",
+      "props": {
+        "State": "Cracked",
+        "Board": "Marks",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63254",
+        "name": "State=Cracked, Board=Marks, Layout=Column",
+        "w": 109,
+        "h": 266,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": "$Zumpo · UI:space/12"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63255",
+            "name": "Head",
+            "w": 85,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63256",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63257",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/green"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:69860",
+            "name": "Board",
+            "w": 76,
+            "h": 196,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks board",
+            "componentId": "162:69758"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Out, Board=Marks, Layout=Column",
+      "id": "162:63346",
+      "props": {
+        "State": "Out",
+        "Board": "Marks",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63346",
+        "name": "State=Out, Board=Marks, Layout=Column",
+        "w": 109,
+        "h": 266,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": "$Zumpo · UI:space/12"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63347",
+            "name": "Head",
+            "w": 85,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63348",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63349",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:69911",
+            "name": "Board",
+            "w": 76,
+            "h": 196,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code marks board",
+            "componentId": "162:69758"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Guessing, Board=Digits, Layout=Column",
+      "id": "162:63438",
+      "props": {
+        "State": "Guessing",
+        "Board": "Digits",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63438",
+        "name": "State=Guessing, Board=Digits, Layout=Column",
+        "w": 216,
+        "h": 478,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63439",
+            "name": "Head",
+            "w": 184,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63440",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63441",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:63479",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Board=Digits, Layout=Column",
+      "id": "162:63610",
+      "props": {
+        "State": "Cracked",
+        "Board": "Digits",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63610",
+        "name": "State=Cracked, Board=Digits, Layout=Column",
+        "w": 216,
+        "h": 478,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63611",
+            "name": "Head",
+            "w": 184,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63612",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63613",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/green"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:63651",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Out, Board=Digits, Layout=Column",
+      "id": "162:63782",
+      "props": {
+        "State": "Out",
+        "Board": "Digits",
+        "Layout": "Column"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63782",
+        "name": "State=Out, Board=Digits, Layout=Column",
+        "w": 216,
+        "h": 478,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63783",
+            "name": "Head",
+            "w": 184,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63784",
+                "name": "Name",
+                "w": 37,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63785",
+                "name": "Status",
+                "w": 85,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:63823",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Guessing, Board=Digits, Layout=Row",
+      "id": "162:63954",
+      "props": {
+        "State": "Guessing",
+        "Board": "Digits",
+        "Layout": "Row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:63954",
+        "name": "State=Guessing, Board=Digits, Layout=Row",
+        "w": 350,
+        "h": 428,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:63955",
+            "name": "Head",
+            "w": 118,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:63956",
+                "name": "Name",
+                "w": 118,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
+              },
+              {
+                "type": "TEXT",
+                "id": "162:63957",
+                "name": "Status",
+                "w": 118,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:63995",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Cracked, Board=Digits, Layout=Row",
+      "id": "162:64126",
+      "props": {
+        "State": "Cracked",
+        "Board": "Digits",
+        "Layout": "Row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:64126",
+        "name": "State=Cracked, Board=Digits, Layout=Row",
+        "w": 350,
+        "h": 428,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/green"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:64127",
+            "name": "Head",
+            "w": 118,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:64128",
+                "name": "Name",
+                "w": 118,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
+              },
+              {
+                "type": "TEXT",
+                "id": "162:64129",
+                "name": "Status",
+                "w": 118,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/green"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:64167",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Out, Board=Digits, Layout=Row",
+      "id": "162:64298",
+      "props": {
+        "State": "Out",
+        "Board": "Digits",
+        "Layout": "Row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "162:64298",
+        "name": "State=Out, Board=Digits, Layout=Row",
+        "w": 350,
+        "h": 428,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/16"
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:64299",
+            "name": "Head",
+            "w": 118,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:64300",
+                "name": "Name",
+                "w": 118,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Name"
+                },
+                "text": "Maya",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
+              },
+              {
+                "type": "TEXT",
+                "id": "162:64301",
+                "name": "Status",
+                "w": 118,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Status"
+                },
+                "text": "Cracked · +633",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:64339",
+            "name": "Board",
+            "w": 184,
+            "h": 396,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Small"
+            },
+            "componentId": "162:62737"
+          }
+        ]
+      }
+    }
+  ]
+}

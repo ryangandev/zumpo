@@ -1,0 +1,755 @@
+{
+  "format": 1,
+  "code": "SN07",
+  "title": "Room · not a match, locked out",
+  "id": "162:86076",
+  "section": "11 / Snap / complete flow",
+  "reviewNotes": [
+    "SN07 · Sam tapped the fish, which is only on his card. It shows as wrong on his screen alone, his card dims, and he cannot tap for 2 seconds. Nobody else is told, and he keeps his cards."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:86076",
+    "name": "SN07 / Room · not a match, locked out",
+    "x": 3120,
+    "y": 1850,
+    "w": 1440,
+    "h": 785,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:86077",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Snap"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "10 of 27 cards",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86078",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 615,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:86079",
+            "name": "Board stage",
+            "w": 944,
+            "h": 520,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:86080",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "The fish is only on your card",
+                  "Label": "Locked out",
+                  "Main": "Not a match",
+                  "Category": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Label": "locked out",
+                      "Time": "00:02",
+                      "Tone": "Urgent"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:86081",
+                "name": "Board panel",
+                "w": 944,
+                "h": 412,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/20",
+                  "pad": "$Zumpo · UI:space/24",
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:90532",
+                    "name": "Cards",
+                    "w": 688,
+                    "h": 362,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/48",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:90487",
+                        "name": "Middle card",
+                        "w": 320,
+                        "h": 362,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "column",
+                          "gap": "$Zumpo · UI:space/12",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:90488",
+                            "name": "Label",
+                            "w": 147,
+                            "h": 30,
+                            "wSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "162:90489",
+                                "w": 82,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Middle card",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:90490",
+                                "name": "Tag / 17 left",
+                                "w": 57,
+                                "h": 30,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "component": "Zumpo/Tag",
+                                "variant": {
+                                  "Tone": "Sand"
+                                },
+                                "componentId": "24:6511",
+                                "props": {
+                                  "Label": "17 left"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 30,
+                                    "width": 57
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:90461",
+                            "name": "Snap card / Default / Star, Bolt, Crown, Note, Moon, Cloud",
+                            "w": 320,
+                            "h": 320,
+                            "component": "Zumpo/Snap card",
+                            "variant": {
+                              "State": "Default",
+                              "Size": "Regular"
+                            },
+                            "componentId": "162:38970",
+                            "overrides": [
+                              {
+                                "path": "Spot 2 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 3 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 4 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 5 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 6 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:90524",
+                        "name": "Your card",
+                        "w": 320,
+                        "h": 362,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "column",
+                          "gap": "$Zumpo · UI:space/12",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:90525",
+                            "name": "Label",
+                            "w": 132,
+                            "h": 30,
+                            "wSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "162:90526",
+                                "w": 66,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Your card",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:90527",
+                                "name": "Tag / 2 won",
+                                "w": 58,
+                                "h": 30,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "component": "Zumpo/Tag",
+                                "variant": {
+                                  "Tone": "Sand"
+                                },
+                                "componentId": "24:6511",
+                                "props": {
+                                  "Label": "2 won"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 30,
+                                    "width": 58
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:90495",
+                            "name": "Snap card / Locked / Bow, Leaf, Eye, Fish, Star, Flower",
+                            "w": 320,
+                            "h": 320,
+                            "component": "Zumpo/Snap card",
+                            "variant": {
+                              "State": "Locked",
+                              "Size": "Regular"
+                            },
+                            "componentId": "162:39012",
+                            "overrides": [
+                              {
+                                "path": "Spot 1 / Symbol",
+                                "height": 76.8,
+                                "opacity": 0.3,
+                                "width": 76.8
+                              },
+                              {
+                                "path": "Spot 2 / Symbol",
+                                "height": 61.44,
+                                "opacity": 0.3,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 3 / Symbol",
+                                "height": 61.44,
+                                "opacity": 0.3,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 4 / Symbol",
+                                "height": 61.44,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 5 / Symbol",
+                                "height": 61.44,
+                                "opacity": 0.3,
+                                "width": 61.44
+                              },
+                              {
+                                "path": "Spot 6 / Symbol",
+                                "height": 61.44,
+                                "opacity": 0.3,
+                                "width": 61.44
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:86104",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 615,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:86105",
+                "name": "Zumpo/Scoreboard",
+                "w": 344,
+                "h": 304,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": "Heading / Count",
+                    "characters": "4 / 6"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Looking",
+                      "Host": true,
+                      "You": false,
+                      "Score": "4",
+                      "Icon": "24:4994",
+                      "Name": "Maya",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Looking",
+                      "Host": false,
+                      "You": true,
+                      "Score": "2",
+                      "Icon": "24:4994",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Looking",
+                      "Host": false,
+                      "You": false,
+                      "Score": "3",
+                      "Icon": "24:5071",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Looking",
+                      "Host": false,
+                      "You": false,
+                      "Score": "1",
+                      "Icon": "24:4994",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:86106",
+                "name": "Zumpo/Chat",
+                "w": 344,
+                "h": 287,
+                "hSize": "hug",
+                "component": "Zumpo/Chat",
+                "componentId": "9:334",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 287,
+                    "width": 344
+                  },
+                  {
+                    "path": "Messages / Message 1",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "where is the cloud",
+                      "Name": "Ryan",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 2",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "finally",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 3",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Name": "System",
+                      "Message": "Maya took a card! (+1)",
+                      "Kind": "Success"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "how",
+                      "Name": "Sam",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 5",
+                    "visible": false
+                  },
+                  {
+                    "path": "Messages / Message 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Chat input",
+                    "componentProperties": {
+                      "Placeholder": "Say something…",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:86107",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:86108",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:86109",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
