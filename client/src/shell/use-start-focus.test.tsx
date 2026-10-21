@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useRef, type ReactNode } from 'react';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { onTouch } from '../tests/phone';
 import { useStartFocus } from './use-start-focus';
 
 /** A stage with whatever controls a test gives it, and a chat and a dialog. */
@@ -31,6 +32,10 @@ function Stage({
 const card = <button>Card</button>;
 
 describe('useStartFocus', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('moves the focus to the first control as the game starts', () => {
     const { rerender } = render(<Stage started={false} controls={card} />);
     expect(document.body).toHaveFocus();
@@ -138,5 +143,11 @@ describe('useStartFocus', () => {
       />,
     );
     expect(screen.getByRole('group', { name: 'Board' })).toHaveFocus();
+  });
+
+  it('leaves the focus alone on a touch screen, which has no keys to send', () => {
+    onTouch();
+    render(<Stage started controls={card} />);
+    expect(document.body).toHaveFocus();
   });
 });

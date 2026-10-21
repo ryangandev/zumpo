@@ -1,4 +1,5 @@
 import { useEffect, useRef, type RefObject } from 'react';
+import { TOUCH } from './use-media-query';
 
 /** What the keyboard can reach; text fields are left out, see below. */
 const CONTROLS = [
@@ -22,6 +23,8 @@ const CONTROLS = [
  *
  * A text field is never chosen, because on a phone focusing one opens the
  * keyboard over the game; a game that wants its field focused does so itself.
+ * A touch screen is left alone: it has no keys to send, and the focus would
+ * only draw its ring around the board.
  */
 export function useStartFocus(
   started: boolean,
@@ -53,7 +56,9 @@ export function useStartFocus(
       waiting.current = started;
       was.current = started;
     }
-    if (!waiting.current) return;
+    // A touch screen has no keys to send there, and a focus put there would
+    // only draw its ring around the board.
+    if (!waiting.current || window.matchMedia(TOUCH).matches) return;
     const active = document.activeElement;
     if (active && active !== document.body) {
       // The game put the focus somewhere of its own, such as a text field.
