@@ -237,6 +237,14 @@ describe('a claim', () => {
     await taken;
     await settle();
     expect(snapRoom(harness, roomId).game.lockouts.size).toBe(0);
+    // The first claim took the card and its point; the later one nothing.
+    expect(bob.state).toMatchObject({
+      lastTake: { playerId: alice.playerId },
+      playerList: {
+        [alice.playerId]: { points: 1 },
+        [bob.playerId]: { points: 0 },
+      },
+    });
 
     // After the next card is turned, a claim still meant for the old one.
     const next = await waitForSnapState(bob, (s) => s.phase === 'finding');
