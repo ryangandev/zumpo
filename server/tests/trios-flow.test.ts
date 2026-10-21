@@ -14,6 +14,7 @@ import {
   waitForChat,
   waitForTriosState,
   type TestServer,
+  endNotices,
 } from './helpers/test-server.js';
 
 /** The cards of a trio on the table, as a player who spotted it would send. */
@@ -357,9 +358,13 @@ describe('a Trios game', () => {
     players[1].emit('trios:claim', roomId, aTrio(first));
     await found;
 
+    const endChat = collectChat(owner);
     const over = waitForTriosState(owner, (s) => s.lastGame !== null);
     players[1].emit('room:leave', roomId);
     expect((await over).lastGame).toMatchObject({ endedEarly: true, found: 1 });
+    // One notice says it ended early; no result for a game nobody finished.
+    await settle();
+    expect(endNotices(endChat)).toEqual(['game:interrupted']);
   });
 
   it('keeps a lockout through a refresh', async () => {

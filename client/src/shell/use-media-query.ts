@@ -17,6 +17,12 @@ export function useMediaQuery(query: string): boolean {
   );
 }
 
+/**
+ * A finger, not a mouse: a phone or a tablet, where sending a link means the
+ * system share sheet, and a tap on a board has no hover before it.
+ */
+export const TOUCH = '(pointer: coarse)';
+
 /** The phone layout's breakpoint, the same as the components' CSS. */
 export const PHONE = '(max-width: 640px)';
 
@@ -34,7 +40,4 @@ export const ONE_COLUMN = '(max-width: 1023px)';
  * and the turn bar takes its compact phone row. The same query is in the
  * layouts' CSS.
  */
-/** A screen played by touch, where a tap has no hover before it. */
-export const TOUCH = '(pointer: coarse)';
-
 export const SHORT_SCREEN = '(min-width: 641px) and (max-height: 500px)';

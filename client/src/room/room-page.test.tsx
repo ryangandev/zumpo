@@ -34,6 +34,8 @@ function server({ password = '' } = {}) {
   return fake;
 }
 
+const players = () => within(screen.getByRole('region', { name: /^Players/ }));
+
 describe('a room page', () => {
   it('renders tied results and the viewer’s place in Chinese', async () => {
     const fake = server();
@@ -118,6 +120,70 @@ describe('a room page', () => {
     expect(within(bar).getByText('Waiting room')).toBeInTheDocument();
     // A room has no links out but the wordmark, which asks first.
     expect(within(bar).queryByRole('link', { name: 'Games' })).toBeNull();
+  });
+
+  it('takes a seat in a locked room with the invite link’s key, then drops it from the address', async () => {
+    const fake = server({ password: 'k3y-from-link' });
+    const { router } = await renderApp(`${ROOM}#key=k3y-from-link`, { fake });
+
+    expect(fake.requests.find((r) => r.event === 'room:join')!.args).toEqual([
+      'r1',
+      'Ryan',
+      'k3y-from-link',
+      null,
+    ]);
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ hasPassword: true, inviteKey: 'k3y-from-link' }),
+      ),
+    );
+    expect(screen.queryByLabelText('Room password')).toBeNull();
+    await vi.waitFor(() => expect(router.state.location.hash).toBe(''));
+    expect(router.state.location.pathname).toBe(ROOM);
+  });
+
+  it('lists who is here before a first game, with no scores or Waiting yet', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+            p2: { username: 'Maya', points: 0, isConnected: false },
+          },
+        }),
+      ),
+    );
+    expect(players().getByText('Ryan')).toBeInTheDocument();
+    expect(players().queryByText('Waiting')).toBeNull();
+    expect(players().queryByText('0')).toBeNull();
+    // Away still says so: it is the one thing a lobby row has to tell.
+    expect(players().getByText('Away')).toBeInTheDocument();
+
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 90, isConnected: true },
+            p2: { username: 'Maya', points: 120, isConnected: true },
+          },
+          lastGame: {
+            endedEarly: false,
+            difficulty: 'Small',
+            rounds: 6,
+            standings: [
+              { playerId: 'p2', username: 'Maya', points: 120 },
+              { playerId: 'p1', username: 'Ryan', points: 90 },
+            ],
+          },
+        }),
+      ),
+    );
+    expect(players().getByText('90')).toBeInTheDocument();
   });
 
   it('asks for the password of a private room', async () => {
@@ -290,6 +356,13 @@ describe('a room page', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(
       'Zumpo 没有回应，请再试一次。',
     );
+    // Only a guest may move to watch.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ owner: { username: 'Maya', playerId: 'p2' } }),
+      ),
+    );
     await user.click(screen.getByRole('button', { name: '去观战' }));
     expect(screen.getByRole('alert')).toHaveTextContent('观战席已经满了。');
   });
@@ -373,8 +446,29 @@ describe('a room page', () => {
     expect(fake.sentArgs('room:leave')).toEqual([]);
   });
 
-  it('invites with the whole link, ready to copy', async () => {
+  it('copies the invite link at one click on a desktop, keeping the button’s width', async () => {
     const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+
+    await user.click(
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
+    );
+    expect(await navigator.clipboard.readText()).toBe(
+      `${window.location.origin}${ROOM}`,
+    );
+    expect(
+      screen.getAllByRole('button', { name: 'Link copied' })[0],
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('shows the invite link to copy by hand when the clipboard refuses', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(
+      new DOMException('Denied', 'NotAllowedError'),
+    );
     const fake = server();
     await renderApp(ROOM, { fake });
     act(() => fake.serverEmits('room:state', minesweeperState()));
@@ -385,7 +479,6 @@ describe('a room page', () => {
     const dialog = await screen.findByRole('dialog', {
       name: 'Invite friends',
     });
-
     expect(
       within(dialog).getByRole('textbox', { name: 'Room link' }),
     ).toHaveValue(`${window.location.origin}${ROOM}`);
@@ -394,6 +487,58 @@ describe('a room page', () => {
         within(dialog).getByRole('button', { name: 'Copy' }),
       ).toHaveFocus(),
     );
+  });
+
+  it('invites to a locked room with a link that carries its key', async () => {
+    const user = userEvent.setup();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ hasPassword: true, inviteKey: 'Zq9-k3y_8Bf2LmPw' }),
+      ),
+    );
+    await user.click(
+      screen.getAllByRole('button', { name: 'Invite friends' })[0]!,
+    );
+    expect(await navigator.clipboard.readText()).toBe(
+      `${window.location.origin}${ROOM}#key=Zq9-k3y_8Bf2LmPw`,
+    );
+  });
+
+  it('shares the invite link through the share sheet on a phone', async () => {
+    onPhone();
+    const share = vi.fn<(data: ShareData) => Promise<void>>();
+    share
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValueOnce(new DOMException('Cancelled', 'AbortError'));
+    Object.defineProperty(navigator, 'share', {
+      value: share,
+      configurable: true,
+    });
+    try {
+      const user = userEvent.setup();
+      const fake = server();
+      await renderApp(ROOM, { fake });
+      act(() => fake.serverEmits('room:state', minesweeperState()));
+
+      const invite = screen.getAllByRole('button', {
+        name: 'Invite friends',
+      })[0]!;
+      await user.click(invite);
+      expect(share).toHaveBeenCalledWith({
+        title: 'Friday table',
+        text: 'Join me for Minesweeper in Friday table.',
+        url: `${window.location.origin}${ROOM}`,
+      });
+      // A sheet closed without sharing is a change of mind: nothing opens.
+      await user.click(invite);
+      expect(share).toHaveBeenCalledTimes(2);
+      expect(screen.queryByRole('dialog')).toBeNull();
+    } finally {
+      Reflect.deleteProperty(navigator, 'share');
+    }
   });
 
   it('watches a game under way, with nothing to play and a seat for later', async () => {
@@ -456,18 +601,104 @@ describe('a room page', () => {
     expect(fake.requests.at(-1)).toEqual({ event: 'room:sit', args: ['r1'] });
   });
 
-  it('lets a player watch instead between games', async () => {
+  it('lets a guest watch instead between games', async () => {
     const user = userEvent.setup();
     const fake = server();
     fake.answer('room:watch', () => ok);
     await renderApp(ROOM, { fake });
-    act(() => fake.serverEmits('room:state', minesweeperState()));
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ owner: { username: 'Maya', playerId: 'p2' } }),
+      ),
+    );
 
     await user.click(screen.getByRole('button', { name: 'Watch instead' }));
     expect(fake.requests.at(-1)).toEqual({
       event: 'room:watch',
       args: ['r1'],
     });
+  });
+
+  it('never offers the host Watch instead, which would give the crown away', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', minesweeperState()));
+    expect(
+      screen.getByRole('heading', { name: 'Everyone’s here?' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Watch instead' })).toBeNull();
+
+    // Alone, after the others left, there is nobody to hand it to either.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          playerList: {
+            p1: { username: 'Ryan', points: 0, isConnected: true },
+          },
+        }),
+      ),
+    );
+    expect(screen.queryByRole('button', { name: 'Watch instead' })).toBeNull();
+  });
+
+  it('says the crown came to the viewer only when it did', async () => {
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    const alone = { p1: { username: 'Ryan', points: 0, isConnected: true } };
+    const cutShort = {
+      endedEarly: true,
+      difficulty: 'Small' as const,
+      rounds: 1,
+      standings: [{ playerId: 'p1', username: 'Ryan', points: 0 }],
+    };
+
+    // Ryan hosted the game, and Maya left it.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ isGameStarted: true, phase: 'picking', round: 1 }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ playerList: alone, lastGame: cutShort }),
+      ),
+    );
+    expect(
+      screen.getByRole('heading', { name: 'Everyone else left.' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Minesweeper needs at least 2 players, so the game has ended. Invite friends to start a new one.',
+      ),
+    ).toBeInTheDocument();
+
+    // Maya hosted the next one, and left it: the crown is Ryan's now.
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({
+          owner: { username: 'Maya', playerId: 'p2' },
+          isGameStarted: true,
+          phase: 'picking',
+          round: 1,
+        }),
+      ),
+    );
+    act(() =>
+      fake.serverEmits(
+        'room:state',
+        minesweeperState({ playerList: alone, lastGame: cutShort }),
+      ),
+    );
+    expect(
+      screen.getByText(
+        'Minesweeper needs at least 2 players, so the game has ended. You are the host now: invite friends to start a new one.',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('lets a spectator leave a game under way at once', async () => {
@@ -546,7 +777,7 @@ describe('a room page', () => {
     const dialog = screen.getByRole('dialog', { name: 'Leave Friday table?' });
     expect(
       within(dialog).getByText(
-        'Your seat goes with you. You can join again while a seat is open.',
+        'Your seat goes with you. You can join again while a seat is open. Maya becomes the host.',
       ),
     ).toBeInTheDocument();
 
@@ -578,7 +809,7 @@ describe('a room page', () => {
     await user.click(screen.getByRole('link', { name: 'Zumpo home' }));
     expect(
       within(screen.getByRole('dialog')).getByText(
-        /The game carries on without you/,
+        'Too few players would be left, so leaving ends the game for everyone. Maya becomes the host.',
       ),
     ).toBeInTheDocument();
   });

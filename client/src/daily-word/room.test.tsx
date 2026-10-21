@@ -246,6 +246,13 @@ describe('a Daily Word room', () => {
         { name: 'S, right place' },
       ),
     ).toBeInTheDocument();
+    // A finished board draws only the rows played, or one empty row.
+    expect(
+      screen.getByRole('group', { name: 'Maya’s board' }).children,
+    ).toHaveLength(1);
+    expect(
+      screen.getByRole('group', { name: 'Ryan’s board' }).children,
+    ).toHaveLength(1);
   });
 
   it('counts the words each player found at the end', async () => {

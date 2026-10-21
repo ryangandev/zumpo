@@ -1,10 +1,10 @@
-import { SEATS } from '../../../shared/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type {
   ChatMessageKind,
   RoomNotice,
 } from '../../../shared/wire-types.js';
 import type { DrawAndGuessState } from '../../models/types.js';
-import { isSpectator, seatCount } from '../../libs/rooms/seats.js';
+import { isSpectator } from '../../libs/rooms/seats.js';
 import type { ChatVerdict, GameContext, Room } from '../../libs/rooms/types.js';
 import { emitToRoom } from '../../libs/rooms/emit.js';
 import {
@@ -248,6 +248,11 @@ const createDrawAndGuessGameEngine = (
       (player) => player.isConnected,
     );
     if (room.game.wordCategory === '' || nobodyHere) {
+      // Nobody at the table can draw: the game stops, and says so, as any
+      // game cut short does. It posts no result.
+      if (nobodyHere) {
+        announce(room.roomId, 'alert', { type: 'game:interrupted' });
+      }
       endGame(room, { endedEarly: true });
       return;
     }
@@ -398,9 +403,8 @@ const createDrawAndGuessGameEngine = (
     game.wordCategory = '';
 
     emitState(room);
-    announce(room.roomId, endedEarly ? 'system' : 'success', {
-      type: 'game:ended',
-    });
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) announce(room.roomId, 'success', { type: 'game:ended' });
     emitLobbyRoomList();
   };
 
@@ -418,7 +422,10 @@ const createDrawAndGuessGameEngine = (
 
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['draw-and-guess'].min) {
+    if (
+      departureFrom({ gameType: 'draw-and-guess', seats: room.playerList })
+        .kind === 'cut-short'
+    ) {
       announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
       return;

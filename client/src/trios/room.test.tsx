@@ -214,5 +214,7 @@ describe('a Trios room', () => {
     expect(
       within(screen.getByRole('group', { name: 'Table' })).getAllByRole('img'),
     ).toHaveLength(12);
+    // The table marks the last trio; no strip repeats it.
+    expect(screen.queryByText(/^Last trio/)).toBeNull();
   });
 });

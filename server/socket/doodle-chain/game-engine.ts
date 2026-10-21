@@ -3,7 +3,7 @@ import type {
   DoodleChainContent,
   DoodleChainDraft,
 } from '../../models/types.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import {
   emitToPlayer,
@@ -45,9 +45,6 @@ import {
 } from './state.js';
 
 type DoodleChainRoom = Room<DoodleChainState>;
-
-/** Below this many players a game stops playing steps and shows what was made. */
-const FEWEST_TO_PLAY_ON = 2;
 
 /** A drawing's id: unique in the room, since `game` counts its games. */
 const drawingId = (game: DoodleChainState, chain: number, step: number) =>
@@ -547,10 +544,16 @@ const createDoodleChainGameEngine = (
       countHearts(room);
       return;
     }
-    if (seatCount(room) < FEWEST_TO_PLAY_ON) {
-      // Passing on from the last step, every step has been played, and the
-      // reveal comes anyway: nothing ends early.
-      if (game.phase === 'passing' && game.step >= game.steps) return;
+    // Below two players the steps stop, unless every step has been played
+    // and the reveal comes anyway.
+    const departure = departureFrom({
+      gameType: 'doodle-chain',
+      seats: room.playerList,
+      phase: game.phase,
+      step: game.step,
+      steps: game.steps,
+    });
+    if (departure.kind === 'cut-short') {
       endEarly(room);
       return;
     }

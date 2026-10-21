@@ -22,6 +22,21 @@ describe('room announcements', () => {
       'Sam 改名为 山姆。',
     ],
     [
+      { type: 'room:owner-left', name: 'Ana', owner: 'Ben' },
+      'Ana has left the room. Ben is now the host.',
+      'Ana 离开了房间，Ben 成为新房主。',
+    ],
+    [
+      { type: 'cb:started', rounds: 3, seconds: 180 },
+      'Game has started! 3 codes, 3 minutes each.',
+      '游戏开始！共 3 局，每局 3 分钟。',
+    ],
+    [
+      { type: 'dw:started', rounds: 3, seconds: 90 },
+      'Game has started! 3 words, 90 seconds each.',
+      '游戏开始！共 3 个单词，每个 90 秒。',
+    ],
+    [
       { type: 'dg:started', category: 'Animals' },
       'Game has started! The word category for this game is "Animals"!',
       '游戏开始！本局词语类别是“动物”！',

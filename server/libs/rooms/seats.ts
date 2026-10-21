@@ -5,7 +5,7 @@ import type {
   RoomStatus,
   SpectatorInfo,
 } from '../../../shared/wire-types.js';
-import { MAX_SPECTATORS } from '../../../shared/room.js';
+import { heirOf, MAX_SPECTATORS } from '../../../shared/room.js';
 import { getRemainingPhaseMs } from '../utils.js';
 import type { Room } from './types.js';
 
@@ -56,26 +56,6 @@ const seatOf = (room: Room, playerId: string): PlayerInfo => {
 const isSpectator = (room: Room, playerId: string): boolean =>
   Boolean(room.spectators[playerId]);
 
-/** The first of `members` who is here, else the first away; none if empty. */
-const firstHere = (
-  members: Record<string, { isConnected: boolean }>,
-): string | undefined => {
-  const entries = Object.entries(members);
-  return (entries.find(([, member]) => member.isConnected) ?? entries[0])?.[0];
-};
-
-/**
- * Who the crown passes to: somebody at the table before a spectator, and in
- * either somebody here before somebody away, who could not start a game.
- * `undefined` when nobody is left to take it.
- */
-const heirOf = (
-  room: Room,
-  { playersOnly = false }: { playersOnly?: boolean } = {},
-): string | undefined =>
-  firstHere(room.playerList) ??
-  (playersOnly ? undefined : firstHere(room.spectators));
-
 /**
  * What every game's lobby row says of a room, the game aside: each module
  * spreads this into its `toLobbyInfo` and adds its type and settings.
@@ -93,14 +73,15 @@ const lobbyBasics = (room: Room): Omit<LobbyRoomInfo, 'gameType'> => ({
 
 /**
  * What every game's snapshot says of a room, the game aside: who is at the
- * table and who is watching, and the clock.
+ * table and who is watching, the clock, and the key for its invite link.
  */
 const roomBasics = (
   room: Room,
 ): Pick<
   RoomState,
-  'playerList' | 'spectators' | 'isGameStarted' | 'phaseEndsInMs'
+  'playerList' | 'spectators' | 'isGameStarted' | 'phaseEndsInMs' | 'inviteKey'
 > => ({
+  inviteKey: room.inviteKey,
   playerList: room.playerList,
   spectators: room.spectators,
   isGameStarted: room.isGameStarted,

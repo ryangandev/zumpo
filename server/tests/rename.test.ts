@@ -25,6 +25,7 @@ const roomOf = (names: Record<string, string>, game: unknown = {}): Room => ({
   },
   maxPlayers: 8,
   password: '',
+  inviteKey: '',
   playerList: Object.fromEntries(
     Object.entries(names).map(([id, username]) => [
       id,

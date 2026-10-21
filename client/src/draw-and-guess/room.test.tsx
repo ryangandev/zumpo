@@ -196,7 +196,7 @@ describe('a Draw & Guess room', () => {
     );
     expect(
       screen.getByRole('heading', {
-        name: 'Ryan and Maya tie with 414 points.',
+        name: 'You tie with Maya on 414 points.',
       }),
     ).toBeInTheDocument();
     const places = within(screen.getByRole('list', { name: 'Standings' }))

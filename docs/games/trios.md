@@ -145,7 +145,7 @@ A hint is the same for everybody, so it changes nobody's chances; hints are clea
 ### The end
 
 A game ends when its 10 or 20 trios have been found, after the last one's 2 seconds, and the room reopens for a new one.
-The finished table stays under the results until the next game is dealt.
+The finished table stays under the results until the next game is dealt, its last trio marked with who took it; no line under it repeats that trio.
 **The winner is whoever found the most trios.**
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 

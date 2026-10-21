@@ -1,5 +1,4 @@
-import { SEATS } from '../../../shared/seats.js';
-import { seatCount } from '../../libs/rooms/seats.js';
+import { departureFrom } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import { gameOverNotice, resetPoints, standingsOf } from '../../libs/utils.js';
 import {
@@ -184,11 +183,14 @@ const createSnapGameEngine = (
     game.pile = [];
 
     ctx.rooms.emitState(room);
-    ctx.rooms.announce(
-      room.roomId,
-      'success',
-      gameOverNotice(standings, 'card'),
-    );
+    // A game cut short has no result: game:interrupted already said so.
+    if (!endedEarly) {
+      ctx.rooms.announce(
+        room.roomId,
+        'success',
+        gameOverNotice(standings, 'card'),
+      );
+    }
     ctx.rooms.emitLobby('snap');
   };
 
@@ -198,7 +200,10 @@ const createSnapGameEngine = (
     room.game.hands.delete(playerId);
     if (!room.isGameStarted) return;
 
-    if (seatCount(room) < SEATS['snap'].min) {
+    if (
+      departureFrom({ gameType: 'snap', seats: room.playerList }).kind ===
+      'cut-short'
+    ) {
       ctx.rooms.announce(room.roomId, 'alert', { type: 'game:interrupted' });
       endGame(room, { endedEarly: true });
     }

@@ -147,6 +147,7 @@ const makeRoom = (): Room => ({
   owner: { username: 'Owner', playerId: 'player-owner' },
   maxPlayers: 4,
   password: '',
+  inviteKey: '',
   playerList: {
     'player-owner': { username: 'Owner', points: 0, isConnected: true },
   },

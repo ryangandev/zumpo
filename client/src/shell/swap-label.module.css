@@ -1,0 +1,13 @@
+/* Both labels in one cell: the cell is as wide as the wider. */
+.swap {
+  display: inline-grid;
+  justify-items: center;
+}
+
+.swap > * {
+  grid-area: 1 / 1;
+}
+
+.hidden {
+  visibility: hidden;
+}

@@ -3,6 +3,12 @@ import type { WordCategory } from '../../../../shared/wire-types';
 
 const who = (name: string): string => name || '某位玩家';
 
+/** 整分钟说“3 分钟”，否则说“45 秒”，和设置里的说法一致。 */
+const duration = (seconds: number): string =>
+  seconds >= 60 && seconds % 60 === 0
+    ? `${seconds / 60} 分钟`
+    : `${seconds} 秒`;
+
 const list = (names: readonly string[]): string =>
   names.length < 2
     ? names.join('')
@@ -93,14 +99,14 @@ export const notices: typeof en = {
   'hush:discarded': (n) =>
     `离开玩家手里的 ${list(n.cards.map(String))} 已弃掉，不扣命。`,
   'dw:started': (n) =>
-    `游戏开始！共 ${n.rounds} 个单词，每个 ${n.seconds} 秒。`,
+    `游戏开始！共 ${n.rounds} 个单词，每个 ${duration(n.seconds)}。`,
   'dw:solved': (n) =>
     `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
   'dw:revealed': (n) => `答案是 ${n.word}。`,
   'cb:started': (n) =>
     n.rounds === 1
-      ? `游戏开始！共 1 局，限时 ${n.seconds} 秒。`
-      : `游戏开始！共 ${n.rounds} 局，每局 ${n.seconds} 秒。`,
+      ? `游戏开始！共 1 局，限时 ${duration(n.seconds)}。`
+      : `游戏开始！共 ${n.rounds} 局，每局 ${duration(n.seconds)}。`,
   'cb:cracked': (n) =>
     `${who(n.name)} 猜了 ${n.guesses} 次后猜中！(+${n.points})`,
   'cb:revealed': (n) => `答案是 ${n.code}。`,

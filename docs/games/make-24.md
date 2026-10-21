@@ -58,6 +58,7 @@ Every player gets the same hand at the same time and solves it on their own.
 Between games the room is in `waiting`.
 A hand ends early once every connected player has solved it.
 After the last hand's reveal the game ends, and the room reopens for a new one.
+The last hand's cards stay under the results, without its results: the standings already count them.
 
 ### Scoring
 

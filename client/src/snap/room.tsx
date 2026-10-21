@@ -87,7 +87,8 @@ function BetweenGames({ room }: { room: Room }) {
           starting={starting}
         />
         {/* SN09: the last middle card stays, with its taker, until the next
-            game is dealt. */}
+            game is dealt; the standings already count everybody's cards,
+            so the viewer's own card is not shown again. */}
         {state.middle && taker && take && (
           <SnapBoard
             middle={{
@@ -99,8 +100,7 @@ function BetweenGames({ room }: { room: Room }) {
               badge: taker.initials,
               badgeLabel: taker.label,
             }}
-            // Its taker's card is the last card itself.
-            mine={taker.mine ? null : myView(room, m)}
+            mine={null}
             inPlay={false}
           />
         )}

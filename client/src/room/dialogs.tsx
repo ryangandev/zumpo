@@ -1,32 +1,100 @@
 import { useRef } from 'react';
+import { departureFrom, heirOf } from '../../../shared/room';
+import type { AnyRoomState } from '../../../shared/wire-types';
 import { Button, Dialog, DialogClose, HowToPlay, TextField } from '../ui';
-import type { GameInfo } from '../games/catalog';
+import { scoreOf, type GameInfo } from '../games/catalog';
 import { FullRules } from '../games/full-rules';
-import { useMessages } from '../i18n';
+import { useMessages, type Messages } from '../i18n';
 import { useCopy } from '../shell/use-copy';
+import { SwapLabel } from '../shell/swap-label';
 import styles from './dialogs.module.css';
 
 /**
- * P11, P16: leaving asks first. Mid-game it costs the seat and the score
- * (P11); between games only the seat, for a way out other than Leave room
- * (P16).
+ * What leaving costs this viewer, as the room stands: watching costs
+ * nothing; mid-game the game's own rule (`departureFrom`, which the server
+ * acts on too) says whether it hands the game to somebody, ends it for
+ * everybody, or plays on without their seat and score; between games only
+ * the seat. A host is told who takes the crown; a host alone, only that the
+ * room closes, since there is nothing to come back to.
+ */
+export function leaveCost(
+  state: AnyRoomState,
+  playerId: string,
+  m: Messages,
+): string {
+  const rest = {
+    playerList: without(state.playerList, playerId),
+    spectators: without(state.spectators, playerId),
+  };
+  const heir = heirOf(rest);
+  const host = state.owner.playerId === playerId;
+  // Nobody to come back to: the room closes, and that is the whole cost.
+  if (host && !heir) return m.room.leaveCloses;
+  const cost = seatCost(state, playerId, rest.playerList, m);
+  if (!host || !heir) return cost;
+  const next = m.room.leaveNextHost(
+    (rest.playerList[heir] ?? rest.spectators[heir])?.username ?? '',
+  );
+  return m.room.both(cost, next);
+}
+
+/** What leaving costs a viewer at the table, or watching it. */
+function seatCost(
+  state: AnyRoomState,
+  playerId: string,
+  seats: AnyRoomState['playerList'],
+  m: Messages,
+): string {
+  const seat = state.playerList[playerId];
+  if (!seat) return m.room.leaveSpectating;
+  if (!state.isGameStarted) return m.room.leaveBetweenGames;
+  const departure = departureFrom(
+    state.gameType === 'doodle-chain'
+      ? {
+          gameType: state.gameType,
+          seats,
+          phase: state.phase,
+          step: state.step,
+          steps: state.steps,
+        }
+      : { gameType: state.gameType, seats },
+  );
+  switch (departure.kind) {
+    case 'decided':
+      return m.room.leaveResigns(seats[departure.winner]?.username ?? '');
+    case 'cut-short':
+      return m.room.leaveEndsGame;
+    case 'plays-on':
+      return seat.points === 0
+        ? m.room.leaveInGameNoScore
+        : m.room.leaveInGame(scoreOf(m, state.gameType, seat.points));
+  }
+}
+
+function without<T>(
+  members: Readonly<Record<string, T>>,
+  playerId: string,
+): Record<string, T> {
+  return Object.fromEntries(
+    Object.entries(members).filter(([id]) => id !== playerId),
+  );
+}
+
+/**
+ * P11, P16: leaving asks first, and says what it costs (`leaveCost`): mid-game
+ * the seat and the score, or the game itself (P11); between games only the
+ * seat, for a way out other than Leave room (P16).
  */
 export function LeaveDialog({
   open,
   roomName,
-  inGame,
-  spectating,
-  score,
+  cost,
   onStay,
   onLeave,
 }: {
   open: boolean;
   roomName: string;
-  inGame: boolean;
-  /** Watching: nothing is lost, in a game or not. */
-  spectating: boolean;
-  /** "180 points", "3 pairs". */
-  score: string;
+  cost: string;
   onStay: () => void;
   onLeave: () => void;
 }) {
@@ -39,13 +107,7 @@ export function LeaveDialog({
         if (!next) onStay();
       }}
       title={m.room.leaveTitle(roomName)}
-      description={
-        spectating
-          ? m.room.leaveSpectating
-          : inGame
-            ? m.room.leaveInGame(score)
-            : m.room.leaveBetweenGames
-      }
+      description={cost}
       initialFocus={stay}
       actions={
         <>
@@ -125,9 +187,9 @@ export function InviteDialog({
           <Button
             ref={copyButton}
             icon={copied ? 'check' : 'copy'}
-            onClick={copy}
+            onClick={() => void copy()}
           >
-            {copied ? m.room.copied : m.room.copy}
+            <SwapLabel second={copied} labels={[m.room.copy, m.room.copied]} />
           </Button>
           <DialogClose
             render={<Button variant="secondary">{m.room.done}</Button>}

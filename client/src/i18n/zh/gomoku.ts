@@ -47,8 +47,6 @@ export const gomoku: typeof en = {
   hoverHint: '鼠标移到点上会显示你的棋子，点击落子。',
   colorsNote: '黑方先走。这局之后交换颜色，你们轮流先手。',
   missedNotice: '你超时了，这一手跳过。下一手再超时，这局就判负。',
-  here: '在场',
-  hostHere: '房主 · 在场',
   away: '暂离',
   freeSeat: '空位',
   anybodyCanSit: '观战的人都可以坐下',
@@ -89,7 +87,6 @@ export const gomoku: typeof en = {
   fiveFrom: (from, to) => `五子连珠，${from} 到 ${to}`,
   drawStatus: '平局',
   both: (first, second) => `${first}${second}`,
-  startGame: (game) => `开始第 ${game} 局`,
 
   solo: {
     computer: '电脑',

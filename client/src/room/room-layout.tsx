@@ -23,7 +23,7 @@ import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
-import type { Seat } from './players';
+import { roomNameOf, type Seat } from './players';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -120,6 +120,10 @@ export function RoomLayout({
     lockedReason: reconnecting ? m.room.reconnecting : chat.lockedReason,
   };
 
+  // Before a first game every score is 0 and everybody is waiting: the rows
+  // say only who is here, and who is away.
+  const firstLobby = !state.isGameStarted && state.lastGame === null;
+
   const scoreboard = (
     <Scoreboard
       title={scoreTitle}
@@ -132,9 +136,9 @@ export function RoomLayout({
           name={seat.username}
           initials={initialsOf(seat.username)}
           tone={toneOf(seat.username)}
-          status={status}
+          status={firstLobby && rowState !== 'away' ? undefined : status}
           statusIcon={statusIcon}
-          score={showScores ? seat.points : undefined}
+          score={showScores && !firstLobby ? seat.points : undefined}
           host={seat.playerId === state.owner.playerId}
           you={seat.playerId === room.playerId}
           state={rowState}
@@ -191,7 +195,7 @@ export function RoomLayout({
         <RoomBar
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[state.gameType].name}
-          room={state.roomName}
+          room={roomNameOf(state, m)}
           phase={phase}
           onHowToPlay={() => setRules(true)}
           onLeave={reconnecting ? undefined : room.leave}
@@ -202,7 +206,7 @@ export function RoomLayout({
     >
       {reconnecting ? (
         <Notice tone="pending">
-          {m.room.reconnectingNotice(state.roomName, seconds)}
+          {m.room.reconnectingNotice(roomNameOf(state, m), seconds)}
         </Notice>
       ) : (
         <>

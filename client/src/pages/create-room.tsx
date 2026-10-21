@@ -55,9 +55,12 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const { socket, lost, name } = useConnectedSession();
   const navigate = useNavigate();
 
-  const [roomName, setRoomName] = useState(() =>
+  // The suggested name, kept as it is, names the room after whoever hosts
+  // it, so it follows the crown when this player leaves.
+  const [suggested] = useState(() =>
     m.createRoom.defaultName(name).slice(0, ROOM_NAME_MAX_LENGTH),
   );
+  const [roomName, setRoomName] = useState(suggested);
   const [nameMissing, setNameMissing] = useState(false);
   const nameField = useRef<HTMLInputElement>(null);
   const [more, setMore] = useState(false);
@@ -93,7 +96,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
     }
     const request: RoomCreateRequest = {
       gameType,
-      roomName: trimmed,
+      roomName: trimmed === suggested ? '' : trimmed,
       username: name,
       maxPlayers: seats,
       password,

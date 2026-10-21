@@ -58,8 +58,6 @@ export const gomoku = {
     'Black moves first. After this game the colours swap, so each of you opens every other game.',
   missedNotice:
     'You ran out of time, so your turn passed. Run out again on your next turn and you lose this game.',
-  here: 'Here',
-  hostHere: 'Host · here',
   away: 'Away',
   freeSeat: 'Free seat',
   anybodyCanSit: 'Anybody watching can sit here',
@@ -105,7 +103,6 @@ export const gomoku = {
   drawStatus: 'Draw',
   /** Two sentences of a result, one after the other. */
   both: (first: string, second: string) => `${first} ${second}`,
-  startGame: (game: number) => `Start game ${game}`,
 
   solo: {
     computer: 'Computer',

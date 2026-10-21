@@ -85,6 +85,40 @@ describe('joining and leaving a room', () => {
     ).resolves.toBeUndefined();
   });
 
+  it('admits a friend with the invite link’s key, which only members see', async () => {
+    const owner = await harness.connect();
+    const roomId = await createRoom(owner, { password: 'open-sesame' });
+
+    // The host's snapshot carries the key for the link; the lobby does not.
+    const { state } = await syncRoom(owner, roomId);
+    expect(state.inviteKey).toMatch(/^[\w-]{16}$/);
+    expect(state.inviteKey).not.toBe('open-sesame');
+    const lobby = await harness.connect();
+    expect(await lobbyView(lobby, roomId)).not.toHaveProperty('inviteKey');
+
+    const stranger = await harness.connect();
+    const refused = await request(
+      stranger,
+      'room:join',
+      roomId,
+      'Stranger',
+      'a-guessed-key-xyz',
+    );
+    expect(refused.error?.type).toBe('incorrectPassword');
+
+    const friend = await harness.connect();
+    await expect(
+      joinRoom(friend, roomId, 'Friend', state.inviteKey),
+    ).resolves.toBeUndefined();
+  });
+
+  it('gives an unlocked room no invite key', async () => {
+    const owner = await harness.connect();
+    const roomId = await createRoom(owner);
+    const { state } = await syncRoom(owner, roomId);
+    expect(state.inviteKey).toBe('');
+  });
+
   it('reports a room that does not exist rather than inventing one', async () => {
     const client = await harness.connect();
     const answer = await request(
@@ -235,7 +269,7 @@ describe('joining and leaving a room', () => {
       (state) => !state.playerList[owner.playerId],
     );
     const announced = waitForChat(guest, (message) =>
-      textOf(message).includes('owner'),
+      textOf(message).includes('host'),
     );
     owner.emit('room:leave', roomId);
 
