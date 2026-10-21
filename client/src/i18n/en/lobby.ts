@@ -12,7 +12,7 @@ export const lobby = {
   /** The game page's rules panel. */
   howToPlay: 'How to play',
   createRoom: 'Create a room',
-  emptyTitle: 'A little quiet in here.',
+  emptyTitle: 'No rooms yet.',
   emptyDescription:
     'Be the first to make a room. Bring a friend and get playing.',
   loadingTitle: 'Finding your people…',

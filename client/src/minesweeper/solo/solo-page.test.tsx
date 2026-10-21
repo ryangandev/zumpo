@@ -48,7 +48,7 @@ describe('Play solo', () => {
     expect(screen.getByText('剩余 10 颗雷')).toBeInTheDocument();
     expect(screen.getByText('第一次点击一定安全')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '插旗' }));
-    expect(screen.getByText('插旗模式：点击插旗')).toBeInTheDocument();
+    expect(screen.getByText('插旗已开启：点击插旗')).toBeInTheDocument();
   });
 
   it('is offered on the games that have it', async () => {
@@ -113,13 +113,13 @@ describe('a board on your own', () => {
     fireEvent.contextMenu(hidden[0]!);
     expect(turn().getByText('10 mines left')).toBeInTheDocument();
 
-    // Flag mode makes a click flag.
+    // Turning Flag on makes a click flag.
     await user.click(screen.getByRole('button', { name: 'Flag' }));
     expect(screen.getByRole('button', { name: 'Flag' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
-    expect(turn().getByText('Flag mode: a click flags')).toBeInTheDocument();
+    expect(turn().getByText('Flag is on: click to flag')).toBeInTheDocument();
     await user.click(hidden[1]!);
     expect(hidden[1]).toHaveAccessibleName(/: flagged$/);
     expect(turn().getByText('9 mines left')).toBeInTheDocument();
@@ -179,15 +179,17 @@ describe('a board on your own', () => {
     expect(screen.getByText(/^10 mines\. Best: \d:\d\d$/)).toBeInTheDocument();
   });
 
-  it('flags with Flag mode on a phone', async () => {
+  it('turns Flag on to flag with a tap on a phone', async () => {
     onPhone();
     const user = userEvent.setup();
     smallBoard(7);
     await renderApp('/games/minesweeper/solo?board=Small');
     await user.click(cell(5, 5));
-    expect(turn().getByText('Long-press to flag')).toBeInTheDocument();
+    expect(
+      turn().getByText('Long-press or turn on Flag to flag'),
+    ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Flag' }));
-    expect(turn().getByText('Flag mode: a tap flags')).toBeInTheDocument();
+    expect(turn().getByText('Flag is on: tap to flag')).toBeInTheDocument();
     // A phone keeps to the board: no side cards.
     expect(screen.queryByText('This game')).toBeNull();
   });

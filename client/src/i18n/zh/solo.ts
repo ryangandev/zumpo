@@ -6,7 +6,7 @@ export const solo: typeof en = {
   leaveTitle: '离开这局？',
   stay: '留下',
   linkCopied: '链接已复制',
-  challengeFriend: '挑战朋友',
+  challengeFriend: '挑战好友',
   copyChallengeLink: '复制挑战链接',
   today: '今天',
   yesterday: '昨天',

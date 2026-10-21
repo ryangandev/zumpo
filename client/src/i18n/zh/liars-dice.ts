@@ -55,7 +55,7 @@ export const liarsDice: typeof en = {
   resultDetail: (rounds, dice) => `${rounds} 轮，每人 ${dice} 颗骰子。`,
   leftGame: '已离开游戏',
   lastCall: '最后一次“吹牛”',
-  alone: '叫上朋友更好玩。',
+  alone: '叫上好友更好玩。',
   setup: (players, dice) =>
     `${players} 人，每人 ${dice} 颗骰子。大家暗中摇骰，然后对全桌叫点；不相信对方时，就喊“吹牛”。`,
   guestSetup: (players, dice) => `${players} 人，每人 ${dice} 颗骰子。`,

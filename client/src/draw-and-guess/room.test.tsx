@@ -293,7 +293,7 @@ describe('a Draw & Guess room', () => {
       const lines = within(board().getByRole('log', { name: 'Chat' }))
         .getAllByRole('listitem')
         .map((line) => line.textContent);
-      expect(lines).toEqual(['Samcat', 'Samdog', 'Ryan (you)turtl']);
+      expect(lines).toEqual(['Samcat', 'Samdog', 'Youturtl']);
       const mine = board().getByText('turtl').closest('li')!;
       expect(mine.className).toMatch(/flash/);
       expect(board().getByText('dog').closest('li')!.className).not.toMatch(

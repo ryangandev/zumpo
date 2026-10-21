@@ -127,7 +127,7 @@ export const gomoku: typeof en = {
     youPlay: '你执',
     stonesOnBoard: '棋盘上的子',
     movesLabel: '手数',
-    onDevice: '这台设备上',
+    onDevice: '本机记录',
     gamesWonAt: (level) => `${level}难度胜局`,
     gamesWonCount: (wins, games) => `${games} 局胜 ${wins}`,
     currentRun: '当前连胜',

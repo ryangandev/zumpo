@@ -168,7 +168,7 @@ A word not found is worth nothing, and nothing is ever taken away.
 Players who share the top score share the win, and the results rank a shared score in one place (1, 1, 3).
 The results also say how many of the words each player found.
 
-The chat says when somebody finds the word ("Maya got it in 3! (+431)"), as a quiet score line, what the word was at each reveal, and who won.
+The chat says when somebody finds the word ("Maya got it in 3, +431."), as a quiet score line, what the word was at each reveal, and who won.
 
 ## Rules the server enforces
 

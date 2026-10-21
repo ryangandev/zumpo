@@ -38,7 +38,7 @@ export const room: typeof en = {
   turnTitle: '(!) 轮到你了 · Zumpo',
   leaveTitle: (name) => `离开“${name}”？`,
   leaveInGame: (score) =>
-    `游戏会继续，但你的座位和 ${score} 会被移除。还有空位时，你可以再次加入。`,
+    `游戏会继续，但你的座位和${score}会被移除。还有空位时，你可以再次加入。`,
   leaveInGameNoScore:
     '游戏会继续，但你的座位会被移除。还有空位时，你可以再次加入。',
   leaveEndsGame: '剩下的玩家会不够，所以你离开后，这一局对所有人都会结束。',
@@ -72,7 +72,7 @@ export const room: typeof en = {
   spectatingNotice: '你正在观战。这一局结束后可以加入玩家席。',
   rulesTitle: (game) => `${game}玩法`,
   backToGame: '返回游戏',
-  invite: '邀请朋友',
+  invite: '邀请好友',
   inviteDescription: (name) =>
     `还有空位时，任何拿到链接的人都可以加入“${name}”。`,
   copied: '已复制',
@@ -81,20 +81,20 @@ export const room: typeof en = {
   copy: '复制',
   done: '完成',
   roomLink: '房间链接',
-  pickedName: (name) => `你现在叫 ${name}。起一个朋友们认得出的名字吧。`,
+  pickedName: (name) => `你现在叫${name}。起一个好友们认得出的名字吧。`,
   waitingForHost: (name) => `等待 ${name} 开始游戏。`,
   guestSetup: (setup) => `${setup}只有房主可以开始游戏。`,
   needsPlayers: (game, fewest) =>
-    `${game}至少需要 ${fewest} 人。分享房间，邀请朋友加入就能开始。`,
+    `${game}至少需要 ${fewest} 人。分享房间，邀请好友加入就能开始。`,
   everyoneHere: '大家到齐了吗？',
   here: (names) => `${names} 已经在房间里了。`,
   starting: '正在开始游戏…',
   start: '开始游戏',
   everyoneLeft: '其他人都离开了。',
   endedEarly: (game) =>
-    `${game}至少需要 2 人，因此这一局已结束。邀请朋友开始新的一局吧。`,
+    `${game}至少需要 2 人，因此这一局已结束。邀请好友开始新的一局吧。`,
   endedEarlyNewHost: (game) =>
-    `${game}至少需要 2 人，因此这一局已结束。你现在是房主，邀请朋友开始新的一局吧。`,
+    `${game}至少需要 2 人，因此这一局已结束。你现在是房主，邀请好友开始新的一局吧。`,
   waitingForAgain: (name) => `等待 ${name} 开始下一局。`,
   playAgain: '再玩一局',
   nextGame: '下一局',

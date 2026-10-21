@@ -466,7 +466,7 @@ describe('a game’s page', () => {
   it('leaves Create a room to the intro when no room is open', async () => {
     const { fake } = await renderApp('/games/minesweeper');
     act(() => fake.serverEmits('lobby:rooms', 'minesweeper', []));
-    expect(screen.getByText('A little quiet in here.')).toBeInTheDocument();
+    expect(screen.getByText('No rooms yet.')).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: 'Create a room' })).toHaveLength(
       1,
     );
@@ -480,7 +480,7 @@ describe('a game’s page', () => {
 
   it('says so when a game does not exist', async () => {
     await renderApp('/games/chess');
-    expect(screen.getByText('A little lost?')).toBeInTheDocument();
+    expect(screen.getByText('Lost?')).toBeInTheDocument();
   });
 });
 

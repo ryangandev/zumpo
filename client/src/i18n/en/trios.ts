@@ -1,4 +1,5 @@
 import { itemAt } from '../../../../shared/list';
+import { COLOUR_WORDS } from '../../../../shared/trios';
 import type { CardFeatures, Feature } from '../../../../shared/trios';
 import { plural } from './plural';
 
@@ -6,7 +7,7 @@ const counts = ['one', 'two', 'three'];
 const value = (feature: Feature, f: CardFeatures, many: boolean): string => {
   switch (feature) {
     case 'colour':
-      return f.colour;
+      return COLOUR_WORDS[f.colour];
     case 'shape':
       return many ? `${f.shape}s` : `a ${f.shape}`;
     case 'fill':
@@ -32,7 +33,7 @@ export const trios = {
   you: 'you',
   by: (name: string) => `by ${name}`,
   resultDetail: (count: number) => `${plural(count, 'trio')}.`,
-  alone: 'A little better with company.',
+  alone: 'Better with company.',
   setup: (players: number, count: number) =>
     `${plural(players, 'player')}, ${plural(count, 'trio')}. Everybody looks at the same twelve cards; the first to pick a trio takes it.`,
   guestSetup: (players: number, count: number) =>

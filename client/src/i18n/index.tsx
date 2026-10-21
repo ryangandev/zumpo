@@ -74,7 +74,7 @@ export function useLocale(): Pick<LocaleState, 'locale' | 'setLocale'> {
   return { locale, setLocale };
 }
 
-/** The catalog in the player's language: `m.room.leave`, `m.chat.you(name)`. */
+/** The catalog in the player's language: `m.room.leave`, `m.chat.you`. */
 export function useMessages(): Messages {
   return useLocaleState().messages;
 }
