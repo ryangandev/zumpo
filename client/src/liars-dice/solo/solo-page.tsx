@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DICE_PER_PLAYER,
   type DicePerPlayer,
@@ -6,18 +6,16 @@ import {
 import {
   BidPicker,
   Button,
-  ButtonLink,
   Card,
   ChipField,
   StatList,
   TurnBar,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
 import { useSession } from '../../net/session';
 import { listNames, ordinal } from '../../room/players';
-import { FormPage } from '../../shell/form-page';
+import { ChangeSettings } from '../../solo/change-settings';
 import { SoloLayout } from '../../solo/solo-layout';
 import { useSoloTime } from '../../solo/solo-time';
 import { SoloResult } from '../../solo/solo-result';
@@ -57,100 +55,83 @@ const BOT_COUNTS = Array.from(
   (_, index) => MIN_BOTS + index,
 );
 
-/** "5 of 10 games won", or nothing before the first game. */
+/** "You have won 5 of 10 games here.", or nothing before the first game. */
 function recordLine(record: LiarsDiceRecord, m: Messages): string | null {
   if (record.games === 0) return null;
   return m.liarsDice.solo.record(record.wins, record.games, record.run);
 }
 
 /**
- * LD01-LD06, LD13: Liar's Dice on your own, against bots. It all runs here:
- * nothing reaches the server.
+ * LD02-LD06, LD13: Liar's Dice on your own, against bots, straight away at
+ * the table picked last here. It all runs here: nothing reaches the server.
  */
 export function LiarsDiceSolo() {
   // Each game is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{
-    picks: SoloPicks;
-    game: number;
-  } | null>(null);
-  if (playing === null) {
-    return (
-      <TablePicker
-        onStart={(picks) => {
-          writePicks(picks);
-          setPlaying({ picks, game: 0 });
-        }}
-      />
-    );
-  }
+  const [playing, setPlaying] = useState(() => ({
+    picks: readPicks(),
+    game: 0,
+  }));
   return (
     <SoloTable
       key={playing.game}
       picks={playing.picks}
       onPlayAgain={() => setPlaying({ ...playing, game: playing.game + 1 })}
-      onChangeTable={() => setPlaying(null)}
+      onChangeTable={(picks) => {
+        writePicks(picks);
+        setPlaying({ picks, game: playing.game + 1 });
+      }}
     />
   );
 }
 
-/** LD01: how many bots, and how many dice each. */
-function TablePicker({ onStart }: { onStart: (picks: SoloPicks) => void }) {
-  const game = gameInfo('liars-dice');
+/** LD01, behind Change table: how many bots, and how many dice each. */
+function ChangeTable({
+  picks,
+  onPlay,
+}: {
+  picks: SoloPicks;
+  onPlay: (picks: SoloPicks) => void;
+}) {
   const m = useMessages();
-  const text = m.games.of[game.type];
-  const [picks, setPicks] = useState(readPicks);
-  const description =
-    recordLine(readRecord(), m) ?? m.liarsDice.solo.description;
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
+    <ChangeSettings
+      label={m.liarsDice.solo.changeTable}
       title={m.liarsDice.solo.pickTable}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart(picks);
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.liarsDice.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.shell.backToGames}
-          </ButtonLink>
-        </>
-      }
+      description={recordLine(readRecord(), m) ?? m.liarsDice.solo.description}
+      settings={picks}
+      onPlay={onPlay}
     >
-      <ChipField
-        label={m.liarsDice.solo.bots}
-        options={BOT_COUNTS.map((count) => ({
-          value: count,
-          label: String(count),
-          name: m.liarsDice.solo.botCount(count),
-        }))}
-        value={picks.bots}
-        onValueChange={(bots: number) => setPicks({ ...picks, bots })}
-      />
-      <ChipField
-        label={m.liarsDice.solo.diceEach}
-        helper={
-          picks.dicePerPlayer === 3
-            ? m.liarsDice.solo.quick
-            : m.liarsDice.solo.classic
-        }
-        options={DICE_PER_PLAYER.map((count) => ({
-          value: count,
-          label: m.liarsDice.solo.diceCount(count),
-        }))}
-        value={picks.dicePerPlayer}
-        onValueChange={(dicePerPlayer: DicePerPlayer) =>
-          setPicks({ ...picks, dicePerPlayer })
-        }
-      />
-    </FormPage>
+      {(picked, pick) => (
+        <>
+          <ChipField
+            label={m.liarsDice.solo.bots}
+            options={BOT_COUNTS.map((count) => ({
+              value: count,
+              label: String(count),
+              name: m.liarsDice.solo.botCount(count),
+            }))}
+            value={picked.bots}
+            onValueChange={(bots: number) => pick({ ...picked, bots })}
+          />
+          <ChipField
+            label={m.liarsDice.solo.diceEach}
+            helper={
+              picked.dicePerPlayer === 3
+                ? m.liarsDice.solo.quick
+                : m.liarsDice.solo.classic
+            }
+            options={DICE_PER_PLAYER.map((count) => ({
+              value: count,
+              label: m.liarsDice.solo.diceCount(count),
+            }))}
+            value={picked.dicePerPlayer}
+            onValueChange={(dicePerPlayer: DicePerPlayer) =>
+              pick({ ...picked, dicePerPlayer })
+            }
+          />
+        </>
+      )}
+    </ChangeSettings>
   );
 }
 
@@ -175,7 +156,7 @@ function SoloTable({
 }: {
   picks: SoloPicks;
   onPlayAgain: () => void;
-  onChangeTable: () => void;
+  onChangeTable: (picks: SoloPicks) => void;
 }) {
   const m = useMessages();
   const { name } = useSession();
@@ -225,49 +206,7 @@ function SoloTable({
       }
       stage={
         <>
-          {over ? (
-            <SoloResult
-              celebrate={youWon(game)}
-              title={
-                youWon(game)
-                  ? m.liarsDice.solo.wonIn(game.round)
-                  : m.liarsDice.solo.outIn(ordinal(place, m), of)
-              }
-              body={
-                youWon(game)
-                  ? m.liarsDice.solo.lastAtTable(you.diceLeft)
-                  : m.liarsDice.solo.stillIn(
-                      listNames(stillIn, m),
-                      stillIn.length,
-                      game.round,
-                    )
-              }
-              stats={[
-                {
-                  label: m.liarsDice.solo.place,
-                  value: m.liarsDice.solo.placeOf(ordinal(place, m), of),
-                },
-                { label: m.liarsDice.solo.rounds, value: String(game.round) },
-                {
-                  label: m.liarsDice.solo.gamesWon,
-                  value: m.liarsDice.solo.gamesWonCount(
-                    shown.wins,
-                    shown.games,
-                  ),
-                },
-              ]}
-              actions={
-                <>
-                  <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
-                  <Button variant="secondary" onClick={onChangeTable}>
-                    {m.liarsDice.solo.changeTable}
-                  </Button>
-                </>
-              }
-            />
-          ) : (
-            <TurnBar {...turnBar(game, m)} />
-          )}
+          <TurnBar {...turnBar(game, m)} />
           <Table
             seats={seatsOf(game, name)}
             round={game.round}
@@ -293,6 +232,33 @@ function SoloTable({
           />
         </>
       }
+      result={
+        over && (
+          <SoloResult
+            celebrate={youWon(game)}
+            title={
+              youWon(game)
+                ? m.liarsDice.solo.wonIn(game.round)
+                : m.liarsDice.solo.outIn(ordinal(place, m), of)
+            }
+            body={
+              youWon(game)
+                ? m.liarsDice.solo.lastAtTable(you.diceLeft)
+                : m.liarsDice.solo.stillIn(
+                    listNames(stillIn, m),
+                    stillIn.length,
+                    game.round,
+                  )
+            }
+            actions={
+              <>
+                <Button onClick={onPlayAgain}>{m.room.playAgain}</Button>
+                <ChangeTable picks={picks} onPlay={onChangeTable} />
+              </>
+            }
+          />
+        )
+      }
       side={
         <>
           {!over && (
@@ -300,7 +266,6 @@ function SoloTable({
               <StatList
                 className={styles.stats}
                 stats={[
-                  { label: m.liarsDice.solo.round, value: String(game.round) },
                   {
                     label: m.liarsDice.solo.diceOnTable,
                     value: String(diceOnTable(game)),
@@ -376,7 +341,7 @@ function YourMove({
 
 function turnBar(game: SoloGame, m: Messages): TurnBarProps {
   const who = whoIn(m);
-  if (game.phase === 'reveal' && game.reveal) {
+  if (game.phase !== 'bidding' && game.reveal) {
     return { ...revealBar(game.reveal, who, m), kind: 'status' };
   }
   const latest = currentBid(game);

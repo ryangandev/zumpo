@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import {
   formatExpression,
@@ -9,21 +9,15 @@ import {
 import { newSeed, SEED_PATTERN } from '../../../../shared/seed';
 import {
   Button,
-  ButtonLink,
   Card,
   StatList,
   TurnBar,
   type Stat,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo, soloPath } from '../../games/catalog';
+import { soloPath } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
-import { FormPage } from '../../shell/form-page';
-import {
-  ChallengeButton,
-  ChallengeCard,
-  challengeLink,
-} from '../../solo/challenge';
+import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import {
   dayLabel,
   formatDuration,
@@ -67,90 +61,30 @@ const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
 
 /**
- * T01-T05, T11: Make 24 on your own, a run of ten hands against one clock.
- * `?seed=` is a challenge: the same ten hands somebody else played. It all
- * runs here: nothing reaches the server.
+ * T02-T05, T11: Make 24 on your own, a run of ten hands against one clock,
+ * dealt as the page opens. `?seed=` is a challenge: the same ten hands
+ * somebody else played. It all runs here: nothing reaches the server.
  */
 export function Make24Solo() {
   const [params, setParams] = useSearchParams();
-  const linked = params.get('seed');
   // Each run is a fresh mount, so nothing carries over from the last.
-  const [playing, setPlaying] = useState<{ seed: string; run: number } | null>(
-    null,
-  );
-
-  if (playing === null) {
-    return (
-      <RunPicker
-        challenge={isSeed(linked)}
-        onStart={() =>
-          setPlaying({ seed: isSeed(linked) ? linked : newSeed(), run: 0 })
-        }
-      />
-    );
-  }
+  const [playing, setPlaying] = useState(() => {
+    const linked = params.get('seed');
+    return isSeed(linked)
+      ? { seed: linked, challenge: true, run: 0 }
+      : { seed: newSeed(), challenge: false, run: 0 };
+  });
   return (
     <RunView
       key={playing.run}
       seed={playing.seed}
+      challenge={playing.challenge}
       onPlayAgain={() => {
         // A challenge is played once; the next run is a new one.
-        if (linked !== null) setParams({}, { replace: true });
-        setPlaying({ seed: newSeed(), run: playing.run + 1 });
+        if (playing.challenge) setParams({}, { replace: true });
+        setPlaying({ seed: newSeed(), challenge: false, run: playing.run + 1 });
       }}
     />
-  );
-}
-
-/** T01: what a run is, and the best on this device. */
-function RunPicker({
-  challenge,
-  onStart,
-}: {
-  challenge: boolean;
-  onStart: () => void;
-}) {
-  const m = useMessages();
-  const game = gameInfo('make-24');
-  const text = m.games.of[game.type];
-  const best = readBest(BEST_KEY);
-  const description = m.make24.solo.description(challenge);
-
-  return (
-    <FormPage
-      heading={{
-        eyebrow: m.make24.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
-      title={m.make24.solo.tenHandsClock}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart();
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.make24.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.make24.solo.backToGames}
-          </ButtonLink>
-        </>
-      }
-    >
-      <StatList
-        className={styles.stats}
-        stats={[
-          { label: m.make24.solo.hands, value: String(RUN_HANDS) },
-          {
-            label: m.make24.solo.yourBestOnDevice,
-            value: best === null ? m.make24.solo.notYet : formatDuration(best),
-            tone: best === null ? 'muted' : undefined,
-          },
-        ]}
-      />
-    </FormPage>
   );
 }
 
@@ -165,9 +99,12 @@ interface Finish {
 /** T02-T05, T11: the run, from the first hand to its results. */
 function RunView({
   seed,
+  challenge,
   onPlayAgain,
 }: {
   seed: string;
+  /** Dealt from somebody else's link. */
+  challenge: boolean;
   onPlayAgain: () => void;
 }) {
   const m = useMessages();
@@ -203,8 +140,6 @@ function RunView({
     }
   };
 
-  const link = challengeLink(soloPath('make-24'), { seed });
-
   if (finish) {
     const { timeMs, solved, skipped, fastestMs } = summary(run);
     const time = formatDuration(timeMs);
@@ -214,42 +149,48 @@ function RunView({
         phase={{ tone: 'lime', label: m.make24.solo.runComplete }}
         stage={
           <>
-            <SoloResult
-              title={m.make24.solo.finishedIn(RUN_HANDS, time)}
-              body={finishBody(finish, m)}
-              stats={[
-                { label: m.make24.solved, value: String(solved) },
-                {
-                  label: m.make24.solo.skipped,
-                  value: skipped
-                    ? m.make24.solo.skippedPenalty(
-                        skipped,
-                        formatDuration(skipped * SKIP_PENALTY_MS),
-                      )
-                    : '0',
-                },
-                {
-                  label: m.make24.solo.fastestHand,
-                  value:
-                    fastestMs === null
-                      ? m.make24.solo.none
-                      : formatDuration(fastestMs),
-                  tone: fastestMs === null ? 'muted' : undefined,
-                },
-              ]}
-              actions={
-                <>
-                  <Button onClick={onPlayAgain}>
-                    {m.make24.solo.playAgain}
-                  </Button>
-                  <ChallengeButton link={link} />
-                </>
-              }
+            <TurnBar
+              label={m.make24.hand(RUN_HANDS, RUN_HANDS)}
+              kind="status"
+              main={m.make24.solo.solvedOf(solved, RUN_HANDS)}
+              countdown={{
+                seconds: Math.floor(timeMs / 1000),
+                label: m.make24.solo.runTime,
+                waiting: true,
+              }}
             />
             <TablePanel>
               <EveryHand results={run.results} />
             </TablePanel>
           </>
+        }
+        result={
+          <SoloResult
+            title={m.make24.solo.finishedIn(RUN_HANDS, time)}
+            body={finishBody(finish, m)}
+            stats={[
+              {
+                label: m.make24.solo.skipped,
+                value: skipped
+                  ? m.make24.solo.skippedPenalty(
+                      skipped,
+                      formatDuration(skipped * SKIP_PENALTY_MS),
+                    )
+                  : '0',
+              },
+              {
+                label: m.make24.solo.fastestHand,
+                value:
+                  fastestMs === null
+                    ? m.make24.solo.none
+                    : formatDuration(fastestMs),
+                tone: fastestMs === null ? 'muted' : undefined,
+              },
+            ]}
+            actions={
+              <Button onClick={onPlayAgain}>{m.make24.solo.playAgain}</Button>
+            }
+          />
         }
         side={
           <>
@@ -261,7 +202,7 @@ function RunView({
             </Card>
             <ChallengeCard
               description={m.make24.solo.challengeDescription(time)}
-              link={link}
+              text={challengeLink(soloPath('make-24'), { seed })}
             />
           </>
         }
@@ -275,7 +216,10 @@ function RunView({
     <SoloLayout
       gameType="make-24"
       time={clock}
-      phase={{ tone: 'blue', label: m.make24.hand(run.hand + 1, RUN_HANDS) }}
+      phase={{
+        tone: 'blue',
+        label: challenge ? m.solo.challenge : m.make24.solo.tenHands,
+      }}
       stage={
         <>
           <TurnBar {...turnBar(run, now, last, m)} />
@@ -324,10 +268,6 @@ function RunView({
             <StatList
               className={styles.stats}
               stats={[
-                {
-                  label: m.make24.solo.hand,
-                  value: m.make24.solo.handProgress(run.hand + 1, RUN_HANDS),
-                },
                 { label: m.make24.solved, value: String(summary(run).solved) },
                 {
                   label: m.make24.solo.skipped,

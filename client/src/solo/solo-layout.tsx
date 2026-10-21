@@ -15,9 +15,20 @@ export interface SoloLayoutProps {
   gameType: GameType;
   /** The second tag, after "On your own": the board, the hand, "Board cleared". */
   phase: { tone: TagTone; label: string };
-  /** The game: turn bar and board, or the result over the board. */
+  /**
+   * The game: its turn bar and board, from the first move to the last, so a
+   * finished board stays where it was played.
+   */
   stage: ReactNode;
-  /** Cards beside the game on a wide screen; a phone shows only the game. */
+  /**
+   * A finished game's `SoloResult`: first in the column beside the board, or
+   * under the board where there is one column.
+   */
+  result?: ReactNode;
+  /**
+   * Cards beside the game on a wide screen, under it on one column. A phone
+   * shows them only under a result: while a game is played, only the game.
+   */
   side?: ReactNode;
   /**
    * The game's own time, for a game in progress: How to play and the Leave
@@ -33,7 +44,8 @@ export interface SoloLayoutProps {
 
 /**
  * A game on your own: a room bar with no room, the game, and its cards beside
- * it (MS02-MS05, T01-T05, PR01-PR04), or under it from 1023 px down. There is
+ * it (MS02-MS05, T02-T05, PR02-PR04), or under it from 1023 px down. A
+ * finished game's result leads the cards, so the board never moves. There is
  * no seat, so Leave goes back to the game's page, where the game can be
  * started again with other settings; it asks first only with `leaveWarning`.
  * While How to play or that question is open the game's time stands still, and
@@ -43,6 +55,7 @@ export function SoloLayout({
   gameType,
   phase,
   stage,
+  result,
   side,
   time,
   leaveWarning = null,
@@ -85,12 +98,15 @@ export function SoloLayout({
         />
       }
     >
-      {phone || side == null ? (
+      {(phone && result == null) || (side == null && result == null) ? (
         <div className={stageClass}>{stage}</div>
       ) : (
         <div className={styles.solo}>
           <div className={stageClass}>{stage}</div>
-          <div className={styles.side}>{side}</div>
+          <div className={styles.side}>
+            {result}
+            {side}
+          </div>
         </div>
       )}
       <RulesDialog open={rules} onOpenChange={setRules} game={game} solo />

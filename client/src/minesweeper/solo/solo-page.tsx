@@ -1,10 +1,9 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router';
 import type { MinesweeperDifficulty } from '../../../../shared/wire-types';
 import { BOARD_SIZES, DIFFICULTIES } from '../../../../shared/minesweeper';
 import {
   Button,
-  ButtonLink,
   Card,
   ChoiceList,
   StatList,
@@ -12,10 +11,9 @@ import {
   type MineCellState,
   type TurnBarProps,
 } from '../../ui';
-import { gameInfo } from '../../games/catalog';
 import { useMessages, type Messages } from '../../i18n';
-import { FormPage } from '../../shell/form-page';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
+import { ChangeSettings } from '../../solo/change-settings';
 import {
   formatDuration,
   readBest,
@@ -49,94 +47,76 @@ const bestKey = (difficulty: MinesweeperDifficulty) =>
 const isDifficulty = (value: string | null): value is MinesweeperDifficulty =>
   DIFFICULTIES.includes(value as MinesweeperDifficulty);
 
+/** The board played last on this device, or Small on a first visit. */
+function lastBoard(): MinesweeperDifficulty {
+  const last = readStored(LAST_BOARD);
+  return isDifficulty(last) ? last : 'Small';
+}
+
 /**
- * MS01-MS05: Minesweeper on your own. Without a board in the address it asks
- * for one; `?board=Medium` plays one. It all runs here: nothing reaches the
+ * MS02-MS05: Minesweeper on your own, straight away on the board played last
+ * here; `?board=Medium` plays that one. It all runs here: nothing reaches the
  * server.
  */
 export function MinesweeperSolo() {
   const [params, setParams] = useSearchParams();
-  const board = params.get('board');
+  const linked = params.get('board');
+  const board = isDifficulty(linked) ? linked : lastBoard();
   // Each new game is a fresh mount, so nothing carries over from the last.
   const [run, setRun] = useState(0);
 
-  if (!isDifficulty(board)) {
-    return (
-      <BoardPicker
-        onStart={(difficulty) => {
-          writeStored(LAST_BOARD, difficulty);
-          setParams({ board: difficulty });
-        }}
-      />
-    );
-  }
   return (
     <SoloGameView
       key={`${board}:${run}`}
       difficulty={board}
       onPlayAgain={() => setRun((count) => count + 1)}
-      onChangeBoard={() => setParams({})}
+      onChangeBoard={(next) => {
+        writeStored(LAST_BOARD, next);
+        setParams({ board: next });
+        setRun((count) => count + 1);
+      }}
     />
   );
 }
 
-/** MS01: the three boards, each with its best on this device. */
-function BoardPicker({
-  onStart,
+/** MS01, now behind Change board: the three boards, each with its best. */
+function ChangeBoard({
+  difficulty,
+  onPlay,
 }: {
-  onStart: (difficulty: MinesweeperDifficulty) => void;
+  difficulty: MinesweeperDifficulty;
+  onPlay: (difficulty: MinesweeperDifficulty) => void;
 }) {
   const m = useMessages();
-  const game = gameInfo('minesweeper');
-  const text = m.games.of[game.type];
-  const [difficulty, setDifficulty] = useState<MinesweeperDifficulty>(() => {
-    const last = readStored(LAST_BOARD);
-    return isDifficulty(last) ? last : 'Small';
-  });
-  const description = m.minesweeper.solo.description;
-
   return (
-    <FormPage
-      heading={{
-        eyebrow: m.minesweeper.solo.onYourOwn,
-        title: text.name,
-        subtitle: text.solo?.summary,
-      }}
-      phone={{ eyebrow: text.name, subtitle: description }}
+    <ChangeSettings
+      label={m.minesweeper.solo.changeBoard}
       title={m.minesweeper.solo.pickBoard}
-      description={description}
-      onSubmit={(event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        onStart(difficulty);
-      }}
-      actions={
-        <>
-          <Button type="submit">{m.minesweeper.solo.start}</Button>
-          <ButtonLink to="/" variant="secondary" icon="back">
-            {m.minesweeper.solo.backToGames}
-          </ButtonLink>
-        </>
-      }
+      description={m.minesweeper.solo.description}
+      settings={difficulty}
+      onPlay={onPlay}
     >
-      <ChoiceList
-        label={m.minesweeper.solo.board}
-        options={DIFFICULTIES.map((board) => {
-          const best = readBest(bestKey(board));
-          return {
-            value: board,
-            label: m.minesweeper.boardLabel(board),
-            detail: m.minesweeper.solo.boardOption(
-              BOARD_SIZES[board].mines,
-              best === null
-                ? m.minesweeper.solo.noBest
-                : m.minesweeper.solo.best(formatDuration(best)),
-            ),
-          };
-        })}
-        value={difficulty}
-        onValueChange={setDifficulty}
-      />
-    </FormPage>
+      {(picked, pick) => (
+        <ChoiceList
+          label={m.minesweeper.solo.board}
+          options={DIFFICULTIES.map((board) => {
+            const best = readBest(bestKey(board));
+            return {
+              value: board,
+              label: m.minesweeper.boardLabel(board),
+              detail: m.minesweeper.solo.boardOption(
+                BOARD_SIZES[board].mines,
+                best === null
+                  ? m.minesweeper.solo.noBest
+                  : m.minesweeper.solo.best(formatDuration(best)),
+              ),
+            };
+          })}
+          value={picked}
+          onValueChange={pick}
+        />
+      )}
+    </ChangeSettings>
   );
 }
 
@@ -151,7 +131,7 @@ function SoloGameView({
 }: {
   difficulty: MinesweeperDifficulty;
   onPlayAgain: () => void;
-  onChangeBoard: () => void;
+  onChangeBoard: (difficulty: MinesweeperDifficulty) => void;
 }) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
@@ -194,76 +174,8 @@ function SoloGameView({
     return { state };
   };
 
-  const tryAgain = (
-    <>
-      <Button onClick={onPlayAgain}>{m.minesweeper.solo.tryAgain}</Button>
-      <Button variant="secondary" onClick={onChangeBoard}>
-        {m.minesweeper.solo.changeBoard}
-      </Button>
-    </>
-  );
-
-  const stage = (
-    <>
-      {finish ? (
-        <SoloResult
-          title={m.minesweeper.solo.clearedIn(formatDuration(finish.time))}
-          body={finishBody(difficulty, finish, m)}
-          stats={[
-            {
-              label: m.minesweeper.solo.time,
-              value: formatDuration(finish.time),
-            },
-            {
-              label: m.minesweeper.solo.board,
-              value: m.minesweeper.boardLabel(difficulty),
-            },
-            { label: m.minesweeper.solo.mines, value: String(game.mines) },
-          ]}
-          actions={
-            <>
-              <Button onClick={onPlayAgain}>
-                {m.minesweeper.solo.playAgain}
-              </Button>
-              <Button variant="secondary" onClick={onChangeBoard}>
-                {m.minesweeper.solo.changeBoard}
-              </Button>
-            </>
-          }
-        />
-      ) : (
-        <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
-      )}
-      <div className={styles.boardPanel}>
-        <MineGrid width={game.width} height={game.height} cell={cell} />
-        {!over && (
-          <div
-            className={styles.mode}
-            role="group"
-            aria-label={m.minesweeper.solo.click}
-          >
-            <Button
-              variant={flagMode ? 'secondary' : 'primary'}
-              aria-pressed={!flagMode}
-              onClick={() => setFlagMode(false)}
-            >
-              {m.minesweeper.solo.reveal}
-            </Button>
-            <Button
-              variant={flagMode ? 'primary' : 'secondary'}
-              icon="flag"
-              aria-pressed={flagMode}
-              onClick={() => setFlagMode(true)}
-            >
-              {m.minesweeper.solo.flag}
-            </Button>
-          </div>
-        )}
-        {phone && game.status === 'lost' && (
-          <div className={styles.mode}>{tryAgain}</div>
-        )}
-      </div>
-    </>
+  const changeBoard = (
+    <ChangeBoard difficulty={difficulty} onPlay={onChangeBoard} />
   );
 
   return (
@@ -275,38 +187,97 @@ function SoloGameView({
           ? { tone: 'lime', label: m.minesweeper.solo.boardCleared }
           : { tone: 'blue', label: m.minesweeper.boardLabel(difficulty) }
       }
-      stage={stage}
+      stage={
+        <>
+          <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
+          <div className={styles.boardPanel}>
+            <MineGrid width={game.width} height={game.height} cell={cell} />
+            {!over && (
+              <div
+                className={styles.mode}
+                role="group"
+                aria-label={m.minesweeper.solo.click}
+              >
+                <Button
+                  variant={flagMode ? 'secondary' : 'primary'}
+                  aria-pressed={!flagMode}
+                  onClick={() => setFlagMode(false)}
+                >
+                  {m.minesweeper.solo.reveal}
+                </Button>
+                <Button
+                  variant={flagMode ? 'primary' : 'secondary'}
+                  icon="flag"
+                  aria-pressed={flagMode}
+                  onClick={() => setFlagMode(true)}
+                >
+                  {m.minesweeper.solo.flag}
+                </Button>
+              </div>
+            )}
+          </div>
+        </>
+      }
+      result={
+        finish ? (
+          <SoloResult
+            title={m.minesweeper.solo.clearedIn(formatDuration(finish.time))}
+            body={finishBody(difficulty, finish, m)}
+            stats={[
+              {
+                label: m.minesweeper.solo.board,
+                value: m.minesweeper.boardLabel(difficulty),
+              },
+              { label: m.minesweeper.solo.mines, value: String(game.mines) },
+            ]}
+            actions={
+              <>
+                <Button onClick={onPlayAgain}>
+                  {m.minesweeper.solo.playAgain}
+                </Button>
+                {changeBoard}
+              </>
+            }
+          />
+        ) : (
+          game.status === 'lost' && (
+            <SoloResult
+              title={m.minesweeper.solo.tryAgainTitle}
+              body={m.minesweeper.solo.newBoard(difficulty)}
+              actions={
+                <>
+                  <Button onClick={onPlayAgain}>
+                    {m.minesweeper.solo.tryAgain}
+                  </Button>
+                  {changeBoard}
+                </>
+              }
+            />
+          )
+        )
+      }
       side={
         <>
-          {game.status === 'lost' ? (
-            <Card
-              kind="panel"
-              title={m.minesweeper.solo.tryAgainTitle}
-              description={m.minesweeper.solo.newBoard(difficulty)}
-              actions={tryAgain}
-            />
-          ) : (
-            game.status !== 'won' && (
-              <Card kind="panel" title={m.minesweeper.solo.thisGame}>
-                <StatList
-                  className={styles.stats}
-                  stats={[
-                    {
-                      label: m.minesweeper.solo.mines,
-                      value: String(game.mines),
-                    },
-                    {
-                      label: m.minesweeper.solo.flags,
-                      value: String(game.flags.filter(Boolean).length),
-                    },
-                    {
-                      label: m.minesweeper.solo.safeCellsLeft,
-                      value: String(safeCells(game) - clearedCells(game)),
-                    },
-                  ]}
-                />
-              </Card>
-            )
+          {!over && (
+            <Card kind="panel" title={m.minesweeper.solo.thisGame}>
+              <StatList
+                className={styles.stats}
+                stats={[
+                  {
+                    label: m.minesweeper.solo.mines,
+                    value: String(game.mines),
+                  },
+                  {
+                    label: m.minesweeper.solo.flags,
+                    value: String(game.flags.filter(Boolean).length),
+                  },
+                  {
+                    label: m.minesweeper.solo.safeCellsLeft,
+                    value: String(safeCells(game) - clearedCells(game)),
+                  },
+                ]}
+              />
+            </Card>
           )}
           <Card kind="panel" title={m.minesweeper.solo.bestOnDevice}>
             <StatList
@@ -375,6 +346,15 @@ function turnBar(
       kind: 'status',
       main: m.minesweeper.solo.hitMine,
       meta: m.minesweeper.solo.cleared(clearedCells(game), safeCells(game)),
+      countdown,
+    };
+  }
+  if (game.status === 'won') {
+    return {
+      label: m.minesweeper.gameOver,
+      kind: 'status',
+      main: m.minesweeper.solo.allClear,
+      meta: m.minesweeper.solo.minesFlagged(game.mines),
       countdown,
     };
   }

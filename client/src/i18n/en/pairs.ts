@@ -53,14 +53,8 @@ export const pairs = {
   cards: 'Cards',
   solo: {
     turnsCount: (turns: number) => plural(turns, 'turn'),
-    description: (challenge: boolean): string =>
-      challenge
-        ? 'A friend sent you this deck. Fewer turns is better. Your time is kept too.'
-        : 'Fewer turns is better. Your time is kept too.',
-    onYourOwn: 'On your own',
+    description: 'Fewer turns is better. Your time is kept too.',
     pickBoard: 'Pick a board.',
-    start: 'Start',
-    backToGames: 'Back to games',
     board: 'Board',
     boardOption: (total: number, best: string) => `${total} pairs. ${best}`,
     noBest: 'No best yet',
@@ -70,7 +64,6 @@ export const pairs = {
     finishedIn: (total: number, turns: number) =>
       `${total} pairs in ${plural(turns, 'turn')}.`,
     time: 'Time',
-    turns: 'Turns',
     longestStreak: 'Longest streak',
     streak: (total: number) => `${plural(total, 'pair')} in a row`,
     playAgain: 'Play again',
@@ -94,6 +87,7 @@ export const pairs = {
     whereSeen: 'Where did you see it?',
     flipBackSoon: 'They flip back in a moment',
     aPair: 'A pair!',
+    allPairs: (total: number) => `All ${total} pairs found`,
     flipAnother: 'Flip another card',
     clockStarts: 'The clock starts with your first card',
     thenFindPair: 'Then find its pair',

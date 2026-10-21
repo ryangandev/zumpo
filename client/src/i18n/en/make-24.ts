@@ -66,18 +66,9 @@ export const make24 = {
     keys: 'Keys: 1 to 4 pick a card, + − × ÷ a sign, Backspace undoes, Esc starts over.',
   },
   solo: {
-    description: (challenge: boolean): string =>
-      challenge
-        ? 'A friend sent you these ten hands. Use each number once to make 24. Stuck? Skip the hand for 30 seconds on the clock.'
-        : 'Use each number once to make 24. Stuck? Skip the hand for 30 seconds on the clock.',
-    onYourOwn: 'On your own',
-    tenHandsClock: 'Ten hands, one clock.',
-    start: 'Start',
-    backToGames: 'Back to games',
-    hands: 'Hands',
-    yourBestOnDevice: 'Your best on this device',
     notYet: 'Not yet',
     runComplete: 'Run complete',
+    solvedOf: (solved: number, hands: number) => `${solved} of ${hands} solved`,
     finishedIn: (hands: number, time: string) => `${hands} hands in ${time}.`,
     skipped: 'Skipped',
     skippedPenalty: (skipped: number, time: string) => `${skipped}, +${time}`,
@@ -92,8 +83,6 @@ export const make24 = {
     nextHandPrompt: 'Next hand in a moment.',
     skip: 'Skip, +30 s',
     thisRun: 'This run',
-    hand: 'Hand',
-    handProgress: (hand: number, hands: number) => `${hand} of ${hands}`,
     tenHands: 'Ten hands',
     runTime: 'run time',
     skipPenalty: '30 seconds on the clock',

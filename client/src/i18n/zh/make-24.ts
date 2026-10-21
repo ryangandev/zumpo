@@ -61,18 +61,9 @@ export const make24: typeof en = {
     keys: '键盘：1 到 4 选牌，+ − × ÷ 选运算符，退格键撤销，Esc 重新开始。',
   },
   solo: {
-    description: (challenge) =>
-      challenge
-        ? '朋友发来了这十手牌。每个数字用一次，算出 24。卡住了？跳过一手，计时加 30 秒。'
-        : '每个数字用一次，算出 24。卡住了？跳过一手，计时加 30 秒。',
-    onYourOwn: '单人模式',
-    tenHandsClock: '十手牌，一起计时。',
-    start: '开始',
-    backToGames: '返回游戏列表',
-    hands: '手数',
-    yourBestOnDevice: '你的本机最佳成绩',
     notYet: '暂无',
     runComplete: '挑战完成',
+    solvedOf: (solved, hands) => `解出 ${solved} 手，共 ${hands} 手`,
     finishedIn: (hands, time) => `${hands} 手，用时 ${time}。`,
     skipped: '已跳过',
     skippedPenalty: (skipped, time) => `${skipped} 手，+${time}`,
@@ -87,8 +78,6 @@ export const make24: typeof en = {
     nextHandPrompt: '马上开始下一手。',
     skip: '跳过，+30 秒',
     thisRun: '本次挑战',
-    hand: '手数',
-    handProgress: (hand, hands) => `${hand} / ${hands}`,
     tenHands: '十手牌',
     runTime: '用时',
     skipPenalty: '计时加 30 秒',
