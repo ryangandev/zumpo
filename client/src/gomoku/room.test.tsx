@@ -271,7 +271,7 @@ describe('a Gomoku room', () => {
       screen.getByRole('heading', { name: 'You win with five in a row.' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('21 moves. Next game, Maya plays Black.'),
+      screen.getByText('A game of 21 moves. Next game, Maya plays Black.'),
     ).toBeInTheDocument();
     const standings = within(screen.getByRole('list', { name: 'Standings' }));
     expect(standings.getByText('Five in a row, C11 to G7')).toBeInTheDocument();
@@ -311,7 +311,9 @@ describe('a Gomoku room', () => {
       screen.getByRole('heading', { name: 'You win: Maya left the room.' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('3 moves. Maya’s seat is free for anybody to take.'),
+      screen.getByText(
+        'A game of 3 moves. Maya’s seat is free for anybody to take.',
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^Start game/ })).toBeNull();

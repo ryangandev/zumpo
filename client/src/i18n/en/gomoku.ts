@@ -97,7 +97,7 @@ export const gomoku = {
       ? `${winner} wins with five in a row.`
       : `${winner} wins: ${loser} ${HOW[ending as keyof typeof HOW]}.`,
   draw: 'A draw: the board is full.',
-  moves: (count: number) => `${plural(count, 'move')}.`,
+  moves: (count: number) => `A game of ${plural(count, 'move')}.`,
   drawDetail: (stones: number) => `${stones} stones and nobody made five.`,
   nextBlack: (name: string) => `Next game, ${name} plays Black.`,
   seatFree: (name: string) => `${name}’s seat is free for anybody to take.`,
@@ -142,8 +142,9 @@ export const gomoku = {
     computerThinking: 'The computer is thinking',
     computerPlayed: (point: string) => `The computer played ${point}`,
     thinking: 'thinking',
-    wonIn: (moves: number) => `You won in ${plural(moves, 'move')}.`,
-    lostIn: (moves: number) => `The computer won in ${plural(moves, 'move')}.`,
+    wonIn: (moves: number) => `You won a game of ${plural(moves, 'move')}.`,
+    lostIn: (moves: number) =>
+      `The computer won a game of ${plural(moves, 'move')}.`,
     draw: 'A draw: the board is full.',
     five: (from: string, to: string, next: GomokuColor) =>
       `Five in a row, from ${from} to ${to}. Play again and you take ${COLOR[next]}.`,

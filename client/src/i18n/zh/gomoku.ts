@@ -118,8 +118,8 @@ export const gomoku: typeof en = {
     computerThinking: '电脑正在思考',
     computerPlayed: (point) => `电脑下在 ${point}`,
     thinking: '思考中',
-    wonIn: (moves) => `你用 ${moves} 手赢了。`,
-    lostIn: (moves) => `电脑用 ${moves} 手赢了。`,
+    wonIn: (moves) => `共 ${moves} 手，你赢了。`,
+    lostIn: (moves) => `共 ${moves} 手，电脑赢了。`,
     draw: '平局：棋盘下满了。',
     five: (from, to, next) =>
       `五子连珠，从 ${from} 到 ${to}。再来一局你执${COLOR[next]}。`,

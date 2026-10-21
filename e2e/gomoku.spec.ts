@@ -84,7 +84,7 @@ test('two players make five in a row while a third watches, then swap colours', 
     }),
   ).toBeVisible();
   await expect(
-    maya.getByText(`9 moves. Next game, ${whiteName} plays Black.`),
+    maya.getByText(`A game of 9 moves. Next game, ${whiteName} plays Black.`),
   ).toBeVisible();
   await expect(black.getByText('Five in a row, D8 to H8')).toBeVisible();
   await expect(leo.getByText(`${blackName} made five in a row.`)).toBeVisible();

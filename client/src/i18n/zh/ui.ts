@@ -142,7 +142,7 @@ export const ui: typeof en = {
       [
         name,
         stone === null ? '空' : stone === 'black' ? '黑子' : '白子',
-        won ? '五连之一' : last ? '最后一手' : null,
+        won ? '连成五子' : last ? '最后一手' : null,
       ]
         .filter(Boolean)
         .join('，'),

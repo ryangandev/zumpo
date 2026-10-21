@@ -134,7 +134,7 @@ describe('Gomoku on your own', () => {
     expect(screen.getByText('Computer won')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {
-        name: /^The computer won in \d+ moves\.$/,
+        name: /^The computer won a game of \d+ moves\.$/,
       }),
     ).toBeInTheDocument();
     expect(
