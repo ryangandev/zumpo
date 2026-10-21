@@ -87,7 +87,7 @@
       'answer answer answer';
     gap: var(--zumpo-space-4) var(--zumpo-space-8);
     padding: var(--zumpo-space-16);
-    border-radius: 20px;
+    border-radius: var(--zumpo-radius-20);
   }
 
   .untagged {

@@ -26,14 +26,14 @@
 /* Compact cells sit 3 px apart. */
 .compact .board,
 .compact .row {
-  gap: 3px;
+  gap: var(--zumpo-space-3);
 }
 
 @media (max-width: 640px) {
   /* A Small board fits: 36 px cells, 3 px apart. */
   .board,
   .row {
-    gap: 3px;
+    gap: var(--zumpo-space-3);
   }
 
   /* Wider boards keep full-size cells and pan sideways. */

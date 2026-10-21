@@ -47,7 +47,7 @@
 
 .success,
 .alert {
-  padding: 8px 10px;
+  padding: var(--zumpo-space-8) var(--zumpo-space-10);
   border-radius: var(--zumpo-radius-12);
 }
 

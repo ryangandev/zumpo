@@ -39,14 +39,14 @@
 .details {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--zumpo-space-2);
   min-width: 0;
 }
 
 .nameLine {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--zumpo-space-6);
   min-width: 0;
 }
 

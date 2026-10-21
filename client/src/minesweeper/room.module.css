@@ -57,7 +57,7 @@
   .results {
     padding: var(--zumpo-space-16);
     border: 1px solid var(--zumpo-line);
-    border-radius: 20px;
+    border-radius: var(--zumpo-radius-20);
     background: var(--zumpo-paper);
   }
 

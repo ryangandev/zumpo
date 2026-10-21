@@ -125,6 +125,7 @@ Everything in `design/figma/` is generated; change the design in Figma and expor
 
 Each Shared pieces family is one component in [`client/src/ui/`](../client/src/ui/index.ts), named as in Figma without the `Zumpo/` prefix; [architecture.md](architecture.md#client) explains how the layer is built.
 Variables, text styles and effect styles reach code only through the generated `--zumpo-*` tokens, so a value code needs and Figma lacks is a gap to fix in Figma first, as the menu, dialog and cell shadows were.
+Every padding, gap and radius in Figma is bound to a `space/*` or `radius/*` variable, and the export's `audit.json` lists any that is typed in instead (`unboundSpacing`, `unboundRadii`), so an empty list there means the CSS needs no raw size.
 
 To review the design system, run `npm run dev -w client` (it needs no server) and open [`/design`](http://localhost:3001/design).
 Every specimen is captioned with its Figma variant, uses that variant's sample copy, and shows its size beside Figma's, in red when they differ by more than half a pixel.

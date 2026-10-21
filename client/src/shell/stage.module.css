@@ -3,7 +3,7 @@
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 56px 0;
+  padding: var(--zumpo-space-56) 0;
 }
 
 @media (max-width: 640px) {

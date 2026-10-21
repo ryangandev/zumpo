@@ -12,7 +12,7 @@
 /* Compact cards sit 6 px apart, so a 6 × 6 board fits a phone. */
 .compact,
 .compact .row {
-  gap: 6px;
+  gap: var(--zumpo-space-6);
 }
 
 /* The board on its paper panel, as a Minesweeper board sits on a desktop. */
