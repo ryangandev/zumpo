@@ -158,7 +158,7 @@ const createDoodleChainGameEngine = (
       game.work.set(playerId, createWork());
     }
 
-    ctx.rooms.announce(room.roomId, 'system', { type: 'dc:step', step, kind });
+    ctx.rooms.announce(room.roomId, 'divider', { type: 'dc:step', step, kind });
     ctx.rooms.startPhase(room, secondsFor(room), () => finishStep(room));
 
     // Whoever describes is sent the drawing they describe, and nobody else:

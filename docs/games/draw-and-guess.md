@@ -69,7 +69,9 @@ The drawer cannot guess their own word.
    You have twelve brush colours, four brush sizes, undo and clear.
 5. **When it is not**, type guesses into the chat box.
    Matching is case-insensitive and ignores surrounding spaces, so `steak`, `Steak` and `STEAK` all count.
-6. A wrong guess is just chat: everyone sees it, which is half the fun.
+6. A wrong guess is just chat: everyone at the table sees it, which is half the fun.
+   On a phone the newest three lines of the chat show under the board, so the guesses can be followed without leaving the drawing, and your own guess lights up as it lands.
+7. Each turn starts with a quiet divider in the chat, `Round <n> · <name> draws`, so it is clear which turn a guess belonged to.
 
 ## Rules the server enforces
 
@@ -81,6 +83,10 @@ The client shows them, and the server checks them, so a modified client gains no
 - **Only the room owner may start a game**, and only with two or more players.
 - **Only a member may read a room's state**, a player or a spectator, so a locked room's player list is not readable by anyone who has a room id.
 - **Only a member may talk** in a room, and a spectator's right guess is swallowed and scores nobody.
+- **During drawing, a spectator talks only to the other spectators.**
+  Someone watching sees the drawing and the hint and can work the word out like anybody else, so a line from a spectator then reaches the spectators alone, never the drawer or a guesser, and the input says so.
+  The line is marked `audience: 'spectators'`, and a player's history on a refresh leaves it out.
+  In choosing, review and between games a spectator's message is ordinary chat.
 - **Nothing a client sends advances a phase.**
   The clock lives on the server; a client is told how many milliseconds are left and renders a countdown from it.
 
@@ -93,7 +99,7 @@ Chat is also where guesses arrive, so every message passes the game before it is
   A correct one is never shown: it is scored, and the room is told `<name> guessed the correct word! (+<points>)` as a `success` message.
   A wrong one is ordinary chat.
 - **A player who has scored is silent until the next turn starts**, the review phase included, because they know the word and could type it.
-- **Everyone else may say anything in the other phases.**
+- **Everyone else may say anything in the other phases**, spectators included.
   Typing the word during the review phase is chat, because the word is on screen by then.
 - A correct guess in a turn whose drawer has left is swallowed rather than shown.
 

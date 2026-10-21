@@ -165,7 +165,7 @@ describe('a round', () => {
     const [miss] = missesFor(word!, 1);
 
     await guess(alice, roomId, miss!);
-    const announced = waitForChat(bob, (m) => m.kind === 'success');
+    const announced = waitForChat(bob, (m) => m.kind === 'score');
     const found = waitForDailyWordState(
       bob,
       (s) => boardOf(s, alice.playerId).status === 'found',

@@ -8,6 +8,7 @@ export const ui: typeof en = {
     message: '消息',
     placeholder: '猜一猜，或打个招呼…',
     send: '发送',
+    unread: (tab, count) => `${tab}，${count} 条新消息`,
   },
   you: '你',
   youName: (name) => `${name}（你）`,
