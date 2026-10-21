@@ -38,6 +38,12 @@ export interface TurnBarProps {
    * line. A short window wider than that has the room, and shows it.
    */
   labelOnPhone?: boolean;
+  /**
+   * False for a game whose words fit the phone's one first line, such as
+   * Gomoku: at a phone's width the bar keeps the compact row rather than
+   * give the meta a line of its own, and the board has that height.
+   */
+  stackOnPhone?: boolean;
   className?: string;
 }
 
@@ -63,11 +69,13 @@ export function TurnBar({
   meta,
   countdown,
   labelOnPhone = true,
+  stackOnPhone = true,
   className,
 }: TurnBarProps) {
   const m = useMessages();
   const box = useRef<HTMLDivElement>(null);
-  const { phone, narrow, stacked } = usePhoneRow(box);
+  const { phone, narrow, stacked: stackable } = usePhoneRow(box);
+  const stacked = stackable && stackOnPhone;
   const labelled = labelOnPhone || !narrow;
   const labelRef = useRef<HTMLSpanElement>(null);
   useOneLine(labelRef, stacked && labelled, label);

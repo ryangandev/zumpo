@@ -115,6 +115,21 @@ describe('TurnBar', () => {
     expect(section().className).not.toMatch(/unlabelled/);
   });
 
+  it('keeps the compact row at a phone’s width where the game asks', () => {
+    barWidth(328);
+    const { container } = render(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        stackOnPhone={false}
+      />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/phone/);
+    expect(container.firstElementChild!.className).not.toMatch(/narrow/);
+    expect(line()).not.toBeInTheDocument();
+  });
+
   it('keeps one first line on a short screen, beside the board, however narrow', () => {
     onShortScreen();
     barWidth(328);
