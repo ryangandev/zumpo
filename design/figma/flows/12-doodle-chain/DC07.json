@@ -293,6 +293,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Drawing",
@@ -326,6 +327,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Drawing",
@@ -340,6 +342,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Done",
@@ -354,6 +357,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Drawing",

@@ -279,7 +279,7 @@ const createLiarsDiceGameEngine = (
     ctx.rooms.emitState(room);
     const [winner] = standings;
     if (winner && winner.points > 0) {
-      ctx.rooms.announce(room.roomId, 'system', {
+      ctx.rooms.announce(room.roomId, 'success', {
         type: 'game:over',
         names: [winner.username],
         points: winner.points,

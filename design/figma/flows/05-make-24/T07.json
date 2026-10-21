@@ -287,6 +287,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "342",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Solved · +127",
                       "State": "Scored"
@@ -320,6 +321,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "280",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Solved · +95",
                       "State": "Scored"
@@ -347,6 +349,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Solving",
@@ -422,6 +425,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Solving",

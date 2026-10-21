@@ -467,6 +467,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -506,6 +507,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "3",
+                      "Show status": true,
                       "Status icon": false,
                       "Status": "Took the card",
                       "State": "Scored"
@@ -533,6 +535,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -608,6 +611,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",

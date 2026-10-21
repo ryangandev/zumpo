@@ -106,7 +106,7 @@ const createPairsGameEngine = (
     game.matched[second] = true;
     game.up = [];
     player.points += 1;
-    ctx.rooms.announce(room.roomId, 'success', {
+    ctx.rooms.announce(room.roomId, 'score', {
       type: 'pairs:found',
       name: player.username,
     });
@@ -146,7 +146,7 @@ const createPairsGameEngine = (
     ctx.rooms.emitState(room);
     ctx.rooms.announce(
       room.roomId,
-      'system',
+      'success',
       gameOverNotice(standings, 'pair'),
     );
     ctx.rooms.emitLobby('pairs');

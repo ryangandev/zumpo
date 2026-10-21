@@ -1353,6 +1353,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "76",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +12",
                       "State": "Scored"
@@ -1386,6 +1387,7 @@
                       "Host": false,
                       "Name": "Leo",
                       "Score": "68",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +12",
                       "State": "Scored"
@@ -1413,6 +1415,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": true,
                       "Status": "Hit a mine · −82",
@@ -1494,6 +1497,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "−61",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +17",
                       "State": "Scored"

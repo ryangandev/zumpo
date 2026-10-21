@@ -1276,6 +1276,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "1055",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +633",
                       "State": "Scored"
@@ -1309,6 +1310,7 @@
                       "Host": false,
                       "Name": "Sam",
                       "Score": "1031",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +518",
                       "State": "Scored"
@@ -1342,6 +1344,7 @@
                       "Host": false,
                       "Name": "Leo",
                       "Score": "609",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +306",
                       "State": "Scored"
@@ -1357,6 +1360,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Missed",

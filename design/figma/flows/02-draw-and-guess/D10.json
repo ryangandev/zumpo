@@ -225,6 +225,7 @@
                       "Host": true,
                       "Status": "Away",
                       "You": false,
+                      "Show status": true,
                       "Score": "460",
                       "Name": "Maya",
                       "State": "Away"

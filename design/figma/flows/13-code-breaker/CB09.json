@@ -351,141 +351,364 @@
                       },
                       {
                         "type": "FRAME",
-                        "id": "162:98311",
-                        "name": "The others",
+                        "id": "164:67481",
+                        "name": "Side",
                         "w": 411,
-                        "h": 334,
+                        "h": 10,
                         "wSize": "fill",
                         "hSize": "hug",
+                        "clip": true,
                         "layout": {
                           "mode": "column",
-                          "gap": "$Zumpo · UI:space/16",
+                          "gap": "$Zumpo · UI:space/32",
                           "strokesIncluded": true
                         },
                         "children": [
                           {
                             "type": "FRAME",
-                            "id": "162:98312",
-                            "name": "Heading space",
-                            "w": 161,
-                            "h": 52,
-                            "wSize": "hug",
-                            "hSize": "hug",
+                            "id": "164:67482",
+                            "name": "The others",
+                            "w": 411,
+                            "h": 1,
+                            "wSize": "fill",
+                            "hSize": "fill",
                             "layout": {
                               "mode": "column",
-                              "gap": "$Zumpo · UI:space/4",
+                              "gap": "$Zumpo · UI:space/16",
                               "strokesIncluded": true
                             },
                             "children": [
                               {
-                                "type": "TEXT",
-                                "id": "162:98313",
-                                "w": 125,
-                                "h": 30,
+                                "type": "FRAME",
+                                "id": "164:67483",
+                                "name": "Heading space",
+                                "w": 161,
+                                "h": 52,
                                 "wSize": "hug",
                                 "hSize": "hug",
-                                "text": "The others",
-                                "textStyle": "Zumpo/Heading",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
+                                "layout": {
+                                  "mode": "column",
+                                  "gap": "$Zumpo · UI:space/4",
+                                  "strokesIncluded": true
+                                },
+                                "children": [
+                                  {
+                                    "type": "TEXT",
+                                    "id": "164:67484",
+                                    "w": 125,
+                                    "h": 30,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "text": "The others",
+                                    "textStyle": "Zumpo/Heading",
+                                    "fills": [
+                                      "$Zumpo · UI:color/ink"
+                                    ]
+                                  },
+                                  {
+                                    "type": "TEXT",
+                                    "id": "164:67485",
+                                    "w": 161,
+                                    "h": 18,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "text": "Their pegs, never their digits",
+                                    "textStyle": "Zumpo/Small",
+                                    "fills": [
+                                      "$Zumpo · UI:color/muted"
+                                    ]
+                                  }
                                 ]
                               },
                               {
-                                "type": "TEXT",
-                                "id": "162:98314",
-                                "w": 161,
-                                "h": 18,
+                                "type": "FRAME",
+                                "id": "164:67486",
+                                "name": "Boards",
+                                "w": 341,
+                                "h": 266,
                                 "wSize": "hug",
                                 "hSize": "hug",
-                                "text": "Their pegs, never their digits",
-                                "textStyle": "Zumpo/Small",
-                                "fills": [
-                                  "$Zumpo · UI:color/muted"
+                                "layout": {
+                                  "mode": "row",
+                                  "gap": "$Zumpo · UI:space/16",
+                                  "strokesIncluded": true
+                                },
+                                "children": [
+                                  {
+                                    "type": "INSTANCE",
+                                    "id": "164:67487",
+                                    "name": "Race board / Maya",
+                                    "w": 109,
+                                    "h": 266,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "component": "Zumpo/Code race board",
+                                    "variant": {
+                                      "State": "Cracked",
+                                      "Board": "Marks",
+                                      "Layout": "Column"
+                                    },
+                                    "componentId": "162:63254"
+                                  },
+                                  {
+                                    "type": "INSTANCE",
+                                    "id": "164:67488",
+                                    "name": "Race board / Ryan",
+                                    "w": 100,
+                                    "h": 266,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "component": "Zumpo/Code race board",
+                                    "variant": {
+                                      "State": "Guessing",
+                                      "Board": "Marks",
+                                      "Layout": "Column"
+                                    },
+                                    "componentId": "162:63162",
+                                    "props": {
+                                      "Status": "4 guesses",
+                                      "Name": "Ryan"
+                                    },
+                                    "overrides": [
+                                      {
+                                        "path": ".",
+                                        "height": 266,
+                                        "width": 100
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "INSTANCE",
+                                    "id": "164:67489",
+                                    "name": "Race board / Leo",
+                                    "w": 100,
+                                    "h": 266,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "component": "Zumpo/Code race board",
+                                    "variant": {
+                                      "State": "Guessing",
+                                      "Board": "Marks",
+                                      "Layout": "Column"
+                                    },
+                                    "componentId": "162:63162",
+                                    "props": {
+                                      "Status": "3 guesses",
+                                      "Name": "Leo"
+                                    },
+                                    "overrides": [
+                                      {
+                                        "path": ".",
+                                        "height": 266,
+                                        "width": 100
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
                           },
                           {
                             "type": "FRAME",
-                            "id": "162:98315",
-                            "name": "Boards",
-                            "w": 341,
-                            "h": 266,
-                            "wSize": "hug",
+                            "id": "164:67490",
+                            "name": "How to read it",
+                            "w": 411,
+                            "h": 182,
+                            "wSize": "fill",
                             "hSize": "hug",
+                            "clip": true,
                             "layout": {
-                              "mode": "row",
+                              "mode": "column",
                               "gap": "$Zumpo · UI:space/16",
                               "strokesIncluded": true
                             },
                             "children": [
                               {
-                                "type": "INSTANCE",
-                                "id": "162:98995",
-                                "name": "Race board / Maya",
-                                "w": 109,
-                                "h": 266,
+                                "type": "TEXT",
+                                "id": "164:67491",
+                                "w": 168,
+                                "h": 30,
                                 "wSize": "hug",
                                 "hSize": "hug",
-                                "component": "Zumpo/Code race board",
-                                "variant": {
-                                  "State": "Cracked",
-                                  "Board": "Marks",
-                                  "Layout": "Column"
-                                },
-                                "componentId": "162:63254"
-                              },
-                              {
-                                "type": "INSTANCE",
-                                "id": "162:99050",
-                                "name": "Race board / Ryan",
-                                "w": 100,
-                                "h": 266,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "component": "Zumpo/Code race board",
-                                "variant": {
-                                  "State": "Guessing",
-                                  "Board": "Marks",
-                                  "Layout": "Column"
-                                },
-                                "componentId": "162:63162",
-                                "props": {
-                                  "Status": "4 guesses",
-                                  "Name": "Ryan"
-                                },
-                                "overrides": [
-                                  {
-                                    "path": ".",
-                                    "height": 266,
-                                    "width": 100
-                                  }
+                                "text": "How to read it",
+                                "textStyle": "Zumpo/Heading",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
                                 ]
                               },
                               {
-                                "type": "INSTANCE",
-                                "id": "162:99105",
-                                "name": "Race board / Leo",
-                                "w": 100,
-                                "h": 266,
-                                "wSize": "hug",
+                                "type": "FRAME",
+                                "id": "164:67492",
+                                "name": "Legend",
+                                "w": 411,
+                                "h": 136,
+                                "wSize": "fill",
                                 "hSize": "hug",
-                                "component": "Zumpo/Code race board",
-                                "variant": {
-                                  "State": "Guessing",
-                                  "Board": "Marks",
-                                  "Layout": "Column"
+                                "clip": true,
+                                "layout": {
+                                  "mode": "column",
+                                  "gap": "$Zumpo · UI:space/12",
+                                  "strokesIncluded": true
                                 },
-                                "componentId": "162:63162",
-                                "props": {
-                                  "Status": "3 guesses",
-                                  "Name": "Leo"
-                                },
-                                "overrides": [
+                                "children": [
                                   {
-                                    "path": ".",
-                                    "height": 266,
-                                    "width": 100
+                                    "type": "FRAME",
+                                    "id": "164:67493",
+                                    "name": "Mark / Correct",
+                                    "w": 190,
+                                    "h": 25,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "clip": true,
+                                    "layout": {
+                                      "mode": "row",
+                                      "gap": "$Zumpo · UI:space/12",
+                                      "align": "center",
+                                      "strokesIncluded": true
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "INSTANCE",
+                                        "id": "164:67494",
+                                        "name": "Zumpo/Letter tile",
+                                        "w": 16,
+                                        "h": 16,
+                                        "component": "Zumpo/Letter tile",
+                                        "variant": {
+                                          "State": "Correct",
+                                          "Size": "Mini"
+                                        },
+                                        "componentId": "44:61341",
+                                        "props": {
+                                          "Letter": "P"
+                                        }
+                                      },
+                                      {
+                                        "type": "TEXT",
+                                        "id": "164:67495",
+                                        "name": "Meaning",
+                                        "w": 162,
+                                        "h": 25,
+                                        "wSize": "hug",
+                                        "hSize": "hug",
+                                        "text": "Right digit, right place",
+                                        "textStyle": "Zumpo/Body",
+                                        "fills": [
+                                          "$Zumpo · UI:color/ink"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "FRAME",
+                                    "id": "164:67496",
+                                    "name": "Mark / Present",
+                                    "w": 231,
+                                    "h": 25,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "clip": true,
+                                    "layout": {
+                                      "mode": "row",
+                                      "gap": "$Zumpo · UI:space/12",
+                                      "align": "center",
+                                      "strokesIncluded": true
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "INSTANCE",
+                                        "id": "164:67497",
+                                        "name": "Zumpo/Letter tile",
+                                        "w": 16,
+                                        "h": 16,
+                                        "component": "Zumpo/Letter tile",
+                                        "variant": {
+                                          "State": "Present",
+                                          "Size": "Mini"
+                                        },
+                                        "componentId": "44:61342",
+                                        "props": {
+                                          "Letter": "L"
+                                        }
+                                      },
+                                      {
+                                        "type": "TEXT",
+                                        "id": "164:67498",
+                                        "name": "Meaning",
+                                        "w": 203,
+                                        "h": 25,
+                                        "wSize": "hug",
+                                        "hSize": "hug",
+                                        "text": "Right digit, somewhere else",
+                                        "textStyle": "Zumpo/Body",
+                                        "fills": [
+                                          "$Zumpo · UI:color/ink"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "FRAME",
+                                    "id": "164:67499",
+                                    "name": "Mark / Absent",
+                                    "w": 143,
+                                    "h": 25,
+                                    "wSize": "hug",
+                                    "hSize": "hug",
+                                    "clip": true,
+                                    "layout": {
+                                      "mode": "row",
+                                      "gap": "$Zumpo · UI:space/12",
+                                      "align": "center",
+                                      "strokesIncluded": true
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "INSTANCE",
+                                        "id": "164:67500",
+                                        "name": "Zumpo/Letter tile",
+                                        "w": 16,
+                                        "h": 16,
+                                        "component": "Zumpo/Letter tile",
+                                        "variant": {
+                                          "State": "Absent",
+                                          "Size": "Mini"
+                                        },
+                                        "componentId": "44:61343",
+                                        "props": {
+                                          "Letter": "S"
+                                        }
+                                      },
+                                      {
+                                        "type": "TEXT",
+                                        "id": "164:67501",
+                                        "name": "Meaning",
+                                        "w": 115,
+                                        "h": 25,
+                                        "wSize": "hug",
+                                        "hSize": "hug",
+                                        "text": "Not in the code",
+                                        "textStyle": "Zumpo/Body",
+                                        "fills": [
+                                          "$Zumpo · UI:color/ink"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "TEXT",
+                                    "id": "164:67502",
+                                    "name": "Pegs count",
+                                    "w": 411,
+                                    "h": 25,
+                                    "wSize": "fill",
+                                    "hSize": "hug",
+                                    "text": "The pegs count digits. They never say which ones.",
+                                    "textStyle": "Zumpo/Body",
+                                    "fills": [
+                                      "$Zumpo · UI:color/muted"
+                                    ],
+                                    "autoResize": "height"
                                   }
                                 ]
                               }
@@ -574,6 +797,7 @@
                       "Host": true,
                       "Name": "Maya",
                       "Score": "1055",
+                      "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +633",
                       "State": "Scored"
@@ -601,6 +825,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -634,6 +859,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -709,6 +935,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Guessing",

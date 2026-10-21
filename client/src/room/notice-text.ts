@@ -44,14 +44,16 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['dg:all-guessed'](notice);
     case 'dg:guessed':
       return m.notices['dg:guessed'](notice);
+    case 'dg:turn':
+      return m.notices['dg:turn'](notice);
     case 'ms:started':
       return m.notices['ms:started'](notice);
-    case 'ms:mine':
-      return m.notices['ms:mine'](notice);
+    case 'ms:mines':
+      return m.notices['ms:mines'](notice);
     case 'make24:started':
       return m.notices['make24:started'](notice);
-    case 'make24:solved':
-      return m.notices['make24:solved'](notice);
+    case 'make24:hand':
+      return m.notices['make24:hand'](notice);
     case 'pairs:started':
       return m.notices['pairs:started'](notice);
     case 'pairs:found':
@@ -62,8 +64,6 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['trios:found'](notice);
     case 'snap:started':
       return m.notices['snap:started'](notice);
-    case 'snap:took':
-      return m.notices['snap:took'](notice);
     case 'ld:started':
       return m.notices['ld:started'](notice);
     case 'ld:auto-bid':

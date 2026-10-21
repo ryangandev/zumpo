@@ -294,6 +294,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Describing",
@@ -315,6 +316,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Describing",
@@ -342,6 +344,7 @@
                       "Host": false,
                       "Status": "Away · back in 18s",
                       "You": false,
+                      "Show status": true,
                       "Score": "",
                       "Name": "Leo",
                       "State": "Away"
@@ -358,6 +361,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "Status": "Sits this step out",
@@ -380,6 +384,7 @@
                     "path": "Player 5",
                     "componentProperties": {
                       "Icon": "24:5053",
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": true,
                       "You": false,
@@ -393,6 +398,7 @@
                   {
                     "path": "Player 6",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -407,6 +413,7 @@
                   {
                     "path": "Player 7",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",
@@ -421,6 +428,7 @@
                   {
                     "path": "Player 8",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Guessing",

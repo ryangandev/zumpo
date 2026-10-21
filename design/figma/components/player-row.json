@@ -38,6 +38,10 @@
       "type": "boolean",
       "default": true
     },
+    "Show status": {
+      "type": "boolean",
+      "default": true
+    },
     "State": {
       "type": "variant",
       "default": "Default",
@@ -191,6 +195,9 @@
                 "h": 18,
                 "wSize": "hug",
                 "hSize": "hug",
+                "propRefs": {
+                  "visible": "Show status"
+                },
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/4",
@@ -414,6 +421,9 @@
                 "h": 18,
                 "wSize": "hug",
                 "hSize": "hug",
+                "propRefs": {
+                  "visible": "Show status"
+                },
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/4",
@@ -634,6 +644,9 @@
                 "h": 18,
                 "wSize": "hug",
                 "hSize": "hug",
+                "propRefs": {
+                  "visible": "Show status"
+                },
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/4",
@@ -860,6 +873,9 @@
                 "h": 18,
                 "wSize": "hug",
                 "hSize": "hug",
+                "propRefs": {
+                  "visible": "Show status"
+                },
                 "layout": {
                   "mode": "row",
                   "gap": "$Zumpo · UI:space/4",

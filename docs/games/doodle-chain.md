@@ -138,6 +138,7 @@ The game is only funny if nobody sees a chain before the reveal, so the server s
 The chat is open to everybody, spectators too, through the whole game.
 There is no score to protect: telling the next player what you drew only spoils your own joke, and the reveal is where a room wants to talk most.
 So Doodle Chain has no `handleChat`: every message is chat.
+Each step starts with a quiet divider in it (`Step 2 · Draw`), so the talk reads in steps.
 
 ## The reveal
 

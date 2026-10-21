@@ -36,7 +36,7 @@
   "missingComponents": {},
   "hiddenLayers": {
     "INSTANCE": {
-      "count": 96,
+      "count": 98,
       "samples": [
         "Zumpo/Button > Style=Primary, State=Default > Icon",
         "Zumpo/Button > Style=Primary, State=Hover > Icon",
