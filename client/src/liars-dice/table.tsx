@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { useMessages, type Messages } from '../i18n';
-import { counts, type Bid as BidOf } from '../../../shared/liars-dice';
+import { counts, WILD, type Bid as BidOf } from '../../../shared/liars-dice';
 import type { LiarsDiceReveal } from '../../../shared/wire-types';
 import {
   Bid,
@@ -55,8 +55,12 @@ function diceOf(
   const shown: Pick<DieProps, 'face' | 'state'>[] = seat.dice
     ? seat.dice.map((face) => ({
         face: face as DieFace,
+        // While bidding, a one in your cup shows as wild, as it counts for
+        // whatever face is bid.
         state: !reveal
-          ? 'default'
+          ? face === WILD
+            ? 'wild'
+            : 'default'
           : counts(face, reveal.bid.face)
             ? face === reveal.bid.face
               ? 'counted'

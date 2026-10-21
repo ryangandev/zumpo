@@ -1,4 +1,5 @@
 import type { liarsDice as en } from '../en/liars-dice';
+import { HIGHEST_FACE } from '../../../../shared/liars-dice';
 import type { LiarsDiceReveal } from '../../../../shared/wire-types';
 import type { Naming, Who } from '../../liars-dice/words';
 
@@ -18,6 +19,10 @@ export const liarsDice: typeof en = {
   bid: (bid) => `${bid.count} 个 ${bid.face}`,
   bidLabel: (bid) => `叫 ${bid.count} 个 ${bid.face}`,
   bidLine: (who, bid) => `${subject(who)}叫了 ${bid.count} 个 ${bid.face}`,
+  beat: (bid) =>
+    bid.face < HIGHEST_FACE
+      ? `要大过 ${bid.count} 个 ${bid.face}：多叫几个，或叫更大的点数`
+      : `要大过 ${bid.count} 个 ${bid.face}：多叫几个`,
   countDetail: (reveal) =>
     `${reveal.wild === 0 ? '不含百搭' : `含 ${reveal.wild} 颗百搭`} · 叫了 ${reveal.bid.count} 个`,
   lossLine: loss,

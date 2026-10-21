@@ -353,7 +353,8 @@ function YourMove({
 }) {
   const m = useMessages();
   const latest = currentBid(game);
-  const picker = useBidChoice(latest, diceOnTable(game), (raise) =>
+  const mine = game.seats.find((seat) => seat.id === YOU)?.dice ?? [];
+  const picker = useBidChoice(latest, diceOnTable(game), mine, (raise) =>
     onMove(bid(game, YOU, raise)),
   );
   const onCall = latest ? () => onMove(call(game, YOU)) : undefined;
@@ -381,7 +382,10 @@ function turnBar(game: SoloGame, m: Messages): TurnBarProps {
       label: m.liarsDice.yourTurn,
       kind: 'status',
       main: latest ? m.liarsDice.raiseOrCall : m.liarsDice.openBidding,
-      meta: bidMeta ?? m.liarsDice.onTable(diceOnTable(game)),
+      // What beats the bid in front of you, the raise rule in a line.
+      meta: latest
+        ? m.liarsDice.beat(latest)
+        : m.liarsDice.onTable(diceOnTable(game)),
     };
   }
   const bot = game.turnId ?? '';

@@ -43,6 +43,14 @@ After three 5s, three 6s or four 2s are raises; three 4s is not.
 - Only the player whose turn it is may call, and only on the bid just made.
 
 There is no **Spot on** (exact) call.
+
+### Your turn
+
+The bid picker, on your own and in a room, opens on the face you hold most of, your ones counted, at the smallest count that face may be bid at; on a tie, the higher face.
+So pressing Bid straight away makes a bid about your own dice, never an unrelated one 2.
+The picker only ever offers raises; where it opens changes nothing else.
+Your ones show as wild in your cup while you bid, as they do at the reveal.
+The turn bar says what beats the bid in front of you: "Beat four 5s: more dice, or a higher face", or only more dice after a bid of 6s.
 Liar's Dice is complete without it; leaving it out keeps every turn a choice of two (raise or call), keeps the bid picker small on a phone, and keeps games short, since Spot on's usual reward is a die back.
 
 ### How long a game takes

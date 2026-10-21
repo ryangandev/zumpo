@@ -149,12 +149,14 @@ function Turn({ room }: { room: Room }) {
   );
 }
 
-/** LD09: the bid picker, opening on the smallest raise. */
+/** LD09: the bid picker, opening on your strongest face. */
 function YourMove({ room }: { room: Room }) {
   const m = useMessages();
   const { state, socket } = room;
   const latest = state.bids.at(-1) ?? null;
-  const picker = useBidChoice(latest, diceOnTable(state), (bid) =>
+  const mine =
+    state.cups.find((cup) => cup.playerId === room.playerId)?.dice ?? [];
+  const picker = useBidChoice(latest, diceOnTable(state), mine, (bid) =>
     socket.emit('ld:bid', state.roomId, bid.count, bid.face),
   );
   const call = latest ? () => socket.emit('ld:call', state.roomId) : undefined;
@@ -194,7 +196,10 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
       label: m.liarsDice.yourTurn,
       kind: 'status',
       main: latest ? m.liarsDice.raiseOrCall : m.liarsDice.openBidding,
-      meta: bidMeta ?? m.liarsDice.onTable(diceOnTable(state)),
+      // What beats the bid in front of you, the raise rule in a line.
+      meta: latest
+        ? m.liarsDice.beat(latest)
+        : m.liarsDice.onTable(diceOnTable(state)),
       countdown: clock(m.liarsDice.toBid, false),
     };
   }
