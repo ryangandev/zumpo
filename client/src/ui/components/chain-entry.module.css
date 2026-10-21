@@ -1,0 +1,113 @@
+.container {
+  container-type: inline-size;
+}
+
+.entry {
+  display: flex;
+  gap: var(--zumpo-space-12);
+}
+
+/* An empty entry is one line, centred on its avatar. */
+.empty {
+  align-items: center;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--zumpo-space-8);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-8);
+  min-height: 30px;
+}
+
+.empty .head {
+  min-height: 0;
+}
+
+.who {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--zumpo-space-4) var(--zumpo-space-8);
+  min-width: 0;
+  margin: 0;
+}
+
+.name {
+  color: var(--zumpo-ink);
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  overflow-wrap: anywhere;
+}
+
+.empty .name {
+  color: var(--zumpo-muted);
+}
+
+.verb {
+  color: var(--zumpo-muted);
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+.favourite {
+  flex: none;
+}
+
+/* A line of words, like a chat bubble pointing at the avatar. */
+.bubble {
+  margin: 0;
+  padding: var(--zumpo-space-12) var(--zumpo-space-16);
+  border-radius: var(--zumpo-radius-4) var(--zumpo-radius-16)
+    var(--zumpo-radius-16) var(--zumpo-radius-16);
+  background: var(--zumpo-lime);
+  color: var(--zumpo-ink);
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+  overflow-wrap: anywhere;
+}
+
+.description {
+  border: 1px solid var(--zumpo-line);
+  background: var(--zumpo-paper);
+}
+
+/* The canvas's 798 × 598 at half its size. */
+.drawing {
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 399px;
+  max-width: 100%;
+  aspect-ratio: 798 / 598;
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-16);
+  background: var(--zumpo-white);
+}
+
+.drawing > * {
+  width: 100%;
+  height: 100%;
+}
+
+@container (max-width: 560px) {
+  .entry {
+    gap: var(--zumpo-space-8);
+  }
+
+  .bubble {
+    padding: var(--zumpo-space-10) var(--zumpo-space-14);
+  }
+
+  .drawing {
+    width: 298px;
+  }
+}

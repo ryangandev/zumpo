@@ -1,0 +1,44 @@
+.container {
+  container-type: inline-size;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-16);
+}
+
+/* Suggest on the left, Done on the right. */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+}
+
+.done {
+  margin-left: auto;
+}
+
+.notice {
+  flex: 1;
+  min-width: 0;
+}
+
+/* On a phone the two buttons share the row; done, the notice sits above
+   a full-width Keep editing. */
+@container (max-width: 560px) {
+  .half,
+  .done {
+    flex: 1;
+    margin-left: 0;
+  }
+
+  .doneActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wide {
+    width: 100%;
+  }
+}
