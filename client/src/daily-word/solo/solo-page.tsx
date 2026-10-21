@@ -21,7 +21,6 @@ import {
 } from '../../ui';
 import { soloPath } from '../../games/catalog';
 import { listNames } from '../../room/players';
-import { useCopy } from '../../shell/use-copy';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
@@ -29,7 +28,7 @@ import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { BoardPanel, MarkLegend } from '../panel';
 import { PlayArea } from '../play';
-import { Distribution } from './distribution';
+import { CopyButton, Distribution, formatWait } from '../../solo/daily';
 import {
   deleteLetter,
   guessesToWin,
@@ -94,19 +93,9 @@ export function DailyWordSolo() {
   );
 }
 
-const two = (n: number) => String(n).padStart(2, '0');
-
 /** The line under the board while a word is still open. */
 function promptFor(guesses: number, m: Messages): string {
   return guesses === 0 ? m.dailyWord.freshPrompt : m.dailyWord.nextPrompt;
-}
-
-/** "9:41:18": the time to the next word. */
-export function formatWait(ms: number): string {
-  const seconds = Math.ceil(ms / 1000);
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  return `${hours}:${two(minutes)}:${two(seconds % 60)}`;
 }
 
 /** The typing a board takes, as one game changes into the next. */
@@ -116,7 +105,7 @@ function useSoloGame(
 ) {
   const [game, setGame] = useState(start);
   const typing = {
-    onLetter: (letter: string) => setGame(typeLetter(game, letter)),
+    onKey: (letter: string) => setGame(typeLetter(game, letter)),
     onDelete: () => setGame(deleteLetter(game)),
     onEnter: () => {
       const next = submit(game);
@@ -234,6 +223,7 @@ function DailyView({
               <CopyButton
                 text={share}
                 label={m.dailyWord.share}
+                copiedLabel={m.dailyWord.copied}
                 icon="copy"
                 primary
               />
@@ -249,7 +239,14 @@ function DailyView({
         <>
           <DeviceStats stats={stats} />
           <Card kind="panel" title={m.dailyWord.guessesToFind}>
-            <Distribution counts={stats.distribution} today={found} />
+            <Distribution
+              bars={stats.distribution.map((count, index) => ({
+                guesses: String(index + 1),
+                count,
+                label: m.dailyWord.distribution(count, index + 1),
+              }))}
+              today={found === null ? null : found - 1}
+            />
           </Card>
         </>
       }
@@ -335,6 +332,7 @@ function PracticeView({
               <CopyButton
                 text={share}
                 label={m.dailyWord.challengeFriend}
+                copiedLabel={m.dailyWord.copied}
                 icon="link"
               />
               <Button variant="quiet" icon="back" onClick={onToday}>
@@ -364,6 +362,7 @@ function PracticeView({
           <CopyButton
             text={share}
             label={m.dailyWord.copyChallenge}
+            copiedLabel={m.dailyWord.copied}
             icon="link"
             className={styles.copy}
           />
@@ -430,34 +429,6 @@ function DeviceStats({ stats }: { stats: DailyStats }) {
         ]}
       />
     </Card>
-  );
-}
-
-/** Copies a result to paste anywhere, and says so for a moment. */
-function CopyButton({
-  text,
-  label,
-  icon,
-  primary = false,
-  className,
-}: {
-  text: string;
-  label: string;
-  icon: 'copy' | 'link';
-  primary?: boolean;
-  className?: string;
-}) {
-  const m = useMessages();
-  const { copied, copy } = useCopy(text);
-  return (
-    <Button
-      variant={primary ? 'primary' : 'secondary'}
-      icon={copied ? 'check' : icon}
-      onClick={copy}
-      className={className}
-    >
-      {copied ? m.dailyWord.copied : label}
-    </Button>
   );
 }
 

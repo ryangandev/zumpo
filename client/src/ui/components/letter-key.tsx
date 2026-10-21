@@ -16,6 +16,13 @@ export interface LetterKeyProps {
    * becomes Compact in a container narrower than the Desktop keyboard.
    */
   size?: 'regular' | 'compact';
+  /**
+   * Shares a row's width with the keys beside it, at the Regular height,
+   * as the Digit pad's keys do on a phone.
+   */
+  fill?: boolean;
+  /** Says what the key is when its state is not a mark: "1, noted out". */
+  label?: string;
   onPress: () => void;
   disabled?: boolean;
 }
@@ -30,19 +37,22 @@ export function LetterKey({
   letter = '',
   state = 'plain',
   size = 'regular',
+  fill = false,
+  label: given,
   onPress,
   disabled,
 }: LetterKeyProps) {
   const m = useMessages();
   const shown = letter.toUpperCase();
   const label =
-    kind === 'enter'
+    given ??
+    (kind === 'enter'
       ? m.ui.word.enter
       : kind === 'delete'
         ? m.ui.word.delete
         : state === 'plain'
           ? shown
-          : m.ui.word.marked(shown, m.ui.word.marks[state]);
+          : m.ui.word.marked(shown, m.ui.word.marks[state]));
   return (
     <button
       type="button"
@@ -50,6 +60,7 @@ export function LetterKey({
       className={cx(
         styles.key,
         size === 'compact' && styles.compact,
+        fill && styles.fill,
         kind !== 'letter' && styles.wide,
         styles[state],
       )}

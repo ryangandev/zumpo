@@ -48,6 +48,19 @@
   }
 }
 
+/* A key that shares its row: the Digit pad on a phone, Regular height. */
+.key.fill {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  height: 56px;
+}
+
+.fill .letter {
+  font: var(--zumpo-text-number);
+  letter-spacing: var(--zumpo-text-number-tracking);
+}
+
 .letter {
   font: var(--zumpo-text-number);
   letter-spacing: var(--zumpo-text-number-tracking);
