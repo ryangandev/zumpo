@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useLayoutEffect, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import type { GameType } from '../../../shared/wire-types';
 import { RoomBar, type TagTone } from '../ui';
@@ -52,6 +52,10 @@ export function SoloLayout({
     time?.setPaused(open);
   };
   const stageClass = cx(styles.stage, time?.paused && styles.away);
+
+  // A game opens at the top of the page, as a new page does, not where the
+  // form it was started from had been scrolled to.
+  useLayoutEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <Page
