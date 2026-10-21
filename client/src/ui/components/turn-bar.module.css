@@ -110,6 +110,45 @@
   white-space: nowrap;
 }
 
+/* Desktop: the meta, often the only instruction on screen, has a line of
+   its own under the main line, where it wraps rather than being cut beside
+   a long main line at any width. The line is kept while there is no meta,
+   so the bar, and the board under it, keep their place from phase to
+   phase. */
+.desktop .bar {
+  grid-template-areas:
+    'tag label clock'
+    'main main clock'
+    'meta meta meta';
+}
+
+.desktop .untagged {
+  grid-template-areas:
+    'label label clock'
+    'main main clock'
+    'meta meta meta';
+}
+
+.desktop .answer {
+  display: contents;
+}
+
+.desktop .answer > .mainBox {
+  grid-area: main;
+}
+
+/* A word's height in every phase (TurnBar's wordLine). */
+.desktop .wordLine .answer > .mainBox {
+  height: var(--zumpo-text-title-line);
+}
+
+.desktop .meta {
+  grid-area: meta;
+  min-height: var(--zumpo-text-small-line);
+  overflow: visible;
+  white-space: normal;
+}
+
 /* Phone: a compact bar. The tag, what to do and the meta share the first
    line; the main line is under them at Heading size; the clock shows its
    time beside both. The bar takes it when it is 560 px wide or less, and on
@@ -224,7 +263,6 @@
 }
 
 .narrow .unlabelled .meta {
-  min-height: 0;
   margin-top: 0;
 }
 

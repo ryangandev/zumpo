@@ -20,7 +20,9 @@ const onShortScreen = () => {
   }));
 };
 
-const bar = (props: { labelOnPhone?: boolean; category?: string } = {}) => (
+const bar = (
+  props: { labelOnPhone?: boolean; category?: string; wordLine?: boolean } = {},
+) => (
   <TurnBar
     label="Practice word"
     kind="status"
@@ -75,6 +77,43 @@ describe('TurnBar', () => {
     );
     expect(line()).toBeInTheDocument();
     expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('keeps the meta’s line on a phone when the label is left out, too', () => {
+    barWidth(328);
+    render(
+      <TurnBar
+        label="Practice word"
+        kind="status"
+        main="You found SHADY"
+        labelOnPhone={false}
+      />,
+    );
+    // A result with nothing more to say keeps the bar the height it was.
+    expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('gives the meta a line of its own on a desktop, kept while it is empty', () => {
+    barWidth(784);
+    const { container, rerender } = render(bar());
+    expect(container.firstElementChild!.className).toMatch(/desktop/);
+    expect(container.firstElementChild!.className).not.toMatch(/phone/);
+    expect(line()).toHaveTextContent('Six guesses. Practice keeps no stats.');
+
+    rerender(
+      <TurnBar label="Your turn" kind="status" main="Place a black stone" />,
+    );
+    expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('keeps a word’s height for the main line where the game asks', () => {
+    barWidth(784);
+    const { rerender } = render(bar());
+    expect(section().className).not.toMatch(/wordLine/);
+    rerender(bar({ wordLine: true }));
+    expect(section().className).toMatch(/wordLine/);
   });
 
   it('scales a label a little too long to its line, and wraps one much too long', () => {

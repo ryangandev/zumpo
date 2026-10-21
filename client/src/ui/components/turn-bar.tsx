@@ -45,6 +45,12 @@ export interface TurnBarProps {
    * give the meta a line of its own, and the board has that height.
    */
   stackOnPhone?: boolean;
+  /**
+   * True for a game whose main line is a word in some phases, as Draw &
+   * Guess's and Doodle Chain's are: on a desktop the line keeps a word's
+   * height in every phase, so the bar does not change height between them.
+   */
+  wordLine?: boolean;
   /** The bar's region, for a page that hands it the focus. */
   ref?: Ref<HTMLElement>;
   className?: string;
@@ -73,6 +79,7 @@ export function TurnBar({
   countdown,
   labelOnPhone = true,
   stackOnPhone = true,
+  wordLine = false,
   ref,
   className,
 }: TurnBarProps) {
@@ -88,7 +95,7 @@ export function TurnBar({
       ref={box}
       className={cx(
         styles.container,
-        phone && styles.phone,
+        phone ? styles.phone : styles.desktop,
         stacked && styles.narrow,
         className,
       )}
@@ -100,6 +107,7 @@ export function TurnBar({
           category == null && styles.untagged,
           category == null && !countdown && styles.topless,
           !labelled && styles.unlabelled,
+          wordLine && styles.wordLine,
         )}
         aria-label={m.ui.turn}
         // Where a game starts with no control for the viewer, the focus
@@ -115,8 +123,9 @@ export function TurnBar({
           <Fit align="start" className={styles.mainBox}>
             <span className={cx(styles.main, styles[kind])}>{main}</span>
           </Fit>
-          {/* At a phone's width the meta's line is kept while it is empty. */}
-          {(meta || (stacked && labelled)) && (
+          {/* On a desktop and at a phone's width the meta's line is kept
+              while it is empty. */}
+          {(meta || stacked || !phone) && (
             <span className={styles.meta}>{meta}</span>
           )}
         </div>
