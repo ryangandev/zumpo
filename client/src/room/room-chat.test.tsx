@@ -80,6 +80,22 @@ describe('the phone’s Chat tab', () => {
     send(said(5, 'p2', 'seen right away'));
     await user.click(screen.getByRole('tab', { name: 'Board' }));
     expect(screen.getByRole('tab', { name: 'Chat' })).toBeInTheDocument();
+
+    // A reconnect brings the whole history back, with what was said while
+    // the connection was down: that is news too.
+    act(() =>
+      fake.serverEmits('chat:history', 'r1', [
+        said(1, ME, 'mine'),
+        said(3, 'p2', 'hello'),
+        said(4, 'p2', 'anyone?'),
+        said(5, 'p2', 'seen right away'),
+        said(6, 'p2', 'you there?'),
+        said(7, 'p2', 'hello??'),
+      ]),
+    );
+    expect(screen.getByRole('tab', { name: 'Chat, 2 new' })).toHaveTextContent(
+      '2',
+    );
   });
 });
 
@@ -97,7 +113,7 @@ describe('the turn title', () => {
 
   it('says it is the viewer’s turn in a background tab, and gives the title back', () => {
     document.title = 'Friday table · Zumpo';
-    const { rerender } = renderHook(({ turn }) => useTurnTitle(turn), {
+    const { rerender, unmount } = renderHook(({ turn }) => useTurnTitle(turn), {
       initialProps: { turn: true },
       wrapper: LocaleProvider,
     });
@@ -110,6 +126,12 @@ describe('the turn title', () => {
 
     hide(true);
     rerender({ turn: false });
+    expect(document.title).toBe('Friday table · Zumpo');
+
+    // Leaving the room mid-turn, with the tab still hidden, gives it back too.
+    rerender({ turn: true });
+    expect(document.title).toBe('(!) Your turn · Zumpo');
+    unmount();
     expect(document.title).toBe('Friday table · Zumpo');
   });
 });
