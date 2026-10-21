@@ -191,10 +191,12 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
                 )
               : m.createRoom.seatsHelper(game.minPlayers, game.maxPlayers)
           }
-          options={seatCounts(game.minPlayers, game.maxPlayers).map((count) => ({
-            value: count,
-            label: m.createRoom.players(count),
-          }))}
+          options={seatCounts(game.minPlayers, game.maxPlayers).map(
+            (count) => ({
+              value: count,
+              label: m.createRoom.players(count),
+            }),
+          )}
           value={seats}
           onValueChange={setSeats}
           name="seats"
