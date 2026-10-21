@@ -1,0 +1,24 @@
+/* The newest lines under a phone's board: three lines tall, plus a gap's
+   headroom, whatever they say, so the input under it never moves. Newest at
+   the bottom; a line pushed past the top fades out rather than being cut. */
+.recent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--zumpo-space-8);
+  height: calc(3 * var(--zumpo-text-body-line) + 3 * var(--zumpo-space-8));
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--zumpo-ink) var(--zumpo-space-8)
+  );
+}
+
+/* The newest line must never be the one that does not fit. */
+.recent > li {
+  flex: none;
+}

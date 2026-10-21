@@ -19,6 +19,7 @@ export const drawAndGuess: typeof en = {
   waitingRoom: '等待室',
   guessPlaceholder: '输入你的答案…',
   messagePlaceholder: '说点什么…',
+  spectatorPlaceholder: '只有观战的人能看到…',
   guess: '猜词',
   message: '消息',
   drawer: '画画的人',

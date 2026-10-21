@@ -8,6 +8,8 @@ export const ui = {
     message: 'Message',
     placeholder: 'Type a guess or say hi…',
     send: 'Send',
+    /** A phone's Chat tab with lines nobody has read yet: "Chat, 3 new". */
+    unread: (tab: string, count: number) => `${tab}, ${count} new`,
   },
   you: 'You',
   youName: (name: string) => `${name} (you)`,
