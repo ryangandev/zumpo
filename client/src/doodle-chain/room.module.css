@@ -7,6 +7,7 @@
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-24);
   background: var(--zumpo-paper);
+  container-type: inline-size;
 }
 
 .result {
@@ -56,4 +57,24 @@
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
+}
+
+/* The host's hint, then Next. */
+.reveal {
+  display: flex;
+  align-items: center;
+  gap: var(--zumpo-space-16);
+}
+
+/* On a phone the album's hint takes a line of its own under the buttons, and
+   Next spans the panel above the reveal's (DC19). */
+@container (max-width: 560px) {
+  .hint {
+    flex-basis: 100%;
+  }
+
+  .reveal {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
 }

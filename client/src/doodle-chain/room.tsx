@@ -196,7 +196,7 @@ function Reveal({ room }: { room: Room }) {
         <Chain entries={reveal.entries[chain] ?? []} heartOf={heartOf} />
         <hr className={styles.divider} />
         {isHost ? (
-          <div className={styles.actions}>
+          <div className={styles.reveal}>
             <p className={styles.hint}>
               {shown < length
                 ? length - shown === 1
