@@ -337,6 +337,29 @@ for (const size of SIZES) {
       } else {
         await play(leo, first!.card, [maya, leo]);
       }
+      // The pile's top card shows whole and large enough to read, inside
+      // the room the board is given, above the hand (#149).
+      const top = leo
+        .getByRole('region', { name: 'The pile' })
+        .getByRole('img', { name: String(first!.card), exact: true });
+      await expect(top).toBeVisible();
+      const fit = await top.evaluate((card) => {
+        const box = card.getBoundingClientRect();
+        const board = card.closest('[data-play-board]')!;
+        const room = board.getBoundingClientRect();
+        return {
+          height: box.height,
+          inside: box.top >= room.top - 0.5 && box.bottom <= room.bottom + 0.5,
+          scrolls: board.hasAttribute('data-scroll'),
+        };
+      });
+      expect(fit).toEqual({
+        height: expect.any(Number),
+        inside: true,
+        scrolls: false,
+      });
+      expect(fit.height).toBeGreaterThanOrEqual(72);
+      await hand('the first card on the pile');
     });
 
     test('draw and guess keeps the guess field and the canvas still', async ({

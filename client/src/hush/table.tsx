@@ -73,7 +73,7 @@ export function Pile({
   const count = under.length;
   useLayoutEffect(() => {
     const list = trail.current;
-    if (list) list.scrollTop = list.scrollHeight;
+    if (list && count > 0) list.scrollTop = list.scrollHeight;
   }, [count]);
 
   const pileOf = (
