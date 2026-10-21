@@ -48,8 +48,6 @@ describe('Countdown tones', () => {
   it('draws a clock that is no deadline apart, and never urgent', () => {
     expect(toneOf({ seconds: 12, deadline: false })).toBe('info');
     expect(toneOf({ seconds: 3, deadline: false })).toBe('info');
-    expect(toneOf({ seconds: 3, deadline: false, waiting: true })).toBe(
-      'info',
-    );
+    expect(toneOf({ seconds: 3, deadline: false, waiting: true })).toBe('info');
   });
 });
