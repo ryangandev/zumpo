@@ -1,8 +1,7 @@
 import type { CodeBreakerMark } from './wire-types.js';
 import { msUntilMidnight, puzzleDays } from './daily.js';
-import { shuffle } from './pairs.js';
+import { charAt, itemAt, pickFrom, shuffle } from './list.js';
 import { seededRandom, seedNumber } from './seed.js';
-import { charAt, itemAt, pickFrom } from './list.js';
 
 /**
  * Code Breaker's rules, which a room on the server and a game on your own in

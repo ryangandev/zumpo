@@ -15,7 +15,7 @@ import {
   type Deal,
 } from '../../shared/trios.js';
 import { seededRandom, seedNumber } from '../../shared/seed.js';
-import { shuffle } from '../../shared/pairs.js';
+import { shuffle } from '../../shared/list.js';
 
 const ALL = Array.from({ length: DECK_SIZE }, (_, card) => card);
 

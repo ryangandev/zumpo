@@ -1,4 +1,4 @@
-import { pickFrom } from '../../../../shared/list';
+import { pickFrom, shuffle } from '../../../../shared/list';
 import {
   bidStands,
   countFace,
@@ -7,7 +7,6 @@ import {
   type Bid,
   type DicePerPlayer,
 } from '../../../../shared/liars-dice';
-import { shuffle } from '../../../../shared/pairs';
 import type {
   LiarsDiceBid,
   LiarsDiceReveal,

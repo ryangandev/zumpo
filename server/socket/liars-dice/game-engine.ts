@@ -18,7 +18,6 @@ import {
   rollDice,
   type Bid,
 } from '../../../shared/liars-dice.js';
-import { shuffle } from '../../../shared/pairs.js';
 import {
   diceOnTable,
   isIn,
@@ -26,7 +25,7 @@ import {
   playersIn,
   type LiarsDiceRoom,
 } from './state.js';
-import { itemAt } from '../../../shared/list.js';
+import { itemAt, shuffle } from '../../../shared/list.js';
 
 /** Sorts a player who kept dice after everybody who went out. */
 const STILL_IN = Number.MAX_SAFE_INTEGER;

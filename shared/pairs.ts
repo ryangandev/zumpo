@@ -1,5 +1,5 @@
 import type { PairsBoard } from './wire-types.js';
-import { swap } from './list.js';
+import { shuffle } from './list.js';
 
 /**
  * Pairs rules that a room on the server and a game on your own in the
@@ -26,15 +26,6 @@ export const PAIRS_BOARDS: Readonly<Record<PairsBoard, PairsBoardSize>> = {
 };
 
 export const BOARDS = Object.keys(PAIRS_BOARDS) as readonly PairsBoard[];
-
-export function shuffle<T>(items: readonly T[], random: () => number): T[] {
-  const shuffled = [...items];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    swap(shuffled, i, j);
-  }
-  return shuffled;
-}
 
 /**
  * A shuffled deck for `board`: a Large board has every symbol, a Small one

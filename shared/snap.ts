@@ -1,4 +1,4 @@
-import { shuffle } from './pairs.js';
+import { shuffle } from './list.js';
 import { seededRandom, seedNumber } from './seed.js';
 
 /**
