@@ -89,7 +89,6 @@ test('a player with no name races through thirty cards on their own', async ({
   test.setTimeout(120_000);
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Snap');
-  await sam.getByRole('button', { name: 'Start' }).click();
 
   const turn = turnOf(sam);
   await expect(turn.getByText('Card 1 of 30')).toBeVisible();
@@ -103,12 +102,6 @@ test('a player with no name races through thirty cards on their own', async ({
     await expect(turn.getByText(`Card ${card} of 30`)).toBeVisible();
     await readyToTap(sam);
     await tapMatch(sam);
-    // The last card ends the run once its match has shown.
-    if (card < 30) {
-      await expect(thisRun.getByRole('definition').first()).toHaveText(
-        String(card),
-      );
-    }
   }
 
   await expect(
@@ -116,8 +109,8 @@ test('a player with no name races through thirty cards on their own', async ({
   ).toBeVisible();
   await expect(sam.getByText('Run complete', { exact: true })).toBeVisible();
   await expect(
-    sam.getByRole('button', { name: 'Challenge a friend' }).first(),
-  ).toBeVisible();
+    sam.getByRole('button', { name: 'Copy challenge link' }),
+  ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });
 

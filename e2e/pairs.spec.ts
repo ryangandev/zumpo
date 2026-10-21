@@ -57,8 +57,7 @@ test('a player with no name clears a board on their own', async ({
 }) => {
   const sam = await player('Sam', { named: false });
   const sent = await playSolo(sam, 'Pairs');
-  await sam.getByRole('radio', { name: /Small/ }).click();
-  await sam.getByRole('button', { name: 'Start' }).click();
+  // A first visit plays Small at once.
 
   const memory: Memory = new Map();
   const cleared = sam.getByRole('heading', {
@@ -70,7 +69,7 @@ test('a player with no name clears a board on their own', async ({
   }
   await expect(sam.getByText('Board cleared', { exact: true })).toBeVisible();
   await expect(
-    sam.getByRole('button', { name: 'Challenge a friend' }).first(),
-  ).toBeVisible();
+    sam.getByRole('button', { name: 'Copy challenge link' }),
+  ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });

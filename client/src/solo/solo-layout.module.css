@@ -31,7 +31,8 @@
 
 /* Under 1024 px (ONE_COLUMN in use-media-query.ts) the side column would
    leave the stage less than a board needs: one column, the side's cards
-   under the stage, side by side where two fit. */
+   under the stage, side by side where two fit, and one the whole width on
+   the narrowest phones. */
 @media (max-width: 1023px) {
   .solo {
     grid-template-columns: minmax(0, 1fr);
@@ -39,7 +40,7 @@
 
   .side {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     align-items: start;
   }
 }

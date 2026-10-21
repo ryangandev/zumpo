@@ -153,10 +153,6 @@ test('a player plays the computer on their own, with nothing sent to the server'
 }) => {
   const sam = await player('Sam');
   const sent = await playSolo(sam, 'Gomoku');
-  await expect(sam.getByRole('combobox', { name: 'Level' })).toContainText(
-    'Medium',
-  );
-  await sam.getByRole('button', { name: 'Start' }).click();
 
   await expect(sam.getByText('Move 1')).toBeVisible();
   await pointOf(sam, 'H8').click();
