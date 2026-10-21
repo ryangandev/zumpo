@@ -4,7 +4,7 @@ import type {
   DoodleChainDraft,
   DoodleChainStepEnd,
 } from '../../models/types.js';
-import { departureFrom } from '../../../shared/room.js';
+import { departureFrom, starterOf } from '../../../shared/room.js';
 import type { GameContext, Room } from '../../libs/rooms/types.js';
 import {
   emitToPlayer,
@@ -313,12 +313,15 @@ const createDoodleChainGameEngine = (
   };
 
   /**
-   * The host shows the next entry. `total` is how many they saw shown, so a
-   * double tap, or a Next from a page a step behind, shows nothing more.
+   * The starter shows the next entry: the host, or while they are away the
+   * player the crown would pass to, as for starting a game, so the reveal
+   * never waits on a host who is not there. `total` is how many they saw
+   * shown, so a double tap, or a Next from a page a step behind, shows
+   * nothing more.
    */
   const next = (roomId: string, playerId: string, total: number) => {
     const room = roomOf(roomId);
-    if (!room?.isGameStarted || room.owner.playerId !== playerId) return;
+    if (!room?.isGameStarted || starterOf(room) !== playerId) return;
     const game = room.game;
     if (game.phase !== 'reveal' || !game.reveal) return;
     if (total !== revealTotal(game)) return;

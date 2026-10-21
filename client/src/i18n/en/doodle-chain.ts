@@ -228,8 +228,8 @@ export const doodleChain = {
   hostShowing: (host: string) => `${host} is showing the chains.`,
   hostNext: (host: string, next: string) =>
     `${host} is showing the chains. ${next}’s chain is next.`,
-  hostAway: (host: string) =>
-    `${host} is away. The reveal goes on when they are back.`,
+  /** For the player who steps the reveal on while the host is away. */
+  standInReveal: (host: string) => `${host} is away, so you show the chains.`,
 
   // The album.
   everyChain: 'That’s every chain.',

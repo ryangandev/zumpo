@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { CanvasStroke, DoodleChainRoomState } from '../models/types.js';
 import { MAX_POINTS_PER_CANVAS } from '../libs/drawing/canvas.js';
+import { starterOf } from '../../shared/room.js';
 import {
   collect,
   collectChat,
@@ -699,6 +700,47 @@ describe('Doodle Chain', () => {
       const next = waitForDoodleChainState(ryan, (s) => s.reveal?.total === 2);
       host.emit('dc:reveal:next', roomId, 1);
       expect((await next).reveal).toMatchObject({ chain: 0, shown: 2 });
+    });
+
+    it('hands the reveal to the next player while the host is away, and back on return', async () => {
+      // A grace long enough that the crown itself cannot have moved.
+      await harness.teardown();
+      harness = await startTestServer(undefined, 5);
+      const { roomId, players, owner } = await playToReveal(harness);
+      const room = () => doodleChainRoom(harness, roomId);
+      const shown = () => room().game.reveal?.shown;
+
+      owner.close();
+      await settle();
+      expect(room().owner.playerId).toBe(owner.playerId);
+      const standIn = players.find((p) => p.playerId === starterOf(room()))!;
+      const other = players.find((p) => p !== owner && p !== standIn)!;
+      expect(standIn).not.toBe(owner);
+
+      // Only the player next in line steps the reveal on.
+      other.emit('dc:reveal:next', roomId, 1);
+      await settle();
+      expect(shown()).toBe(1);
+      const second = waitForDoodleChainState(
+        other,
+        (s) => s.reveal?.total === 2,
+      );
+      standIn.emit('dc:reveal:next', roomId, 1);
+      expect((await second).reveal?.shown).toBe(2);
+
+      // The host is back, and the reveal is theirs again.
+      const back = await harness.reload(owner);
+      await joinRoom(back, roomId, 'Maya');
+      await settle();
+      standIn.emit('dc:reveal:next', roomId, 2);
+      await settle();
+      expect(shown()).toBe(2);
+      const third = waitForDoodleChainState(
+        other,
+        (s) => s.reveal?.total === 3,
+      );
+      back.emit('dc:reveal:next', roomId, 2);
+      expect((await third).reveal?.shown).toBe(3);
     });
 
     it('gives a spectator the drawings but no heart', async () => {

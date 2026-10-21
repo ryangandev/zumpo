@@ -488,6 +488,26 @@ describe('a Doodle Chain room', () => {
     expect(fake.sentArgs('dc:reveal:next')).toEqual([['r1', 2]]);
   });
 
+  it('hands the reveal to the next player while the host is away', async () => {
+    const user = userEvent.setup();
+    const away = revealing({ owner: MAYA });
+    const { fake } = await renderSeated({
+      ...away,
+      playerList: {
+        ...away.playerList,
+        p2: { ...away.playerList.p2!, isConnected: false },
+      },
+    });
+
+    expect(
+      screen.getByText(
+        'Maya is away, so you show the chains. Next shows the last of Ryan’s chain.',
+      ),
+    ).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    expect(fake.sentArgs('dc:reveal:next')).toEqual([['r1', 2]]);
+  });
+
   it('reads out each entry as the reveal shows it', async () => {
     const { update } = await renderSeated(revealing());
     const live = screen.getByText('Maya drew it.');

@@ -172,18 +172,20 @@ function Waiting({ room }: { room: Room }) {
   );
 }
 
-/** DC12, DC13, DC19: the host shows the chains, one entry at a time. */
+/**
+ * DC12, DC13, DC19: the host shows the chains, one entry at a time, or while
+ * they are away the player next in line, as for starting a game.
+ */
 function Reveal({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, playerId, socket, spectating, isHost } = room;
+  const { state, playerId, socket, spectating, isHost, canStart, starterName } =
+    room;
   const reveal = state.reveal;
   if (!reveal) return null;
   const { chain, shown, chains } = reveal;
   const owner = chains[chain]?.owner.username ?? '';
   const length = chains[chain]?.length ?? 0;
   const nextOwner = chains[chain + 1]?.owner.username;
-  const host = state.playerList[state.owner.playerId];
-  const hostName = state.owner.username;
 
   const heartOf = (entry: DoodleChainEntry) => {
     if (spectating || entry.author.playerId === playerId) {
@@ -218,9 +220,11 @@ function Reveal({ room }: { room: Room }) {
           announce
         />
         <hr className={styles.divider} />
-        {isHost ? (
+        {canStart ? (
           <div className={styles.reveal}>
             <p className={styles.hint}>
+              {!isHost &&
+                `${m.doodleChain.standInReveal(state.owner.username)} `}
               {shown < length
                 ? length - shown === 1
                   ? m.doodleChain.lastIn(owner)
@@ -244,11 +248,9 @@ function Reveal({ room }: { room: Room }) {
           </div>
         ) : (
           <Notice tone="pending">
-            {host && !host.isConnected
-              ? m.doodleChain.hostAway(hostName)
-              : shown >= length && nextOwner
-                ? m.doodleChain.hostNext(hostName, nextOwner)
-                : m.doodleChain.hostShowing(hostName)}
+            {shown >= length && nextOwner
+              ? m.doodleChain.hostNext(starterName, nextOwner)
+              : m.doodleChain.hostShowing(starterName)}
           </Notice>
         )}
       </section>

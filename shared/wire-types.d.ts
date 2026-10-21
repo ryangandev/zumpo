@@ -1544,7 +1544,10 @@ interface ClientToServerEvents {
   'dc:draw:end': (roomId: string) => void;
   'dc:draw:undo': (roomId: string) => void;
   'dc:draw:clear': (roomId: string) => void;
-  /** The host shows the next entry; `total` is how many are shown before it. */
+  /**
+   * The starter (the host, or while they are away the player next in line,
+   * `starterOf`) shows the next entry; `total` is how many are shown before it.
+   */
   'dc:reveal:next': (roomId: string, total: number) => void;
   /** Gives the chain's heart to the entry made at `step`, or takes it back. */
   'dc:heart': (roomId: string, chain: number, step: number | null) => void;

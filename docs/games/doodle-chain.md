@@ -160,7 +160,8 @@ After the last step everybody, spectators included, watches the chains together:
 Next names the entry it means to show (`dc:reveal:next` carries how many are shown), so a double tap shows one entry, never two.
 There is no Back: the album is where chains are read again, at each player's own pace.
 
-**A host who is away holds the reveal** until they come back or their seat goes, as the crown passes when a seat goes; the new host carries on from the same entry.
+**A host who is away does not hold the reveal:** at once the player next in line steps it on from the same entry, as they may start a game (`starterOf` in [`shared/room.ts`](../../shared/room.ts)), and is told "Maya is away, so you show the chains."
+The host takes it back the moment they return; if their seat goes, the crown passes and the new host carries on.
 
 ### Hearts
 
@@ -218,7 +219,7 @@ There is no setting for the number of steps: the players are the length, as in H
 - **The deal of chains is the server's:** the order is fixed when the game starts, and which chain each player works on, and who sits out, follows from it.
 - **Nothing a client sends ends a step**, except that the server ends it early once everybody who has something to do has pressed Done.
   The clock is the server's; a client is told how many milliseconds are left and renders a countdown from it.
-- **Only the host steps the reveal**, one entry at a time, and only to the entry it names.
+- **Only the host steps the reveal**, or while they are away the player next in line, one entry at a time, and only to the entry it names.
 - **A heart is a player's,** only during the reveal, only on a shown entry, never on their own, and one per chain.
 - **Only the host may start a game**, or while they are away the player next in line, and only with three or more players.
   Between games anybody else at the table may say Ready, which tells the starter who is ready; the starter still starts the next game ([the room layer](../architecture.md#the-room-layer)).
@@ -287,7 +288,7 @@ Doodle Chain's events of its own:
 | `dc:text`                                       | The room, and the text or a suggestion number | A player writing or describing |
 | `dc:done`                                       | The room, and Done or not                     | A player                       |
 | `dc:draw:start`, `move`, `end`, `undo`, `clear` | As Draw & Guess's, for your own drawing       | A player drawing               |
-| `dc:reveal:next`                                | The room, and how many entries are shown      | The host                       |
+| `dc:reveal:next`                                | The room, and how many entries are shown      | The starter                    |
 | `dc:heart`                                      | The room, the chain, and an entry or none     | A player, in the reveal        |
 | `dc:drawing`                                    | The room, a drawing id and its strokes        | The server                     |
 | `dc:canvas:sync`                                | The room, and your own strokes                | The server                     |
