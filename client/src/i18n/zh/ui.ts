@@ -82,6 +82,7 @@ export const ui: typeof en = {
     noted: (digit, note) =>
       `${digit}，已记为${note === 'out' ? '不在答案中' : '在答案中'}`,
     mark: (right, moved) => `${right} 个位置正确，${moved} 个位置不对`,
+    board: (name) => `${name} 的猜数板`,
   },
   lives: (lives) => (lives === 0 ? '没有命了' : `${lives} 条命`),
   discarded: (value) => `${value}，已弃置`,

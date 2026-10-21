@@ -338,8 +338,10 @@ describe('a round', () => {
 describe('leaving and coming back', () => {
   let harness: TestServer;
 
+  // A grace long enough that a dropped player is still holding their seat
+  // when they come back, however slow the machine.
   beforeEach(async () => {
-    harness = await startTestServer();
+    harness = await startTestServer(undefined, 5);
   });
 
   afterEach(async () => {

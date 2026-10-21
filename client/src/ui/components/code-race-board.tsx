@@ -40,7 +40,7 @@ export function CodeRaceBoard({
   describe,
 }: CodeRaceBoardProps) {
   const m = useMessages();
-  const label = m.ui.word.board(name);
+  const label = m.ui.code.board(name);
   const digits = describe !== undefined;
   return (
     <div

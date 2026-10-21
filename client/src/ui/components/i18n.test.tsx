@@ -5,6 +5,7 @@ import { LocaleProvider, useLocale } from '../../i18n';
 import { BidPicker } from './bid-picker';
 import { ChatInput } from './chat-input';
 import { CodeMarks } from './code-marks';
+import { CodeRaceBoard } from './code-race-board';
 import { Die } from './die';
 import { DigitPad } from './digit-pad';
 import { DrawingToolbar } from './drawing-toolbar';
@@ -103,8 +104,14 @@ describe('public components in Chinese', () => {
           onDelete={noop}
         />
         <CodeMarks mark={{ right: 2, moved: 1 }} />
+        <CodeRaceBoard
+          name="Maya"
+          status="2 次"
+          rows={[{ guess: null, mark: { right: 0, moved: 1 } }]}
+        />
       </>,
     );
+    expect(screen.getByRole('group', { name: 'Maya 的猜数板' })).toBeVisible();
     const pad = screen.getByRole('group', { name: '数字键盘' });
     expect(
       within(pad).getByRole('button', { name: '5，已记为不在答案中' }),
