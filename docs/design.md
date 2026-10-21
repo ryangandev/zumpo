@@ -255,6 +255,7 @@ Code differs from Figma on purpose in a few places:
 - Until the bridge script `j-fig-1-countdown-info.js` runs, Figma has no Countdown Info tone: its Trios hint clocks, Snap card clocks and run times are still drawn Running or Waiting.
 - Until `j-fig-2-no-word-categories.js` runs, DL04 to DL06, DL10, DL11, D16 and MO05 still draw a Word categories field; the app has none, since a Draw & Guess game draws its one category at random.
 - Until `j-fig-4-standing-mark.js` runs, `Zumpo/Standing` has no Mark: code puts the Icon check (green) or close (danger red) before a finished race's guesses on a phone's strip, where it used to type ✓ and ✗.
+- Until `j-fig-5-chat-byline.js` runs and the tokens are exported, a chat line's sender is in Label, 14 px beside the 16 px message; the script adds the Zumpo/Body strong text style for it, which `chat-message.module.css` already asks for and takes once `--zumpo-text-body-strong` exists.
 - Until `j-fig-3-artwork-words.js` runs, `Zumpo/Game artwork`'s words are fixed text; code takes them from the catalog, so a Chinese page shows Doodle Chain's 乌龟 and 汉堡？.
 
 ## Editing the Figma file
