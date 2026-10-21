@@ -211,7 +211,7 @@ describe('a Make 24 room', () => {
       }),
     );
     expect(
-      screen.getByRole('heading', { name: 'Ryan wins with 420 points.' }),
+      screen.getByRole('heading', { name: 'You win with 420 points.' }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: 'Hand 5 results' }),

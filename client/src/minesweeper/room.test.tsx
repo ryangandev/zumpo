@@ -240,7 +240,7 @@ describe('a Minesweeper room', () => {
     update(picking);
     update(ended);
     expect(
-      screen.getByRole('heading', { name: 'Ryan wins with 120 points.' }),
+      screen.getByRole('heading', { name: 'You win with 120 points.' }),
     ).toBeInTheDocument();
     expect(confetti()).not.toBeNull();
   });

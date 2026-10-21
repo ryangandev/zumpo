@@ -75,7 +75,8 @@ test('two players bid and call until one of them has dice left', async ({
   expect(calls).toBeLessThanOrEqual(5);
   await expect(
     maya.getByRole('heading', {
-      name: /^(Maya|Leo) wins with (1 die|2 dice|3 dice)\.$/,
+      // Maya reads her own win as hers.
+      name: /^(Leo wins|You win) with (1 die|2 dice|3 dice)\.$/,
     }),
   ).toBeVisible();
   await expect(

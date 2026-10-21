@@ -91,6 +91,8 @@ export const room: typeof en = {
   gameOver: '游戏结束。',
   wins: (name, score) => `${name} 以 ${score}获胜。`,
   ties: (names, score) => `${names} 以 ${score}并列获胜。`,
+  youWin: (score) => `你以 ${score}获胜。`,
+  youTie: (others, score) => `你和 ${others} 以 ${score}并列获胜。`,
   finished: (detail, place) => `${detail}你获得了${place}。`,
   standings: '排名',
   winner: '获胜者',

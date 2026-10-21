@@ -100,6 +100,9 @@ export const room = {
   gameOver: 'Game over.',
   wins: (name: string, score: string) => `${name} wins with ${score}.`,
   ties: (names: string, score: string) => `${names} tie with ${score}.`,
+  youWin: (score: string) => `You win with ${score}.`,
+  youTie: (others: string, score: string) =>
+    `You tie with ${others} on ${score}.`,
   finished: (detail: string, place: string) =>
     `${detail} You finished ${place}.`,
   standings: 'Standings',

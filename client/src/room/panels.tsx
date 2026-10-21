@@ -376,25 +376,32 @@ export function ResultsPanel<Summary extends GameSummary>({
   // A spectator has no place.
   const place = places[standings.findIndex((s) => s.playerId === playerId)];
   const [winner] = winners;
+  const score = winner && scoreOf(m, state.gameType, winner.points);
+  // The viewer's own win is theirs: "You win", not their name.
+  const others = winners
+    .filter((w) => w.playerId !== playerId)
+    .map((w) => w.username);
+  const won = others.length < winners.length;
 
   return (
     <ResultsFrame
       title={
         title ??
-        (winner === undefined
+        (winner === undefined || score === undefined
           ? m.room.gameOver
-          : winners.length === 1
-            ? m.room.wins(
-                winner.username,
-                scoreOf(m, state.gameType, winner.points),
-              )
-            : m.room.ties(
-                listNames(
-                  winners.map((w) => w.username),
-                  m,
-                ),
-                scoreOf(m, state.gameType, winner.points),
-              ))
+          : won
+            ? others.length === 0
+              ? m.room.youWin(score)
+              : m.room.youTie(listNames(others, m), score)
+            : winners.length === 1
+              ? m.room.wins(winner.username, score)
+              : m.room.ties(
+                  listNames(
+                    winners.map((w) => w.username),
+                    m,
+                  ),
+                  score,
+                ))
       }
       detail={
         title === undefined && place !== undefined && place > 1
