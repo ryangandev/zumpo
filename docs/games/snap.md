@@ -62,11 +62,14 @@ A spot is marked **Match** (lime, outlined in green), **Miss** (peach, outlined 
 
 ### The deal
 
-Everything is dealt from a seed (`shared/seed.ts`), so a seed always deals the same game:
+A deal (`dealDeck` in `shared/snap.ts`) shuffles three times, from the random source it is given:
 
 1. The 31 symbols are shuffled onto the plane's 31 points, so which symbols meet is new every game.
 2. The 31 cards are shuffled into the order they are dealt and turned.
 3. Each card's six symbols are shuffled into its six spots, so the shared symbol is as likely in the centre as anywhere.
+
+A run on your own deals from a seed (`shared/seed.ts`), so a challenge link deals the same deck.
+A room deals from `Math.random` on the server, since nobody replays a room's deck.
 
 ## Spotting
 
@@ -100,7 +103,7 @@ A run without a link gets a new seed, and Play again starts another.
 ## In a room
 
 The room owner picks 2–6 seats when creating the room; there is nothing else to choose, and the lobby shows "31 cards".
-At the start of a game the server shuffles a new deck from a new seed, deals **one card face up to each player**, and turns the next one up as the **middle card**.
+At the start of a game the server shuffles a new deck, deals **one card face up to each player**, and turns the next one up as the **middle card**.
 The rest are the pile.
 
 There are no turns: everybody looks at the same middle card at the same time, each with their own card.
@@ -203,15 +206,15 @@ Snap's one event of its own is `snap:claim`, with the room, the middle card's nu
 
 ## Where the code lives
 
-| File                                                                          | Responsibility                                                                  |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`shared/snap.ts`](../../shared/snap.ts)                                      | The plane, the symbols, the deal from a seed and the match: what both sides run |
-| [`module.ts`](../../server/socket/snap/module.ts)                             | What the room layer calls, and all it calls                                     |
-| [`game-engine.ts`](../../server/socket/snap/game-engine.ts)                   | Claims, lockouts, taking a card, turning the next and the score                 |
-| [`state.ts`](../../server/socket/snap/state.ts)                               | The game's state, and the snapshot each player is sent                          |
-| [`snap/solo/`](../../client/src/snap/solo/)                                   | A run on your own                                                               |
-| [`snap/room.tsx`](../../client/src/snap/room.tsx)                             | A room's screens                                                                |
-| [`ui/components/snap-card.tsx`](../../client/src/ui/components/snap-card.tsx) | `Zumpo/Snap card`, its spots and symbols                                        |
+| File                                                                          | Responsibility                                                      |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| [`shared/snap.ts`](../../shared/snap.ts)                                      | The plane, the symbols, the deal and the match: what both sides run |
+| [`module.ts`](../../server/socket/snap/module.ts)                             | What the room layer calls, and all it calls                         |
+| [`game-engine.ts`](../../server/socket/snap/game-engine.ts)                   | Claims, lockouts, taking a card, turning the next and the score     |
+| [`state.ts`](../../server/socket/snap/state.ts)                               | The game's state, and the snapshot each player is sent              |
+| [`snap/solo/`](../../client/src/snap/solo/)                                   | A run on your own                                                   |
+| [`snap/room.tsx`](../../client/src/snap/room.tsx)                             | A room's screens                                                    |
+| [`ui/components/snap-card.tsx`](../../client/src/ui/components/snap-card.tsx) | `Zumpo/Snap card`, its spots and symbols                            |
 
 The rules are covered by [`snap-rules.test.ts`](../../server/tests/snap-rules.test.ts) and [`snap-flow.test.ts`](../../server/tests/snap-flow.test.ts), and a room's race and a run on your own by [`e2e/snap.spec.ts`](../../e2e/snap.spec.ts).
 The screens are SN01-SN14 in [the Figma file](../design.md).
