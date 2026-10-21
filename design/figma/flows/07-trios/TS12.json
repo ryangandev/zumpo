@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 3050,
     "w": 390,
-    "h": 860,
+    "h": 830,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -94,7 +94,7 @@
         "id": "79:89114",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 196,
+        "h": 166,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -112,8 +112,8 @@
         "overrides": [
           {
             "path": ".",
-            "height": 196,
-            "paddingBottom": 31,
+            "height": 166,
+            "paddingBottom": "$Zumpo · UI:space/16",
             "width": 350
           },
           {
@@ -128,7 +128,7 @@
           {
             "path": "Answer",
             "counterAxisSizingMode": "AUTO",
-            "counterAxisSpacing": 19
+            "counterAxisSpacing": "$Zumpo · UI:space/4"
           },
           {
             "path": "Top / Countdown",
