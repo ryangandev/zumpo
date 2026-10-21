@@ -167,6 +167,7 @@ describe('a Gomoku room', () => {
     expect(await first).toMatchObject({
       phase: 'waiting',
       colors: null,
+      gameNumber: 0,
       moves: [],
       turnPlayerId: null,
       missedTurns: {},
@@ -187,6 +188,7 @@ describe('a Gomoku room', () => {
       white: { playerId: alice.playerId, username: 'Alice' },
     });
     expect(view!.turnPlayerId).toBe(bob.playerId);
+    expect(view!.gameNumber).toBe(1);
     expect(view!.missedTurns).toEqual({
       [alice.playerId]: 0,
       [bob.playerId]: 0,
@@ -350,6 +352,7 @@ describe('a rematch', () => {
 
     const [second] = await startAndWait(alice, roomId, [alice, bob]);
     expect(second!.colors?.black.playerId).toBe(bob.playerId);
+    expect(second!.gameNumber).toBe(2);
     expect(second!.turnPlayerId).toBe(bob.playerId);
     // The last game's board is gone, and the score stays.
     expect(second!.moves).toEqual([]);
@@ -359,6 +362,24 @@ describe('a rematch', () => {
 
     const third = await startNewPairAfter(harness, roomId, alice, bob);
     expect(third.colors?.black.username).toBe('Cleo');
+    expect(third.gameNumber).toBe(1);
+  });
+
+  it('puts the game’s winner first on the result, whoever has won more', async () => {
+    harness = await startServer();
+    const { roomId, alice, bob } = await playToFirstMove(harness);
+    const first = waitForGomokuState(alice, (s) => s.phase === 'waiting');
+    bob.emit('gomoku:resign', roomId);
+    await first;
+
+    await startAndWait(alice, roomId, [alice, bob]);
+    const second = waitForGomokuState(alice, (s) => s.phase === 'waiting');
+    alice.emit('gomoku:resign', roomId);
+    const view = await second;
+    expect(view.lastGame?.standings).toEqual([
+      { playerId: bob.playerId, username: 'Bob', points: 1 },
+      { playerId: alice.playerId, username: 'Alice', points: 1 },
+    ]);
   });
 });
 

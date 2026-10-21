@@ -17,6 +17,8 @@ interface GomokuState {
   phase: GomokuPhase;
   /** This game's colours, or the last game's between games. */
   colors: GomokuColors | null;
+  /** This pair's game: 1 for their first, again 1 for a new pair. */
+  gameNumber: number;
   moves: GomokuMove[];
   /** Whose turn it is; null between games. */
   turnPlayerId: string | null;
@@ -29,6 +31,7 @@ interface GomokuState {
 const createState = (): GomokuState => ({
   phase: 'waiting',
   colors: null,
+  gameNumber: 0,
   moves: [],
   turnPlayerId: null,
   missedTurns: {},
@@ -57,6 +60,7 @@ const toRoomState = (room: GomokuRoom): GomokuRoomState => {
       black: { ...game.colors.black },
       white: { ...game.colors.white },
     },
+    gameNumber: game.gameNumber,
     moves: game.moves.map((move) => ({ ...move })),
     turnPlayerId: game.turnPlayerId,
     missedTurns: { ...game.missedTurns },

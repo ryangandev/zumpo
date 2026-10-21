@@ -36,15 +36,25 @@ const isTurnOf = (room: GomokuRoom, playerId: string) =>
   room.game.phase === 'playing' &&
   room.game.turnPlayerId === playerId;
 
-/** Most games won first. */
-const gomokuStandings = (room: GomokuRoom): Standing[] =>
-  Object.entries(room.playerList)
+/**
+ * The game's winner first, then whoever else is still seated; after a draw,
+ * Black first. Their points are the games each has won here.
+ */
+const gomokuStandings = (
+  room: GomokuRoom,
+  winner: GomokuColor | null,
+): Standing[] => {
+  const first = room.game.colors?.[winner ?? 'black'].playerId;
+  return Object.entries(room.playerList)
     .map(([playerId, player]) => ({
       playerId,
       username: player.username,
       points: player.points,
     }))
-    .toSorted((a, b) => b.points - a.points);
+    .toSorted(
+      (a, b) => Number(b.playerId === first) - Number(a.playerId === first),
+    );
+};
 
 /**
  * Owns a game: whose turn it is, the move clock, lost turns, the colours, and
@@ -63,7 +73,9 @@ const createGomokuGameEngine = (
    * The same two players as last game swap colours, so each has the first
    * move in turn; a new pair is drawn at random.
    */
-  const colorsFor = (room: GomokuRoom): GomokuColors => {
+  const colorsFor = (
+    room: GomokuRoom,
+  ): GomokuColors & { samePair: boolean } => {
     const seated = Object.keys(room.playerList);
     const side = (playerId: string) => ({
       playerId,
@@ -79,16 +91,19 @@ const createGomokuGameEngine = (
       return {
         black: side(last.white.playerId),
         white: side(last.black.playerId),
+        samePair,
       };
     }
     const [first = '', second = ''] =
       random() < 0.5 ? seated : seated.toReversed();
-    return { black: side(first), white: side(second) };
+    return { black: side(first), white: side(second), samePair };
   };
 
   const startGame = (room: GomokuRoom) => {
     const game = room.game;
-    game.colors = colorsFor(room);
+    const { samePair, ...colors } = colorsFor(room);
+    game.colors = colors;
+    game.gameNumber = samePair ? game.gameNumber + 1 : 1;
     game.moves = [];
     game.missedTurns = {
       [game.colors.black.playerId]: 0,
@@ -196,7 +211,7 @@ const createGomokuGameEngine = (
 
     game.lastGame = {
       endedEarly: ending === 'left',
-      standings: gomokuStandings(room),
+      standings: gomokuStandings(room, winner),
       ending,
       winner,
       stones: stonesOf(game.moves),

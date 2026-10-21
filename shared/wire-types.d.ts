@@ -1098,6 +1098,11 @@ interface GomokuRoomState extends RoomState {
   phase: GomokuPhase;
   /** This game's colours, or the last game's between games; null before the first. */
   colors: GomokuColors | null;
+  /**
+   * Which of this pair's games this is, or the last was: 1 for their first,
+   * counted again from 1 for a new pair; 0 before any.
+   */
+  gameNumber: number;
   /** This game's turns in order; between games, the last game's. */
   moves: GomokuMove[];
   /** Whose turn it is; null between games. */
