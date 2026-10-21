@@ -235,7 +235,7 @@ describe('joining and leaving a room', () => {
       (state) => !state.playerList[owner.playerId],
     );
     const announced = waitForChat(guest, (message) =>
-      textOf(message).includes('owner'),
+      textOf(message).includes('host'),
     );
     owner.emit('room:leave', roomId);
 
