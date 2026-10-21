@@ -130,3 +130,21 @@ describe('the language switch', () => {
     expect(screen.getByRole('button', { name: '完整规则' })).toBeVisible();
   });
 });
+
+describe('result lines that count something', () => {
+  it('says so when a Gomoku game had no moves, in both languages', () => {
+    expect(en.gomoku.moves(0)).toBe('No moves were played.');
+    expect(en.gomoku.moves(1)).toBe('A game of 1 move.');
+    expect(zh.gomoku.moves(0)).toBe('一手棋也没下。');
+    expect(zh.gomoku.moves(12)).toBe('共 12 手。');
+  });
+
+  it('says how many Make 24 hands were solved, in both languages', () => {
+    expect(en.make24.solo.runResult(1, 10, '5:44')).toBe(
+      'Solved 1 of 10 in 5:44.',
+    );
+    expect(zh.make24.solo.runResult(1, 10, '5:44')).toBe(
+      '5:44 内解出 1 题，共 10 题。',
+    );
+  });
+});

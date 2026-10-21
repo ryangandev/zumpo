@@ -32,7 +32,7 @@ export const createRoom = {
   diceCount: (count: number) => `${count} dice`,
   diceDetail: (count: DicePerPlayer): string =>
     count === 3
-      ? 'The quick game, and the usual one.'
+      ? 'The quick game, and the default.'
       : 'The classic: longer, best with 2–4 players.',
   board: 'Board',
   boardName: (board: MinesweeperDifficulty | PairsBoard): string => board,

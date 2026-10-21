@@ -81,7 +81,7 @@ export const gomoku: typeof en = {
       ? `${winner} 连成五子，获胜。`
       : `${winner} 获胜：${loser} ${HOW[ending as keyof typeof HOW]}。`,
   draw: '平局：棋盘下满了。',
-  moves: (count) => `共 ${count} 手。`,
+  moves: (count) => (count === 0 ? '一手棋也没下。' : `共 ${count} 手。`),
   drawDetail: (stones) => `${stones} 颗子，没有人连成五子。`,
   nextBlack: (name) => `下一局 ${name} 执黑。`,
   nextYou: (color) => `下一局你执${COLOR[color]}。`,

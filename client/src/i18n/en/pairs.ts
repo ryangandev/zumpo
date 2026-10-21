@@ -85,7 +85,7 @@ export const pairs = {
     previousBest: (board: PairsBoard, best: string) =>
       `Your best on ${SIZES[board]} is ${best}.`,
     turn: (turn: number) => `Turn ${turn}`,
-    runTime: 'run time',
+    runTime: 'Time',
     findPair: 'Find its pair',
     whereSeen: 'Where did you see it?',
     flipBackSoon: 'They flip back in a moment',

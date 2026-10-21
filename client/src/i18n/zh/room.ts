@@ -28,14 +28,14 @@ export const room: typeof en = {
   reconnecting: '重新连接中…',
   reconnectingNotice: (name, seconds) =>
     `正在重新连接“${name}”…你的座位和得分会保留 ${seconds} 秒。`,
-  board: '棋盘',
+  board: '游戏',
   nowHost: '你现在是房主了。',
   playerAway: (name) => `${name} 暂离了。`,
   playerLeft: (name) => `${name} 离开了房间。`,
   leftNowHost: (name) => `${name} 离开了房间，你现在是房主了。`,
   players: (count) => `玩家 · ${count}`,
   chat: '聊天',
-  turnTitle: '(!) 轮到你了 · Zumpo',
+  turnTitle: '(!) 轮到你了',
   leaveTitle: (name) => `离开“${name}”？`,
   leaveInGame: (score) =>
     `游戏会继续，但你的座位和${score}会被移除。还有空位时，你可以再次加入。`,
@@ -70,7 +70,7 @@ export const room: typeof en = {
   spectatingSeatFree: '加入玩家席就能参加下一局，也可以继续观战。',
   spectatingSeatsFull: '玩家席已满，有人空出座位后就能加入。',
   spectatingNotice: '你正在观战。这一局结束后可以加入玩家席。',
-  rulesTitle: (game) => `${game}玩法`,
+  rulesTitle: (game) => `「${game}」玩法`,
   backToGame: '返回游戏',
   invite: '邀请好友',
   inviteDescription: (name) =>
@@ -81,7 +81,7 @@ export const room: typeof en = {
   copy: '复制',
   done: '完成',
   roomLink: '房间链接',
-  pickedName: (name) => `你现在叫${name}。起一个好友们认得出的名字吧。`,
+  pickedName: (name) => `你现在叫 ${name}。起一个好友们认得出的名字吧。`,
   waitingForHost: (name) => `等待 ${name} 开始游戏。`,
   guestSetup: (setup) => `${setup}只有房主可以开始游戏。`,
   needsPlayers: (game, fewest) =>

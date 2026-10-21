@@ -46,7 +46,7 @@ test('a player with no name plays ten hands on their own', async ({
   }
 
   await expect(
-    sam.getByRole('heading', { name: /^10 hands in / }),
+    sam.getByRole('heading', { name: /^Solved 10 of 10 in / }),
   ).toBeVisible();
   await expect(
     sam.getByRole('button', { name: 'Copy challenge link' }),

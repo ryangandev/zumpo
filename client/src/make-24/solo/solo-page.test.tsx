@@ -176,7 +176,7 @@ describe('Make 24 on your own', () => {
     }
 
     expect(
-      screen.getByRole('heading', { name: /^10 hands in 4:3\d\.$/ }),
+      screen.getByRole('heading', { name: /^Solved 1 of 10 in 4:3\d\.$/ }),
     ).toBeInTheDocument();
     expect(
       screen.getByText('Your first run on this device.'),

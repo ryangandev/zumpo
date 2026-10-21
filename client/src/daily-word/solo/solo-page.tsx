@@ -155,7 +155,7 @@ function DailyView({
     tone: 'blue' as const,
     label: m.dailyWord.wordNumber(puzzle),
   };
-  const title = m.dailyWord.dailyNumber(puzzle);
+  const title = m.dailyWord.today;
 
   const found = guessesToWin(game);
   const word = game.answer.toUpperCase();
@@ -357,7 +357,7 @@ function SoloStage({
       phase={phase}
       stage={
         <>
-          <TurnBar {...bar} />
+          <TurnBar {...bar} labelOnPhone={false} />
           {/* Keyed on the window's layout, not on whether the keys are
               beside the board now, so the board grows back when the window
               makes room, but not when the keys go at the end. */}

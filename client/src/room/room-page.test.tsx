@@ -236,7 +236,7 @@ describe('a room page', () => {
         ),
       );
     emit({ playerList: seats(true, true) });
-    const board = screen.getByRole('tabpanel', { name: 'Board' });
+    const board = screen.getByRole('tabpanel', { name: 'Game' });
     expect(within(board).queryByRole('status')).not.toBeInTheDocument();
 
     emit({ playerList: seats(false, true) });
@@ -282,7 +282,7 @@ describe('a room page', () => {
       ),
     );
     expect(
-      within(screen.getByRole('tabpanel', { name: 'Board' })).getByRole(
+      within(screen.getByRole('tabpanel', { name: 'Game' })).getByRole(
         'status',
       ),
     ).toHaveTextContent('Maya left the room. You’re the host now.');
@@ -315,7 +315,7 @@ describe('a room page', () => {
         }),
       ),
     );
-    const board = within(screen.getByRole('tabpanel', { name: 'Board' }));
+    const board = within(screen.getByRole('tabpanel', { name: 'Game' }));
     expect(
       board.getByRole('heading', { name: 'Everyone else left.' }),
     ).toBeInTheDocument();

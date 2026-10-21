@@ -12,7 +12,7 @@ export const ui = {
     unread: (tab: string, count: number) => `${tab}, ${count} new`,
   },
   you: 'You',
-  /** A phone's Board tab while it is your go and another tab is open. */
+  /** A phone's Game tab while it is your go and another tab is open. */
   yourTurn: 'Your turn',
   turnTab: (tab: string) => `${tab}, your turn`,
   youName: (name: string) => `${name} (you)`,

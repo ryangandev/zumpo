@@ -13,6 +13,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import { roomNameOf } from '../room/players';
 import { ConnectionLost } from '../shell/connection-lost';
 import { Page } from '../shell/page';
+import { usePageTitle } from '../shell/use-page-title';
 import styles from './game.module.css';
 
 /**
@@ -25,6 +26,7 @@ export default function GamePage({ gameType }: { gameType: GameType }) {
   const m = useMessages();
   const { lost } = useSession();
   const rooms = useLobby(gameType);
+  usePageTitle(m.games.of[gameType].name);
 
   return (
     <Page>

@@ -100,7 +100,10 @@ export const gomoku = {
       ? `${winner} wins with five in a row.`
       : `${winner} wins: ${loser} ${HOW[ending as keyof typeof HOW]}.`,
   draw: 'A draw: the board is full.',
-  moves: (count: number) => `A game of ${plural(count, 'move')}.`,
+  moves: (count: number) =>
+    count === 0
+      ? 'No moves were played.'
+      : `A game of ${plural(count, 'move')}.`,
   drawDetail: (stones: number) => `${stones} stones and nobody made five.`,
   nextBlack: (name: string) => `Next game, ${name} plays Black.`,
   /** A phone's results turn bar: the viewer's colour next. */

@@ -93,7 +93,7 @@ export interface RoomLayoutProps {
   /**
    * This player's go, which a clock runs against: a drawer's word, a bid, a
    * flip, a stone. Out of sight it is said in the window's title, and on a
-   * phone with another tab open, on the Board tab.
+   * phone with another tab open, on the Game tab.
    */
   yourTurn?: boolean;
 }

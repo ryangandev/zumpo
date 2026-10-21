@@ -70,7 +70,8 @@ export const make24 = {
     notYet: 'Not yet',
     runComplete: 'Run complete',
     solvedOf: (solved: number, hands: number) => `${solved} of ${hands} solved`,
-    finishedIn: (hands: number, time: string) => `${hands} hands in ${time}.`,
+    runResult: (solved: number, hands: number, time: string) =>
+      `Solved ${solved} of ${hands} in ${time}.`,
     skipped: 'Skipped',
     skippedPenalty: (skipped: number, time: string) => `${skipped}, +${time}`,
     fastestHand: 'Fastest hand',
@@ -85,7 +86,7 @@ export const make24 = {
     skip: 'Skip, +30 s',
     thisRun: 'This run',
     tenHands: 'Ten hands',
-    runTime: 'run time',
+    runTime: 'Time',
     skipPenalty: '30 seconds on the clock',
     nice: '24! Nice.',
     solvedIn: (time: string) => `Solved in ${time}`,

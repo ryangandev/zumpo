@@ -154,20 +154,20 @@ describe('a Pairs room', () => {
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
   });
 
-  it('marks the Board tab when your turn comes while Chat is open', async () => {
+  it('marks the Game tab when your turn comes while Chat is open', async () => {
     onPhone();
     const user = userEvent.setup();
     const { fake } = await renderSeated(theirMiss);
     await user.click(screen.getByRole('tab', { name: 'Chat' }));
-    expect(screen.getByRole('tab', { name: 'Board' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Game' })).toBeInTheDocument();
 
     act(() => fake.serverEmits('room:state', myTurn));
     expect(
-      screen.getByRole('tab', { name: 'Board, your turn' }),
+      screen.getByRole('tab', { name: 'Game, your turn' }),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole('tab', { name: 'Board, your turn' }));
-    expect(screen.getByRole('tab', { name: 'Board' })).toBeInTheDocument();
+    await user.click(screen.getByRole('tab', { name: 'Game, your turn' }));
+    expect(screen.getByRole('tab', { name: 'Game' })).toBeInTheDocument();
     expect(turn().getByText('Your turn')).toBeInTheDocument();
   });
 

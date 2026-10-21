@@ -66,19 +66,22 @@
 
 /* On your own on a short wide window (SHORT_WIDE in use-media-query.ts):
    the pad, in its two rows, beside the board and its line, so the ten rows
-   shrink less to fit the height. The line wraps to the board's width rather
-   than widen its column. When the pad goes at the end the board is centred,
-   as a finished board under it is, at the same size. DOM order, and so Tab,
-   is unchanged. */
+   shrink less to fit the height. The board and the pad sit together in the
+   middle of the panel, as the board and the pad under it do, the pad level
+   with the board's middle. The line wraps to the board's width rather than
+   widen its column. When the pad goes at the end the board is centred, as a
+   finished board under it is, at the same size. DOM order, and so Tab, is
+   unchanged. */
 .beside {
   display: grid;
   grid-template-areas:
     'board pad'
     'line pad';
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, calc(6 * var(--zumpo-space-64)));
   grid-template-rows: auto 1fr;
   align-items: start;
-  gap: var(--zumpo-space-12) var(--zumpo-space-24);
+  justify-content: center;
+  gap: var(--zumpo-space-12) var(--zumpo-space-48);
 }
 
 .beside > .board {
@@ -90,10 +93,10 @@
   contain: inline-size;
 }
 
-/* As wide as six thumb-sized keys, in the middle of its column. */
+/* As wide as six thumb-sized keys, or the room left where that is less: its
+   column is capped rather than the pad, since a percentage of an auto column
+   has nothing to resolve against. */
 .beside > .pad {
   grid-area: pad;
   align-self: center;
-  justify-self: center;
-  max-width: calc(6 * var(--zumpo-space-64));
 }

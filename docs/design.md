@@ -224,6 +224,10 @@ Code differs from Figma on purpose in a few places:
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
+- Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
+- The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
+- A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
+- The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
 - The drawer's word-choice clock is Running, as the Countdown's own rule says of a phase you act in; D04 and MO07 keep the Status turn bar's default Waiting tone.
 - The header marks the page you are on; Figma draws Games as current on every screen.
@@ -265,7 +269,7 @@ Code differs from Figma on purpose in a few places:
   The home page's hero takes MO01's shorter copy and Title-size heading there too, so the whole of it and the game filters are in the first screen.
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact, one under the other, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A game on your own on a window 800 px tall or less takes the Turn bar's Phone row too, with 16 px around the page and 12 px between the turn bar and the board, and Daily Word's keyboard and Code Breaker's pad stand beside the board from 1240 px wide; Figma draws no window that short yet, and the frames for it wait on the bridge.
-- A phone's Board tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
+- A phone's Game tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
   A game cut short because everyone else left gets neither: its panel already says "Everyone else left." and who is host now, and a notice would cover that heading.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - Games on your own start at once and end beside the board (#105, #86, #107), which the Figma file does not draw yet: the bridge was down when the change was made, so its scripts wait to be run.
@@ -287,10 +291,12 @@ Code differs from Figma on purpose in a few places:
 - Until `j-fig-5-chat-byline.js` runs and the tokens are exported, a chat line's sender is in Label, 14 px beside the 16 px message; the script adds the Zumpo/Body strong text style for it, which `chat-message.module.css` already asks for and takes once `--zumpo-text-body-strong` exists.
 - Until `j-fig-3-artwork-words.js` runs, `Zumpo/Game artwork`'s words are fixed text; code takes them from the catalog, so a Chinese page shows Doodle Chain's 乌龟 and 汉堡？.
 - Until `j-fig-6-mines-phone-turn.js` runs, MO11 and MO12 draw the board's tag in the Minesweeper turn bar; on a phone code leaves it out and says the mines short ("10 mines · 1 hit"), since the tag, the round and the mines do not fit one row at 360 px. The phone board also sits under the turn bar rather than centred in the height left, so the spare height is under it, where a round's results lie.
-- Until `p-fig-1-mobile-tabs-turn.js` runs, `Zumpo/Mobile tabs` has no Board turn mark: code puts a lime "Your turn" pill after Board when it becomes your go in a turn-based room (a drawer's word, a bid, a flip, a stone) while Players or Chat is open, and MO16 will show it.
+- Until `p-fig-1-mobile-tabs-turn.js` runs, `Zumpo/Mobile tabs` has no Board turn mark: code puts a lime "Your turn" pill after Game when it becomes your go in a turn-based room (a drawer's word, a bid, a flip, a stone) while Players or Chat is open, and MO16 will show it.
 - Until `p-fig-2-gomoku-phone-seat.js` runs, `Zumpo/Gomoku seat` has no Phone layout and GM17 to GM19 draw full seats with avatars; code draws each phone seat on one line, as the PH04 and PH06 note above says.
 - A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
+- Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
+- On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file
 

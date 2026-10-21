@@ -8,6 +8,8 @@ import { SnapSolo } from '../snap/solo/solo-page';
 import { LiarsDiceSolo } from '../liars-dice/solo/solo-page';
 import { CodeBreakerSolo } from '../code-breaker/solo/solo-page';
 import { GomokuSolo } from '../gomoku/solo/solo-page';
+import { useMessages } from '../i18n';
+import { usePageTitle } from '../shell/use-page-title';
 import NotFoundPage from '../pages/not-found';
 
 // Daily Word brings its word lists, so it loads only when played.
@@ -19,6 +21,24 @@ const DailyWordSolo = lazy(() =>
 
 /** /games/:game/solo: a game on your own, for the games that have one. */
 export default function SoloPage({ gameType }: { gameType: GameType }) {
+  if (!HAS_SOLO.has(gameType)) return <NotFoundPage />;
+  return <SoloGame gameType={gameType} />;
+}
+
+const HAS_SOLO: ReadonlySet<GameType> = new Set([
+  'minesweeper',
+  'make-24',
+  'pairs',
+  'trios',
+  'snap',
+  'liars-dice',
+  'gomoku',
+  'daily-word',
+  'code-breaker',
+]);
+
+function SoloGame({ gameType }: { gameType: GameType }) {
+  usePageTitle(useMessages().games.of[gameType].name);
   switch (gameType) {
     case 'minesweeper':
       return <MinesweeperSolo />;

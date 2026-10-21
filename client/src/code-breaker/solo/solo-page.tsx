@@ -160,7 +160,7 @@ function SoloStage({
       phase={phase}
       stage={
         <>
-          <TurnBar {...bar} />
+          <TurnBar {...bar} labelOnPhone={false} />
           {/* Keyed on the window's layout, not on whether the keys are
               beside the board now, so the board grows back when the window
               makes room, but not when the keys go at the end. */}
@@ -225,7 +225,7 @@ function DailyView({
     tone: 'blue' as const,
     label: m.codeBreaker.codeNumber(puzzle),
   };
-  const title = m.codeBreaker.dailyNumber(puzzle);
+  const title = m.codeBreaker.today;
 
   const cracked = guessesToCrack(game);
   return (

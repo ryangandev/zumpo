@@ -31,7 +31,7 @@ export const trios: typeof en = {
   chat: '聊点什么…',
   you: '你',
   by: (name) => (name === trios.you ? '你找到的' : `${name} 找到的`),
-  resultDetail: (count) => `${count} 组。`,
+  resultDetail: (count) => `共找到 ${count} 组。`,
   alone: '叫上好友更好玩。',
   setup: (players, count) =>
     `${players} 人，${count} 组。大家看着同样的 12 张牌，最先选中一组的人拿走它。`,
@@ -76,7 +76,7 @@ export const trios: typeof en = {
     wrongPicks: '选错次数',
     hints: '提示次数',
     fastest: '最快一组',
-    none: '无',
+    none: '暂无',
     best: '本机最佳成绩',
     challenge: (time) => `好友会拿到同一副牌，试着打破 ${time} 的成绩。`,
     progress: (count, total) => `第 ${count} / ${total} 组`,
