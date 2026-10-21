@@ -5,7 +5,7 @@
 .row {
   display: grid;
   grid-template-areas: 'host identity players action';
-  grid-template-columns: auto 1fr 72px minmax(128px, auto);
+  grid-template-columns: auto 1fr 72px 168px;
   align-items: center;
   gap: var(--zumpo-space-16);
   padding: var(--zumpo-space-20);
@@ -72,7 +72,9 @@
 
 /*
  * As tall as the Join button whatever it holds, so every status is the same
- * height. A room you can only watch keeps its state beside Watch.
+ * height, and as wide as Playing beside Watch, the widest it holds, so the
+ * counts of a list line up. A room you can only watch keeps its state beside
+ * Watch.
  */
 .action {
   display: flex;

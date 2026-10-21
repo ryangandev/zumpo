@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderApp } from '../tests/render-app';
 
-vi.mock('./how-to-play', () => ({
+vi.mock('./not-found', () => ({
   default: () => {
     throw new Error('The page broke');
   },
@@ -16,7 +16,7 @@ describe('a page that throws', () => {
   it('shows a way back in, in the frame, instead of a blank screen', async () => {
     // React and the page both report the error, which is the point.
     const reported = vi.spyOn(console, 'error').mockImplementation(() => {});
-    await renderApp('/how-to-play');
+    await renderApp('/nowhere');
 
     expect(
       screen.getByRole('heading', { name: 'Something went wrong' }),

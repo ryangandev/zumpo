@@ -15,7 +15,7 @@ export default function HomePage() {
   // A phone keeps shorter copy, so the games show sooner.
   const phone = useMediaQuery(PHONE);
   return (
-    <Page nameHint>
+    <Page>
       <div className={styles.hero}>
         <PageHeading
           eyebrow={phone ? m.home.eyebrowPhone : m.home.eyebrow}

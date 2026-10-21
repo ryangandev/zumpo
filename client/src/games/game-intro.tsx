@@ -4,13 +4,16 @@ import { useMessages } from '../i18n';
 import { GameArtwork } from './artwork';
 import { createRoomPath, soloPath, type GameInfo } from './catalog';
 import { GameTags } from './game-tags';
+import { useToday } from './today';
 import styles from './game-intro.module.css';
 
 /**
  * Zumpo/Game intro: the top of a game's page, what the game is and its ways
  * in. Play solo comes first where the game has it, because it starts at once;
- * Create a room follows, and the open rooms to join are listed under it. Its
- * artwork sits beside the copy, and above it on a phone (Layout=Phone).
+ * Create a room follows, and the open rooms to join are listed under it. A
+ * daily game started today says where it stands, and Play solo becomes
+ * Continue or See today's result. Its artwork sits beside the copy, and above
+ * it on a phone (Layout=Phone).
  */
 export function GameIntro({
   game,
@@ -22,6 +25,7 @@ export function GameIntro({
 }) {
   const m = useMessages();
   const text = m.games.of[game.type];
+  const today = useToday(game.type);
   return (
     <div className={styles.container}>
       <section
@@ -39,11 +43,15 @@ export function GameIntro({
             </h1>
             <p className={styles.tagline}>{text.tagline}</p>
           </div>
-          <GameTags game={game} />
+          <GameTags game={game} today={today} streak />
           <div className={styles.actions}>
             {game.solo && (
               <ButtonLink to={soloPath(game.type)}>
-                {m.games.playSolo}
+                {today?.state === 'playing'
+                  ? m.games.today.continue
+                  : today?.state === 'done'
+                    ? m.games.today.seeResult
+                    : m.games.playSolo}
               </ButtonLink>
             )}
             <ButtonLink

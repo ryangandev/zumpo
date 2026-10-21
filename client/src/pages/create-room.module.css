@@ -1,0 +1,29 @@
+/* More options sits at the start of the card's column, as wide as its label. */
+.moreButton {
+  align-self: flex-start;
+}
+
+.moreButton svg {
+  transition: transform 120ms ease-out;
+}
+
+.moreButton[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+/* The room's name, seats and password: the card's column, once open. */
+.more {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-24);
+}
+
+.more[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moreButton svg {
+    transition: none;
+  }
+}

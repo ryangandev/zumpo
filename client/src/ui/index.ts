@@ -131,10 +131,8 @@ export {
 export {
   NameMenu,
   NameMenuForm,
-  NameMenuHint,
   NAME_MAX_LENGTH,
   type NameMenuFormProps,
-  type NameMenuHintProps,
   type NameMenuProps,
 } from './components/name-menu';
 export { Notice, type NoticeProps, type NoticeTone } from './components/notice';

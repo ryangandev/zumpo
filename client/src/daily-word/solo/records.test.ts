@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { dailyAnswer } from '../../../../shared/daily-word';
-import { readRecords, recordGuesses, statsOf } from './records';
+import { readRecords, recordGuesses, statsOf, todayOf } from './records';
 
 /** A found puzzle in `count` guesses, and a missed one. */
 const foundIn = (puzzle: number, count: number) => [
@@ -82,6 +82,29 @@ describe('the stats', () => {
       played: 0,
       foundPercent: 0,
       currentStreak: 0,
+    });
+  });
+});
+
+describe('today, for the card and the game page', () => {
+  it('is nothing before the first guess, then the guess it is on', () => {
+    expect(todayOf(new Map(), 5)).toBeNull();
+    expect(todayOf(new Map([[5, foundIn(5, 3).slice(0, 2)]]), 5)).toEqual({
+      state: 'playing',
+      guess: 3,
+      of: 6,
+    });
+  });
+
+  it('is done once found or missed, with the streak it leaves', () => {
+    const found = new Map([
+      [4, foundIn(4, 2)],
+      [5, foundIn(5, 3)],
+    ]);
+    expect(todayOf(found, 5)).toEqual({ state: 'done', streak: 2 });
+    expect(todayOf(new Map([[5, missed(5)]]), 5)).toEqual({
+      state: 'done',
+      streak: 0,
     });
   });
 });

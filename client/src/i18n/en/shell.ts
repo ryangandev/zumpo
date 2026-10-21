@@ -2,7 +2,6 @@
 export const shell = {
   nav: {
     games: 'Games',
-    howToPlay: 'How to play',
     /** The main navigation's accessible name. */
     main: 'Main',
     /** The wordmark link's accessible name. */
@@ -20,10 +19,6 @@ export const shell = {
     yourName: 'Your name',
     /** The viewer's avatar button, which opens the name menu. */
     viewer: (name: string) => `${name}: your name`,
-    hintTitle: (name: string) => `You’re ${name}.`,
-    hintDescription:
-      'We picked a name so you can jump right in. Change it here anytime.',
-    gotIt: 'Got it',
     changeName: 'Change name',
     helper: 'Everyone in your rooms sees it.',
     save: 'Save',
