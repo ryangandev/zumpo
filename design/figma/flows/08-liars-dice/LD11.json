@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Sam bid three 4s",
-                  "Label": "Maya’s turn",
                   "Main": "Maya is deciding",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Maya’s turn"
                 },
                 "overrides": [
                   {
@@ -156,12 +156,11 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
-                      "Time": "00:09",
+                      "Time": "0:09",
                       "Tone": "Waiting"
-                    },
-                    "height": 44,
-                    "width": 163
+                    }
                   }
                 ]
               },

@@ -128,9 +128,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Play your lowest card when it feels right.",
-                  "Label": "Level 3 of 5",
                   "Main": "Hush",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 3 of 5"
                 },
                 "overrides": [
                   {
@@ -150,8 +150,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "flip back",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -532,7 +533,7 @@
             "id": "58:73782",
             "name": "Room sidebar",
             "w": 344,
-            "h": 578,
+            "h": 560,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -791,14 +792,14 @@
                 "id": "58:73784",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 250,
+                "h": 232,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 250,
+                    "height": 232,
                     "width": 344
                   },
                   {
@@ -807,7 +808,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 2 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

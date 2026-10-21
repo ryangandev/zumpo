@@ -126,10 +126,10 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "Leo bid five 5s",
-                  "Label": "Your turn",
+                  "Meta": "Beat five 5s: more dice, or a higher face",
                   "Main": "Raise, or call Liar",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Your turn"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
-                      "Time": "00:12",
+                      "Time": "0:12",
                       "Tone": "Running"
                     }
                   }

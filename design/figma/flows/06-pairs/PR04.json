@@ -350,7 +350,7 @@
                     "type": "FRAME",
                     "id": "40:51029",
                     "name": "Actions",
-                    "w": 317,
+                    "w": 468,
                     "h": 48,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -382,6 +382,30 @@
                             "path": ".",
                             "height": 48,
                             "width": 110
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "163:65942",
+                        "name": "Action / Change board",
+                        "w": 139,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Secondary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:18",
+                        "props": {
+                          "Label": "Change board"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 139
                           }
                         ]
                       },

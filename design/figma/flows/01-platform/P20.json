@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 8895,
     "w": 1440,
-    "h": 746,
+    "h": 716,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "90:112889",
         "name": "Game & room",
         "w": 1312,
-        "h": 576,
+        "h": 546,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -267,7 +267,7 @@
             "id": "90:112896",
             "name": "Room sidebar",
             "w": 344,
-            "h": 576,
+            "h": 546,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -362,14 +362,14 @@
                 "id": "90:112898",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 248,
+                "h": 218,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 248,
+                    "height": 218,
                     "width": 344
                   },
                   {
@@ -377,7 +377,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan has joined the room.",
+                      "Message": "Ryan and Brave Noodle have joined the room.",
                       "Kind": "System"
                     }
                   },
@@ -388,7 +388,8 @@
                       "Name": "System",
                       "Message": "Brave Noodle has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",

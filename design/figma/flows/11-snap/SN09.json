@@ -796,7 +796,7 @@
             "id": "162:86380",
             "name": "Room sidebar",
             "w": 344,
-            "h": 619,
+            "h": 541,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -909,14 +909,14 @@
                 "id": "162:86382",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 291,
+                "h": 213,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 291,
+                    "height": 213,
                     "width": 344
                   },
                   {
@@ -926,7 +926,8 @@
                       "Name": "System",
                       "Message": "Sam took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 2",
@@ -935,7 +936,8 @@
                       "Name": "System",
                       "Message": "Maya took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -943,7 +945,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 9 cards!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

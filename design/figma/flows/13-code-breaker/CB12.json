@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "You cracked it in 6 for +518",
-                  "Label": "The code was",
                   "Main": "7302",
-                  "Category": false
+                  "Category": false,
+                  "Label": "The code was"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next code",
-                      "Time": "00:06",
+                      "Time": "0:06",
                       "Tone": "Waiting"
                     }
                   }
@@ -1248,7 +1249,7 @@
             "id": "162:104051",
             "name": "Room sidebar",
             "w": 344,
-            "h": 667,
+            "h": 613,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1393,14 +1394,14 @@
                 "id": "162:104053",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 339,
+                "h": 285,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 339,
+                    "height": 285,
                     "width": 344
                   },
                   {
@@ -1409,7 +1410,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya cracked it in 5! (+633)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1418,7 +1419,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam cracked it in 6! (+518)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1427,7 +1428,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo cracked it in 8! (+306)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

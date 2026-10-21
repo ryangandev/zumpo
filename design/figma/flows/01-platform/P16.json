@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 5391,
     "w": 1440,
-    "h": 753,
+    "h": 693,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -81,7 +81,7 @@
         "id": "39:21406",
         "name": "Game & room",
         "w": 1312,
-        "h": 583,
+        "h": 523,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -210,7 +210,7 @@
             "id": "39:21413",
             "name": "Room sidebar",
             "w": 344,
-            "h": 583,
+            "h": 523,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -298,14 +298,14 @@
                 "id": "39:21415",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 255,
+                "h": 195,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 255,
+                    "height": 195,
                     "width": 344
                   },
                   {
@@ -313,7 +313,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan has joined the room.",
+                      "Message": "Ryan, Leo and Sam have joined the room.",
                       "Kind": "System"
                     }
                   },
@@ -324,7 +324,8 @@
                       "Name": "System",
                       "Message": "Leo has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -333,7 +334,8 @@
                       "Name": "System",
                       "Message": "Sam has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 4",
@@ -416,7 +418,7 @@
         "y": 0,
         "absolute": true,
         "w": 1440,
-        "h": 753,
+        "h": 693,
         "opacity": 0.4,
         "fills": [
           "$Zumpo · UI:color/ink"

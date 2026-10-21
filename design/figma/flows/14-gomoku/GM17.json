@@ -14,7 +14,7 @@
     "x": 40,
     "y": 5580,
     "w": 390,
-    "h": 966,
+    "h": 972,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:101868",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,27 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Move 17",
           "Game": "Gomoku"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "On your own",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Move 17",
-              "Tone": "Blue"
-            }
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -81,7 +64,7 @@
         "id": "162:101869",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 110,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -91,7 +74,6 @@
         },
         "componentId": "27:22192",
         "props": {
-          "Top row": false,
           "Countdown": false,
           "Main": "Place a black stone",
           "Category": false,
@@ -101,11 +83,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 110,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -114,10 +96,11 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "run time",
-              "Time": "00:24",
+              "Time": "0:24",
               "Tone": "Waiting"
             }
           }
@@ -128,7 +111,7 @@
         "id": "162:101870",
         "name": "Table",
         "w": 350,
-        "h": 646,
+        "h": 706,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -388,7 +371,7 @@
             "id": "162:102022",
             "name": "Actions",
             "w": 350,
-            "h": 96,
+            "h": 156,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -412,6 +395,33 @@
                 "componentId": "4:15",
                 "props": {
                   "Label": "Place stone"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "primaryAxisSizingMode": "FIXED",
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "163:66195",
+                "name": "Action / Take back",
+                "w": 350,
+                "h": 48,
+                "wSize": "fill",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=undo",
+                  "Show icon": true,
+                  "Label": "Take back"
                 },
                 "overrides": [
                   {

@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Waiting for Ryan and Leo",
-                  "Label": "Word 2 of 3",
                   "Main": "Got it in 4! +322",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Word 2 of 3"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to guess",
-                      "Time": "00:52",
+                      "Time": "0:52",
                       "Tone": "Running"
                     }
                   }
@@ -524,7 +525,7 @@
             "id": "79:100914",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 590,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -723,14 +724,14 @@
                 "id": "79:100916",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 262,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 262,
                     "width": 344
                   },
                   {
@@ -748,7 +749,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya got it in 3! (+431)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -766,7 +767,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam got it in 4! (+322)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     },
                     "visible": true
                   },

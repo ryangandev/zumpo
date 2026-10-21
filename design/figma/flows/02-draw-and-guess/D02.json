@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 2934,
     "w": 1440,
-    "h": 790,
+    "h": 730,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -88,7 +88,7 @@
         "id": "9:1376",
         "name": "Game & room",
         "w": 1312,
-        "h": 620,
+        "h": 560,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -291,7 +291,7 @@
             "id": "9:1384",
             "name": "Room sidebar",
             "w": 344,
-            "h": 620,
+            "h": 560,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -379,14 +379,14 @@
                 "id": "9:1415",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 292,
+                "h": 232,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 292,
+                    "height": 232,
                     "width": 344
                   },
                   {
@@ -394,7 +394,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan has joined the room.",
+                      "Message": "Ryan, Leo and Sam have joined the room.",
                       "Kind": "System"
                     }
                   },
@@ -405,7 +405,8 @@
                       "Name": "System",
                       "Message": "Leo has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -414,7 +415,8 @@
                       "Name": "System",
                       "Message": "Sam has joined the room.",
                       "Kind": "System"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 4",

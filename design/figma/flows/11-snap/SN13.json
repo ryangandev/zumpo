@@ -14,7 +14,7 @@
     "x": 4050,
     "y": 3050,
     "w": 1440,
-    "h": 785,
+    "h": 737,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -97,7 +97,7 @@
         "id": "162:91034",
         "name": "Board & room",
         "w": 1312,
-        "h": 615,
+        "h": 567,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "The first right tap takes the middle card",
-                  "Label": "You’re watching",
                   "Main": "Everyone is looking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "You’re watching"
                 },
                 "overrides": [
                   {
@@ -156,8 +156,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "on this card",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -319,7 +320,7 @@
             "id": "162:91049",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 567,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -522,14 +523,14 @@
                 "id": "162:91051",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 239,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 239,
                     "width": 344
                   },
                   {
@@ -539,7 +540,8 @@
                       "Name": "System",
                       "Message": "Leo took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 2",

@@ -2014,7 +2014,7 @@ test('Code Breaker on your own', async ({ player }) => {
   const twelfth = dailyCode(12);
   const [first, second, third, fourth, fifth] = missingCode(twelfth, [
     '1234',
-    '5678',
+    '5689',
     '2149',
     '4310',
     '4170',

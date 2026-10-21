@@ -14,7 +14,7 @@
     "x": 1510,
     "y": 6567,
     "w": 390,
-    "h": 594,
+    "h": 574,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20711",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,19 +46,9 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Round 2 of 2",
           "Game": "Draw & Guess"
-        },
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 2 of 2",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        }
       },
       {
         "type": "INSTANCE",

@@ -115,8 +115,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "99 mines · 4 hit so far",
-                  "Label": "Round 19",
-                  "Main": "Pick a cell"
+                  "Main": "Pick a cell",
+                  "Label": "Round 19"
                 },
                 "overrides": [
                   {
@@ -131,8 +131,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to pick",
-                      "Time": "00:10",
+                      "Time": "0:10",
                       "Tone": "Running"
                     }
                   }

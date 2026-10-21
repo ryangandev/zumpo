@@ -35,7 +35,7 @@ A **run** is ten hands, with no name, no room and no server: it runs in the brow
 
 - The **run time** counts up while a hand is in front of you, and stops for the moment between hands.
   It also stops while **How to play** is open, and the hand is put away behind it until it closes.
-- **Skip** gives up a hand: one way to solve it shows, off the clock, until you press **Next hand**, and 30 seconds are added to the run time.
+- **Skip** gives up a hand: one way to solve it shows, off the clock, until you press **Next hand** (T13), and 30 seconds are added to the run time.
   The way shown is the one a person would most likely write: whole numbers all along where possible, a 1 multiplied in last rather than mid-sum, then the shortest.
 - A solved hand shows **24! Nice.** and the next one follows a moment later.
 - After the tenth hand: the run time, how many hands were solved and skipped, the fastest solved hand, and every hand with how you solved it (or, for a skipped one, a way to).
@@ -131,4 +131,4 @@ Make 24's one event of its own is `t24:solve`, with the room and the steps.
 | [`make-24/solo/`](../../client/src/make-24/solo/)              | A run on your own                                                   |
 
 The rules are covered by [`make-24-rules.test.ts`](../../server/tests/make-24-rules.test.ts) and [`make-24-flow.test.ts`](../../server/tests/make-24-flow.test.ts).
-The screens are T01-T12 in [the Figma file](../design.md).
+The screens are T01-T13 in [the Figma file](../design.md).

@@ -313,10 +313,10 @@
         "id": "39:21388",
         "name": "Dialog / How to play",
         "x": 440,
-        "y": 260,
+        "y": 261,
         "absolute": true,
         "w": 560,
-        "h": 366,
+        "h": 487,
         "hSize": "hug",
         "component": "Zumpo/Card",
         "variant": {
@@ -324,13 +324,13 @@
         },
         "componentId": "35:13434",
         "props": {
-          "Description": "Take turns drawing a word while everyone else races to guess it in the chat. Faster guesses score more.",
+          "Description": "Draw a word for the others to guess, and guess theirs.",
           "Title": "How to play Draw & Guess"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 366,
+            "height": 487,
             "layoutPositioning": "ABSOLUTE",
             "width": 560
           }
@@ -338,19 +338,70 @@
         "slots": {
           "Content": [
             {
-              "type": "TEXT",
-              "id": "I39:21388;35:13437;39:21394",
-              "name": "2–8 players 1–4 rounds, everyone draws once a round 15s to pick a word · 90s to draw The answer shows for 10s",
+              "type": "INSTANCE",
+              "id": "163:66232",
+              "name": "How to play",
               "w": 494,
-              "h": 100,
+              "h": 174,
               "wSize": "fill",
               "hSize": "hug",
-              "text": "2–8 players\n1–4 rounds, everyone draws once a round\n15s to pick a word · 90s to draw\nThe answer shows for 10s",
-              "textStyle": "Zumpo/Body",
-              "fills": [
-                "$Zumpo · Primitives:color/ink"
-              ],
-              "autoResize": "height"
+              "component": "Zumpo/How to play",
+              "componentId": "163:65908",
+              "props": {
+                "Show goal": false,
+                "Show step 4": true,
+                "Show heading": false
+              },
+              "overrides": [
+                {
+                  "path": "",
+                  "height": 174,
+                  "width": 494
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "id": "163:66253",
+              "name": "Full rules",
+              "w": 494,
+              "h": 48,
+              "wSize": "fill",
+              "hSize": "hug",
+              "clip": true,
+              "layout": {
+                "mode": "column",
+                "gap": "$Zumpo · UI:space/16",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I39:21388;35:13437;163:66256",
+                  "name": "Action / Full rules",
+                  "w": 130,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Quiet",
+                    "State": "Default"
+                  },
+                  "componentId": "4:21",
+                  "props": {
+                    "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                    "Show icon": true,
+                    "Label": "Full rules"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 130
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "FRAME",

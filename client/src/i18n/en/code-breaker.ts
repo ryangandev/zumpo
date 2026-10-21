@@ -121,7 +121,7 @@ export const codeBreaker = {
   copied: 'Copied',
   guessNumber: (guess: number, max: number) => `Guess ${guess} of ${max}`,
   fixRow: 'Fix the row and try again',
-  /** "Three guesses in. 5, 6 and 8 are out." */
+  /** "Three guesses in. 5, 6, 8 and 9 are out." */
   known: (guesses: number, parts: readonly string[]) =>
     `${countWord(guesses)} ${guesses === 1 ? 'guess' : 'guesses'} in. ${
       parts.length ? parts.join(' ') : 'No digit is certain yet.'

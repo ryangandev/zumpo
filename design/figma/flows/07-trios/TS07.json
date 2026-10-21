@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "You can pick again in a moment",
-                  "Label": "Not a trio",
                   "Main": "Two are circles and one is a triangle.",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Not a trio"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "locked out",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Urgent"
                     }
                   }
@@ -554,7 +555,7 @@
             "id": "79:85428",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 597,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -757,14 +758,14 @@
                 "id": "79:85430",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 269,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 269,
                     "width": 344
                   },
                   {
@@ -791,7 +792,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a trio! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

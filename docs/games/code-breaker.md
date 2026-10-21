@@ -79,7 +79,7 @@ The player keeps their own **notes** on the pad.
 - An **out** digit's key is a flat grey key, as an absent letter is in Daily Word; an **in** digit's key is green.
   The notes show whether Notes is on or off, so they help while typing too, and a noted digit can still be typed.
 - Notes are the player's own: the game never fills them in, checks them or corrects them.
-- The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6 and 8 are out." (CB03).
+- The only thing the game works out is what is **certain**: on your own, a desktop's turn bar says how many guesses are in and which digits the marks settle, "Three guesses in. 5, 6, 8 and 9 are out." (CB03).
   A row with no pegs rules its four digits out; a row with four pegs, or six digits ruled out, settles every digit as in or out.
   Anything less than certain, which is most of the game, stays the player's to work out, and a phone's turn bar shows the peg legend instead.
 - On your own, the pad also **dims** each digit certainly out: a flat cream key with its digit muted, apart from a note's flat grey, and still typeable; Ryan approved it on 2026-10-21 (#93).

@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "You’re back in step 4.",
-                  "Label": "Step 3 of 4",
                   "Main": "You sit this step out",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 3 of 4"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:24",
+                      "Time": "0:24",
                       "Tone": "Waiting"
                     }
                   }
@@ -469,10 +470,10 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
-                      "Alert icon": "24:4999",
                       "Name": "Ryan",
-                      "Message": "Step 3: describe the drawing you were given.",
-                      "Kind": "System"
+                      "Alert icon": "24:4999",
+                      "Message": "Step 3 · Describe",
+                      "Kind": "Divider"
                     }
                   },
                   {

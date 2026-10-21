@@ -147,8 +147,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:41",
+                      "Time": "0:41",
                       "Tone": "Running"
                     }
                   }
@@ -402,10 +403,10 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
-                      "Alert icon": "24:4999",
                       "Name": "Maya",
-                      "Message": "Step 2: draw what you were given.",
-                      "Kind": "System"
+                      "Alert icon": "24:4999",
+                      "Message": "Step 2 · Draw",
+                      "Kind": "Divider"
                     }
                   },
                   {

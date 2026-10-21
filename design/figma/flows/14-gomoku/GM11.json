@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Your turn passed",
-                  "Label": "Maya’s turn",
                   "Main": "Maya is thinking",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Maya’s turn"
                 },
                 "overrides": [
                   {
@@ -156,8 +156,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to move",
-                      "Time": "00:27",
+                      "Time": "0:27",
                       "Tone": "Waiting"
                     }
                   }

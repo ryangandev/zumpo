@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Everybody holds 3 cards.",
-                  "Label": "Level 3 of 5",
                   "Main": "Hush",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 3 of 5"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to start",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -484,7 +485,7 @@
             "id": "57:73399",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 608,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -743,14 +744,14 @@
                 "id": "57:73401",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 280,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 280,
                     "width": 344
                   },
                   {
@@ -768,7 +769,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 2 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

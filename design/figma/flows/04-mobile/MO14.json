@@ -14,7 +14,7 @@
     "x": 530,
     "y": 6567,
     "w": 390,
-    "h": 1176,
+    "h": 1098,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "39:20655",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -45,17 +45,9 @@
           "Layout": "Phone"
         },
         "componentId": "39:19277",
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Round 19",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        "props": {
+          "Phase": "Round 19"
+        }
       },
       {
         "type": "INSTANCE",
@@ -82,7 +74,7 @@
         "id": "27:22689",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 144,
+        "h": 86,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -98,7 +90,12 @@
         },
         "overrides": [
           {
-            "path": "Top / Eyebrow / Category",
+            "path": ".",
+            "height": 86,
+            "width": 350
+          },
+          {
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -107,10 +104,11 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "to pick",
-              "Time": "00:10",
+              "Time": "0:10",
               "Tone": "Running"
             }
           }

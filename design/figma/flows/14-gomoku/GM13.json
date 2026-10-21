@@ -466,7 +466,7 @@
                     "type": "FRAME",
                     "id": "162:93394",
                     "name": "Actions",
-                    "w": 128,
+                    "w": 110,
                     "h": 48,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -480,8 +480,8 @@
                       {
                         "type": "INSTANCE",
                         "id": "162:93487",
-                        "name": "Action / Start game 3",
-                        "w": 128,
+                        "name": "Action / Play again",
+                        "w": 110,
                         "h": 48,
                         "wSize": "hug",
                         "component": "Zumpo/Button",
@@ -491,13 +491,13 @@
                         },
                         "componentId": "4:15",
                         "props": {
-                          "Label": "Start game 3"
+                          "Label": "Play again"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 48,
-                            "width": 128
+                            "width": 110
                           }
                         ]
                       }
@@ -863,7 +863,7 @@
             "id": "162:93410",
             "name": "Room sidebar",
             "w": 344,
-            "h": 701,
+            "h": 739,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1094,14 +1094,14 @@
                 "id": "162:93412",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 269,
+                "h": 307,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 269,
+                    "height": 307,
                     "width": 344
                   },
                   {
@@ -1119,7 +1119,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya made five in a row and wins game 2.",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

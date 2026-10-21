@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Not one slip: a life back.",
-                  "Label": "Level 4 of 5",
                   "Main": "Level cleared!",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Level 4 of 5"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to level 5",
-                      "Time": "00:04",
+                      "Time": "0:04",
                       "Tone": "Waiting"
                     }
                   }
@@ -637,7 +638,7 @@
             "id": "61:74944",
             "name": "Room sidebar",
             "w": 344,
-            "h": 694,
+            "h": 638,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -854,14 +855,14 @@
                 "id": "61:74946",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 366,
+                "h": 310,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 366,
+                    "height": 310,
                     "width": 344
                   },
                   {
@@ -879,7 +880,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 3 cleared!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -897,7 +898,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Level 4 cleared without a slip: a life back!",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

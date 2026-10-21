@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "You lose a die",
-                  "Label": "You called Liar",
                   "Main": "Leo’s bid stands",
-                  "Category": false
+                  "Category": false,
+                  "Label": "You called Liar"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next round",
-                      "Time": "00:04",
+                      "Time": "0:04",
                       "Tone": "Waiting"
                     }
                   }

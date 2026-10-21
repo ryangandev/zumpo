@@ -134,9 +134,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "The chains stay secret until the reveal.",
-                  "Label": "Step 2 of 4",
                   "Main": "Everybody is drawing",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Step 2 of 4"
                 },
                 "overrides": [
                   {
@@ -156,12 +156,11 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:41",
+                      "Time": "0:41",
                       "Tone": "Running"
-                    },
-                    "height": 44,
-                    "width": 141
+                    }
                   }
                 ]
               },

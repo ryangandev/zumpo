@@ -115,8 +115,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "10 mines · 2 hit so far",
-                  "Label": "Round 5",
-                  "Main": "Pick a cell"
+                  "Main": "Pick a cell",
+                  "Label": "Round 5"
                 },
                 "overrides": [
                   {
@@ -131,8 +131,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to pick",
-                      "Time": "00:13",
+                      "Time": "0:13",
                       "Tone": "Running"
                     }
                   }
@@ -1039,7 +1040,7 @@
             "id": "9:6608",
             "name": "Room sidebar",
             "w": 344,
-            "h": 663,
+            "h": 627,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1160,14 +1161,14 @@
                 "id": "9:6639",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 335,
+                "h": 299,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 335,
+                    "height": 299,
                     "width": 344
                   },
                   {
@@ -1184,8 +1185,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Maya hit a mine (11% risk): −109",
-                      "Kind": "Alert"
+                      "Message": "Round 2: Maya hit a mine (−109).",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1202,8 +1203,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Ryan hit a mine (38% risk): −82",
-                      "Kind": "Alert"
+                      "Message": "Round 4: Ryan hit a mine (−82).",
+                      "Kind": "System"
                     }
                   },
                   {

@@ -115,8 +115,8 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Your cell had a 15% risk. A mine costs more the safer it looked.",
-                  "Label": "Round 4 results",
-                  "Main": "Mine. −105"
+                  "Main": "Mine. −105",
+                  "Label": "Round 4 results"
                 },
                 "overrides": [
                   {
@@ -131,8 +131,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "next round",
-                      "Time": "00:03",
+                      "Time": "0:03",
                       "Tone": "Waiting"
                     }
                   }
@@ -1351,7 +1352,7 @@
             "id": "9:5349",
             "name": "Room sidebar",
             "w": 344,
-            "h": 674,
+            "h": 590,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1585,14 +1586,14 @@
                 "id": "9:5380",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 346,
+                "h": 262,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 346,
+                    "height": 262,
                     "width": 344
                   },
                   {
@@ -1609,8 +1610,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Maya hit a mine (11% risk): −109",
-                      "Kind": "Alert"
+                      "Message": "Round 2: Maya hit a mine (−109).",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1627,8 +1628,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Ryan hit a mine (38% risk): −82",
-                      "Kind": "Alert"
+                      "Message": "Round 4: Ryan (−82) and Sam (−105) hit mines.",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1638,7 +1639,8 @@
                       "Alert icon": "24:5071",
                       "Message": "Sam hit a mine (15% risk): −105",
                       "Kind": "Alert"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 6",

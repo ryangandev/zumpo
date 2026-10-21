@@ -124,8 +124,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "left",
-                      "Time": "00:55",
+                      "Time": "0:55",
                       "Tone": "Running"
                     }
                   }
