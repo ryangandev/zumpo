@@ -14,7 +14,7 @@
     "x": 40,
     "y": 1850,
     "w": 1440,
-    "h": 785,
+    "h": 737,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -90,7 +90,7 @@
         "id": "162:86008",
         "name": "Board & room",
         "w": 1312,
-        "h": 615,
+        "h": 567,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "The first right tap takes the middle card",
-                  "Label": "One symbol on both cards",
                   "Main": "Spot the match",
-                  "Category": false
+                  "Category": false,
+                  "Label": "One symbol on both cards"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "on this card",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -427,7 +428,7 @@
             "id": "162:86034",
             "name": "Room sidebar",
             "w": 344,
-            "h": 615,
+            "h": 567,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -452,6 +453,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -485,6 +487,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -518,6 +521,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -593,6 +597,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Looking",
@@ -630,14 +635,14 @@
                 "id": "162:86036",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 287,
+                "h": 239,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 287,
+                    "height": 239,
                     "width": 344
                   },
                   {
@@ -647,7 +652,8 @@
                       "Name": "System",
                       "Message": "Leo took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 2",

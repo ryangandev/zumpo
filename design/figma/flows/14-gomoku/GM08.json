@@ -135,9 +135,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "Colours are drawn when the game starts",
-                  "Label": "Game 1",
                   "Main": "Ready when you are",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Game 1"
                 },
                 "overrides": [
                   {
@@ -157,8 +157,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "to bid",
-                      "Time": "00:12",
+                      "Time": "0:12",
                       "Tone": "Running"
                     }
                   }
@@ -245,7 +246,7 @@
                             "id": "162:97106",
                             "name": "Seats",
                             "w": 306,
-                            "h": 202,
+                            "h": 36,
                             "wSize": "fill",
                             "hSize": "hug",
                             "layout": {
@@ -258,9 +259,9 @@
                                 "type": "INSTANCE",
                                 "id": "162:97030",
                                 "name": "Seat / Maya",
+                                "visible": false,
                                 "w": 306,
                                 "h": 76,
-                                "wSize": "fill",
                                 "hSize": "hug",
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
@@ -288,9 +289,9 @@
                                 "type": "INSTANCE",
                                 "id": "162:97044",
                                 "name": "Seat / Leo",
+                                "visible": false,
                                 "w": 306,
                                 "h": 66,
-                                "wSize": "fill",
                                 "hSize": "hug",
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
@@ -421,7 +422,8 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Here",
                       "Host": true,
@@ -454,7 +456,8 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Here",
                       "Host": false,
@@ -487,7 +490,8 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Icon": "24:5071",
                       "Status icon": false,
                       "You": true,
@@ -563,7 +567,8 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
-                      "Show score": true,
+                      "Show status": false,
+                      "Show score": false,
                       "Status icon": false,
                       "Status": "Bid four 5s",
                       "Host": false,
@@ -593,6 +598,66 @@
                     "strokes": [
                       "$Zumpo · UI:color/muted"
                     ]
+                  },
+                  {
+                    "path": "Player 5",
+                    "componentProperties": {
+                      "Icon": "24:5053",
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": true,
+                      "You": false,
+                      "Name": "Maya",
+                      "Status": "Drawing",
+                      "Host": true,
+                      "Score": "460",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 6",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "320",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 7",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": false,
+                      "Score": "240",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 8",
+                    "componentProperties": {
+                      "Show status": false,
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Guessing",
+                      "Host": false,
+                      "You": true,
+                      "Score": "180",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
                   }
                 ]
               },
@@ -622,6 +687,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": false,
                       "Status icon": false,
                       "Status": "Watching",
@@ -655,6 +721,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Here",
@@ -689,6 +756,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5071",
                       "Status icon": false,
@@ -765,6 +833,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Bid four 5s",

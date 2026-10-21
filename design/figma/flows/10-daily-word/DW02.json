@@ -142,10 +142,9 @@
                 "props": {
                   "Countdown": false,
                   "Meta": "A and L are in place, T is somewhere else",
-                  "Top row": false,
-                  "Label": "Daily word #12",
                   "Main": "Guess 3 of 6",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Daily word #12"
                 },
                 "overrides": [
                   {
@@ -165,8 +164,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "run time",
-                      "Time": "00:39",
+                      "Time": "0:39",
                       "Tone": "Waiting"
                     }
                   }

@@ -127,9 +127,9 @@
                 "componentId": "26:16856",
                 "props": {
                   "Meta": "Both flip back. You’re next.",
-                  "Label": "Leo’s turn",
                   "Main": "Not a pair",
-                  "Category": false
+                  "Category": false,
+                  "Label": "Leo’s turn"
                 },
                 "overrides": [
                   {
@@ -149,8 +149,9 @@
                   {
                     "path": "Countdown",
                     "componentProperties": {
+                      "Show label": true,
                       "Label": "flip back",
-                      "Time": "00:02",
+                      "Time": "0:02",
                       "Tone": "Waiting"
                     }
                   }
@@ -913,7 +914,7 @@
             "id": "40:51700",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 590,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -938,6 +939,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -971,6 +973,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Up next",
@@ -1004,6 +1007,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Icon": "24:5071",
                       "Status icon": false,
@@ -1079,6 +1083,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1116,14 +1121,14 @@
                 "id": "40:51702",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 298,
+                "h": 262,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 298,
+                    "height": 262,
                     "width": 344
                   },
                   {
@@ -1132,7 +1137,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya found a pair! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {
@@ -1150,7 +1155,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam found a pair! (+1)",
-                      "Kind": "Success"
+                      "Kind": "Score"
                     }
                   },
                   {

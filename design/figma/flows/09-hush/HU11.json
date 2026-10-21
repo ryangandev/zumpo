@@ -14,7 +14,7 @@
     "x": 2070,
     "y": 2965,
     "w": 390,
-    "h": 851,
+    "h": 819,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "74:82192",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,28 +46,9 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Level 2 of 5",
           "Game": "Hush"
-        },
-        "overrides": [
-          {
-            "path": "Room identity / Room context / Room",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Maya’s room",
-              "Tone": "Sand"
-            }
-          },
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Level 2 of 5",
-              "Tone": "Blue"
-            }
-          }
-        ]
+        }
       },
       {
         "type": "INSTANCE",
@@ -94,7 +75,7 @@
         "id": "74:82194",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 88,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -104,7 +85,6 @@
         },
         "componentId": "27:22192",
         "props": {
-          "Top row": false,
           "Countdown": false,
           "Main": "Get ready",
           "Category": false,
@@ -114,11 +94,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 88,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Top / Eyebrow / Category",
+            "path": "Text / Eyebrow / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -127,10 +107,11 @@
             }
           },
           {
-            "path": "Top / Countdown",
+            "path": "Countdown",
             "componentProperties": {
+              "Show label": false,
               "Label": "to flip",
-              "Time": "00:07",
+              "Time": "0:07",
               "Tone": "Running"
             }
           }

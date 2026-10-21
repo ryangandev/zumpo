@@ -541,7 +541,7 @@
                     "type": "FRAME",
                     "id": "162:90703",
                     "name": "Cards",
-                    "w": 688,
+                    "w": 320,
                     "h": 362,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -674,6 +674,7 @@
                         "type": "FRAME",
                         "id": "162:90695",
                         "name": "Your card",
+                        "visible": false,
                         "w": 320,
                         "h": 362,
                         "wSize": "hug",
@@ -796,7 +797,7 @@
             "id": "162:86380",
             "name": "Room sidebar",
             "w": 344,
-            "h": 619,
+            "h": 541,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -821,6 +822,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -842,6 +844,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -863,6 +866,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -884,6 +888,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -909,14 +914,14 @@
                 "id": "162:86382",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 291,
+                "h": 213,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 291,
+                    "height": 213,
                     "width": 344
                   },
                   {
@@ -926,7 +931,8 @@
                       "Name": "System",
                       "Message": "Sam took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 2",
@@ -935,7 +941,8 @@
                       "Name": "System",
                       "Message": "Maya took a card! (+1)",
                       "Kind": "Success"
-                    }
+                    },
+                    "visible": false
                   },
                   {
                     "path": "Messages / Message 3",
@@ -943,7 +950,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 9 cards!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

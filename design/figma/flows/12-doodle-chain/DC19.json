@@ -14,7 +14,7 @@
     "x": 4880,
     "y": 4082,
     "w": 390,
-    "h": 1026,
+    "h": 994,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -37,7 +37,7 @@
         "id": "162:103356",
         "name": "Zumpo/Room bar",
         "w": 350,
-        "h": 68,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Room bar",
@@ -46,20 +46,10 @@
         },
         "componentId": "39:19277",
         "props": {
+          "Phase": "Reveal",
           "Game": "Doodle Chain"
         },
         "overrides": [
-          {
-            "path": "Room identity / Room context / Phase",
-            "componentProperties": {
-              "Show icon": false,
-              "Icon": "24:5010",
-              "Label": "Reveal",
-              "Tone": "Lime"
-            },
-            "height": 30,
-            "width": 61
-          },
           {
             "path": "You",
             "componentProperties": {
@@ -139,7 +129,7 @@
         "id": "162:103358",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 88,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -149,7 +139,6 @@
         },
         "componentId": "27:22192",
         "props": {
-          "Top row": false,
           "Countdown": false,
           "Main": "Maya’s chain",
           "Category": false,
@@ -159,20 +148,20 @@
         "overrides": [
           {
             "path": ".",
-            "height": 88,
+            "height": 76,
             "width": 350
           },
           {
-            "path": "Answer",
+            "path": "Text / Answer",
             "counterAxisAlignItems": "MIN"
           },
           {
-            "path": "Answer / Main",
+            "path": "Text / Answer / Main",
             "layoutGrow": 1,
             "textAutoResize": "HEIGHT"
           },
           {
-            "path": "Answer / Meta",
+            "path": "Text / Eyebrow / Meta",
             "visible": false
           }
         ]

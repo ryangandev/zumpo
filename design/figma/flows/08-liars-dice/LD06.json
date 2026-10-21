@@ -154,7 +154,7 @@
                     "type": "FRAME",
                     "id": "78:82783",
                     "name": "Result heading",
-                    "w": 267,
+                    "w": 370,
                     "h": 75,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -168,11 +168,11 @@
                         "type": "TEXT",
                         "id": "78:82784",
                         "name": "Heading",
-                        "w": 266,
+                        "w": 370,
                         "h": 42,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "Out in 3rd of 4.",
+                        "text": "You finished 3rd of 4.",
                         "textStyle": "Zumpo/Title",
                         "fills": [
                           "$Zumpo · UI:color/ink"

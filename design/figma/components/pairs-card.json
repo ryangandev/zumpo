@@ -4,6 +4,7 @@
   "id": "40:22031",
   "type": "COMPONENT_SET",
   "key": "38d6fe2592cdfb72e3bb23f18e40d57be4b74ca8",
+  "description": "One card of a Pairs board. Regular, 80 px, is the default; Compact, 52 px, fits a 6 × 6 board on a phone; Large, 124 px, is a 4 × 4 board on a desktop, as wide as 6 × 6 at Regular (520 px). Turning a card over is a 0.25 s flip, off when the system asks for reduced motion.",
   "properties": {
     "Symbol": {
       "type": "instance_swap",
@@ -23,7 +24,8 @@
       "default": "Regular",
       "options": [
         "Regular",
-        "Compact"
+        "Compact",
+        "Large"
       ]
     }
   },
@@ -375,6 +377,182 @@
                 "height": 30,
                 "opacity": 0.35,
                 "width": 30
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Down, Size=Large",
+      "id": "164:69304",
+      "props": {
+        "State": "Down",
+        "Size": "Large"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "164:69304",
+        "name": "State=Down, Size=Large",
+        "x": 24,
+        "y": 216,
+        "w": 124,
+        "h": 124,
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/16",
+        "effects": [
+          {
+            "type": "inner_shadow",
+            "color": "#282B2524",
+            "offset": [
+              0,
+              -2
+            ],
+            "radius": 0
+          }
+        ],
+        "effectStyle": "Zumpo/Cell edge",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "164:69305",
+            "name": "Symbol",
+            "visible": false,
+            "w": 68,
+            "h": 68,
+            "propRefs": {
+              "mainComponent": "Symbol"
+            },
+            "component": "Zumpo/Pairs symbol",
+            "variant": {
+              "Symbol": "Circle Coral"
+            },
+            "componentId": "40:21975",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 68,
+                "width": 68
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Up, Size=Large",
+      "id": "164:69307",
+      "props": {
+        "State": "Up",
+        "Size": "Large"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "164:69307",
+        "name": "State=Up, Size=Large",
+        "x": 180,
+        "y": 216,
+        "w": 124,
+        "h": 124,
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "strokeWeight": 2,
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/16",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "164:69308",
+            "name": "Symbol",
+            "w": 68,
+            "h": 68,
+            "propRefs": {
+              "mainComponent": "Symbol"
+            },
+            "component": "Zumpo/Pairs symbol",
+            "variant": {
+              "Symbol": "Circle Coral"
+            },
+            "componentId": "40:21975",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 68,
+                "width": 68
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Matched, Size=Large",
+      "id": "164:69310",
+      "props": {
+        "State": "Matched",
+        "Size": "Large"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "164:69310",
+        "name": "State=Matched, Size=Large",
+        "x": 336,
+        "y": 216,
+        "w": 124,
+        "h": 124,
+        "fills": [
+          "$Zumpo · UI:color/cream"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/16",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "164:69311",
+            "name": "Symbol",
+            "w": 68,
+            "h": 68,
+            "propRefs": {
+              "mainComponent": "Symbol"
+            },
+            "component": "Zumpo/Pairs symbol",
+            "variant": {
+              "Symbol": "Circle Coral"
+            },
+            "componentId": "40:21975",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 68,
+                "opacity": 0.35,
+                "width": 68
               }
             ]
           }

@@ -14,7 +14,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 903,
+    "h": 905,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -137,7 +137,7 @@
         "id": "79:86456",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 532,
+        "h": 534,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -155,7 +155,7 @@
             "id": "79:104689",
             "name": "Ten trios, one clock.",
             "w": 560,
-            "h": 420,
+            "h": 422,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -169,7 +169,7 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 420,
+                "height": 422,
                 "width": 560
               }
             ],
@@ -179,9 +179,9 @@
                   "type": "FRAME",
                   "id": "I79:104689;35:13433;79:104691",
                   "name": "Example trio",
-                  "w": 437,
-                  "h": 48,
-                  "wSize": "hug",
+                  "w": 494,
+                  "h": 50,
+                  "wSize": "fill",
                   "hSize": "hug",
                   "layout": {
                     "mode": "row",
@@ -232,7 +232,7 @@
                           },
                           "componentId": "45:63911",
                           "props": {
-                            "Shape": "Zumpo/Trios shape / Shape=Triangle, Fill=Striped, Colour=Blue, Stripes=Coarse"
+                            "Shape": "Zumpo/Trios shape / Shape=Triangle, Fill=Striped, Colour=Coral, Stripes=Coarse"
                           }
                         },
                         {
@@ -249,7 +249,7 @@
                           },
                           "componentId": "45:63918",
                           "props": {
-                            "Shape": "Zumpo/Trios shape / Shape=Square, Fill=Outline, Colour=Ink, Stripes=Fine"
+                            "Shape": "Zumpo/Trios shape / Shape=Square, Fill=Outline, Colour=Coral, Stripes=Fine"
                           }
                         }
                       ]
@@ -257,15 +257,17 @@
                     {
                       "type": "TEXT",
                       "id": "I79:104689;35:13433;79:104696",
-                      "w": 201,
-                      "h": 25,
-                      "wSize": "hug",
+                      "name": "A trio: every feature differs.",
+                      "w": 258,
+                      "h": 50,
+                      "wSize": "fill",
                       "hSize": "hug",
-                      "text": "A trio: every feature differs.",
+                      "text": "A trio: the same colour; shape, count and fill all different.",
                       "textStyle": "Zumpo/Body",
                       "fills": [
                         "$Zumpo · UI:color/muted"
-                      ]
+                      ],
+                      "autoResize": "height"
                     }
                   ]
                 },

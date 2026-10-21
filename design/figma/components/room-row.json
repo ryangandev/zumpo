@@ -4,7 +4,7 @@
   "id": "9:289",
   "type": "COMPONENT_SET",
   "key": "f3a16f34745c7b51712e5c6fcdffef04b8087b18",
-  "description": "One room in a lobby list. Details: host plus the game setting (rounds or board). Open and Private rooms show Join (Private adds a lock and asks for the password next); Full and Playing rooms show their state instead, because they cannot be joined.",
+  "description": "One room in a lobby list. Details: the host plus the game setting (rounds or board); a room that kept its default name, \"Maya’s room\", shows only the setting, since the name says who hosts. Open and Private rooms show Join (Private adds a lock and asks for the password next); Full and Playing rooms show their state instead, because they cannot be joined, and Watch beside it while a spectator seat is free. On a desktop the action column is 168 px, as wide as Playing beside Watch, so the player counts of a list line up.",
   "properties": {
     "Room name": {
       "type": "text",
@@ -98,7 +98,7 @@
             "type": "FRAME",
             "id": "9:244",
             "name": "Room identity",
-            "w": 510,
+            "w": 470,
             "h": 42,
             "wSize": "fill",
             "hSize": "hug",
@@ -222,10 +222,11 @@
             "type": "FRAME",
             "id": "24:6387",
             "name": "Action",
-            "w": 128,
+            "w": 168,
             "h": 48,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -319,7 +320,7 @@
             "type": "FRAME",
             "id": "9:256",
             "name": "Room identity",
-            "w": 510,
+            "w": 470,
             "h": 42,
             "wSize": "fill",
             "hSize": "hug",
@@ -455,10 +456,11 @@
             "type": "FRAME",
             "id": "24:6396",
             "name": "Action",
-            "w": 128,
+            "w": 168,
             "h": 48,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -552,7 +554,7 @@
             "type": "FRAME",
             "id": "9:268",
             "name": "Room identity",
-            "w": 510,
+            "w": 470,
             "h": 42,
             "wSize": "fill",
             "hSize": "hug",
@@ -677,10 +679,11 @@
             "type": "FRAME",
             "id": "24:6402",
             "name": "Action",
-            "w": 128,
+            "w": 168,
             "h": 48,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -707,6 +710,30 @@
                     "path": ".",
                     "height": 30,
                     "width": 44
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "164:69537",
+                "name": "Action / Watch",
+                "w": 87,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Label": "Watch"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 87
                   }
                 ]
               }
@@ -774,7 +801,7 @@
             "type": "FRAME",
             "id": "9:280",
             "name": "Room identity",
-            "w": 510,
+            "w": 470,
             "h": 42,
             "wSize": "fill",
             "hSize": "hug",
@@ -898,10 +925,11 @@
             "type": "FRAME",
             "id": "24:6408",
             "name": "Action",
-            "w": 128,
+            "w": 168,
             "h": 48,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -928,6 +956,30 @@
                     "path": ".",
                     "height": 30,
                     "width": 65
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "164:69573",
+                "name": "Action / Watch",
+                "w": 87,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Label": "Watch"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 87
                   }
                 ]
               }
@@ -1122,8 +1174,11 @@
             "name": "Action",
             "w": 72,
             "h": 48,
+            "wSize": "hug",
+            "minWidth": 72,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -1356,8 +1411,11 @@
             "name": "Action",
             "w": 72,
             "h": 48,
+            "wSize": "hug",
+            "minWidth": 72,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -1451,7 +1509,7 @@
             "type": "FRAME",
             "id": "28:23821",
             "name": "Room identity",
-            "w": 180,
+            "w": 113,
             "h": 66,
             "wSize": "fill",
             "hSize": "hug",
@@ -1577,10 +1635,13 @@
             "type": "FRAME",
             "id": "28:23828",
             "name": "Action",
-            "w": 72,
+            "w": 139,
             "h": 48,
+            "wSize": "hug",
+            "minWidth": 72,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -1607,6 +1668,30 @@
                     "path": ".",
                     "height": 30,
                     "width": 44
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "164:69609",
+                "name": "Action / Watch",
+                "w": 87,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Label": "Watch"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 87
                   }
                 ]
               }
@@ -1674,7 +1759,7 @@
             "type": "FRAME",
             "id": "28:23839",
             "name": "Room identity",
-            "w": 180,
+            "w": 92,
             "h": 66,
             "wSize": "fill",
             "hSize": "hug",
@@ -1799,10 +1884,13 @@
             "type": "FRAME",
             "id": "28:23846",
             "name": "Action",
-            "w": 72,
+            "w": 160,
             "h": 48,
+            "wSize": "hug",
+            "minWidth": 72,
             "layout": {
               "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
               "justify": "max",
               "align": "center",
               "strokesIncluded": true
@@ -1829,6 +1917,30 @@
                     "path": ".",
                     "height": 30,
                     "width": 65
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "164:69639",
+                "name": "Action / Watch",
+                "w": 87,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Label": "Watch"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 87
                   }
                 ]
               }

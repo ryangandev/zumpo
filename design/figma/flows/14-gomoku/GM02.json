@@ -123,7 +123,7 @@
             "w": 1312,
             "h": 25,
             "hSize": "hug",
-            "text": "Take turns placing stones. Five in a row wins.",
+            "text": "Take turns placing stones. Five in a row, across, down or diagonally, wins.",
             "textStyle": "Zumpo/Body",
             "fills": [
               "$Zumpo · UI:color/muted"
@@ -190,7 +190,7 @@
                   "componentId": "9:204",
                   "props": {
                     "Select": true,
-                    "Helper": "Blocks your open threes, but not a threat built two moves ahead.",
+                    "Helper": "Stops simple threats, so a win takes a plan.",
                     "Value": "Medium",
                     "Label": "Level"
                   },

@@ -4,167 +4,19 @@
   "id": "90:110743",
   "type": "COMPONENT_SET",
   "key": "6077de5d5698e3902288591c54ceca753e7dee9f",
+  "description": "The name menu the viewer’s avatar opens on every page and in every room. Edit is the field, Save and Roll a name; Error is an empty name.",
   "properties": {
-    "Title": {
-      "type": "text",
-      "default": "You’re Sleepy Otter."
-    },
     "State": {
       "type": "variant",
-      "default": "Hint",
+      "default": "Edit",
       "options": [
-        "Hint",
         "Edit",
         "Error"
       ]
     }
   },
-  "defaultVariant": "State=Hint",
+  "defaultVariant": "State=Edit",
   "variants": [
-    {
-      "name": "State=Hint",
-      "id": "90:110676",
-      "props": {
-        "State": "Hint"
-      },
-      "node": {
-        "type": "COMPONENT",
-        "id": "90:110676",
-        "name": "State=Hint",
-        "w": 320,
-        "h": 251,
-        "hSize": "hug",
-        "fills": [
-          "$Zumpo · Primitives:color/paper"
-        ],
-        "strokes": [
-          "$Zumpo · Primitives:color/line"
-        ],
-        "strokeAlign": "inside",
-        "radius": "$Zumpo · UI:radius/24",
-        "effects": [
-          {
-            "type": "drop_shadow",
-            "color": "#282B251F",
-            "offset": [
-              0,
-              8
-            ],
-            "radius": 24
-          }
-        ],
-        "effectStyle": "Zumpo/Menu lift",
-        "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/16",
-          "pad": "$Zumpo · UI:space/32",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "90:110677",
-            "name": "Title",
-            "w": 254,
-            "h": 30,
-            "wSize": "fill",
-            "hSize": "hug",
-            "propRefs": {
-              "characters": "Title"
-            },
-            "text": "You’re Sleepy Otter.",
-            "textStyle": "Zumpo/Heading",
-            "fills": [
-              "$Zumpo · Primitives:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "90:110678",
-            "name": "Description",
-            "w": 254,
-            "h": 75,
-            "wSize": "fill",
-            "hSize": "hug",
-            "text": "We picked a name so you can jump right in. Change it here anytime.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · Primitives:color/muted"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "FRAME",
-            "id": "90:110679",
-            "name": "Actions",
-            "w": 256,
-            "h": 48,
-            "wSize": "hug",
-            "hSize": "hug",
-            "clip": true,
-            "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
-              "align": "center",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "90:110680",
-                "name": "Action / Got it",
-                "w": 79,
-                "h": 48,
-                "wSize": "hug",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Primary",
-                  "State": "Default"
-                },
-                "componentId": "4:15",
-                "props": {
-                  "Label": "Got it"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "width": 79
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "90:110686",
-                "name": "Action / Change name",
-                "w": 165,
-                "h": 48,
-                "wSize": "hug",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Secondary",
-                  "State": "Default"
-                },
-                "componentId": "4:18",
-                "props": {
-                  "Icon": "Zumpo/Icon / Glyph=edit",
-                  "Show icon": true,
-                  "Label": "Change name"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "width": 165
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
     {
       "name": "State=Edit",
       "id": "90:110693",

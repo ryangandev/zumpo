@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 6797,
     "w": 1440,
-    "h": 1451,
+    "h": 1149,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -85,7 +85,7 @@
         "id": "9:9824",
         "name": "Board & room",
         "w": 1312,
-        "h": 1281,
+        "h": 979,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -98,7 +98,7 @@
             "id": "27:19637",
             "name": "Board stage",
             "w": 944,
-            "h": 1281,
+            "h": 979,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -522,7 +522,7 @@
                 "id": "27:20053",
                 "name": "Minefield panel",
                 "w": 944,
-                "h": 780,
+                "h": 478,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -1422,9 +1422,9 @@
                     "type": "FRAME",
                     "id": "27:20219",
                     "name": "Round 8 results",
+                    "visible": false,
                     "w": 894,
                     "h": 278,
-                    "wSize": "fill",
                     "hSize": "hug",
                     "layout": {
                       "mode": "column",
@@ -1608,7 +1608,7 @@
             "id": "9:9839",
             "name": "Room sidebar",
             "w": 344,
-            "h": 645,
+            "h": 665,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1629,6 +1629,7 @@
                   {
                     "path": "Player 1",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1650,6 +1651,7 @@
                   {
                     "path": "Player 2",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1671,6 +1673,7 @@
                   {
                     "path": "Player 3",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1692,6 +1695,7 @@
                   {
                     "path": "Player 4",
                     "componentProperties": {
+                      "Show status": true,
                       "Show score": true,
                       "Status icon": false,
                       "Status": "Waiting",
@@ -1717,14 +1721,14 @@
                 "id": "9:9870",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 317,
+                "h": 337,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 317,
+                    "height": 337,
                     "width": 344
                   },
                   {
@@ -1732,8 +1736,8 @@
                     "componentProperties": {
                       "Name": "System",
                       "Alert icon": "24:5071",
-                      "Message": "Ryan hit a mine (50% risk): −70",
-                      "Kind": "Alert"
+                      "Message": "Round 9: Ryan hit a mine (−70).",
+                      "Kind": "System"
                     }
                   },
                   {
@@ -1751,7 +1755,7 @@
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Sam wins with 130 points!",
-                      "Kind": "System"
+                      "Kind": "Success"
                     }
                   },
                   {

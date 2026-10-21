@@ -34,7 +34,7 @@ const FLOW_SECTIONS = [
   { id: '162:67746', prefix: '14', dir: '14-gomoku' },
 ];
 const SHARED_SECTION = { id: '9:198', name: 'Shared pieces' };
-const EXPECTED_FLOWS = 247;
+const EXPECTED_FLOWS = 249;
 const EXPECTED_FAMILIES = 74;
 
 const FLOW_CODE = /^([A-Z]{1,2}\d{2})\b/;
