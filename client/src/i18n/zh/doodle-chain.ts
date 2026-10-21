@@ -146,7 +146,7 @@ export const doodleChain: typeof en = {
   working: { prompt: '在写', drawing: '在画', description: '在描述' },
   sitsOut: '这一步轮空',
   passingStatus: '往下传',
-  away: '离开',
+  away: '暂离',
   showing: '在揭晓传话',
   watching: '在看',
   favourite: '最受欢迎',
