@@ -158,7 +158,7 @@ There is no Back: the album is where chains are read again, at each player's own
 
 The light competition is a **heart**, given during the reveal:
 
-- Every player may give **one heart per chain**, to any shown entry that is not their own.
+- Every player may give **one heart per chain**, to any shown entry that is not their own and not empty.
   Giving it to another entry of the same chain moves it, and pressing it again takes it back.
 - Everybody sees each entry's hearts as they are given; on your own entry the count is all there is, 0 included.
 - Spectators watch, but do not give hearts: they are not in the game.
@@ -264,7 +264,7 @@ A field a viewer may not see is left out of their snapshot altogether, not blank
 `phaseEndsInMs` counts down `write`, `draw`, `describe` and `passing`; in `reveal` and `waiting` it is 0, and no clock is shown.
 
 **Drawings are not in the snapshot**, because the room's state is rebuilt for every change and a game's drawings are tens of thousands of points.
-They are sent once, to whoever may see them, by `dc:drawing` (the room, the drawing id and its strokes): the drawing you are given, as a describing step starts; each drawing the reveal shows, as it is shown; and the album's, when a game ends or a page syncs.
+They are sent once, to whoever may see them, by `dc:drawing` (the room, the drawing id and its strokes): the drawing you are given, as a describing step starts; each drawing the reveal shows, as it is shown, which by the album is every one; and the album's, when a page syncs.
 Your own drawing in progress comes back to you on sync by `dc:canvas:sync`, as a Draw & Guess drawer's does.
 
 Doodle Chain's events of its own:

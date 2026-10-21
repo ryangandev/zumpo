@@ -160,10 +160,13 @@ const createDoodleChainGameEngine = (
     ctx.rooms.announce(room.roomId, 'system', { type: 'dc:step', step, kind });
     ctx.rooms.startPhase(room, secondsFor(room), () => finishStep(room));
 
-    // Whoever describes is sent the drawing they describe, and nobody else.
+    // Whoever describes is sent the drawing they describe, and nobody else:
+    // not a player who has left, who may be back watching, or in another room.
     if (kind === 'description') {
       for (const [playerId, task] of game.tasks) {
-        if (!task.sitsOut) sendGivenDrawing(room, playerId, task);
+        if (!task.sitsOut && room.playerList[playerId]) {
+          sendGivenDrawing(room, playerId, task);
+        }
       }
     }
     ctx.rooms.emitState(room);

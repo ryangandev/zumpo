@@ -370,6 +370,27 @@ describe('Doodle Chain', () => {
   });
 
   describe('leaving and coming back', () => {
+    it('sends a leaver who came back to watch no drawing to describe', async () => {
+      const { roomId, players, owner } = await playToWrite(harness, FOUR);
+      const [maya, ryan, leo, sam] = players;
+      writeAll(players, roomId, ['one', 'two', 'three', 'four']);
+      await at(owner, 'draw', 2);
+
+      // Leo leaves and comes straight back, as a spectator of the game.
+      leo.emit('room:leave', roomId);
+      await settle();
+      await joinRoom(leo, roomId, 'Leo', '', 'spectator');
+      const received = collect(leo, 'dc:drawing');
+      const describing = at(leo, 'describe', 3);
+      drawAll([maya, ryan, sam], roomId, [true, true, true]);
+      const view = await describing;
+      await settle();
+
+      // At step 3 his place would describe Ryan's drawing of Maya's line.
+      expect(view.task).toBeUndefined();
+      expect(received).toHaveLength(0);
+    });
+
     it('keeps what a leaver made, and makes their later steps empty', async () => {
       const { roomId, players, owner } = await playToWrite(harness, FOUR);
       const [maya, ryan, leo, sam] = players;

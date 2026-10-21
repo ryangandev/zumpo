@@ -156,9 +156,10 @@ export const doodleChain = {
     author: string,
     reason: 'time' | 'left',
     owner: string,
-    next: string | null,
+    /** Null after the last step; undefined when the next player has left too. */
+    next: string | null | undefined,
   ) =>
-    `${author} ${reason === 'left' ? 'left the game' : 'ran out of time'}, so ${owner}’s chain skips this step${next ? ` and goes on to ${next}` : ' and ends on the entry before'}.`,
+    `${author} ${reason === 'left' ? 'left the game' : 'ran out of time'}, so ${owner}’s chain skips this step${next ? ` and goes on to ${next}` : next === null ? ' and ends on the entry before' : ''}.`,
   passing: {
     prompt: 'Passing the chains on. Next: draw the words you are given.',
     drawing: 'Passing the chains on. Next: draw the words you are given.',

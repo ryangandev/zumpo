@@ -159,6 +159,20 @@ describe('a Doodle Chain room', () => {
     expect(fake.sentArgs('dc:done').at(-1)).toEqual(['r1', false]);
   });
 
+  it('names nobody next when the next player has left', async () => {
+    const { playerList, table } = writing;
+    await renderSeated({
+      ...writing,
+      playerList: { p1: playerList.p1!, p3: playerList.p3! },
+      table: { p1: table.p1!, p3: table.p3! },
+    });
+
+    expect(
+      turn().getByText('The chains stay secret until the reveal.'),
+    ).toBeInTheDocument();
+    expect(turn().queryByText(/Maya/)).toBeNull();
+  });
+
   it('picks up the words already sent when it comes back mid-step', async () => {
     await renderSeated({ ...writing, draft: { text: 'A ghost doing' } });
 

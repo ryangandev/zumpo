@@ -28,7 +28,7 @@ Every game has its own page, at Ryan's request on 2026-10-08, so you pick a game
 A home card opens the game's page, which holds its ways in (Play solo, Create a room), its open rooms and its rules at a glance; the old room list at the same address became that page.
 
 The interface supports English and simplified Chinese, chosen from the footer and remembered for the browser ([languages](architecture.md#languages)).
-The catalogs cover room flows, all eight games, solo records and accessible labels; each player renders room announcements in their own language.
+The catalogs cover room flows, every game, solo records and accessible labels; each player renders room announcements in their own language.
 The wordmark, footer slogan and English gameplay words retain their original language.
 It was reviewed and played through in both languages, two players in one room, on 2026-10-07 (this session's branch), and Chinese terms now read the same across games (喊“吹牛”, 条命, 颗雷, 单人模式).
 

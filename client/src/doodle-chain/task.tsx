@@ -47,10 +47,18 @@ function nameAt(state: DoodleChainRoomState, place: number): string {
   return state.order[((place % count) + count) % count]?.username ?? '';
 }
 
-/** Who works on `task`'s chain next step, or null after the last. */
-function nextOn(state: DoodleChainRoomState, task: DoodleChainTask) {
+/**
+ * Who works on `task`'s chain next step: null after the last, and undefined
+ * when they have left, so the chain skips them.
+ */
+function nextOn(
+  state: DoodleChainRoomState,
+  task: DoodleChainTask,
+): string | null | undefined {
   if (state.step >= state.steps) return null;
-  return nameAt(state, placeAt(task.chain, state.step + 1, state.order.length));
+  const next =
+    state.order[placeAt(task.chain, state.step + 1, state.order.length)];
+  return next && state.playerList[next.playerId] ? next.username : undefined;
 }
 
 /** The players this step still waits for, the viewer aside. */
@@ -150,7 +158,9 @@ function turnBar(
         ? m.doodleChain.chainsMoveOn
         : nextName
           ? m.doodleChain.goesOn[task.kind](nextName)
-          : m.doodleChain.revealNext,
+          : nextName === null
+            ? m.doodleChain.revealNext
+            : m.doodleChain.chainsMoveOn,
       countdown: clock(next, true),
     };
   }
@@ -172,13 +182,15 @@ function turnBar(
   const meta =
     done && waiting.length > 0
       ? m.doodleChain.waitingFor(listNames(waiting, m))
-      : !nextName
-        ? m.doodleChain.lastStep
-        : task.kind === 'prompt'
-          ? m.doodleChain.drawsNext(nextName)
-          : task.kind === 'drawing'
-            ? m.doodleChain.describesNext(nextName)
-            : m.doodleChain.drawsYoursNext(nextName);
+      : nextName === undefined
+        ? m.doodleChain.secret
+        : nextName === null
+          ? m.doodleChain.lastStep
+          : task.kind === 'prompt'
+            ? m.doodleChain.drawsNext(nextName)
+            : task.kind === 'drawing'
+              ? m.doodleChain.describesNext(nextName)
+              : m.doodleChain.drawsYoursNext(nextName);
 
   switch (task.kind) {
     case 'prompt':

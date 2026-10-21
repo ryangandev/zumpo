@@ -127,7 +127,7 @@ export const doodleChain: typeof en = {
     description: '你前一步的画是空的。',
   },
   skipped: (author, reason, owner, next) =>
-    `${author}${reason === 'left' ? '离开了游戏' : '没来得及完成'}，所以 ${owner} 的传话跳过这一步，${next ? `接着传给 ${next}` : '停在上一条'}。`,
+    `${author}${reason === 'left' ? '离开了游戏' : '没来得及完成'}，所以 ${owner} 的传话跳过这一步${next ? `，接着传给 ${next}` : next === null ? '，停在上一条' : ''}。`,
   passing: {
     prompt: '传话正在往下传。下一步：画出你拿到的话。',
     drawing: '传话正在往下传。下一步：画出你拿到的话。',
