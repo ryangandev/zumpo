@@ -6,7 +6,7 @@ import type {
   DoodleChainRoomState,
 } from '../../../shared/wire-types';
 import { doodleChainState, ME } from '../tests/fixtures';
-import { narrowable } from '../tests/phone';
+import { narrowable, onPhone } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 const RYAN = { playerId: ME, username: 'Ryan' };
@@ -671,6 +671,30 @@ describe('a Doodle Chain room', () => {
     await user.click(screen.getByRole('button', { name: 'Maya’s chain' }));
     act(narrow);
     expect(screen.getByText('A frog in a top hat')).toBeInTheDocument();
+  });
+
+  it('keeps Play again above the chains on a phone, not under them all', async () => {
+    onPhone();
+    await renderSeated(
+      doodleChainState({
+        lastGame: {
+          endedEarly: false,
+          standings: [
+            { playerId: 'p2', username: 'Maya', points: 0 },
+            { playerId: ME, username: 'Ryan', points: 0 },
+          ],
+          chains: [{ owner: RYAN, entries: ryansChain }],
+          favourites: [],
+        },
+      }),
+    );
+
+    const playAgain = screen.getByRole('button', { name: 'Play again' });
+    const chains = screen.getByRole('group', { name: 'Chains' });
+    expect(
+      playAgain.compareDocumentPosition(chains) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('gives nobody a place when nobody gave a heart', async () => {
