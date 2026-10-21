@@ -114,4 +114,16 @@ describe('TurnBar', () => {
     expect(container.firstElementChild!.className).toMatch(/phone/);
     expect(section().className).not.toMatch(/unlabelled/);
   });
+
+  it('keeps one first line on a short screen, beside the board, however narrow', () => {
+    onShortScreen();
+    barWidth(328);
+    const { container } = render(
+      <TurnBar label="Your turn" kind="status" main="Place a black stone" />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/phone/);
+    expect(container.firstElementChild!.className).not.toMatch(/narrow/);
+    // No meta, and no line kept for one: the height goes to the board.
+    expect(line()).not.toBeInTheDocument();
+  });
 });

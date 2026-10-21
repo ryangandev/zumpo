@@ -141,6 +141,29 @@
   white-space: normal;
 }
 
+/* Without the label (labelOnPhone), the meta has the first line to itself;
+   the label is said to a screen reader only, as the clock's purpose is. */
+.phone .unlabelled {
+  grid-template-areas:
+    'tag meta meta meta clock'
+    'main main main main clock';
+}
+
+.phone .untagged.unlabelled {
+  grid-template-areas:
+    'meta meta meta meta clock'
+    'main main main main clock';
+}
+
+.phone .unlabelled .label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* At a phone's width the first line has no room for the meta, which is
    often the only instruction on screen: it has a line of its own under the
    main line, the bar's whole width, with the tag at its start, and wraps
@@ -203,15 +226,6 @@
 .narrow .unlabelled .meta {
   min-height: 0;
   margin-top: 0;
-}
-
-.narrow .unlabelled .label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 
 .phone .answer {

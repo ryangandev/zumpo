@@ -45,10 +45,11 @@ export interface TurnBarProps {
  * Zumpo/Turn bar: sits above the canvas and carries the turn. It lays itself
  * out as the Phone variant when it is narrow, or the screen is short, as a
  * phone on its side is: a compact bar, what to do over the main line and the
- * clock's time beside them. On a short wide screen the tag and the meta
- * share the first line; at a phone's width they have a line of their own
- * under the main line, where the meta wraps rather than being cut, since it
- * is often the only instruction on screen.
+ * clock's time beside them. On a short screen the tag, the label and the
+ * meta share the first line, wrapping where they are too long for it
+ * together; at a phone's width the tag and the meta have a line of their
+ * own under the main line, where the meta wraps rather than being cut, since
+ * it is often the only instruction on screen.
  *
  * The main line never wraps: a line longer than the bar is scaled down to
  * fit it, as a label a little too long for its phone line is, so the bar
@@ -66,17 +67,17 @@ export function TurnBar({
 }: TurnBarProps) {
   const m = useMessages();
   const box = useRef<HTMLDivElement>(null);
-  const { phone, narrow } = usePhoneRow(box);
+  const { phone, narrow, stacked } = usePhoneRow(box);
   const labelled = labelOnPhone || !narrow;
   const labelRef = useRef<HTMLSpanElement>(null);
-  useOneLine(labelRef, narrow && labelled, label);
+  useOneLine(labelRef, stacked && labelled, label);
   return (
     <div
       ref={box}
       className={cx(
         styles.container,
         phone && styles.phone,
-        narrow && styles.narrow,
+        stacked && styles.narrow,
         className,
       )}
     >
@@ -102,7 +103,7 @@ export function TurnBar({
             <span className={cx(styles.main, styles[kind])}>{main}</span>
           </Fit>
           {/* At a phone's width the meta's line is kept while it is empty. */}
-          {(meta || (narrow && labelled)) && (
+          {(meta || (stacked && labelled)) && (
             <span className={styles.meta}>{meta}</span>
           )}
         </div>
@@ -188,11 +189,14 @@ const PHONE_WIDTH = 560;
 /**
  * Whether the bar takes its phone row: 560 px wide or less, on a short
  * screen, or where the page asks for it. Measured before the first paint, so
- * it never shows the other.
+ * it never shows the other. Stacked, with the meta on a line of its own, at
+ * a phone's width where the height can spare it: not on a short screen, as
+ * a phone on its side, where the bar sits beside the board.
  */
 function usePhoneRow(box: RefObject<HTMLElement | null>): {
   phone: boolean;
   narrow: boolean;
+  stacked: boolean;
 } {
   const short = useMediaQuery(SHORT_SCREEN);
   const asked = useContext(CompactTurnBar);
@@ -209,5 +213,9 @@ function usePhoneRow(box: RefObject<HTMLElement | null>): {
     observer.observe(element);
     return () => observer.disconnect();
   }, [box]);
-  return { phone: short || asked || narrow, narrow };
+  return {
+    phone: short || asked || narrow,
+    narrow,
+    stacked: narrow && !short && !asked,
+  };
 }
