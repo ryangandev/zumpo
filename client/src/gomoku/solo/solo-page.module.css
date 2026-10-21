@@ -1,0 +1,12 @@
+/* A panel card lines its content up at the start; the rows span it. */
+.stats {
+  align-self: stretch;
+}
+
+/* GM03, GM17: how to place a stone, under the seats. */
+.hint {
+  margin: 0;
+  font: var(--zumpo-text-small);
+  letter-spacing: var(--zumpo-text-small-tracking);
+  color: var(--zumpo-muted);
+}
