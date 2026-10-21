@@ -112,7 +112,7 @@ describe('a Code Breaker room', () => {
     expect(turn().getByText('Fewer guesses score more')).toBeInTheDocument();
   });
 
-  it('says how to read the pegs in a phone’s turn bar until someone cracks it', async () => {
+  it('says how to read the pegs in a phone’s turn bar until your board is done', async () => {
     onPhone();
     const { update } = await renderSeated(start);
     await screen.findByRole('group', { name: 'Your guesses' });
@@ -130,7 +130,24 @@ describe('a Code Breaker room', () => {
         }),
       ]),
     );
-    expect(turn().getByText('Maya cracked it')).toBeInTheDocument();
+    // Somebody else cracking it does not take the legend away.
+    expect(
+      turn().getByText('Green: in place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+
+    update(
+      guessing([
+        board(ME, 'Ryan', {
+          rows: [{ guess: '4071', mark: CRACKED }],
+          status: 'cracked',
+          points: 1018,
+        }),
+        board('p2', 'Maya'),
+      ]),
+    );
+    expect(
+      turn().queryByText('Green: in place. Coral: somewhere else.'),
+    ).toBeNull();
   });
 
   it('quiets a cracker’s chat until the reveal', async () => {

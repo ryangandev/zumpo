@@ -448,13 +448,14 @@ function turnBar(
     main: room.spectating
       ? m.codeBreaker.everyoneGuessing
       : m.codeBreaker.crackCode,
-    // Until somebody cracks it, a phone, with no legend beside the board,
-    // says how to read the pegs (CB18).
-    meta: crackers.length
-      ? m.codeBreaker.namesCracked(listNames(crackers, m))
-      : phone
+    // A phone has no legend beside the board, so while you still guess it
+    // says how to read the pegs (CB18); the race is on the Players tab.
+    meta:
+      phone && !room.spectating
         ? m.codeBreaker.legendLine
-        : m.codeBreaker.fewerScore,
+        : crackers.length
+          ? m.codeBreaker.namesCracked(listNames(crackers, m))
+          : m.codeBreaker.fewerScore,
     countdown: clock(m.codeBreaker.toGuess, room.spectating),
   };
 }

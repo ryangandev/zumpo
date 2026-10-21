@@ -436,13 +436,14 @@ function turnBar(
     kind: 'status',
     // The board counts the guesses; the bar keeps to the race (DW07, DW13).
     main: room.spectating ? m.dailyWord.everyoneGuessing : m.dailyWord.findWord,
-    // Until somebody finds it, a phone, with no legend beside the board, says
-    // how to read the marks (DW13).
-    meta: finders.length
-      ? m.dailyWord.namesFound(listNames(finders, m))
-      : phone
+    // A phone has no legend beside the board, so while you still guess it
+    // says how to read the marks (DW13); the race is on the Players tab.
+    meta:
+      phone && !room.spectating
         ? m.dailyWord.legendLine
-        : m.dailyWord.fewerScore,
+        : finders.length
+          ? m.dailyWord.namesFound(listNames(finders, m))
+          : m.dailyWord.fewerScore,
     countdown: clock(m.dailyWord.toGuess, room.spectating),
   };
 }

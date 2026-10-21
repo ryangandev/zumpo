@@ -122,7 +122,7 @@ describe('a Daily Word room', () => {
     expect(within(legend).getByText('Not in the word')).toBeInTheDocument();
   });
 
-  it('says how to read the marks in a phone’s turn bar until someone finds it', async () => {
+  it('says how to read the marks in a phone’s turn bar until your board is done', async () => {
     onPhone();
     const { update } = await renderSeated(start);
     await screen.findByRole('group', { name: 'Your guesses' });
@@ -140,7 +140,24 @@ describe('a Daily Word room', () => {
         }),
       ]),
     );
-    expect(turn().getByText('Maya found it')).toBeInTheDocument();
+    // Somebody else finding it does not take the legend away.
+    expect(
+      turn().getByText('Green: right place. Coral: somewhere else.'),
+    ).toBeInTheDocument();
+
+    update(
+      guessing([
+        board(ME, 'Ryan', {
+          rows: [{ word: 'south', marks: Array(5).fill('correct') }],
+          status: 'found',
+          points: 540,
+        }),
+        board('p2', 'Maya'),
+      ]),
+    );
+    expect(
+      turn().queryByText('Green: right place. Coral: somewhere else.'),
+    ).toBeNull();
   });
 
   it('quiets a finder’s chat until the reveal', async () => {
