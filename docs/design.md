@@ -29,6 +29,9 @@ They are not copied here, so there is one place to change them.
 | 09 / Hush / complete flow            | `43:61072`  | HU01-HU09 room, HU10-HU11 phone                                                       |
 | 10 / Daily Word / complete flow      | `43:61073`  | DW01-DW06 solo, DW07-DW11 room, DW12-DW16 phone                                       |
 | 11 / Snap / complete flow            | `162:86002` | SN01-SN04 solo, SN05-SN09 and SN13 room, SN10 create, SN11-SN12 phone, SN14 game page |
+| 12 / Doodle Chain / complete flow    | `162:65089` | DC01-DC14 desktop, DC15-DC20 phone                                                    |
+| 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
+| 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
 
@@ -112,7 +115,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 171 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 247 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 

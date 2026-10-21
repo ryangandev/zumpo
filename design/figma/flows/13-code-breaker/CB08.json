@@ -1,0 +1,621 @@
+{
+  "format": 1,
+  "code": "CB08",
+  "title": "Solo · practice code cracked",
+  "id": "162:82249",
+  "section": "13 / Code Breaker / complete flow",
+  "reviewNotes": [
+    "CB08 · A practice code, after today’s: plays the same and keeps no stats. Another code deals a new seed; Challenge a friend copies the pegs with a link to the same code (?seed=k3f9x2); Today’s code goes back to the daily result."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:82249",
+    "name": "CB08 / Solo · practice code cracked",
+    "x": 4660,
+    "y": 1550,
+    "w": 1440,
+    "h": 1017,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:82250",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Code Breaker"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Practice",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:82251",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 847,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:82252",
+            "name": "Board stage",
+            "w": 944,
+            "h": 847,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:82253",
+                "name": "Final scores",
+                "w": 944,
+                "h": 229,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/40",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:82254",
+                    "name": "Result heading",
+                    "w": 367,
+                    "h": 75,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/8",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:82255",
+                        "w": 225,
+                        "h": 42,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Cracked in 5.",
+                        "textStyle": "Zumpo/Title",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:82256",
+                        "w": 367,
+                        "h": 25,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "The code was 6195. Practice codes keep no stats.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:82257",
+                    "name": "Actions",
+                    "w": 511,
+                    "h": 48,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:82258",
+                        "name": "Action / Another word",
+                        "w": 134,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:15",
+                        "props": {
+                          "Label": "Another code"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 134
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:82259",
+                        "name": "Action / Challenge a friend",
+                        "w": 195,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Secondary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:18",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=link",
+                          "Show icon": true,
+                          "Label": "Challenge a friend"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 195
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:82260",
+                        "name": "Action / Today’s word",
+                        "w": 158,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Quiet",
+                          "State": "Default"
+                        },
+                        "componentId": "4:21",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=back",
+                          "Show icon": true,
+                          "Label": "Today’s code"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 158
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:82261",
+                "name": "Table panel",
+                "w": 944,
+                "h": 602,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:82411",
+                    "name": "Your board",
+                    "w": 268,
+                    "h": 552,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Code board",
+                    "variant": {
+                      "Size": "Compact"
+                    },
+                    "componentId": "162:62606",
+                    "overrides": [
+                      {
+                        "path": "Guess 1 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "0",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "2",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 1 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "3",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "8",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "5",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "2",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 2 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "0",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "4",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "9",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 3 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "7",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "6",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "8",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "9",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 4 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "3",
+                          "State": "Guessed",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 1",
+                        "componentProperties": {
+                          "Digit": "6",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 2",
+                        "componentProperties": {
+                          "Digit": "1",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 3",
+                        "componentProperties": {
+                          "Digit": "9",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      },
+                      {
+                        "path": "Guess 5 / Digits / Digit 4",
+                        "componentProperties": {
+                          "Digit": "5",
+                          "State": "Cracked",
+                          "Size": "Compact"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:82263",
+            "name": "Run sidebar",
+            "w": 344,
+            "h": 463,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:82264",
+                "name": "Challenge a friend",
+                "w": 344,
+                "h": 463,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "They get this same code and try to crack it in fewer than 5 guesses. They see your pegs, not your digits.",
+                  "Title": "Challenge a friend"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 463,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:82264;35:13441;162:82269",
+                      "name": "Your marks",
+                      "w": 76,
+                      "h": 196,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Code marks board",
+                      "componentId": "162:69758"
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "I162:82264;35:13441;162:82270",
+                      "name": "Action / Copy challenge link",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Secondary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:18",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=link",
+                        "Show icon": true,
+                        "Label": "Copy challenge link"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "primaryAxisSizingMode": "FIXED",
+                          "width": 278
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:82265",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:82266",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:82267",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

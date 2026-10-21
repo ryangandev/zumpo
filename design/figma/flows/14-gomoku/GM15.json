@@ -1,0 +1,2528 @@
+{
+  "format": 1,
+  "code": "GM15",
+  "title": "Room · a draw",
+  "id": "162:94526",
+  "section": "14 / Gomoku / complete flow",
+  "reviewNotes": [
+    "GM15 · Rare but possible: all 225 points filled with no five is a draw and gives nobody a point. Leo played Black in game 3; H15 was the last stone."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:94526",
+    "name": "GM15 / Room · a draw",
+    "x": 3120,
+    "y": 4155,
+    "w": 1440,
+    "h": 1142,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:94527",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Gomoku"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Game over",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Lime"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:94528",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 972,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:94529",
+            "name": "Board stage",
+            "w": 944,
+            "h": 972,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:94530",
+                "name": "Final scores",
+                "w": 944,
+                "h": 342,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/40",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:94531",
+                    "name": "Result heading",
+                    "w": 475,
+                    "h": 75,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/8",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "162:94532",
+                        "name": "Heading",
+                        "w": 437,
+                        "h": 42,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "A draw: the board is full.",
+                        "textStyle": "Zumpo/Title",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:94533",
+                        "name": "Summary",
+                        "w": 475,
+                        "h": 25,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "225 stones and nobody made five. Next game, Maya plays Black.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:94534",
+                    "name": "Ranking",
+                    "w": 862,
+                    "h": 112,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/8",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:94535",
+                        "name": "Place 1",
+                        "w": 862,
+                        "h": 52,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/16",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:94536",
+                            "name": "Place",
+                            "w": 24,
+                            "h": 24,
+                            "hSize": "hug",
+                            "text": "1",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ],
+                            "alignH": "center",
+                            "autoResize": "height"
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:94537",
+                            "name": "Rank / Maya",
+                            "w": 822,
+                            "h": 52,
+                            "wSize": "fill",
+                            "component": "Zumpo/Player row",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "26:10577",
+                            "props": {
+                              "Status icon": false,
+                              "Status": "Draw",
+                              "Host": true,
+                              "Score": "1"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 52,
+                                "width": 822
+                              },
+                              {
+                                "path": "Avatar",
+                                "componentProperties": {
+                                  "Initials": "MA",
+                                  "Tone": "Peach"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:94538",
+                        "name": "Place 2",
+                        "w": 862,
+                        "h": 52,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/16",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:94539",
+                            "name": "Place",
+                            "w": 24,
+                            "h": 24,
+                            "hSize": "hug",
+                            "text": "1",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ],
+                            "alignH": "center",
+                            "autoResize": "height"
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:94540",
+                            "name": "Rank / Leo",
+                            "w": 822,
+                            "h": 52,
+                            "wSize": "fill",
+                            "component": "Zumpo/Player row",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "26:10577",
+                            "props": {
+                              "Status icon": false,
+                              "Status": "Draw",
+                              "You": true,
+                              "Score": "1",
+                              "Name": "Leo"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 52,
+                                "width": 822
+                              },
+                              {
+                                "path": "Avatar",
+                                "componentProperties": {
+                                  "Initials": "LE",
+                                  "Tone": "Lime"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:94541",
+                        "name": "Place 3",
+                        "visible": false,
+                        "w": 862,
+                        "h": 52,
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/16",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:94542",
+                            "name": "Place",
+                            "w": 24,
+                            "h": 24,
+                            "hSize": "hug",
+                            "text": "3",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ],
+                            "alignH": "center",
+                            "autoResize": "height"
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:94543",
+                            "name": "Rank / Leo",
+                            "w": 822,
+                            "h": 52,
+                            "wSize": "fill",
+                            "component": "Zumpo/Player row",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "26:10577",
+                            "props": {
+                              "Status icon": false,
+                              "Status": "Out in round 8",
+                              "Score": "0",
+                              "Name": "Leo"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 52,
+                                "width": 822
+                              },
+                              {
+                                "path": "Avatar",
+                                "componentProperties": {
+                                  "Initials": "LE",
+                                  "Tone": "Lime"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:94544",
+                        "name": "Place 4",
+                        "visible": false,
+                        "w": 862,
+                        "h": 52,
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/16",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "162:94545",
+                            "name": "Place",
+                            "w": 24,
+                            "h": 24,
+                            "hSize": "hug",
+                            "text": "4",
+                            "textStyle": "Zumpo/Number",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ],
+                            "alignH": "center",
+                            "autoResize": "height"
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:94546",
+                            "name": "Rank / Ryan",
+                            "w": 822,
+                            "h": 52,
+                            "wSize": "fill",
+                            "component": "Zumpo/Player row",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "26:10577",
+                            "props": {
+                              "Status icon": false,
+                              "Status": "Out in round 6",
+                              "Score": "0",
+                              "Name": "Ryan"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 52,
+                                "width": 822
+                              },
+                              {
+                                "path": "Avatar",
+                                "componentProperties": {
+                                  "Initials": "RG",
+                                  "Tone": "Blue"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "162:94547",
+                    "name": "Waiting for host",
+                    "w": 321,
+                    "h": 25,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "162:94548",
+                        "name": "Zumpo/Icon",
+                        "w": 20,
+                        "h": 20,
+                        "component": "Zumpo/Icon",
+                        "variant": {
+                          "Glyph": "pending"
+                        },
+                        "componentId": "24:5002",
+                        "overrides": [
+                          {
+                            "path": "pending",
+                            "strokes": [
+                              "$Zumpo · UI:color/muted"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "162:94549",
+                        "w": 293,
+                        "h": 25,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Waiting for Maya to start another game.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:94550",
+                "name": "Table panel",
+                "w": 944,
+                "h": 614,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:94952",
+                    "name": "Game",
+                    "w": 894,
+                    "h": 564,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/24",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:94659",
+                        "name": "Board",
+                        "w": 564,
+                        "h": 564,
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:94660",
+                            "name": "Zumpo/Gomoku board",
+                            "x": 0,
+                            "y": 0,
+                            "w": 564,
+                            "h": 564,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Gomoku board",
+                            "variant": {
+                              "Layout": "Desktop"
+                            },
+                            "componentId": "162:62901"
+                          },
+                          {
+                            "type": "GRID",
+                            "rows": 15,
+                            "cols": 15,
+                            "count": 225,
+                            "kind": "Zumpo/Stone",
+                            "firstId": "162:94697",
+                            "pitch": [
+                              36,
+                              36
+                            ],
+                            "cell": {
+                              "type": "INSTANCE",
+                              "name": "Stone A15",
+                              "w": "$Zumpo · UI:space/32",
+                              "h": "$Zumpo · UI:space/32",
+                              "component": "Zumpo/Stone",
+                              "variant": {
+                                "Color": "Black",
+                                "Mark": "None",
+                                "State": "Placed",
+                                "Size": "Regular"
+                              },
+                              "componentId": "162:62874"
+                            },
+                            "special": [
+                              {
+                                "r": 0,
+                                "c": 1,
+                                "id": "162:94698",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 2,
+                                "id": "162:94699",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 6,
+                                "id": "162:94703",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 7,
+                                "id": "162:94704",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Last",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62875",
+                                "name": "Stone H15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 9,
+                                "id": "162:94707",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 11,
+                                "id": "162:94709",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 12,
+                                "id": "162:94710",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M15"
+                              },
+                              {
+                                "r": 0,
+                                "c": 14,
+                                "id": "162:94712",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O15"
+                              },
+                              {
+                                "r": 1,
+                                "c": 0,
+                                "id": "162:94713",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 1,
+                                "id": "162:94714",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 5,
+                                "id": "162:94718",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 8,
+                                "id": "162:94721",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 9,
+                                "id": "162:94722",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 10,
+                                "id": "162:94723",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K14"
+                              },
+                              {
+                                "r": 1,
+                                "c": 13,
+                                "id": "162:94726",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N14"
+                              },
+                              {
+                                "r": 2,
+                                "c": 0,
+                                "id": "162:94728",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 2,
+                                "id": "162:94730",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 3,
+                                "id": "162:94731",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 5,
+                                "id": "162:94733",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 10,
+                                "id": "162:94738",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 11,
+                                "id": "162:94739",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L13"
+                              },
+                              {
+                                "r": 2,
+                                "c": 12,
+                                "id": "162:94740",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M13"
+                              },
+                              {
+                                "r": 3,
+                                "c": 0,
+                                "id": "162:94743",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 1,
+                                "id": "162:94744",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 5,
+                                "id": "162:94748",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 7,
+                                "id": "162:94750",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 8,
+                                "id": "162:94751",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 9,
+                                "id": "162:94752",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 12,
+                                "id": "162:94755",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M12"
+                              },
+                              {
+                                "r": 3,
+                                "c": 13,
+                                "id": "162:94756",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N12"
+                              },
+                              {
+                                "r": 4,
+                                "c": 2,
+                                "id": "162:94760",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 3,
+                                "id": "162:94761",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 4,
+                                "id": "162:94762",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 6,
+                                "id": "162:94764",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 10,
+                                "id": "162:94768",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 14,
+                                "id": "162:94772",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O11"
+                              },
+                              {
+                                "r": 5,
+                                "c": 2,
+                                "id": "162:94775",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 4,
+                                "id": "162:94777",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 6,
+                                "id": "162:94779",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 7,
+                                "id": "162:94780",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 8,
+                                "id": "162:94781",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 11,
+                                "id": "162:94784",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L10"
+                              },
+                              {
+                                "r": 5,
+                                "c": 14,
+                                "id": "162:94787",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O10"
+                              },
+                              {
+                                "r": 6,
+                                "c": 0,
+                                "id": "162:94788",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 3,
+                                "id": "162:94791",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 7,
+                                "id": "162:94795",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 8,
+                                "id": "162:94796",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 10,
+                                "id": "162:94798",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 11,
+                                "id": "162:94799",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L9"
+                              },
+                              {
+                                "r": 6,
+                                "c": 13,
+                                "id": "162:94801",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N9"
+                              },
+                              {
+                                "r": 7,
+                                "c": 0,
+                                "id": "162:94803",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 3,
+                                "id": "162:94806",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 4,
+                                "id": "162:94807",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 6,
+                                "id": "162:94809",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 8,
+                                "id": "162:94811",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 10,
+                                "id": "162:94813",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 12,
+                                "id": "162:94815",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M8"
+                              },
+                              {
+                                "r": 7,
+                                "c": 13,
+                                "id": "162:94816",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N8"
+                              },
+                              {
+                                "r": 8,
+                                "c": 1,
+                                "id": "162:94819",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 3,
+                                "id": "162:94821",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 4,
+                                "id": "162:94822",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 5,
+                                "id": "162:94823",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 6,
+                                "id": "162:94824",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 8,
+                                "id": "162:94826",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 9,
+                                "id": "162:94827",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 11,
+                                "id": "162:94829",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 12,
+                                "id": "162:94830",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 13,
+                                "id": "162:94831",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N7"
+                              },
+                              {
+                                "r": 8,
+                                "c": 14,
+                                "id": "162:94832",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O7"
+                              },
+                              {
+                                "r": 9,
+                                "c": 0,
+                                "id": "162:94833",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 2,
+                                "id": "162:94835",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 3,
+                                "id": "162:94836",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 5,
+                                "id": "162:94838",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 7,
+                                "id": "162:94840",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 9,
+                                "id": "162:94842",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 11,
+                                "id": "162:94844",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L6"
+                              },
+                              {
+                                "r": 9,
+                                "c": 14,
+                                "id": "162:94847",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O6"
+                              },
+                              {
+                                "r": 10,
+                                "c": 0,
+                                "id": "162:94848",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 1,
+                                "id": "162:94849",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 2,
+                                "id": "162:94850",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 5,
+                                "id": "162:94853",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 6,
+                                "id": "162:94854",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 9,
+                                "id": "162:94857",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 10,
+                                "id": "162:94858",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K5"
+                              },
+                              {
+                                "r": 10,
+                                "c": 12,
+                                "id": "162:94860",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M5"
+                              },
+                              {
+                                "r": 11,
+                                "c": 1,
+                                "id": "162:94864",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 3,
+                                "id": "162:94866",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 8,
+                                "id": "162:94871",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 10,
+                                "id": "162:94873",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 12,
+                                "id": "162:94875",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 13,
+                                "id": "162:94876",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone N4"
+                              },
+                              {
+                                "r": 11,
+                                "c": 14,
+                                "id": "162:94877",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O4"
+                              },
+                              {
+                                "r": 12,
+                                "c": 1,
+                                "id": "162:94879",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone B3"
+                              },
+                              {
+                                "r": 12,
+                                "c": 5,
+                                "id": "162:94883",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F3"
+                              },
+                              {
+                                "r": 12,
+                                "c": 8,
+                                "id": "162:94886",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I3"
+                              },
+                              {
+                                "r": 12,
+                                "c": 9,
+                                "id": "162:94887",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J3"
+                              },
+                              {
+                                "r": 12,
+                                "c": 10,
+                                "id": "162:94888",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone K3"
+                              },
+                              {
+                                "r": 13,
+                                "c": 3,
+                                "id": "162:94896",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone D2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 4,
+                                "id": "162:94897",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 5,
+                                "id": "162:94898",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 7,
+                                "id": "162:94900",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 8,
+                                "id": "162:94901",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 11,
+                                "id": "162:94904",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone L2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 12,
+                                "id": "162:94905",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M2"
+                              },
+                              {
+                                "r": 13,
+                                "c": 14,
+                                "id": "162:94907",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O2"
+                              },
+                              {
+                                "r": 14,
+                                "c": 0,
+                                "id": "162:94908",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone A1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 2,
+                                "id": "162:94910",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone C1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 4,
+                                "id": "162:94912",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 5,
+                                "id": "162:94913",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 6,
+                                "id": "162:94914",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 9,
+                                "id": "162:94917",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 12,
+                                "id": "162:94920",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone M1"
+                              },
+                              {
+                                "r": 14,
+                                "c": 14,
+                                "id": "162:94922",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone O1"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:94953",
+                        "name": "Side",
+                        "w": 306,
+                        "h": 564,
+                        "wSize": "fill",
+                        "hSize": "fill",
+                        "layout": {
+                          "mode": "column",
+                          "justify": "space_between",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:94954",
+                            "name": "Seats",
+                            "w": 306,
+                            "h": 154,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "column",
+                              "gap": "$Zumpo · UI:space/12",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:94923",
+                                "name": "Seat / Leo",
+                                "w": 306,
+                                "h": 76,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "Black",
+                                  "State": "Default"
+                                },
+                                "componentId": "162:63045",
+                                "props": {
+                                  "You": true,
+                                  "Detail": "Black · draw",
+                                  "Name": "Leo"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 76,
+                                    "width": 306
+                                  },
+                                  {
+                                    "path": "Player / Avatar",
+                                    "componentProperties": {
+                                      "Initials": "LE",
+                                      "Tone": "Lime"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:94938",
+                                "name": "Seat / Maya",
+                                "w": 306,
+                                "h": 66,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "White",
+                                  "State": "Default"
+                                },
+                                "componentId": "162:63087",
+                                "props": {
+                                  "Detail": "White · draw"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 66,
+                                    "width": 306
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:94563",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 664,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:94564",
+                "name": "Zumpo/Scoreboard",
+                "w": 344,
+                "h": 192,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 192,
+                    "width": 344
+                  },
+                  {
+                    "path": "Heading / Count",
+                    "characters": "2 / 2"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": true,
+                      "You": false,
+                      "Score": "1",
+                      "Icon": "24:5053",
+                      "Name": "Maya",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": false,
+                      "You": true,
+                      "Score": "1",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": false,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": false,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:95158",
+                "name": "Watching",
+                "w": 344,
+                "h": 192,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 192,
+                    "width": 344
+                  },
+                  {
+                    "path": "Heading / Title",
+                    "characters": "Watching"
+                  },
+                  {
+                    "path": "Heading / Count",
+                    "characters": "2 / 5"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:5053",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": false,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "24:5053",
+                      "Name": "Leo",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Waiting",
+                      "Host": false,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "24:5053",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:94565",
+                "name": "Zumpo/Chat",
+                "w": 344,
+                "h": 232,
+                "hSize": "hug",
+                "component": "Zumpo/Chat",
+                "componentId": "9:334",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 232,
+                    "width": 344
+                  },
+                  {
+                    "path": "Messages / Message 1",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Name": "System",
+                      "Message": "The board is full: game 3 is a draw.",
+                      "Kind": "System"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 2",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "that took a while",
+                      "Name": "Maya",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 3",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "one more",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "gg",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Messages / Message 5",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "rematch?",
+                      "Name": "Sam",
+                      "Kind": "Player"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Messages / Message 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Chat input",
+                    "componentProperties": {
+                      "Placeholder": "Say something…",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:94566",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:94567",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:94568",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

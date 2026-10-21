@@ -1,0 +1,1160 @@
+{
+  "format": 1,
+  "code": "GM12",
+  "title": "Room · resign?",
+  "id": "162:92781",
+  "section": "14 / Gomoku / complete flow",
+  "reviewNotes": [
+    "GM12 · Resign asks first, over the room. Resign is Danger and ends the game at once as a win for the other player; Keep playing closes it. The clock keeps running behind the dialog."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:92781",
+    "name": "GM12 / Room · resign?",
+    "x": 4660,
+    "y": 3003,
+    "w": 1440,
+    "h": 892,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:92782",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Gomoku"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Game 2",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Lime"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:92783",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 722,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "162:92784",
+            "name": "Board stage",
+            "w": 944,
+            "h": 722,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:92785",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "Maya played D10",
+                  "Label": "Your turn",
+                  "Main": "Place a white stone",
+                  "Category": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Label": "to move",
+                      "Time": "00:24",
+                      "Tone": "Running"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "162:92786",
+                "name": "Table panel",
+                "w": 944,
+                "h": 614,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "162:92953",
+                    "name": "Game",
+                    "w": 894,
+                    "h": 564,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/24",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "162:92860",
+                        "name": "Board",
+                        "w": 564,
+                        "h": 564,
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "162:92861",
+                            "name": "Zumpo/Gomoku board",
+                            "x": 0,
+                            "y": 0,
+                            "w": 564,
+                            "h": 564,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Gomoku board",
+                            "variant": {
+                              "Layout": "Desktop"
+                            },
+                            "componentId": "162:62901"
+                          },
+                          {
+                            "type": "GRID",
+                            "rows": 6,
+                            "cols": 7,
+                            "count": 19,
+                            "kind": "Zumpo/Stone",
+                            "firstId": "162:92898",
+                            "pitch": [
+                              36,
+                              36
+                            ],
+                            "holes": 23,
+                            "cell": {
+                              "type": "INSTANCE",
+                              "name": "Stone H8",
+                              "w": "$Zumpo · UI:space/32",
+                              "h": "$Zumpo · UI:space/32",
+                              "component": "Zumpo/Stone",
+                              "variant": {
+                                "Color": "Black",
+                                "Mark": "None",
+                                "State": "Placed",
+                                "Size": "Regular"
+                              },
+                              "componentId": "162:62874"
+                            },
+                            "special": [
+                              {
+                                "r": 2,
+                                "c": 5,
+                                "id": "162:92899",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I9"
+                              },
+                              {
+                                "r": 4,
+                                "c": 5,
+                                "id": "162:92901",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone I7"
+                              },
+                              {
+                                "r": 5,
+                                "c": 2,
+                                "id": "162:92903",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone F6"
+                              },
+                              {
+                                "r": 3,
+                                "c": 6,
+                                "id": "162:92905",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone J8"
+                              },
+                              {
+                                "r": 5,
+                                "c": 3,
+                                "id": "162:92907",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G6"
+                              },
+                              {
+                                "r": 0,
+                                "c": 3,
+                                "id": "162:92909",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone G11"
+                              },
+                              {
+                                "r": 4,
+                                "c": 4,
+                                "id": "162:92911",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H7"
+                              },
+                              {
+                                "r": 3,
+                                "c": 1,
+                                "id": "162:92913",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone E8"
+                              },
+                              {
+                                "r": 2,
+                                "c": 4,
+                                "id": "162:92915",
+                                "variant": {
+                                  "Color": "White",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62879",
+                                "name": "Stone H9"
+                              },
+                              {
+                                "r": 1,
+                                "c": 0,
+                                "id": "162:92916",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Last",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62875",
+                                "name": "Stone D10"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "162:92954",
+                        "name": "Side",
+                        "w": 306,
+                        "h": 564,
+                        "wSize": "fill",
+                        "hSize": "fill",
+                        "layout": {
+                          "mode": "column",
+                          "justify": "space_between",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "162:92955",
+                            "name": "Seats",
+                            "w": 306,
+                            "h": 156,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "column",
+                              "gap": "$Zumpo · UI:space/12",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:92918",
+                                "name": "Seat / Maya",
+                                "w": 306,
+                                "h": 66,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "Black",
+                                  "State": "Default"
+                                },
+                                "componentId": "162:63045",
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 66,
+                                    "width": 306
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:92932",
+                                "name": "Seat / Leo",
+                                "w": 306,
+                                "h": 78,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "White",
+                                  "State": "Turn"
+                                },
+                                "componentId": "162:63101",
+                                "props": {
+                                  "You": true,
+                                  "Detail": "White · your turn",
+                                  "Name": "Leo"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 78,
+                                    "width": 306
+                                  },
+                                  {
+                                    "path": "Player / Avatar",
+                                    "componentProperties": {
+                                      "Initials": "LE",
+                                      "Tone": "Lime"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "162:92956",
+                            "name": "Actions",
+                            "w": 306,
+                            "h": 48,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "column",
+                              "gap": "$Zumpo · UI:space/12",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "162:92947",
+                                "name": "Action / Resign",
+                                "w": 88,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
+                                "variant": {
+                                  "Style": "Secondary",
+                                  "State": "Default"
+                                },
+                                "componentId": "4:18",
+                                "props": {
+                                  "Label": "Resign"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 88
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:92801",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 701,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:92802",
+                "name": "Zumpo/Scoreboard",
+                "w": 344,
+                "h": 192,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 192,
+                    "width": 344
+                  },
+                  {
+                    "path": "Heading / Count",
+                    "characters": "2 / 2"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Black",
+                      "Host": true,
+                      "You": false,
+                      "Score": "0",
+                      "Icon": "24:4994",
+                      "Name": "Maya",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Icon": "24:4994",
+                      "Status icon": false,
+                      "You": true,
+                      "Name": "Leo",
+                      "Status": "White · your turn",
+                      "Host": false,
+                      "Score": "1",
+                      "State": "Highlight"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "LE",
+                      "Tone": "Lime"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Up next",
+                      "Host": false,
+                      "You": true,
+                      "Score": "2",
+                      "Icon": "24:5071",
+                      "Name": "Sam",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Bid four 5s",
+                      "Host": false,
+                      "You": false,
+                      "Score": "2",
+                      "Icon": "24:4994",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:93158",
+                "name": "Watching",
+                "w": 344,
+                "h": 192,
+                "hSize": "hug",
+                "component": "Zumpo/Scoreboard",
+                "componentId": "9:320",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 192,
+                    "width": 344
+                  },
+                  {
+                    "path": "Heading / Title",
+                    "characters": "Watching"
+                  },
+                  {
+                    "path": "Heading / Count",
+                    "characters": "2 / 5"
+                  },
+                  {
+                    "path": "Player 1",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:4994",
+                      "Name": "Sam",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 1 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2",
+                    "componentProperties": {
+                      "Show score": false,
+                      "Status icon": false,
+                      "Status": "Watching",
+                      "Host": false,
+                      "You": false,
+                      "Score": "",
+                      "Icon": "24:4994",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 2 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Up next",
+                      "Host": false,
+                      "You": true,
+                      "Score": "2",
+                      "Icon": "24:5071",
+                      "Name": "Sam",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 3 / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 3 / Details / Status line / Status icon / mine",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4",
+                    "componentProperties": {
+                      "Show score": true,
+                      "Status icon": false,
+                      "Status": "Bid four 5s",
+                      "Host": false,
+                      "You": false,
+                      "Score": "2",
+                      "Icon": "24:4994",
+                      "Name": "Ryan",
+                      "State": "Default"
+                    },
+                    "visible": false
+                  },
+                  {
+                    "path": "Player 4 / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "path": "Player 4 / Details / Status line / Status icon / check",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:92803",
+                "name": "Zumpo/Chat",
+                "w": 344,
+                "h": 269,
+                "hSize": "hug",
+                "component": "Zumpo/Chat",
+                "componentId": "9:334",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 269,
+                    "width": 344
+                  },
+                  {
+                    "path": "Messages / Message 1",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Name": "System",
+                      "Message": "Leo won game 1: five in a row.",
+                      "Kind": "System"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 2",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "rematch!",
+                      "Name": "Leo",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 3",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "go Maya",
+                      "Name": "Sam",
+                      "Kind": "Player"
+                    }
+                  },
+                  {
+                    "path": "Messages / Message 4",
+                    "componentProperties": {
+                      "Alert icon": "24:4999",
+                      "Message": "you’re on",
+                      "Name": "Maya",
+                      "Kind": "Player"
+                    },
+                    "visible": true
+                  },
+                  {
+                    "path": "Messages / Message 5",
+                    "visible": false
+                  },
+                  {
+                    "path": "Messages / Message 6",
+                    "visible": false
+                  },
+                  {
+                    "path": "Chat input",
+                    "componentProperties": {
+                      "Placeholder": "Say something…",
+                      "State": "Default"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:92804",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:92805",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "162:92806",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RECTANGLE",
+        "id": "162:93350",
+        "name": "Scrim",
+        "x": 0,
+        "y": 0,
+        "absolute": true,
+        "w": 1440,
+        "h": 892,
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:93351",
+        "name": "Dialog / Resign",
+        "x": 440,
+        "y": 325,
+        "absolute": true,
+        "w": 560,
+        "h": 242,
+        "hSize": "hug",
+        "component": "Zumpo/Card",
+        "variant": {
+          "Kind": "Dialog"
+        },
+        "componentId": "35:13434",
+        "props": {
+          "Description": "Maya wins game 2 and takes the point. You keep your seat for the next game.",
+          "Title": "Resign this game?"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 242,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 560
+          }
+        ],
+        "slots": {
+          "Content": [
+            {
+              "type": "FRAME",
+              "id": "I162:93351;35:13437;162:93353",
+              "name": "Actions",
+              "w": 496,
+              "h": 48,
+              "hSize": "hug",
+              "layout": {
+                "mode": "row",
+                "gap": "$Zumpo · UI:space/12",
+                "align": "center",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:93351;35:13437;162:93354",
+                  "name": "Action / Resign",
+                  "w": 86,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Danger",
+                    "State": "Default"
+                  },
+                  "componentId": "24:5351",
+                  "props": {
+                    "Label": "Resign"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 86
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I162:93351;35:13437;162:93355",
+                  "name": "Action / Keep playing",
+                  "w": 130,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Secondary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:18",
+                  "props": {
+                    "Label": "Keep playing"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 130
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

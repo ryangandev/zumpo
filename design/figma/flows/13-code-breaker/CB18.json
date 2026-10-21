@@ -1,0 +1,369 @@
+{
+  "format": 1,
+  "code": "CB18",
+  "title": "Phone · room board",
+  "id": "162:108356",
+  "section": "13 / Code Breaker / complete flow",
+  "reviewNotes": [
+    "CB18 · CB09 at 390 px: your board and the pad on the Board tab; the others and the scores are on Players, and chat on Chat. A cracked or missed board drops the pad, as on desktop."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "162:108356",
+    "name": "CB18 / Phone · room board",
+    "x": 4590,
+    "y": 4350,
+    "w": 390,
+    "h": 1166,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "162:108357",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 68,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Game": "Code Breaker"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room context / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Maya’s room",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Room context / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Code 2 of 3",
+              "Tone": "Blue"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:108358",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "162:108359",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 144,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Main": "Crack the code",
+          "Category": false,
+          "Meta": "Maya cracked it",
+          "Label": "Code 2 of 3"
+        },
+        "overrides": [
+          {
+            "path": "Top / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Label": "to guess",
+              "Time": "01:42",
+              "Tone": "Running"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:108360",
+        "name": "Table",
+        "w": 350,
+        "h": 754,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/20",
+          "pad": [
+            "$Zumpo · UI:space/8",
+            0
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "162:108531",
+            "name": "Your board",
+            "w": 268,
+            "h": 552,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62606",
+            "overrides": [
+              {
+                "path": "Guess 1 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "2",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "5",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "2",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "6",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "4",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "162:108677",
+            "name": "Digit pad",
+            "w": 358,
+            "h": 166,
+            "hSize": "hug",
+            "component": "Zumpo/Digit pad",
+            "variant": {
+              "Layout": "Phone"
+            },
+            "componentId": "162:63009",
+            "overrides": [
+              {
+                "path": "Row 1 / Key 1",
+                "componentProperties": {
+                  "Letter": "1",
+                  "Kind": "Letter",
+                  "State": "Absent",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              },
+              {
+                "path": "Row 1 / Key 3",
+                "componentProperties": {
+                  "Letter": "3",
+                  "Kind": "Letter",
+                  "State": "Correct",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              },
+              {
+                "path": "Row 1 / Key 5",
+                "componentProperties": {
+                  "Letter": "5",
+                  "Kind": "Letter",
+                  "State": "Absent",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "162:108363",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "162:108364",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      }
+    ]
+  }
+}
