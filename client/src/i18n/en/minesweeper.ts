@@ -116,7 +116,7 @@ export const minesweeper = {
       `Your best on ${SIZES[difficulty]} is ${previous}.`,
     minesLeft: (count: number) =>
       `${count < 0 ? `−${-count}` : count} ${Math.abs(count) === 1 ? 'mine' : 'mines'} left`,
-    runTime: 'run time',
+    runTime: 'Time',
     hitMine: 'You hit a mine',
     allClear: 'Every safe cell is open',
     minesFlagged: (mines: number) => `All ${mines} mines are flagged for you`,

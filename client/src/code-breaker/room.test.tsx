@@ -315,7 +315,7 @@ describe('a Code Breaker room', () => {
     expect(
       screen.getByRole('group', { name: 'Maya’s board' }),
     ).toBeInTheDocument();
-    await user.click(screen.getByRole('tab', { name: 'Board' }));
+    await user.click(screen.getByRole('tab', { name: 'Game' }));
     expect(
       screen.getByRole('button', { name: '9, noted out of the code' }),
     ).toBeInTheDocument();

@@ -150,9 +150,9 @@ function RunView({
         stage={
           <>
             <TurnBar
-              label={m.make24.hand(RUN_HANDS, RUN_HANDS)}
+              label={m.make24.solo.thisRun}
               kind="status"
-              main={m.make24.solo.solvedOf(solved, RUN_HANDS)}
+              main={m.make24.solo.tenHands}
               countdown={{
                 seconds: Math.floor(timeMs / 1000),
                 label: m.make24.solo.runTime,
@@ -166,7 +166,7 @@ function RunView({
         }
         result={
           <SoloResult
-            title={m.make24.solo.finishedIn(RUN_HANDS, time)}
+            title={m.make24.solo.runResult(solved, RUN_HANDS, time)}
             body={finishBody(finish, m)}
             stats={[
               {

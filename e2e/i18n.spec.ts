@@ -75,7 +75,7 @@ test('a Chinese phone visitor can change language with the keyboard and create a
   await expect(
     phone.getByRole('button', { name: '离开房间', exact: true }),
   ).toBeVisible();
-  await expect(phone.getByRole('tab', { name: /^棋盘/ })).toBeVisible();
+  await expect(phone.getByRole('tab', { name: /^游戏/ })).toBeVisible();
   await phone.getByRole('tab', { name: '聊天', exact: true }).click();
   await expect(
     phone.getByText('小雨 创建了房间。', { exact: true }),

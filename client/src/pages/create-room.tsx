@@ -13,6 +13,7 @@ import { ConnectionLost } from '../shell/connection-lost';
 import { FormPage } from '../shell/form-page';
 import { Page } from '../shell/page';
 import { PageHeading } from '../shell/page-heading';
+import { usePageTitle } from '../shell/use-page-title';
 import { Stage } from '../shell/stage';
 import { StatusLine } from '../shell/status-line';
 import styles from './create-room.module.css';
@@ -32,6 +33,7 @@ export default function CreateRoomPage({ gameType }: { gameType: GameType }) {
   const game = gameInfo(gameType);
   const m = useMessages();
   const text = m.games.of[gameType];
+  usePageTitle(m.createRoom.title(text.name));
   const { socket, lost, name } = useConnectedSession();
   const navigate = useNavigate();
 

@@ -4,6 +4,7 @@ import { Button, Card } from '../ui';
 import { useMessages } from '../i18n';
 import { Page } from '../shell/page';
 import { Stage } from '../shell/stage';
+import { usePageTitle } from '../shell/use-page-title';
 
 /**
  * What a page that threw shows in its place: a way back in rather than a blank
@@ -13,6 +14,7 @@ import { Stage } from '../shell/stage';
 export default function CrashedPage() {
   const m = useMessages().shell.crashed;
   const error = useRouteError();
+  usePageTitle(m.title);
   useEffect(() => {
     console.error(error);
   }, [error]);

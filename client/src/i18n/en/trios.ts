@@ -32,7 +32,7 @@ export const trios = {
   chat: 'Say something…',
   you: 'you',
   by: (name: string) => `by ${name}`,
-  resultDetail: (count: number) => `${plural(count, 'trio')}.`,
+  resultDetail: (count: number) => `${plural(count, 'trio')} found.`,
   alone: 'Better with company.',
   setup: (players: number, count: number) =>
     `${plural(players, 'player')}, ${plural(count, 'trio')}. Everybody looks at the same twelve cards; the first to pick a trio takes it.`,
@@ -78,7 +78,7 @@ export const trios = {
     wrongPicks: 'Wrong picks',
     hints: 'Hints',
     fastest: 'Fastest trio',
-    none: 'None',
+    none: 'Not yet',
     best: 'Best on this device',
     challenge: (time: string) =>
       `They get this same deal and try to beat ${time}.`,
@@ -86,7 +86,7 @@ export const trios = {
     hintButton: 'Hint, +10 s',
     thisRun: 'This run',
     tenTrios: 'Ten trios',
-    runTime: 'run time',
+    runTime: 'Time',
     trio: 'A trio!',
     foundIn: (time: string) => `Found in ${time}`,
     wrong: 'Not a trio, +5 s',

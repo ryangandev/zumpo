@@ -48,7 +48,7 @@ export const snap: typeof en = {
   waitingRoom: '等待室',
   chat: '聊点什么…',
   you: '你',
-  resultDetail: (count) => `${count} 张牌。`,
+  resultDetail: (count) => `共抢到 ${count} 张牌。`,
   alone: '叫上好友更好玩。',
   setup: (players, cards) =>
     `${players} 人，${cards} 张牌可抢。大家比谁先找到自己的牌和中间那张牌共有的图案。`,
@@ -87,7 +87,7 @@ export const snap: typeof en = {
     wrongTaps: '点错次数',
     fastest: '最快一张',
     slowest: '最慢一张',
-    none: '无',
+    none: '暂无',
     best: '本机最佳成绩',
     challenge: (time) => `好友会拿到同一副牌，试着打破 ${time} 的成绩。`,
     progress: (count, total) => `第 ${count} / ${total} 张`,

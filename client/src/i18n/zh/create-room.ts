@@ -24,7 +24,7 @@ export const createRoom: typeof en = {
   diceEach: '每人骰子数',
   diceCount: (count) => `${count} 颗骰子`,
   diceDetail: (count) =>
-    count === 3 ? '快速局，也是常用玩法。' : '经典局：时间更长，适合 2–4 人。',
+    count === 3 ? '快速局，也是默认设置。' : '经典局：时间更长，适合 2–4 人。',
   board: '棋盘',
   boardName: (board) => ({ Small: '小', Medium: '中', Large: '大' })[board],
   minesweeperDetail: (board) => {

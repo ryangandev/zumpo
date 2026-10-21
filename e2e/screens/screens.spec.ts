@@ -618,7 +618,7 @@ test('a Draw & Guess game', async ({ player }) => {
       await shot(leo!.page, 'MO15');
       await leo!.page.getByRole('tab', { name: 'Chat' }).click();
       await shot(leo!.page, 'MO16');
-      await leo!.page.getByRole('tab', { name: 'Board' }).click();
+      await leo!.page.getByRole('tab', { name: 'Game' }).click();
 
       await watcher.page.getByRole('button', { name: 'Leave room' }).click();
       await shot(watcher.page, 'P11');
@@ -924,7 +924,7 @@ test('Make 24 on your own', async ({ player }) => {
     }
   }
   await expect(
-    maya.getByRole('heading', { name: /^10 hands in / }),
+    maya.getByRole('heading', { name: /^Solved 9 of 10 in / }),
   ).toBeVisible();
   await shot(maya, 'T05');
 
@@ -1842,9 +1842,9 @@ async function say(page: Page, text: string, onPhone = false) {
   // Back to the board, whose keys are not heard while the chat has focus.
   await box.blur();
   if (onPhone) {
-    await page.getByRole('tab', { name: 'Board' }).click();
+    await page.getByRole('tab', { name: 'Game' }).click();
     // A thumb on the on-screen keys leaves the tab without a focus ring.
-    await page.getByRole('tab', { name: 'Board' }).blur();
+    await page.getByRole('tab', { name: 'Game' }).blur();
   }
 }
 
@@ -1901,8 +1901,8 @@ test('a Daily Word game', async ({ player }) => {
   await shot(leo, 'DW13');
   await leo.getByRole('tab', { name: /^Players/ }).click();
   await shot(leo, 'DW14');
-  await leo.getByRole('tab', { name: 'Board' }).click();
-  await leo.getByRole('tab', { name: 'Board' }).blur();
+  await leo.getByRole('tab', { name: 'Game' }).click();
+  await leo.getByRole('tab', { name: 'Game' }).blur();
   for (let i = 0; i < 3; i++) await leo.keyboard.press('Backspace');
 
   // Sam finds it in four; Ryan and Leo guess on.
@@ -2215,8 +2215,8 @@ test('a Code Breaker game', async ({ player }) => {
   await shot(leo, 'CB18');
   await leo.getByRole('tab', { name: /^Players/ }).click();
   await shot(leo, 'CB19');
-  await leo.getByRole('tab', { name: 'Board' }).click();
-  await leo.getByRole('tab', { name: 'Board' }).blur();
+  await leo.getByRole('tab', { name: 'Game' }).click();
+  await leo.getByRole('tab', { name: 'Game' }).blur();
   for (let i = 0; i < 2; i++) await leo.keyboard.press('Backspace');
 
   // Sam cracks it in six; Ryan reaches seven guesses and Leo five.

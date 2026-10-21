@@ -180,7 +180,7 @@ test('a phone player draws from the words alone and guesses under the board', as
       await say(maya.page, word);
     } else {
       const word = await drawAWord(maya.page);
-      const board = leo.page.getByRole('tabpanel', { name: 'Board' });
+      const board = leo.page.getByRole('tabpanel', { name: 'Game' });
       await expect(board.getByText(/type your guess/)).toHaveCount(0);
       await expect(board.getByRole('textbox', { name: 'Guess' })).toBeVisible();
       // A wrong guess lands under the board, with the newest lines.

@@ -72,7 +72,7 @@ export const dailyWord = {
   freshPrompt: 'Type a five-letter word, then press Enter.',
   nextPrompt: 'Enter checks the word. Backspace takes a letter back.',
   wordNumber: (puzzle: number) => `Word #${puzzle}`,
-  dailyNumber: (puzzle: number) => `Daily word #${puzzle}`,
+  today: 'Today’s word',
   dailyFresh: 'Six guesses. A new word every day.',
   readIt: 'How to read it',
   shareDaily: (puzzle: number) => `Daily Word #${puzzle}`,

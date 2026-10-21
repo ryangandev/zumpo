@@ -9,6 +9,7 @@ import { ME, minesweeperState } from '../tests/fixtures';
 import { onPhone } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 import { chatLines } from './chat-lines';
+import { usePageTitle } from '../shell/use-page-title';
 import { useTurnTitle } from './use-turn-title';
 
 const joined = (id: number, name: string): ChatMessage => ({
@@ -78,7 +79,7 @@ describe('the phone’s Chat tab', () => {
     await user.click(screen.getByRole('tab', { name: 'Chat, 2 new' }));
     expect(screen.getByRole('tab', { name: 'Chat' })).toBeInTheDocument();
     send(said(5, 'p2', 'seen right away'));
-    await user.click(screen.getByRole('tab', { name: 'Board' }));
+    await user.click(screen.getByRole('tab', { name: 'Game' }));
     expect(screen.getByRole('tab', { name: 'Chat' })).toBeInTheDocument();
 
     // A reconnect brings the whole history back, with what was said while
@@ -105,33 +106,64 @@ const hide = (hidden: boolean) => {
   act(() => document.dispatchEvent(new Event('visibilitychange')));
 };
 
+/** The room page and its game's room, as they sit in the tree. */
+const room = ({ name, turn }: { name: string; turn: boolean }) => {
+  usePageTitle(name, 'Liar’s Dice');
+  useTurnTitle(turn);
+};
+
 describe('the turn title', () => {
   afterEach(() => {
     vi.restoreAllMocks();
-    document.title = 'Zumpo';
   });
 
-  it('says it is the viewer’s turn in a background tab, and gives the title back', () => {
-    document.title = 'Friday table · Zumpo';
-    const { rerender, unmount } = renderHook(({ turn }) => useTurnTitle(turn), {
-      initialProps: { turn: true },
+  it('says it is the viewer’s turn in a background tab, and takes it back', () => {
+    const { rerender, unmount } = renderHook(room, {
+      initialProps: { name: 'Friday table', turn: true },
       wrapper: LocaleProvider,
     });
-    expect(document.title).toBe('Friday table · Zumpo');
+    expect(document.title).toBe('Friday table · Liar’s Dice · Zumpo');
 
     hide(true);
-    expect(document.title).toBe('(!) Your turn · Zumpo');
+    expect(document.title).toBe(
+      '(!) Your turn · Friday table · Liar’s Dice · Zumpo',
+    );
     hide(false);
-    expect(document.title).toBe('Friday table · Zumpo');
+    expect(document.title).toBe('Friday table · Liar’s Dice · Zumpo');
 
     hide(true);
-    rerender({ turn: false });
-    expect(document.title).toBe('Friday table · Zumpo');
+    rerender({ name: 'Friday table', turn: false });
+    expect(document.title).toBe('Friday table · Liar’s Dice · Zumpo');
 
-    // Leaving the room mid-turn, with the tab still hidden, gives it back too.
-    rerender({ turn: true });
-    expect(document.title).toBe('(!) Your turn · Zumpo');
+    // Leaving the room mid-turn, with the tab still hidden, takes it off too.
+    rerender({ name: 'Friday table', turn: true });
+    expect(document.title).toContain('(!) Your turn');
     unmount();
-    expect(document.title).toBe('Friday table · Zumpo');
+    expect(document.title).toBe('Friday table · Liar’s Dice · Zumpo');
+  });
+
+  it('keeps the signal when the room is renamed, and follows the new name', () => {
+    const { rerender } = renderHook(room, {
+      initialProps: { name: 'Friday table', turn: true },
+      wrapper: LocaleProvider,
+    });
+    hide(true);
+    rerender({ name: 'Late table', turn: true });
+    expect(document.title).toBe(
+      '(!) Your turn · Late table · Liar’s Dice · Zumpo',
+    );
+    hide(false);
+    expect(document.title).toBe('Late table · Liar’s Dice · Zumpo');
+  });
+
+  it('shows the signal when the page mounts in an already hidden tab', () => {
+    hide(true);
+    renderHook(room, {
+      initialProps: { name: 'Friday table', turn: true },
+      wrapper: LocaleProvider,
+    });
+    expect(document.title).toBe(
+      '(!) Your turn · Friday table · Liar’s Dice · Zumpo',
+    );
   });
 });
