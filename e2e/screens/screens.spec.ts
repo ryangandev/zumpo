@@ -359,7 +359,12 @@ async function lobbyScreens(
   // Minesweeper's menu is its board, in view; Draw & Guess's is its seats,
   // under More options, as the name left them.
   if (game === 'minesweeper') await maya.reload();
-  await maya.getByLabel(game === 'minesweeper' ? 'Board' : 'Seats').click();
+  await maya
+    .getByRole('combobox', {
+      name: game === 'minesweeper' ? 'Board' : 'Seats',
+      exact: true,
+    })
+    .click();
   await expect(maya.getByRole('listbox')).toBeVisible();
   await shot(maya, codes.menu);
   await maya.keyboard.press('Escape');
@@ -418,7 +423,7 @@ test('Draw & Guess rooms and their lists', async ({ player }) => {
 test('Draw & Guess rounds menu', async ({ player }) => {
   const maya = await player('Maya', desktop);
   await maya.goto('/games/draw-and-guess/new');
-  await maya.getByLabel('Rounds').click();
+  await maya.getByRole('combobox', { name: 'Rounds', exact: true }).click();
   await expect(maya.getByRole('listbox')).toBeVisible();
   await shot(maya, 'DL11');
 });

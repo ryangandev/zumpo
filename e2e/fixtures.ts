@@ -207,7 +207,9 @@ export async function joinRoom(page: Page, link: string): Promise<void> {
  * the menu to settle, and the field has to show the choice.
  */
 export async function choose(page: Page, field: string, option: RegExp) {
-  const trigger = page.getByLabel(field);
+  // A form is named after its game ("New Trios room"), so the field is found
+  // by its role as well as its name.
+  const trigger = page.getByRole('combobox', { name: field, exact: true });
   const menu = page.getByRole('listbox');
   // The menu picked from last slides out after the pick.
   await expect(menu).toHaveCount(0);
