@@ -202,9 +202,16 @@ export const hintedPlaces = (run: SoloRun): number[] =>
     .slice(0, run.hints)
     .map((card) => run.deal.table.indexOf(card));
 
+/**
+ * The run so far: its finished trios, and the open one's wrong picks and
+ * hints while it is open. A found trio's are in its result from the moment
+ * it is found, so they are never counted twice while it is up.
+ */
 export function summary(run: SoloRun) {
+  const open = run.trioStartedAt !== null;
   const total = (key: 'wrongPicks' | 'hints') =>
-    run.results.reduce((sum, result) => sum + result[key], 0);
+    run.results.reduce((sum, result) => sum + result[key], 0) +
+    (open ? run[key] : 0);
   return {
     timeMs: run.bankedMs,
     found: run.results.length,

@@ -150,12 +150,19 @@ export function afterFlash(run: SoloRun, now: number): SoloRun {
 /** The match between your card and the middle card. */
 export const matchNow = (run: SoloRun) => matchOf(run.mine, middleOf(run));
 
+/**
+ * The run so far: its finished cards, and the open one's wrong taps while it
+ * is open. A taken card's are in its result from the moment it is taken, so
+ * they are never counted twice while the match is up.
+ */
 export function summary(run: SoloRun) {
   const times = run.results.map((result) => result.ms);
+  const open = run.cardStartedAt === null ? 0 : run.wrongTaps;
   return {
     timeMs: run.bankedMs,
     taken: run.results.length,
-    wrongTaps: run.results.reduce((sum, result) => sum + result.wrongTaps, 0),
+    wrongTaps:
+      run.results.reduce((sum, result) => sum + result.wrongTaps, 0) + open,
     fastestMs: times.length ? Math.min(...times) : null,
     slowestMs: times.length ? Math.max(...times) : null,
   };

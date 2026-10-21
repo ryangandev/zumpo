@@ -19,6 +19,9 @@ const turn = () => within(screen.getByRole('region', { name: 'Turn' }));
 const table = () => within(screen.getByRole('group', { name: 'Table' }));
 /** The cards on the table, in their places. */
 const places = () => table().getAllByRole('button');
+/** A value on the side's This run card. */
+const stat = (label: string) =>
+  screen.getByText(label, { selector: 'dt' }).nextElementSibling?.textContent;
 const chineseCards = () =>
   within(screen.getByRole('group', { name: '牌桌' })).getAllByRole('button');
 
@@ -140,6 +143,27 @@ describe('Trios on your own', () => {
     await pause(FLASH_MS);
     expect(turn().getByText('Find a trio')).toBeInTheDocument();
     expect(screen.getByText('1, +0:05')).toBeInTheDocument();
+  });
+
+  it('counts a found trio’s wrong pick and hints once while it is up', async () => {
+    await startRun();
+    const t = model.deal.table;
+    const third = t.findIndex((_, c) => c > 1 && !isTrio(t[0]!, t[1]!, t[c]!));
+    await pickPlaces([0, 1, third]);
+    await pause(FLASH_MS);
+    model = afterFlash(model, 0);
+    await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
+    await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
+
+    await pickPlaces(findTrios(model.deal.table)[0]!);
+    expect(turn().getByText('A trio!')).toBeInTheDocument();
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
+    await pause(FLASH_MS);
+    expect(stat('Wrong picks')).toBe('1, +0:05');
+    expect(stat('Hints')).toBe('2, +0:20');
   });
 
   it('marks a card of a trio for 10 seconds, twice at most', async () => {

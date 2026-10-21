@@ -293,7 +293,7 @@ function RunView({
                 },
                 {
                   label: m.snap.solo.wrongTaps,
-                  value: costOf(wrongTaps + run.wrongTaps, m),
+                  value: costOf(wrongTaps, m),
                 },
                 {
                   label: m.snap.solo.fastest,

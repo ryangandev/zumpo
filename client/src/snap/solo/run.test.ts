@@ -70,6 +70,17 @@ describe('a run of Snap on your own', () => {
     ]);
   });
 
+  it('counts the open card’s wrong taps once, also while a match is up', () => {
+    let run = newRun(SEED, 0);
+    run = afterFlash(tap(run, onlyMine(run), 1_000), 1_600);
+    expect(summary(run).wrongTaps).toBe(1);
+    run = tap(run, matchNow(run)!, 2_000);
+    expect(run.flash?.match).toBe(true);
+    expect(summary(run).wrongTaps).toBe(1);
+    run = afterFlash(run, 2_500);
+    expect(summary(run).wrongTaps).toBe(1);
+  });
+
   it('ignores a symbol on neither card, and taps while something is up', () => {
     const run = newRun(SEED, 0);
     const neither = [...Array(31).keys()].find(

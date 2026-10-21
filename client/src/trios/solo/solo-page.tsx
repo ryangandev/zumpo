@@ -308,13 +308,12 @@ function RunView({
                 },
                 {
                   label: m.trios.solo.wrongPicks,
-                  value: costOf(
-                    wrongPicks + run.wrongPicks,
-                    WRONG_PENALTY_MS,
-                    m,
-                  ),
+                  value: costOf(wrongPicks, WRONG_PENALTY_MS, m),
                 },
-                { label: m.trios.solo.hints, value: String(hints + run.hints) },
+                {
+                  label: m.trios.solo.hints,
+                  value: costOf(hints, HINT_PENALTY_MS, m),
+                },
               ]}
             />
           </Card>
