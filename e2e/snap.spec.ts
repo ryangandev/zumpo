@@ -83,7 +83,8 @@ test('two players race for the middle card while a third watches', async ({
   await expect(
     maya.getByRole('group', { name: 'Last card, taken by Leo' }),
   ).toBeVisible();
-  await expect(maya.getByText('15 won')).toBeVisible();
+  // Not your own card again: the standings count everybody's cards.
+  await expect(maya.getByText('15 won')).toBeHidden();
 });
 
 test('a player with no name races through thirty cards on their own', async ({

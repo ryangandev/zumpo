@@ -138,10 +138,62 @@ test('a friend from an invite link is asked for a name they know', async ({
   await expect(maya.getByText(`${name} is now Ava.`)).toBeVisible();
 });
 
+/** Clicks Invite friends, which copies the link at once on a desktop. */
+async function copyInvite(page: Page): Promise<string> {
+  await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+  const invite = page.getByRole('button', { name: 'Invite friends' }).first();
+  const box = await invite.boundingBox();
+  await invite.click();
+  const copied = page.getByRole('button', { name: 'Link copied' }).first();
+  await expect(copied).toBeVisible();
+  // The label changes in place; the button keeps its width.
+  expect((await copied.boundingBox())!.width).toBe(box!.width);
+  await expect(page.getByRole('dialog')).toBeHidden();
+  return page.evaluate(() => navigator.clipboard.readText());
+}
+
 test('a friend joins from the invite link', async ({ player }) => {
   const maya = await player('Maya');
   const leo = await player('Leo');
   const link = await createRoom(maya, 'draw-and-guess');
+
+  expect(await copyInvite(maya)).toBe(link);
+
+  await joinRoom(leo, link);
+  const players = maya.getByRole('region', { name: 'Players' });
+  await expect(players.getByText('Leo')).toBeVisible();
+  await expect(maya.getByRole('button', { name: 'Start game' })).toBeVisible();
+});
+
+test('a friend with the invite link sits straight down in a private room', async ({
+  player,
+}) => {
+  const maya = await player('Maya');
+  const leo = await player('Leo');
+  const link = await createRoom(maya, 'minesweeper', { password: 'otter' });
+
+  const invite = await copyInvite(maya);
+  expect(invite).toMatch(new RegExp(`^${link}#key=[\\w-]{16}$`));
+  expect(invite).not.toContain('otter');
+
+  await joinRoom(leo, invite);
+  await expect(leo.getByLabel('Room password')).toBeHidden();
+  // The key leaves the address bar once it has done its work.
+  await expect(leo).toHaveURL(link);
+  await expect(
+    maya.getByRole('region', { name: 'Players' }).getByText('Leo'),
+  ).toBeVisible();
+});
+
+test('an invite the clipboard refuses shows the link to copy by hand', async ({
+  player,
+}) => {
+  const maya = await player('Maya');
+  const link = await createRoom(maya, 'draw-and-guess');
+  await maya.evaluate(() => {
+    navigator.clipboard.writeText = () =>
+      Promise.reject(new DOMException('Denied', 'NotAllowedError'));
+  });
 
   await maya.getByRole('button', { name: 'Invite friends' }).first().click();
   const invite = maya.getByRole('dialog', { name: 'Invite friends' });
@@ -150,11 +202,7 @@ test('a friend joins from the invite link', async ({ player }) => {
   );
   await expect(invite.getByRole('button', { name: 'Copy' })).toBeFocused();
   await invite.getByRole('button', { name: 'Done' }).click();
-
-  await joinRoom(leo, link);
-  const players = maya.getByRole('region', { name: 'Players' });
-  await expect(players.getByText('Leo')).toBeVisible();
-  await expect(maya.getByRole('button', { name: 'Start game' })).toBeVisible();
+  await expect(invite).toBeHidden();
 });
 
 test('a room keeps a player until they mean to leave', async ({ player }) => {
