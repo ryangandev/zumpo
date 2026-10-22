@@ -53,6 +53,11 @@ The same day Ryan decided that a Minesweeper refresh does not hold the round, so
 A full repository audit the same day found 26 issues (A1-A26), fixed in [#50](https://github.com/ryangandev/zumpo/pull/50)-[#54](https://github.com/ryangandev/zumpo/pull/54); the last PR bound every padding, gap and radius in Figma to a variable, so A11's last raw sizes became tokens.
 They covered game flow, connection limits per address, a crash page, security headers, error logging, index safety, and shared start rules.
 
+A UI/UX review on 2026-10-21 looked at how easy each game is to pick up: eight reviewers played every screen, solo and in rooms, on desktop and phone.
+It filed 63 issues ([#62](https://github.com/ryangandev/zumpo/issues/62)-[#124](https://github.com/ryangandev/zumpo/issues/124)) and a dozen follow-ups from the final checks; all are fixed and closed.
+Ryan decided the product calls in it the same day: anyone can press Ready at the results and the next game starts when everybody is ready, the host can still start at once ([#114](https://github.com/ryangandev/zumpo/issues/114)); an invite link lets its holder past a room's password, through a per-room invite key ([#62](https://github.com/ryangandev/zumpo/issues/62)); Doodle Chain's describe step is 45 s; Draw & Guess spectators chat only among themselves while someone draws; solo games come first on Home, and the global How to play page is gone.
+Beyond the issues, the round made the turn bar's hints never cut ([#152](https://github.com/ryangandev/zumpo/pull/152)), kept a room's board still when its game ends ([#157](https://github.com/ryangandev/zumpo/pull/157)), fitted every room to a 1440 by 900 window ([#159](https://github.com/ryangandev/zumpo/pull/159)), and brought the Figma file up to date with all of it ([#160](https://github.com/ryangandev/zumpo/pull/160)).
+
 ## Product direction
 
 Decided by Ryan, and the frame for every design and implementation choice:
@@ -91,6 +96,7 @@ Ideas worth doing next, roughly in order:
 
 - Close-guess feedback in Draw & Guess ("Sam is close!").
 - A longer word bank and per-room word packs; six fixed categories today, English only.
+- Redraw the remaining phone room frames in Figma (for example MO13, T11 and the Daily Word and Code Breaker rooms) to the current phone spacing, as PH01-PH08 and MO11-MO12 already are.
 
 ## Deliberately not doing
 
