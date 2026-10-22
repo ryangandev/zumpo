@@ -48,14 +48,14 @@ beforeEach(() => {
   );
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     function (this: HTMLElement) {
-      const words = this.querySelector<HTMLElement>('[data-testid="words"]');
+      const held = this.querySelector<HTMLElement>('[data-testid="words"]');
       // The words; the piece and the box, as wide as the words up to the
       // room; the room.
       const width =
         this.dataset.testid === 'words'
           ? wordsWidth(this)
-          : words && this.dataset.testid !== 'room'
-            ? Math.min(wordsWidth(words), room)
+          : held && this.dataset.testid !== 'room'
+            ? Math.min(wordsWidth(held), room)
             : room;
       return {
         left: 0,
