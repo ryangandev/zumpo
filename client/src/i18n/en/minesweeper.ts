@@ -35,6 +35,8 @@ export const minesweeper = {
   messagePlaceholder: 'Say something…',
   resultsDetail: (difficulty: MinesweeperDifficulty, rounds: number) =>
     `${SIZES[difficulty]} board, ${plural(rounds, 'round')}.`,
+  /** The result bar's detail, under the board's tag, so without the board. */
+  resultBarDetail: (rounds: number) => `${plural(rounds, 'round')}.`,
   aloneTitle: 'Better with company.',
   setup: (players: number, difficulty: MinesweeperDifficulty) => {
     const { width, height, mines } = BOARD_SIZES[difficulty];

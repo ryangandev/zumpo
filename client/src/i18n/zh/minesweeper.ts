@@ -34,6 +34,7 @@ export const minesweeper: typeof en = {
   messagePlaceholder: '说点什么…',
   resultsDetail: (difficulty, rounds) =>
     `${SIZES[difficulty]}棋盘，${rounds} 轮。`,
+  resultBarDetail: (rounds) => `${rounds} 轮。`,
   aloneTitle: '叫上好友更好玩。',
   setup: (players, difficulty) => {
     const { width, height, mines } = BOARD_SIZES[difficulty];

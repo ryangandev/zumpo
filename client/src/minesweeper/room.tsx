@@ -99,7 +99,8 @@ function BetweenGames({ room }: { room: Room }) {
       <>
         <ResultBar
           summary={summary}
-          detail={detail}
+          // The tag over it names the board.
+          detail={m.minesweeper.resultBarDetail(summary.rounds)}
           label={m.minesweeper.gameOver}
           category={m.minesweeper.boardLabel(summary.difficulty)}
           hintRowBelow={HINT_ROW_BELOW}

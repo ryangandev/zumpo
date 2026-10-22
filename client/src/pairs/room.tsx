@@ -110,7 +110,8 @@ function BetweenGames({ room }: { room: Room }) {
       <>
         <ResultBar
           summary={summary}
-          detail={detail}
+          // The board itself is under it.
+          detail={m.pairs.resultBarDetail(summary.pairs)}
           label={m.pairs.gameOver}
           hintRowBelow={HINT_ROW_BELOW}
         />

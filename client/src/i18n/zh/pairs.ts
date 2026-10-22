@@ -24,6 +24,7 @@ export const pairs: typeof en = {
   waitingRoom: '等待室',
   messagePlaceholder: '说点什么…',
   resultsDetail: (board, total) => `${SIZES[board]}棋盘，${total} 对。`,
+  resultBarDetail: (total) => `${total} 对。`,
   aloneTitle: '叫上好友更好玩。',
   setup: (players, board) =>
     `${players} 人，${board}。轮流翻两张牌，找到一对就继续翻。`,
