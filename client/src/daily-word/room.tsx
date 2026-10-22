@@ -23,6 +23,15 @@ import { BoardPanel, MarkLegend } from './panel';
 import { PlayArea } from './play';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, a score beside how guesses score, with 18-character names
+ * and its clock, in either language, needs this much beside its main line,
+ * with 4 px to spare for a clock's digits and subpixel text (TurnBar's
+ * hintRowBelow).
+ */
+const HINT_ROW_BELOW = 581;
+
 type Room = RoomOf<DailyWordRoomState>;
 
 /**
@@ -159,7 +168,10 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <BoardPanel>
           <Side room={room} />
         </BoardPanel>
@@ -169,7 +181,10 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <RoundResults state={state} />
       </>
     );
@@ -221,7 +236,10 @@ function Round({
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, mine, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <BoardPanel>
         <div className={cx(styles.table, !done && playColumn)}>
           <PlayArea

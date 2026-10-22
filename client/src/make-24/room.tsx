@@ -26,6 +26,15 @@ import {
 } from './table';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, how much time a solve had left, beside its points, with
+ * 18-character names and its clock, in either language, needs this much
+ * beside its main line, with 4 px to spare for a clock's digits and subpixel
+ * text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 569;
+
 type Room = RoomOf<Make24RoomState>;
 
 /** T06-T09, T12: a Make 24 room, before, during and after a game. */
@@ -128,7 +137,10 @@ function Hand({ room }: { room: Room }) {
   if (state.phase === 'reveal') {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, cards, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, cards, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <HandResults state={state} />
       </>
     );
@@ -138,7 +150,10 @@ function Hand({ room }: { room: Room }) {
   if (room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, cards, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, cards, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <TablePanel>
           <DealtCards deal={state.deal} />
         </TablePanel>
@@ -147,7 +162,10 @@ function Hand({ room }: { room: Room }) {
   }
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, cards, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, cards, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <TablePanel>
         {state.mySolve && !madeIt ? (
           // A refresh keeps the solve but not the steps that made it.

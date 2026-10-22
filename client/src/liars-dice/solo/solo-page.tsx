@@ -50,6 +50,13 @@ import {
 } from './record';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own
+ * (TurnBar's hintRowBelow): none, since every hint fits beside its main line
+ * at every desktop width, from 561 px, in either language.
+ */
+const HINT_ROW_BELOW = 0;
+
 const BOT_COUNTS = Array.from(
   { length: MAX_BOTS - MIN_BOTS + 1 },
   (_, index) => MIN_BOTS + index,
@@ -211,7 +218,7 @@ function SoloTable({
       }
       stage={
         <>
-          <TurnBar {...turnBar(game, m)} />
+          <TurnBar {...turnBar(game, m)} hintRowBelow={HINT_ROW_BELOW} />
           <Table
             seats={seatsOf(game, name)}
             round={game.round}

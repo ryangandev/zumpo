@@ -43,6 +43,13 @@ import {
 } from './game';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own
+ * (TurnBar's hintRowBelow): none, since every hint fits beside its main line
+ * at every desktop width, from 561 px, in either language.
+ */
+const HINT_ROW_BELOW = 0;
+
 const LAST_BOARD = 'minesweeper:board';
 const bestKey = (difficulty: MinesweeperDifficulty) =>
   `minesweeper:${difficulty}`;
@@ -194,7 +201,10 @@ function SoloGameView({
       }
       stage={
         <>
-          <TurnBar {...turnBar(game, now, flagMode, phone, m)} />
+          <TurnBar
+            {...turnBar(game, now, flagMode, phone, m)}
+            hintRowBelow={HINT_ROW_BELOW}
+          />
           <div ref={panel} className={cx(styles.boardPanel, playColumn)}>
             <MineGrid
               width={game.width}

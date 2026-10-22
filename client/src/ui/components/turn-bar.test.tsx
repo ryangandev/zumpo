@@ -115,6 +115,30 @@ describe('TurnBar', () => {
     expect(line()).not.toBeInTheDocument();
   });
 
+  it('keeps one row at exactly the game’s width, and gives the meta its line a pixel under it', () => {
+    const at = (width: number) => {
+      barWidth(width);
+      const { container, unmount } = render(
+        <TurnBar
+          label="Your turn"
+          kind="status"
+          main="Place a black stone"
+          meta="Maximilian Fischer played D8"
+          hintRowBelow={745}
+        />,
+      );
+      const className = container.firstElementChild!.className;
+      expect(container.firstElementChild).toHaveAttribute(
+        'data-hint-row-below',
+        '745',
+      );
+      unmount();
+      return className;
+    };
+    expect(at(745)).not.toMatch(/rowBelow/);
+    expect(at(744)).toMatch(/rowBelow/);
+  });
+
   it('gives the meta a line of its own on a desktop under the game’s width, kept while it is empty', () => {
     barWidth(625);
     const { container, rerender } = render(

@@ -111,6 +111,8 @@ export function TurnBar({
   return (
     <div
       ref={box}
+      // For the e2e guard, which sizes the bar to it and a pixel under.
+      data-hint-row-below={hintRowBelow}
       className={cx(
         styles.container,
         phone ? styles.phone : styles.desktop,

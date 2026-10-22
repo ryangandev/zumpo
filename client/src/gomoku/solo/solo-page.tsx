@@ -47,6 +47,13 @@ import {
 import { think } from './think';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own
+ * (TurnBar's hintRowBelow): none, since every hint fits beside its main line
+ * at every desktop width, from 561 px, in either language.
+ */
+const HINT_ROW_BELOW = 0;
+
 /** "At Medium you have won 4 of 9 games.", or nothing before the first. */
 function recordLine(
   picks: SoloPicks,
@@ -243,6 +250,7 @@ function SoloBoard({
           turn={
             // Its words fit one row, so the board keeps the height.
             <TurnBar
+              hintRowBelow={HINT_ROW_BELOW}
               {...turnBar(game, previewing !== null, m)}
               stackOnPhone={false}
             />

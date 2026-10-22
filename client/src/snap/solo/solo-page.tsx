@@ -49,10 +49,11 @@ import styles from './solo-page.module.css';
 
 /**
  * The turn bar width under which its hints take a line of their own: the
- * widest of them, how to take a card, beside the count, in either language, needs
- * this much beside its main line (TurnBar's hintRowBelow).
+ * widest of them, which card a symbol is on, beside a miss, with its clock,
+ * in either language, needs this much beside its main line, with 4 px to
+ * spare for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 585;
+const HINT_ROW_BELOW = 609;
 
 /** Where the best run and the best of each day are kept. */
 const BEST_KEY = 'snap:thirty-cards';

@@ -26,11 +26,12 @@ import styles from './room.module.css';
 
 /**
  * The turn bar width under which its hints take a line of their own: the
- * widest of them, who cracked it, by name, beside a score, with 18-character
- * names, in either language, needs this much beside its main line (TurnBar's
+ * widest of them, a score beside how guesses score, with 18-character names
+ * and its clock, in either language, needs this much beside its main line,
+ * with 4 px to spare for a clock's digits and subpixel text (TurnBar's
  * hintRowBelow).
  */
-const HINT_ROW_BELOW = 625;
+const HINT_ROW_BELOW = 629;
 
 type Room = RoomOf<CodeBreakerRoomState>;
 
