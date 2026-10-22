@@ -8,15 +8,11 @@
   align-items: baseline;
 }
 
-/* As big as the message beside it: Body strong, which reaches the tokens
-   with the next Figma export (j-fig-5-chat-byline.js); Label until then. */
+/* As big as the message beside it: Body strong. */
 .name {
   flex: none;
-  font: var(--zumpo-text-body-strong, var(--zumpo-text-label));
-  letter-spacing: var(
-    --zumpo-text-body-strong-tracking,
-    var(--zumpo-text-label-tracking)
-  );
+  font: var(--zumpo-text-body-strong);
+  letter-spacing: var(--zumpo-text-body-strong-tracking);
 }
 
 .text {

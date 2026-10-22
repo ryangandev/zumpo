@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 1318,
     "w": 1440,
-    "h": 1094,
+    "h": 1168,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -97,7 +99,7 @@
         "id": "79:101970",
         "name": "Board & room",
         "w": 1312,
-        "h": 924,
+        "h": 998,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -110,7 +112,7 @@
             "id": "79:101971",
             "name": "Board stage",
             "w": 944,
-            "h": 924,
+            "h": 998,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -123,7 +125,7 @@
                 "id": "79:101972",
                 "name": "Final scores",
                 "w": 944,
-                "h": 485,
+                "h": 559,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -462,24 +464,55 @@
                   },
                   {
                     "type": "FRAME",
-                    "id": "79:101989",
+                    "id": "171:77234",
                     "name": "Actions",
-                    "w": 283,
-                    "h": 48,
-                    "wSize": "hug",
+                    "w": 862,
+                    "h": 122,
+                    "wSize": "fill",
                     "hSize": "hug",
+                    "clip": true,
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
                       "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
                       {
+                        "type": "TEXT",
+                        "id": "171:77235",
+                        "name": "Next game",
+                        "w": 862,
+                        "h": 25,
+                        "hSize": "hug",
+                        "text": "Next game: 3 words",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "171:77236",
+                        "name": "How it starts",
+                        "w": 862,
+                        "h": 25,
+                        "hSize": "hug",
+                        "text": "The next game starts once everyone is ready, or when Maya starts it.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
                         "type": "INSTANCE",
-                        "id": "79:101990",
-                        "name": "Action / Play again",
-                        "w": 110,
+                        "id": "171:77237",
+                        "name": "Action / Ready",
+                        "w": 111,
                         "h": 48,
                         "wSize": "hug",
                         "component": "Zumpo/Button",
@@ -489,39 +522,39 @@
                         },
                         "componentId": "4:15",
                         "props": {
-                          "Label": "Play again"
+                          "Icon": "Zumpo/Icon / Glyph=check",
+                          "Show icon": true,
+                          "Label": "Ready"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 48,
-                            "width": 110
+                            "width": 111
                           }
                         ]
                       },
                       {
                         "type": "INSTANCE",
-                        "id": "79:101991",
-                        "name": "Action / Invite friends",
-                        "w": 161,
+                        "id": "171:77238",
+                        "name": "Action / Watch instead",
+                        "w": 140,
                         "h": 48,
                         "wSize": "hug",
                         "component": "Zumpo/Button",
                         "variant": {
-                          "Style": "Secondary",
+                          "Style": "Quiet",
                           "State": "Default"
                         },
-                        "componentId": "4:18",
+                        "componentId": "4:21",
                         "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Invite friends"
+                          "Label": "Watch instead"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 48,
-                            "width": 161
+                            "width": 140
                           }
                         ]
                       }
@@ -1481,6 +1514,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

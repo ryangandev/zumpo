@@ -1,0 +1,331 @@
+{
+  "format": 1,
+  "code": "PH05",
+  "title": "Draw & Guess drawer · 390 × 844",
+  "id": "163:65269",
+  "section": "15 / Phone in play",
+  "reviewNotes": [
+    "PH05 · The drawer: the word and clock in one compact row, the toolbar, and the canvas at its 798 × 598 ratio as wide as the column."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "163:65269",
+    "name": "PH05 / Draw & Guess drawer · 390 × 844",
+    "x": 2160,
+    "y": 200,
+    "w": 390,
+    "h": 844,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/12",
+      "pad": [
+        "$Zumpo · UI:space/12",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "163:65270",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Phase": "Maya’s room · Round 2 of 2",
+          "Game": "Draw & Guess"
+        },
+        "overrides": [
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65271",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          },
+          {
+            "path": "Status / Board",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:10340",
+                    "toName": "MO09 / Guesser · canvas & guess input"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Players · 4",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13463",
+                    "toName": "MO15 / Room · players tab"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Status / Chat",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:13517",
+                    "toName": "MO16 / Room · chat tab"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65361",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65272",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 108,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Word",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22154",
+        "props": {
+          "Meta": "Only you can see the word",
+          "Main": "Turtle",
+          "Label": "Draw this"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 108,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65273",
+        "name": "Zumpo/Drawing toolbar",
+        "w": 350,
+        "h": 108,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Drawing toolbar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "26:16547",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 108,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:65274",
+        "name": "Canvas",
+        "w": 350,
+        "h": 200.4,
+        "wSize": "fill",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:65275",
+            "name": "Drawing / Turtle",
+            "w": 297.6,
+            "h": 198.4,
+            "component": "Sample / Turtle drawing",
+            "variant": {
+              "Stage": "Outline"
+            },
+            "componentId": "27:17556"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:65276",
+        "name": "Recent chat",
+        "w": 350,
+        "h": 91,
+        "wSize": "fill",
+        "hSize": "hug",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "max",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "163:65277",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a rock?",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:65278",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a hat",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "163:65279",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "shell"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Reveal",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -125,13 +127,12 @@
                 "w": 944,
                 "h": 92,
                 "wSize": "fill",
-                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Status",
-                  "Layout": "Desktop"
+                  "Layout": "Desktop hint row"
                 },
-                "componentId": "26:16856",
+                "componentId": "166:75802",
                 "props": {
                   "Countdown": false,
                   "Meta": "3 of 4 shown",
@@ -146,16 +147,18 @@
                     "width": 944
                   },
                   {
-                    "path": "Turn / Eyebrow / Category",
+                    "path": "Top / Turn / Eyebrow / Category",
                     "componentProperties": {
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
-                    }
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    },
+                    "visible": false
                   },
                   {
-                    "path": "Countdown",
+                    "path": "Top / Countdown",
                     "componentProperties": {
                       "Show label": true,
                       "Label": "flip back",
@@ -391,6 +394,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

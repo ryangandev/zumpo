@@ -29,20 +29,29 @@
         "Paper",
         "Ink"
       ]
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Compact"
+      ]
     }
   },
-  "defaultVariant": "Tone=Sand",
+  "defaultVariant": "Tone=Sand, Size=Regular",
   "variants": [
     {
-      "name": "Tone=Sand",
+      "name": "Tone=Sand, Size=Regular",
       "id": "24:6511",
       "props": {
-        "Tone": "Sand"
+        "Tone": "Sand",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6511",
-        "name": "Tone=Sand",
+        "name": "Tone=Sand, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -100,15 +109,16 @@
       }
     },
     {
-      "name": "Tone=Blue",
+      "name": "Tone=Blue, Size=Regular",
       "id": "24:6516",
       "props": {
-        "Tone": "Blue"
+        "Tone": "Blue",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6516",
-        "name": "Tone=Blue",
+        "name": "Tone=Blue, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -166,15 +176,16 @@
       }
     },
     {
-      "name": "Tone=Lime",
+      "name": "Tone=Lime, Size=Regular",
       "id": "24:6521",
       "props": {
-        "Tone": "Lime"
+        "Tone": "Lime",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6521",
-        "name": "Tone=Lime",
+        "name": "Tone=Lime, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -232,15 +243,16 @@
       }
     },
     {
-      "name": "Tone=Peach",
+      "name": "Tone=Peach, Size=Regular",
       "id": "24:6526",
       "props": {
-        "Tone": "Peach"
+        "Tone": "Peach",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6526",
-        "name": "Tone=Peach",
+        "name": "Tone=Peach, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -298,15 +310,16 @@
       }
     },
     {
-      "name": "Tone=Paper",
+      "name": "Tone=Paper, Size=Regular",
       "id": "24:6531",
       "props": {
-        "Tone": "Paper"
+        "Tone": "Paper",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6531",
-        "name": "Tone=Paper",
+        "name": "Tone=Paper, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -364,15 +377,16 @@
       }
     },
     {
-      "name": "Tone=Ink",
+      "name": "Tone=Ink, Size=Regular",
       "id": "24:6536",
       "props": {
-        "Tone": "Ink"
+        "Tone": "Ink",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "24:6536",
-        "name": "Tone=Ink",
+        "name": "Tone=Ink, Size=Regular",
         "w": 100,
         "h": 30,
         "wSize": "hug",
@@ -426,6 +440,422 @@
           {
             "type": "TEXT",
             "id": "24:6540",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/paper"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Sand, Size=Compact",
+      "id": "171:77262",
+      "props": {
+        "Tone": "Sand",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77262",
+        "name": "Tone=Sand, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77263",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010"
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77264",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Blue, Size=Compact",
+      "id": "171:77267",
+      "props": {
+        "Tone": "Blue",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77267",
+        "name": "Tone=Blue, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77268",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010"
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77269",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Lime, Size=Compact",
+      "id": "171:77272",
+      "props": {
+        "Tone": "Lime",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77272",
+        "name": "Tone=Lime, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/lime"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77273",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010"
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77274",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Peach, Size=Compact",
+      "id": "171:77277",
+      "props": {
+        "Tone": "Peach",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77277",
+        "name": "Tone=Peach, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77278",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010"
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77279",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Paper, Size=Compact",
+      "id": "171:77282",
+      "props": {
+        "Tone": "Paper",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77282",
+        "name": "Tone=Paper, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77283",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010"
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77284",
+            "name": "Label",
+            "w": 76,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Label"
+            },
+            "text": "Waiting room",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Ink, Size=Compact",
+      "id": "171:77287",
+      "props": {
+        "Tone": "Ink",
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "171:77287",
+        "name": "Tone=Ink, Size=Compact",
+        "w": 92,
+        "h": 20,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/6",
+          "pad": [
+            "$Zumpo · UI:space/1",
+            "$Zumpo · UI:space/8"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "171:77288",
+            "name": "Icon",
+            "visible": false,
+            "w": 14,
+            "h": 14,
+            "propRefs": {
+              "visible": "Show icon",
+              "mainComponent": "Icon"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "lock"
+            },
+            "componentId": "24:5010",
+            "overrides": [
+              {
+                "path": "lock",
+                "strokes": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              },
+              {
+                "path": "lock",
+                "strokes": [
+                  "$Zumpo · UI:color/paper"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "171:77289",
             "name": "Label",
             "w": 76,
             "h": 18,

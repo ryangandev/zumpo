@@ -14,7 +14,7 @@
     "x": 530,
     "y": 4350,
     "w": 390,
-    "h": 1178,
+    "h": 1198,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Round 3",
+          "Phase": "Maya’s room · Round 3",
           "Game": "Liar’s Dice"
         }
       },
@@ -75,7 +75,7 @@
         "id": "79:89905",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -93,20 +93,21 @@
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to bid",
@@ -161,6 +162,7 @@
                 },
                 "componentId": "73:81079",
                 "props": {
+                  "Detail": "Up next",
                   "Name": "Maya"
                 },
                 "overrides": [

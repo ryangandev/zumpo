@@ -14,7 +14,7 @@
     "x": 40,
     "y": 2552,
     "w": 1440,
-    "h": 1035,
+    "h": 1080,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Word #13",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "79:99583",
         "name": "Board & room",
         "w": 1312,
-        "h": 865,
+        "h": 910,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +119,7 @@
             "id": "79:99584",
             "name": "Board stage",
             "w": 944,
-            "h": 865,
+            "h": 582,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -126,339 +128,50 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "79:99585",
-                "name": "Final scores",
+                "type": "INSTANCE",
+                "id": "166:71970",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 375,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "A new word at midnight.",
+                  "Main": "Out of guesses",
+                  "Category": false,
+                  "Label": "Daily word #12"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "79:99586",
-                    "name": "Result heading",
-                    "w": 238,
-                    "h": 115,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "79:99587",
-                        "w": 238,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Not this time.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "163:66622",
-                        "name": "Answer",
-                        "w": 176,
-                        "h": 32,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/4",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "INSTANCE",
-                            "id": "163:66623",
-                            "name": "Letter W",
-                            "w": 32,
-                            "h": 32,
-                            "component": "Zumpo/Letter tile",
-                            "variant": {
-                              "State": "Correct",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61334",
-                            "props": {
-                              "Letter": "W"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "163:66625",
-                            "name": "Letter A",
-                            "w": 32,
-                            "h": 32,
-                            "component": "Zumpo/Letter tile",
-                            "variant": {
-                              "State": "Correct",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61334"
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "163:66627",
-                            "name": "Letter T",
-                            "w": 32,
-                            "h": 32,
-                            "component": "Zumpo/Letter tile",
-                            "variant": {
-                              "State": "Correct",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61334",
-                            "props": {
-                              "Letter": "T"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "163:66629",
-                            "name": "Letter C",
-                            "w": 32,
-                            "h": 32,
-                            "component": "Zumpo/Letter tile",
-                            "variant": {
-                              "State": "Correct",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61334",
-                            "props": {
-                              "Letter": "C"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "163:66631",
-                            "name": "Letter H",
-                            "w": 32,
-                            "h": 32,
-                            "component": "Zumpo/Letter tile",
-                            "variant": {
-                              "State": "Correct",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61334",
-                            "props": {
-                              "Letter": "H"
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "79:99588",
-                        "w": 221,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "A new streak starts tomorrow.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "79:99589",
-                    "name": "Ranking",
-                    "w": 862,
-                    "h": 82,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "79:99590",
-                        "name": "Stat / Guesses",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "79:99591",
-                            "w": 64,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Guesses",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "79:99592",
-                            "w": 49,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "6 of 6",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "79:99593",
-                        "name": "Stat / Next word in",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "79:99594",
-                            "w": 93,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Next word in",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "79:99595",
-                            "w": 70,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "09:41:18",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "79:99599",
-                    "name": "Actions",
-                    "w": 258,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:99600",
-                        "name": "Action / Share",
-                        "w": 108,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=copy",
-                          "Show icon": true,
-                          "Label": "Share"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 108
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:99601",
-                        "name": "Action / Practice word",
-                        "w": 138,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Label": "Practice word"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 138
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "0:39",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -751,14 +464,268 @@
             "id": "79:99666",
             "name": "Run sidebar",
             "w": 344,
-            "h": 596,
+            "h": 910,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71926",
+                "name": "Result",
+                "w": 344,
+                "h": 306,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "A new streak starts tomorrow.",
+                  "Title": "Not this time."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 306,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71930",
+                      "name": "Answer",
+                      "w": 176,
+                      "h": 32,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/4",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71938",
+                          "name": "Letter W",
+                          "w": 32,
+                          "h": 32,
+                          "component": "Zumpo/Letter tile",
+                          "variant": {
+                            "State": "Correct",
+                            "Size": "Small"
+                          },
+                          "componentId": "44:61334",
+                          "props": {
+                            "Letter": "W"
+                          }
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71939",
+                          "name": "Letter A",
+                          "w": 32,
+                          "h": 32,
+                          "component": "Zumpo/Letter tile",
+                          "variant": {
+                            "State": "Correct",
+                            "Size": "Small"
+                          },
+                          "componentId": "44:61334"
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71940",
+                          "name": "Letter T",
+                          "w": 32,
+                          "h": 32,
+                          "component": "Zumpo/Letter tile",
+                          "variant": {
+                            "State": "Correct",
+                            "Size": "Small"
+                          },
+                          "componentId": "44:61334",
+                          "props": {
+                            "Letter": "T"
+                          }
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71941",
+                          "name": "Letter C",
+                          "w": 32,
+                          "h": 32,
+                          "component": "Zumpo/Letter tile",
+                          "variant": {
+                            "State": "Correct",
+                            "Size": "Small"
+                          },
+                          "componentId": "44:61334",
+                          "props": {
+                            "Letter": "C"
+                          }
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71942",
+                          "name": "Letter H",
+                          "w": 32,
+                          "h": 32,
+                          "component": "Zumpo/Letter tile",
+                          "variant": {
+                            "State": "Correct",
+                            "Size": "Small"
+                          },
+                          "componentId": "44:61334",
+                          "props": {
+                            "Letter": "H"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "166:71943",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 41,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71926;35:13441;166:71953",
+                          "name": "Stat / Next word in",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71926;35:13441;166:71954",
+                              "w": 93,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Next word in",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71926;35:13441;166:71955",
+                              "w": 70,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "09:41:18",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "166:71956",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71960",
+                          "name": "Action / Share",
+                          "w": 108,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=copy",
+                            "Show icon": true,
+                            "Label": "Share"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 108
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71926;35:13441;166:71961",
+                          "name": "Action / Practice word",
+                          "w": 138,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=link",
+                            "Label": "Practice word"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 138
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "79:99667",

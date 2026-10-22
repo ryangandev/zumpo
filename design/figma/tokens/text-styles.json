@@ -94,6 +94,16 @@
     "description": "The masked word in the phone turn bar: Heading size, tracked as Hint so each blank reads as one letter."
   },
   {
+    "name": "Zumpo/Body strong",
+    "id": "S:7721401e501b4e6c14729534daceebdcdbaaf589,",
+    "font": "DM Sans Bold",
+    "family": "DM Sans",
+    "style": "Bold",
+    "size": 16,
+    "lineHeight": "25px",
+    "description": "Body’s size and line in Bold: a name that leads a line of Body text, as a chat line’s sender."
+  },
+  {
     "name": "Zumpo/Club Circuit/Brand",
     "id": "S:c59fdfe8ec6c41401534372a544fe6aef4d8d662,",
     "font": "Space Grotesk Bold",

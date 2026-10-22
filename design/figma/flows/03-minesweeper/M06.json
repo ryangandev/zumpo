@@ -52,7 +52,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Round 4",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -126,7 +127,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   }
                 ]
@@ -1082,6 +1084,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -1235,7 +1240,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Game has started! 10 mines on a 9×9 board.",
+                      "Message": "Game started: 10 mines on a 9×9 board.",
                       "Kind": "System"
                     }
                   },

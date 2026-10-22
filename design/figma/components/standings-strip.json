@@ -36,6 +36,11 @@
         "componentId": "163:62746",
         "overrides": [
           {
+            "path": ".",
+            "height": 34,
+            "width": 80
+          },
+          {
             "path": "Avatar",
             "componentProperties": {
               "Initials": "MA",

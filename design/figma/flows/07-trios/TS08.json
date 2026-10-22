@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "5 of 10 trios",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -126,7 +128,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "Find the two that go with it",
+                  "Meta": "Find the other two",
                   "Main": "One card of a trio is marked",
                   "Category": false,
                   "Label": "Hint"
@@ -143,7 +145,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -152,7 +155,7 @@
                       "Show label": true,
                       "Label": "to a second hint",
                       "Time": "0:24",
-                      "Tone": "Running"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -263,7 +266,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:86088",
-                            "name": "Trios card / Default / Two ink solid circles",
+                            "name": "Trios card / Default / Two black solid circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -347,7 +350,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:86168",
-                            "name": "Trios card / Default / One ink striped circle",
+                            "name": "Trios card / Default / One black striped circle",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -397,7 +400,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:86191",
-                            "name": "Trios card / Default / Three ink outlined circles",
+                            "name": "Trios card / Default / Three black outlined circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -495,7 +498,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:86309",
-                            "name": "Trios card / Default / One ink solid triangle",
+                            "name": "Trios card / Default / One black solid triangle",
                             "w": 72,
                             "h": 48,
                             "component": "Zumpo/Trios card",
@@ -572,6 +575,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -778,7 +784,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Maya found a trio! (+1)",
+                      "Message": "Maya found a trio, +1.",
                       "Kind": "Score"
                     }
                   },

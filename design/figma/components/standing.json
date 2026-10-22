@@ -4,11 +4,23 @@
   "id": "163:62758",
   "type": "COMPONENT_SET",
   "key": "ec29f9997ef8f267bfe7c9a8522183e69908894a",
-  "description": "One player in the phone's standings strip: their avatar and score, or what stands for one (guesses used, cards won). You marks the viewer; Away a player whose connection dropped.",
+  "description": "One player in the phone's standings strip: their avatar and score, or what stands for one (guesses used, cards won). You marks the viewer; Away a player whose connection dropped. Show mark puts an Icon before the value when a race is over for them: Mark=check (green) once solved, close (danger red) once out of guesses.",
   "properties": {
     "Value": {
       "type": "text",
       "default": "295"
+    },
+    "Show mark": {
+      "type": "boolean",
+      "default": false
+    },
+    "Mark": {
+      "type": "instance_swap",
+      "default": "Zumpo/Icon / Glyph=check",
+      "preferred": [
+        "component:a8c6adbe2e014d961b2a2178faa1dd3382c5e3ce",
+        "component:06b4005bbcd90c4b20189da7995d6f136e52861a"
+      ]
     },
     "State": {
       "type": "variant",
@@ -73,6 +85,42 @@
                 "path": ".",
                 "height": 32,
                 "width": 32
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "166:74779",
+            "name": "Mark",
+            "visible": false,
+            "w": 16,
+            "h": 16,
+            "propRefs": {
+              "visible": "Show mark",
+              "mainComponent": "Mark"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "check"
+            },
+            "componentId": "24:4994",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 16,
+                "width": 16
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
               }
             ]
           },
@@ -151,6 +199,42 @@
             ]
           },
           {
+            "type": "INSTANCE",
+            "id": "166:74782",
+            "name": "Mark",
+            "visible": false,
+            "w": 16,
+            "h": 16,
+            "propRefs": {
+              "visible": "Show mark",
+              "mainComponent": "Mark"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "check"
+            },
+            "componentId": "24:4994",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 16,
+                "width": 16
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
+              }
+            ]
+          },
+          {
             "type": "TEXT",
             "id": "163:62753",
             "name": "Value",
@@ -222,6 +306,42 @@
                 "height": 32,
                 "opacity": 0.5,
                 "width": 32
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "166:74785",
+            "name": "Mark",
+            "visible": false,
+            "w": 16,
+            "h": 16,
+            "propRefs": {
+              "visible": "Show mark",
+              "mainComponent": "Mark"
+            },
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "check"
+            },
+            "componentId": "24:4994",
+            "overrides": [
+              {
+                "path": ".",
+                "height": 16,
+                "width": 16
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
+              },
+              {
+                "path": "check",
+                "strokes": [
+                  "$Zumpo · Primitives:color/green"
+                ]
               }
             ]
           },

@@ -97,7 +97,7 @@
             "componentId": "9:400",
             "props": {
               "Description": "We couldn’t find this page. There are still good games waiting for you.",
-              "Title": "A little lost?"
+              "Title": "Lost?"
             },
             "overrides": [
               {

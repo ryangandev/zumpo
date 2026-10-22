@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Hand 3 of 5",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -143,7 +145,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -365,7 +368,8 @@
                               "Show icon": true,
                               "Icon": "24:4994",
                               "Label": "Solved",
-                              "Tone": "Lime"
+                              "Tone": "Lime",
+                              "Size": "Regular"
                             }
                           }
                         ]
@@ -406,7 +410,8 @@
                               "Show icon": true,
                               "Icon": "24:4994",
                               "Label": "Solved",
-                              "Tone": "Lime"
+                              "Tone": "Lime",
+                              "Size": "Regular"
                             }
                           }
                         ]
@@ -448,7 +453,8 @@
                               "Show icon": true,
                               "Icon": "24:4994",
                               "Label": "Solved",
-                              "Tone": "Lime"
+                              "Tone": "Lime",
+                              "Size": "Regular"
                             }
                           }
                         ]
@@ -490,7 +496,8 @@
                               "Icon": "24:5006",
                               "Show icon": true,
                               "Label": "Out of time",
-                              "Tone": "Sand"
+                              "Tone": "Sand",
+                              "Size": "Regular"
                             }
                           }
                         ]
@@ -522,6 +529,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

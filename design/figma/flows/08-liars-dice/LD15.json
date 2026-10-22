@@ -14,7 +14,7 @@
     "x": 1020,
     "y": 4350,
     "w": 390,
-    "h": 851,
+    "h": 867,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Round 3",
+          "Phase": "Maya’s room · Round 3",
           "Game": "Liar’s Dice"
         }
       },
@@ -75,7 +75,7 @@
         "id": "79:90329",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -93,20 +93,21 @@
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "next round",
@@ -121,7 +122,7 @@
         "id": "79:90330",
         "name": "Table",
         "w": 350,
-        "h": 527,
+        "h": 523,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -228,7 +229,7 @@
             "id": "79:90592",
             "name": "The count",
             "w": 350,
-            "h": 121,
+            "h": 117,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -257,7 +258,7 @@
                 "id": "79:90594",
                 "name": "Count",
                 "w": 350,
-                "h": 93,
+                "h": 56,
                 "wSize": "fill",
                 "hSize": "hug",
                 "clip": true,
@@ -309,52 +310,23 @@
                     "fills": [
                       "$Zumpo · UI:color/muted"
                     ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "79:90603",
-                    "name": "Outcome",
-                    "w": 145,
-                    "h": 25,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "clip": true,
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "79:90604",
-                        "w": 13,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "→",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "79:90605",
-                        "w": 120,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Leo’s bid stands",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      }
-                    ]
                   }
                 ]
+              },
+              {
+                "type": "TEXT",
+                "id": "79:90605",
+                "name": "Verdict",
+                "w": 350,
+                "h": 25,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Leo’s bid stands, so you lose a die",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
               }
             ]
           },

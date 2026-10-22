@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 2552,
     "w": 1440,
-    "h": 889,
+    "h": 855,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Practice",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "79:99877",
         "name": "Board & room",
         "w": 1312,
-        "h": 719,
+        "h": 685,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +119,7 @@
             "id": "79:99878",
             "name": "Board stage",
             "w": 944,
-            "h": 719,
+            "h": 582,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -126,162 +128,50 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "79:99879",
-                "name": "Final scores",
+                "type": "INSTANCE",
+                "id": "166:72008",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 229,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "",
+                  "Main": "You found OCEAN",
+                  "Category": false,
+                  "Label": "Practice"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "79:99880",
-                    "name": "Result heading",
-                    "w": 385,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "79:99881",
-                        "w": 192,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Found in 3.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "79:99882",
-                        "w": 385,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "The word was OCEAN. Practice words keep no stats.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "79:99893",
-                    "name": "Actions",
-                    "w": 511,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:99894",
-                        "name": "Action / Another word",
-                        "w": 134,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Another word"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 134
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:99895",
-                        "name": "Action / Challenge a friend",
-                        "w": 195,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Challenge a friend"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 195
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:100022",
-                        "name": "Action / Today’s word",
-                        "w": 158,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Quiet",
-                          "State": "Default"
-                        },
-                        "componentId": "4:21",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=back",
-                          "Show icon": true,
-                          "Label": "Today’s word"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 158
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "0:39",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -454,14 +344,112 @@
             "id": "79:99960",
             "name": "Run sidebar",
             "w": 344,
-            "h": 383,
+            "h": 685,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71988",
+                "name": "Result",
+                "w": 344,
+                "h": 286,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "The word was OCEAN. Practice words keep no stats.",
+                  "Title": "Found in 3."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 286,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71992",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 108,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71988;35:13441;166:71997",
+                          "name": "Action / Another word",
+                          "w": 134,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Another word"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 134
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71988;35:13441;166:71998",
+                          "name": "Action / Today’s word",
+                          "w": 158,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Quiet",
+                            "State": "Default"
+                          },
+                          "componentId": "4:21",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=back",
+                            "Show icon": true,
+                            "Label": "Today’s word"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 158
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "79:99962",

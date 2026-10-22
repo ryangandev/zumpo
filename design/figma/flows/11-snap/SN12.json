@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 3050,
     "w": 390,
-    "h": 891,
+    "h": 892,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "9 of 27 cards",
+          "Phase": "Maya’s room · 9 of 27 cards",
           "Game": "Snap"
         }
       },
@@ -75,7 +75,7 @@
         "id": "162:86429",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 95,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -93,31 +93,32 @@
         "overrides": [
           {
             "path": ".",
-            "height": 95,
-            "paddingBottom": 31,
+            "height": 96,
+            "paddingBottom": 12,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Text / Answer",
+            "path": "Top / Text / Answer",
             "counterAxisSizingMode": "AUTO",
             "counterAxisSpacing": 19
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "on this card",
               "Time": "0:02",
-              "Tone": "Waiting"
+              "Tone": "Info"
             }
           }
         ]
@@ -205,7 +206,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -320,7 +322,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {

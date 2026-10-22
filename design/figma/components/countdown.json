@@ -4,7 +4,7 @@
   "id": "24:5284",
   "type": "COMPONENT_SET",
   "key": "5e3befb7e3da3f8c2819b9525c23cc9c152ec4e2",
-  "description": "Server-driven phase clock (the client only renders the time it is sent). Running: a phase you act in. Waiting: someone else is acting, or a reveal. Urgent: the last 5 seconds. Time is m:ss, as every time on the site (0:33); Label says what the clock is for.",
+  "description": "Server-driven phase clock (the client only renders the time it is sent), or on your own the run’s. A deadline is a filled pill. Running: a phase you act in. Waiting: someone else is acting, or a reveal. Urgent: the last 5 seconds. Info: a clock that ends nothing you are doing (the time to a hint, the time on this card, a run’s time): a line, no fill, never urgent. Time is m:ss, as every time on the site (0:33); Label says what the clock is for.",
   "properties": {
     "Time": {
       "type": "text",
@@ -24,7 +24,8 @@
       "options": [
         "Running",
         "Waiting",
-        "Urgent"
+        "Urgent",
+        "Info"
       ]
     }
   },
@@ -310,6 +311,102 @@
             "textStyle": "Zumpo/Label",
             "fills": [
               "$Zumpo · UI:color/danger"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Info",
+      "id": "166:74443",
+      "props": {
+        "Tone": "Info"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "166:74443",
+        "name": "Tone=Info",
+        "w": 153,
+        "h": 46,
+        "wSize": "hug",
+        "hSize": "hug",
+        "strokes": [
+          "$Zumpo · Primitives:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            "$Zumpo · UI:space/10",
+            "$Zumpo · UI:space/18",
+            "$Zumpo · UI:space/10",
+            "$Zumpo · UI:space/14"
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "166:74444",
+            "name": "Icon",
+            "w": 20,
+            "h": 20,
+            "component": "Zumpo/Icon",
+            "variant": {
+              "Glyph": "clock"
+            },
+            "componentId": "24:5006",
+            "overrides": [
+              {
+                "path": "clock",
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "path": "clock",
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "166:74445",
+            "name": "Time",
+            "w": 35,
+            "h": 24,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Time"
+            },
+            "text": "0:15",
+            "textStyle": "Zumpo/Number",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "166:74446",
+            "name": "Label",
+            "w": 48,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "visible": "Show label",
+              "characters": "Label"
+            },
+            "text": "to pick",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
             ]
           }
         ]

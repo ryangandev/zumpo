@@ -14,7 +14,7 @@
     "x": 1020,
     "y": 5580,
     "w": 390,
-    "h": 922,
+    "h": 818,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Game over",
+          "Phase": "Maya’s room · Game over",
           "Game": "Gomoku"
         },
         "overrides": [
@@ -94,30 +94,22 @@
         "component": "Zumpo/Turn bar",
         "variant": {
           "Kind": "Status",
-          "Layout": "Phone"
+          "Layout": "Phone row"
         },
-        "componentId": "27:22192",
+        "componentId": "168:76902",
         "props": {
-          "Countdown": false,
-          "Main": "You win with five in a row",
           "Category": false,
-          "Meta": "Next game, Leo plays Black",
+          "Main": "You win with five in a row.",
+          "Countdown": false,
+          "Meta": "You play White next.",
           "Label": "Game over"
         },
         "overrides": [
           {
             "path": ".",
             "height": 76,
+            "primaryAxisSizingMode": "FIXED",
             "width": 350
-          },
-          {
-            "path": "Text / Eyebrow / Category",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Small · 9 × 9",
-              "Tone": "Sand"
-            }
           },
           {
             "path": "Countdown",
@@ -127,6 +119,16 @@
               "Time": "0:12",
               "Tone": "Running"
             }
+          },
+          {
+            "path": "Text / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand",
+              "Size": "Regular"
+            }
           }
         ]
       },
@@ -135,12 +137,12 @@
         "id": "162:102366",
         "name": "Table",
         "w": 350,
-        "h": 598,
+        "h": 494,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/24",
+          "gap": "$Zumpo · UI:space/12",
           "strokesIncluded": true
         },
         "children": [
@@ -365,12 +367,13 @@
           },
           {
             "type": "FRAME",
-            "id": "162:102698",
-            "name": "Seats",
+            "id": "171:81526",
+            "name": "Side",
             "w": 350,
-            "h": 152,
+            "h": 132,
             "wSize": "fill",
             "hSize": "hug",
+            "clip": true,
             "layout": {
               "mode": "column",
               "gap": "$Zumpo · UI:space/8",
@@ -378,102 +381,143 @@
             },
             "children": [
               {
-                "type": "INSTANCE",
-                "id": "162:102603",
-                "name": "Seat / Maya",
+                "type": "FRAME",
+                "id": "162:102699",
+                "name": "Actions",
                 "w": 350,
-                "h": 78,
+                "h": 48,
                 "wSize": "fill",
                 "hSize": "hug",
-                "component": "Zumpo/Gomoku seat",
-                "variant": {
-                  "Color": "Black",
-                  "State": "Won"
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
                 },
-                "componentId": "162:63073",
-                "props": {
-                  "You": true,
-                  "Detail": "Black · five in a row · 1 win"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 78,
-                    "width": 350
+                    "type": "INSTANCE",
+                    "id": "162:102632",
+                    "name": "Action / Play again",
+                    "w": 168,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Play again"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "FIXED",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 168
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "171:81527",
+                    "name": "Action / Invite friends",
+                    "w": 170,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Icon": "Zumpo/Icon / Glyph=link",
+                      "Show icon": true,
+                      "Label": "Invite friends"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "FIXED",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 170
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "type": "INSTANCE",
-                "id": "162:102617",
-                "name": "Seat / Leo",
+                "type": "FRAME",
+                "id": "162:102698",
+                "name": "Seats",
                 "w": 350,
-                "h": 66,
+                "h": 76,
                 "wSize": "fill",
                 "hSize": "hug",
-                "component": "Zumpo/Gomoku seat",
-                "variant": {
-                  "Color": "White",
-                  "State": "Default"
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/6",
+                  "strokesIncluded": true
                 },
-                "componentId": "162:63087",
-                "props": {
-                  "Detail": "White · 1 win",
-                  "Name": "Leo"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 66,
-                    "width": 350
+                    "type": "INSTANCE",
+                    "id": "162:102603",
+                    "name": "Seat / Maya",
+                    "w": 350,
+                    "h": 36,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "Black",
+                      "State": "Won",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75961",
+                    "props": {
+                      "You": true,
+                      "Detail": "1 win"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 36,
+                        "width": 350
+                      }
+                    ]
                   },
                   {
-                    "path": "Player / Avatar",
-                    "componentProperties": {
-                      "Initials": "LE",
-                      "Tone": "Lime"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "162:102699",
-            "name": "Actions",
-            "w": 350,
-            "h": 48,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/12",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "162:102632",
-                "name": "Action / Play again",
-                "w": 350,
-                "h": 48,
-                "wSize": "fill",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Primary",
-                  "State": "Default"
-                },
-                "componentId": "4:15",
-                "props": {
-                  "Label": "Play again"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "primaryAxisSizingMode": "FIXED",
-                    "width": 350
+                    "type": "INSTANCE",
+                    "id": "162:102617",
+                    "name": "Seat / Leo",
+                    "w": 350,
+                    "h": 34,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "White",
+                      "State": "Default",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75975",
+                    "props": {
+                      "Detail": "1 win",
+                      "Name": "Leo"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 34,
+                        "width": 350
+                      }
+                    ]
                   }
                 ]
               }

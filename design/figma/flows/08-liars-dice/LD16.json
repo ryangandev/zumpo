@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 4350,
     "w": 1440,
-    "h": 623,
+    "h": 622,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Round 1",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "163:65955",
         "name": "Board & room",
         "w": 1312,
-        "h": 453,
+        "h": 452,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -158,7 +160,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -167,7 +170,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "1:12",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -416,11 +419,11 @@
             "id": "163:65966",
             "name": "Game sidebar",
             "w": 344,
-            "h": 453,
+            "h": 445,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
@@ -812,7 +815,7 @@
         "y": 0,
         "absolute": true,
         "w": 1440,
-        "h": 623,
+        "h": 622,
         "opacity": 0.4,
         "fills": [
           "$Zumpo · UI:color/ink"

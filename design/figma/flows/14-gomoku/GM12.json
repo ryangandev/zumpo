@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Game 2",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -150,7 +152,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -424,7 +427,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "Black",
-                                  "State": "Default"
+                                  "State": "Default",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63045",
                                 "overrides": [
@@ -446,7 +450,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "White",
-                                  "State": "Turn"
+                                  "State": "Turn",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63101",
                                 "props": {
@@ -540,6 +545,9 @@
                 "h": 192,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -741,6 +749,9 @@
                 "h": 192,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

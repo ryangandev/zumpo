@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Level 3 of 5",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -127,7 +129,7 @@
                 "componentId": "26:16856",
                 "props": {
                   "Countdown": false,
-                  "Meta": "Maya and Ryan are ready.",
+                  "Meta": "2 players are ready.",
                   "Main": "Get ready",
                   "Category": false,
                   "Label": "Level 3 of 5"
@@ -144,7 +146,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -270,9 +273,8 @@
                     "hSize": "hug",
                     "clip": true,
                     "layout": {
-                      "mode": "column",
+                      "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
-                      "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -463,6 +465,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -696,7 +701,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Level 2 cleared!",
+                      "Message": "Level 2 cleared.",
                       "Kind": "Score"
                     }
                   },

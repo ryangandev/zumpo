@@ -41,6 +41,14 @@
     "Step 4": {
       "type": "text",
       "default": "Faster guesses score more, and the drawer gets a share of each."
+    },
+    "Show step 2": {
+      "type": "boolean",
+      "default": true
+    },
+    "Show step 3": {
+      "type": "boolean",
+      "default": true
     }
   },
   "node": {
@@ -177,6 +185,9 @@
             "h": 50,
             "wSize": "fill",
             "hSize": "hug",
+            "propRefs": {
+              "visible": "Show step 2"
+            },
             "layout": {
               "mode": "row",
               "gap": "$Zumpo · UI:space/12",
@@ -236,6 +247,9 @@
             "h": 50,
             "wSize": "fill",
             "hSize": "hug",
+            "propRefs": {
+              "visible": "Show step 3"
+            },
             "layout": {
               "mode": "row",
               "gap": "$Zumpo · UI:space/12",

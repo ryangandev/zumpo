@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 4082,
     "w": 390,
-    "h": 1590,
+    "h": 1623,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -250,7 +250,7 @@
         "id": "162:101396",
         "name": "How to play",
         "w": 350,
-        "h": 462,
+        "h": 495,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -282,63 +282,29 @@
             "autoResize": "height"
           },
           {
-            "type": "TEXT",
-            "id": "162:101398",
-            "name": "Choose a word, draw it, and race to guess. Fast guesses earn more poin",
-            "w": 304,
-            "h": 100,
-            "hSize": "hug",
-            "text": "Everyone writes a line. The next player draws it, the next says what the drawing shows, and so on round the table. Then the host shows every chain.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "FRAME",
-            "id": "162:101399",
-            "name": "Play together",
+            "type": "INSTANCE",
+            "id": "166:70144",
+            "name": "How to play / Play together",
             "w": 300,
-            "h": 186,
+            "h": 335,
             "wSize": "fill",
             "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/4",
-              "strokesIncluded": true
+            "component": "Zumpo/How to play",
+            "componentId": "163:65908",
+            "props": {
+              "Step 3": "You only ever see the step before yours.",
+              "Step 4": "The host shows every chain at the end. Your score is the hearts your entries get.",
+              "Step 2": "Then draw the line you are given, or say in words what the drawing shows.",
+              "Step 1": "Everyone starts a chain by writing a line: anything drawable.",
+              "Goal": "Pass a line round the table as drawings and words, and watch it change.",
+              "Show step 4": true,
+              "Heading": "Play together"
             },
-            "children": [
+            "overrides": [
               {
-                "type": "TEXT",
-                "id": "162:101400",
-                "name": "Label",
-                "w": 92,
-                "h": 20,
-                "wSize": "hug",
-                "hSize": "hug",
-                "text": "Play together",
-                "textStyle": "Zumpo/Label",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "162:101401",
-                "name": "Rules at a glance",
-                "w": 300,
-                "h": 162,
-                "wSize": "fill",
-                "hSize": "hug",
-                "text": "3–8 players\nUp to 6 steps: write, then draw and describe in turn\n30s to write · 60s to draw · 30s to describe\nThe host steps through the reveal",
-                "font": "DM Sans Regular",
-                "size": 16,
-                "lineHeight": "25px",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
+                "path": ".",
+                "height": 335,
+                "width": 300
               }
             ]
           },

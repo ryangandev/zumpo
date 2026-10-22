@@ -8,9 +8,6 @@ export const COMPARE_DIR = path.join(ROOT, 'design/compare');
 /** Screens no state of the app shows, and why. */
 const NOT_CAPTURED: Record<string, string> = {
   M06: 'A round resolves the moment the last player locks in, so "everyone locked" is never on screen.',
-  T01: 'Play solo deals the first hand at once, so there is no start screen; the frame is to go from Figma.',
-  TS01: 'Play solo deals the table at once, so there is no start screen; the frame is to go from Figma.',
-  SN01: 'Play solo deals the cards at once, so there is no start screen; the frame is to go from Figma.',
   SN14: 'Not a page: Snap’s game intro and home card side by side, which the game page and Home show in place.',
   GM21: 'Not a page: every state a Gomoku point can show, side by side, which the boards in GM03-GM19 show in place.',
 };
@@ -44,7 +41,6 @@ const CONTENT: Record<string, string> = {
   SN06: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN07: 'The chat starts with the room’s join messages, which Figma leaves out.',
   SN08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN09: 'Between games a player may move to the spectator seats, a button no Figma screen has yet.',
   SN13: 'Every room shows its spectators a banner and a Watching panel, which no Figma screen has yet; the chat starts with the join messages.',
   LD07: 'Liar’s Dice’s description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
   LD08: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and two lines of talk.',
@@ -65,8 +61,8 @@ const CONTENT: Record<string, string> = {
   CB09: 'The chat holds the game so far, from the start and the first code on; Figma’s example has three lines.',
   CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
   CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
+  PH08: 'Figma crops the page to the phone’s screen, the capture runs on to On this device; Chromium’s touch emulation keeps a fine pointer, so it shows the mouse’s hint where a phone shows Place stone.',
   CB12: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
-  CB21: 'Between games a player may move to the spectator seats, a button no Figma screen has yet.',
 };
 
 interface Screen {

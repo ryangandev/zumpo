@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1550,
     "w": 1440,
-    "h": 888,
+    "h": 808,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Level 4 of 5",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -90,7 +92,7 @@
         "id": "61:74897",
         "name": "Board & room",
         "w": 1312,
-        "h": 718,
+        "h": 638,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -103,7 +105,7 @@
             "id": "61:74898",
             "name": "Board stage",
             "w": 944,
-            "h": 718,
+            "h": 534,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -143,7 +145,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -162,7 +165,7 @@
                 "id": "61:74900",
                 "name": "Board panel",
                 "w": 944,
-                "h": 610,
+                "h": 426,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -264,14 +267,13 @@
                     "id": "61:75008",
                     "name": "Pile",
                     "w": 894,
-                    "h": 400,
+                    "h": 216,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
                     "layout": {
-                      "mode": "column",
+                      "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
-                      "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -295,17 +297,16 @@
                         "type": "FRAME",
                         "id": "61:75011",
                         "name": "Trail",
-                        "w": 894,
-                        "h": 168,
+                        "w": 710,
+                        "h": 216,
                         "wSize": "fill",
-                        "hSize": "hug",
+                        "hSize": "fill",
                         "clip": true,
                         "layout": {
                           "mode": "row",
                           "gap": "$Zumpo · UI:space/8",
                           "wrap": true,
                           "crossGap": "$Zumpo · UI:space/8",
-                          "justify": "center",
                           "align": "center",
                           "strokesIncluded": true
                         },
@@ -654,6 +655,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -887,7 +891,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Level 3 cleared!",
+                      "Message": "Level 3 cleared.",
                       "Kind": "Score"
                     }
                   },
@@ -905,7 +909,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Level 4 cleared without a slip: a life back!",
+                      "Message": "Level 4 cleared without a slip: a life back.",
                       "Kind": "Score"
                     }
                   },

@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 150,
     "w": 1440,
-    "h": 582,
+    "h": 574,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Hand 3 of 10",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "40:40650",
         "name": "Board & room",
         "w": 1312,
-        "h": 412,
+        "h": 404,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -157,7 +159,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -166,7 +169,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "0:39",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -274,11 +277,11 @@
             "id": "40:40761",
             "name": "Run sidebar",
             "w": 344,
-            "h": 412,
+            "h": 404,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [

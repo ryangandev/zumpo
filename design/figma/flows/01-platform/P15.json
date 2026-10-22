@@ -51,7 +51,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Round 2 of 2",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           }
         ]
@@ -160,6 +161,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -379,15 +383,15 @@
                   "type": "INSTANCE",
                   "id": "I39:21388;35:13437;163:66256",
                   "name": "Action / Full rules",
-                  "w": 130,
+                  "w": 132,
                   "h": 48,
                   "wSize": "hug",
                   "component": "Zumpo/Button",
                   "variant": {
-                    "Style": "Quiet",
+                    "Style": "Secondary",
                     "State": "Default"
                   },
-                  "componentId": "4:21",
+                  "componentId": "4:18",
                   "props": {
                     "Icon": "Zumpo/Icon / Glyph=chevron-down",
                     "Show icon": true,
@@ -397,7 +401,7 @@
                     {
                       "path": ".",
                       "height": 48,
-                      "width": 130
+                      "width": 132
                     }
                   ]
                 }

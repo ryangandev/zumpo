@@ -14,7 +14,7 @@
     "x": 1510,
     "y": 150,
     "w": 390,
-    "h": 1540,
+    "h": 1623,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -250,7 +250,7 @@
         "id": "120:119709",
         "name": "How to play",
         "w": 350,
-        "h": 412,
+        "h": 495,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -282,63 +282,24 @@
             "autoResize": "height"
           },
           {
-            "type": "TEXT",
-            "id": "120:119711",
-            "name": "Choose a word, draw it, and race to guess. Fast guesses earn more poin",
-            "w": 304,
-            "h": 75,
-            "hSize": "hug",
-            "text": "Take turns drawing a word while everyone else races to guess it in the chat. Faster guesses score more.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "FRAME",
-            "id": "120:119712",
-            "name": "Play together",
+            "type": "INSTANCE",
+            "id": "166:69819",
+            "name": "How to play / Play together",
             "w": 300,
-            "h": 161,
+            "h": 335,
             "wSize": "fill",
             "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/4",
-              "strokesIncluded": true
+            "component": "Zumpo/How to play",
+            "componentId": "163:65908",
+            "props": {
+              "Show step 4": true,
+              "Heading": "Play together"
             },
-            "children": [
+            "overrides": [
               {
-                "type": "TEXT",
-                "id": "120:119713",
-                "name": "Label",
-                "w": 92,
-                "h": 20,
-                "wSize": "hug",
-                "hSize": "hug",
-                "text": "Play together",
-                "textStyle": "Zumpo/Label",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "120:119714",
-                "name": "2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-                "w": 300,
-                "h": 137,
-                "wSize": "fill",
-                "hSize": "hug",
-                "text": "2–8 players\n1–4 rounds, everyone draws once a round\n15s to pick a word · 90s to draw\nThe answer shows for 10s",
-                "font": "DM Sans Regular",
-                "size": 16,
-                "lineHeight": "25px",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
+                "path": ".",
+                "height": 335,
+                "width": 300
               }
             ]
           },

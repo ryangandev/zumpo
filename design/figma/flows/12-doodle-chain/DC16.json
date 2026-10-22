@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 4082,
     "w": 390,
-    "h": 537,
+    "h": 569,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Step 1 of 4",
+          "Phase": "Maya’s room · Step 1 of 4",
           "Game": "Doodle Chain"
         },
         "overrides": [
@@ -131,7 +131,7 @@
         "id": "162:102931",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 108,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -149,24 +149,24 @@
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 108,
             "width": 350
           },
           {
-            "path": "Text / Answer",
+            "path": "Top / Text / Answer",
             "counterAxisAlignItems": "MIN"
           },
           {
-            "path": "Text / Answer / Main",
+            "path": "Top / Text / Answer / Main",
             "layoutGrow": 1,
             "textAutoResize": "HEIGHT"
           },
           {
-            "path": "Text / Eyebrow / Meta",
+            "path": "Bottom / Meta",
             "visible": false
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "left",

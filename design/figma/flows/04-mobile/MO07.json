@@ -14,7 +14,7 @@
     "x": 1020,
     "y": 4254,
     "w": 390,
-    "h": 688,
+    "h": 710,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Round 2 of 2",
+          "Phase": "Maya’s room · Round 2 of 2",
           "Game": "Draw & Guess"
         },
         "overrides": [
@@ -129,7 +129,7 @@
         "id": "27:22234",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 86,
+        "h": 108,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -146,7 +146,7 @@
         "overrides": [
           {
             "path": ".",
-            "height": 86,
+            "height": 108,
             "width": 350
           }
         ]

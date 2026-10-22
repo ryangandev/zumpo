@@ -14,7 +14,7 @@
     "x": 3610,
     "y": 2965,
     "w": 390,
-    "h": 637,
+    "h": 657,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Hand 3 of 5",
+          "Phase": "Maya’s room · Hand 3 of 5",
           "Game": "Make 24"
         }
       },
@@ -75,7 +75,7 @@
         "id": "40:44378",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -87,26 +87,27 @@
         "props": {
           "Main": "Make 24",
           "Category": false,
-          "Meta": "Maya solved it",
+          "Meta": "1 player solved it",
           "Label": "Hand 3 of 5"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to solve",
