@@ -4,6 +4,8 @@ import { Fit } from './fit';
 
 /** The box Fit is given. */
 const GIVEN = 300;
+/** The room around Fit's box, which hugs its words up to it. */
+let room = GIVEN;
 /** Each character's width unscaled. */
 const CHAR = 10;
 /**
@@ -23,18 +25,38 @@ function wordsWidth(element: HTMLElement) {
   return natural * scale + (scale < 1 ? rounding : 0);
 }
 
+/** Every ResizeObserver's callback with what it watches. */
+let observers: { callback: () => void; watched: Element[] }[] = [];
+
 beforeEach(() => {
   rounding = 0;
+  room = GIVEN;
+  observers = [];
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      watched: Element[] = [];
+      constructor(callback: () => void) {
+        observers.push({ callback, watched: this.watched });
+      }
+      observe(target: Element) {
+        this.watched.push(target);
+      }
+      unobserve() {}
+      disconnect() {}
+    },
+  );
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     function (this: HTMLElement) {
-      const inside = this.firstElementChild as HTMLElement | null;
-      // The words; the piece, never wider than its box; the box.
+      const words = this.querySelector<HTMLElement>('[data-testid="words"]');
+      // The words; the piece and the box, as wide as the words up to the
+      // room; the room.
       const width =
         this.dataset.testid === 'words'
           ? wordsWidth(this)
-          : inside?.dataset.testid === 'words'
-            ? Math.min(wordsWidth(inside), GIVEN)
-            : GIVEN;
+          : words && this.dataset.testid !== 'room'
+            ? Math.min(wordsWidth(words), room)
+            : room;
       return {
         left: 0,
         right: width,
@@ -47,7 +69,10 @@ beforeEach(() => {
   );
 });
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 
 const line = (text: string) => (
   <Fit align="start">
@@ -75,5 +100,19 @@ describe('Fit', () => {
     await act(async () => rerender(line('x'.repeat(60))));
     expect(zoom()).toBeCloseTo(0.5);
     expect(wordsWidth(words())).toBeLessThanOrEqual(GIVEN);
+  });
+
+  it('scales its words up again when the room around a hugging box grows', () => {
+    render(<div data-testid="room">{line('x'.repeat(40))}</div>);
+    expect(zoom()).toBeCloseTo(0.75);
+    // The box hugs the scaled words, so only the room around it changes.
+    room = 600;
+    const grown = screen.getByTestId('room');
+    act(() => {
+      for (const { callback, watched } of observers) {
+        if (watched.includes(grown)) callback();
+      }
+    });
+    expect(zoom()).toBe(1);
   });
 });

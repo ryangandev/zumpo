@@ -39,6 +39,10 @@ export function Fit({ children, align = 'center', className }: FitProps) {
     const observer = new ResizeObserver(fit);
     observer.observe(outer);
     observer.observe(inner);
+    // A box that hugs its piece, as a flex item sized by its content does,
+    // keeps the scaled piece's width when the room around it grows, so it
+    // never says so: the room is watched too.
+    if (outer.parentElement) observer.observe(outer.parentElement);
     // The piece never grows past its box, so content that changes while too
     // wide, as words in another language or in a font that has just come,
     // leaves its size as it was: those are watched for themselves.
