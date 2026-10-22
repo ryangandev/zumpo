@@ -20,6 +20,7 @@ import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { HIDDEN } from '../../../shared/minesweeper';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
 import { Board } from './board';
@@ -107,6 +108,7 @@ function BetweenGames({ room }: { room: Room }) {
         />
         <Minefield
           room={room}
+          fitHeight="result"
           showPicks={false}
           standings={
             !oneColumn && (
@@ -151,6 +153,7 @@ function Round({ room }: { room: Room }) {
       />
       <Minefield
         room={room}
+        fitHeight="room"
         showPicks={state.phase === 'reveal'}
         onPick={
           canPick
@@ -167,20 +170,24 @@ function Round({ room }: { room: Room }) {
  * only while the round is revealed (MO13), so the next pick (MO11, MO12)
  * keeps the board alone on screen. A finished game's standings already
  * count its last round, so they take its place under the board, or on a
- * phone the board stands alone under them.
+ * phone the board stands alone under them. On a desktop the panel ends
+ * inside the window, under the turn bar or the result (`fitHeight`).
  */
 function Minefield({
   room,
   showPicks,
   onPick,
   standings,
+  fitHeight = false,
 }: {
   room: Room;
   showPicks: boolean;
   onPick?: (index: number) => void;
   /** A finished game's standings, in the last round's place. */
   standings?: ReactNode;
+  fitHeight?: FitHeight;
 }) {
+  const panel = useFitHeight<HTMLDivElement>(fitHeight);
   const m = useMessages();
   const { state } = room;
   const phone = useMediaQuery(PHONE);
@@ -203,7 +210,7 @@ function Minefield({
       : state.round - 1;
 
   return (
-    <div className={cx(styles.minefield, playColumn)}>
+    <div ref={panel} className={cx(styles.minefield, playColumn)}>
       <div className={cx(styles.boardPanel, playColumn)}>
         <Board
           state={state}

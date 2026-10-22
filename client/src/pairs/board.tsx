@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { PairsCard, type PairsCardSize, type PairsCardState } from '../ui';
 import { cx } from '../ui/cx';
-import { useFitHeight } from '../shell/fit-height';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages } from '../i18n';
@@ -63,15 +63,15 @@ export function PairsGrid({ cards, onFlip, inPlay = true }: PairsGridProps) {
 }
 
 /**
- * The paper panel a board is played on; bare on a phone. On your own,
- * `fitHeight` keeps the whole board inside the window.
+ * The paper panel a board is played on; bare on a phone. `fitHeight` keeps
+ * the whole board inside the window, on your own or in a room (useFitHeight).
  */
 export function BoardPanel({
   children,
   fitHeight = false,
 }: {
   children: ReactNode;
-  fitHeight?: boolean;
+  fitHeight?: FitHeight;
 }) {
   const ref = useFitHeight<HTMLDivElement>(fitHeight);
   return (

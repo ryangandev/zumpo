@@ -1,11 +1,13 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { onPhone } from '../tests/phone';
-import { useFitHeight } from './fit-height';
+import { KeptScale, useFitHeight, type FitHeight } from './fit-height';
 
 /** Where the board starts on the page, and the footer under it. */
 let top = 100;
 let below = 40;
+/** What comes under the board in its column, such as a room's standings. */
+let after = 0;
 
 /** The board's height unscaled: 1000 px of rows and keys, as laid out. */
 let natural = 1000;
@@ -29,22 +31,25 @@ function setWindowHeight(height: number) {
 
 function Board({
   layout,
-  underBar = false,
+  fit = true,
 }: {
   layout?: string;
-  underBar?: boolean;
+  fit?: FitHeight;
 }) {
-  const ref = useFitHeight<HTMLDivElement>(true, layout, underBar);
+  const ref = useFitHeight<HTMLDivElement>(fit, layout);
   return <div ref={ref} data-testid="board" />;
 }
 
-/** A room's turn bar, then its board. */
-function UnderBar() {
+/**
+ * A room's page: its turn bar, then its board, and whatever comes under the
+ * board at the end, then the page's foot.
+ */
+function Room({ fit = 'room' }: { fit?: FitHeight }) {
   return (
-    <div>
+    <main data-testid="main">
       <div data-testid="bar" />
-      <Board underBar />
-    </div>
+      <Board fit={fit} />
+    </main>
   );
 }
 
@@ -100,26 +105,28 @@ beforeEach(() => {
   side = 0;
   top = 100;
   below = 40;
+  after = 0;
   observed = [];
   watched = new Map();
   frames = [];
   setWindowHeight(720);
-  // jsdom lays nothing out: the board is as tall as its zoom makes it, and
-  // the page ends a footer below it.
+  // jsdom lays nothing out: the board is as tall as its zoom makes it, what
+  // comes after it in its column follows, and the page ends a footer below.
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     function (this: HTMLElement) {
       const played = natural * zoomOf(board());
       const height = {
         board: played,
-        column: played,
+        column: played + after,
+        main: played + after,
         side,
-        row: Math.max(played, side),
+        row: Math.max(played + after, side),
       }[this.dataset.testid ?? ''];
       return new DOMRect(0, top, 600, height ?? 0);
     },
   );
   vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(
-    () => top + Math.max(natural * zoomOf(board()), side) + below,
+    () => top + Math.max(natural * zoomOf(board()) + after, side) + below,
   );
   vi.stubGlobal(
     'ResizeObserver',
@@ -188,8 +195,81 @@ describe('useFitHeight', () => {
     expect(zoomOf(board())).toBe(zoom);
   });
 
+  it('fits a room board as a board on your own, to the page foot', () => {
+    render(<Room />);
+    const zoom = zoomOf(board());
+    expect(endsInWindow()).toBe(true);
+    expect(zoom).toBeGreaterThan(0.575);
+    expect(zoom).toBeLessThanOrEqual(0.579);
+  });
+
+  it('makes no room in a room for what comes under the board at the end', () => {
+    // The standings under a finished board scroll with the page.
+    after = 300;
+    render(<Room />);
+    expect(zoomOf(board())).toBeGreaterThan(0.575);
+  });
+
+  it('gives a room board drawn anew at the end the scale the game had', () => {
+    const kept = { current: null };
+    const { unmount } = render(
+      <KeptScale value={kept}>
+        <Room />
+      </KeptScale>,
+    );
+    const zoom = zoomOf(board());
+    expect(zoom).toBeLessThan(1);
+    unmount();
+
+    // The finished board is shorter, without the strip that was under it,
+    // and would fit at a larger scale.
+    natural = 800;
+    render(
+      <KeptScale value={kept}>
+        <Room fit="result" />
+      </KeptScale>,
+    );
+    expect(zoomOf(board())).toBe(zoom);
+    // It holds the scale as it is measured again, until the window changes.
+    act(() => observed.forEach((callback) => callback([], {} as never)));
+    expect(zoomOf(board())).toBe(zoom);
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    expect(zoomOf(board())).toBeGreaterThan(zoom);
+    expect(endsInWindow()).toBe(true);
+  });
+
+  it('measures a finished room board afresh in another window, or with none kept', () => {
+    const kept = { current: null };
+    const { unmount } = render(
+      <KeptScale value={kept}>
+        <Room />
+      </KeptScale>,
+    );
+    unmount();
+    setWindowHeight(1400);
+    const { unmount: gone } = render(
+      <KeptScale value={kept}>
+        <Room fit="result" />
+      </KeptScale>,
+    );
+    expect(board().style.zoom).toBe('');
+    gone();
+
+    // Somebody who came in to watch the results.
+    setWindowHeight(720);
+    render(
+      <KeptScale value={{ current: null }}>
+        <Room fit="result" />
+      </KeptScale>,
+    );
+    expect(endsInWindow()).toBe(true);
+    expect(zoomOf(board())).toBeGreaterThan(0.575);
+  });
+
   it('measures a room board again a frame after the bar over it grows', () => {
-    render(<UnderBar />);
+    render(<Room />);
     const zoom = zoomOf(board());
 
     // The turn bar takes a second line for its hints and moves the board

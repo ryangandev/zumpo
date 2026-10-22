@@ -171,7 +171,7 @@ function Round({
           {...turnBar(room, seconds, mine, phone, m)}
           hintRowBelow={HINT_ROW_BELOW}
         />
-        <BoardPanel>
+        <BoardPanel fitHeight="room">
           <Side room={room} />
         </BoardPanel>
       </>
@@ -239,7 +239,7 @@ function Round({
         {...turnBar(room, seconds, mine, phone, m)}
         hintRowBelow={HINT_ROW_BELOW}
       />
-      <BoardPanel>
+      <BoardPanel fitHeight="room">
         <div className={cx(styles.table, !done && playColumn)}>
           <PlayArea
             rows={rows}

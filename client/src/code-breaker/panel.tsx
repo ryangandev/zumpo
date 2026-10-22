@@ -2,14 +2,14 @@ import { useMessages } from '../i18n';
 import type { ReactNode } from 'react';
 import { LetterTile } from '../ui';
 import { cx } from '../ui/cx';
-import { useFitHeight } from '../shell/fit-height';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import styles from './panel.module.css';
 
 /**
- * The paper panel a board is played on (CB02-CB12); bare on a phone. On your
- * own, `fitHeight` keeps the board and its keys inside the window, measured
- * afresh when `layout` changes (useFitHeight).
+ * The paper panel a board is played on (CB02-CB12); bare on a phone.
+ * `fitHeight` keeps the board and its keys inside the window, on your own or
+ * in a room, measured afresh when `layout` changes (useFitHeight).
  */
 export function BoardPanel({
   children,
@@ -17,7 +17,7 @@ export function BoardPanel({
   layout,
 }: {
   children: ReactNode;
-  fitHeight?: boolean;
+  fitHeight?: FitHeight;
   /** Where the keys are, such as beside the board on a short wide window. */
   layout?: unknown;
 }) {

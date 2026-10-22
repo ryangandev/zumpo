@@ -92,7 +92,7 @@ function BetweenGames({ room }: { room: Room }) {
     // place under the result, in the turn bar's, with the standings under
     // it and what comes next beside it.
     const board = (
-      <BoardPanel>
+      <BoardPanel fitHeight="result">
         <PairsGrid cards={cardsOf(state.cards)} inPlay={false} />
       </BoardPanel>
     );
@@ -145,7 +145,7 @@ function Turn({ room }: { room: Room }) {
         {...turnBar(room, seconds, phone, m)}
         hintRowBelow={HINT_ROW_BELOW}
       />
-      <BoardPanel>
+      <BoardPanel fitHeight="room">
         <PairsGrid
           cards={cardsOf(state.cards)}
           onFlip={
