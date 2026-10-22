@@ -47,7 +47,6 @@ export const trios = {
   newCardsSoon: 'New cards soon',
   newCards: 'new cards',
   notTrio: 'Not a trio',
-  pickAgainSoon: 'Pick again soon',
   lockedOut: 'locked out',
   findTrio: 'Find a trio',
   pickThird: 'Pick a third card',

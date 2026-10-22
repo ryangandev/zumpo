@@ -45,7 +45,6 @@ export const trios: typeof en = {
   newCardsSoon: '马上补入新牌',
   newCards: '补入新牌',
   notTrio: '不成一组',
-  pickAgainSoon: '稍后再选',
   lockedOut: '暂时不能选牌',
   findTrio: '找出一组',
   pickThird: '再选第 3 张牌',

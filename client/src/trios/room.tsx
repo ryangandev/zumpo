@@ -14,13 +14,13 @@ import { LastTrio, TablePanel, TriosTable, type PlaceView } from './table';
 import { whyNotATrio } from './words';
 
 /**
- * The turn bar width under which its hints take a line of their own: the
- * widest of them, why three cards are not a trio, beside the lockout, with
- * 18-character names and its clock, in either language, needs this much
- * beside its main line, with 4 px to spare for a clock's digits and subpixel
- * text (TurnBar's hintRowBelow).
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, a long name finding a trio beside the new cards coming, with
+ * 18-character names and its clock, in either language, needs this much beside
+ * its main line, with 4 px to spare for a clock's digits and subpixel text
+ * (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 732;
+const HINT_ROW_BELOW = 746;
 
 type Room = RoomOf<TriosRoomState>;
 
@@ -257,12 +257,13 @@ function turnBar(
       countdown: clock(m.trios.newCards, true),
     };
   }
+  // The clock says how long the lockout lasts, so the reason, as long as
+  // "Two have two shapes and one has three.", has the line to itself.
   if (state.lockedOutMs > 0) {
     return {
       label: m.trios.notTrio,
       kind: 'status',
       main: whyNotATrio(state.myMiss, m) ?? m.trios.notTrio,
-      meta: m.trios.pickAgainSoon,
       countdown: clock(m.trios.lockedOut, false, lockedSeconds),
     };
   }
