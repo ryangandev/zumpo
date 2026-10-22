@@ -555,7 +555,7 @@ async function draw(drawer: Page) {
 async function wordOf(drawer: Page): Promise<string> {
   return (await drawer
     .getByRole('region', { name: 'Turn' })
-    .locator('[class*="_main_"]')
+    .locator('[aria-live="polite"] span')
     .first()
     .textContent())!.trim();
 }
@@ -1543,7 +1543,14 @@ test('a Liar’s Dice game', async ({ player }) => {
     }
 
     if (bids === 0) previous = null;
-    if (previous) after.set(previous, mover);
+    if (previous) {
+      // A seat that is out drops from the order: whoever now follows
+      // `previous` is the only one that does.
+      for (const [seat, next] of after) {
+        if (next === mover && seat !== previous) after.delete(seat);
+      }
+      after.set(previous, mover);
+    }
     previous = mover;
     const before = seatBefore(sam);
     const twoBefore = before && seatBefore(before);
@@ -1578,7 +1585,7 @@ test('a Liar’s Dice game', async ({ player }) => {
       continue;
     }
     // Then Ryan bids every die on the table until he is out, and the others
-    // call what the table does not hold, so it is Ryan who loses the dice.
+    // call what the table does not hold, so it is mostly Ryan who loses them.
     if (shown.has('LD10')) {
       const bid = await latestBid(mover);
       if (mover === ryan) await bluff(ryan);
@@ -2344,11 +2351,16 @@ async function placeAlone(page: Page, name: string, stone: 'black' | 'white') {
   const commit = page.getByRole('button', { name: 'Place stone' });
   // Either the click placed it, or it left a faint stone for Place stone.
   await expect(async () => {
-    if (!(await placed.isVisible()) && (await commit.isEnabled())) {
+    // On a desktop there is no Place stone button at all.
+    if (
+      !(await placed.isVisible()) &&
+      (await commit.count()) > 0 &&
+      (await commit.isEnabled())
+    ) {
       await commit.click();
     }
     await expect(placed).toBeVisible({ timeout: 1_000 });
-  }).toPass();
+  }).toPass({ timeout: 15_000 });
 }
 
 /** Points two apart each way, where a player's stones never make five. */

@@ -77,7 +77,8 @@ export async function bidStands(
 /**
  * A move that sets up `friend` to meet a bid that stands on the friend's own
  * dice, so calling Liar on it is sure to cost the friend a die. Whoever sits
- * just `before` the friend bids the smallest such raise, when there is one;
+ * just `before` the friend bids, on the lowest face that has one, the
+ * smallest raise the friend's dice make, when there is one;
  * anybody else calls Liar on a bid in front of them, so a fresh round starts
  * and the next one may open that way. Only the test reads the friend's page:
  * no page is told anybody else's dice.
@@ -156,13 +157,25 @@ export async function move(page: Page): Promise<'bid' | 'call'> {
   return raise(page);
 }
 
-/** Sets the picker to `count` dice showing `face`, from where it opened. */
+/**
+ * Sets the picker to exactly `count` dice showing `face`. A face keeps the
+ * larger of the count shown and its own smallest, so the count may need More
+ * or Fewer; the picker shows what was reached, and it is checked before the
+ * bid is placed.
+ */
 export async function pickBid(page: Page, count: number, face: number) {
-  await page.getByRole('radio', { name: `${face}s`, exact: true }).click();
+  const faceButton = page.getByRole('radio', { name: `${face}s`, exact: true });
+  await faceButton.click();
   const shown = page.getByRole('status', { name: 'How many' });
-  for (let more = count - Number(await shown.textContent()); more > 0; more--) {
+  const shownCount = async () => Number(await shown.textContent());
+  while ((await shownCount()) < count) {
     await page.getByRole('button', { name: 'More' }).click();
   }
+  while ((await shownCount()) > count) {
+    await page.getByRole('button', { name: 'Fewer' }).click();
+  }
+  await expect(shown).toHaveText(String(count));
+  await expect(faceButton).toBeChecked();
 }
 
 /** A bid on every die on the table showing one face: somebody will call it. */
