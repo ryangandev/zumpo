@@ -19,6 +19,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import {
   EndedEarlyPanel,
   NextGameUnderBoard,
+  RESULT_TITLE,
   ResultsFrame,
   WaitingPanel,
 } from '../room/panels';
@@ -114,6 +115,7 @@ function BetweenGames({ room }: { room: Room }) {
             kind="status"
             main={title}
             meta={detail}
+            headingId={RESULT_TITLE}
           />
         )}
         {/* HU07, HU08: the last pile stays on the table. */}
@@ -140,7 +142,7 @@ function BetweenGames({ room }: { room: Room }) {
         )}
         <NextGameUnderBoard />
         {!phone && (
-          <section className={styles.summary} aria-label={title}>
+          <section className={styles.summary} aria-labelledby={RESULT_TITLE}>
             <TeamResult summary={summary} />
           </section>
         )}

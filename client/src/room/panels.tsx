@@ -550,6 +550,13 @@ export function ResultsActions({
  * A finished game's panel: what happened, the game's own account of it, and
  * what comes next (`ResultsActions`).
  */
+/**
+ * The id of a finished game's result heading: a results card's title, or
+ * the turn bar's main line where the result is said there (`ResultBar`).
+ * The room hands it the focus as a game ends (RoomLayout).
+ */
+export const RESULT_TITLE = 'results-title';
+
 export function ResultsFrame({
   title,
   detail,
@@ -564,9 +571,9 @@ export function ResultsFrame({
   starting: boolean;
 }) {
   return (
-    <section className={styles.results} aria-labelledby="results-title">
+    <section className={styles.results} aria-labelledby={RESULT_TITLE}>
       <div className={styles.resultHeading}>
-        <h2 id="results-title" className={styles.title}>
+        <h2 id={RESULT_TITLE} className={styles.title} tabIndex={-1}>
           {title}
         </h2>
         <p className={styles.body}>{detail}</p>
@@ -775,6 +782,7 @@ export function ResultBar<Summary extends GameSummary>({
       main={title}
       meta={detail}
       stackOnPhone={stackOnPhone}
+      headingId={RESULT_TITLE}
     />
   );
 }

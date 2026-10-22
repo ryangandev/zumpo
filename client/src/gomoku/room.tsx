@@ -17,6 +17,7 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
 import {
+  RESULT_TITLE,
   ResultBar,
   ResultsActions,
   useResultsNote,
@@ -508,6 +509,7 @@ function resultBar(
     label: m.gomoku.gameOver,
     kind: 'status',
     main: resultTitle(room, summary, m, true),
+    headingId: RESULT_TITLE,
     meta:
       said ??
       (summary.ending === 'draw'

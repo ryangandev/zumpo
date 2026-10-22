@@ -89,6 +89,7 @@ Decisions from the design review rounds (their reports are in git history):
   The result is a Status turn bar labelled Game over in the turn bar's place (`ResultBar`), what comes next heads the side column on paper of its own (`NextGamePanel`, through RoomLayout's `nextBeside`), and the standings go under the board (`StandingsSection`).
   So a newcomer sees the result and Play again or Ready at once, without scrolling, at 1440 × 900.
   In one column, under 1024 px, the side column is under the whole stage, so what comes next stands under the board instead, over the standings (`NextGameUnderBoard`).
+  The turn bar's main line is then the stage's level 2 heading (TurnBar `headingId`), and as a game ends it takes the focus with no ring until a key, as a result on your own does, unless the viewer is typing in a field or in a dialog.
   Minesweeper and Make 24 put the standings in the board's own panel, as a round's results are; Gomoku leaves them out, since its seats say who won, and puts what comes next in its table's actions place, where Resign was; Hush puts the levels and the hands still held under the pile.
   A phone keeps the results card over the board (`ResultsPanel`), with Play again in its first screen.
 - A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.

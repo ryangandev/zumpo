@@ -69,7 +69,13 @@ test('a Gomoku board keeps its size and place from a game to its results on a de
   // The result and what comes next, at once.
   await inSight(turnOf(white).getByText(/wins with five in a row/));
   await inSight(maya.getByRole('button', { name: 'Play again' }));
-  await inSight(leo.getByRole('button', { name: 'Ready', exact: true }));
+  await inSight(leo.getByRole('button', { name: 'Ready', exact: true })); // The result is the stage's heading and takes the focus, for the players
+  // and the spectator alike.
+  for (const page of pages) {
+    await expect(
+      turnOf(page).getByRole('heading', { level: 2, name: /five in a row/ }),
+    ).toBeFocused();
+  }
 });
 
 const minefieldOf = (page: Page) =>
@@ -120,4 +126,12 @@ test('a Minesweeper board keeps its size and place from a game to its results on
   await inSight(turnOf(sam).getByText(/wins with|tie with/));
   await inSight(maya.getByRole('button', { name: 'Play again' }));
   await inSight(leo.getByRole('button', { name: 'Ready', exact: true }));
+  for (const page of pages) {
+    await expect(
+      turnOf(page).getByRole('heading', {
+        level: 2,
+        name: /wins? with|tie with/,
+      }),
+    ).toBeFocused();
+  }
 });
