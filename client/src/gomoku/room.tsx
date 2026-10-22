@@ -29,6 +29,14 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, the last move, by name, beside whose turn it is, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 745;
+
 type Room = RoomOf<GomokuRoomState>;
 
 /** A point the viewer picked, good while the game is still at that move. */
@@ -146,6 +154,7 @@ export function GomokuRoom() {
             turn={
               playing && (
                 <TurnBar
+                  hintRowBelow={HINT_ROW_BELOW}
                   {...turnBar(room, seconds, previewing !== null, phone, m)}
                   // Its words fit one row, so the board keeps the height.
                   stackOnPhone={false}

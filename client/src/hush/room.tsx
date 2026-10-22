@@ -262,7 +262,7 @@ function Level({ room }: { room: Room }) {
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, m)} />
+      <TurnBar {...turnBar(room, seconds, m)} hintRowBelow={873} />
       <TablePanel>
         <TableHead {...tableHead(state, m)} />
         <Pile

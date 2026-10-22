@@ -52,6 +52,13 @@ import {
 } from './records';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, what three guesses rule in and out, in either language, needs
+ * this much beside its main line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 665;
+
 const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
 
@@ -160,7 +167,11 @@ function SoloStage({
       phase={phase}
       stage={
         <>
-          <TurnBar {...bar} labelOnPhone={false} />
+          <TurnBar
+            {...bar}
+            labelOnPhone={false}
+            hintRowBelow={HINT_ROW_BELOW}
+          />
           {/* Keyed on the window's layout, not on whether the keys are
               beside the board now, so the board grows back when the window
               makes room, but not when the keys go at the end. */}

@@ -51,6 +51,17 @@ export interface TurnBarProps {
    * height in every phase, so the bar does not change height between them.
    */
   wordLine?: boolean;
+  /**
+   * The bar width, in px, under which a desktop bar gives the meta a line of
+   * its own under the main line, rather than set it beside the main line as
+   * Figma draws it: each game's, from its longest hint beside its longest
+   * main line, with 18-character names, in either language, so no hint is
+   * cut beside it. Set by the width alone, never by what a phase says, so the
+   * bar keeps one height through a game at any one width. 0, the default,
+   * never; Infinity always, as Doodle Chain's, whose main line is the last
+   * player's words.
+   */
+  hintRowBelow?: number;
   /** The bar's region, for a page that hands it the focus. */
   ref?: Ref<HTMLElement>;
   className?: string;
@@ -80,12 +91,19 @@ export function TurnBar({
   labelOnPhone = true,
   stackOnPhone = true,
   wordLine = false,
+  hintRowBelow = 0,
   ref,
   className,
 }: TurnBarProps) {
   const m = useMessages();
   const box = useRef<HTMLDivElement>(null);
-  const { phone, narrow, stacked: stackable } = usePhoneRow(box);
+  const {
+    phone,
+    narrow,
+    stacked: stackable,
+    below,
+  } = usePhoneRow(box, hintRowBelow);
+  const rowBelow = below && !phone;
   const stacked = stackable && stackOnPhone;
   const labelled = labelOnPhone || !narrow;
   const labelRef = useRef<HTMLSpanElement>(null);
@@ -96,6 +114,7 @@ export function TurnBar({
       className={cx(
         styles.container,
         phone ? styles.phone : styles.desktop,
+        rowBelow && styles.rowBelow,
         stacked && styles.narrow,
         stackable && !stackOnPhone && styles.oneRow,
         className,
@@ -124,9 +143,9 @@ export function TurnBar({
           <Fit align="start" className={styles.mainBox}>
             <span className={cx(styles.main, styles[kind])}>{main}</span>
           </Fit>
-          {/* On a desktop and at a phone's width the meta's line is kept
-              while it is empty. */}
-          {(meta || stacked || !phone) && (
+          {/* On a line of its own, at a phone's width or on a desktop under
+              hintRowBelow, the meta keeps its line while it is empty. */}
+          {(meta || stacked || rowBelow) && (
             <span className={styles.meta}>{meta}</span>
           )}
         </div>
@@ -216,29 +235,37 @@ const PHONE_WIDTH = 560;
  * a phone's width where the height can spare it: not on a short screen, as
  * a phone on its side, where the bar sits beside the board.
  */
-function usePhoneRow(box: RefObject<HTMLElement | null>): {
+function usePhoneRow(
+  box: RefObject<HTMLElement | null>,
+  hintRowBelow: number,
+): {
   phone: boolean;
   narrow: boolean;
   stacked: boolean;
+  /** Narrower than hintRowBelow, so a desktop bar gives the meta its line. */
+  below: boolean;
 } {
   const short = useMediaQuery(SHORT_SCREEN);
   const asked = useContext(CompactTurnBar);
   const [narrow, setNarrow] = useState(false);
+  const [below, setBelow] = useState(false);
   useLayoutEffect(() => {
     const element = box.current;
     if (!element) return;
     const measure = () => {
       const width = element.clientWidth;
       setNarrow(width > 0 && width <= PHONE_WIDTH);
+      setBelow(width > 0 && width < hintRowBelow);
     };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [box]);
+  }, [box, hintRowBelow]);
   return {
     phone: short || asked || narrow,
     narrow,
     stacked: narrow && !short && !asked,
+    below,
   };
 }

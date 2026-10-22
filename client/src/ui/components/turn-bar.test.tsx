@@ -94,17 +94,64 @@ describe('TurnBar', () => {
     expect(line()).toBeEmptyDOMElement();
   });
 
-  it('gives the meta a line of its own on a desktop, kept while it is empty', () => {
+  it('sets the meta beside the main line on a desktop, as Figma draws it', () => {
     barWidth(784);
     const { container, rerender } = render(bar());
     expect(container.firstElementChild!.className).toMatch(/desktop/);
     expect(container.firstElementChild!.className).not.toMatch(/phone/);
+    expect(container.firstElementChild!.className).not.toMatch(/rowBelow/);
     expect(line()).toHaveTextContent('Six guesses. Practice keeps no stats.');
 
+    // A game whose hints fit beside its main line at this width keeps one row.
     rerender(
-      <TurnBar label="Your turn" kind="status" main="Place a black stone" />,
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={745}
+      />,
+    );
+    expect(container.firstElementChild!.className).not.toMatch(/rowBelow/);
+    expect(line()).not.toBeInTheDocument();
+  });
+
+  it('gives the meta a line of its own on a desktop under the game’s width, kept while it is empty', () => {
+    barWidth(625);
+    const { container, rerender } = render(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        meta="Maximilian Fischer played D8"
+        hintRowBelow={745}
+      />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/rowBelow/);
+    expect(line()).toHaveTextContent('Maximilian Fischer played D8');
+
+    // Without a meta the line stays, so the board keeps its place between phases.
+    rerender(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={745}
+      />,
     );
     expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+
+    // Infinity, as Doodle Chain's, gives it the line at any width.
+    barWidth(1500);
+    rerender(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={Infinity}
+      />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/rowBelow/);
     expect(line()).toBeEmptyDOMElement();
   });
 

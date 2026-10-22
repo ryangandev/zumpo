@@ -11,6 +11,14 @@ import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { SnapBoard, type CardView } from './board';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, a long name taking a card beside the symbol it was, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 721;
+
 type Room = RoomOf<SnapRoomState>;
 type Marks = Partial<Record<number, SnapSpotMark>>;
 
@@ -157,7 +165,10 @@ function Play({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)} />
+      <TurnBar
+        {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <SnapBoard
         middle={{
           symbols: middle.symbols,

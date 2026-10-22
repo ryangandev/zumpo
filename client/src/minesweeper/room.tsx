@@ -17,6 +17,14 @@ import { cx } from '../ui/cx';
 import { Board } from './board';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, the names still picking, or a mine's risk, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 745;
+
 type Room = RoomOf<MinesweeperRoomState>;
 
 /** M01-M16: a Minesweeper room, before, during and after a game. */
@@ -93,7 +101,10 @@ function Round({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <Minefield
         room={room}
         showPicks={state.phase === 'reveal'}

@@ -13,6 +13,14 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { LastTrio, TablePanel, TriosTable, type PlaceView } from './table';
 import { whyNotATrio } from './words';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, a long name finding a trio beside its hint, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 713;
+
 type Room = RoomOf<TriosRoomState>;
 
 /** TS05-TS09, TS12: a Trios room, before, during and after a game. */
@@ -175,6 +183,7 @@ function Play({ room }: { room: Room }) {
   return (
     <>
       <TurnBar
+        hintRowBelow={HINT_ROW_BELOW}
         {...turnBar(
           room,
           picked.length,

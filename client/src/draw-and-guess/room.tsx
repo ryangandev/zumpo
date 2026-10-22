@@ -29,6 +29,14 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, a long name choosing a word beside its hint, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 769;
+
 type Room = RoomOf<DrawAndGuessRoomState>;
 
 /** D01-D15: a Draw & Guess room, before, during and after a game. */
@@ -304,6 +312,7 @@ function Turn({ room }: { room: Room }) {
   return (
     <>
       <TurnBar
+        hintRowBelow={HINT_ROW_BELOW}
         {...turnBar(room, seconds, drawerName, phone, m)}
         wordLine
         ref={turnBox}

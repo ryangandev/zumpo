@@ -11,6 +11,14 @@ import { fromViewer, Table, type TableSeat } from './table';
 import { bidLine, naming, revealBar, stood, type Naming } from './words';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, a long name's bid beside the round's hint, with
+ * 18-character names, in either language, needs this much beside its main
+ * line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 665;
+
 type Room = RoomOf<LiarsDiceRoomState>;
 
 /** LD08-LD12: a Liar's Dice room, before, during and after a game. */
@@ -152,7 +160,7 @@ function Turn({ room }: { room: Room }) {
     !room.spectating && (state.playerList[playerId]?.points ?? 0) === 0;
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, m)} />
+      <TurnBar {...turnBar(room, seconds, m)} hintRowBelow={HINT_ROW_BELOW} />
       <Table
         seats={seatsOf(state, m)}
         round={state.round}

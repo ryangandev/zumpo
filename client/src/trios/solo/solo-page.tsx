@@ -54,6 +54,13 @@ import {
 } from './run';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, what makes a trio, beside the count, in either language, needs
+ * this much beside its main line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 657;
+
 /** Where the best run and the best of each day are kept. */
 const BEST_KEY = 'trios:ten-trios';
 /** How many days of bests a finished run lists. */
@@ -168,6 +175,7 @@ function RunView({
         stage={
           <>
             <TurnBar
+              hintRowBelow={HINT_ROW_BELOW}
               label={m.trios.solo.progress(RUN_TRIOS, RUN_TRIOS)}
               kind="status"
               main={m.trios.solo.allFound(RUN_TRIOS)}
@@ -239,7 +247,10 @@ function RunView({
       leaveWarning={run.results.length > 0 ? m.trios.solo.leaveWarning : null}
       stage={
         <>
-          <TurnBar {...turnBar(run, now, label, m)} />
+          <TurnBar
+            {...turnBar(run, now, label, m)}
+            hintRowBelow={HINT_ROW_BELOW}
+          />
           <TablePanel fitHeight>
             <TriosTable
               cards={run.deal.table}

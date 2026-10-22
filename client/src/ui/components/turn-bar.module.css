@@ -110,30 +110,30 @@
   white-space: nowrap;
 }
 
-/* Desktop: the meta, often the only instruction on screen, has a line of
-   its own under the main line, where it wraps rather than being cut beside
-   a long main line at any width. The line is kept while there is no meta,
-   so the bar, and the board under it, keep their place from phase to
-   phase. */
-.desktop .bar {
+/* Desktop, narrower than a game's hints need beside its main line
+   (TurnBar's hintRowBelow): the meta, often the only instruction on screen,
+   has a line of its own under the main line, where it wraps rather than
+   being cut. The line is kept while there is no meta, so the bar, and the
+   board under it, keep their place from phase to phase. */
+.rowBelow .bar {
   grid-template-areas:
     'tag label clock'
     'main main clock'
     'meta meta meta';
 }
 
-.desktop .untagged {
+.rowBelow .untagged {
   grid-template-areas:
     'label label clock'
     'main main clock'
     'meta meta meta';
 }
 
-.desktop .answer {
+.rowBelow .answer {
   display: contents;
 }
 
-.desktop .answer > .mainBox {
+.rowBelow .answer > .mainBox {
   grid-area: main;
 }
 
@@ -142,7 +142,7 @@
   height: var(--zumpo-text-title-line);
 }
 
-.desktop .meta {
+.rowBelow .meta {
   grid-area: meta;
   min-height: var(--zumpo-text-small-line);
   overflow: visible;

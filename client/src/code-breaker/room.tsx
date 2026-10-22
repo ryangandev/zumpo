@@ -29,6 +29,14 @@ import { BoardPanel, PegLegend } from './panel';
 import { describeRow, PlayArea } from './play';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, who cracked it, by name, beside a score, with 18-character
+ * names, in either language, needs this much beside its main line (TurnBar's
+ * hintRowBelow).
+ */
+const HINT_ROW_BELOW = 625;
+
 type Room = RoomOf<CodeBreakerRoomState>;
 
 /**
@@ -162,7 +170,10 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <BoardPanel>
           <Side room={room} />
         </BoardPanel>
@@ -172,7 +183,10 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <RoundResults state={state} />
       </>
     );
@@ -248,7 +262,10 @@ function Round({
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, mine, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <BoardPanel>
         {done ? (
           // CB10, CB11: the pad gone, your board and the others side by side.

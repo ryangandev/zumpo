@@ -47,6 +47,13 @@ import {
 } from './run';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the
+ * widest of them, how to take a card, beside the count, in either language, needs
+ * this much beside its main line (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 585;
+
 /** Where the best run and the best of each day are kept. */
 const BEST_KEY = 'snap:thirty-cards';
 /** How many days of bests a finished run lists. */
@@ -195,6 +202,7 @@ function RunView({
         stage={
           <>
             <TurnBar
+              hintRowBelow={HINT_ROW_BELOW}
               label={m.snap.solo.progress(RUN_CARDS, RUN_CARDS)}
               kind="status"
               main={m.snap.solo.allTaken(RUN_CARDS)}
@@ -251,7 +259,10 @@ function RunView({
       }}
       stage={
         <>
-          <TurnBar {...turnBar(run, now, label, m)} />
+          <TurnBar
+            {...turnBar(run, now, label, m)}
+            hintRowBelow={HINT_ROW_BELOW}
+          />
           {board}
         </>
       }

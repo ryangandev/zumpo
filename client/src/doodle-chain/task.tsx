@@ -43,6 +43,12 @@ import type { Room as RoomOf } from '../room/room-context';
 import { EntryDrawing, textOf } from './chain';
 import styles from './task.module.css';
 
+/**
+ * The turn bar always gives its hint a line of its own, since its main line
+ * is the last player's words (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = Infinity;
+
 type Room = RoomOf<DoodleChainRoomState>;
 
 /** How often, at most, the words being typed reach the server. */
@@ -125,7 +131,11 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const task = room.spectating ? undefined : state.task;
   return (
     <>
-      <TurnBar {...turnBar(room, task, seconds, m)} wordLine />
+      <TurnBar
+        {...turnBar(room, task, seconds, m)}
+        wordLine
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       {state.phase === 'draw' && task && !task.sitsOut ? (
         <Drawing room={room} desk={desk} onDesk={onDesk} />
       ) : (
