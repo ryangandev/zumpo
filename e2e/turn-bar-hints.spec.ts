@@ -4,11 +4,11 @@ import { blackOf, place, turnOf as gomokuTurn } from './play/gomoku';
 import { solve } from './play/daily-word';
 import { solveHand } from './play/make-24';
 import { move, whoseTurn } from './play/liars-dice';
+import { startServer } from './own-server';
 import {
   pickMiss,
   pickTrio,
   readyToFind,
-  tableOf,
   turnOf as triosTurn,
 } from './play/trios';
 
@@ -47,16 +47,35 @@ interface Bar {
   below: number;
   row: boolean;
   cut: string[];
+  /** Whether the bar still says its phase's words, where a check names them. */
+  showing: boolean;
+  /** Whether the bar has the layout its width asks for: the hint row under its game's width. */
+  settled: boolean;
+}
+
+/** Words a phase's bar says, in each language, to tell it from the next. */
+interface Phase {
+  en: string;
+  zh: string;
 }
 
 /**
- * The bar as it stands. A label or meta is cut when its words are wider than
- * its box by any fraction of a pixel, as an ellipsis then shows: the whole
- * pixels of scrollWidth and clientWidth round a cut of under one away.
+ * The bar as it stands, read in one step, so a phase that ends between two
+ * reads cannot pass for a measured one. A label, main line or meta is cut
+ * when its words are wider than its box by any fraction of a pixel: the
+ * label and meta then end in an ellipsis, and the main line, scaled to its
+ * box (Fit), would run past it. The whole pixels of scrollWidth and
+ * clientWidth round a cut of under one away. It waits two frames first, so
+ * the bar's and Fit's ResizeObservers have answered the last resize.
  */
-const read = (page: Page): Promise<Bar> =>
-  barBox(page).evaluate((box) => {
-    const cut = ['label', 'meta'].flatMap((part) => {
+const read = (page: Page, phase?: Phase): Promise<Bar> =>
+  barBox(page).evaluate(async (box, phase) => {
+    for (let frame = 0; frame < 2; frame++) {
+      await new Promise((done) => requestAnimationFrame(done));
+    }
+    const zh = document.documentElement.lang.startsWith('zh');
+    const words = phase ? (zh ? phase.zh : phase.en) : '';
+    const cut = ['label', 'mainBox', 'meta'].flatMap((part) => {
       const el = box.querySelector<HTMLElement>(`[class*="_${part}_"]`);
       if (!el?.textContent) return [];
       const words = document.createRange();
@@ -69,13 +88,20 @@ const read = (page: Page): Promise<Bar> =>
           ]
         : [];
     });
+    const width = box.clientWidth;
+    const below = Number(box.getAttribute('data-hint-row-below'));
+    const row = /rowBelow/.test(box.className);
+    // A phone's bar, 560 px or less, never takes the desktop hint row.
+    const wanted = width > 560 && width < below;
     return {
-      width: box.clientWidth,
-      below: Number(box.getAttribute('data-hint-row-below')),
-      row: /rowBelow/.test(box.className),
+      width,
+      below,
+      row,
       cut,
+      showing: (box.textContent ?? '').includes(words),
+      settled: row === wanted,
     };
-  });
+  }, phase);
 
 /** Sizes the window until the bar is `width` wide. */
 async function barAt(page: Page, width: number) {
@@ -89,10 +115,18 @@ async function barAt(page: Page, width: number) {
   throw new Error(`no window gives a ${width} px bar`);
 }
 
-/** The hint is whole at the game's width, a pixel under it, and every window. */
-async function hintsWhole(page: Page, at: string) {
+/**
+ * The hint is whole at the game's width, a pixel under it, and every window;
+ * with a phase, every measure is taken while the bar says its words.
+ */
+async function hintsWhole(page: Page, at: string, phase?: Phase) {
   await expect(barBox(page)).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
+  const whole = async () => {
+    const { showing, settled, cut } = await read(page, phase);
+    return { showing, settled, cut };
+  };
+  const measured = { showing: true, settled: true, cut: [] };
   const { below } = await read(page);
   if (below > 0 && Number.isFinite(below)) {
     for (const [width, row] of [
@@ -106,25 +140,25 @@ async function hintsWhole(page: Page, at: string) {
           message: `${at}: ${row ? 'the hint’s own line' : 'one row'} at ${width} px`,
         })
         .toBe(row);
-      expect((await read(page)).cut, `${at} at a ${width} px bar`).toEqual([]);
+      await expect
+        .poll(whole, { message: `${at} at a ${width} px bar` })
+        .toEqual(measured);
     }
   }
   for (const width of WINDOWS) {
     await page.setViewportSize({ width, height: 900 });
     await expect
-      .poll(async () => (await read(page)).cut, {
-        message: `${at} at ${width}`,
-      })
-      .toEqual([]);
+      .poll(whole, { message: `${at} at ${width}` })
+      .toEqual(measured);
   }
 }
 
 /** Checks the bar as it is, in English and then in Chinese. */
-async function bothLanguages(page: Page, at: string) {
-  await hintsWhole(page, `${at} (en)`);
+async function bothLanguages(page: Page, at: string, phase?: Phase) {
+  await hintsWhole(page, `${at} (en)`, phase);
   await page.getByRole('radio', { name: '中文', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await hintsWhole(page, `${at} (zh)`);
+  await hintsWhole(page, `${at} (zh)`, phase);
   await page.getByRole('radio', { name: 'English', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -182,31 +216,38 @@ test('a Gomoku room keeps its hints whole and the page still', async ({
 test('a Trios room keeps its hints whole and the page still', async ({
   player,
 }) => {
-  test.setTimeout(120_000);
-  const [host, guest] = await room(player, 'trios', { seats: 2 });
-  await readyToFind(guest);
-  await expect(triosTurn(guest).getByText('Find a trio')).toBeVisible();
-  await bothLanguages(guest, 'searching');
-  await expect.poll(() => pageScroll(guest)).toBe(0);
-  // Its widest hint, beside a long name finding a trio, lasts the 2 s the
-  // trio stays on the table: the bar is at the game's width when it comes.
-  await barAt(guest, (await read(guest)).below);
-  const taken = await pickTrio(host);
-  await expect(
-    triosTurn(guest).getByText(`${LONG[0]} found a trio`),
-  ).toBeVisible();
-  expect((await read(guest)).cut, 'a trio taken').toEqual([]);
-  await guest.setViewportSize({ width: 1440, height: 900 });
-  // New cards are dealt into the trio's places before the next pick counts.
-  await expect
-    .poll(async () =>
-      (await tableOf(host)).some((card) => taken.includes(card)),
-    )
-    .toBe(false);
-  await readyToFind(host);
-  await pickMiss(host);
-  await expect(triosTurn(host).getByText('Not a trio')).toBeVisible();
-  await hintsWhole(host, 'locked out');
+  test.setTimeout(180_000);
+  // A lockout and a trio taken held for 59 s, so every width is measured
+  // while they show; their clocks keep the digits of the 3 s and 2 s ones.
+  const server = await startServer(0, {
+    TRIOS_LOCKOUT_SECONDS: '59',
+    TRIOS_TAKEN_SECONDS: '59',
+  });
+  try {
+    const own = { server: server.url };
+    const [host, guest] = await room((name) => player(name, own), 'trios', {
+      seats: 2,
+    });
+    await readyToFind(guest);
+    await expect(triosTurn(guest).getByText('Find a trio')).toBeVisible();
+    await bothLanguages(guest, 'searching');
+    await expect.poll(() => pageScroll(guest)).toBe(0);
+    // Why three cards are not a trio has the main line to itself.
+    await pickMiss(guest);
+    await bothLanguages(guest, 'locked out', {
+      en: 'Not a trio',
+      zh: '不成一组',
+    });
+    // Its widest hint, beside a long name finding a trio.
+    await readyToFind(host);
+    await pickTrio(host);
+    await bothLanguages(guest, 'a trio taken', {
+      en: `${LONG[0]} found a trio`,
+      zh: `${LONG[0]} 找到了一组`,
+    });
+  } finally {
+    server.process.kill('SIGKILL');
+  }
 });
 
 test('a Make 24 room counts who solved it and who it waits for', async ({
