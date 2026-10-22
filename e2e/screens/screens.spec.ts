@@ -64,11 +64,15 @@ import {
 import {
   bidCount,
   bidsOf,
+  bidStands,
   bidSurelyStands,
   pickBid,
   bluff,
   callLiar,
   move,
+  latestBid,
+  raise,
+  setUpCall,
   whoseTurn as whoseLiarsDiceTurn,
   yourTurn as yourLiarsDiceTurn,
 } from '../play/liars-dice';
@@ -551,7 +555,7 @@ async function draw(drawer: Page) {
 async function wordOf(drawer: Page): Promise<string> {
   return (await drawer
     .getByRole('region', { name: 'Turn' })
-    .locator('p > span')
+    .locator('[aria-live="polite"] span')
     .first()
     .textContent())!.trim();
 }
@@ -1504,6 +1508,16 @@ test('a Liar’s Dice game', async ({ player }) => {
     .getByRole('region', { name: 'Turn' })
     .getByText('You called Liar');
   const over = sam.getByText('Game over', { exact: true });
+  // Sam bids with five or six bids in front of him when the round opened
+  // one or two seats before him: until such a round, the two seats that
+  // could open it call a standing bid, so a die is lost and a fresh round
+  // opens; then everybody bids the smallest raise. The seating is learnt from
+  // who bids after whom.
+  let roundForSam = false;
+  let previous: Page | null = null;
+  const after = new Map<Page, Page>();
+  const seatBefore = (page: Page) =>
+    seats.find((seat) => after.get(seat) === page);
   while (!(await over.isVisible())) {
     await expect
       .poll(
@@ -1528,6 +1542,32 @@ test('a Liar’s Dice game', async ({ player }) => {
       if (await ryanOut.isVisible()) await capture(ryan, 'LD11');
     }
 
+    if (bids === 0) previous = null;
+    if (previous) {
+      // A seat that is out drops from the order: whoever now follows
+      // `previous` is the only one that does.
+      for (const [seat, next] of after) {
+        if (next === mover && seat !== previous) after.delete(seat);
+      }
+      after.set(previous, mover);
+    }
+    previous = mover;
+    const before = seatBefore(sam);
+    const twoBefore = before && seatBefore(before);
+    if (bids === 0) {
+      roundForSam = mover === before || mover === twoBefore;
+    }
+    if (!shown.has('LD09')) {
+      const bid = await latestBid(mover);
+      const calls =
+        !roundForSam &&
+        (mover === before || mover === twoBefore) &&
+        bid !== null &&
+        (await bidStands(seats, bid));
+      if (calls) await callLiar(mover);
+      else await raise(mover);
+      continue;
+    }
     // Sam calls a bid his own dice already make, and loses a die over it.
     if (
       mover === sam &&
@@ -1544,9 +1584,20 @@ test('a Liar’s Dice game', async ({ player }) => {
       }
       continue;
     }
-    // Then Ryan bids every die on the table until he is out.
-    if (mover === ryan && shown.has('LD10')) {
-      await bluff(ryan);
+    // Then Ryan bids every die on the table until he is out, and the others
+    // call what the table does not hold, so it is mostly Ryan who loses them.
+    if (shown.has('LD10')) {
+      const bid = await latestBid(mover);
+      if (mover === ryan) await bluff(ryan);
+      else if (bid && !(await bidStands(seats, bid))) await callLiar(mover);
+      else await raise(mover);
+      continue;
+    }
+    // Until then the others play so that Sam meets a bid his own dice make,
+    // instead of leaving it to the luck of the dice: the seat before him sets it up.
+    if (shown.has('LD09') && !shown.has('LD10')) {
+      if (mover === sam) await raise(sam);
+      else await setUpCall(mover, sam, mover === before);
       continue;
     }
     await move(mover);
@@ -2285,20 +2336,31 @@ const GOMOKU_RECORD = {
   }),
 };
 
-/** Your turn on your own: the hint under the board is back. */
+/** Your turn on your own: the turn bar says so, on a desktop and a phone. */
 const yourGomokuTurn = (page: Page) =>
-  page.getByText(/^(Hover a point|Tap the faint stone)/);
+  page.getByRole('region', { name: 'Turn' }).getByText('Your turn', {
+    exact: true,
+  });
 
-/** Places a stone on your own, with a second tap on a phone. */
+/** Places a stone on your own; a phone previews it, then Place stone commits. */
 async function placeAlone(page: Page, name: string, stone: 'black' | 'white') {
   await pointOf(page, name).click();
   const placed = gomokuBoardOf(page).getByRole('gridcell', {
     name: new RegExp(`^${name}, ${stone} stone`),
   });
-  const faint = page.getByRole('button', { name: 'Place stone' });
-  await expect(placed.or(faint)).toBeVisible();
-  if (await faint.isVisible()) await pointOf(page, name).click();
-  await expect(placed).toBeVisible();
+  const commit = page.getByRole('button', { name: 'Place stone' });
+  // Either the click placed it, or it left a faint stone for Place stone.
+  await expect(async () => {
+    // On a desktop there is no Place stone button at all.
+    if (
+      !(await placed.isVisible()) &&
+      (await commit.count()) > 0 &&
+      (await commit.isEnabled())
+    ) {
+      await commit.click();
+    }
+    await expect(placed).toBeVisible({ timeout: 1_000 });
+  }).toPass({ timeout: 15_000 });
 }
 
 /** Points two apart each way, where a player's stones never make five. */
@@ -2466,7 +2528,7 @@ test('a Gomoku game', async ({ player }) => {
 
   // Game 2, the colours swapped: Maya builds on a slant while Leo plays
   // elsewhere, then it is Maya's turn.
-  await maya.getByRole('button', { name: 'Start game 2' }).click();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   const black = await blackOf([maya, leo]);
   const white = black === maya ? leo : maya;
   const mayaMoves = ['E5', 'F6', 'G7', 'H8', 'D6'];
@@ -2508,7 +2570,7 @@ test('a Gomoku game', async ({ player }) => {
   await shot(maya, 'GM13');
 
   // Game 3: Leo leaves under way, and loses it.
-  await maya.getByRole('button', { name: 'Start game 3' }).click();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   const third = await blackOf([maya, leo]);
   await placeStone(third, 'H8');
   await leo.getByRole('button', { name: 'Leave room' }).click();
