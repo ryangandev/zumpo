@@ -37,6 +37,27 @@ const section = () => screen.getByRole('region', { name: 'Turn' });
 /** The bar's meta line. */
 const line = () => section().querySelector('[class*="meta"]');
 
+/** The bar's classes at `width`, for a game whose hints need 745 px. */
+const classAt = (width: number) => {
+  barWidth(width);
+  const { container, unmount } = render(
+    <TurnBar
+      label="Your turn"
+      kind="status"
+      main="Place a black stone"
+      meta="Maximilian Fischer played D8"
+      hintRowBelow={745}
+    />,
+  );
+  const className = container.firstElementChild!.className;
+  expect(container.firstElementChild).toHaveAttribute(
+    'data-hint-row-below',
+    '745',
+  );
+  unmount();
+  return className;
+};
+
 describe('TurnBar', () => {
   it('shows its label on a phone unless the page already names it', () => {
     barWidth(328);
@@ -116,27 +137,8 @@ describe('TurnBar', () => {
   });
 
   it('keeps one row at exactly the game’s width, and gives the meta its line a pixel under it', () => {
-    const at = (width: number) => {
-      barWidth(width);
-      const { container, unmount } = render(
-        <TurnBar
-          label="Your turn"
-          kind="status"
-          main="Place a black stone"
-          meta="Maximilian Fischer played D8"
-          hintRowBelow={745}
-        />,
-      );
-      const className = container.firstElementChild!.className;
-      expect(container.firstElementChild).toHaveAttribute(
-        'data-hint-row-below',
-        '745',
-      );
-      unmount();
-      return className;
-    };
-    expect(at(745)).not.toMatch(/rowBelow/);
-    expect(at(744)).toMatch(/rowBelow/);
+    expect(classAt(745)).not.toMatch(/rowBelow/);
+    expect(classAt(744)).toMatch(/rowBelow/);
   });
 
   it('gives the meta a line of its own on a desktop under the game’s width, kept while it is empty', () => {
