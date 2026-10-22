@@ -475,6 +475,7 @@ function Results({
       detail={next ? m.gomoku.both(first, next) : first}
       // As the bar in play: one row on a narrow column, as tall.
       stackOnPhone={false}
+      hintRowBelow={HINT_ROW_BELOW}
     />
   );
 }

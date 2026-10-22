@@ -130,7 +130,12 @@ function BetweenGames({ room }: { room: Room }) {
       </>
     ) : (
       <>
-        <ResultBar summary={summary} detail={detail} label={m.snap.gameOver} />
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.snap.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         {board}
         <NextGameUnderBoard />
         <StandingsSection summary={summary} />

@@ -97,6 +97,7 @@ function BetweenGames({ room }: { room: Room }) {
           detail={detail}
           label={m.minesweeper.gameOver}
           category={m.minesweeper.boardLabel(summary.difficulty)}
+          hintRowBelow={HINT_ROW_BELOW}
         />
         <Minefield
           room={room}

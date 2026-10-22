@@ -120,6 +120,7 @@ function BetweenGames({ room }: { room: Room }) {
           summary={summary}
           detail={detail}
           label={m.make24.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
         />
         {oneColumn ? (
           cards && <TablePanel>{cards}</TablePanel>

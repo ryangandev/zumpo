@@ -161,6 +161,7 @@ function BetweenGames({ room }: { room: Room }) {
           detail={detail}
           label={m.liarsDice.gameOver}
           ranked
+          hintRowBelow={HINT_ROW_BELOW}
         />
         {table}
         <NextGameUnderBoard />
