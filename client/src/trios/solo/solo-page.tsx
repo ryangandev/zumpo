@@ -55,12 +55,12 @@ import {
 import styles from './solo-page.module.css';
 
 /**
- * The turn bar width under which its hints take a line of their own: the
- * widest of them, what makes a trio, beside the count, with its clock, in
- * either language, needs this much beside its main line, with 4 px to spare
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, what makes a trio, beside the count, with a ten-minute run's clock,
+ * in either language, needs this much beside its main line, with 4 px to spare
  * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 671;
+const HINT_ROW_BELOW = 688;
 
 /** Where the best run and the best of each day are kept. */
 const BEST_KEY = 'trios:ten-trios';

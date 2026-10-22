@@ -50,12 +50,12 @@ import {
 import styles from './solo-page.module.css';
 
 /**
- * The turn bar width under which its hints take a line of their own
- * (TurnBar's hintRowBelow): none, since every hint, the five letters known
- * so far included fits beside its main line at every desktop width, from 561
- * px, in either language.
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, the five letters known so far at their longest, beside the word
+ * found, in either language, needs this much beside its main line, with 4 px to
+ * spare for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 0;
+const HINT_ROW_BELOW = 569;
 
 const isSeed = (value: string | null): value is string =>
   value !== null && SEED_PATTERN.test(value);
