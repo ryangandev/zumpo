@@ -44,7 +44,7 @@ export const trios = {
   taken: 'Trio taken',
   youFound: 'You found a trio!',
   foundBy: (name: string) => `${name} found a trio`,
-  newCardsSoon: 'New cards in a moment',
+  newCardsSoon: 'New cards soon',
   newCards: 'new cards',
   notTrio: 'Not a trio',
   pickAgainSoon: 'Pick again soon',
