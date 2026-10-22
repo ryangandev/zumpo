@@ -51,6 +51,9 @@ interface Bar {
   showing: boolean;
   /** Whether the bar has the layout its width asks for: the hint row under its game's width. */
   settled: boolean;
+  /** Whether the main line is scaled down to its box (Fit). */
+  scaled: boolean;
+  height: number;
 }
 
 /** Words a phase's bar says, in each language, to tell it from the next. */
@@ -93,6 +96,7 @@ const read = (page: Page, phase?: Phase): Promise<Bar> =>
     const row = /rowBelow/.test(box.className);
     // A phone's bar, 560 px or less, never takes the desktop hint row.
     const wanted = width > 560 && width < below;
+    const piece = box.querySelector<HTMLElement>('[class*="_mainBox_"] > *');
     return {
       width,
       below,
@@ -100,6 +104,8 @@ const read = (page: Page, phase?: Phase): Promise<Bar> =>
       cut,
       showing: (box.textContent ?? '').includes(says),
       settled: row === wanted,
+      scaled: Boolean(piece?.style.zoom),
+      height: box.getBoundingClientRect().height,
     };
   }, phase);
 
@@ -115,18 +121,47 @@ async function barAt(page: Page, width: number) {
   throw new Error(`no window gives a ${width} px bar`);
 }
 
+/** The widths each check sizes the bar to: the game's, a pixel under, and every window's. */
+interface Checks {
+  /** Words the bar says while it is measured. */
+  phase?: Phase;
+  /**
+   * A result's heading (ResultBar) is at its full size beside its detail
+   * wherever they share a line, as the game's width is measured for.
+   */
+  unscaled?: boolean;
+  /** The bar's height at each bar width, where it must keep the bar in play's. */
+  heights?: Map<number, number>;
+}
+
 /**
  * The hint is whole at the game's width, a pixel under it, and every window;
  * with a phase, every measure is taken while the bar says its words.
  */
-async function hintsWhole(page: Page, at: string, phase?: Phase) {
+async function hintsWhole(page: Page, at: string, checks: Checks = {}) {
+  const { phase, unscaled = false, heights } = checks;
   await expect(barBox(page)).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   const whole = async () => {
-    const { showing, settled, cut } = await read(page, phase);
-    return { showing, settled, cut };
+    const { showing, settled, cut, scaled, row, width, height } = await read(
+      page,
+      phase,
+    );
+    return {
+      showing,
+      settled,
+      cut,
+      scaled: unscaled && !row && scaled,
+      keeps: heights === undefined || heights.get(width) === height,
+    };
   };
-  const measured = { showing: true, settled: true, cut: [] };
+  const measured = {
+    showing: true,
+    settled: true,
+    cut: [],
+    scaled: false,
+    keeps: true,
+  };
   const { below } = await read(page);
   if (below > 0 && Number.isFinite(below)) {
     for (const [width, row] of [
@@ -153,12 +188,39 @@ async function hintsWhole(page: Page, at: string, phase?: Phase) {
   }
 }
 
+/**
+ * The bar's height at each width a check sizes it to, by bar width: the
+ * game's, a pixel under it, and every window's.
+ */
+async function barHeights(page: Page) {
+  const heights = new Map<number, number>();
+  const take = async () => {
+    const { width, height } = await read(page);
+    heights.set(width, height);
+  };
+  const { below } = await read(page);
+  if (below > 0 && Number.isFinite(below)) {
+    for (const width of [below, below - 1]) {
+      await barAt(page, width);
+      await expect.poll(async () => (await read(page)).settled).toBe(true);
+      await take();
+    }
+  }
+  for (const width of WINDOWS) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect.poll(async () => (await read(page)).settled).toBe(true);
+    await take();
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  return heights;
+}
+
 /** Checks the bar as it is, in English and then in Chinese. */
-async function bothLanguages(page: Page, at: string, phase?: Phase) {
-  await hintsWhole(page, `${at} (en)`, phase);
+async function bothLanguages(page: Page, at: string, checks: Checks = {}) {
+  await hintsWhole(page, `${at} (en)`, checks);
   await page.getByRole('radio', { name: '中文', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await hintsWhole(page, `${at} (zh)`, phase);
+  await hintsWhole(page, `${at} (zh)`, checks);
   await page.getByRole('radio', { name: 'English', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -211,6 +273,31 @@ test('a Gomoku room keeps its hints whole and the page still', async ({
   await bothLanguages(white, 'after a move');
   await bothLanguages(black, 'the other’s turn');
   await expect.poll(() => pageScroll(white)).toBe(0);
+  // The result, a long name's win beside who plays Black next, takes the
+  // bar in play's place and height, its heading at full size beside it.
+  const heights = await barHeights(white);
+  for (const [mine, theirs] of [
+    ['E8', 'A1'],
+    ['F8', 'C1'],
+    ['G8', 'E1'],
+  ] as const) {
+    await place(white, theirs);
+    await place(black, mine);
+  }
+  await place(white, 'G1');
+  await place(black, 'H8');
+  const winner = black === pages[0] ? LONG[0] : LONG[1];
+  await expect(
+    gomokuTurn(white).getByText(`${winner} wins with five in a row.`),
+  ).toBeVisible();
+  await bothLanguages(white, 'the result', {
+    phase: {
+      en: `${winner} wins with five in a row.`,
+      zh: `${winner} 连成五子，获胜。`,
+    },
+    unscaled: true,
+    heights,
+  });
 });
 
 test('a Trios room keeps its hints whole and the page still', async ({
@@ -235,15 +322,13 @@ test('a Trios room keeps its hints whole and the page still', async ({
     // Why three cards are not a trio has the main line to itself.
     await pickMiss(guest);
     await bothLanguages(guest, 'locked out', {
-      en: 'Not a trio',
-      zh: '不成一组',
+      phase: { en: 'Not a trio', zh: '不成一组' },
     });
     // Its widest hint, beside a long name finding a trio.
     await readyToFind(host);
     await pickTrio(host);
     await bothLanguages(guest, 'a trio taken', {
-      en: `${LONG[0]} found a trio`,
-      zh: `${LONG[0]} 找到了一组`,
+      phase: { en: `${LONG[0]} found a trio`, zh: `${LONG[0]} 找到了一组` },
     });
   } finally {
     server.process.kill('SIGKILL');
