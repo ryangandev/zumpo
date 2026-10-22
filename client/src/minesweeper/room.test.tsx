@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { ME, minesweeperState } from '../tests/fixtures';
@@ -128,7 +128,7 @@ describe('a Minesweeper room', () => {
     expect(
       screen.getByText('Locked in', { selector: '*:not(li *)' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(screen.getByText('Waiting for everyone else')).toBeInTheDocument();
     expect(
       screen.getByRole('gridcell', { name: 'Row 1, column 1: hidden' }),
     ).toHaveAttribute('aria-disabled', 'true');
@@ -145,11 +145,17 @@ describe('a Minesweeper room', () => {
     expect(turn).toHaveTextContent('10 mines · 2 hit');
   });
 
-  it('names who has locked in while the viewer is still picking', async () => {
+  it('says how many have locked in while the viewer is still picking', async () => {
     const { update } = await renderSeated({ ...picking, lockedIn: ['p2'] });
 
     expect(screen.getByText('Pick a cell')).toBeInTheDocument();
-    expect(screen.getByText('Maya locked in')).toBeInTheDocument();
+    expect(screen.getByText('1 player is locked in')).toBeInTheDocument();
+    // The scoreboard names them.
+    expect(
+      within(screen.getByRole('region', { name: 'Players' })).getByText(
+        'Locked in',
+      ),
+    ).toBeInTheDocument();
     expect(
       screen.queryByText('10 mines · your pick locks when you click'),
     ).toBeNull();
@@ -157,6 +163,27 @@ describe('a Minesweeper room', () => {
     expect(
       screen.getByText('10 mines · your pick locks when you click'),
     ).toBeInTheDocument();
+  });
+
+  it('counts more than one player locked in, in English and Chinese', async () => {
+    const four = {
+      ...picking,
+      playerList: {
+        ...picking.playerList,
+        p3: { username: 'Leo', points: 0, isConnected: true },
+        p4: { username: 'Ana', points: 0, isConnected: true },
+      },
+      lockedIn: ['p2', 'p3'],
+    };
+    const { unmount } = await renderSeated(four);
+    expect(screen.getByText('2 players are locked in')).toBeInTheDocument();
+    unmount();
+
+    const fake = new FakeSocket();
+    fake.answer('room:sync', () => ({ ok: true as const }));
+    await renderApp(roomPath('minesweeper', 'r1'), { locale: 'zh', fake });
+    act(() => fake.serverEmits('room:state', four));
+    expect(screen.getByText('已有 2 人选好')).toBeInTheDocument();
   });
 
   it('shows what each pick was worth', async () => {

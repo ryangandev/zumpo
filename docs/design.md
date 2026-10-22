@@ -257,7 +257,9 @@ Code differs from Figma on purpose in a few places:
   Chinese text sets in the system's own sans, because the Paper Pop fonts have no Chinese glyphs.
 - Spectator seats are not in Figma yet, beyond the lobby row's Watch, so their pieces are made of existing families: the spectators are a second Scoreboard titled Watching under the players, a spectator waiting for a game gets the guest's Waiting panel with their own heading, and Take a seat is a secondary Button among a panel's actions.
   Watch instead is a Quiet Button after Invite friends, offered only to a guest: for the host it would hand the crown on for good.
-  Mid-game a spectator sees the board as a player who may not act, with a Notice under it saying they can take a seat once the game ends.
+  Mid-game a spectator sees the board as a player who may not act, at the players' size: the room bar's phase says "Watching · Game 1", and the Notice saying they can take a seat once the game ends heads the scoreboard's column, a phone's Players tab, rather than the board's, so the board keeps its size and place from the game to its results.
+  In one column, under 1024 px, that column is out of sight, so the same Notice also shows over the top of the board for a few seconds as the watching starts, as a phone's "You're the host now" does, and only once a game.
+  A phone's Gomoku table keeps its empty actions row for a spectator in play, as the results fill it, so their board is the players' size throughout.
   In the side column beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat under it keeps its height; in one column, under 1024 px, and in a phone's Players tab it stays open.
 - Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
   It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
@@ -293,7 +295,9 @@ Code differs from Figma on purpose in a few places:
 - Between games every room's results end the same way: the starter gets a Next game select (an Input with no helper, 320 px wide), and everyone else gets a muted line saying the setting, a muted line saying how the next game starts, and Ready.
   Figma draws this on M14 for the host and on LD12 for a guest; the other results screens still show the host with Play again alone and a guest with "Waiting for … to start another game."
   The lines for Not ready, for a stand-in while the host is away ("Ryan isn’t at the table, so you can start the next game."), and for who is ready are muted body lines too, and Figma does not draw them.
-- The turn bar's meta names who has locked in on a Minesweeper round ("Maya locked in"), and who has solved a Make 24 hand while you undo; M04, M11 to M13 and T04 draw the lines from before anybody has.
+- The turn bar's meta counts who has locked in on a Minesweeper round ("1 player is locked in") and says "Waiting for everyone else" once you have, leaving the names to the scoreboard's Picking and Locked in, so the line never wraps on a phone and the board stays put.
+  It names who has solved a Make 24 hand while you undo.
+  M04, M11 to M13 and T04 draw the lines from before anybody has.
   A Pairs turn that ran out says so in the meta for the next turn ("Maya ran out of time · your turn"), and no Pairs screen draws it.
 - Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.
 - A Doodle Chain album's Play again, or Ready, is never below every chain: on a phone it sits under the album's title, where DC20 says how the next game starts, and on a wider screen it stays at the foot, as DC14 draws it, but held on screen on the panel's paper while the chains scroll by.
@@ -315,6 +319,7 @@ Code differs from Figma on purpose in a few places:
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
   On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
 - The Phone room bar's line under the game is one text in Figma; code keeps its phase whole and ends only a room's name too long for the rest of the line in an ellipsis, so "Game over" is never cut to "Game ov…" at 360 px.
+  Where even that does not fit, as a spectator's "Watching · 24 of 29 cards" at 320 px, the pieces go in order, each with its separator: the room's name once fewer than a few letters of it fit, then the Watching lead, so the line never reaches under the buttons and the phase is cut only where it alone is wider than the line.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file
