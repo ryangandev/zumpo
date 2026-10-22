@@ -778,10 +778,19 @@ export function ResultBar<Summary extends GameSummary>({
 export function StandingsSection<Summary extends GameSummary>({
   className,
   ...standings
-}: StandingsOf<Summary> & { className?: string }) {
+}: StandingsOf<Summary> & {
+  /**
+   * In the board's own panel, as a round's results are; on paper of its
+   * own, under the board's, without.
+   */
+  className?: string;
+}) {
   const m = useMessages();
   return (
-    <section className={className} aria-labelledby="standings-title">
+    <section
+      className={className ?? styles.standings}
+      aria-labelledby="standings-title"
+    >
       <h2 id="standings-title" className={styles.standingsTitle}>
         {m.room.standings}
       </h2>

@@ -251,7 +251,19 @@ describe('a Liar’s Dice room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Maya wins with 2 dice.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Maya wins with 2 dice.',
+      ),
+    ).toBeInTheDocument();
+    // What comes next is beside the board, so the board keeps its place.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
     ).toBeInTheDocument();
     expect(
       screen.getByText('10 rounds, 3 dice each. You finished 2nd.'),
