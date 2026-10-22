@@ -35,14 +35,14 @@ const inSight = (locator: Locator) =>
   expect(locator).toBeInViewport({ ratio: 1 });
 
 /**
- * Windows of a Gomoku room in two columns and in one, the next game under
- * the board rather than beside it under 1024 px. The meta has its own line
- * at both, as at every desktop width, since a Gomoku result needs it
- * (TurnBar's hintRowBelow), and the result bar keeps it too.
+ * Windows at which a Gomoku bar has its hints beside the main line, and
+ * under it (TurnBar's hintRowBelow), where the result bar must keep that
+ * line too. Under 1024 px the room is one column, the next game under the
+ * board rather than beside it.
  */
 const GOMOKU_WINDOWS = [
-  { width: 1440, beside: true },
-  { width: 900, beside: false },
+  { width: 1440, row: false, beside: true },
+  { width: 900, row: true, beside: false },
 ] as const;
 
 for (const window of GOMOKU_WINDOWS) {
@@ -72,7 +72,7 @@ for (const window of GOMOKU_WINDOWS) {
       await place(white, theirs);
     }
     const pages = [black, white, sam];
-    await expectRow(pages);
+    await expectRow(pages, window.row);
     const before = await boxesOf(pages, boardOf);
     expect(before[1]).toEqual(before[0]);
     expect(before[2]).toEqual(before[0]);
@@ -82,7 +82,7 @@ for (const window of GOMOKU_WINDOWS) {
       await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
     }
     expect(await boxesOf(pages, boardOf)).toEqual(before);
-    await expectRow(pages);
+    await expectRow(pages, window.row);
     // The result and what comes next, at once.
     await inSight(turnOf(white).getByText(/wins with five in a row/));
     if (window.beside) {
@@ -99,12 +99,13 @@ for (const window of GOMOKU_WINDOWS) {
   });
 }
 
-/** Every page's turn bar has its meta on a line of its own. */
-const expectRow = async (pages: readonly Page[]) => {
+/** Whether every page's turn bar has its meta on a line of its own. */
+const expectRow = async (pages: readonly Page[], row: boolean) => {
   for (const page of pages) {
-    await expect(page.locator('[data-hint-row-below]').first()).toHaveClass(
-      /rowBelow/,
-    );
+    const bar = page.locator('[data-hint-row-below]').first();
+    await (row
+      ? expect(bar).toHaveClass(/rowBelow/)
+      : expect(bar).not.toHaveClass(/rowBelow/));
   }
 };
 

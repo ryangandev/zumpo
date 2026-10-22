@@ -51,8 +51,8 @@ interface Bar {
   showing: boolean;
   /** Whether the bar has the layout its width asks for: the hint row under its game's width. */
   settled: boolean;
-  /** Whether the main line is scaled down to its box (Fit). */
-  scaled: boolean;
+  /** The main line's scale, 1 unless Fit scaled it down to its box. */
+  zoom: number;
   height: number;
 }
 
@@ -104,7 +104,7 @@ const read = (page: Page, phase?: Phase): Promise<Bar> =>
       cut,
       showing: (box.textContent ?? '').includes(says),
       settled: row === wanted,
-      scaled: Boolean(piece?.style.zoom),
+      zoom: Number(piece?.style.zoom || 1),
       height: box.getBoundingClientRect().height,
     };
   }, phase);
@@ -126,10 +126,12 @@ interface Checks {
   /** Words the bar says while it is measured. */
   phase?: Phase;
   /**
-   * A result's heading (ResultBar) is at its full size beside its detail
-   * wherever they share a line, as the game's width is measured for.
+   * The smallest scale a result's heading (ResultBar) may have beside its
+   * detail wherever they share a line: 1, its full size, as the game's width
+   * is measured for a heading naming one player, or `NAMED_TWICE` where the
+   * detail names another.
    */
-  unscaled?: boolean;
+  floor?: number;
   /** The bar's height at each bar width, where it must keep the bar in play's. */
   heights?: Map<number, number>;
 }
@@ -139,11 +141,11 @@ interface Checks {
  * with a phase, every measure is taken while the bar says its words.
  */
 async function hintsWhole(page: Page, at: string, checks: Checks = {}) {
-  const { phase, unscaled = false, heights } = checks;
+  const { phase, floor = 0, heights } = checks;
   await expect(barBox(page)).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   const whole = async () => {
-    const { showing, settled, cut, scaled, row, width, height } = await read(
+    const { showing, settled, cut, zoom, row, width, height } = await read(
       page,
       phase,
     );
@@ -151,7 +153,7 @@ async function hintsWhole(page: Page, at: string, checks: Checks = {}) {
       showing,
       settled,
       cut,
-      scaled: unscaled && !row && scaled,
+      scaled: !row && zoom < floor,
       keeps: heights === undefined || heights.get(width) === height,
     };
   };
@@ -226,8 +228,11 @@ async function bothLanguages(page: Page, at: string, checks: Checks = {}) {
   await page.setViewportSize({ width: 1440, height: 900 });
 }
 
-/** The height the hints' own line adds to a desktop bar. */
-const HINT_LINE = 26;
+/**
+ * The smallest a result's heading is scaled beside a detail that names a
+ * second 18-character player, as Gomoku's width is measured for.
+ */
+const NAMED_TWICE = 0.85;
 
 /** How far the page scrolls, which a room at 1440 by 900 never needs to. */
 const pageScroll = (page: Page) =>
@@ -275,11 +280,10 @@ test('a Gomoku room keeps its hints whole and the page still', async ({
   await expect(gomokuTurn(white).getByText(/played D8$/)).toBeVisible();
   await bothLanguages(white, 'after a move');
   await bothLanguages(black, 'the other’s turn');
-  // The hints' own line, which a Gomoku result needs at every width, is all
-  // the page scrolls at 1440 by 900.
-  await expect.poll(() => pageScroll(white)).toBeLessThanOrEqual(HINT_LINE);
-  // The result, a long name's win beside who plays Black next, takes the
-  // bar in play's place and height, its heading at full size beside it.
+  await expect.poll(() => pageScroll(white)).toBe(0);
+  // The result, a long name's win beside the other long name playing Black
+  // next, takes the bar in play's place and height, its heading scaled no
+  // smaller than the floor beside it.
   const heights = await barHeights(white);
   for (const [mine, theirs] of [
     ['E8', 'A1'],
@@ -300,7 +304,7 @@ test('a Gomoku room keeps its hints whole and the page still', async ({
       en: `${winner} wins with five in a row.`,
       zh: `${winner} 连成五子，获胜。`,
     },
-    unscaled: true,
+    floor: NAMED_TWICE,
     heights,
   });
 });
@@ -368,7 +372,7 @@ test('a Make 24 room counts who solved it and who it waits for', async ({
   ).toBeVisible();
   await bothLanguages(guest, 'the result', {
     phase: { en: 'You finished 2nd', zh: '你获得了第 2 名' },
-    unscaled: true,
+    floor: 1,
     heights,
   });
 });
