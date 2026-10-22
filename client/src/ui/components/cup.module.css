@@ -29,6 +29,12 @@
   padding: var(--zumpo-space-12) var(--zumpo-space-16);
 }
 
+/* A row's dice keep to one line; the name gives way, in an ellipsis. */
+.row .dice {
+  flex: none;
+  flex-wrap: nowrap;
+}
+
 .player {
   display: flex;
   align-items: center;

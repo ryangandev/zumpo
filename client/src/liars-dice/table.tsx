@@ -242,8 +242,13 @@ export function Table(props: TableProps) {
   return (
     <div className={cx(styles.table, playColumn)}>
       {inPlay ? (
-        // The latest bid stays in sight when the bids outgrow the room.
-        <PlayBoard min={1} fitWidth={false} current={bids.length}>
+        // The latest bid, or what a call found down to its verdict, stays in
+        // sight when the table outgrows the room.
+        <PlayBoard
+          min={1}
+          fitWidth={false}
+          current={reveal ? 'reveal' : bids.length}
+        >
           {table}
         </PlayBoard>
       ) : (
@@ -278,7 +283,12 @@ export function CountLine({
 }) {
   const m = useMessages();
   return (
-    <section className={styles.count} aria-labelledby="ld-count">
+    // Kept in view, verdict and all, on a play board too short for the table.
+    <section
+      className={styles.count}
+      aria-labelledby="ld-count"
+      data-play-current=""
+    >
       <h3 id="ld-count" className={styles.label}>
         {label}
       </h3>

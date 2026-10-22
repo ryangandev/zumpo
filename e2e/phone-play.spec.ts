@@ -6,7 +6,7 @@ import { blackOf, pointOf } from './play/gomoku';
 import { deal, play, readyUp } from './play/hush';
 import { move, yourTurn } from './play/liars-dice';
 import { missHand, solveHand, startHand } from './play/make-24';
-import { openMiddle } from './play/minesweeper';
+import { hitAMine, openMiddle } from './play/minesweeper';
 import { playTurn, type Memory } from './play/pairs';
 import { readyToTap, tapMatch, tapMiss } from './play/snap';
 import { pickMiss, pickTrio, readyToFind } from './play/trios';
@@ -104,6 +104,18 @@ const currentInBoard = (page: Page) =>
     const room = board.getBoundingClientRect();
     const rect = current.getBoundingClientRect();
     return rect.top >= room.top - 1 && rect.bottom <= room.bottom + 1;
+  });
+
+/** Whether a board is whole in the window, its own scroller still. */
+const fitsItsScroller = (board: Locator) =>
+  board.evaluate((grid) => {
+    const box = grid.getBoundingClientRect();
+    const scroller = grid.parentElement!;
+    return (
+      box.left >= -0.5 &&
+      box.right <= innerWidth + 0.5 &&
+      scroller.scrollWidth <= scroller.clientWidth + 1
+    );
   });
 
 /** Writes `text` in a Doodle Chain step's field and presses Done. */
@@ -252,6 +264,12 @@ for (const size of SIZES) {
       await still('the first cells open');
       await sam.getByRole('button', { name: 'Flag' }).click();
       await still('flagging');
+      await sam.getByRole('button', { name: 'Reveal' }).click();
+      // A finished board is as wide as the one in play: it never pans.
+      await hitAMine(sam);
+      await expect
+        .poll(() => fitsItsScroller(board), { message: 'a finished board' })
+        .toBe(true);
     });
 
     test("liar's dice keeps the bid picker still", async ({ player }) => {
@@ -445,6 +463,10 @@ for (const size of SIZES) {
       await sheet('a stroke drawn');
       await doneStill('a stroke drawn');
       await done.click();
+      // Checked once the server has the Done, and the turn bar says so.
+      await expect(
+        turnOf(maya).getByText('The step ends when everyone is done.'),
+      ).toBeVisible();
       await sheet('done, waiting for the others');
 
       for (const page of others) {
@@ -463,6 +485,9 @@ for (const size of SIZES) {
       await write(maya, 'Your description', 'A cat, I think');
       await expect(
         maya.getByRole('button', { name: 'Keep editing' }),
+      ).toBeVisible();
+      await expect(
+        turnOf(maya).getByText('The step ends when everyone is done.'),
       ).toBeVisible();
       await field('described, waiting for the others');
       for (const page of others) {
@@ -549,4 +574,97 @@ test('a phone on its side shows the whole Gomoku board beside the turn', async (
   expect(turn.x).toBeGreaterThan(grid.x + grid.width);
   // A touch screen shows the stone first; Place stone then places it.
   await expect(placeStone(sam)).toBeDisabled();
+});
+
+/** A Gomoku stone on a phone: a first tap puts it down faint, a second places it. */
+const tapStone = async (page: Page, name: string) => {
+  await expect(turnOf(page).getByText('Your turn')).toBeVisible();
+  await pointOf(page, name).tap();
+  await pointOf(page, name).tap();
+  await expect(pointOf(page, name)).toHaveAccessibleName(
+    new RegExp(
+      `^${name}, (black|white) stone, (last placed|in the winning line)$`,
+    ),
+  );
+};
+
+/** Where a Gomoku board is, and how tall each seat. */
+const tableLayout = (page: Page) =>
+  page.evaluate(() => {
+    const [board, ...seats] = [
+      document.querySelector('[role=grid]')!,
+      ...document.querySelectorAll('[class*="_seat_"]'),
+    ].map((element) => {
+      const rect = element.getBoundingClientRect();
+      return [rect.left, rect.top, rect.width, rect.height].map(Math.round);
+    });
+    return { board, seats: seats.map((seat) => seat[3]) };
+  });
+
+test('a Gomoku board keeps its size and place from a game to its results', async ({
+  player,
+}) => {
+  const size = { width: 360, height: 640 };
+  // Long names, the second as long as a name can be: each seat is one line
+  // that never wraps.
+  const maya = await onPhone(player, 'Sparkly Hedgehog', size);
+  const leo = await onPhone(player, 'Wandering Squirrel', size);
+  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  await maya.getByRole('button', { name: 'Start game' }).click();
+  const black = await blackOf([maya, leo]);
+  const white = black === maya ? leo : maya;
+  for (const [mine, theirs] of [
+    ['D8', 'A1'],
+    ['E8', 'C1'],
+    ['F8', 'E1'],
+    ['G8', 'G1'],
+  ] as const) {
+    await tapStone(black, mine);
+    await tapStone(white, theirs);
+  }
+  await expect(black.getByRole('button', { name: 'Resign' })).toBeVisible();
+  const before = await Promise.all([tableLayout(black), tableLayout(white)]);
+  expect(before[0]).toEqual(before[1]);
+
+  await tapStone(black, 'H8');
+  for (const page of [black, white]) {
+    await expect(page.getByRole('button', { name: 'Resign' })).toHaveCount(0);
+    await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
+  }
+  const after = await Promise.all([tableLayout(black), tableLayout(white)]);
+  expect(after).toEqual(before);
+});
+
+/** A Minesweeper cell the player may still pick. */
+const hiddenCell = (page: Page) =>
+  page.getByRole('gridcell', { name: /: hidden$/, disabled: false });
+
+test('a finished Minesweeper room board fits a phone', async ({ player }) => {
+  test.setTimeout(180_000);
+  const size = { width: 360, height: 640 };
+  const maya = await onPhone(player, 'Maya', size);
+  const leo = await onPhone(player, 'Leo', size);
+  await joinRoom(leo, await createRoom(maya, 'minesweeper'));
+  await maya.getByRole('button', { name: 'Start game' }).click();
+  // Both always pick, so no round waits out its clock.
+  const over = maya.getByText('Game over', { exact: true });
+  while (!(await over.isVisible())) {
+    await expect(
+      turnOf(maya).getByText('Pick a cell').or(over).first(),
+    ).toBeVisible();
+    if (await over.isVisible()) break;
+    await hiddenCell(maya).first().click();
+    await hiddenCell(leo).last().click();
+    await expect(turnOf(maya).getByText('Pick a cell')).toBeHidden();
+  }
+  for (const page of [maya, leo]) {
+    await expect
+      .poll(
+        () => fitsItsScroller(page.getByRole('grid', { name: /^Board, / })),
+        {
+          message: 'a finished board',
+        },
+      )
+      .toBe(true);
+  }
 });

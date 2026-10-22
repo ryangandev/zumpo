@@ -45,19 +45,23 @@
   min-width: 0;
 }
 
+/* Beside the board a seat column can be narrow (206 px at 1280 by 800), too
+   narrow for a default name, its You tag and the stone on one line: the name
+   keeps every word, wrapping between them, and the tag goes under it. The
+   board beside the seats never moves for it. */
 .nameLine {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--zumpo-space-6);
+  gap: var(--zumpo-space-2) var(--zumpo-space-6);
   min-width: 0;
 }
 
 .name {
-  overflow: hidden;
+  min-width: 0;
   font: var(--zumpo-text-label);
   letter-spacing: var(--zumpo-text-label-tracking);
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .detail {
@@ -70,17 +74,52 @@
   color: var(--zumpo-ink);
 }
 
-/* A phone's seat beside the other: the stone first, then the name and the
-   detail, each on one line. */
+/* A phone's seat, one line as tall as the compact You tag: the stone
+   first, then the name, and the detail at the line's end. The line never
+   wraps, so both players' seats, and the board above them, keep their size
+   from a game to its results: the name gives way first, with an ellipsis. */
 .compact {
+  position: relative;
   flex-direction: row-reverse;
   justify-content: flex-end;
   gap: var(--zumpo-space-8);
-  padding: var(--zumpo-space-8) var(--zumpo-space-12);
+  padding: var(--zumpo-space-6) var(--zumpo-space-12);
+}
+
+.compact .player {
+  flex: 1 1 0;
+}
+
+.compact .details {
+  flex: 1 1 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--zumpo-space-12);
+}
+
+.compact .nameLine {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+}
+
+.compact .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .compact .detail {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* The colour, for a screen reader alone: the stone shows it. */
+.colour {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  clip-path: inset(50%);
   white-space: nowrap;
 }

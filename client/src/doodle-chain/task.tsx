@@ -228,7 +228,7 @@ function turnBar(
   const done = state.table[playerId]?.done ?? false;
   const meta =
     done && waiting.length > 0
-      ? m.doodleChain.waitingFor(listNames(waiting, m))
+      ? m.doodleChain.endsWhenAllDone
       : nextName === undefined
         ? m.doodleChain.secret
         : nextName === null

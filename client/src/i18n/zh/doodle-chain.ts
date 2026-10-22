@@ -102,7 +102,7 @@ export const doodleChain: typeof en = {
   describesNext: (name) => `接下来由 ${name} 描述它。`,
   drawsYoursNext: (name) => `接下来由 ${name} 画你写的话。`,
   lastStep: '你是这条传话的最后一步。',
-  waitingFor: (names) => `在等 ${names}。所有人完成时这一步就结束。`,
+  endsWhenAllDone: '所有人完成时这一步就结束。',
   backIn: (step) => `第 ${step} 步你再加入。`,
   revealNext: '接下来是揭晓。',
   goesOn: {

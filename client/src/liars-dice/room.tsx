@@ -5,7 +5,6 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
-import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { useBidChoice } from './bid-choice';
 import { fromViewer, Table, type TableSeat } from './table';
@@ -26,6 +25,7 @@ export function LiarsDiceRoom() {
   const ended = !inGame ? state.lastGame : null;
   return (
     <RoomLayout
+      yourTurn={inGame && bidding(room)}
       // No standings over the board: everybody’s cups are on the table.
       standings={false}
       phase={
@@ -60,6 +60,10 @@ function inTurnOrder(state: LiarsDiceRoomState, youId: string): Seat[] {
   };
   return ranked.toSorted((a, b) => place(a) - place(b));
 }
+
+/** Whether it is this player's turn to bid or call. */
+const bidding = ({ state, playerId, reconnecting }: Room) =>
+  state.phase === 'bidding' && state.turnPlayerId === playerId && !reconnecting;
 
 const whoIn = (room: Room, m: Messages): Naming =>
   naming(
@@ -120,6 +124,7 @@ function BetweenGames({ room }: { room: Room }) {
             reveal={state.reveal}
             who={whoIn(room, m)}
             countLabel={m.liarsDice.lastCall}
+            inPlay={false}
           />
         )}
       </>
@@ -142,11 +147,7 @@ function Turn({ room }: { room: Room }) {
   const m = useMessages();
   const { state, receivedAt, reconnecting, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
-  const mine =
-    state.phase === 'bidding' &&
-    state.turnPlayerId === playerId &&
-    !reconnecting;
-  useTurnTitle(mine);
+  const mine = bidding(room);
   const out =
     !room.spectating && (state.playerList[playerId]?.points ?? 0) === 0;
   return (

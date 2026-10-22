@@ -223,6 +223,7 @@ function SoloTable({
             reveal={game.reveal}
             who={whoIn(m)}
             countLabel={over ? m.liarsDice.lastCall : m.liarsDice.count}
+            inPlay={!over}
             beside={
               game.phase === 'reveal' ? (
                 <div className={styles.next}>

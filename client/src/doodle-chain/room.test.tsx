@@ -199,6 +199,11 @@ describe('a Doodle Chain room', () => {
     expect(notice.closest('[aria-hidden="true"]')).toBeNull();
     expect(notice.closest('[role="status"]')).not.toBeNull();
     expect(scoreboard().getByText('Done')).toBeInTheDocument();
+    // The notice names who it waits for; the turn bar's one line does not.
+    expect(
+      turn().getByText('The step ends when everyone is done.'),
+    ).toBeInTheDocument();
+    expect(turn().queryByText(/Maya|Leo/)).toBeNull();
     // Done takes the field and itself away, so Keep editing has the focus.
     const keepEditing = screen.getByRole('button', { name: 'Keep editing' });
     expect(keepEditing).toHaveFocus();

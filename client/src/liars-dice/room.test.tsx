@@ -263,5 +263,8 @@ describe('a Liar’s Dice room', () => {
     expect(
       screen.getByText('Your bid was a lie, so you are out'),
     ).toBeInTheDocument();
+    // The game is over: the last call scrolls with the page, not in a box
+    // of the height a round in play would leave it.
+    expect(document.querySelector('[data-play-board]')).toBeNull();
   });
 });
