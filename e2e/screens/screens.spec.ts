@@ -125,6 +125,27 @@ async function shot(page: Page, code: string) {
 }
 
 /**
+ * Captures the page in a window of the Figma frame's own size, for the
+ * screens drawn at a size of their own: a small phone (PH02, PH04), a phone
+ * on its side (PH08), a short window (DW17, CB22), or a phone's view of a
+ * desktop player's turn (PH06). A board refits a frame after a resize, so
+ * the capture waits for it to settle.
+ */
+async function shotAt(page: Page, code: string) {
+  const viewport = page.viewportSize()!;
+  const [width, height] = figmaSize(code);
+  await page.setViewportSize({ width, height });
+  await page.evaluate(
+    () =>
+      new Promise((done) =>
+        requestAnimationFrame(() => requestAnimationFrame(done)),
+      ),
+  );
+  await shot(page, code);
+  await page.setViewportSize(viewport);
+}
+
+/**
  * Captures the dialog `change` opens over a finished game on your own (MS01,
  * PR01, LD01, GM02), the one place such a game is set, then closes it with
  * nothing changed.
@@ -606,6 +627,7 @@ test('a Draw & Guess game', async ({ player }) => {
       await shot(drawer.page, 'MO07');
       const word = await chooseAndDraw(drawer.page);
       await shot(drawer.page, 'MO08');
+      await shot(drawer.page, 'PH05');
       for (const seat of guessers) await guess(seat, word);
       continue;
     }
@@ -1324,6 +1346,7 @@ test('a Snap game', async ({ player }) => {
   for (const seat of seats) await readyToTap(seat);
   await shot(sam, 'SN05');
   await shot(leo, 'SN12');
+  await shot(leo, 'PH03');
 
   // Jo comes in after the start, and watches; only SN13 has Jo.
   const jo = await player('Jo', desktop);
@@ -1544,6 +1567,7 @@ test('a Liar’s Dice game', async ({ player }) => {
     }
     if (mover === sam && bids >= 5 && bids <= 6 && !shown.has('LD09')) {
       await capture(sam, 'LD09');
+      await shotAt(sam, 'PH06');
       await narrow(sam, () => capture(sam, 'LD14'));
     }
     if (mover !== ryan && bids > 0 && !shown.has('LD11')) {
@@ -1822,6 +1846,7 @@ test('Daily Word on your own', async ({ player }) => {
   await maya.goto('/games/daily-word/solo');
   await expect(yourGuesses(maya)).toBeVisible();
   await shot(maya, 'DW01');
+  await shotAt(maya, 'DW17');
 
   // Word #12 is UNITE.
   await guessWords(maya, ['stare', 'cloud']);
@@ -1962,6 +1987,7 @@ test('a Daily Word game', async ({ player }) => {
   await shot(sam, 'DW07');
   await leo.keyboard.type(second!.slice(0, 3));
   await shot(leo, 'DW13');
+  await shotAt(leo, 'PH02');
   await leo.getByRole('tab', { name: /^Players/ }).click();
   await shot(leo, 'DW14');
   await leo.getByRole('tab', { name: 'Game' }).click();
@@ -2118,6 +2144,7 @@ test('Code Breaker on your own', async ({ player }) => {
   await maya.goto('/games/code-breaker/solo');
   await expect(yourGuesses(maya)).toBeVisible();
   await shot(maya, 'CB02');
+  await shotAt(maya, 'CB22');
 
   await guessCodes(maya, [first!, second!, third!]);
   await notesToggle(maya).click();
@@ -2278,6 +2305,16 @@ test('a Code Breaker game', async ({ player }) => {
   await shot(sam, 'CB09');
   await leo.keyboard.type(leos[3]!.slice(0, 2));
   await shot(leo, 'CB18');
+  await shot(leo, 'PH01');
+  // Maya's connection drops: Leo's Game tab says so over the board.
+  const restoreMaya = await dropConnection(maya);
+  const away = leo.getByText('Maya is away.', { exact: true });
+  await expect(away).toBeVisible({ timeout: 15_000 });
+  expect(await shotWhile(leo, 'PH07', away), 'the away notice').toBe(true);
+  restoreMaya();
+  await expect(maya.getByRole('button', { name: 'Leave room' })).toBeVisible({
+    timeout: 20_000,
+  });
   await leo.getByRole('tab', { name: /^Players/ }).click();
   await shot(leo, 'CB19');
   await leo.getByRole('tab', { name: 'Game' }).click();
@@ -2456,6 +2493,8 @@ test('Gomoku on your own', async ({ player }) => {
     onPhone.getByRole('button', { name: 'Place stone' }),
   ).toBeVisible();
   await shot(onPhone, 'GM17');
+  await shotAt(onPhone, 'PH04');
+  await shotAt(onPhone, 'PH08');
 });
 
 test('Gomoku rooms and their list', async ({ player }) => {
