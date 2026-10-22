@@ -211,7 +211,9 @@ function Minefield({
 
   return (
     <div ref={panel} className={cx(styles.minefield, playColumn)}>
-      <div className={cx(styles.boardPanel, playColumn)}>
+      {/* What is fitted ends with the board: the round's results and the
+          standings under it never rescale it (useFitHeight). */}
+      <div className={cx(styles.boardPanel, playColumn)} data-fit-end="">
         <Board
           state={state}
           onPick={onPick}

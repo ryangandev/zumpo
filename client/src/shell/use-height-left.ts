@@ -28,7 +28,9 @@ export function useHeightLeft(
       if (toEnd) target.toggleAttribute('data-fit-height', !oneColumn);
       const rect = target.getBoundingClientRect();
       const top = rect.top + window.scrollY;
-      const after = toEnd ? playAreaBelow(target, rect) : 0;
+      // In one column the page scrolls to what follows, so only the window
+      // below the top is left, as for a board on its own.
+      const after = toEnd && !oneColumn ? playAreaBelow(target, rect) : 0;
       target.style.setProperty(
         '--height-left',
         `${Math.max(0, window.innerHeight - top - after)}px`,

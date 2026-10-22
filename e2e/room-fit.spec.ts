@@ -203,3 +203,52 @@ test('a Doodle Chain room fits a 1440 × 900 window at each step', async ({
   }
   await expectFits(pages, 'describing');
 });
+
+/** Where a board is on the page, to the pixel. */
+const boxOf = async (page: Page, board: string) => {
+  const box = (await page.locator(board).first().boundingBox())!;
+  return [box.x, box.y, box.width, box.height].map(Math.round);
+};
+
+test('a Minesweeper board keeps its size as a round is revealed under it', async ({
+  player,
+}) => {
+  const pages = await startRoom('minesweeper', player);
+  // 720 px tall, where the board is scaled to fit in play.
+  for (const page of pages) {
+    await page.setViewportSize({ width: 1280, height: 720 });
+  }
+  const grid = '[role="grid"][aria-label^="Board, "]';
+  for (const page of pages) {
+    await expect(
+      page.getByRole('region', { name: 'Turn' }).getByText('Pick a cell'),
+    ).toBeVisible();
+  }
+  const before = await Promise.all(pages.map((page) => boxOf(page, grid)));
+  for (const [index, page] of pages.entries()) {
+    await page
+      .locator(`${grid} [aria-label^="Row ${index + 2}, column 2:"]`)
+      .click();
+  }
+  for (const page of pages) {
+    await expect(
+      page.getByRole('heading', { name: 'Round 1 results' }),
+    ).toBeVisible();
+  }
+  for (const [index, page] of pages.entries()) {
+    await expect.poll(() => boxOf(page, grid)).toEqual(before[index]);
+  }
+});
+
+test('a Daily Word board keeps its size as the other player guesses', async ({
+  player,
+}) => {
+  const [me, other] = await startRoom('daily-word', player);
+  const board = '[role="group"][aria-label="Your guesses"]';
+  await expect(me!.locator(board)).toBeVisible();
+  await guessWord(me!, 'slate');
+  const before = await boxOf(me!, board);
+  await guessWord(other!, 'crane');
+  await expect(me!.getByText('1 guess').first()).toBeVisible();
+  await expect.poll(() => boxOf(me!, board)).toEqual(before);
+});

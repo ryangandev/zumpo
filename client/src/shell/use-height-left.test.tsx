@@ -101,11 +101,11 @@ describe('useHeightLeft', () => {
     expect(sheet()).toHaveAttribute('data-fit-height');
   });
 
-  it('in one column, less only the foot, and leaves the page as it is', () => {
-    // The side's cards follow the stage, and the page scrolls to them.
+  it('in one column, leaves the window under its top, and the page as it is', () => {
+    // What follows, the side's cards among it, scrolls with the page.
     onPhone();
     render(<RoomPage columns="600px" />);
-    expect(heightLeft()).toBe(WINDOW - TOP - FOOT);
+    expect(heightLeft()).toBe(WINDOW - TOP);
     expect(sheet()).not.toHaveAttribute('data-fit-height');
   });
 });

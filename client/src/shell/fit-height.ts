@@ -237,12 +237,16 @@ function heightScale(element: HTMLElement, inRoom: boolean): number {
   if (rect.height === 0) return 1;
   const top = rect.top + window.scrollY;
   const below = inRoom ? pageFoot(element) : belowOf(element, rect);
-  if (top + rect.height + below <= window.innerHeight) return 1;
+  if (top + fittedHeight(element, rect) + below <= window.innerHeight) {
+    return 1;
+  }
   // A pixel spare, so rounding never leaves the page a pixel too tall.
   const room = window.innerHeight - top - below - 1;
   const fits = (scale: number) => {
     element.style.setProperty('zoom', String(scale));
-    return element.getBoundingClientRect().height <= room;
+    return (
+      fittedHeight(element, element.getBoundingClientRect(), scale) <= room
+    );
   };
   let low = MIN_SCALE;
   let high = 1;
@@ -254,4 +258,32 @@ function heightScale(element: HTMLElement, inRoom: boolean): number {
   }
   element.style.removeProperty('zoom');
   return low;
+}
+
+/**
+ * The height of what is fitted: the whole element, or, where a part of it
+ * is marked `data-fit-end`, down to that part's foot and the element's own
+ * padding and border under it. What comes after that part, such as a round's
+ * results under a Minesweeper board, comes and goes during a game, so it is
+ * left out and never rescales the board; the page scrolls for it instead.
+ */
+function fittedHeight(
+  element: HTMLElement,
+  rect: DOMRect,
+  scale = Number(element.style.zoom || 1),
+): number {
+  const end = element.querySelector('[data-fit-end]');
+  if (!end) return rect.height;
+  const style = getComputedStyle(element);
+  const foot =
+    Number.parseFloat(style.paddingBottom) +
+    Number.parseFloat(style.borderBottomWidth);
+  return footOf(end) - rect.top + foot * scale;
+}
+
+/** Where an element ends on screen, or its children, for one not drawn. */
+function footOf(element: Element): number {
+  const { height, bottom } = element.getBoundingClientRect();
+  if (height > 0 || element.children.length === 0) return bottom;
+  return Math.max(...[...element.children].map(footOf));
 }
