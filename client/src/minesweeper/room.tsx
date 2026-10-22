@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type {
   MinesweeperPickResult,
   MinesweeperRoomState,
@@ -38,6 +38,16 @@ import styles from './room.module.css';
  * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
 const HINT_ROW_BELOW = 743;
+
+/**
+ * The height a round's results, or a game's standings, may take under the
+ * board on a desktop: their heading and two rows, 160 px, and the 20 px gap
+ * over them. The board is fitted to leave this free from the first round,
+ * so the results never push the page past the window or rescale the board;
+ * a longer list scrolls inside it (room.module.css).
+ */
+const RESULTS_ROOM = 160;
+const RESULTS_GAP = 20;
 
 type Room = RoomOf<MinesweeperRoomState>;
 
@@ -210,9 +220,15 @@ function Minefield({
       : state.round - 1;
 
   return (
-    <div ref={panel} className={cx(styles.minefield, playColumn)}>
-      {/* What is fitted ends with the board: the round's results and the
-          standings under it never rescale it (useFitHeight). */}
+    <div
+      ref={panel}
+      className={cx(styles.minefield, playColumn)}
+      data-fit-reserve={fitHeight ? RESULTS_ROOM + RESULTS_GAP : undefined}
+      style={{ '--results-room': `${RESULTS_ROOM}px` } as CSSProperties}
+    >
+      {/* What is fitted ends with the board, and the room the results may
+          take under it is left free: they never rescale it, nor push the page
+          past the window (useFitHeight). */}
       <div className={cx(styles.boardPanel, playColumn)} data-fit-end="">
         <Board
           state={state}

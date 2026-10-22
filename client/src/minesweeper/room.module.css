@@ -21,6 +21,23 @@
   gap: var(--zumpo-space-4);
 }
 
+/* Beside a side column the page ends inside the window, with the room the
+   board was fitted to leave (--results-room); more rows than it has scroll
+   under their heading. In one column the page scrolls as it is. */
+@media (min-width: 1024px) {
+  .results {
+    max-height: var(--results-room);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .results > h2 {
+    position: sticky;
+    top: 0;
+    background: var(--zumpo-paper);
+  }
+}
+
 .resultsTitle {
   padding-bottom: var(--zumpo-space-8);
   font: var(--zumpo-text-heading);

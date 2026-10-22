@@ -67,8 +67,9 @@ export type FitHeight = boolean | 'room' | 'result';
  * down without changing the board's size, so its height is watched too, and
  * the board measured again a frame later; the bar's height never follows the
  * board's scale. The board ends the play area: only the page's foot is made
- * room for, not what comes under the board in the stage once the game is
- * over, such as the standings, which scroll with the page.
+ * room for, and the reserve the element asks for (`data-fit-reserve`, see
+ * `fittedHeight`), not all that comes under the board in the stage, such as
+ * a round's results or the standings at a game's end.
  *
  * A room's finished board drawn anew under its result (`result`) takes the
  * scale the room's board had in play, in this window (`KeptScale`), so it
@@ -265,7 +266,10 @@ function heightScale(element: HTMLElement, inRoom: boolean): number {
  * is marked `data-fit-end`, down to that part's foot and the element's own
  * padding and border under it. What comes after that part, such as a round's
  * results under a Minesweeper board, comes and goes during a game, so it is
- * left out and never rescales the board; the page scrolls for it instead.
+ * left out and never rescales the board. Its room is made once instead: the
+ * element's `data-fit-reserve` (in px, unscaled) is left free under the
+ * part, for it to grow into and to scroll within, so the page never grows
+ * past the window when it comes.
  */
 function fittedHeight(
   element: HTMLElement,
@@ -278,7 +282,8 @@ function fittedHeight(
   const foot =
     Number.parseFloat(style.paddingBottom) +
     Number.parseFloat(style.borderBottomWidth);
-  return footOf(end) - rect.top + foot * scale;
+  const reserve = Number(element.dataset.fitReserve ?? 0);
+  return footOf(end) - rect.top + (foot + reserve) * scale;
 }
 
 /** Where an element ends on screen, or its children, for one not drawn. */
