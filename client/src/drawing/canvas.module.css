@@ -45,11 +45,15 @@
 }
 
 /* Wider than a phone, the sheet is all in sight under the turn bar: never
-   taller than the window leaves it below its top, less the page's foot, nor
-   narrower than half its column. */
+   taller, with its border, than the window leaves it below its top, less what
+   follows it in its column and the page's foot (use-height-left.ts). A sheet
+   to draw on is never narrower than half its column either; a drawing only
+   shown, such as one to describe, may be. The box takes its column's width,
+   which its sheet's widths are of, even in a panel that centres. */
 @media (min-width: 641px) and (min-height: 501px) {
   .playSheet {
     display: flex;
+    align-self: stretch;
     justify-content: center;
   }
 
@@ -57,7 +61,13 @@
     width: 100%;
     max-width: max(
       50%,
-      calc((var(--height-left, 100dvh) - var(--zumpo-space-24)) * 798 / 598)
+      calc((var(--height-left, 100dvh) - 2 * var(--zumpo-space-1)) * 798 / 598)
+    );
+  }
+
+  .shown > * {
+    max-width: calc(
+      (var(--height-left, 100dvh) - 2 * var(--zumpo-space-1)) * 798 / 598
     );
   }
 }
