@@ -633,6 +633,8 @@ describe('a room page', () => {
         'You’re watching this game. You can take a seat once it ends.',
       ),
     ).toBeInTheDocument();
+    // The room bar says so too, beside the phase.
+    expect(screen.getByText('Watching · Round 1')).toBeInTheDocument();
     expect(screen.getByText('Everyone is picking')).toBeInTheDocument();
     // The board takes no picks from a spectator.
     expect(

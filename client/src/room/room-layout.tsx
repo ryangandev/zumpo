@@ -141,6 +141,15 @@ export function RoomLayout({
   const gone = usePlayerGone(state.playerList, state.spectators, room.playerId);
   // A game cut short as the others left ends on a panel that says so, and
   // who is host now: a notice over its heading would only hide it.
+  // A spectator watching a game is told so where it takes none of the
+  // board's room: the room bar says Watching beside the phase, and the
+  // notice heads the scoreboard's column, a phone's Players tab. So the
+  // board is the players' size, and keeps it into the results.
+  const watchingGame = room.spectating && state.isGameStarted;
+  const watchNotice =
+    watchingGame && !reconnecting ? (
+      <Notice>{m.room.spectatingNotice}</Notice>
+    ) : null;
   const endedAlone =
     !state.isGameStarted &&
     state.lastGame?.endedEarly === true &&
@@ -244,7 +253,11 @@ export function RoomLayout({
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[state.gameType].name}
           room={roomNameOf(state, m)}
-          phase={phase}
+          phase={
+            watchingGame
+              ? { ...phase, label: m.room.watchingPhase(phase.label) }
+              : phase
+          }
           onHowToPlay={() => setRules(true)}
           onLeave={reconnecting ? undefined : room.leave}
           viewer={viewer}
@@ -257,12 +270,7 @@ export function RoomLayout({
           {m.room.reconnectingNotice(roomNameOf(state, m), seconds)}
         </Notice>
       ) : (
-        <>
-          {room.spectating && state.isGameStarted && (
-            <Notice>{m.room.spectatingNotice}</Notice>
-          )}
-          {notice}
-        </>
+        notice
       )}
       {phone ? (
         <MobileTabs<View>
@@ -321,8 +329,9 @@ export function RoomLayout({
               value: 'players',
               label: m.room.players(players.length),
               panel:
-                playersAside || watching ? (
+                playersAside || watching || watchNotice ? (
                   <div className={styles.side}>
+                    {watchNotice}
                     {scoreboard}
                     {watching}
                     {playersAside}
@@ -338,6 +347,7 @@ export function RoomLayout({
         <div className={styles.room}>
           <div className={styles.stage}>{gameView}</div>
           <div className={styles.side}>
+            {watchNotice}
             {scoreboard}
             {watching}
             {chatPanel}
