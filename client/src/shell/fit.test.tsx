@@ -84,6 +84,16 @@ const line = (text: string) => (
   </Fit>
 );
 
+/** 25 characters in a hugging box, beside other words in its room. */
+const row = (next: string) => (
+  <div data-testid="room">
+    <Fit align="start" hugs>
+      <span data-testid="words">{'x'.repeat(25)}</span>
+    </Fit>
+    <span data-testid="beside">{next}</span>
+  </div>
+);
+
 describe('Fit', () => {
   it('scales a line too wide for its box down to it', () => {
     render(line('x'.repeat(40)));
@@ -122,14 +132,6 @@ describe('Fit', () => {
   });
 
   it('scales its words up again when the words beside a hugging box shrink', async () => {
-    const row = (next: string) => (
-      <div data-testid="room">
-        <Fit align="start" hugs>
-          <span data-testid="words">{'x'.repeat(25)}</span>
-        </Fit>
-        <span data-testid="beside">{next}</span>
-      </div>
-    );
     const { rerender } = render(row('y'.repeat(10)));
     expect(zoom()).toBeCloseTo(200 / 250);
     // The words and the room stay as they were: only what is beside shrinks.
