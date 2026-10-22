@@ -13,10 +13,18 @@ import { PickResult, TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
-import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
+import {
+  EndedEarlyPanel,
+  NextGameUnderBoard,
+  ResultBar,
+  ResultsPanel,
+  StandingsSection,
+  WaitingPanel,
+} from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import {
   cardsAfter,
   DealtCards,
@@ -74,6 +82,7 @@ export function Make24Room() {
             ? m.make24.spectatorChatLocked
             : undefined,
       }}
+      nextBeside
     />
   );
 }
@@ -83,22 +92,45 @@ function BetweenGames({ room }: { room: Room }) {
   const { state, startGame, starting } = room;
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
+  const phone = useMediaQuery(PHONE);
+  const oneColumn = useMediaQuery(ONE_COLUMN);
 
   if (summary && !summary.endedEarly) {
-    return (
+    const detail = m.make24.resultsDetail(summary.hands);
+    const cards = state.lastDeal.length > 0 && (
+      <DealtCards deal={state.lastDeal} />
+    );
+    // The standings count the last hand: its cards stand alone, and off a
+    // phone the standings take the hand's results' place under them, under
+    // the result in the turn bar's, with what comes next beside them; in one
+    // column what comes next is under the cards, and the standings under it.
+    return phone ? (
       <>
         <ResultsPanel
           summary={summary}
-          detail={m.make24.resultsDetail(summary.hands)}
+          detail={detail}
           onPlayAgain={startGame}
           starting={starting}
         />
-        {/* The standings count the last hand: its cards stand alone. */}
-        {state.lastDeal.length > 0 && (
+        {cards && <TablePanel>{cards}</TablePanel>}
+      </>
+    ) : (
+      <>
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.make24.gameOver}
+        />
+        {oneColumn ? (
+          cards && <TablePanel>{cards}</TablePanel>
+        ) : (
           <TablePanel>
-            <DealtCards deal={state.lastDeal} />
+            {cards}
+            <StandingsSection summary={summary} className={styles.results} />
           </TablePanel>
         )}
+        <NextGameUnderBoard />
+        {oneColumn && <StandingsSection summary={summary} />}
       </>
     );
   }

@@ -62,6 +62,12 @@ export interface TurnBarProps {
    * player's words.
    */
   hintRowBelow?: number;
+  /**
+   * Where the bar says how a game ended, in place of a results card's
+   * title: the main line is then that heading, level 2, with this id, and
+   * takes the focus a page hands it (tabIndex -1).
+   */
+  headingId?: string;
   /** The bar's region, for a page that hands it the focus. */
   ref?: Ref<HTMLElement>;
   className?: string;
@@ -92,6 +98,7 @@ export function TurnBar({
   stackOnPhone = true,
   wordLine = false,
   hintRowBelow = 0,
+  headingId,
   ref,
   className,
 }: TurnBarProps) {
@@ -143,7 +150,21 @@ export function TurnBar({
         </span>
         <div className={styles.answer} aria-live="polite">
           <Fit align="start" className={styles.mainBox}>
-            <span className={cx(styles.main, styles[kind])}>{main}</span>
+            {headingId ? (
+              // A span, not an h2, so the main line keeps its inline box
+              // for Fit to scale.
+              <span
+                className={cx(styles.main, styles[kind])}
+                id={headingId}
+                role="heading"
+                aria-level={2}
+                tabIndex={-1}
+              >
+                {main}
+              </span>
+            ) : (
+              <span className={cx(styles.main, styles[kind])}>{main}</span>
+            )}
           </Fit>
           {/* On a line of its own, at a phone's width or on a desktop under
               hintRowBelow, the meta keeps its line while it is empty. */}

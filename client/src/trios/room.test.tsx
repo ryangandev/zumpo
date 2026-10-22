@@ -217,7 +217,19 @@ describe('a Trios room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Maya wins with 7 trios.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Maya wins with 7 trios.',
+      ),
+    ).toBeInTheDocument();
+    // What comes next is beside the board, so the board keeps its place.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
     ).toBeInTheDocument();
     expect(
       screen.getByText('10 trios found. You finished 2nd.'),

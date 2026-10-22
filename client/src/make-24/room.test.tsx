@@ -219,7 +219,19 @@ describe('a Make 24 room', () => {
       }),
     );
     expect(
-      screen.getByRole('heading', { name: 'You win with 420 points.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'You win with 420 points.',
+      ),
+    ).toBeInTheDocument();
+    // What comes next is beside the board, so the board keeps its place.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('heading', { name: 'Hand 5 results' }),

@@ -26,7 +26,9 @@ test('two players solve every hand of a game', async ({ player }) => {
     await expect(maya.getByText(`Hand ${hand} results`).first()).toBeVisible();
   }
 
-  await expect(maya.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    maya.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
   await expect(
     maya.getByRole('list', { name: 'Standings' }).getByRole('listitem'),
   ).toHaveCount(2);

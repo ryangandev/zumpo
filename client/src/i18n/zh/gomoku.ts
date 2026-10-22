@@ -110,8 +110,6 @@ export const gomoku: typeof en = {
   nextAsk: (color) => `下一局你执${COLOR[color]}，准备好了吗？`,
   nextWait: (note, color) => `${note} · 你执${COLOR[color]}`,
   seatFree: (name) => `${name} 的座位空出来了，谁都可以坐。`,
-  fiveFrom: (from, to) => `五子连珠，${from} 到 ${to}`,
-  drawStatus: '平局',
   both: (first, second) => `${first}${second}`,
 
   solo: {

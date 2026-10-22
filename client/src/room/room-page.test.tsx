@@ -85,7 +85,9 @@ describe('a room page', () => {
       ),
     );
     expect(
-      screen.getByRole('heading', { name: 'Maya 和 Sam 以 120 分并列获胜。' }),
+      within(screen.getByRole('region', { name: '当前回合' })).getByText(
+        'Maya 和 Sam 以 120 分并列获胜。',
+      ),
     ).toBeInTheDocument();
     const standings = screen.getByRole('list', { name: '排名' });
     expect(within(standings).getByText('第 3 名')).toBeInTheDocument();

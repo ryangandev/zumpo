@@ -71,12 +71,15 @@ test('two players race for the middle card while a third watches', async ({
   }
 
   for (const page of [maya, leo, jo]) {
-    await expect(page.getByText('Game over', { exact: true })).toBeVisible();
     await expect(
-      page.getByRole('heading', {
-        name:
+      page.getByRole('banner').getByText('Game over', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page
+        .getByRole('region', { name: 'Turn' })
+        .getByText(
           page === maya ? 'You win with 15 cards.' : 'Maya wins with 15 cards.',
-      }),
+        ),
     ).toBeVisible();
   }
   // The last card stays up, with who took it.

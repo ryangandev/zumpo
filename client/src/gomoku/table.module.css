@@ -60,6 +60,12 @@
   gap: var(--zumpo-space-12);
 }
 
+/* Each as tall as it is, a line of words too, such as how the next game
+   starts, which a results row would stretch to a row of its own. */
+.side .actions > * {
+  flex: none;
+}
+
 /* Too narrow for a regular board and a side beside it: the side goes under
    the board, as on a phone. */
 @container (max-width: 820px) {
@@ -206,5 +212,10 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: auto;
+  }
+
+  /* A line of words has a row of its own, over the buttons. */
+  .beside .actions > :not(button) {
+    flex-basis: 100%;
   }
 }

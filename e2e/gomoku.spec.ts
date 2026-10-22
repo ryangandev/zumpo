@@ -68,25 +68,28 @@ test('two players make five in a row while a third watches, then swap colours', 
   }
 
   for (const page of [maya, leo, jo]) {
-    await expect(page.getByText('Game over', { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('banner').getByText('Game over', { exact: true }),
+    ).toBeVisible();
     await expect(
       boardOf(page).getByRole('gridcell', {
         name: /black stone, in the winning line$/,
       }),
     ).toHaveCount(5);
   }
+  // The result is in the turn bar's place, over the board it ended on.
   await expect(
-    black.getByRole('heading', { name: 'You win with five in a row.' }),
+    turnOf(black).getByText('You win with five in a row.'),
   ).toBeVisible();
   await expect(
-    white.getByRole('heading', {
-      name: `${blackName} wins with five in a row.`,
-    }),
+    turnOf(white).getByText(`${blackName} wins with five in a row.`),
   ).toBeVisible();
   await expect(
-    maya.getByText(`A game of 9 moves. Next game, ${whiteName} plays Black.`),
+    turnOf(maya).getByText(
+      `A game of 9 moves. Next game, ${whiteName} plays Black.`,
+    ),
   ).toBeVisible();
-  await expect(black.getByText('Five in a row, D8 to H8')).toBeVisible();
+  await expect(black.getByText('Black · five in a row')).toBeVisible();
   await expect(leo.getByText(`${blackName} made five in a row.`)).toBeVisible();
 
   // The colours swap for the same pair, and either may resign.
@@ -103,15 +106,11 @@ test('two players make five in a row while a third watches, then swap colours', 
   ).toBeFocused();
   await dialog.getByRole('button', { name: 'Resign' }).click();
   await expect(
-    black.getByRole('heading', { name: `You win: ${whiteName} resigned.` }),
+    turnOf(black).getByText(`You win: ${whiteName} resigned.`),
   ).toBeVisible();
+  await expect(turnOf(white).getByText('You resigned.')).toBeVisible();
   await expect(
-    white.getByRole('heading', { name: 'You resigned.' }),
-  ).toBeVisible();
-  await expect(
-    jo.getByRole('heading', {
-      name: `${blackName} wins: ${whiteName} resigned.`,
-    }),
+    turnOf(jo).getByText(`${blackName} wins: ${whiteName} resigned.`),
   ).toBeVisible();
 });
 

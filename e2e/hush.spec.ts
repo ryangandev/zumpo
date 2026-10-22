@@ -73,9 +73,8 @@ test('two players play every card in order, together, without a word', async ({
 
   // The team's result: no ranks, every level, and the last pile.
   for (const page of both) {
-    await expect(
-      page.getByRole('heading', { name: 'All 7 levels cleared.' }),
-    ).toBeVisible();
+    // In the turn bar's place, over the last pile.
+    await expect(turn(page).getByText('All 7 levels cleared.')).toBeVisible();
     await expect(
       page.getByText('Together, with 3 lives to spare.'),
     ).toBeVisible();

@@ -1,3 +1,15 @@
+/* HU07, HU08: off a phone, the team's result under the pile, on paper of
+   its own. */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zumpo-space-24);
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
 /* HU07, HU08: the team's result, level by level. */
 .block {
   display: flex;
