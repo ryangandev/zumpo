@@ -62,8 +62,10 @@
 }
 
 /* One line whatever it says, so the bar keeps its height: the main line
-   hugs its words and is scaled down (Fit) rather than wrap, and the meta
-   beside it ends in an ellipsis. */
+   hugs its words and is scaled down (Fit) rather than wrap. The meta beside
+   it keeps its words, and only the main line gives way: were both to shrink,
+   the scaled main line would shrink its own box again and run over the
+   meta. Only a meta wider than the whole line ends in an ellipsis. */
 .answer > .mainBox {
   display: flex;
   flex: 0 1 auto;
@@ -100,8 +102,9 @@
 }
 
 .meta {
-  flex: 0 1 auto;
+  flex: none;
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
