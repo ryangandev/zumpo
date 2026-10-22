@@ -148,8 +148,6 @@ export const gomoku = {
   nextWait: (note: string, color: GomokuColor) =>
     `${note} · you play ${COLOR[color]}`,
   seatFree: (name: string) => `${name}’s seat is free for anybody to take.`,
-  fiveFrom: (from: string, to: string) => `Five in a row, ${from} to ${to}`,
-  drawStatus: 'Draw',
   /** Two sentences of a result, one after the other. */
   both: (first: string, second: string) => `${first} ${second}`,
 

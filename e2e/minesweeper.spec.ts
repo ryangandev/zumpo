@@ -25,7 +25,7 @@ test('two players pick until the board is done', async ({ player }) => {
 
   // The reveal between rounds lasts half a second here, too short to catch
   // under load, so the rounds are told apart by their numbers.
-  const over = maya.getByText('Game over', { exact: true });
+  const over = maya.getByRole('banner').getByText('Game over', { exact: true });
   for (let round = 2; ; round++) {
     const open = maya
       .getByRole('region', { name: 'Turn' })

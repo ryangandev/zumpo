@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type {
   MinesweeperPickResult,
   MinesweeperRoomState,
@@ -6,7 +7,13 @@ import { PickResult, TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
-import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
+import {
+  EndedEarlyPanel,
+  ResultBar,
+  ResultsPanel,
+  StandingsSection,
+  WaitingPanel,
+} from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
@@ -41,6 +48,7 @@ export function MinesweeperRoom() {
       stage={inGame ? <Round room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.minesweeper.messagePlaceholder }}
+      nextBeside
     />
   );
 }
@@ -50,20 +58,42 @@ function BetweenGames({ room }: { room: Room }) {
   const { state, startGame, starting } = room;
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
+  const phone = useMediaQuery(PHONE);
 
   if (summary && !summary.endedEarly) {
-    return (
+    const detail = m.minesweeper.resultsDetail(
+      summary.difficulty,
+      summary.rounds,
+    );
+    // M14, M15: on a phone the results come over the board. Off a phone the
+    // result takes the turn bar's place, the standings the last round's
+    // under the board, and what comes next is beside it, so the board keeps
+    // its size and place from the game to its results.
+    return phone ? (
       <>
         <ResultsPanel
           summary={summary}
-          detail={m.minesweeper.resultsDetail(
-            summary.difficulty,
-            summary.rounds,
-          )}
+          detail={detail}
           onPlayAgain={startGame}
           starting={starting}
         />
         <Minefield room={room} showPicks={false} />
+      </>
+    ) : (
+      <>
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.minesweeper.gameOver}
+          category={m.minesweeper.boardLabel(summary.difficulty)}
+        />
+        <Minefield
+          room={room}
+          showPicks={false}
+          standings={
+            <StandingsSection summary={summary} className={styles.results} />
+          }
+        />
       </>
     );
   }
@@ -111,16 +141,20 @@ function Round({ room }: { room: Room }) {
  * The board, with the latest round's results under it. A phone shows them
  * only while the round is revealed (MO13), so the next pick (MO11, MO12)
  * keeps the board alone on screen. A finished game's standings already
- * count its last round, so the board stands alone under them.
+ * count its last round, so they take its place under the board, or on a
+ * phone the board stands alone under them.
  */
 function Minefield({
   room,
   showPicks,
   onPick,
+  standings,
 }: {
   room: Room;
   showPicks: boolean;
   onPick?: (index: number) => void;
+  /** A finished game's standings, in the last round's place. */
+  standings?: ReactNode;
 }) {
   const m = useMessages();
   const { state } = room;
@@ -153,6 +187,7 @@ function Minefield({
           inPlay={state.isGameStarted}
         />
       </div>
+      {standings}
       {results.length > 0 && (
         <section className={styles.results} aria-labelledby="round-results">
           <h2 id="round-results" className={styles.resultsTitle}>

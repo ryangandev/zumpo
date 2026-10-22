@@ -17,8 +17,8 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
 import {
+  ResultBar,
   ResultsActions,
-  ResultsPanel,
   useResultsNote,
   type ResultsNote,
   WaitingPanel,
@@ -122,16 +122,7 @@ export function GomokuRoom() {
       }
       stage={
         <>
-          {playing ? null : summary ? (
-            phone ? (
-              <TurnBar
-                {...resultBar(room, summary, note, m)}
-                stackOnPhone={false}
-              />
-            ) : (
-              <Results room={room} summary={summary} />
-            )
-          ) : (
+          {playing || summary ? null : (
             <WaitingPanel
               aloneTitle={m.gomoku.alone}
               setup={m.gomoku.setup}
@@ -144,12 +135,19 @@ export function GomokuRoom() {
             phone={phone}
             fill={phone && (playing || summary !== null)}
             turn={
-              playing && (
+              playing ? (
                 <TurnBar
                   {...turnBar(room, seconds, previewing !== null, phone, m)}
                   // Its words fit one row, so the board keeps the height.
                   stackOnPhone={false}
                 />
+              ) : summary && phone ? (
+                <TurnBar
+                  {...resultBar(room, summary, note, m)}
+                  stackOnPhone={false}
+                />
+              ) : (
+                summary && <Results room={room} summary={summary} />
               )
             }
             board={board}
@@ -179,11 +177,14 @@ export function GomokuRoom() {
                     {resign}
                   </>
                 )
-              ) : summary && phone ? (
+              ) : summary ? (
+                // Where Resign was: at the foot of the seats beside the
+                // board, or under it on a phone, whose turn bar says the
+                // words.
                 <ResultsActions
                   onPlayAgain={room.startGame}
                   starting={room.starting}
-                  words={false}
+                  words={!phone}
                 />
               ) : null
             }
@@ -436,7 +437,11 @@ function resultNext(
     : m.gomoku.nextBlack(sideName(state, 'white'));
 }
 
-/** GM13-GM15: the result over the finished board. */
+/**
+ * GM13-GM15: the result in the turn bar's place over the finished board, as
+ * tall as the bar in play, so the board keeps its size and place; what comes
+ * next is where Resign was, at the foot of the seats.
+ */
 function Results({
   room,
   summary,
@@ -445,34 +450,19 @@ function Results({
   summary: GomokuGameSummary;
 }) {
   const m = useMessages();
-  const { state } = room;
   const first =
     summary.ending === 'draw'
       ? m.gomoku.drawDetail(summary.stones)
       : m.gomoku.moves(summary.stones);
-  const next = resultNext(state, summary, m);
-  const line = state.winLines?.[0];
+  const next = resultNext(room.state, summary, m);
   return (
-    <ResultsPanel
+    <ResultBar
       summary={summary}
+      label={m.gomoku.gameOver}
       title={resultTitle(room, summary, m)}
       detail={next ? m.gomoku.both(first, next) : first}
-      ranked={summary.winner !== null}
-      statusOf={(standing) => {
-        const color = colorOf(state, standing.playerId);
-        if (summary.winner === null) return m.gomoku.drawStatus;
-        if (color !== summary.winner) {
-          return color ? m.gomoku.color(color) : '';
-        }
-        return summary.ending === 'five' && line
-          ? m.gomoku.fiveFrom(
-              pointName(line[0] ?? 0),
-              pointName(line.at(-1) ?? 0),
-            )
-          : m.gomoku.wonGame(state.gameNumber);
-      }}
-      onPlayAgain={room.startGame}
-      starting={room.starting}
+      // As the bar in play: one row on a narrow column, as tall.
+      stackOnPhone={false}
     />
   );
 }

@@ -28,6 +28,7 @@ import { useStartFocus } from '../shell/use-start-focus';
 import { useTurnTitle } from './use-turn-title';
 import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
+import { NextGamePanel } from './panels';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
 import { roomNameOf, type RaceStanding, type Seat } from './players';
@@ -96,6 +97,13 @@ export interface RoomLayoutProps {
    * phone with another tab open, on the Game tab.
    */
   yourTurn?: boolean;
+  /**
+   * The game keeps the board a game ended on in its place, under the result
+   * in the turn bar's (`ResultBar`): off a phone, what comes next for a game
+   * played to its end (`NextGamePanel`) is at the top of the side column,
+   * in sight beside it. A phone's Board tab has the game's own results.
+   */
+  nextBeside?: boolean;
 }
 
 /** How long a phone says "You're the host now", or who went, over the board. */
@@ -123,6 +131,7 @@ export function RoomLayout({
   playersAside,
   standings = showScores,
   yourTurn = false,
+  nextBeside = false,
 }: RoomLayoutProps) {
   const room = useRoomContext();
   const { state, reconnecting, reconnectGraceMs } = room;
@@ -151,6 +160,11 @@ export function RoomLayout({
     placeholder: chat.placeholder,
     lockedReason: reconnecting ? m.room.reconnecting : chat.lockedReason,
   };
+
+  const finished =
+    !state.isGameStarted &&
+    state.lastGame !== null &&
+    !state.lastGame.endedEarly;
 
   // Before a first game every score is 0 and everybody is waiting: the rows
   // say only who is here, and who is away.
@@ -338,6 +352,12 @@ export function RoomLayout({
         <div className={styles.room}>
           <div className={styles.stage}>{gameView}</div>
           <div className={styles.side}>
+            {nextBeside && finished && (
+              <NextGamePanel
+                onPlayAgain={room.startGame}
+                starting={room.starting}
+              />
+            )}
             {scoreboard}
             {watching}
             {chatPanel}

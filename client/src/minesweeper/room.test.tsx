@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { ME, minesweeperState } from '../tests/fixtures';
@@ -285,10 +285,23 @@ describe('a Minesweeper room', () => {
 
     update(picking);
     update(ended);
+    // The result is in the turn bar's place, and what comes next beside the
+    // board, so the board keeps its own.
     expect(
-      screen.getByRole('heading', { name: 'You win with 120 points.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'You win with 120 points.',
+      ),
     ).toBeInTheDocument();
-    // The standings count the last round: its results are not repeated.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    // The standings count the last round: they take its place.
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
+    ).toBeInTheDocument();
     expect(
       screen.queryByRole('heading', { name: /^Round \d+ results$/ }),
     ).toBeNull();

@@ -120,3 +120,23 @@
     padding: var(--zumpo-space-24);
   }
 }
+
+/* Beside the board a game ended on: what comes next, on its own paper at
+   the top of the side column, a line of words over the buttons. */
+.next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--zumpo-space-12);
+  padding: var(--zumpo-space-24);
+  border: 1px solid var(--zumpo-line);
+  border-radius: var(--zumpo-radius-24);
+  background: var(--zumpo-paper);
+}
+
+/* Under the board a game ended on, as a round's results are headed. */
+.standingsTitle {
+  padding-bottom: var(--zumpo-space-8);
+  font: var(--zumpo-text-heading);
+  letter-spacing: var(--zumpo-text-heading-tracking);
+}
