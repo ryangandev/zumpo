@@ -229,6 +229,13 @@ Code differs from Figma on purpose in a few places:
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
 - Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
 - The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
+- On a phone Hush's table is one screen (#149): the pile is scaled to the height between the head and the hand, down to 0.3, so on a 360 by 640 phone the top card is about 70 by 90 px; Figma's HU10 and HU11 are tall frames that draw it at full size.
+  On every width the cards under the top one scroll beside it in play, the newest kept in view, drawn at least half size so their numbers stay 12 px, and a keyboard can reach them while they scroll; a hand with more cards than fit in one row is scaled down to the width, keeping the room of cards already played for the whole level; Figma draws neither.
+  On a short window beside the side column, such as 1280 by 720, the table in play is scaled down so it ends inside the window, as a board on your own is.
+  There the side column is as tall as the stage, its chat scrolling, so the page never runs past the window.
+  Before the first play a desktop's empty pile is card-shaped, in the top card's place, so the first play moves nothing; on a phone on its side the pile keeps its own height and the page scrolls as a desktop's does.
+  On a phone the last pile under a game's results is drawn at half size, and the cards each player still held go under their name, every row at the one scale the fullest needs; Figma has no phone results screen for Hush.
+  Until `s-fig-1-hush-phone-table.js` and `s-fig-2-hush-desktop-pile-row.js` run, HU01-HU08 draw the pile as a column, HU10 and HU11 draw the hand in Regular cards and the hearts with their words, and the phone table's parts sit 24 apart, not 12.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
 - The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
@@ -308,7 +315,6 @@ Code differs from Figma on purpose in a few places:
   Gomoku, whose words fit the one row, keeps it (TurnBar `stackOnPhone={false}`), so its board keeps that height.
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
   On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
-- Until `j-fig-9-hush-phone-panel-gap.js` runs, HU10 and HU11 set the phone table's parts 24 apart; code sets them 16 apart, which gives back most of the height the turn bar's meta line takes on a 360 by 640 phone.
 - The Phone room bar's line under the game is one text in Figma; code keeps its phase whole and ends only a room's name too long for the rest of the line in an ellipsis, so "Game over" is never cut to "Game ov…" at 360 px.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
