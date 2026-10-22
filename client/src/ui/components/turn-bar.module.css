@@ -53,12 +53,20 @@
   margin-left: var(--zumpo-space-16);
 }
 
+/* As tall as its main line's box, whatever the main line's scale: the main
+   line's Fit watches this line for the room it has (Fit's hugs), which must
+   not follow the scale it sets. */
 .answer {
   display: flex;
   grid-area: answer;
   align-items: baseline;
   gap: var(--zumpo-space-12);
   min-width: 0;
+  height: var(--zumpo-text-title-line);
+}
+
+.answer:has(.status) {
+  height: var(--zumpo-text-heading-line);
 }
 
 /* One line whatever it says, so the bar keeps its height: the main line
@@ -141,6 +149,7 @@
 }
 
 /* A word's height in every phase (TurnBar's wordLine). */
+.desktop .wordLine .answer,
 .desktop .wordLine .answer > .mainBox {
   height: var(--zumpo-text-title-line);
 }

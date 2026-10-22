@@ -7,6 +7,14 @@ export interface FitProps {
   /** Centred in the width it is given, or at its start. */
   align?: 'center' | 'start';
   className?: string;
+  /**
+   * The box is sized by its piece, as a flex item beside others is, rather
+   * than given a width: its own size then says nothing when the room around
+   * it grows or what is beside it shrinks, so Fit watches its parent, the
+   * parent's width and the words in it. The parent's size must never follow
+   * the piece's scale, or watching it would loop.
+   */
+  hugs?: boolean;
 }
 
 /**
@@ -16,7 +24,12 @@ export interface FitProps {
  * fits, it shrinks rather than overflow. The piece is measured unscaled on
  * every resize, since scaled it always fits what it has.
  */
-export function Fit({ children, align = 'center', className }: FitProps) {
+export function Fit({
+  children,
+  align = 'center',
+  className,
+  hugs = false,
+}: FitProps) {
   const box = useRef<HTMLDivElement>(null);
   const piece = useRef<HTMLDivElement>(null);
 
@@ -39,15 +52,14 @@ export function Fit({ children, align = 'center', className }: FitProps) {
     const observer = new ResizeObserver(fit);
     observer.observe(outer);
     observer.observe(inner);
-    // A box that hugs its piece, as a flex item sized by its content does,
-    // keeps the scaled piece's width when the room around it grows, so it
-    // never says so: the room is watched too.
-    if (outer.parentElement) observer.observe(outer.parentElement);
     // The piece never grows past its box, so content that changes while too
     // wide, as words in another language or in a font that has just come,
-    // leaves its size as it was: those are watched for themselves.
+    // leaves its size as it was: those are watched for themselves. A hugging
+    // box's room is its parent, words beside it included.
+    const room = hugs ? outer.parentElement : null;
+    if (room) observer.observe(room);
     const content = new MutationObserver(fit);
-    content.observe(inner, {
+    content.observe(room ?? inner, {
       childList: true,
       subtree: true,
       characterData: true,
@@ -58,7 +70,7 @@ export function Fit({ children, align = 'center', className }: FitProps) {
       content.disconnect();
       document.fonts?.removeEventListener('loadingdone', fit);
     };
-  }, []);
+  }, [hugs]);
 
   return (
     <div ref={box} className={cx(styles.box, className)}>

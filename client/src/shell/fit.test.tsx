@@ -6,6 +6,10 @@ import { Fit } from './fit';
 const GIVEN = 300;
 /** The room around Fit's box, which hugs its words up to it. */
 let room = GIVEN;
+/** The words beside the box in its room, which take their width from it. */
+const beside = () =>
+  (document.querySelector('[data-testid="beside"]')?.textContent?.length ?? 0) *
+  CHAR;
 /** Each character's width unscaled. */
 const CHAR = 10;
 /**
@@ -49,13 +53,13 @@ beforeEach(() => {
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     function (this: HTMLElement) {
       const held = this.querySelector<HTMLElement>('[data-testid="words"]');
-      // The words; the piece and the box, as wide as the words up to the
-      // room; the room.
+      // The words; the piece and the box, as wide as the words up to what
+      // the room leaves beside the words next to them; the room.
       const width =
         this.dataset.testid === 'words'
           ? wordsWidth(this)
           : held && this.dataset.testid !== 'room'
-            ? Math.min(wordsWidth(held), room)
+            ? Math.min(wordsWidth(held), room - beside())
             : room;
       return {
         left: 0,
@@ -102,8 +106,38 @@ describe('Fit', () => {
     expect(wordsWidth(words())).toBeLessThanOrEqual(GIVEN);
   });
 
-  it('scales its words up again when the room around a hugging box grows', () => {
+  it('leaves the room around a box it is given unwatched', () => {
     render(<div data-testid="room">{line('x'.repeat(40))}</div>);
+    const parent = screen.getByTestId('room');
+    expect(observers.some(({ watched }) => watched.includes(parent))).toBe(
+      false,
+    );
+  });
+
+  it('scales its words up again when the words beside a hugging box shrink', async () => {
+    const row = (next: string) => (
+      <div data-testid="room">
+        <Fit align="start" hugs>
+          <span data-testid="words">{'x'.repeat(25)}</span>
+        </Fit>
+        <span data-testid="beside">{next}</span>
+      </div>
+    );
+    const { rerender } = render(row('y'.repeat(10)));
+    expect(zoom()).toBeCloseTo(200 / 250);
+    // The words and the room stay as they were: only what is beside shrinks.
+    await act(async () => rerender(row('y'.repeat(2))));
+    expect(zoom()).toBe(1);
+  });
+
+  it('scales its words up again when the room around a hugging box grows', () => {
+    render(
+      <div data-testid="room">
+        <Fit align="start" hugs>
+          <span data-testid="words">{'x'.repeat(40)}</span>
+        </Fit>
+      </div>,
+    );
     expect(zoom()).toBeCloseTo(0.75);
     // The box hugs the scaled words, so only the room around it changes.
     room = 600;

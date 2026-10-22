@@ -149,7 +149,7 @@ export function TurnBar({
           {label}
         </span>
         <div className={styles.answer} aria-live="polite">
-          <Fit align="start" className={styles.mainBox}>
+          <Fit align="start" className={styles.mainBox} hugs>
             {headingId ? (
               // A span, not an h2, so the main line keeps its inline box
               // for Fit to scale.
