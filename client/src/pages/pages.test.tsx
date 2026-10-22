@@ -13,7 +13,7 @@ import {
 import type { MinesweeperLobbyRoomInfo } from '../../../shared/wire-types';
 import { recordGuesses } from '../daily-word/solo/records';
 import { onPhone } from '../tests/phone';
-import { renderApp } from '../tests/render-app';
+import { loaded, renderApp } from '../tests/render-app';
 
 const lobbyRoom: MinesweeperLobbyRoomInfo = {
   gameType: 'minesweeper',
@@ -440,6 +440,8 @@ describe('a game’s page', () => {
     expect(screen.getByText('1 room · Updates live')).toBeInTheDocument();
 
     await user.click(within(row).getByRole('button', { name: 'Join' }));
+    // The room loads as it is opened.
+    await act(() => loaded(router));
     expect(router.state.location.pathname).toBe('/games/minesweeper/rooms/r1');
     expect(fake.sentArgs('lobby:unsubscribe')).toEqual([['minesweeper']]);
   });
@@ -467,6 +469,8 @@ describe('a game’s page', () => {
     const row = screen.getByRole('article', { name: 'Friday table' });
     expect(within(row).getByText('Playing')).toBeInTheDocument();
     await user.click(within(row).getByRole('button', { name: 'Watch' }));
+    // The room loads as it is opened.
+    await act(() => loaded(router));
     expect(router.state.location.pathname).toBe('/games/minesweeper/rooms/r1');
   });
 

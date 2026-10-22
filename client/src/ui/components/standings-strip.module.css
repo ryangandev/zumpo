@@ -22,8 +22,8 @@
 }
 
 .strip:focus-visible {
-  outline: 2px solid var(--zumpo-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 /* Zumpo/Standing: the avatar and the value on a paper chip. */

@@ -191,7 +191,7 @@ function Hand({ room }: { room: Room }) {
           {...turnBar(room, seconds, cards, m)}
           hintRowBelow={HINT_ROW_BELOW}
         />
-        <TablePanel>
+        <TablePanel fitHeight="room">
           <DealtCards deal={state.deal} />
         </TablePanel>
       </>
@@ -203,7 +203,7 @@ function Hand({ room }: { room: Room }) {
         {...turnBar(room, seconds, cards, m)}
         hintRowBelow={HINT_ROW_BELOW}
       />
-      <TablePanel>
+      <TablePanel fitHeight="room">
         {state.mySolve && !madeIt ? (
           // A refresh keeps the solve but not the steps that made it.
           <FinalCard

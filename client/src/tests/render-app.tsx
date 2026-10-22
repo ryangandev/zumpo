@@ -42,9 +42,28 @@ export async function renderApp(
       </SessionProvider>
     </LocaleProvider>,
   );
+  // A page that loads when opened, as a room does, is in before the test
+  // goes on (app.tsx).
+  await act(() => loaded(router));
   // Connect, as the server would accept the handshake.
   await act(async () => {
     if (fake.active) fake.open();
   });
   return { ...view, fake, router };
+}
+
+type Router = ReturnType<typeof createMemoryRouter>;
+
+/** Settles once the router has the page it opened, or navigated to, in. */
+export function loaded(router: Router) {
+  const done = () =>
+    router.state.initialized && router.state.navigation.state === 'idle';
+  if (done()) return Promise.resolve();
+  return new Promise<void>((resolve) => {
+    const unsubscribe = router.subscribe(() => {
+      if (!done()) return;
+      unsubscribe();
+      resolve();
+    });
+  });
 }

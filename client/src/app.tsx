@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, type ComponentType } from 'react';
 import {
   createBrowserRouter,
   Navigate,
@@ -8,6 +8,7 @@ import {
   useParams,
   type RouteObject,
 } from 'react-router';
+import type { GameType } from '../../shared/wire-types';
 import { isGameType } from './games/catalog';
 import { LocaleProvider } from './i18n';
 import { SessionProvider } from './net/session';
@@ -16,8 +17,6 @@ import GamePage from './pages/game';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/not-found';
 import CrashedPage from './pages/crashed';
-import RoomPage from './room/room-page';
-import SoloPage from './solo/solo-page';
 
 // The design system gallery, for development only: the build drops it.
 const DesignGallery = import.meta.env.DEV
@@ -33,26 +32,53 @@ function Root() {
   );
 }
 
+function Loading() {
+  return null;
+}
+
 /** A page under /games/:game, for a game that exists. */
 function GameRoute({
   page: Page,
 }: {
-  page: typeof GamePage | typeof CreateRoomPage | typeof SoloPage;
+  page: ComponentType<{ gameType: GameType }>;
 }) {
   const { game } = useParams();
   if (!isGameType(game)) return <NotFoundPage />;
   return <Page key={game} gameType={game} />;
 }
 
-function GameRoomPage() {
+/**
+ * A game on your own and a room bring every game's board, so each loads only
+ * when it is opened: the home page, where most visits start, downloads
+ * neither. The router keeps the page it leaves on screen while one loads.
+ */
+async function soloRoute() {
+  const { default: SoloPage } = await import('./solo/solo-page');
+  return { Component: () => <GameRoute page={SoloPage} /> };
+}
+
+async function roomRoute() {
+  const { default: RoomPage } = await import('./room/room-page');
+  return { Component: () => <RoomRoute page={RoomPage} /> };
+}
+
+/** /games/:game/rooms/:roomId, for a game that exists. */
+function RoomRoute({
+  page: Page,
+}: {
+  page: ComponentType<{ gameType: GameType; roomId: string }>;
+}) {
   const { game, roomId } = useParams();
   if (!isGameType(game) || !roomId) return <NotFoundPage />;
-  return <RoomPage key={roomId} gameType={game} roomId={roomId} />;
+  return <Page key={roomId} gameType={game} roomId={roomId} />;
 }
 
 export const routes: RouteObject[] = [
   {
     element: <Root />,
+    // Opened straight from its link, a page that loads when opened leaves
+    // the cream page bare for the moment it takes.
+    HydrateFallback: Loading,
     children: [
       {
         // A page that throws shows the crash page in its place, in the frame.
@@ -68,8 +94,8 @@ export const routes: RouteObject[] = [
             path: '/games/:game/new',
             element: <GameRoute page={CreateRoomPage} />,
           },
-          { path: '/games/:game/solo', element: <GameRoute page={SoloPage} /> },
-          { path: '/games/:game/rooms/:roomId', element: <GameRoomPage /> },
+          { path: '/games/:game/solo', lazy: soloRoute },
+          { path: '/games/:game/rooms/:roomId', lazy: roomRoute },
           ...(DesignGallery
             ? [
                 {

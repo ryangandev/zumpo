@@ -206,13 +206,26 @@ function paint(
  * Where a sheet is played, or a drawing shown to work from. A phone plays on
  * one screen (play-board.tsx), so here the sheet keeps its 798 × 598
  * proportions in the height the controls leave it: as wide as the column, or
- * as tall as the room where that is less. Wider screens leave it as it is.
+ * as tall as the room where that is less. Wider, it ends inside the window
+ * with what follows it, such as Done (useHeightLeft), and a sheet to draw on
+ * is never narrower than half its column; a drawing only `shown`, to work
+ * from, may be.
  */
-export function PlaySheet({ children }: { children: ReactNode }) {
+export function PlaySheet({
+  children,
+  shown = false,
+}: {
+  children: ReactNode;
+  shown?: boolean;
+}) {
   const box = useRef<HTMLDivElement>(null);
-  useHeightLeft(box);
+  useHeightLeft(box, true, true);
   return (
-    <div ref={box} className={styles.playSheet} data-play-board="">
+    <div
+      ref={box}
+      className={cx(styles.playSheet, shown && styles.shown)}
+      data-play-board=""
+    >
       {children}
     </div>
   );

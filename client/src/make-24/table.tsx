@@ -15,7 +15,7 @@ import {
 import { Button, NumberCard, OperatorKey, type NumberCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { useTypingKeys } from '../shell/board-typing';
-import { useFitHeight } from '../shell/fit-height';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages, type Messages } from '../i18n';
@@ -26,15 +26,16 @@ export const cardsAfter = (deal: readonly number[], steps: readonly Step[]) =>
   play(deal, steps) ?? play(deal, [])!;
 
 /**
- * The paper panel a hand is played on (T02-T09); bare on a phone. On your
- * own, `fitHeight` keeps the cards and their keys inside the window.
+ * The paper panel a hand is played on (T02-T09); bare on a phone.
+ * `fitHeight` keeps the cards and their keys inside the window, on your own
+ * or in a room (useFitHeight).
  */
 export function TablePanel({
   children,
   fitHeight = false,
 }: {
   children: ReactNode;
-  fitHeight?: boolean;
+  fitHeight?: FitHeight;
 }) {
   const ref = useFitHeight<HTMLDivElement>(fitHeight);
   return (
