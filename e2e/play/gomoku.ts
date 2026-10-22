@@ -30,20 +30,26 @@ export async function blackOf(pages: readonly Page[]): Promise<Page> {
 }
 
 /**
- * Places a stone with a click on the player's turn, a second one on a phone,
- * whose first tap puts down only a faint stone, and waits for the server's
+ * Places a stone with a click on the player's turn, then Place stone on a
+ * phone, whose first tap puts down only a faint stone, and waits for the server's
  * answer to show it as the last stone.
  */
 export async function place(page: Page, name: string): Promise<void> {
   await expect(turnOf(page).getByText('Your turn')).toBeVisible();
   await expect(pointOf(page, name)).toBeEnabled();
-  await pointOf(page, name).click();
   const placed = boardOf(page).getByRole('gridcell', {
     name: new RegExp(`^${name}, (black|white) stone`),
   });
-  const faint = page.getByRole('button', { name: 'Place stone' });
-  await expect(placed.or(faint)).toBeVisible();
-  if (await faint.isVisible()) await pointOf(page, name).click();
+  const commit = page.getByRole('button', { name: 'Place stone' });
+  if (await commit.isVisible()) {
+    // A phone: a tap puts down a faint stone, and Place stone places it.
+    await pointOf(page, name).tap();
+    await expect(commit).toBeEnabled();
+    await commit.click();
+  } else {
+    await pointOf(page, name).click();
+  }
+  await expect(placed).toBeVisible();
   await expect(pointOf(page, name)).toHaveAccessibleName(
     new RegExp(
       `^${name}, (black|white) stone, (last placed|in the winning line)$`,
