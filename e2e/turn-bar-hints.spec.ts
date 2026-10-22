@@ -69,18 +69,18 @@ interface Phase {
  * the bar's and Fit's ResizeObservers have answered the last resize.
  */
 const read = (page: Page, phase?: Phase): Promise<Bar> =>
-  barBox(page).evaluate(async (box, phase) => {
+  barBox(page).evaluate(async (box, said) => {
     for (let frame = 0; frame < 2; frame++) {
       await new Promise((done) => requestAnimationFrame(done));
     }
     const zh = document.documentElement.lang.startsWith('zh');
-    const words = phase ? (zh ? phase.zh : phase.en) : '';
+    const says = said ? (zh ? said.zh : said.en) : '';
     const cut = ['label', 'mainBox', 'meta'].flatMap((part) => {
       const el = box.querySelector<HTMLElement>(`[class*="_${part}_"]`);
       if (!el?.textContent) return [];
-      const words = document.createRange();
-      words.selectNodeContents(el);
-      const needs = words.getBoundingClientRect().width;
+      const text = document.createRange();
+      text.selectNodeContents(el);
+      const needs = text.getBoundingClientRect().width;
       const has = el.getBoundingClientRect().width;
       return needs > has + 0.01
         ? [
@@ -98,7 +98,7 @@ const read = (page: Page, phase?: Phase): Promise<Bar> =>
       below,
       row,
       cut,
-      showing: (box.textContent ?? '').includes(words),
+      showing: (box.textContent ?? '').includes(says),
       settled: row === wanted,
     };
   }, phase);
