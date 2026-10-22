@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 1550,
     "w": 1440,
-    "h": 1101,
+    "h": 918,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -97,7 +99,7 @@
         "id": "62:75364",
         "name": "Board & room",
         "w": 1312,
-        "h": 931,
+        "h": 748,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -110,7 +112,7 @@
             "id": "62:75365",
             "name": "Board stage",
             "w": 944,
-            "h": 931,
+            "h": 652,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -119,549 +121,50 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "62:75366",
-                "name": "Result",
+                "type": "INSTANCE",
+                "id": "166:76494",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 411,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "Together, with 1 life to spare.",
+                  "Main": "All 5 levels cleared.",
+                  "Category": false,
+                  "Label": "Game over"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "62:75367",
-                    "name": "Result heading",
-                    "w": 344,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "62:75368",
-                        "w": 344,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "All 5 levels cleared.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "62:75369",
-                        "w": 207,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Together, with 1 life to spare.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "62:75467",
-                    "name": "Level by level",
-                    "w": 752,
-                    "h": 62,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "clip": true,
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/12",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "62:75468",
-                        "name": "Label",
-                        "w": 91,
-                        "h": 20,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Level by level",
-                        "textStyle": "Zumpo/Label",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "62:75469",
-                        "name": "Levels",
-                        "w": 752,
-                        "h": 30,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "clip": true,
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/8",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75470",
-                            "name": "Tag / Level 1: clean",
-                            "w": 117,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "component": "Zumpo/Tag",
-                            "variant": {
-                              "Tone": "Lime"
-                            },
-                            "componentId": "24:6521",
-                            "props": {
-                              "Show icon": true,
-                              "Icon": "Zumpo/Icon / Glyph=check",
-                              "Label": "Level 1: clean"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 30,
-                                "width": 117
-                              }
-                            ]
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75477",
-                            "name": "Tag / Level 2: a life lost",
-                            "w": 140,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "component": "Zumpo/Tag",
-                            "variant": {
-                              "Tone": "Peach"
-                            },
-                            "componentId": "24:6526",
-                            "props": {
-                              "Show icon": true,
-                              "Icon": "Zumpo/Icon / Glyph=alert",
-                              "Label": "Level 2: a life lost"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 30,
-                                "width": 140
-                              }
-                            ]
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75485",
-                            "name": "Tag / Level 3: a life lost",
-                            "w": 140,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "component": "Zumpo/Tag",
-                            "variant": {
-                              "Tone": "Peach"
-                            },
-                            "componentId": "24:6526",
-                            "props": {
-                              "Show icon": true,
-                              "Icon": "Zumpo/Icon / Glyph=alert",
-                              "Label": "Level 3: a life lost"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 30,
-                                "width": 140
-                              }
-                            ]
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75493",
-                            "name": "Tag / Level 4: clean, a life back",
-                            "w": 183,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "component": "Zumpo/Tag",
-                            "variant": {
-                              "Tone": "Lime"
-                            },
-                            "componentId": "24:6521",
-                            "props": {
-                              "Show icon": true,
-                              "Icon": "Zumpo/Icon / Glyph=check",
-                              "Label": "Level 4: clean, a life back"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 30,
-                                "width": 183
-                              }
-                            ]
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75500",
-                            "name": "Tag / Level 5: a life lost",
-                            "w": 140,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "component": "Zumpo/Tag",
-                            "variant": {
-                              "Tone": "Peach"
-                            },
-                            "componentId": "24:6526",
-                            "props": {
-                              "Show icon": true,
-                              "Icon": "Zumpo/Icon / Glyph=alert",
-                              "Label": "Level 5: a life lost"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 30,
-                                "width": 140
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "62:75508",
-                    "name": "Played by",
-                    "w": 390,
-                    "h": 72,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "clip": true,
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/12",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "62:75509",
-                        "name": "Label",
-                        "w": 67,
-                        "h": 20,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Played by",
-                        "textStyle": "Zumpo/Label",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "62:75510",
-                        "name": "Team",
-                        "w": 390,
-                        "h": 40,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "clip": true,
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/24",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "FRAME",
-                            "id": "62:75511",
-                            "name": "Maya",
-                            "w": 85,
-                            "h": 40,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "clip": true,
-                            "layout": {
-                              "mode": "row",
-                              "gap": "$Zumpo · UI:space/8",
-                              "align": "center",
-                              "strokesIncluded": true
-                            },
-                            "children": [
-                              {
-                                "type": "INSTANCE",
-                                "id": "62:75512",
-                                "name": "Avatar",
-                                "w": 40,
-                                "h": 40,
-                                "component": "Zumpo/Avatar",
-                                "variant": {
-                                  "Tone": "Peach"
-                                },
-                                "componentId": "4:34",
-                                "props": {
-                                  "Initials": "MA"
-                                }
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "62:75514",
-                                "name": "Name",
-                                "w": 37,
-                                "h": 20,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "Maya",
-                                "textStyle": "Zumpo/Label",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "FRAME",
-                            "id": "62:75515",
-                            "name": "Sam",
-                            "w": 78,
-                            "h": 40,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "clip": true,
-                            "layout": {
-                              "mode": "row",
-                              "gap": "$Zumpo · UI:space/8",
-                              "align": "center",
-                              "strokesIncluded": true
-                            },
-                            "children": [
-                              {
-                                "type": "INSTANCE",
-                                "id": "62:75516",
-                                "name": "Avatar",
-                                "w": 40,
-                                "h": 40,
-                                "component": "Zumpo/Avatar",
-                                "variant": {
-                                  "Tone": "Sand"
-                                },
-                                "componentId": "26:10572",
-                                "props": {
-                                  "Initials": "SA"
-                                }
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "62:75519",
-                                "name": "Name",
-                                "w": 30,
-                                "h": 20,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "Sam",
-                                "textStyle": "Zumpo/Label",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "FRAME",
-                            "id": "62:75520",
-                            "name": "Ryan",
-                            "w": 82,
-                            "h": 40,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "clip": true,
-                            "layout": {
-                              "mode": "row",
-                              "gap": "$Zumpo · UI:space/8",
-                              "align": "center",
-                              "strokesIncluded": true
-                            },
-                            "children": [
-                              {
-                                "type": "INSTANCE",
-                                "id": "62:75521",
-                                "name": "Avatar",
-                                "w": 40,
-                                "h": 40,
-                                "component": "Zumpo/Avatar",
-                                "variant": {
-                                  "Tone": "Blue"
-                                },
-                                "componentId": "26:10568"
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "62:75524",
-                                "name": "Name",
-                                "w": 34,
-                                "h": 20,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "Ryan",
-                                "textStyle": "Zumpo/Label",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "FRAME",
-                            "id": "62:75525",
-                            "name": "Leo",
-                            "w": 73,
-                            "h": 40,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "clip": true,
-                            "layout": {
-                              "mode": "row",
-                              "gap": "$Zumpo · UI:space/8",
-                              "align": "center",
-                              "strokesIncluded": true
-                            },
-                            "children": [
-                              {
-                                "type": "INSTANCE",
-                                "id": "62:75526",
-                                "name": "Avatar",
-                                "w": 40,
-                                "h": 40,
-                                "component": "Zumpo/Avatar",
-                                "variant": {
-                                  "Tone": "Lime"
-                                },
-                                "componentId": "26:10570",
-                                "props": {
-                                  "Initials": "LE"
-                                }
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "62:75529",
-                                "name": "Name",
-                                "w": 25,
-                                "h": 20,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "Leo",
-                                "textStyle": "Zumpo/Label",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "62:75383",
-                    "name": "Actions",
-                    "w": 283,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "62:75384",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "62:75385",
-                        "name": "Action / Invite friends",
-                        "w": 161,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Invite friends"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 161
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "flip back",
+                      "Time": "0:02",
+                      "Tone": "Waiting"
+                    }
                   }
                 ]
               },
@@ -670,7 +173,7 @@
                 "id": "62:75386",
                 "name": "Board panel",
                 "w": 944,
-                "h": 504,
+                "h": 320,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -772,14 +275,13 @@
                     "id": "62:75549",
                     "name": "Pile",
                     "w": 894,
-                    "h": 400,
+                    "h": 216,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
                     "layout": {
-                      "mode": "column",
+                      "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
-                      "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -803,17 +305,16 @@
                         "type": "FRAME",
                         "id": "62:75552",
                         "name": "Trail",
-                        "w": 894,
-                        "h": 168,
+                        "w": 710,
+                        "h": 216,
                         "wSize": "fill",
-                        "hSize": "hug",
+                        "hSize": "fill",
                         "clip": true,
                         "layout": {
                           "mode": "row",
                           "gap": "$Zumpo · UI:space/8",
                           "wrap": true,
                           "crossGap": "$Zumpo · UI:space/8",
-                          "justify": "center",
                           "align": "center",
                           "strokesIncluded": true
                         },
@@ -1127,6 +628,449 @@
                     ]
                   }
                 ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:76542",
+                "name": "Team result",
+                "w": 944,
+                "h": 208,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "62:75467",
+                    "name": "Level by level",
+                    "w": 752,
+                    "h": 62,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/12",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "62:75468",
+                        "name": "Label",
+                        "w": 91,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Level by level",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "62:75469",
+                        "name": "Levels",
+                        "w": 752,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "clip": true,
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75470",
+                            "name": "Tag / Level 1: clean",
+                            "w": 117,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Tag",
+                            "variant": {
+                              "Tone": "Lime",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:6521",
+                            "props": {
+                              "Show icon": true,
+                              "Icon": "Zumpo/Icon / Glyph=check",
+                              "Label": "Level 1: clean"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 30,
+                                "width": 117
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75477",
+                            "name": "Tag / Level 2: a life lost",
+                            "w": 140,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Tag",
+                            "variant": {
+                              "Tone": "Peach",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:6526",
+                            "props": {
+                              "Show icon": true,
+                              "Icon": "Zumpo/Icon / Glyph=alert",
+                              "Label": "Level 2: a life lost"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 30,
+                                "width": 140
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75485",
+                            "name": "Tag / Level 3: a life lost",
+                            "w": 140,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Tag",
+                            "variant": {
+                              "Tone": "Peach",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:6526",
+                            "props": {
+                              "Show icon": true,
+                              "Icon": "Zumpo/Icon / Glyph=alert",
+                              "Label": "Level 3: a life lost"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 30,
+                                "width": 140
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75493",
+                            "name": "Tag / Level 4: clean, a life back",
+                            "w": 183,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Tag",
+                            "variant": {
+                              "Tone": "Lime",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:6521",
+                            "props": {
+                              "Show icon": true,
+                              "Icon": "Zumpo/Icon / Glyph=check",
+                              "Label": "Level 4: clean, a life back"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 30,
+                                "width": 183
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75500",
+                            "name": "Tag / Level 5: a life lost",
+                            "w": 140,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Tag",
+                            "variant": {
+                              "Tone": "Peach",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:6526",
+                            "props": {
+                              "Show icon": true,
+                              "Icon": "Zumpo/Icon / Glyph=alert",
+                              "Label": "Level 5: a life lost"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 30,
+                                "width": 140
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "62:75508",
+                    "name": "Played by",
+                    "w": 390,
+                    "h": 72,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/12",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "62:75509",
+                        "name": "Label",
+                        "w": 67,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Played by",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "62:75510",
+                        "name": "Team",
+                        "w": 390,
+                        "h": 40,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "clip": true,
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/24",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "62:75511",
+                            "name": "Maya",
+                            "w": 85,
+                            "h": 40,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "clip": true,
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "62:75512",
+                                "name": "Avatar",
+                                "w": 40,
+                                "h": 40,
+                                "component": "Zumpo/Avatar",
+                                "variant": {
+                                  "Tone": "Peach"
+                                },
+                                "componentId": "4:34",
+                                "props": {
+                                  "Initials": "MA"
+                                }
+                              },
+                              {
+                                "type": "TEXT",
+                                "id": "62:75514",
+                                "name": "Name",
+                                "w": 37,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Maya",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "62:75515",
+                            "name": "Sam",
+                            "w": 78,
+                            "h": 40,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "clip": true,
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "62:75516",
+                                "name": "Avatar",
+                                "w": 40,
+                                "h": 40,
+                                "component": "Zumpo/Avatar",
+                                "variant": {
+                                  "Tone": "Sand"
+                                },
+                                "componentId": "26:10572",
+                                "props": {
+                                  "Initials": "SA"
+                                }
+                              },
+                              {
+                                "type": "TEXT",
+                                "id": "62:75519",
+                                "name": "Name",
+                                "w": 30,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Sam",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "62:75520",
+                            "name": "Ryan",
+                            "w": 82,
+                            "h": 40,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "clip": true,
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "62:75521",
+                                "name": "Avatar",
+                                "w": 40,
+                                "h": 40,
+                                "component": "Zumpo/Avatar",
+                                "variant": {
+                                  "Tone": "Blue"
+                                },
+                                "componentId": "26:10568"
+                              },
+                              {
+                                "type": "TEXT",
+                                "id": "62:75524",
+                                "name": "Name",
+                                "w": 34,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Ryan",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "62:75525",
+                            "name": "Leo",
+                            "w": 73,
+                            "h": 40,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "clip": true,
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/8",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "62:75526",
+                                "name": "Avatar",
+                                "w": 40,
+                                "h": 40,
+                                "component": "Zumpo/Avatar",
+                                "variant": {
+                                  "Tone": "Lime"
+                                },
+                                "componentId": "26:10570",
+                                "props": {
+                                  "Initials": "LE"
+                                }
+                              },
+                              {
+                                "type": "TEXT",
+                                "id": "62:75529",
+                                "name": "Name",
+                                "w": 25,
+                                "h": 20,
+                                "wSize": "hug",
+                                "hSize": "hug",
+                                "text": "Leo",
+                                "textStyle": "Zumpo/Label",
+                                "fills": [
+                                  "$Zumpo · UI:color/ink"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -1135,7 +1079,7 @@
             "id": "62:75430",
             "name": "Room sidebar",
             "w": 344,
-            "h": 626,
+            "h": 748,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1144,6 +1088,100 @@
             },
             "children": [
               {
+                "type": "FRAME",
+                "id": "166:76512",
+                "name": "Next game",
+                "w": 344,
+                "h": 98,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/12",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "62:75383",
+                    "name": "Actions",
+                    "w": 294,
+                    "h": 48,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "62:75384",
+                        "name": "Action / Play again",
+                        "w": 110,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:15",
+                        "props": {
+                          "Label": "Play again"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 110
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "62:75385",
+                        "name": "Action / Invite friends",
+                        "w": 161,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Secondary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:18",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=link",
+                          "Show icon": true,
+                          "Label": "Invite friends"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 161
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
                 "type": "INSTANCE",
                 "id": "62:75431",
                 "name": "Zumpo/Scoreboard",
@@ -1151,6 +1189,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

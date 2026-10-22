@@ -14,7 +14,7 @@
     "x": 530,
     "y": 6567,
     "w": 390,
-    "h": 1098,
+    "h": 1108,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Round 19"
+          "Phase": "Maya’s room · Round 19"
         }
       },
       {
@@ -74,7 +74,7 @@
         "id": "27:22689",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 86,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -85,26 +85,28 @@
         "componentId": "27:22192",
         "props": {
           "Main": "Pick a cell",
-          "Meta": "99 mines · 4 hit so far",
+          "Category": false,
+          "Meta": "99 mines · 4 hit",
           "Label": "Round 19"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 86,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Large · 30 × 16",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to pick",

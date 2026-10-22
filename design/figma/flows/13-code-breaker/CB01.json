@@ -14,7 +14,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 1035,
+    "h": 1213,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,7 +70,7 @@
         "id": "162:107059",
         "name": "Lobby layout",
         "w": 1312,
-        "h": 809,
+        "h": 987,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -311,7 +311,7 @@
             "id": "162:107069",
             "name": "How to play",
             "w": 368,
-            "h": 680,
+            "h": 987,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -342,110 +342,56 @@
                 "autoResize": "height"
               },
               {
-                "type": "TEXT",
-                "id": "162:107071",
-                "name": "Summary",
-                "w": 304,
-                "h": 75,
-                "hSize": "hug",
-                "text": "Everyone races to crack the same four-digit code, with ten guesses each. Fewer guesses score more.",
-                "textStyle": "Zumpo/Body",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
-              },
-              {
-                "type": "FRAME",
-                "id": "163:62622",
-                "name": "On your own",
+                "type": "INSTANCE",
+                "id": "166:70205",
+                "name": "How to play / On your own",
                 "w": 302,
-                "h": 236,
+                "h": 410,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "The pegs count digits; they never say which ones.",
+                  "Step 4": "One code a day, the same for everybody. Your streak is kept on this device.",
+                  "Step 2": "Each guess gets four pegs. Green square: right digit, right place. Coral circle: right digit, somewhere else. Grey square: not in the code.",
+                  "Step 1": "The code and every guess are four different digits; a code may start with 0.",
+                  "Goal": "Crack the hidden four-digit code in ten guesses.",
+                  "Show step 4": true,
+                  "Heading": "On your own"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "163:62623",
-                    "name": "Label",
-                    "w": 86,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "On your own",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "163:62624",
-                    "name": "Facts",
-                    "w": 302,
-                    "h": 212,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "Four different digits; a code may start with 0\nGreen square: right place. Coral circle: somewhere else. Grey: not in it\nA new code at your midnight; your streak is kept on this device\nPractice codes after it, as many as you like",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 410,
+                    "width": 302
                   }
                 ]
               },
               {
-                "type": "FRAME",
-                "id": "162:107072",
-                "name": "Play together",
+                "type": "INSTANCE",
+                "id": "166:70225",
+                "name": "How to play / Play together",
                 "w": 302,
-                "h": 161,
+                "h": 385,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "The pegs count digits; they never say which ones.",
+                  "Step 4": "Fewer guesses score more, plus a little for the time left.",
+                  "Step 2": "Each guess gets four pegs. Green square: right digit, right place. Coral circle: right digit, somewhere else. Grey square: not in the code.",
+                  "Step 1": "The code and every guess are four different digits; a code may start with 0.",
+                  "Goal": "Crack the same hidden four-digit code as the others, in fewer guesses.",
+                  "Show step 4": true,
+                  "Heading": "Play together"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "162:107073",
-                    "name": "Label",
-                    "w": 92,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "Play together",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "162:107074",
-                    "name": "Rules at a glance",
-                    "w": 302,
-                    "h": 137,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "2–8 players\n1 or 3 codes\n3 minutes for each code\nOthers see your pegs, never your digits",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 385,
+                    "width": 302
                   }
                 ]
               },

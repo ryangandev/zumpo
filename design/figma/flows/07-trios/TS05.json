@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "4 of 10 trios",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -143,7 +145,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -152,7 +155,7 @@
                       "Show label": true,
                       "Label": "to a hint",
                       "Time": "0:18",
-                      "Tone": "Running"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -229,7 +232,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:84415",
-                            "name": "Trios card / Default / One ink solid triangle",
+                            "name": "Trios card / Default / One black solid triangle",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -263,7 +266,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:84437",
-                            "name": "Trios card / Selected / Two ink solid circles",
+                            "name": "Trios card / Selected / Two black solid circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -347,7 +350,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:84517",
-                            "name": "Trios card / Default / One ink striped circle",
+                            "name": "Trios card / Default / One black striped circle",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -397,7 +400,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:84540",
-                            "name": "Trios card / Default / Three ink outlined circles",
+                            "name": "Trios card / Default / Three black outlined circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -525,7 +528,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:84700",
-                            "name": "Trios card / Default / Two ink outlined circles",
+                            "name": "Trios card / Default / Two black outlined circles",
                             "w": 72,
                             "h": 48,
                             "component": "Zumpo/Trios card",
@@ -568,6 +571,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -774,7 +780,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Leo found a trio! (+1)",
+                      "Message": "Leo found a trio, +1.",
                       "Kind": "Score"
                     }
                   },

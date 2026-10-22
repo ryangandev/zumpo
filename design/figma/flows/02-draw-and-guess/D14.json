@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 6851,
     "w": 1440,
-    "h": 952,
+    "h": 892,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -81,7 +82,7 @@
         "id": "9:2389",
         "name": "Game & room",
         "w": 1312,
-        "h": 782,
+        "h": 722,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -94,7 +95,7 @@
             "id": "9:2390",
             "name": "Game stage",
             "w": 944,
-            "h": 462,
+            "h": 559,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -107,7 +108,7 @@
                 "id": "27:18983",
                 "name": "Final scores",
                 "w": 944,
-                "h": 462,
+                "h": 559,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -446,66 +447,97 @@
                   },
                   {
                     "type": "FRAME",
-                    "id": "27:19079",
+                    "id": "169:77097",
                     "name": "Actions",
-                    "w": 321,
-                    "h": 25,
-                    "wSize": "hug",
+                    "w": 862,
+                    "h": 122,
+                    "wSize": "fill",
                     "hSize": "hug",
+                    "clip": true,
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
                       "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
                       {
-                        "type": "FRAME",
-                        "id": "27:18979",
-                        "name": "Waiting for host",
-                        "w": 321,
+                        "type": "TEXT",
+                        "id": "169:77098",
+                        "name": "Next game",
+                        "w": 862,
                         "h": 25,
-                        "wSize": "hug",
                         "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/8",
-                          "align": "center",
-                          "strokesIncluded": true
+                        "text": "Next game: 2 rounds",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "169:77099",
+                        "name": "How it starts",
+                        "w": 862,
+                        "h": 25,
+                        "hSize": "hug",
+                        "text": "The next game starts once everyone is ready, or when Maya starts it.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "169:77100",
+                        "name": "Action / Ready",
+                        "w": 111,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
                         },
-                        "children": [
+                        "componentId": "4:15",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=check",
+                          "Show icon": true,
+                          "Label": "Ready"
+                        },
+                        "overrides": [
                           {
-                            "type": "INSTANCE",
-                            "id": "27:18980",
-                            "name": "Zumpo/Icon",
-                            "w": 20,
-                            "h": 20,
-                            "component": "Zumpo/Icon",
-                            "variant": {
-                              "Glyph": "pending"
-                            },
-                            "componentId": "24:5002",
-                            "overrides": [
-                              {
-                                "path": "pending",
-                                "strokes": [
-                                  "$Zumpo · UI:color/muted"
-                                ]
-                              }
-                            ]
-                          },
+                            "path": ".",
+                            "height": 48,
+                            "width": 111
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "169:77101",
+                        "name": "Action / Watch instead",
+                        "w": 140,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Quiet",
+                          "State": "Default"
+                        },
+                        "componentId": "4:21",
+                        "props": {
+                          "Label": "Watch instead"
+                        },
+                        "overrides": [
                           {
-                            "type": "TEXT",
-                            "id": "27:18982",
-                            "w": 293,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Waiting for Maya to start another game.",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
+                            "path": ".",
+                            "height": 48,
+                            "width": 140
                           }
                         ]
                       }
@@ -520,7 +552,7 @@
             "id": "9:2401",
             "name": "Room sidebar",
             "w": 344,
-            "h": 782,
+            "h": 722,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -536,6 +568,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -626,14 +661,14 @@
                 "id": "9:2432",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 454,
+                "h": 394,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 454,
+                    "height": 394,
                     "width": 344
                   },
                   {
@@ -641,7 +676,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Leo guessed the correct word! (+107)",
+                      "Message": "Leo guessed the word, +107.",
                       "Kind": "Success"
                     }
                   },
@@ -650,7 +685,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan guessed the correct word! (+55)",
+                      "Message": "Ryan guessed the word, +55.",
                       "Kind": "Success"
                     }
                   },
@@ -659,7 +694,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Maya guessed the correct word! (+88)",
+                      "Message": "Maya guessed the word, +88.",
                       "Kind": "Success"
                     }
                   },
@@ -668,7 +703,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Game has ended!",
+                      "Message": "Game has ended.",
                       "Kind": "Success"
                     }
                   },

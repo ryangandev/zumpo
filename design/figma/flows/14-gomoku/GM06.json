@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1567,
     "w": 1440,
-    "h": 1176,
+    "h": 892,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Computer won",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "162:69508",
         "name": "Board & room",
         "w": 1312,
-        "h": 1006,
+        "h": 722,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +119,7 @@
             "id": "162:69509",
             "name": "Board stage",
             "w": 944,
-            "h": 1006,
+            "h": 722,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -126,293 +128,50 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "162:69510",
-                "name": "Result",
+                "type": "INSTANCE",
+                "id": "166:71863",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 376,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "From C11 to G7",
+                  "Main": "The computer made five in a row",
+                  "Category": false,
+                  "Label": "Game over"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "162:69511",
-                    "name": "Result heading",
-                    "w": 546,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "162:69512",
-                        "name": "Heading",
-                        "w": 546,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "The computer won on move 21.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "162:69513",
-                        "name": "Body",
-                        "w": 429,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Five in a row, from C11 to G7. Play again and you take Black.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "162:69514",
-                    "name": "Stats",
-                    "w": 862,
-                    "h": 123,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "162:69515",
-                        "name": "Stat / Level",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "162:69516",
-                            "w": 38,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Level",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "162:69517",
-                            "w": 72,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Medium",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "162:69518",
-                        "name": "Stat / Moves",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "162:69519",
-                            "w": 48,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Moves",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "162:69520",
-                            "w": 17,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "21",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "162:69521",
-                        "name": "Stat / Games won at Medium",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "162:69522",
-                            "w": 171,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Games won at Medium",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "162:69523",
-                            "w": 51,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "5 of 11",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "162:69524",
-                    "name": "Actions",
-                    "w": 252,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "162:69525",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "162:69526",
-                        "name": "Action / Change level",
-                        "w": 130,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Label": "Change level"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 130
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "1:12",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -711,7 +470,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "Black",
-                                  "State": "Won"
+                                  "State": "Won",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63073",
                                 "props": {
@@ -744,7 +504,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "White",
-                                  "State": "Default"
+                                  "State": "Default",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63087",
                                 "props": {
@@ -774,14 +535,111 @@
             "id": "162:69541",
             "name": "Game sidebar",
             "w": 344,
-            "h": 194,
+            "h": 441,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71843",
+                "name": "Result",
+                "w": 344,
+                "h": 231,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "Play again and you take Black.",
+                  "Title": "The computer won on move 21."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 231,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71847",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71843;35:13441;166:71852",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71843;35:13441;166:71853",
+                          "name": "Action / Change level",
+                          "w": 130,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=link",
+                            "Label": "Change level"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 130
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "162:69542",

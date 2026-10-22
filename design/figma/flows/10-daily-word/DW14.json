@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Word 2 of 3",
+          "Phase": "Maya’s room · Word 2 of 3",
           "Game": "Daily Word"
         }
       },
@@ -79,6 +79,9 @@
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Scoreboard",
+        "variant": {
+          "Folded": "No"
+        },
         "componentId": "9:320",
         "overrides": [
           {

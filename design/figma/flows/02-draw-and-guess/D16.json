@@ -54,7 +54,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Waiting room",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -282,6 +283,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -557,7 +561,7 @@
         "y": 91,
         "absolute": true,
         "w": 560,
-        "h": 608,
+        "h": 354,
         "hSize": "hug",
         "component": "Zumpo/Card",
         "variant": {
@@ -571,7 +575,7 @@
         "overrides": [
           {
             "path": ".",
-            "height": 608,
+            "height": 354,
             "layoutPositioning": "ABSOLUTE",
             "width": 560
           }
@@ -602,114 +606,6 @@
                   "path": ".",
                   "height": 113,
                   "width": 494
-                }
-              ]
-            },
-            {
-              "type": "INSTANCE",
-              "id": "I95:114274;35:13437;95:114608",
-              "name": "Zumpo/Chip field",
-              "w": 494,
-              "h": 230,
-              "wSize": "fill",
-              "hSize": "hug",
-              "component": "Zumpo/Chip field",
-              "variant": {
-                "State": "Default"
-              },
-              "componentId": "95:113245",
-              "props": {
-                "Action": "Choose all"
-              },
-              "overrides": [
-                {
-                  "path": ".",
-                  "height": 230,
-                  "width": 494
-                },
-                {
-                  "path": "Chips / Actions",
-                  "componentProperties": {
-                    "Label": "Actions",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Clothing",
-                  "componentProperties": {
-                    "Label": "Clothing",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Electronics",
-                  "componentProperties": {
-                    "Label": "Electronics",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Fantasy",
-                  "componentProperties": {
-                    "Label": "Fantasy",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Fruits",
-                  "componentProperties": {
-                    "Label": "Fruits",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Household",
-                  "componentProperties": {
-                    "Label": "Household",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Jobs",
-                  "componentProperties": {
-                    "Label": "Jobs",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / League of Legends",
-                  "componentProperties": {
-                    "Label": "League of Legends",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Music",
-                  "componentProperties": {
-                    "Label": "Music",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Nature",
-                  "componentProperties": {
-                    "Label": "Nature",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Sports",
-                  "componentProperties": {
-                    "Label": "Sports",
-                    "State": "Off"
-                  }
-                },
-                {
-                  "path": "Chips / Vehicles",
-                  "componentProperties": {
-                    "Label": "Vehicles",
-                    "State": "Off"
-                  }
                 }
               ]
             },

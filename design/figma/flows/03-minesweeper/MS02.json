@@ -52,7 +52,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -61,7 +62,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Medium · 16 × 16",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -155,7 +157,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -164,7 +167,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "2:14",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -2180,11 +2183,11 @@
             "id": "40:57697",
             "name": "Game sidebar",
             "w": 344,
-            "h": 494,
+            "h": 486,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [

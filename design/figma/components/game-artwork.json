@@ -4,7 +4,7 @@
   "id": "120:117076",
   "type": "COMPONENT_SET",
   "key": "9d4596164f76699d69562bfce0a8fbb25d429eb3",
-  "description": "The paper panel that shows what a game looks like: a strip of play on a tile, the signature piece as an icon. Game card and Game intro use it.",
+  "description": "The paper panel that shows what a game looks like: a strip of play on a tile, the signature piece as an icon. Game card and Game intro use it. Its words (the Draw & Guess word, Doodle Chain’s first and last lines) are exposed Tag labels, set per language in code.",
   "properties": {
     "Game": {
       "type": "variant",
@@ -78,14 +78,15 @@
           {
             "type": "INSTANCE",
             "id": "120:116989",
-            "name": "Tag / turtle",
+            "name": "Word",
             "w": 76,
             "h": 30,
             "wSize": "hug",
             "hSize": "hug",
             "component": "Zumpo/Tag",
             "variant": {
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             },
             "componentId": "24:6521",
             "props": {
@@ -569,7 +570,7 @@
               {
                 "type": "INSTANCE",
                 "id": "120:117019",
-                "name": "Trios card / Found / Three ink outlined squares",
+                "name": "Trios card / Found / Three black outlined squares",
                 "w": 72,
                 "h": 48,
                 "component": "Zumpo/Trios card",
@@ -2181,7 +2182,8 @@
             "hSize": "hug",
             "component": "Zumpo/Tag",
             "variant": {
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             },
             "componentId": "24:6521",
             "props": {
@@ -2217,7 +2219,8 @@
             "hSize": "hug",
             "component": "Zumpo/Tag",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             },
             "componentId": "24:6526",
             "props": {

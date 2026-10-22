@@ -158,7 +158,7 @@
                     "id": "26:10586",
                     "name": "You",
                     "visible": false,
-                    "w": 37,
+                    "w": 92,
                     "h": 20,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -167,23 +167,13 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Compact"
                     },
-                    "componentId": "24:6511",
+                    "componentId": "171:77262",
                     "props": {
                       "Label": "You"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 20,
-                        "paddingBottom": "$Zumpo · UI:space/1",
-                        "paddingLeft": "$Zumpo · UI:space/8",
-                        "paddingRight": "$Zumpo · UI:space/8",
-                        "paddingTop": "$Zumpo · UI:space/1",
-                        "width": 37
-                      }
-                    ]
+                    }
                   }
                 ]
               },
@@ -384,7 +374,7 @@
                     "id": "26:10606",
                     "name": "You",
                     "visible": false,
-                    "w": 37,
+                    "w": 92,
                     "h": 20,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -393,23 +383,13 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Paper"
+                      "Tone": "Paper",
+                      "Size": "Compact"
                     },
-                    "componentId": "24:6531",
+                    "componentId": "171:77282",
                     "props": {
                       "Label": "You"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 20,
-                        "paddingBottom": "$Zumpo · UI:space/1",
-                        "paddingLeft": "$Zumpo · UI:space/8",
-                        "paddingRight": "$Zumpo · UI:space/8",
-                        "paddingTop": "$Zumpo · UI:space/1",
-                        "width": 37
-                      }
-                    ]
+                    }
                   }
                 ]
               },
@@ -607,7 +587,7 @@
                     "id": "26:10626",
                     "name": "You",
                     "visible": false,
-                    "w": 37,
+                    "w": 92,
                     "h": 20,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -616,23 +596,13 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Compact"
                     },
-                    "componentId": "24:6511",
+                    "componentId": "171:77262",
                     "props": {
                       "Label": "You"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 20,
-                        "paddingBottom": "$Zumpo · UI:space/1",
-                        "paddingLeft": "$Zumpo · UI:space/8",
-                        "paddingRight": "$Zumpo · UI:space/8",
-                        "paddingTop": "$Zumpo · UI:space/1",
-                        "width": 37
-                      }
-                    ]
+                    }
                   }
                 ]
               },
@@ -836,7 +806,7 @@
                     "id": "26:10646",
                     "name": "You",
                     "visible": false,
-                    "w": 37,
+                    "w": 92,
                     "h": 20,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -845,23 +815,13 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Compact"
                     },
-                    "componentId": "24:6511",
+                    "componentId": "171:77262",
                     "props": {
                       "Label": "You"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 20,
-                        "paddingBottom": "$Zumpo · UI:space/1",
-                        "paddingLeft": "$Zumpo · UI:space/8",
-                        "paddingRight": "$Zumpo · UI:space/8",
-                        "paddingTop": "$Zumpo · UI:space/1",
-                        "width": 37
-                      }
-                    ]
+                    }
                   }
                 ]
               },

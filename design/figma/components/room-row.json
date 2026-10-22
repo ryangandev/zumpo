@@ -711,7 +711,8 @@
                 "hSize": "hug",
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6526",
                 "props": {
@@ -961,7 +962,8 @@
                 "hSize": "hug",
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Blue"
+                  "Tone": "Blue",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6516",
                 "props": {
@@ -1685,7 +1687,8 @@
                 "hSize": "hug",
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6526",
                 "props": {
@@ -1938,7 +1941,8 @@
                 "hSize": "hug",
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Blue"
+                  "Tone": "Blue",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6516",
                 "props": {

@@ -52,7 +52,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Round 19",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -125,7 +126,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Large · 30 × 16",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -3147,6 +3149,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 5463,
     "w": 1440,
-    "h": 996,
+    "h": 950,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Round 2 of 2",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -81,7 +82,7 @@
         "id": "9:1974",
         "name": "Game & room",
         "w": 1312,
-        "h": 826,
+        "h": 780,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -94,11 +95,12 @@
             "id": "9:1975",
             "name": "Game stage",
             "w": 944,
-            "h": 826,
+            "h": 780,
             "hSize": "hug",
             "layout": {
               "mode": "column",
               "gap": "$Zumpo · UI:space/16",
+              "align": "center",
               "strokesIncluded": true
             },
             "children": [
@@ -137,8 +139,8 @@
                 "type": "FRAME",
                 "id": "27:18509",
                 "name": "Canvas",
-                "w": 944,
-                "h": 708,
+                "w": 883,
+                "h": 662,
                 "fills": [
                   "$Zumpo · UI:color/white"
                 ],
@@ -177,7 +179,7 @@
             "id": "9:1986",
             "name": "Room sidebar",
             "w": 344,
-            "h": 740,
+            "h": 700,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -193,6 +195,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -314,14 +319,14 @@
                 "id": "9:2017",
                 "name": "Zumpo/Chat",
                 "w": 344,
-                "h": 412,
+                "h": 372,
                 "hSize": "hug",
                 "component": "Zumpo/Chat",
                 "componentId": "9:334",
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 412,
+                    "height": 372,
                     "width": 344
                   },
                   {
@@ -338,7 +343,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Sam guessed the correct word! (+112)",
+                      "Message": "Sam guessed the word, +112.",
                       "Kind": "Success"
                     }
                   },
@@ -356,7 +361,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Ryan guessed the correct word! (+72)",
+                      "Message": "Ryan guessed the word, +72.",
                       "Kind": "Success"
                     }
                   },

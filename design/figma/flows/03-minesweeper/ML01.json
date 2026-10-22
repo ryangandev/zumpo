@@ -14,7 +14,7 @@
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 1035,
+    "h": 1088,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,7 +70,7 @@
         "id": "9:2549",
         "name": "Lobby layout",
         "w": 1312,
-        "h": 809,
+        "h": 862,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -317,7 +317,7 @@
             "id": "9:2596",
             "name": "How to play",
             "w": 368,
-            "h": 630,
+            "h": 862,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -348,110 +348,56 @@
                 "autoResize": "height"
               },
               {
-                "type": "TEXT",
-                "id": "9:2598",
-                "name": "Everyone picks a covered cell at the same time. Safe cells score point",
-                "w": 304,
-                "h": 75,
-                "hSize": "hug",
-                "text": "Everyone picks a hidden cell at the same time. Riskier safe picks score more, and a mine costs points.",
-                "textStyle": "Zumpo/Body",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
-              },
-              {
-                "type": "FRAME",
-                "id": "120:119530",
-                "name": "On your own",
+                "type": "INSTANCE",
+                "id": "166:69880",
+                "name": "How to play / On your own",
                 "w": 302,
-                "h": 211,
+                "h": 335,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "Right-click or long-press to flag a mine, then click a number whose flags are placed to open the rest around it.",
+                  "Step 4": "Clear the board fast: your best time on each board is kept.",
+                  "Step 2": "A number counts the mines in the eight cells around it.",
+                  "Step 1": "Click a cell to open it; your first click is always safe.",
+                  "Goal": "Open every safe cell without hitting a mine.",
+                  "Show step 4": true,
+                  "Heading": "On your own"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "120:119531",
-                    "name": "Label",
-                    "w": 86,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "On your own",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "120:119532",
-                    "name": "Facts",
-                    "w": 302,
-                    "h": 187,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "Your first click is always safe\nRight-click or long-press to flag; Flag mode makes a tap flag\nClick a number whose flags are placed to open the rest around it\nYour best time on each board is kept on this device",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 335,
+                    "width": 302
                   }
                 ]
               },
               {
-                "type": "FRAME",
-                "id": "120:119528",
-                "name": "Play together",
+                "type": "INSTANCE",
+                "id": "166:69900",
+                "name": "How to play / Play together",
                 "w": 302,
-                "h": 136,
+                "h": 335,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "Then every pick opens at once: safe cells clear, mines go off.",
+                  "Step 4": "A riskier safe pick pays more, a mine costs points, and two on one safe cell split it.",
+                  "Step 2": "A number counts the mines in the eight cells around it.",
+                  "Step 1": "Everyone picks one hidden cell at the same time, and nobody sees which.",
+                  "Goal": "Share one board, and pick safe cells in secret.",
+                  "Show step 4": true,
+                  "Heading": "Play together"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "120:119529",
-                    "name": "Label",
-                    "w": 92,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "Play together",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "9:2599",
-                    "name": "2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
-                    "w": 302,
-                    "h": 112,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "2–8 players\nSmall, Medium or Large board\n15s to pick · 4s reveal\nSame safe cell? The points are split.",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 335,
+                    "width": 302
                   }
                 ]
               },

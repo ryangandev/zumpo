@@ -14,7 +14,7 @@
     "x": 40,
     "y": 4254,
     "w": 390,
-    "h": 884,
+    "h": 538,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -140,27 +140,6 @@
           {
             "path": ".",
             "height": 87,
-            "width": 350
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "96:114874",
-        "name": "Zumpo/Chip field",
-        "w": 350,
-        "h": 322,
-        "wSize": "fill",
-        "hSize": "hug",
-        "component": "Zumpo/Chip field",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "95:113245",
-        "overrides": [
-          {
-            "path": ".",
-            "height": 322,
             "width": 350
           }
         ]

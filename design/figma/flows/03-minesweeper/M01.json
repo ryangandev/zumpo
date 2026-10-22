@@ -52,7 +52,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Waiting room",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -132,11 +133,11 @@
                   {
                     "type": "TEXT",
                     "id": "27:20320",
-                    "w": 502,
+                    "w": 372,
                     "h": 42,
                     "wSize": "hug",
                     "hSize": "hug",
-                    "text": "A little better with company.",
+                    "text": "Better with company.",
                     "textStyle": "Zumpo/Title",
                     "fills": [
                       "$Zumpo · UI:color/ink"
@@ -287,6 +288,9 @@
                 "h": 136,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

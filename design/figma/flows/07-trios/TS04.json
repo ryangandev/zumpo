@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 150,
     "w": 1440,
-    "h": 1450,
+    "h": 1166,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Run complete",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -104,7 +106,7 @@
         "id": "79:86779",
         "name": "Board & room",
         "w": 1312,
-        "h": 1280,
+        "h": 996,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +119,7 @@
             "id": "79:86780",
             "name": "Board stage",
             "w": 944,
-            "h": 1280,
+            "h": 996,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -126,292 +128,49 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "79:86781",
-                "name": "Final scores",
+                "type": "INSTANCE",
+                "id": "166:71659",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 376,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "",
+                  "Main": "All 10 trios found",
+                  "Category": false,
+                  "Label": "Trio 10 of 10"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "79:86782",
-                    "name": "Result heading",
-                    "w": 371,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "79:86783",
-                        "w": 271,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "10 trios in 2:41.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "79:86784",
-                        "w": 371,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "A new best on this device. Your last best was 2:48.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "79:86785",
-                    "name": "Ranking",
-                    "w": 862,
-                    "h": 123,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "79:86786",
-                        "name": "Stat / Wrong picks",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "79:86787",
-                            "w": 92,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Wrong picks",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "79:86788",
-                            "w": 66,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "2, +0:10",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "79:86789",
-                        "name": "Stat / Hints",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "79:86790",
-                            "w": 39,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Hints",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "79:86791",
-                            "w": 62,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "1, +0:10",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "79:86792",
-                        "name": "Stat / Fastest trio",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "79:86793",
-                            "w": 84,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Fastest trio",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "79:86794",
-                            "w": 42,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "0:04",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "79:86795",
-                    "name": "Actions",
-                    "w": 317,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:86796",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "79:86797",
-                        "name": "Action / Challenge a friend",
-                        "w": 195,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Challenge a friend"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 195
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "2:41",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -540,7 +299,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:86962",
-                                "name": "Trios card / Default / Three ink striped circles",
+                                "name": "Trios card / Default / Three black striped circles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -557,7 +316,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:86995",
-                                "name": "Trios card / Default / Two ink outlined triangles",
+                                "name": "Trios card / Default / Two black outlined triangles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -574,7 +333,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87004",
-                                "name": "Trios card / Default / One ink solid square",
+                                "name": "Trios card / Default / One black solid square",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -705,7 +464,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87029",
-                                "name": "Trios card / Default / Two ink striped triangles",
+                                "name": "Trios card / Default / Two black striped triangles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -832,7 +591,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87066",
-                                "name": "Trios card / Default / Three ink solid circles",
+                                "name": "Trios card / Default / Three black solid circles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -963,7 +722,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87094",
-                                "name": "Trios card / Default / Three ink striped squares",
+                                "name": "Trios card / Default / Three black striped squares",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1090,7 +849,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87137",
-                                "name": "Trios card / Default / One ink solid triangle",
+                                "name": "Trios card / Default / One black solid triangle",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1238,7 +997,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87191",
-                                "name": "Trios card / Default / One ink solid circle",
+                                "name": "Trios card / Default / One black solid circle",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1352,7 +1111,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87221",
-                                "name": "Trios card / Default / Three ink solid triangles",
+                                "name": "Trios card / Default / Three black solid triangles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1497,7 +1256,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87291",
-                                "name": "Trios card / Default / One ink outlined circle",
+                                "name": "Trios card / Default / One black outlined circle",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1611,7 +1370,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87307",
-                                "name": "Trios card / Default / Three ink outlined triangles",
+                                "name": "Trios card / Default / Three black outlined triangles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1628,7 +1387,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87319",
-                                "name": "Trios card / Default / One ink outlined square",
+                                "name": "Trios card / Default / One black outlined square",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1645,7 +1404,7 @@
                               {
                                 "type": "INSTANCE",
                                 "id": "79:87325",
-                                "name": "Trios card / Default / Two ink outlined circles",
+                                "name": "Trios card / Default / Two black outlined circles",
                                 "w": 72,
                                 "h": 48,
                                 "component": "Zumpo/Trios card",
@@ -1844,14 +1603,242 @@
             "id": "79:86862",
             "name": "Run sidebar",
             "w": 344,
-            "h": 485,
+            "h": 858,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71625",
+                "name": "Result",
+                "w": 344,
+                "h": 365,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "A new best on this device. Your last best was 2:48.",
+                  "Title": "10 trios in 2:41."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 365,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71629",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 123,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71625;35:13441;166:71641",
+                          "name": "Stat / Wrong picks",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71642",
+                              "w": 92,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Wrong picks",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71643",
+                              "w": 66,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "2, +0:10",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71625;35:13441;166:71644",
+                          "name": "Stat / Hints",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71645",
+                              "w": 39,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Hints",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71646",
+                              "w": 62,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "1, +0:10",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71625;35:13441;166:71647",
+                          "name": "Stat / Fastest trio",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71648",
+                              "w": 84,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Fastest trio",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71625;35:13441;166:71649",
+                              "w": 42,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "0:04",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "166:71650",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71625;35:13441;166:71653",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "79:86863",

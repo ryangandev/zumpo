@@ -161,7 +161,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -368,7 +369,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -570,7 +572,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -785,7 +788,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -949,7 +953,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -1156,7 +1161,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -1358,7 +1364,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {
@@ -1573,7 +1580,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6526",
                         "props": {

@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "10 of 27 cards",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -143,7 +145,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -249,7 +252,8 @@
                                 "hSize": "hug",
                                 "component": "Zumpo/Tag",
                                 "variant": {
-                                  "Tone": "Sand"
+                                  "Tone": "Sand",
+                                  "Size": "Regular"
                                 },
                                 "componentId": "24:6511",
                                 "props": {
@@ -359,7 +363,8 @@
                                 "hSize": "hug",
                                 "component": "Zumpo/Tag",
                                 "variant": {
-                                  "Tone": "Sand"
+                                  "Tone": "Sand",
+                                  "Size": "Regular"
                                 },
                                 "componentId": "24:6511",
                                 "props": {
@@ -454,6 +459,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

@@ -14,7 +14,7 @@
     "x": 40,
     "y": 5580,
     "w": 390,
-    "h": 972,
+    "h": 760,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,30 +70,22 @@
         "component": "Zumpo/Turn bar",
         "variant": {
           "Kind": "Status",
-          "Layout": "Phone"
+          "Layout": "Phone row"
         },
-        "componentId": "27:22192",
+        "componentId": "168:76902",
         "props": {
-          "Countdown": false,
-          "Main": "Place a black stone",
           "Category": false,
-          "Meta": "The computer blocked at E8",
+          "Main": "Place a black stone",
+          "Countdown": false,
+          "Meta": "Tap again to place",
           "Label": "Your turn"
         },
         "overrides": [
           {
             "path": ".",
             "height": 76,
+            "primaryAxisSizingMode": "FIXED",
             "width": 350
-          },
-          {
-            "path": "Text / Eyebrow / Category",
-            "componentProperties": {
-              "Icon": "24:5010",
-              "Show icon": false,
-              "Label": "Small · 9 × 9",
-              "Tone": "Sand"
-            }
           },
           {
             "path": "Countdown",
@@ -101,7 +93,17 @@
               "Show label": false,
               "Label": "run time",
               "Time": "0:24",
-              "Tone": "Waiting"
+              "Tone": "Info"
+            }
+          },
+          {
+            "path": "Text / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           }
         ]
@@ -111,12 +113,12 @@
         "id": "162:101870",
         "name": "Table",
         "w": 350,
-        "h": 706,
+        "h": 494,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/24",
+          "gap": "$Zumpo · UI:space/12",
           "strokesIncluded": true
         },
         "children": [
@@ -293,12 +295,13 @@
           },
           {
             "type": "FRAME",
-            "id": "162:102021",
-            "name": "Seats",
+            "id": "171:81524",
+            "name": "Side",
             "w": 350,
-            "h": 152,
+            "h": 132,
             "wSize": "fill",
             "hSize": "hug",
+            "clip": true,
             "layout": {
               "mode": "column",
               "gap": "$Zumpo · UI:space/8",
@@ -306,146 +309,145 @@
             },
             "children": [
               {
-                "type": "INSTANCE",
-                "id": "162:101930",
-                "name": "Seat / Maya",
+                "type": "FRAME",
+                "id": "162:102022",
+                "name": "Actions",
                 "w": 350,
-                "h": 78,
+                "h": 48,
                 "wSize": "fill",
                 "hSize": "hug",
-                "component": "Zumpo/Gomoku seat",
-                "variant": {
-                  "Color": "Black",
-                  "State": "Turn"
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
                 },
-                "componentId": "162:63059",
-                "props": {
-                  "You": true,
-                  "Detail": "Black · your turn"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 78,
-                    "width": 350
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "162:101944",
-                "name": "Seat / Computer",
-                "w": 350,
-                "h": 66,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Gomoku seat",
-                "variant": {
-                  "Color": "White",
-                  "State": "Default"
-                },
-                "componentId": "162:63087",
-                "props": {
-                  "Detail": "White · Medium",
-                  "Name": "Computer"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 66,
-                    "width": 350
+                    "type": "INSTANCE",
+                    "id": "162:101959",
+                    "name": "Action / Place stone",
+                    "w": 168,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Place stone"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "FIXED",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 168
+                      }
+                    ]
                   },
                   {
-                    "path": "Player / Avatar",
-                    "componentProperties": {
-                      "Initials": "CO",
-                      "Tone": "Coral"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "162:102022",
-            "name": "Actions",
-            "w": 350,
-            "h": 156,
-            "wSize": "fill",
-            "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/12",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "INSTANCE",
-                "id": "162:101959",
-                "name": "Action / Place stone",
-                "w": 350,
-                "h": 48,
-                "wSize": "fill",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Primary",
-                  "State": "Default"
-                },
-                "componentId": "4:15",
-                "props": {
-                  "Label": "Place stone"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "primaryAxisSizingMode": "FIXED",
-                    "width": 350
+                    "type": "INSTANCE",
+                    "id": "163:66195",
+                    "name": "Action / Take back",
+                    "w": 170,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Icon": "Zumpo/Icon / Glyph=undo",
+                      "Show icon": true,
+                      "Label": "Take back"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "FIXED",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 170
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "type": "INSTANCE",
-                "id": "163:66195",
-                "name": "Action / Take back",
+                "type": "FRAME",
+                "id": "162:102021",
+                "name": "Seats",
                 "w": 350,
-                "h": 48,
-                "wSize": "fill",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Secondary",
-                  "State": "Default"
-                },
-                "componentId": "4:18",
-                "props": {
-                  "Icon": "Zumpo/Icon / Glyph=undo",
-                  "Show icon": true,
-                  "Label": "Take back"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 48,
-                    "primaryAxisSizingMode": "FIXED",
-                    "width": 350
-                  }
-                ]
-              },
-              {
-                "type": "TEXT",
-                "id": "162:102023",
-                "name": "Text",
-                "w": 350,
-                "h": 36,
+                "h": 76,
                 "wSize": "fill",
                 "hSize": "hug",
-                "text": "Tap the faint stone again, or Place stone. Tap another point to move it.",
-                "textStyle": "Zumpo/Small",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ],
-                "autoResize": "height"
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/6",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101930",
+                    "name": "Seat / Maya",
+                    "w": 350,
+                    "h": 36,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "Black",
+                      "State": "Turn",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75947",
+                    "props": {
+                      "You": true,
+                      "Detail": "Your turn"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 36,
+                        "width": 350
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "162:101944",
+                    "name": "Seat / Computer",
+                    "w": 350,
+                    "h": 34,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "White",
+                      "State": "Default",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75975",
+                    "props": {
+                      "Detail": "Medium",
+                      "Name": "Computer"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 34,
+                        "width": 350
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

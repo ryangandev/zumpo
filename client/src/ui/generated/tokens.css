@@ -110,6 +110,11 @@
   --zumpo-text-hint-compact-tracking: 0.3em;
   --zumpo-text-hint-compact-line: 30px;
 
+  /* Body’s size and line in Bold: a name that leads a line of Body text, as a chat line’s sender. */
+  --zumpo-text-body-strong: 700 16px / 25px var(--zumpo-font-dm-sans);
+  --zumpo-text-body-strong-tracking: normal;
+  --zumpo-text-body-strong-line: 25px;
+
   --zumpo-shadow-paper-lift: 0px 8px 24px #282b2514;
 
   --zumpo-shadow-menu-lift: 0px 8px 24px #282b251f;

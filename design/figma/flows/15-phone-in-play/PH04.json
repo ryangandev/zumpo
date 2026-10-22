@@ -1,0 +1,461 @@
+{
+  "format": 1,
+  "code": "PH04",
+  "title": "Gomoku on your own · tap again · 360 × 640",
+  "id": "163:65172",
+  "section": "15 / Phone in play",
+  "reviewNotes": [
+    "PH04 · A faint stone is down: the turn bar says to tap again, the seats share a row under the board, and Place stone is at the foot, where it always keeps its place."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "163:65172",
+    "name": "PH04 / Gomoku on your own · tap again · 360 × 640",
+    "x": 1650,
+    "y": 200,
+    "w": 360,
+    "h": 640,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/12",
+      "pad": [
+        "$Zumpo · UI:space/12",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "163:65173",
+        "name": "Zumpo/Room bar",
+        "w": 320,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Phase": "Move 17",
+          "Game": "Gomoku"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 48,
+            "width": 320
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65174",
+        "name": "Zumpo/Turn bar",
+        "w": 320,
+        "h": 76,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone row"
+        },
+        "componentId": "168:76902",
+        "props": {
+          "Category": false,
+          "Main": "Place a black stone",
+          "Countdown": false,
+          "Meta": "Tap again to place",
+          "Label": "Your turn"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 76,
+            "primaryAxisSizingMode": "FIXED",
+            "width": 320
+          },
+          {
+            "path": "Countdown",
+            "componentProperties": {
+              "Show label": false,
+              "Label": "run time",
+              "Time": "0:24",
+              "Tone": "Info"
+            }
+          },
+          {
+            "path": "Text / Eyebrow / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand",
+              "Size": "Regular"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:65175",
+        "name": "Table",
+        "w": 320,
+        "h": 464,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "163:65176",
+            "name": "Board",
+            "w": 320,
+            "h": 320,
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "163:65177",
+                "name": "Zumpo/Gomoku board",
+                "x": 0,
+                "y": 0,
+                "w": 320,
+                "h": 320,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Gomoku board",
+                "variant": {
+                  "Layout": "Phone"
+                },
+                "componentId": "162:62938"
+              },
+              {
+                "type": "GRID",
+                "rows": 6,
+                "cols": 6,
+                "count": 17,
+                "kind": "Zumpo/Stone",
+                "firstId": "163:65178",
+                "pitch": [
+                  21,
+                  21
+                ],
+                "holes": 19,
+                "cell": {
+                  "type": "INSTANCE",
+                  "name": "Stone H8",
+                  "w": "$Zumpo · UI:space/18",
+                  "h": "$Zumpo · UI:space/18",
+                  "component": "Zumpo/Stone",
+                  "variant": {
+                    "Color": "Black",
+                    "Mark": "None",
+                    "State": "Placed",
+                    "Size": "Small"
+                  },
+                  "componentId": "162:62884"
+                },
+                "special": [
+                  {
+                    "r": 2,
+                    "c": 4,
+                    "id": "163:65179",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone I9"
+                  },
+                  {
+                    "r": 4,
+                    "c": 4,
+                    "id": "163:65181",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone I7"
+                  },
+                  {
+                    "r": 5,
+                    "c": 1,
+                    "id": "163:65183",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone F6"
+                  },
+                  {
+                    "r": 3,
+                    "c": 5,
+                    "id": "163:65185",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone J8"
+                  },
+                  {
+                    "r": 5,
+                    "c": 2,
+                    "id": "163:65187",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone G6"
+                  },
+                  {
+                    "r": 0,
+                    "c": 2,
+                    "id": "163:65189",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone G11"
+                  },
+                  {
+                    "r": 4,
+                    "c": 3,
+                    "id": "163:65191",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "None",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62889",
+                    "name": "Stone H7"
+                  },
+                  {
+                    "r": 3,
+                    "c": 0,
+                    "id": "163:65193",
+                    "variant": {
+                      "Color": "White",
+                      "Mark": "Last",
+                      "State": "Placed",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62890",
+                    "name": "Stone E8"
+                  },
+                  {
+                    "r": 2,
+                    "c": 0,
+                    "id": "163:65194",
+                    "variant": {
+                      "Color": "Black",
+                      "Mark": "None",
+                      "State": "Ghost",
+                      "Size": "Small"
+                    },
+                    "componentId": "162:62888",
+                    "name": "Faint stone E9"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "173:81876",
+            "name": "Side",
+            "w": 320,
+            "h": 132,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:65198",
+                "name": "Actions",
+                "w": 320,
+                "h": 48,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65199",
+                    "name": "Action / Place stone",
+                    "w": 153,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "Place stone"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 153
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "173:81877",
+                    "name": "Action / Take back",
+                    "w": 155,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Icon": "Zumpo/Icon / Glyph=undo",
+                      "Show icon": true,
+                      "Label": "Take back"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "FIXED",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 155
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "163:65195",
+                "name": "Seats",
+                "w": 320,
+                "h": 76,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/6",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65196",
+                    "name": "Seat / Maya",
+                    "w": 320,
+                    "h": 36,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "Black",
+                      "State": "Turn",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75947",
+                    "props": {
+                      "You": true,
+                      "Detail": "Your turn"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 36,
+                        "width": 320
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65197",
+                    "name": "Seat / Computer",
+                    "w": 320,
+                    "h": 34,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku seat",
+                    "variant": {
+                      "Color": "White",
+                      "State": "Default",
+                      "Layout": "Phone"
+                    },
+                    "componentId": "166:75975",
+                    "props": {
+                      "Detail": "Medium",
+                      "Name": "Computer"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 34,
+                        "width": 320
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

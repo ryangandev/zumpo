@@ -15,7 +15,7 @@
     "x": 40,
     "y": 200,
     "w": 1440,
-    "h": 1035,
+    "h": 1063,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -71,7 +71,7 @@
         "id": "162:97494",
         "name": "Lobby layout",
         "w": 1312,
-        "h": 809,
+        "h": 837,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -312,7 +312,7 @@
             "id": "162:97504",
             "name": "How to play",
             "w": 368,
-            "h": 680,
+            "h": 837,
             "hSize": "hug",
             "fills": [
               "$Zumpo · UI:color/lime"
@@ -343,110 +343,56 @@
                 "autoResize": "height"
               },
               {
-                "type": "TEXT",
-                "id": "162:97506",
-                "name": "Choose a word, draw it, and race to guess. Fast guesses earn more poin",
-                "w": 304,
-                "h": 75,
-                "hSize": "hug",
-                "text": "Take turns placing a stone on any empty point. The first to make five in a row, across, down or diagonally, wins.",
-                "textStyle": "Zumpo/Body",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
-              },
-              {
-                "type": "FRAME",
-                "id": "162:97716",
-                "name": "On your own",
+                "type": "INSTANCE",
+                "id": "166:70367",
+                "name": "How to play / On your own",
                 "w": 302,
-                "h": 211,
+                "h": 310,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "There is no clock, and on your turn you can take back your last move.",
+                  "Step 4": "A full board is a draw. Your wins are kept on this device.",
+                  "Step 2": "Five or more in a row wins: across, down or diagonally.",
+                  "Step 1": "Black moves first, then you take turns placing one stone on any empty point.",
+                  "Goal": "Make five in a row before the computer does.",
+                  "Show step 4": true,
+                  "Heading": "On your own"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "162:97717",
-                    "name": "Label",
-                    "w": 86,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "On your own",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "162:97718",
-                    "name": "2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-                    "w": 302,
-                    "h": 187,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "Against the computer: Easy, Medium or Hard\nMake two threats at once: the computer can block only one\nTake back your last move whenever it is your turn\nNo clock: your turn waits for you",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 310,
+                    "width": 302
                   }
                 ]
               },
               {
-                "type": "FRAME",
-                "id": "162:97507",
-                "name": "Play together",
+                "type": "INSTANCE",
+                "id": "166:70387",
+                "name": "How to play / Play together",
                 "w": 302,
-                "h": 186,
+                "h": 335,
                 "wSize": "fill",
                 "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
+                "component": "Zumpo/How to play",
+                "componentId": "163:65908",
+                "props": {
+                  "Step 3": "You have 30 seconds a move. Miss two turns in a row and you lose.",
+                  "Step 4": "Every game won is a point, and colours swap every game.",
+                  "Step 2": "Five or more in a row wins: across, down or diagonally.",
+                  "Step 1": "Colours are drawn for the first game, and Black moves first. Then you take turns placing one stone on any empty point.",
+                  "Goal": "Be the first to make five in a row.",
+                  "Show step 4": true,
+                  "Heading": "Play together"
                 },
-                "children": [
+                "overrides": [
                   {
-                    "type": "TEXT",
-                    "id": "162:97508",
-                    "name": "Label",
-                    "w": 92,
-                    "h": 20,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "Play together",
-                    "textStyle": "Zumpo/Label",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "162:97509",
-                    "name": "2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-                    "w": 302,
-                    "h": 162,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "2 players, and up to 5 watching\nBlack moves first; colours swap every game\n30s a move; run out twice in a row and you lose\nA full board is a draw",
-                    "font": "DM Sans Regular",
-                    "size": 16,
-                    "lineHeight": "25px",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
+                    "path": ".",
+                    "height": 335,
+                    "width": 302
                   }
                 ]
               },

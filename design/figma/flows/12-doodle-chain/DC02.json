@@ -120,7 +120,7 @@
                   },
                   "componentId": "9:210",
                   "props": {
-                    "Helper": "Writing and describing take 30s.",
+                    "Helper": "Writing takes 30s, describing 45s.",
                     "Select": true,
                     "Value": "60 seconds",
                     "Label": "Drawing time"

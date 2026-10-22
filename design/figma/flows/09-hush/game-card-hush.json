@@ -69,7 +69,8 @@
         "hSize": "hug",
         "component": "Zumpo/Tag",
         "variant": {
-          "Tone": "Paper"
+          "Tone": "Paper",
+          "Size": "Regular"
         },
         "componentId": "24:6531",
         "props": {

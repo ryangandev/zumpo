@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 3050,
     "w": 390,
-    "h": 814,
+    "h": 834,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Card 12 of 30",
+          "Phase": "Maya’s room · Card 12 of 30",
           "Game": "Snap"
         },
         "overrides": [
@@ -85,7 +85,7 @@
         "id": "162:86402",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -103,25 +103,26 @@
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
               "Time": "0:41",
-              "Tone": "Waiting"
+              "Tone": "Info"
             }
           }
         ]
@@ -207,7 +208,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
