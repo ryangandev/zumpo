@@ -671,7 +671,9 @@ test('a Draw & Guess game', async ({ player }) => {
     }
   }
 
-  await expect(maya!.page.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya!.page.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 30_000,
   });
   await shot(maya!.page, 'D13');
@@ -798,7 +800,9 @@ test('a Minesweeper game', async ({ player }) => {
 
   // Then everybody picks, riskiest first, until somebody finds a mine and
   // the board is done.
-  const over = maya!.page.getByText('Game over', { exact: true });
+  const over = maya!.page
+    .getByRole('banner')
+    .getByText('Game over', { exact: true });
   for (let round = 3; !(await over.isVisible()); round++) {
     await expect(maya!.page.getByText('Pick a cell').or(over)).toBeVisible({
       timeout: 20_000,
@@ -982,7 +986,9 @@ test('a Make 24 game', async ({ player }) => {
     for (const seat of seats) await solveHand(seat);
   }
   // After the last hand's reveal.
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await shot(sam, 'T09');
@@ -1055,7 +1061,7 @@ test('a Pairs game', async ({ player }) => {
   const samTurn = sam.getByRole('region', { name: 'Turn' });
   const shown = { yourTurn: false, miss: false, phone: false };
   const memory: Memory = new Map();
-  const over = sam.getByText('Game over', { exact: true });
+  const over = sam.getByRole('banner').getByText('Game over', { exact: true });
   while (!(await over.isVisible())) {
     await expect
       .poll(async () => (await whoseTurn(seats)) !== null || over.isVisible())
@@ -1225,7 +1231,9 @@ test('a Trios game', async ({ player }) => {
   await take(sam, 9);
   await readyToFind(maya);
   await pickTrio(maya);
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
   await shot(sam, 'TS09');
 });
 
@@ -1358,7 +1366,9 @@ test('a Snap game', async ({ player }) => {
       await tapMatch(taker);
     } else await take(taker, index + 12);
   }
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
   await shot(sam, 'SN09');
 });
 
@@ -1503,7 +1513,7 @@ test('a Liar’s Dice game', async ({ player }) => {
   const samCalled = sam
     .getByRole('region', { name: 'Turn' })
     .getByText('You called Liar');
-  const over = sam.getByText('Game over', { exact: true });
+  const over = sam.getByRole('banner').getByText('Game over', { exact: true });
   while (!(await over.isVisible())) {
     await expect
       .poll(
@@ -1688,7 +1698,9 @@ test('a Hush game', async ({ player }) => {
   await readyUp(seats);
   await playOut();
   await expect(
-    maya.getByRole('heading', { name: 'All 5 levels cleared.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('All 5 levels cleared.'),
   ).toBeVisible();
   await shot(maya, 'HU07');
 
@@ -1705,7 +1717,9 @@ test('a Hush game', async ({ player }) => {
     }
   }
   await expect(
-    maya.getByRole('heading', { name: 'Out of lives on level 3.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('Out of lives on level 3.'),
   ).toBeVisible({ timeout: 15_000 });
   await shot(maya, 'HU08');
 });
@@ -1945,7 +1959,9 @@ test('a Daily Word game', async ({ player }) => {
     ['audio', 'trend', 'slick', 'plumb', 'clamp'],
     true,
   );
-  await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await say(sam, 'by nine points!');
@@ -2270,7 +2286,9 @@ test('a Code Breaker game', async ({ player }) => {
   await guessCodes(leo, leoMisses.slice(0, -1));
   // Leo's tenth guess is the last of the code, which ends the game.
   await typeCode(leo, leoMisses.at(-1)!);
-  await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await shot(sam, 'CB13');
@@ -2461,7 +2479,7 @@ test('a Gomoku game', async ({ player }) => {
     );
   }
   await expect(
-    maya.getByText('Game over', { exact: true }).first(),
+    maya.getByRole('banner').getByText('Game over', { exact: true }).first(),
   ).toBeVisible();
 
   // Game 2, the colours swapped: Maya builds on a slant while Leo plays
