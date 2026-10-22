@@ -48,11 +48,11 @@ export const dailyWord = {
   finalScores: 'final scores',
   gotIt: (guesses: number, points: number) =>
     `Got it in ${guesses}! +${points}`,
-  waitingFor: (names: string) => `Waiting for ${names}`,
+  waitingCount: (count: number) => `Waiting for ${plural(count, 'player')}`,
   everyoneDone: 'Everyone is done',
   toGuess: 'to guess',
   findWord: 'Find the word',
-  namesFound: (names: string) => `${names} found it`,
+  foundCount: (count: number) => `${plural(count, 'player')} found it`,
   fewerScore: 'Fewer guesses score more',
   away: 'Away',
   waiting: 'Waiting',

@@ -226,7 +226,7 @@ describe('a Code Breaker room', () => {
     expect(
       await screen.findByText('Cracked it in 2! +1018', { exact: false }),
     ).toBeInTheDocument();
-    expect(turn().getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(turn().getByText('Waiting for 1 player')).toBeInTheDocument();
     expect(
       screen.getByText('You cracked it. Watch the others until the reveal.'),
     ).toBeInTheDocument();

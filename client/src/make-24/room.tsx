@@ -14,7 +14,7 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import { listNames, rankedPlayers, type Seat } from '../room/players';
+import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import {
@@ -265,7 +265,7 @@ function turnBar(
       kind: 'status',
       main: m.make24.solvedPoints(state.mySolve.points),
       meta: waitingFor.length
-        ? m.make24.waitingFor(listNames(waitingFor, m))
+        ? m.make24.waitingCount(waitingFor.length)
         : m.make24.everyoneSolved,
       countdown: clock(m.make24.toSolve),
     };
@@ -279,7 +279,7 @@ function turnBar(
       main: m.make24.makes(formatFraction(last.value)),
       // Who has solved it stays in view: the race goes on while you undo.
       meta: solvers.length
-        ? m.make24.solversUndo(listNames(solvers, m))
+        ? m.make24.solvedCountUndo(solvers.length)
         : m.make24.undoPrompt,
       countdown: clock(m.make24.toSolve),
     };
@@ -289,7 +289,7 @@ function turnBar(
     kind: 'status',
     main: m.games.of['make-24'].name,
     meta: solvers.length
-      ? m.make24.solvers(listNames(solvers, m))
+      ? m.make24.solvedCount(solvers.length)
       : m.make24.useEachNumber,
     countdown: clock(m.make24.toSolve, room.spectating),
   };

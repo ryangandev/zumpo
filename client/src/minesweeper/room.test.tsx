@@ -51,7 +51,7 @@ describe('a Minesweeper room', () => {
     expect(screen.getAllByText('23% 踩雷概率')).toHaveLength(2);
     expect(screen.getAllByText('2 人平分')).toHaveLength(2);
     expect(
-      screen.getByText('你 和 Maya 选了同一个格子，平分奖励'),
+      screen.getByText('另有 1 人选了同一个格子，平分奖励'),
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText('说点什么…')).toBeInTheDocument();
   });
@@ -218,7 +218,7 @@ describe('a Minesweeper room', () => {
     ).toBeInTheDocument();
   });
 
-  it('names who shared a cell', async () => {
+  it('says how many shared a cell', async () => {
     await renderSeated({
       ...picking,
       phase: 'reveal',
@@ -228,9 +228,7 @@ describe('a Minesweeper room', () => {
       ],
     });
     expect(
-      screen.getByText(
-        'You and Maya picked the same cell, so you split its reward',
-      ),
+      screen.getByText('Another player picked it too, so you split its reward'),
     ).toBeInTheDocument();
   });
 

@@ -475,9 +475,9 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
         kind: 'status',
         main: m.hush.getReady,
         meta: meReady
-          ? m.hush.waitingFor(listNames(waitingFor, m))
+          ? m.hush.waitingCount(waitingFor.length)
           : readyNames.length > 0
-            ? m.hush.namesReady(listNames(readyNames, m), readyNames.length)
+            ? m.hush.readyCount(readyNames.length)
             : m.hush.pressReady,
       };
     }
@@ -492,18 +492,6 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     case 'mistake': {
       const mistake = state.lastMistake;
       if (!mistake) break;
-      const holders = [...new Set(mistake.discarded.map((d) => d.playerId))];
-      const held = holders.map((holder, index) =>
-        m.hush.heldCards(
-          nameIn(room, holder, m, index === 0),
-          cardsOf(
-            mistake.discarded
-              .filter((d) => d.playerId === holder)
-              .map((d) => d.card),
-            m,
-          ),
-        ),
-      );
       return {
         label,
         kind: 'status',
@@ -511,7 +499,9 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
           nameIn(room, mistake.playerId, m),
           mistake.card,
         ),
-        meta: m.hush.mistake(listNames(held, m)),
+        // Who held which card is in the chat's alert and on the scoreboard;
+        // the bar keeps to a count, which fits it however many held one.
+        meta: m.hush.mistakeCount(mistake.discarded.length),
         countdown: clock(m.hush.toGoOn),
       };
     }
@@ -528,7 +518,7 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
         meta:
           away.length === 1
             ? m.hush.waitingHolder(names, itemAt(away, 0).held)
-            : m.hush.waitingHolders(names),
+            : m.hush.waitingHoldersCount(away.length),
         countdown: clock(m.hush.seatHeld),
       };
     }

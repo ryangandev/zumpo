@@ -13,12 +13,7 @@ import { useMessages, type Messages } from '../i18n';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import {
-  listNames,
-  raceStanding,
-  rankedPlayers,
-  type Seat,
-} from '../room/players';
+import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { playColumn } from '../shell/play-board';
@@ -395,7 +390,7 @@ function turnBar(
       main: result ? result.word.toUpperCase() : '',
       meta: room.spectating
         ? finders.length
-          ? m.dailyWord.namesFound(listNames(finders, m))
+          ? m.dailyWord.foundCount(finders.length)
           : m.dailyWord.nobodyFound
         : me?.status === 'found'
           ? m.dailyWord.youFound(me.rows.length, me.points)
@@ -423,7 +418,7 @@ function turnBar(
       kind: 'status',
       main: m.dailyWord.gotIt(mine.rows.length, mine.points),
       meta: waitingFor.length
-        ? m.dailyWord.waitingFor(listNames(waitingFor, m))
+        ? m.dailyWord.waitingCount(waitingFor.length)
         : m.dailyWord.everyoneDone,
       countdown: clock(m.dailyWord.toGuess),
     };
@@ -434,7 +429,7 @@ function turnBar(
       kind: 'status',
       main: m.dailyWord.outOfGuesses,
       meta: waitingFor.length
-        ? m.dailyWord.waitingFor(listNames(waitingFor, m))
+        ? m.dailyWord.waitingCount(waitingFor.length)
         : m.dailyWord.everyoneDone,
       countdown: clock(m.dailyWord.toGuess),
     };
@@ -453,7 +448,7 @@ function turnBar(
     meta: phone
       ? m.dailyWord.legendLine
       : finders.length
-        ? m.dailyWord.namesFound(listNames(finders, m))
+        ? m.dailyWord.foundCount(finders.length)
         : m.dailyWord.fewerScore,
     countdown: clock(m.dailyWord.toGuess, room.spectating),
   };

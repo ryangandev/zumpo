@@ -90,7 +90,7 @@ describe('a Hush room', () => {
 
     expect(turn().getByText('Level 3 of 7')).toBeInTheDocument();
     expect(turn().getByText('Get ready')).toBeInTheDocument();
-    expect(turn().getByText('Maya is ready.')).toBeInTheDocument();
+    expect(turn().getByText('1 player is ready.')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: '2 lives' })).toBeInTheDocument();
     expect(scoreboard().getByText('Ready')).toBeInTheDocument();
     expect(scoreboard().getByText('Getting ready')).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe('a Hush room', () => {
         },
       }),
     );
-    expect(turn().getByText('Waiting for Maya.')).toBeInTheDocument();
+    expect(turn().getByText('Waiting for 1 player.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'I’m ready' })).toBeNull();
   });
 
@@ -214,7 +214,7 @@ describe('a Hush room', () => {
 
     expect(turn().getByText('Maya played 52')).toBeInTheDocument();
     expect(
-      turn().getByText('You still held 47. One life lost.'),
+      turn().getByText('A lower card was still held. One life lost.'),
     ).toBeInTheDocument();
     expect(
       screen.getByRole('img', { name: '47, discarded' }),
@@ -433,7 +433,7 @@ describe('a Hush room in Chinese', () => {
     const bar = within(screen.getByRole('region', { name: '当前回合' }));
     expect(bar.getByText('第 3 / 7 关')).toBeVisible();
     expect(bar.getByText('准备开始')).toBeVisible();
-    expect(bar.getByText('Maya 准备好了。')).toBeVisible();
+    expect(bar.getByText('1 人准备好了。')).toBeVisible();
     expect(screen.getByRole('img', { name: '2 条命' })).toBeVisible();
     await user.click(screen.getByRole('button', { name: '我准备好了' }));
     expect(fake.sentArgs('hush:ready')).toEqual([['r1']]);

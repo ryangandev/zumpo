@@ -248,9 +248,7 @@ function turnBar(
       ...base,
       main: m.minesweeper.safePoints(mine.points),
       meta: sharers.length
-        ? m.minesweeper.splitReward(
-            listNames([m.minesweeper.you, ...sharers], m),
-          )
+        ? m.minesweeper.splitCount(sharers.length)
         : m.minesweeper.cellRisk(mine.risk),
     };
   }

@@ -49,11 +49,11 @@ export const codeBreaker = {
   finalScores: 'final scores',
   gotIt: (guesses: number, points: number) =>
     `Cracked it in ${guesses}! +${points}`,
-  waitingFor: (names: string) => `Waiting for ${names}`,
+  waitingCount: (count: number) => `Waiting for ${plural(count, 'player')}`,
   everyoneDone: 'Everyone is done',
   toGuess: 'to guess',
   crackCode: 'Crack the code',
-  namesCracked: (names: string) => `${names} cracked it`,
+  crackedCount: (count: number) => `${plural(count, 'player')} cracked it`,
   fewerScore: 'Fewer guesses score more',
   away: 'Away',
   waiting: 'Waiting',

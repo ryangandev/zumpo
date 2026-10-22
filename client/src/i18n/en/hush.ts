@@ -72,22 +72,24 @@ export const hush = {
   goesSoon: 'Play goes on in a moment.',
   pausedClock: 'paused',
   getReady: 'Get ready',
-  waitingFor: (names: string) => `Waiting for ${names}.`,
-  namesReady: (names: string, count: number) =>
-    `${names} ${count === 1 ? 'is' : 'are'} ready.`,
+  waitingCount: (count: number) => `Waiting for ${plural(count, 'player')}.`,
+  readyCount: (count: number) =>
+    `${plural(count, 'player')} ${count === 1 ? 'is' : 'are'} ready.`,
   pressReady: 'Press Ready when you’re settled.',
   hush: 'Hush',
   everyoneHolds: (count: number) => `Everybody holds ${plural(count, 'card')}.`,
   toStart: 'to start',
-  heldCards: (name: string, cards: string) => `${name} still held ${cards}`,
   playedCard: (name: string, card: number) => `${name} played ${card}`,
-  mistake: (held: string) => `${held}. One life lost.`,
+  mistakeCount: (count: number) =>
+    count === 1
+      ? 'A lower card was still held. One life lost.'
+      : `${count} lower cards were still held. One life lost.`,
   toGoOn: 'to go on',
   paused: 'Paused',
   waitingHolder: (names: string, held: number) =>
     `Waiting for ${names}, who still holds ${plural(held, 'card')}.`,
-  waitingHolders: (names: string) =>
-    `Waiting for ${names}, who still hold cards.`,
+  waitingHoldersCount: (count: number) =>
+    `Waiting for ${count} players, who still hold cards.`,
   seatHeld: 'seat held',
   cleared: 'Level cleared!',
   cleanLifeBack: 'Not one slip: a life back.',

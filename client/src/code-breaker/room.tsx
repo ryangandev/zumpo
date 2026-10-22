@@ -9,12 +9,7 @@ import { useMessages, type Messages } from '../i18n';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import {
-  listNames,
-  raceStanding,
-  rankedPlayers,
-  type Seat,
-} from '../room/players';
+import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -417,7 +412,7 @@ function turnBar(
       main: result?.code ?? '',
       meta: room.spectating
         ? crackers.length
-          ? m.codeBreaker.namesCracked(listNames(crackers, m))
+          ? m.codeBreaker.crackedCount(crackers.length)
           : m.codeBreaker.nobodyCracked
         : me?.status === 'cracked'
           ? m.codeBreaker.youCracked(me.rows.length, me.points)
@@ -440,7 +435,7 @@ function turnBar(
     )
     .map((board) => board.username);
   const waiting = waitingFor.length
-    ? m.codeBreaker.waitingFor(listNames(waitingFor, m))
+    ? m.codeBreaker.waitingCount(waitingFor.length)
     : m.codeBreaker.everyoneDone;
   if (mine?.status === 'cracked') {
     return {
@@ -476,7 +471,7 @@ function turnBar(
     meta: phone
       ? m.codeBreaker.legendLine
       : crackers.length
-        ? m.codeBreaker.namesCracked(listNames(crackers, m))
+        ? m.codeBreaker.crackedCount(crackers.length)
         : m.codeBreaker.fewerScore,
     countdown: clock(m.codeBreaker.toGuess, room.spectating),
   };

@@ -60,8 +60,10 @@ export const minesweeper = {
       ? `Your cell had a ${percent(risk)} risk. A mine costs more the safer it looked.`
       : `Your cell had a ${percent(risk)} risk`,
   safePoints: (points: number) => `Safe! ${signed(points)}`,
-  splitReward: (names: string) =>
-    `${names} picked the same cell, so you split its reward`,
+  splitCount: (count: number) =>
+    count === 1
+      ? 'Another player picked it too, so you split its reward'
+      : `${count} others picked it too, so you split its reward`,
   you: 'You',
   everyoneLocked: 'Everyone is locked in',
   revealingPicks: 'Revealing the picks…',

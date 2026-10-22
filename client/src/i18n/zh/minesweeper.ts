@@ -59,7 +59,7 @@ export const minesweeper: typeof en = {
       ? `你选的格子踩雷概率为 ${percent(risk)}。看起来越安全，踩雷时扣分越多。`
       : `你选的格子踩雷概率为 ${percent(risk)}`,
   safePoints: (points) => `安全！${signed(points)}`,
-  splitReward: (names) => `${names} 选了同一个格子，平分奖励`,
+  splitCount: (count) => `另有 ${count} 人选了同一个格子，平分奖励`,
   you: '你',
   everyoneLocked: '所有人都已选好',
   revealingPicks: '正在揭晓结果…',

@@ -1609,7 +1609,7 @@ test('a Hush game', async ({ player }) => {
   await playOut();
   await levelOn(2);
   await pressReady([maya]);
-  await expect(turnOf(leo).getByText('Maya is ready.')).toBeVisible();
+  await expect(turnOf(leo).getByText('1 player is ready.')).toBeVisible();
   await shot(leo, 'HU11');
   await readyUp(seats.filter((seat) => seat !== maya));
   await slip();
@@ -1619,7 +1619,7 @@ test('a Hush game', async ({ player }) => {
   // Level 3: Maya and Ryan are ready, then the rest, and the cards are dealt.
   await levelOn(3);
   await pressReady([maya, ryan]);
-  await expect(turnOf(sam).getByText('Maya and Ryan are ready.')).toBeVisible();
+  await expect(turnOf(sam).getByText('2 players are ready.')).toBeVisible();
   await shot(sam, 'HU01');
   await pressReady([leo, sam]);
   const counting = turnOf(sam).getByText('Everybody holds 3 cards.');
