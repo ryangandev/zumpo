@@ -322,7 +322,9 @@ describe('a Hush room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'All 2 levels cleared.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'All 2 levels cleared.',
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText('Together, with 2 lives to spare.'),
@@ -350,7 +352,9 @@ describe('a Hush room', () => {
     const { update } = await renderSeated(playing);
     update(hushState({ lastGame: summary }));
     expect(
-      screen.getByRole('heading', { name: 'Out of lives on level 1.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Out of lives on level 1.',
+      ),
     ).toBeInTheDocument();
     expect(confetti()).toBeNull();
 
@@ -367,7 +371,9 @@ describe('a Hush room', () => {
       }),
     );
     expect(
-      screen.getByRole('heading', { name: 'All 1 level cleared.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'All 1 level cleared.',
+      ),
     ).toBeInTheDocument();
     expect(confetti()).not.toBeNull();
   });
@@ -394,7 +400,9 @@ describe('a Hush room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Out of lives on level 1.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Out of lives on level 1.',
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText('0 of 7 levels cleared, together.'),

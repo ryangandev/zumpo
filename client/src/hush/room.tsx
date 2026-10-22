@@ -20,6 +20,7 @@ import { EndedEarlyPanel, ResultsFrame, WaitingPanel } from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { Divider, HandRow, Pile, TableHead, TablePanel } from './table';
 import styles from './room.module.css';
 
@@ -60,6 +61,7 @@ export function HushRoom() {
       // Everybody's points are the levels the team cleared; the rows say
       // what each player holds instead.
       showScores={false}
+      nextBeside
     />
   );
 }
@@ -83,11 +85,32 @@ function BetweenGames({ room }: { room: Room }) {
   const { state, startGame, starting } = room;
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
+  const phone = useMediaQuery(PHONE);
 
   if (summary && !summary.endedEarly) {
+    const { title, detail } = resultOf(summary, m);
+    // Off a phone the result takes the turn bar's place, the pile keeps its
+    // own under it, the team's result goes under the pile and what comes
+    // next beside it, so the table stays where it was.
     return (
       <>
-        <Results room={room} summary={summary} />
+        {phone ? (
+          <ResultsFrame
+            title={title}
+            detail={detail}
+            onPlayAgain={startGame}
+            starting={starting}
+          >
+            <TeamResult summary={summary} />
+          </ResultsFrame>
+        ) : (
+          <TurnBar
+            label={m.hush.gameOver}
+            kind="status"
+            main={title}
+            meta={detail}
+          />
+        )}
         {/* HU07, HU08: the last pile stays on the table. */}
         {state.pile.length > 0 && (
           <TablePanel>
@@ -109,6 +132,11 @@ function BetweenGames({ room }: { room: Room }) {
               inPlay={false}
             />
           </TablePanel>
+        )}
+        {!phone && (
+          <section className={styles.summary} aria-label={title}>
+            <TeamResult summary={summary} />
+          </section>
         )}
       </>
     );
@@ -160,24 +188,24 @@ function levelLine(
   } as const;
 }
 
-/** HU07, HU08: the team's result. Nobody is ranked; every level is listed. */
-function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
-  const m = useMessages();
-  const { startGame, starting } = room;
+/** HU07, HU08: how the team's game ended: "All 4 levels cleared!". */
+function resultOf(summary: HushGameSummary, m: Messages) {
   const lostOn = summary.history.at(-1)?.level ?? summary.levelsCleared + 1;
-  const title = summary.won ? m.hush.won(summary.levels) : m.hush.lost(lostOn);
+  return {
+    title: summary.won ? m.hush.won(summary.levels) : m.hush.lost(lostOn),
+    detail: summary.won
+      ? m.hush.wonDetail(summary.lives)
+      : m.hush.lostDetail(summary.levelsCleared, summary.levels),
+  };
+}
+
+/** HU07, HU08: the team's result. Nobody is ranked; every level is listed. */
+function TeamResult({ summary }: { summary: HushGameSummary }) {
+  const m = useMessages();
   const mostHeld = Math.max(0, ...summary.held.map((h) => h.cards.length));
-  const detail = summary.won
-    ? m.hush.wonDetail(summary.lives)
-    : m.hush.lostDetail(summary.levelsCleared, summary.levels);
 
   return (
-    <ResultsFrame
-      title={title}
-      detail={detail}
-      onPlayAgain={startGame}
-      starting={starting}
-    >
+    <>
       <section className={styles.block} aria-labelledby="hush-levels">
         <h3 id="hush-levels" className={styles.blockTitle}>
           {m.hush.levelByLevel}
@@ -269,7 +297,7 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
           </ul>
         </section>
       )}
-    </ResultsFrame>
+    </>
   );
 }
 
