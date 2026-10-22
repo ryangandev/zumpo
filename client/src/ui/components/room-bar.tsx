@@ -18,8 +18,12 @@ export interface RoomBarProps {
   game: string;
   /** The room's name, the first tag; a game on your own's phone bar has none. */
   room?: string;
-  /** Where the room is: "Waiting room", "Round 2 of 2", "Game over". */
-  phase: { tone: TagTone; label: string };
+  /**
+   * Where the room is: "Waiting room", "Round 2 of 2", "Game over". `lead`
+   * comes before it, as "Watching" does for a spectator; on a phone it gives
+   * way before the label does.
+   */
+  phase: { tone: TagTone; label: string; lead?: string };
   onHowToPlay: () => void;
   /** Without it, as while reconnecting, there is no Leave room button. */
   onLeave?: () => void;
@@ -49,6 +53,7 @@ export function RoomBar({
 }: RoomBarProps) {
   const m = useMessages();
   const phone = layout === 'phone';
+  const separator = m.ui.room.contextSeparator;
   return (
     <header className={cx(styles.bar, phone && styles.phone, className)}>
       {!phone && (
@@ -63,16 +68,27 @@ export function RoomBar({
         <h1 className={styles.game}>{game}</h1>
         {phone ? (
           <p className={styles.context}>
-            {room && <span className={styles.room}>{room}</span>}
-            <span className={styles.phase}>
-              {room && m.ui.room.contextSeparator}
-              <span>{phase.label}</span>
-            </span>
+            {room && (
+              <span className={styles.room}>
+                <span className={styles.roomName}>{room}</span>
+                {separator}
+              </span>
+            )}
+            {phase.lead && (
+              <span className={styles.lead}>
+                {phase.lead}
+                {separator}
+              </span>
+            )}
+            <span className={styles.phase}>{phase.label}</span>
           </p>
         ) : (
           <div className={styles.tags}>
             {room && <Tag>{room}</Tag>}
-            <Tag tone={phase.tone}>{phase.label}</Tag>
+            <Tag tone={phase.tone}>
+              {phase.lead && phase.lead + separator}
+              {phase.label}
+            </Tag>
           </div>
         )}
       </div>

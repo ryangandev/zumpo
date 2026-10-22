@@ -262,11 +262,7 @@ export function RoomLayout({
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[state.gameType].name}
           room={roomNameOf(state, m)}
-          phase={
-            watchingGame
-              ? { ...phase, label: m.room.watchingPhase(phase.label) }
-              : phase
-          }
+          phase={watchingGame ? { ...phase, lead: m.room.watchingLead } : phase}
           onHowToPlay={() => setRules(true)}
           onLeave={reconnecting ? undefined : room.leave}
           viewer={viewer}

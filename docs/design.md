@@ -317,6 +317,7 @@ Code differs from Figma on purpose in a few places:
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.
   On a short screen, as a phone on its side, where the bar sits beside the board and the height is the board's, the tag, the label and the meta keep the first line at any width, and where they are too long for it together they share it and wrap rather than one being cut.
 - The Phone room bar's line under the game is one text in Figma; code keeps its phase whole and ends only a room's name too long for the rest of the line in an ellipsis, so "Game over" is never cut to "Game ov…" at 360 px.
+  Where even that does not fit, as a spectator's "Watching · 24 of 29 cards" at 320 px, the pieces go in order, each with its separator: the room's name once fewer than a few letters of it fit, then the Watching lead, so the line never reaches under the buttons and the phase is cut only where it alone is wider than the line.
 - On a short wide window Code Breaker on your own sets its pad beside the board, which Figma does not draw: the board and a pad six keys wide sit together in the middle of the panel, the pad level with the board's middle.
 
 ## Editing the Figma file

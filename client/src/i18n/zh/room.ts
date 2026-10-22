@@ -70,7 +70,7 @@ export const room: typeof en = {
   spectatingSeatFree: '加入玩家席就能参加下一局，也可以继续观战。',
   spectatingSeatsFull: '玩家席已满，有人空出座位后就能加入。',
   spectatingNotice: '观战中。本局结束后可加入玩家席。',
-  watchingPhase: (phase) => `观战中 · ${phase}`,
+  watchingLead: '观战中',
   rulesTitle: (game) => `「${game}」玩法`,
   backToGame: '返回游戏',
   invite: '邀请好友',

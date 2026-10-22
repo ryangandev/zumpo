@@ -80,8 +80,8 @@ export const room = {
     'Every seat is taken. You can take one once somebody gives theirs up.',
   spectatingNotice:
     'You’re watching this game. You can take a seat once it ends.',
-  /** The room bar's phase for a spectator while a game is on. */
-  watchingPhase: (phase: string) => `Watching · ${phase}`,
+  /** Before the room bar's phase for a spectator while a game is on. */
+  watchingLead: 'Watching',
   rulesTitle: (game: string) => `How to play ${game}`,
   backToGame: 'Back to the game',
   invite: 'Invite friends',
