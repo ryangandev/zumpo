@@ -4,7 +4,12 @@ import { blackOf, place, turnOf as gomokuTurn } from './play/gomoku';
 import { solve } from './play/daily-word';
 import { solveHand } from './play/make-24';
 import { move, whoseTurn } from './play/liars-dice';
-import { pickMiss, readyToFind, turnOf as triosTurn } from './play/trios';
+import {
+  pickMiss,
+  pickTrio,
+  readyToFind,
+  turnOf as triosTurn,
+} from './play/trios';
 
 /**
  * A desktop turn bar's hint, often the only instruction on screen, is never
@@ -43,12 +48,24 @@ interface Bar {
   cut: string[];
 }
 
+/**
+ * The bar as it stands. A label or meta is cut when its words are wider than
+ * its box by any fraction of a pixel, as an ellipsis then shows: the whole
+ * pixels of scrollWidth and clientWidth round a cut of under one away.
+ */
 const read = (page: Page): Promise<Bar> =>
   barBox(page).evaluate((box) => {
     const cut = ['label', 'meta'].flatMap((part) => {
       const el = box.querySelector<HTMLElement>(`[class*="_${part}_"]`);
-      return el?.textContent && el.scrollWidth > el.clientWidth
-        ? [`${part} "${el.textContent}" ${el.scrollWidth} in ${el.clientWidth}`]
+      if (!el?.textContent) return [];
+      const words = document.createRange();
+      words.selectNodeContents(el);
+      const needs = words.getBoundingClientRect().width;
+      const has = el.getBoundingClientRect().width;
+      return needs > has + 0.01
+        ? [
+            `${part} "${el.textContent}" ${needs.toFixed(2)} in ${has.toFixed(2)}`,
+          ]
         : [];
     });
     return {
@@ -170,6 +187,16 @@ test('a Trios room keeps its hints whole and the page still', async ({
   await expect(triosTurn(guest).getByText('Find a trio')).toBeVisible();
   await bothLanguages(guest, 'searching');
   await expect.poll(() => pageScroll(guest)).toBe(0);
+  // Its widest hint, beside a long name finding a trio, lasts the 2 s the
+  // trio stays on the table: the bar is at the game's width when it comes.
+  await barAt(guest, (await read(guest)).below);
+  await pickTrio(host);
+  await expect(
+    triosTurn(guest).getByText(`${LONG[0]} found a trio`),
+  ).toBeVisible();
+  expect((await read(guest)).cut, 'a trio taken').toEqual([]);
+  await guest.setViewportSize({ width: 1440, height: 900 });
+  await expect(triosTurn(host).getByText('Find a trio')).toBeVisible();
   await pickMiss(host);
   await expect(triosTurn(host).getByText('Not a trio')).toBeVisible();
   await hintsWhole(host, 'locked out');
