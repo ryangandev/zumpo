@@ -61,6 +61,52 @@ const held = (dice: readonly number[], face: number) =>
   dice.filter((die) => die === face || die === 1).length;
 
 /**
+ * Whether `bid` stands on the dice of every cup `pages` can read, the whole
+ * table when the test drives every player. The server tells no page anybody
+ * else's dice; the test reads each player's own.
+ */
+export async function bidStands(
+  pages: readonly Page[],
+  bid: Bid,
+): Promise<boolean> {
+  let total = 0;
+  for (const page of pages) total += held(await ownDice(page), bid.face);
+  return total >= bid.count;
+}
+
+/**
+ * A move that sets up `friend` to meet a bid that stands on the friend's own
+ * dice, so calling Liar on it is sure to cost the friend a die. Whoever sits
+ * just `before` the friend bids the smallest such raise, when there is one;
+ * anybody else calls Liar on a bid in front of them, so a fresh round starts
+ * and the next one may open that way. Only the test reads the friend's page:
+ * no page is told anybody else's dice.
+ */
+export async function setUpCall(
+  page: Page,
+  friend: Page,
+  before: boolean,
+): Promise<void> {
+  const bid = await latestBid(page);
+  if (!before) {
+    if (bid) await callLiar(page);
+    else await raise(page);
+    return;
+  }
+  const dice = await ownDice(friend);
+  for (let face = 2; face <= 6; face++) {
+    const count = !bid ? 1 : face > bid.face ? bid.count : bid.count + 1;
+    if (count <= held(dice, face)) {
+      await pickBid(page, count, face);
+      await raise(page);
+      return;
+    }
+  }
+  if (bid) await callLiar(page);
+  else await raise(page);
+}
+
+/**
  * Whether the bid in front of the player is sure to stand on their own dice
  * alone, so calling Liar on it is sure to cost them a die.
  */
@@ -83,7 +129,7 @@ export async function callLiar(page: Page) {
 }
 
 /** The smallest raise the picker opens on, or Liar when no raise is left. */
-async function raise(page: Page): Promise<'bid' | 'call'> {
+export async function raise(page: Page): Promise<'bid' | 'call'> {
   const bid = page.getByRole('button', { name: /^Bid / });
   if (!(await bid.isVisible())) {
     await callLiar(page);
