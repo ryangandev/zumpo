@@ -14,19 +14,16 @@
     "x": 1020,
     "y": 4254,
     "w": 390,
-    "h": 710,
-    "hSize": "hug",
+    "h": 844,
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -126,6 +123,66 @@
       },
       {
         "type": "INSTANCE",
+        "id": "176:83209",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "295",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / MA / Avatar",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "292",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA / Avatar",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "118",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
         "id": "27:22234",
         "name": "Zumpo/Turn bar",
         "w": 350,
@@ -153,75 +210,92 @@
       },
       {
         "type": "FRAME",
-        "id": "27:22252",
-        "name": "Word choices",
+        "id": "176:83256",
+        "name": "Choices zone",
         "w": 350,
-        "h": 354,
+        "h": 447,
         "wSize": "fill",
-        "hSize": "hug",
+        "hSize": "fill",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
+          "justify": "center",
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "INSTANCE",
-            "id": "27:22253",
-            "name": "Word / Turtle",
+            "type": "FRAME",
+            "id": "27:22252",
+            "name": "Word choices",
             "w": 350,
-            "h": 110,
+            "h": 354,
             "wSize": "fill",
             "hSize": "hug",
-            "component": "Zumpo/Word choice",
-            "componentId": "9:408",
-            "overrides": [
-              {
-                "path": ".",
-                "height": 110,
-                "width": 350
-              }
-            ]
-          },
-          {
-            "type": "INSTANCE",
-            "id": "27:22256",
-            "name": "Word / Rabbit",
-            "w": 350,
-            "h": 110,
-            "wSize": "fill",
-            "hSize": "hug",
-            "component": "Zumpo/Word choice",
-            "componentId": "9:408",
-            "props": {
-              "Word": "Rabbit"
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
             },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 110,
-                "width": 350
-              }
-            ]
-          },
-          {
-            "type": "INSTANCE",
-            "id": "27:22259",
-            "name": "Word / Parrot",
-            "w": 350,
-            "h": 110,
-            "wSize": "fill",
-            "hSize": "hug",
-            "component": "Zumpo/Word choice",
-            "componentId": "9:408",
-            "props": {
-              "Word": "Parrot"
-            },
-            "overrides": [
+                "type": "INSTANCE",
+                "id": "27:22253",
+                "name": "Word / Turtle",
+                "w": 350,
+                "h": 110,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Word choice",
+                "componentId": "9:408",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 110,
+                    "width": 350
+                  }
+                ]
+              },
               {
-                "path": ".",
-                "height": 110,
-                "width": 350
+                "type": "INSTANCE",
+                "id": "27:22256",
+                "name": "Word / Rabbit",
+                "w": 350,
+                "h": 110,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Word choice",
+                "componentId": "9:408",
+                "props": {
+                  "Word": "Rabbit"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 110,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "27:22259",
+                "name": "Word / Parrot",
+                "w": 350,
+                "h": 110,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Word choice",
+                "componentId": "9:408",
+                "props": {
+                  "Word": "Parrot"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 110,
+                    "width": 350
+                  }
+                ]
               }
             ]
           }
@@ -229,31 +303,107 @@
       },
       {
         "type": "FRAME",
-        "id": "9:10298",
-        "name": "Footer",
+        "id": "176:83257",
+        "name": "Recent chat",
         "w": 350,
-        "h": 18,
-        "hSize": "hug",
+        "h": 91,
+        "wSize": "fill",
+        "clip": true,
         "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "max",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "TEXT",
-            "id": "9:10299",
+            "type": "INSTANCE",
+            "id": "176:83258",
+            "name": "Zumpo/Chat message",
             "w": 350,
-            "h": 18,
+            "h": 25,
+            "wSize": "fill",
             "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a rock?",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "176:83259",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "a hat",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "176:83260",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "shell"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
           }
         ]
       }

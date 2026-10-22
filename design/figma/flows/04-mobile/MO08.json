@@ -15,18 +15,15 @@
     "y": 4254,
     "w": 390,
     "h": 865,
-    "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -126,6 +123,66 @@
       },
       {
         "type": "INSTANCE",
+        "id": "176:83261",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "295",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / MA / Avatar",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "292",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA / Avatar",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "118",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
         "id": "27:22285",
         "name": "Zumpo/Turn bar",
         "w": 350,
@@ -177,8 +234,9 @@
         "id": "27:22341",
         "name": "Canvas",
         "w": 350,
-        "h": 262,
+        "h": 348,
         "wSize": "fill",
+        "hSize": "fill",
         "fills": [
           "$Zumpo · UI:color/white"
         ],
@@ -313,36 +371,6 @@
                 "textAutoResize": "HEIGHT"
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "9:10338",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "9:10339",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

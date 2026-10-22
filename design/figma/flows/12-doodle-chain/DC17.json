@@ -14,19 +14,16 @@
     "x": 4000,
     "y": 4082,
     "w": 390,
-    "h": 848,
-    "hSize": "hug",
+    "h": 844,
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -131,7 +128,7 @@
         "id": "162:103075",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 108,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -142,14 +139,14 @@
         "componentId": "27:22154",
         "props": {
           "Category": false,
-          "Meta": "",
+          "Meta": "Leo describes it next.",
           "Main": "A turtle on a skateboard",
-          "Label": "Draw this · Leo describes it next"
+          "Label": "Draw this"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 108,
+            "height": 96,
             "width": 350
           },
           {
@@ -163,7 +160,7 @@
           },
           {
             "path": "Bottom / Meta",
-            "visible": false
+            "visible": true
           },
           {
             "path": "Top / Countdown",
@@ -199,39 +196,56 @@
       },
       {
         "type": "FRAME",
-        "id": "162:103077",
-        "name": "Canvas",
+        "id": "178:83619",
+        "name": "Canvas zone",
         "w": 350,
-        "h": 262,
+        "h": 382,
         "wSize": "fill",
-        "fills": [
-          "$Zumpo · UI:color/white"
-        ],
-        "strokes": [
-          "$Zumpo · UI:color/line"
-        ],
-        "strokeAlign": "inside",
-        "radius": "$Zumpo · UI:radius/24",
-        "clip": true,
+        "hSize": "fill",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/16",
           "justify": "center",
           "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "INSTANCE",
-            "id": "162:103078",
-            "name": "Drawing / Turtle",
-            "w": 297.6,
-            "h": 198.4,
-            "component": "Sample / Turtle drawing",
-            "variant": {
-              "Stage": "Done"
+            "type": "FRAME",
+            "id": "162:103077",
+            "name": "Canvas",
+            "w": 350,
+            "h": 263,
+            "wSize": "fill",
+            "fills": [
+              "$Zumpo · UI:color/white"
+            ],
+            "strokes": [
+              "$Zumpo · UI:color/line"
+            ],
+            "strokeAlign": "inside",
+            "radius": "$Zumpo · UI:radius/24",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "justify": "center",
+              "align": "center",
+              "strokesIncluded": true
             },
-            "componentId": "27:17566"
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:103078",
+                "name": "Drawing / Turtle",
+                "w": 297.6,
+                "h": 198.4,
+                "component": "Sample / Turtle drawing",
+                "variant": {
+                  "Stage": "Done"
+                },
+                "componentId": "27:17566"
+              }
+            ]
           }
         ]
       },
@@ -240,23 +254,38 @@
         "id": "162:103183",
         "name": "Step actions",
         "w": 350,
-        "h": 74,
+        "h": 92,
         "wSize": "fill",
-        "hSize": "hug",
         "clip": true,
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/8",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/16",
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
+            "type": "TEXT",
+            "id": "162:103192",
+            "name": "Hint",
+            "w": 230,
+            "h": 92,
+            "wSize": "fill",
+            "hSize": "fill",
+            "text": "When the clock runs out, your drawing goes on as it is.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "none"
+          },
+          {
             "type": "INSTANCE",
             "id": "162:103184",
             "name": "Action / Done",
-            "w": 350,
+            "w": 104,
             "h": 48,
-            "wSize": "fill",
+            "wSize": "hug",
             "component": "Zumpo/Button",
             "variant": {
               "Style": "Primary",
@@ -272,55 +301,10 @@
               {
                 "path": ".",
                 "height": 48,
-                "primaryAxisSizingMode": "FIXED",
-                "width": 350
+                "primaryAxisSizingMode": "AUTO",
+                "width": 104
               }
             ]
-          },
-          {
-            "type": "TEXT",
-            "id": "162:103192",
-            "name": "Hint",
-            "w": 350,
-            "h": 18,
-            "wSize": "fill",
-            "hSize": "hug",
-            "text": "When the clock runs out, your drawing goes on as it is.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "162:103079",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "162:103080",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

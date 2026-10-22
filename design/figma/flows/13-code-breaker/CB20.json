@@ -14,7 +14,7 @@
     "x": 5570,
     "y": 4350,
     "w": 390,
-    "h": 1702,
+    "h": 1758,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -76,6 +76,61 @@
             "path": ".",
             "height": 34,
             "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "176:82629",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "5/10",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "6/10",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "8/10",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "10/10",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
           }
         ]
       },

@@ -15,18 +15,15 @@
     "y": 2965,
     "w": 390,
     "h": 657,
-    "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -67,6 +64,61 @@
             "path": ".",
             "height": 34,
             "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "176:81977",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "208",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "104",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "96",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "0",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
           }
         ]
       },
@@ -122,9 +174,9 @@
         "id": "40:44523",
         "name": "Table",
         "w": 350,
-        "h": 313,
+        "h": 375,
         "wSize": "fill",
-        "hSize": "hug",
+        "hSize": "fill",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/20",
@@ -138,68 +190,85 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "40:44524",
-            "name": "Cards",
-            "w": 252,
-            "h": 100,
-            "wSize": "hug",
-            "hSize": "hug",
+            "id": "176:82012",
+            "name": "Board",
+            "w": 350,
+            "h": 162,
+            "wSize": "fill",
+            "hSize": "fill",
             "layout": {
-              "mode": "row",
-              "gap": "$Zumpo · UI:space/12",
+              "mode": "column",
+              "justify": "center",
               "align": "center",
               "strokesIncluded": true
             },
             "children": [
               {
-                "type": "INSTANCE",
-                "id": "40:44525",
-                "name": "Number card / 2",
-                "w": 76,
+                "type": "FRAME",
+                "id": "40:44524",
+                "name": "Cards",
+                "w": 252,
                 "h": 100,
-                "component": "Zumpo/Number card",
-                "variant": {
-                  "State": "Made",
-                  "Size": "Compact"
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
                 },
-                "componentId": "40:22054",
-                "props": {
-                  "Formula": "8 − 6",
-                  "Show formula": true,
-                  "Value": "2"
-                }
-              },
-              {
-                "type": "INSTANCE",
-                "id": "40:44528",
-                "name": "Number card / 4",
-                "w": 76,
-                "h": 100,
-                "component": "Zumpo/Number card",
-                "variant": {
-                  "State": "Selected",
-                  "Size": "Compact"
-                },
-                "componentId": "40:22051",
-                "props": {
-                  "Value": "4"
-                }
-              },
-              {
-                "type": "INSTANCE",
-                "id": "40:44531",
-                "name": "Number card / 3",
-                "w": 76,
-                "h": 100,
-                "component": "Zumpo/Number card",
-                "variant": {
-                  "State": "Default",
-                  "Size": "Compact"
-                },
-                "componentId": "40:22048",
-                "props": {
-                  "Value": "3"
-                }
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "40:44525",
+                    "name": "Number card / 2",
+                    "w": 76,
+                    "h": 100,
+                    "component": "Zumpo/Number card",
+                    "variant": {
+                      "State": "Made",
+                      "Size": "Compact"
+                    },
+                    "componentId": "40:22054",
+                    "props": {
+                      "Formula": "8 − 6",
+                      "Show formula": true,
+                      "Value": "2"
+                    }
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "40:44528",
+                    "name": "Number card / 4",
+                    "w": 76,
+                    "h": 100,
+                    "component": "Zumpo/Number card",
+                    "variant": {
+                      "State": "Selected",
+                      "Size": "Compact"
+                    },
+                    "componentId": "40:22051",
+                    "props": {
+                      "Value": "4"
+                    }
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "40:44531",
+                    "name": "Number card / 3",
+                    "w": 76,
+                    "h": 100,
+                    "component": "Zumpo/Number card",
+                    "variant": {
+                      "State": "Default",
+                      "Size": "Compact"
+                    },
+                    "componentId": "40:22048",
+                    "props": {
+                      "Value": "3"
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -357,36 +426,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "40:44471",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "40:44472",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

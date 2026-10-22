@@ -15,18 +15,15 @@
     "y": 10000,
     "w": 390,
     "h": 697,
-    "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -46,7 +43,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Maya’s room · Small · 9 × 9"
+          "Phase": "Small · 9 × 9"
         },
         "overrides": [
           {
@@ -56,27 +53,6 @@
               "Tone": "Peach"
             },
             "visible": true
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "40:60432",
-        "name": "Zumpo/Mobile tabs",
-        "visible": false,
-        "w": 350,
-        "h": 34,
-        "hSize": "hug",
-        "component": "Zumpo/Mobile tabs",
-        "variant": {
-          "View": "Board"
-        },
-        "componentId": "9:416",
-        "overrides": [
-          {
-            "path": ".",
-            "height": 34,
-            "width": 350
           }
         ]
       },
@@ -132,9 +108,9 @@
         "id": "40:60698",
         "name": "Board alignment",
         "w": 350,
-        "h": 411,
+        "h": 505,
         "wSize": "fill",
-        "hSize": "hug",
+        "hSize": "fill",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/16",
@@ -144,325 +120,67 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "40:60583",
-            "name": "Minefield / 9 × 9",
-            "w": 347,
-            "h": 347,
-            "wSize": "hug",
-            "hSize": "hug",
+            "id": "176:83208",
+            "name": "Board zone",
+            "w": 350,
+            "h": 441,
+            "wSize": "fill",
+            "hSize": "fill",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/4",
+              "align": "center",
               "strokesIncluded": true
             },
             "children": [
               {
-                "type": "GRID",
-                "rows": 5,
-                "cols": 9,
-                "count": 45,
-                "kind": "Zumpo/Mine cell",
-                "firstId": "40:60585",
-                "rowFrame": {
-                  "type": "FRAME",
-                  "name": "Row 1",
-                  "w": 347,
-                  "h": 35,
-                  "wSize": "hug",
-                  "hSize": "hug",
-                  "layout": {
-                    "mode": "row",
-                    "gap": "$Zumpo · UI:space/4",
-                    "strokesIncluded": true
-                  }
-                },
-                "pitch": [
-                  39,
-                  39
-                ],
-                "cell": {
-                  "type": "INSTANCE",
-                  "name": "Cell 1,1",
-                  "w": 35,
-                  "h": 35,
-                  "component": "Zumpo/Mine cell",
-                  "variant": {
-                    "State": "Hidden",
-                    "Size": "Regular"
-                  },
-                  "componentId": "24:7235",
-                  "overrides": [
-                    {
-                      "path": ".",
-                      "height": 35,
-                      "width": 35
-                    }
-                  ]
-                },
-                "special": [
-                  {
-                    "r": 2,
-                    "c": 2,
-                    "id": "40:60607",
-                    "variant": {
-                      "State": "Flag",
-                      "Size": "Regular"
-                    },
-                    "componentId": "40:54004",
-                    "name": "Cell 3,3"
-                  },
-                  {
-                    "r": 2,
-                    "c": 3,
-                    "id": "40:60611",
-                    "variant": {
-                      "State": "Flag",
-                      "Size": "Regular"
-                    },
-                    "componentId": "40:54004",
-                    "name": "Cell 3,4"
-                  },
-                  {
-                    "r": 3,
-                    "c": 2,
-                    "id": "40:60623",
-                    "variant": {
-                      "State": "Flag",
-                      "Size": "Regular"
-                    },
-                    "componentId": "40:54004",
-                    "name": "Cell 4,3"
-                  },
-                  {
-                    "r": 3,
-                    "c": 3,
-                    "id": "40:60627",
-                    "variant": {
-                      "State": "3",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7245",
-                    "name": "Cell 4,4"
-                  },
-                  {
-                    "r": 3,
-                    "c": 4,
-                    "id": "40:60629",
-                    "variant": {
-                      "State": "1",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7241",
-                    "name": "Cell 4,5"
-                  },
-                  {
-                    "r": 3,
-                    "c": 5,
-                    "id": "40:60631",
-                    "variant": {
-                      "State": "1",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7241",
-                    "name": "Cell 4,6"
-                  },
-                  {
-                    "r": 4,
-                    "c": 2,
-                    "id": "40:60639",
-                    "variant": {
-                      "State": "1",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7241",
-                    "name": "Cell 5,3"
-                  },
-                  {
-                    "r": 4,
-                    "c": 3,
-                    "id": "40:60641",
-                    "variant": {
-                      "State": "1",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7241",
-                    "name": "Cell 5,4"
-                  },
-                  {
-                    "r": 4,
-                    "c": 4,
-                    "id": "40:60643",
-                    "variant": {
-                      "State": "Empty",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7240",
-                    "name": "Cell 5,5"
-                  },
-                  {
-                    "r": 4,
-                    "c": 5,
-                    "id": "40:60644",
-                    "variant": {
-                      "State": "1",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7241",
-                    "name": "Cell 5,6"
-                  },
-                  {
-                    "r": 4,
-                    "c": 6,
-                    "id": "40:60646",
-                    "variant": {
-                      "State": "2",
-                      "Size": "Regular"
-                    },
-                    "componentId": "24:7243",
-                    "name": "Cell 5,7"
-                  }
-                ]
-              },
-              {
                 "type": "FRAME",
-                "id": "40:60650",
-                "name": "Row 6",
+                "id": "40:60583",
+                "name": "Minefield / 9 × 9",
                 "w": 347,
-                "h": 35,
+                "h": 347,
                 "wSize": "hug",
                 "hSize": "hug",
                 "layout": {
-                  "mode": "row",
+                  "mode": "column",
                   "gap": "$Zumpo · UI:space/4",
                   "strokesIncluded": true
                 },
                 "children": [
                   {
                     "type": "GRID",
-                    "rows": 1,
+                    "rows": 5,
                     "cols": 9,
-                    "count": 9,
+                    "count": 45,
                     "kind": "Zumpo/Mine cell",
-                    "firstId": "40:60651",
-                    "pitch": [
-                      39,
-                      0
-                    ],
-                    "cell": {
-                      "type": "INSTANCE",
-                      "name": "Cell 6,3",
-                      "w": 35,
+                    "firstId": "40:60585",
+                    "rowFrame": {
+                      "type": "FRAME",
+                      "name": "Row 1",
+                      "w": 347,
                       "h": 35,
-                      "component": "Zumpo/Mine cell",
-                      "variant": {
-                        "State": "1",
-                        "Size": "Regular"
-                      },
-                      "componentId": "24:7241",
-                      "overrides": [
-                        {
-                          "path": ".",
-                          "height": 35,
-                          "width": 35
-                        }
-                      ]
-                    },
-                    "special": [
-                      {
-                        "r": 0,
-                        "c": 0,
-                        "id": "40:60651",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 6,1"
-                      },
-                      {
-                        "r": 0,
-                        "c": 1,
-                        "id": "40:60652",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 6,2"
-                      },
-                      {
-                        "r": 0,
-                        "c": 3,
-                        "id": "40:60655",
-                        "variant": {
-                          "State": "Empty",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7240",
-                        "name": "Cell 6,4"
-                      },
-                      {
-                        "r": 0,
-                        "c": 4,
-                        "id": "40:60656",
-                        "variant": {
-                          "State": "Empty",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7240",
-                        "name": "Cell 6,5"
-                      },
-                      {
-                        "r": 0,
-                        "c": 5,
-                        "id": "40:60657",
-                        "variant": {
-                          "State": "Empty",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7240",
-                        "name": "Cell 6,6"
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/4",
+                        "strokesIncluded": true
                       }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
-                "id": "40:60664",
-                "name": "Row 7",
-                "w": 347,
-                "h": 35,
-                "wSize": "hug",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "GRID",
-                    "rows": 1,
-                    "cols": 9,
-                    "count": 9,
-                    "kind": "Zumpo/Mine cell",
-                    "firstId": "40:60665",
+                    },
                     "pitch": [
                       39,
-                      0
+                      39
                     ],
                     "cell": {
                       "type": "INSTANCE",
-                      "name": "Cell 7,5",
+                      "name": "Cell 1,1",
                       "w": 35,
                       "h": 35,
                       "component": "Zumpo/Mine cell",
                       "variant": {
-                        "State": "Empty",
+                        "State": "Hidden",
                         "Size": "Regular"
                       },
-                      "componentId": "24:7240",
+                      "componentId": "24:7235",
                       "overrides": [
                         {
                           "path": ".",
@@ -473,234 +191,508 @@
                     },
                     "special": [
                       {
-                        "r": 0,
-                        "c": 0,
-                        "id": "40:60665",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 7,1"
-                      },
-                      {
-                        "r": 0,
-                        "c": 1,
-                        "id": "40:60666",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 7,2"
-                      },
-                      {
-                        "r": 0,
+                        "r": 2,
                         "c": 2,
-                        "id": "40:60667",
+                        "id": "40:60607",
+                        "variant": {
+                          "State": "Flag",
+                          "Size": "Regular"
+                        },
+                        "componentId": "40:54004",
+                        "name": "Cell 3,3"
+                      },
+                      {
+                        "r": 2,
+                        "c": 3,
+                        "id": "40:60611",
+                        "variant": {
+                          "State": "Flag",
+                          "Size": "Regular"
+                        },
+                        "componentId": "40:54004",
+                        "name": "Cell 3,4"
+                      },
+                      {
+                        "r": 3,
+                        "c": 2,
+                        "id": "40:60623",
+                        "variant": {
+                          "State": "Flag",
+                          "Size": "Regular"
+                        },
+                        "componentId": "40:54004",
+                        "name": "Cell 4,3"
+                      },
+                      {
+                        "r": 3,
+                        "c": 3,
+                        "id": "40:60627",
                         "variant": {
                           "State": "3",
                           "Size": "Regular"
                         },
                         "componentId": "24:7245",
-                        "name": "Cell 7,3"
+                        "name": "Cell 4,4"
                       },
                       {
-                        "r": 0,
-                        "c": 3,
-                        "id": "40:60669",
+                        "r": 3,
+                        "c": 4,
+                        "id": "40:60629",
                         "variant": {
                           "State": "1",
                           "Size": "Regular"
                         },
                         "componentId": "24:7241",
-                        "name": "Cell 7,4"
+                        "name": "Cell 4,5"
+                      },
+                      {
+                        "r": 3,
+                        "c": 5,
+                        "id": "40:60631",
+                        "variant": {
+                          "State": "1",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7241",
+                        "name": "Cell 4,6"
+                      },
+                      {
+                        "r": 4,
+                        "c": 2,
+                        "id": "40:60639",
+                        "variant": {
+                          "State": "1",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7241",
+                        "name": "Cell 5,3"
+                      },
+                      {
+                        "r": 4,
+                        "c": 3,
+                        "id": "40:60641",
+                        "variant": {
+                          "State": "1",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7241",
+                        "name": "Cell 5,4"
+                      },
+                      {
+                        "r": 4,
+                        "c": 4,
+                        "id": "40:60643",
+                        "variant": {
+                          "State": "Empty",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7240",
+                        "name": "Cell 5,5"
+                      },
+                      {
+                        "r": 4,
+                        "c": 5,
+                        "id": "40:60644",
+                        "variant": {
+                          "State": "1",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7241",
+                        "name": "Cell 5,6"
+                      },
+                      {
+                        "r": 4,
+                        "c": 6,
+                        "id": "40:60646",
+                        "variant": {
+                          "State": "2",
+                          "Size": "Regular"
+                        },
+                        "componentId": "24:7243",
+                        "name": "Cell 5,7"
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
-                "id": "40:60676",
-                "name": "Row 8",
-                "w": 347,
-                "h": 35,
-                "wSize": "hug",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
-                },
-                "children": [
+                  },
                   {
-                    "type": "GRID",
-                    "rows": 1,
-                    "cols": 9,
-                    "count": 9,
-                    "kind": "Zumpo/Mine cell",
-                    "firstId": "40:60677",
-                    "pitch": [
-                      39,
-                      0
-                    ],
-                    "cell": {
-                      "type": "INSTANCE",
-                      "name": "Cell 8,5",
-                      "w": 35,
-                      "h": 35,
-                      "component": "Zumpo/Mine cell",
-                      "variant": {
-                        "State": "Empty",
-                        "Size": "Regular"
-                      },
-                      "componentId": "24:7240",
-                      "overrides": [
-                        {
-                          "path": ".",
-                          "height": 35,
-                          "width": 35
-                        }
-                      ]
+                    "type": "FRAME",
+                    "id": "40:60650",
+                    "name": "Row 6",
+                    "w": 347,
+                    "h": 35,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/4",
+                      "strokesIncluded": true
                     },
-                    "special": [
+                    "children": [
                       {
-                        "r": 0,
-                        "c": 0,
-                        "id": "40:60677",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
+                        "type": "GRID",
+                        "rows": 1,
+                        "cols": 9,
+                        "count": 9,
+                        "kind": "Zumpo/Mine cell",
+                        "firstId": "40:60651",
+                        "pitch": [
+                          39,
+                          0
+                        ],
+                        "cell": {
+                          "type": "INSTANCE",
+                          "name": "Cell 6,3",
+                          "w": 35,
+                          "h": 35,
+                          "component": "Zumpo/Mine cell",
+                          "variant": {
+                            "State": "1",
+                            "Size": "Regular"
+                          },
+                          "componentId": "24:7241",
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 35,
+                              "width": 35
+                            }
+                          ]
                         },
-                        "componentId": "24:7235",
-                        "name": "Cell 8,1"
-                      },
-                      {
-                        "r": 0,
-                        "c": 1,
-                        "id": "40:60678",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 8,2"
-                      },
-                      {
-                        "r": 0,
-                        "c": 2,
-                        "id": "40:60679",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7235",
-                        "name": "Cell 8,3"
-                      },
-                      {
-                        "r": 0,
-                        "c": 3,
-                        "id": "40:60680",
-                        "variant": {
-                          "State": "1",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7241",
-                        "name": "Cell 8,4"
+                        "special": [
+                          {
+                            "r": 0,
+                            "c": 0,
+                            "id": "40:60651",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 6,1"
+                          },
+                          {
+                            "r": 0,
+                            "c": 1,
+                            "id": "40:60652",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 6,2"
+                          },
+                          {
+                            "r": 0,
+                            "c": 3,
+                            "id": "40:60655",
+                            "variant": {
+                              "State": "Empty",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7240",
+                            "name": "Cell 6,4"
+                          },
+                          {
+                            "r": 0,
+                            "c": 4,
+                            "id": "40:60656",
+                            "variant": {
+                              "State": "Empty",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7240",
+                            "name": "Cell 6,5"
+                          },
+                          {
+                            "r": 0,
+                            "c": 5,
+                            "id": "40:60657",
+                            "variant": {
+                              "State": "Empty",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7240",
+                            "name": "Cell 6,6"
+                          }
+                        ]
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
-                "id": "40:60687",
-                "name": "Row 9",
-                "w": 347,
-                "h": 35,
-                "wSize": "hug",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/4",
-                  "strokesIncluded": true
-                },
-                "children": [
+                  },
                   {
-                    "type": "GRID",
-                    "rows": 1,
-                    "cols": 9,
-                    "count": 9,
-                    "kind": "Zumpo/Mine cell",
-                    "firstId": "40:60688",
-                    "pitch": [
-                      39,
-                      0
-                    ],
-                    "cell": {
-                      "type": "INSTANCE",
-                      "name": "Cell 9,5",
-                      "w": 35,
-                      "h": 35,
-                      "component": "Zumpo/Mine cell",
-                      "variant": {
-                        "State": "Empty",
-                        "Size": "Regular"
-                      },
-                      "componentId": "24:7240",
-                      "overrides": [
-                        {
-                          "path": ".",
-                          "height": 35,
-                          "width": 35
-                        }
-                      ]
+                    "type": "FRAME",
+                    "id": "40:60664",
+                    "name": "Row 7",
+                    "w": 347,
+                    "h": 35,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/4",
+                      "strokesIncluded": true
                     },
-                    "special": [
+                    "children": [
                       {
-                        "r": 0,
-                        "c": 0,
-                        "id": "40:60688",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
+                        "type": "GRID",
+                        "rows": 1,
+                        "cols": 9,
+                        "count": 9,
+                        "kind": "Zumpo/Mine cell",
+                        "firstId": "40:60665",
+                        "pitch": [
+                          39,
+                          0
+                        ],
+                        "cell": {
+                          "type": "INSTANCE",
+                          "name": "Cell 7,5",
+                          "w": 35,
+                          "h": 35,
+                          "component": "Zumpo/Mine cell",
+                          "variant": {
+                            "State": "Empty",
+                            "Size": "Regular"
+                          },
+                          "componentId": "24:7240",
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 35,
+                              "width": 35
+                            }
+                          ]
                         },
-                        "componentId": "24:7235",
-                        "name": "Cell 9,1"
-                      },
+                        "special": [
+                          {
+                            "r": 0,
+                            "c": 0,
+                            "id": "40:60665",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 7,1"
+                          },
+                          {
+                            "r": 0,
+                            "c": 1,
+                            "id": "40:60666",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 7,2"
+                          },
+                          {
+                            "r": 0,
+                            "c": 2,
+                            "id": "40:60667",
+                            "variant": {
+                              "State": "3",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7245",
+                            "name": "Cell 7,3"
+                          },
+                          {
+                            "r": 0,
+                            "c": 3,
+                            "id": "40:60669",
+                            "variant": {
+                              "State": "1",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7241",
+                            "name": "Cell 7,4"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "40:60676",
+                    "name": "Row 8",
+                    "w": 347,
+                    "h": 35,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/4",
+                      "strokesIncluded": true
+                    },
+                    "children": [
                       {
-                        "r": 0,
-                        "c": 1,
-                        "id": "40:60689",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
+                        "type": "GRID",
+                        "rows": 1,
+                        "cols": 9,
+                        "count": 9,
+                        "kind": "Zumpo/Mine cell",
+                        "firstId": "40:60677",
+                        "pitch": [
+                          39,
+                          0
+                        ],
+                        "cell": {
+                          "type": "INSTANCE",
+                          "name": "Cell 8,5",
+                          "w": 35,
+                          "h": 35,
+                          "component": "Zumpo/Mine cell",
+                          "variant": {
+                            "State": "Empty",
+                            "Size": "Regular"
+                          },
+                          "componentId": "24:7240",
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 35,
+                              "width": 35
+                            }
+                          ]
                         },
-                        "componentId": "24:7235",
-                        "name": "Cell 9,2"
-                      },
+                        "special": [
+                          {
+                            "r": 0,
+                            "c": 0,
+                            "id": "40:60677",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 8,1"
+                          },
+                          {
+                            "r": 0,
+                            "c": 1,
+                            "id": "40:60678",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 8,2"
+                          },
+                          {
+                            "r": 0,
+                            "c": 2,
+                            "id": "40:60679",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 8,3"
+                          },
+                          {
+                            "r": 0,
+                            "c": 3,
+                            "id": "40:60680",
+                            "variant": {
+                              "State": "1",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7241",
+                            "name": "Cell 8,4"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "40:60687",
+                    "name": "Row 9",
+                    "w": 347,
+                    "h": 35,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/4",
+                      "strokesIncluded": true
+                    },
+                    "children": [
                       {
-                        "r": 0,
-                        "c": 2,
-                        "id": "40:60690",
-                        "variant": {
-                          "State": "Hidden",
-                          "Size": "Regular"
+                        "type": "GRID",
+                        "rows": 1,
+                        "cols": 9,
+                        "count": 9,
+                        "kind": "Zumpo/Mine cell",
+                        "firstId": "40:60688",
+                        "pitch": [
+                          39,
+                          0
+                        ],
+                        "cell": {
+                          "type": "INSTANCE",
+                          "name": "Cell 9,5",
+                          "w": 35,
+                          "h": 35,
+                          "component": "Zumpo/Mine cell",
+                          "variant": {
+                            "State": "Empty",
+                            "Size": "Regular"
+                          },
+                          "componentId": "24:7240",
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 35,
+                              "width": 35
+                            }
+                          ]
                         },
-                        "componentId": "24:7235",
-                        "name": "Cell 9,3"
-                      },
-                      {
-                        "r": 0,
-                        "c": 3,
-                        "id": "40:60691",
-                        "variant": {
-                          "State": "1",
-                          "Size": "Regular"
-                        },
-                        "componentId": "24:7241",
-                        "name": "Cell 9,4"
+                        "special": [
+                          {
+                            "r": 0,
+                            "c": 0,
+                            "id": "40:60688",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 9,1"
+                          },
+                          {
+                            "r": 0,
+                            "c": 1,
+                            "id": "40:60689",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 9,2"
+                          },
+                          {
+                            "r": 0,
+                            "c": 2,
+                            "id": "40:60690",
+                            "variant": {
+                              "State": "Hidden",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7235",
+                            "name": "Cell 9,3"
+                          },
+                          {
+                            "r": 0,
+                            "c": 3,
+                            "id": "40:60691",
+                            "variant": {
+                              "State": "1",
+                              "Size": "Regular"
+                            },
+                            "componentId": "24:7241",
+                            "name": "Cell 9,4"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -775,36 +767,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "40:60526",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "40:60527",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

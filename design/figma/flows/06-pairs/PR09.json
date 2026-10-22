@@ -15,18 +15,15 @@
     "y": 2930,
     "w": 390,
     "h": 630,
-    "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -46,7 +43,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Maya’s room · Small · 4 × 4",
+          "Phase": "Small · 4 × 4",
           "Game": "Pairs"
         },
         "overrides": [
@@ -58,27 +55,6 @@
             },
             "height": 32,
             "width": 32
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "40:53552",
-        "name": "Zumpo/Mobile tabs",
-        "visible": false,
-        "w": 350,
-        "h": 34,
-        "hSize": "hug",
-        "component": "Zumpo/Mobile tabs",
-        "variant": {
-          "View": "Board"
-        },
-        "componentId": "9:416",
-        "overrides": [
-          {
-            "path": ".",
-            "height": 34,
-            "width": 350
           }
         ]
       },
@@ -134,12 +110,13 @@
         "id": "40:53704",
         "name": "Board alignment",
         "w": 350,
-        "h": 344,
+        "h": 438,
         "wSize": "fill",
-        "hSize": "hug",
+        "hSize": "fill",
         "layout": {
           "mode": "row",
           "justify": "center",
+          "align": "center",
           "strokesIncluded": true
         },
         "children": [
@@ -463,36 +440,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "40:53646",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "40:53647",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

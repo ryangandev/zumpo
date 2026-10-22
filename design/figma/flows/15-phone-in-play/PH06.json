@@ -125,7 +125,7 @@
         "hSize": "hug",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/24",
+          "gap": "$Zumpo · UI:space/16",
           "strokesIncluded": true
         },
         "children": [
@@ -134,12 +134,12 @@
             "id": "173:81900",
             "name": "Ahead",
             "w": 350,
-            "h": 250,
+            "h": 266,
             "wSize": "fill",
             "clip": true,
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "justify": "max",
               "strokesIncluded": true
             },
@@ -431,13 +431,13 @@
             "id": "163:65397",
             "name": "Your cup",
             "w": 350,
-            "h": 332,
+            "h": 324,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/20",
+              "gap": "$Zumpo · UI:space/12",
               "strokesIncluded": true
             },
             "children": [
