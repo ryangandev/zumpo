@@ -85,6 +85,11 @@ Decisions from the design review rounds (their reports are in git history):
   The board is the one played on, never mounted again, so it keeps its place and its scale; the result's title takes the focus when the game ends, and the next game's board takes it after Play again.
   The side column's other cards follow: the best on this device, and Challenge a friend where the game has it, whose one button is Copy challenge link (#107); the progress during play is not repeated there.
   `Zumpo/Game artwork` is the paper panel both draw, one per game and size, so the artwork is drawn once.
+- A room game with a board ends the same way off a phone (#155): the board keeps its size and place from the game to its results, for players and spectators alike.
+  The result is a Status turn bar labelled Game over in the turn bar's place (`ResultBar`), what comes next heads the side column on paper of its own (`NextGamePanel`, through RoomLayout's `nextBeside`), and the standings go under the board (`StandingsSection`).
+  So a newcomer sees the result and Play again or Ready at once, without scrolling, at 1440 × 900.
+  Minesweeper and Make 24 put the standings in the board's own panel, as a round's results are; Gomoku leaves them out, since its seats say who won, and puts what comes next in its table's actions place, where Resign was; Hush puts the levels and the hands still held under the pile.
+  A phone keeps the results card over the board (`ResultsPanel`), with Play again in its first screen.
 - A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.
   More options, a Quiet button, opens the room's name (the host's by default), its seats (all of them by default) and a password, so Create room is one click away; Ryan asked for this on 2026-10-21.
   Hush keeps its seats in view, because they set how long its game is.
