@@ -66,8 +66,13 @@ export const minesweeper = {
   everyoneLocked: 'Everyone is locked in',
   revealingPicks: 'Revealing the picks…',
   lockedIn: 'Locked in',
-  waitingFor: (names: string) => `Waiting for ${names}`,
-  othersLockedIn: (names: string) => `${names} locked in`,
+  /**
+   * The turn bar's meta during a pick, one line on a phone: the scoreboard
+   * says who is still picking, and who is locked in.
+   */
+  waitingOthers: 'Waiting for the others',
+  othersLockedIn: (count: number) =>
+    count === 1 ? '1 player is locked in' : `${count} players are locked in`,
   toPick: 'to pick',
   pickCell: 'Pick a cell',
   everyonePicking: 'Everyone is picking',
