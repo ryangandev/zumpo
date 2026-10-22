@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-22T06:46:04.936Z",
+  "exportedAt": "2026-10-22T16:35:24.965Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -18,8 +18,8 @@
     "outsideComponents": 0,
     "svgs": 127,
     "seconds": 11,
-    "nodes": 14925,
-    "instances": 7848,
+    "nodes": 14893,
+    "instances": 7858,
     "grids": 90,
     "gridCells": 2884
   },
@@ -1469,7 +1469,7 @@
           "id": "9:10261",
           "size": [
             390,
-            710
+            844
           ],
           "file": "flows/04-mobile/MO07.json",
           "isFlow": true
@@ -1535,7 +1535,7 @@
           "id": "9:11134",
           "size": [
             390,
-            1084
+            844
           ],
           "file": "flows/04-mobile/MO13.json",
           "isFlow": true
@@ -1546,7 +1546,7 @@
           "id": "9:11498",
           "size": [
             390,
-            1108
+            844
           ],
           "file": "flows/04-mobile/MO14.json",
           "isFlow": true
@@ -1601,7 +1601,7 @@
           "id": "96:115189",
           "size": [
             390,
-            1096
+            844
           ],
           "file": "flows/04-mobile/MO19.json",
           "isFlow": true
@@ -2192,7 +2192,7 @@
           "id": "79:89587",
           "size": [
             390,
-            1086
+            844
           ],
           "file": "flows/08-liars-dice/LD13.json",
           "isFlow": true
@@ -2203,7 +2203,7 @@
           "id": "79:89902",
           "size": [
             390,
-            1198
+            844
           ],
           "file": "flows/08-liars-dice/LD14.json",
           "isFlow": true
@@ -2214,7 +2214,7 @@
           "id": "79:90326",
           "size": [
             390,
-            867
+            844
           ],
           "file": "flows/08-liars-dice/LD15.json",
           "isFlow": true
@@ -2354,7 +2354,7 @@
           "id": "65:76321",
           "size": [
             390,
-            873
+            844
           ],
           "file": "flows/09-hush/HU10.json",
           "isFlow": true
@@ -2538,7 +2538,7 @@
           "id": "79:102604",
           "size": [
             390,
-            856
+            844
           ],
           "file": "flows/10-daily-word/DW13.json",
           "isFlow": true
@@ -2560,7 +2560,7 @@
           "id": "97:115499",
           "size": [
             390,
-            1190
+            1246
           ],
           "file": "flows/10-daily-word/DW15.json",
           "isFlow": true
@@ -2725,7 +2725,7 @@
           "id": "162:86426",
           "size": [
             390,
-            892
+            844
           ],
           "file": "flows/11-snap/SN12.json",
           "isFlow": true
@@ -2933,7 +2933,7 @@
           "id": "162:102928",
           "size": [
             390,
-            569
+            597
           ],
           "file": "flows/12-doodle-chain/DC16.json",
           "isFlow": true
@@ -2944,7 +2944,7 @@
           "id": "162:103072",
           "size": [
             390,
-            848
+            844
           ],
           "file": "flows/12-doodle-chain/DC17.json",
           "isFlow": true
@@ -2955,7 +2955,7 @@
           "id": "162:103193",
           "size": [
             390,
-            823
+            844
           ],
           "file": "flows/12-doodle-chain/DC18.json",
           "isFlow": true
@@ -2966,7 +2966,7 @@
           "id": "162:103355",
           "size": [
             390,
-            1026
+            844
           ],
           "file": "flows/12-doodle-chain/DC19.json",
           "isFlow": true
@@ -2977,7 +2977,7 @@
           "id": "162:103558",
           "size": [
             390,
-            1413
+            1551
           ],
           "file": "flows/12-doodle-chain/DC20.json",
           "isFlow": true
@@ -3172,7 +3172,7 @@
           "id": "162:107560",
           "size": [
             390,
-            1040
+            844
           ],
           "file": "flows/13-code-breaker/CB16.json",
           "isFlow": true
@@ -3183,7 +3183,7 @@
           "id": "162:107917",
           "size": [
             390,
-            1846
+            1753
           ],
           "file": "flows/13-code-breaker/CB17.json",
           "isFlow": true
@@ -3194,7 +3194,7 @@
           "id": "162:108356",
           "size": [
             390,
-            1098
+            844
           ],
           "file": "flows/13-code-breaker/CB18.json",
           "isFlow": true
@@ -3216,7 +3216,7 @@
           "id": "162:109211",
           "size": [
             390,
-            1702
+            1758
           ],
           "file": "flows/13-code-breaker/CB20.json",
           "isFlow": true

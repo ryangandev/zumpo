@@ -11,7 +11,7 @@
     "x": 6130,
     "y": 2552,
     "w": 390,
-    "h": 1190,
+    "h": 1246,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -73,6 +73,75 @@
             "path": ".",
             "height": 34,
             "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "176:82582",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "3/6",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "4/6",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA / Avatar",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": true,
+              "Value": "5/6",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE / Avatar",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "6/6",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
           }
         ]
       },

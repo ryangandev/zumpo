@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 4082,
     "w": 390,
-    "h": 569,
+    "h": 597,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -131,7 +131,7 @@
         "id": "162:102931",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 108,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -143,13 +143,13 @@
         "props": {
           "Main": "Write the first line",
           "Category": false,
-          "Meta": "",
-          "Label": "Step 1 of 4 · Maya draws it next"
+          "Meta": "Maya draws it next.",
+          "Label": "Step 1 of 4"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 108,
+            "height": 96,
             "width": 350
           },
           {
@@ -163,7 +163,7 @@
           },
           {
             "path": "Bottom / Meta",
-            "visible": false
+            "visible": true
           },
           {
             "path": "Top / Countdown",
@@ -181,7 +181,7 @@
         "id": "162:103050",
         "name": "Step panel",
         "w": 350,
-        "h": 213,
+        "h": 253,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -195,8 +195,8 @@
         "clip": true,
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/16",
-          "pad": "$Zumpo · UI:space/16",
+          "gap": "$Zumpo · UI:space/24",
+          "pad": "$Zumpo · UI:space/24",
           "align": "center",
           "strokesIncluded": true
         },
@@ -205,8 +205,8 @@
             "type": "INSTANCE",
             "id": "162:103051",
             "name": "Chain composer",
-            "w": 316,
-            "h": 179,
+            "w": 300,
+            "h": 203,
             "wSize": "fill",
             "hSize": "hug",
             "component": "Zumpo/Chain composer",
@@ -218,8 +218,12 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 179,
-                "width": 316
+                "height": 203,
+                "width": 300
+              },
+              {
+                "path": "Actions",
+                "counterAxisSizingMode": "AUTO"
               }
             ]
           }

@@ -96,7 +96,6 @@ Ideas worth doing next, roughly in order:
 
 - Close-guess feedback in Draw & Guess ("Sam is close!").
 - A longer word bank and per-room word packs; six fixed categories today, English only.
-- Redraw the remaining phone room frames in Figma (for example MO13, T11 and the Daily Word and Code Breaker rooms) to the current phone spacing, as PH01-PH08 and MO11-MO12 already are.
 
 ## Deliberately not doing
 

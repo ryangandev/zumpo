@@ -15,18 +15,15 @@
     "y": 5580,
     "w": 390,
     "h": 760,
-    "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -113,9 +110,9 @@
         "id": "162:101870",
         "name": "Table",
         "w": 350,
-        "h": 494,
+        "h": 588,
         "wSize": "fill",
-        "hSize": "hug",
+        "hSize": "fill",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/12",
@@ -124,170 +121,187 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "162:101965",
-            "name": "Board",
+            "id": "176:83205",
+            "name": "Board zone",
             "w": 350,
-            "h": 350,
+            "h": 444,
+            "wSize": "fill",
+            "hSize": "fill",
+            "layout": {
+              "mode": "column",
+              "justify": "center",
+              "align": "center",
+              "strokesIncluded": true
+            },
             "children": [
               {
-                "type": "INSTANCE",
-                "id": "162:101966",
-                "name": "Zumpo/Gomoku board",
-                "x": 0,
-                "y": 0,
+                "type": "FRAME",
+                "id": "162:101965",
+                "name": "Board",
                 "w": 350,
                 "h": 350,
-                "wSize": "hug",
-                "hSize": "hug",
-                "component": "Zumpo/Gomoku board",
-                "variant": {
-                  "Layout": "Phone"
-                },
-                "componentId": "162:62938"
-              },
-              {
-                "type": "GRID",
-                "rows": 6,
-                "cols": 6,
-                "count": 17,
-                "kind": "Zumpo/Stone",
-                "firstId": "162:102003",
-                "pitch": [
-                  22,
-                  22
-                ],
-                "holes": 19,
-                "cell": {
-                  "type": "INSTANCE",
-                  "name": "Stone H8",
-                  "w": "$Zumpo · UI:space/18",
-                  "h": "$Zumpo · UI:space/18",
-                  "component": "Zumpo/Stone",
-                  "variant": {
-                    "Color": "Black",
-                    "Mark": "None",
-                    "State": "Placed",
-                    "Size": "Small"
-                  },
-                  "componentId": "162:62884"
-                },
-                "special": [
+                "children": [
                   {
-                    "r": 2,
-                    "c": 4,
-                    "id": "162:102004",
+                    "type": "INSTANCE",
+                    "id": "162:101966",
+                    "name": "Zumpo/Gomoku board",
+                    "x": 0,
+                    "y": 0,
+                    "w": 350,
+                    "h": 350,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Gomoku board",
                     "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
+                      "Layout": "Phone"
                     },
-                    "componentId": "162:62889",
-                    "name": "Stone I9"
+                    "componentId": "162:62938"
                   },
                   {
-                    "r": 4,
-                    "c": 4,
-                    "id": "162:102006",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
+                    "type": "GRID",
+                    "rows": 6,
+                    "cols": 6,
+                    "count": 17,
+                    "kind": "Zumpo/Stone",
+                    "firstId": "162:102003",
+                    "pitch": [
+                      22,
+                      22
+                    ],
+                    "holes": 19,
+                    "cell": {
+                      "type": "INSTANCE",
+                      "name": "Stone H8",
+                      "w": "$Zumpo · UI:space/18",
+                      "h": "$Zumpo · UI:space/18",
+                      "component": "Zumpo/Stone",
+                      "variant": {
+                        "Color": "Black",
+                        "Mark": "None",
+                        "State": "Placed",
+                        "Size": "Small"
+                      },
+                      "componentId": "162:62884"
                     },
-                    "componentId": "162:62889",
-                    "name": "Stone I7"
-                  },
-                  {
-                    "r": 5,
-                    "c": 1,
-                    "id": "162:102008",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62889",
-                    "name": "Stone F6"
-                  },
-                  {
-                    "r": 3,
-                    "c": 5,
-                    "id": "162:102010",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62889",
-                    "name": "Stone J8"
-                  },
-                  {
-                    "r": 5,
-                    "c": 2,
-                    "id": "162:102012",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62889",
-                    "name": "Stone G6"
-                  },
-                  {
-                    "r": 0,
-                    "c": 2,
-                    "id": "162:102014",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62889",
-                    "name": "Stone G11"
-                  },
-                  {
-                    "r": 4,
-                    "c": 3,
-                    "id": "162:102016",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "None",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62889",
-                    "name": "Stone H7"
-                  },
-                  {
-                    "r": 3,
-                    "c": 0,
-                    "id": "162:102018",
-                    "variant": {
-                      "Color": "White",
-                      "Mark": "Last",
-                      "State": "Placed",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62890",
-                    "name": "Stone E8"
-                  },
-                  {
-                    "r": 2,
-                    "c": 0,
-                    "id": "162:102020",
-                    "variant": {
-                      "Color": "Black",
-                      "Mark": "None",
-                      "State": "Ghost",
-                      "Size": "Small"
-                    },
-                    "componentId": "162:62888",
-                    "name": "Faint stone E9"
+                    "special": [
+                      {
+                        "r": 2,
+                        "c": 4,
+                        "id": "162:102004",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone I9"
+                      },
+                      {
+                        "r": 4,
+                        "c": 4,
+                        "id": "162:102006",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone I7"
+                      },
+                      {
+                        "r": 5,
+                        "c": 1,
+                        "id": "162:102008",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone F6"
+                      },
+                      {
+                        "r": 3,
+                        "c": 5,
+                        "id": "162:102010",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone J8"
+                      },
+                      {
+                        "r": 5,
+                        "c": 2,
+                        "id": "162:102012",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone G6"
+                      },
+                      {
+                        "r": 0,
+                        "c": 2,
+                        "id": "162:102014",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone G11"
+                      },
+                      {
+                        "r": 4,
+                        "c": 3,
+                        "id": "162:102016",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "None",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62889",
+                        "name": "Stone H7"
+                      },
+                      {
+                        "r": 3,
+                        "c": 0,
+                        "id": "162:102018",
+                        "variant": {
+                          "Color": "White",
+                          "Mark": "Last",
+                          "State": "Placed",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62890",
+                        "name": "Stone E8"
+                      },
+                      {
+                        "r": 2,
+                        "c": 0,
+                        "id": "162:102020",
+                        "variant": {
+                          "Color": "Black",
+                          "Mark": "None",
+                          "State": "Ghost",
+                          "Size": "Small"
+                        },
+                        "componentId": "162:62888",
+                        "name": "Faint stone E9"
+                      }
+                    ]
                   }
                 ]
               }
@@ -450,36 +464,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "162:101884",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "162:101885",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

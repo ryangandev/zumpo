@@ -295,6 +295,14 @@ Code differs from Figma on purpose in a few places:
   A drawing only shown, as the one Doodle Chain's describe step works from, has no such floor, so that step fits at 1280 × 720 too.
   Doodle Chain's drawing step at 1280 × 720 scrolls about 47 px on purpose: its turn bar and its toolbar each take two lines beside the side column, and a sheet to draw on smaller than half its column would leave too little to draw on; at 1440 × 900 it fits.
 - A room in play fits a 1440 × 900 window: its board, or its sheet, is scaled down to end inside it, as Daily Word's and Code Breaker's are with their keys; Figma's room frames in play (D04 to D12, DW07, CB09, DC07 and DC08) hug their content, 956 to 1098 px tall and DC07 1152 px, and draw every board at full size.
+- Every phone room and solo frame in play is drawn at 390 x 844, one screen with the page's 12 px padding and gap, as the code fits them (T11 to SN12, DW12 to CB20, GM17 to GM19, MS05, HU10, HU11, MO07 to MO19, LD13 to LD15, DC17 to DC19).
+  Where the code scrolls inside that screen, Figma clips the top of the list instead and keeps the newest at the foot: Liar's Dice's other cups and bids, the chain in Doodle Chain's reveal, and Draw & Guess's recent chat.
+  Where a board is scaled to the room it has, Figma draws the size the code lands on at 390 x 844; Code Breaker's board is the Compact one down to 0.75 and the Small one below that.
+- A phone's turn bar scales its main line down to fit one line, which Figma cannot draw: DC16 to DC18 and DW12 show the ellipsis where the code shows the whole line smaller.
+- Minesweeper's round results lie over the foot of the board on a phone (MO13, MO19), up to 60% of the stage on the Menu lift shadow, as Draw & Guess's do; the minefield keeps its place under them.
+- A phone's Doodle Chain composer keeps the done row's 72 px under the field in both of its states, so Figma's composer is 24 px taller there than the Chain composer component, whose row is 48.
+- Code Breaker's daily results (CB17) are a solo page on a phone: the result card, then the turn bar, board and the two panels, with no tabs and without the Guesses row the room's Final scores card has.
+
 - A short screen wider than a phone, 500 px tall or less, as a phone turned on its side is, takes the Turn bar's Phone row, which Figma draws only at phone widths, and a game in play sits 12 px from the header.
   The home page's hero takes MO01's shorter copy and Title-size heading there too, so the whole of it and the game filters are in the first screen.
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact, one under the other, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.

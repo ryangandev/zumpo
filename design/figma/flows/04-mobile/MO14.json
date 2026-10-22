@@ -14,19 +14,16 @@
     "x": 530,
     "y": 6567,
     "w": 390,
-    "h": 1108,
-    "hSize": "hug",
+    "h": 844,
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -66,6 +63,61 @@
             "path": ".",
             "height": 34,
             "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "177:83460",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "312",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "276",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "198",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "144",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
           }
         ]
       },
@@ -121,7 +173,7 @@
         "id": "9:11521",
         "name": "Horizontal board viewport",
         "w": 350,
-        "h": 764,
+        "h": 562,
         "fills": [
           "$Zumpo · UI:color/paper"
         ],
@@ -2892,36 +2944,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "9:13461",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "9:13462",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

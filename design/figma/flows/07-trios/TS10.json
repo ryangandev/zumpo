@@ -136,7 +136,7 @@
                 },
                 {
                   "type": "FRAME",
-                  "id": "163:62968",
+                  "id": "I79:88756;35:13433;163:62987",
                   "name": "More options",
                   "w": 496,
                   "h": 48,
@@ -150,7 +150,7 @@
                   "children": [
                     {
                       "type": "INSTANCE",
-                      "id": "163:62970",
+                      "id": "I79:88756;35:13433;163:62988",
                       "name": "Action / More options",
                       "w": 159,
                       "h": 48,
@@ -168,7 +168,7 @@
                       },
                       "overrides": [
                         {
-                          "path": "",
+                          "path": ".",
                           "height": 48,
                           "width": 159
                         }

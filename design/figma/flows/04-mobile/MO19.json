@@ -11,19 +11,16 @@
     "x": 1020,
     "y": 8047,
     "w": 390,
-    "h": 1096,
-    "hSize": "hug",
+    "h": 844,
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -72,6 +69,75 @@
             "path": ".",
             "height": 34,
             "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "177:83413",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "58",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "24",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA / Avatar",
+            "componentProperties": {
+              "Initials": "SA",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "41",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE / Avatar",
+            "componentProperties": {
+              "Initials": "LE",
+              "Tone": "Blue"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "−164",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
           }
         ]
       },
@@ -1425,10 +1491,11 @@
         "type": "FRAME",
         "id": "96:115293",
         "name": "Round 4 results",
+        "x": 20,
+        "y": 502,
+        "absolute": true,
         "w": 350,
-        "h": 368,
-        "wSize": "fill",
-        "hSize": "hug",
+        "h": 330,
         "fills": [
           "$Zumpo · UI:color/paper"
         ],
@@ -1437,6 +1504,19 @@
         ],
         "strokeAlign": "inside",
         "radius": "$Zumpo · UI:radius/20",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B251F",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Menu lift",
+        "clip": true,
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/4",
@@ -1592,36 +1672,6 @@
                 }
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "96:115300",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "96:115301",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

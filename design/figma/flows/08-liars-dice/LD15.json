@@ -14,19 +14,16 @@
     "x": 1020,
     "y": 4350,
     "w": 390,
-    "h": 867,
-    "hSize": "hug",
+    "h": 844,
     "fills": [
       "$Zumpo · UI:color/cream"
     ],
     "clip": true,
     "layout": {
       "mode": "column",
-      "gap": "$Zumpo · UI:space/24",
+      "gap": "$Zumpo · UI:space/12",
       "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/12",
         "$Zumpo · UI:space/20"
       ],
       "strokesIncluded": true
@@ -122,211 +119,228 @@
         "id": "79:90330",
         "name": "Table",
         "w": 350,
-        "h": 523,
+        "h": 606,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/24",
+          "gap": "$Zumpo · UI:space/16",
           "strokesIncluded": true
         },
         "children": [
           {
             "type": "FRAME",
-            "id": "79:90504",
-            "name": "Other cups",
+            "id": "178:83599",
+            "name": "Ahead",
             "w": 350,
-            "h": 214,
+            "h": 522,
             "wSize": "fill",
-            "hSize": "hug",
             "clip": true,
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/8",
+              "gap": "$Zumpo · UI:space/16",
+              "justify": "center",
               "strokesIncluded": true
             },
             "children": [
-              {
-                "type": "INSTANCE",
-                "id": "79:90505",
-                "name": "Cup / Maya",
-                "w": 350,
-                "h": 66,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Cup",
-                "variant": {
-                  "State": "Default",
-                  "Dice": "Compact",
-                  "Layout": "Row"
-                },
-                "componentId": "73:81079",
-                "props": {
-                  "Name": "Maya"
-                },
-                "overrides": [
-                  {
-                    "path": "Player / Avatar",
-                    "componentProperties": {
-                      "Initials": "MA",
-                      "Tone": "Peach"
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "79:90539",
-                "name": "Cup / Ryan",
-                "w": 350,
-                "h": 66,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Cup",
-                "variant": {
-                  "State": "Default",
-                  "Dice": "Compact",
-                  "Layout": "Row"
-                },
-                "componentId": "73:81079",
-                "props": {
-                  "Detail": "2 dice",
-                  "Name": "Ryan"
-                },
-                "overrides": [
-                  {
-                    "path": "Player / Avatar",
-                    "componentProperties": {
-                      "Initials": "RG",
-                      "Tone": "Blue"
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "INSTANCE",
-                "id": "79:90563",
-                "name": "Cup / Leo",
-                "w": 350,
-                "h": 66,
-                "wSize": "fill",
-                "hSize": "hug",
-                "component": "Zumpo/Cup",
-                "variant": {
-                  "State": "Default",
-                  "Dice": "Compact",
-                  "Layout": "Row"
-                },
-                "componentId": "73:81079",
-                "props": {
-                  "Detail": "Bid five 5s"
-                }
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "79:90592",
-            "name": "The count",
-            "w": 350,
-            "h": 117,
-            "wSize": "fill",
-            "hSize": "hug",
-            "clip": true,
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/8",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "TEXT",
-                "id": "79:90593",
-                "name": "Label",
-                "w": 70,
-                "h": 20,
-                "wSize": "hug",
-                "hSize": "hug",
-                "text": "The count",
-                "textStyle": "Zumpo/Label",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ]
-              },
               {
                 "type": "FRAME",
-                "id": "79:90594",
-                "name": "Count",
+                "id": "79:90504",
+                "name": "Other cups",
                 "w": 350,
-                "h": 56,
+                "h": 214,
                 "wSize": "fill",
                 "hSize": "hug",
                 "clip": true,
                 "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/12",
-                  "wrap": true,
-                  "crossGap": "$Zumpo · UI:space/12",
-                  "align": "center",
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "79:90505",
+                    "name": "Cup / Maya",
+                    "w": 350,
+                    "h": 66,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Cup",
+                    "variant": {
+                      "State": "Default",
+                      "Dice": "Compact",
+                      "Layout": "Row"
+                    },
+                    "componentId": "73:81079",
+                    "props": {
+                      "Name": "Maya"
+                    },
+                    "overrides": [
+                      {
+                        "path": "Player / Avatar",
+                        "componentProperties": {
+                          "Initials": "MA",
+                          "Tone": "Peach"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "79:90539",
+                    "name": "Cup / Ryan",
+                    "w": 350,
+                    "h": 66,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Cup",
+                    "variant": {
+                      "State": "Default",
+                      "Dice": "Compact",
+                      "Layout": "Row"
+                    },
+                    "componentId": "73:81079",
+                    "props": {
+                      "Detail": "2 dice",
+                      "Name": "Ryan"
+                    },
+                    "overrides": [
+                      {
+                        "path": "Player / Avatar",
+                        "componentProperties": {
+                          "Initials": "RG",
+                          "Tone": "Blue"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "79:90563",
+                    "name": "Cup / Leo",
+                    "w": 350,
+                    "h": 66,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "component": "Zumpo/Cup",
+                    "variant": {
+                      "State": "Default",
+                      "Dice": "Compact",
+                      "Layout": "Row"
+                    },
+                    "componentId": "73:81079",
+                    "props": {
+                      "Detail": "Bid five 5s"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "79:90592",
+                "name": "The count",
+                "w": 350,
+                "h": 117,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
                   "strokesIncluded": true
                 },
                 "children": [
                   {
                     "type": "TEXT",
-                    "id": "79:90595",
-                    "w": 36,
-                    "h": 30,
+                    "id": "79:90593",
+                    "name": "Label",
+                    "w": 70,
+                    "h": 20,
                     "wSize": "hug",
                     "hSize": "hug",
-                    "text": "5 ×",
-                    "textStyle": "Zumpo/Heading",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ]
-                  },
-                  {
-                    "type": "INSTANCE",
-                    "id": "79:90596",
-                    "name": "Die",
-                    "w": 56,
-                    "h": 56,
-                    "component": "Zumpo/Die",
-                    "variant": {
-                      "Face": "5",
-                      "State": "Counted",
-                      "Size": "Regular"
-                    },
-                    "componentId": "44:61193"
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "79:90602",
-                    "w": 216,
-                    "h": 25,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "text": "incl. 2 wild ones · bid was five",
-                    "textStyle": "Zumpo/Body",
+                    "text": "The count",
+                    "textStyle": "Zumpo/Label",
                     "fills": [
                       "$Zumpo · UI:color/muted"
                     ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "79:90594",
+                    "name": "Count",
+                    "w": 350,
+                    "h": 56,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "79:90595",
+                        "w": 36,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "5 ×",
+                        "textStyle": "Zumpo/Heading",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "79:90596",
+                        "name": "Die",
+                        "w": 56,
+                        "h": 56,
+                        "component": "Zumpo/Die",
+                        "variant": {
+                          "Face": "5",
+                          "State": "Counted",
+                          "Size": "Regular"
+                        },
+                        "componentId": "44:61193"
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "79:90602",
+                        "w": 216,
+                        "h": 25,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "incl. 2 wild ones · bid was five",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "79:90605",
+                    "name": "Verdict",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Leo’s bid stands, so you lose a die",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ],
+                    "autoResize": "height"
                   }
                 ]
-              },
-              {
-                "type": "TEXT",
-                "id": "79:90605",
-                "name": "Verdict",
-                "w": 350,
-                "h": 25,
-                "wSize": "fill",
-                "hSize": "hug",
-                "text": "Leo’s bid stands, so you lose a die",
-                "textStyle": "Zumpo/Body",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
-                ],
-                "autoResize": "height"
               }
             ]
           },
@@ -335,13 +349,13 @@
             "id": "79:90606",
             "name": "Your cup",
             "w": 350,
-            "h": 144,
+            "h": 68,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/20",
+              "gap": "$Zumpo · UI:space/12",
               "strokesIncluded": true
             },
             "children": [
@@ -350,28 +364,22 @@
                 "id": "79:90607",
                 "name": "Cup / Sam",
                 "w": 350,
-                "h": 144,
+                "h": 68,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Cup",
                 "variant": {
                   "State": "Lost",
-                  "Dice": "Regular",
-                  "Layout": "Stack"
+                  "Dice": "Compact",
+                  "Layout": "Row"
                 },
-                "componentId": "44:62426",
+                "componentId": "73:81107",
                 "props": {
                   "Detail": "Lost a die",
                   "You": true,
                   "Name": "Sam"
                 },
                 "overrides": [
-                  {
-                    "path": ".",
-                    "counterAxisSizingMode": "FIXED",
-                    "height": 144,
-                    "width": 350
-                  },
                   {
                     "path": "Player / Avatar",
                     "componentProperties": {
@@ -382,36 +390,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "79:90374",
-        "name": "Footer",
-        "w": 350,
-        "h": 18,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "gap": "$Zumpo · UI:space/12",
-          "justify": "space_between",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "TEXT",
-            "id": "79:90375",
-            "w": 350,
-            "h": 18,
-            "hSize": "hug",
-            "text": "A little play. Good company.",
-            "textStyle": "Zumpo/Small",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
           }
         ]
       }

@@ -14,7 +14,7 @@
     "x": 4100,
     "y": 4350,
     "w": 390,
-    "h": 1846,
+    "h": 1753,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Maya’s room · Code #12",
+          "Phase": "Code #12",
           "Game": "Code Breaker"
         },
         "overrides": [
@@ -60,23 +60,201 @@
         ]
       },
       {
-        "type": "INSTANCE",
-        "id": "162:107919",
-        "name": "Zumpo/Mobile tabs",
-        "visible": false,
+        "type": "FRAME",
+        "id": "162:108242",
+        "name": "Final scores",
         "w": 350,
-        "h": 34,
+        "h": 267,
+        "wSize": "fill",
         "hSize": "hug",
-        "component": "Zumpo/Mobile tabs",
-        "variant": {
-          "View": "Board"
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
         },
-        "componentId": "9:416",
-        "overrides": [
+        "children": [
           {
-            "path": ".",
-            "height": 34,
-            "width": 350
+            "type": "FRAME",
+            "id": "162:108243",
+            "name": "Result heading",
+            "w": 300,
+            "h": 96,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "162:108244",
+                "w": 300,
+                "h": 30,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Cracked in 6.",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "162:108245",
+                "w": 300,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "The code was 4071. That makes 5 days in a row.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:108246",
+            "name": "Ranking",
+            "w": 300,
+            "h": 41,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "162:108250",
+                "name": "Stat / Next word in",
+                "w": 300,
+                "h": 41,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    "$Zumpo · UI:space/8",
+                    0
+                  ],
+                  "justify": "space_between",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "162:108251",
+                    "w": 94,
+                    "h": 25,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Next code in",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "162:108252",
+                    "w": 70,
+                    "h": 24,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "09:41:18",
+                    "textStyle": "Zumpo/Number",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "162:108253",
+            "name": "Actions",
+            "w": 258,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "162:108254",
+                "name": "Action / Share",
+                "w": 108,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=copy",
+                  "Show icon": true,
+                  "Label": "Share"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 108
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "162:108255",
+                "name": "Action / Practice word",
+                "w": 138,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=link",
+                  "Label": "Practice code"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 138
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -85,7 +263,7 @@
         "id": "162:107920",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 96,
+        "h": 76,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -96,16 +274,20 @@
         "componentId": "27:22192",
         "props": {
           "Countdown": false,
-          "Main": "Cracked it in 6!",
+          "Main": "You cracked 4071",
           "Category": false,
-          "Meta": "A new code at midnight.",
-          "Label": "Daily code #12"
+          "Meta": "",
+          "Label": "A new code at midnight."
         },
         "overrides": [
           {
             "path": ".",
-            "height": 96,
+            "height": 76,
             "width": 350
+          },
+          {
+            "path": "Bottom",
+            "visible": false
           },
           {
             "path": "Bottom / Category",
@@ -135,18 +317,14 @@
       {
         "type": "FRAME",
         "id": "162:107921",
-        "name": "Table",
+        "name": "Board",
         "w": 350,
-        "h": 1560,
+        "h": 552,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/20",
-          "pad": [
-            "$Zumpo · UI:space/8",
-            0
-          ],
           "align": "center",
           "strokesIncluded": true
         },
@@ -358,253 +536,24 @@
                 }
               }
             ]
-          },
-          {
-            "type": "FRAME",
-            "id": "162:108242",
-            "name": "Final scores",
-            "w": 350,
-            "h": 328,
-            "wSize": "fill",
-            "hSize": "hug",
-            "fills": [
-              "$Zumpo · UI:color/paper"
-            ],
-            "strokes": [
-              "$Zumpo · UI:color/line"
-            ],
-            "strokeAlign": "inside",
-            "radius": "$Zumpo · UI:radius/24",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
-              "pad": "$Zumpo · UI:space/24",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
-                "type": "FRAME",
-                "id": "162:108243",
-                "name": "Result heading",
-                "w": 300,
-                "h": 100,
-                "wSize": "fill",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/8",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "TEXT",
-                    "id": "162:108244",
-                    "w": 300,
-                    "h": 42,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "Cracked in 6.",
-                    "textStyle": "Zumpo/Title",
-                    "fills": [
-                      "$Zumpo · UI:color/ink"
-                    ],
-                    "autoResize": "height"
-                  },
-                  {
-                    "type": "TEXT",
-                    "id": "162:108245",
-                    "w": 300,
-                    "h": 50,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "text": "The code was 4071. That makes 5 days in a row.",
-                    "textStyle": "Zumpo/Body",
-                    "fills": [
-                      "$Zumpo · UI:color/muted"
-                    ],
-                    "autoResize": "height"
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
-                "id": "162:108246",
-                "name": "Ranking",
-                "w": 300,
-                "h": 82,
-                "wSize": "fill",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "column",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "FRAME",
-                    "id": "162:108247",
-                    "name": "Stat / Guesses",
-                    "w": 300,
-                    "h": 41,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "pad": [
-                        "$Zumpo · UI:space/8",
-                        0
-                      ],
-                      "justify": "space_between",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "162:108248",
-                        "w": 64,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Guesses",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "162:108249",
-                        "w": 57,
-                        "h": 24,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "6 of 10",
-                        "textStyle": "Zumpo/Number",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "162:108250",
-                    "name": "Stat / Next word in",
-                    "w": 300,
-                    "h": 41,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "pad": [
-                        "$Zumpo · UI:space/8",
-                        0
-                      ],
-                      "justify": "space_between",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "162:108251",
-                        "w": 94,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Next code in",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "162:108252",
-                        "w": 70,
-                        "h": 24,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "09:41:18",
-                        "textStyle": "Zumpo/Number",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "FRAME",
-                "id": "162:108253",
-                "name": "Actions",
-                "w": 258,
-                "h": 48,
-                "wSize": "hug",
-                "hSize": "hug",
-                "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/12",
-                  "align": "center",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "INSTANCE",
-                    "id": "162:108254",
-                    "name": "Action / Share",
-                    "w": 108,
-                    "h": 48,
-                    "wSize": "hug",
-                    "component": "Zumpo/Button",
-                    "variant": {
-                      "Style": "Primary",
-                      "State": "Default"
-                    },
-                    "componentId": "4:15",
-                    "props": {
-                      "Icon": "Zumpo/Icon / Glyph=copy",
-                      "Show icon": true,
-                      "Label": "Share"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 48,
-                        "width": 108
-                      }
-                    ]
-                  },
-                  {
-                    "type": "INSTANCE",
-                    "id": "162:108255",
-                    "name": "Action / Practice word",
-                    "w": 138,
-                    "h": 48,
-                    "wSize": "hug",
-                    "component": "Zumpo/Button",
-                    "variant": {
-                      "Style": "Secondary",
-                      "State": "Default"
-                    },
-                    "componentId": "4:18",
-                    "props": {
-                      "Icon": "Zumpo/Icon / Glyph=link",
-                      "Label": "Practice code"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 48,
-                        "width": 138
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "178:83618",
+        "name": "Panels",
+        "w": 350,
+        "h": 620,
+        "wSize": "fill",
+        "hSize": "hug",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "strokesIncluded": true
+        },
+        "children": [
           {
             "type": "INSTANCE",
             "id": "162:108256",
