@@ -110,6 +110,7 @@ export function useFitHeight<T extends HTMLElement>(
     if (held && before) most = before.scale;
     const measure = () => {
       element.style.removeProperty('zoom');
+      element.style.removeProperty('--fit-scale');
       const oneColumn = window.matchMedia(ONE_COLUMN).matches;
       element.toggleAttribute('data-fit-height', !oneColumn);
       if (oneColumn) return;
@@ -118,7 +119,11 @@ export function useFitHeight<T extends HTMLElement>(
         const { innerWidth: width, innerHeight: height } = window;
         kept.set({ scale: most, width, height });
       }
-      if (most < 1) element.style.setProperty('zoom', String(most));
+      if (most < 1) {
+        element.style.setProperty('zoom', String(most));
+        // Focus rings inside keep their on-screen width (app.css).
+        element.style.setProperty('--fit-scale', String(most));
+      }
     };
     const refit = () => {
       most = 1;
@@ -147,6 +152,7 @@ export function useFitHeight<T extends HTMLElement>(
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', refit);
       element.style.removeProperty('zoom');
+      element.style.removeProperty('--fit-scale');
       element.removeAttribute('data-fit-height');
     };
   }, [enabled, room, resume, kept]);

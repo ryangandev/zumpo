@@ -168,6 +168,13 @@ describe('useFitHeight', () => {
     expect(zoom).toBeLessThanOrEqual(0.579);
   });
 
+  it('tells what is inside its scale, so a focus ring keeps its width on screen', () => {
+    render(<Board />);
+    expect(board().style.getPropertyValue('--fit-scale')).toBe(
+      board().style.zoom,
+    );
+  });
+
   it('makes no room for a longer column of cards beside it, which scrolls', () => {
     render(<BesideCards />);
     const zoom = zoomOf(board());
@@ -183,6 +190,7 @@ describe('useFitHeight', () => {
     setWindowHeight(1200);
     render(<Board />);
     expect(board().style.zoom).toBe('');
+    expect(board().style.getPropertyValue('--fit-scale')).toBe('');
   });
 
   it('keeps its scale as the board gets shorter, so it never grows mid-game', () => {
