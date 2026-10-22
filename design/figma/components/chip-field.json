@@ -4,7 +4,7 @@
   "id": "95:113407",
   "type": "COMPONENT_SET",
   "key": "aab11b5ddb71a99bc078f3b406886bb4aab767ff",
-  "description": "A labelled set of Toggle chips, any number on: a room's word categories. Action is a text button that turns every chip on or off (Choose all, Clear all). Error: none is on; the helper says so in danger red, as Input's does.",
+  "description": "A labelled set of Toggle chips, any number on. Action is a text button that turns every chip on or off (Choose all, Clear all). Error: none is on; the helper says so in danger red, as Input’s does. No screen uses it: a Draw & Guess game draws its one word category at random, with nothing to choose.",
   "properties": {
     "Label": {
       "type": "text",

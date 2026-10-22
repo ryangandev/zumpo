@@ -1,0 +1,498 @@
+{
+  "format": 1,
+  "code": "PH06",
+  "title": "Liar's Dice room · your bid · 390 × 844",
+  "id": "163:65379",
+  "section": "15 / Phone in play",
+  "reviewNotes": [
+    "PH06 · Your cup and the bid picker sit at the foot; the others' cups and the round's bids scroll in the space above them (drawn here clipped where the list goes on)."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "163:65379",
+    "name": "PH06 / Liar's Dice room · your bid · 390 × 844",
+    "x": 2670,
+    "y": 200,
+    "w": 390,
+    "h": 844,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/12",
+      "pad": [
+        "$Zumpo · UI:space/12",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "163:65380",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Phase": "Round 3",
+          "Game": "Liar’s Dice"
+        }
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65381",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65444",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759"
+      },
+      {
+        "type": "INSTANCE",
+        "id": "163:65382",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 96,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Main": "Raise, or call Liar",
+          "Category": false,
+          "Meta": "Leo bid five 5s",
+          "Label": "Your turn"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 96,
+            "width": 350
+          },
+          {
+            "path": "Bottom / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Show label": false,
+              "Label": "to bid",
+              "Time": "0:12",
+              "Tone": "Running"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "163:65383",
+        "name": "Table",
+        "w": 350,
+        "h": 680,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "163:65384",
+            "name": "Other cups",
+            "w": 350,
+            "h": 40,
+            "wSize": "fill",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "163:65385",
+                "name": "Cup / Maya",
+                "w": 350,
+                "h": 66,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Cup",
+                "variant": {
+                  "State": "Default",
+                  "Dice": "Compact",
+                  "Layout": "Row"
+                },
+                "componentId": "73:81079",
+                "props": {
+                  "Name": "Maya"
+                },
+                "overrides": [
+                  {
+                    "path": "Player / Avatar",
+                    "componentProperties": {
+                      "Initials": "MA",
+                      "Tone": "Peach"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "163:65386",
+                "name": "Cup / Ryan",
+                "w": 350,
+                "h": 66,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Cup",
+                "variant": {
+                  "State": "Default",
+                  "Dice": "Compact",
+                  "Layout": "Row"
+                },
+                "componentId": "73:81079",
+                "props": {
+                  "Detail": "2 dice",
+                  "Name": "Ryan"
+                },
+                "overrides": [
+                  {
+                    "path": "Player / Avatar",
+                    "componentProperties": {
+                      "Initials": "RG",
+                      "Tone": "Blue"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "163:65387",
+                "name": "Cup / Leo",
+                "w": 350,
+                "h": 66,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Cup",
+                "variant": {
+                  "State": "Default",
+                  "Dice": "Compact",
+                  "Layout": "Row"
+                },
+                "componentId": "73:81079"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "163:65388",
+            "name": "Bids",
+            "w": 350,
+            "h": 184,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/8",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "163:65389",
+                "name": "Label",
+                "w": 103,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "Bids this round",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "163:65390",
+                "name": "Bid list",
+                "w": 350,
+                "h": 156,
+                "wSize": "fill",
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "wrap": true,
+                  "crossGap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65391",
+                    "name": "Bid / Ryan 2 × 2",
+                    "w": 134,
+                    "h": 46,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Earlier"
+                    },
+                    "componentId": "44:61992",
+                    "props": {
+                      "Count": "2",
+                      "Face": "Zumpo/Die / Face=2, State=Default, Size=Compact",
+                      "Name": "Ryan"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 46,
+                        "width": 134
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65392",
+                    "name": "Bid / Leo 2 × 5",
+                    "w": 125,
+                    "h": 46,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Earlier"
+                    },
+                    "componentId": "44:61992",
+                    "props": {
+                      "Count": "2"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 46,
+                        "width": 125
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65393",
+                    "name": "Bid / You 3 × 5",
+                    "w": 125,
+                    "h": 46,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Earlier"
+                    },
+                    "componentId": "44:61992",
+                    "props": {
+                      "Count": "3",
+                      "Name": "You"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 46,
+                        "width": 125
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65394",
+                    "name": "Bid / Maya 3 × 6",
+                    "w": 137,
+                    "h": 46,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Earlier"
+                    },
+                    "componentId": "44:61992",
+                    "props": {
+                      "Count": "3",
+                      "Face": "Zumpo/Die / Face=6, State=Default, Size=Compact",
+                      "Name": "Maya"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 46,
+                        "width": 137
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65395",
+                    "name": "Bid / Ryan 4 × 5",
+                    "w": 135,
+                    "h": 46,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Earlier"
+                    },
+                    "componentId": "44:61992",
+                    "props": {
+                      "Count": "4",
+                      "Name": "Ryan"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 46,
+                        "width": 135
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "163:65396",
+                    "name": "Bid / Leo 5 × 5",
+                    "w": 128,
+                    "h": 48,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Bid",
+                    "variant": {
+                      "Kind": "Latest"
+                    },
+                    "componentId": "44:61982"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "163:65397",
+            "name": "Your cup",
+            "w": 350,
+            "h": 408,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/20",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "163:65398",
+                "name": "Cup / Sam",
+                "w": 350,
+                "h": 144,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Cup",
+                "variant": {
+                  "State": "Turn",
+                  "Dice": "Regular",
+                  "Layout": "Stack"
+                },
+                "componentId": "44:62389",
+                "props": {
+                  "You": true,
+                  "Detail": "Your turn",
+                  "Name": "Sam"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "counterAxisSizingMode": "FIXED",
+                    "height": 144,
+                    "width": 350
+                  },
+                  {
+                    "path": "Player / Avatar",
+                    "componentProperties": {
+                      "Initials": "SA",
+                      "Tone": "Sand"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "163:65399",
+                "name": "Zumpo/Bid picker",
+                "w": 350,
+                "h": 244,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Bid picker",
+                "variant": {
+                  "Layout": "Phone"
+                },
+                "componentId": "44:62838",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 244,
+                    "width": 350
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

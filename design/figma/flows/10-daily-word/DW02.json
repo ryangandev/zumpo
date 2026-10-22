@@ -167,7 +167,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "0:39",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -445,11 +445,11 @@
             "id": "79:98752",
             "name": "Run sidebar",
             "w": 344,
-            "h": 532,
+            "h": 524,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [

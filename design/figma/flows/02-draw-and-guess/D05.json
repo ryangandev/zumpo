@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 4061,
     "w": 1440,
-    "h": 996,
+    "h": 950,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -81,7 +81,7 @@
         "id": "9:1622",
         "name": "Game & room",
         "w": 1312,
-        "h": 826,
+        "h": 780,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -94,11 +94,12 @@
             "id": "9:1623",
             "name": "Game stage",
             "w": 944,
-            "h": 826,
+            "h": 780,
             "hSize": "hug",
             "layout": {
               "mode": "column",
               "gap": "$Zumpo · UI:space/16",
+              "align": "center",
               "strokesIncluded": true
             },
             "children": [
@@ -126,8 +127,8 @@
                 "type": "FRAME",
                 "id": "27:18231",
                 "name": "Canvas",
-                "w": 944,
-                "h": 708,
+                "w": 883,
+                "h": 662,
                 "fills": [
                   "$Zumpo · UI:color/white"
                 ],
@@ -226,6 +227,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

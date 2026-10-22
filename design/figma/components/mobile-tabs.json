@@ -4,7 +4,7 @@
   "id": "9:16089",
   "type": "COMPONENT_SET",
   "key": "305aebac6b9c948d573b862b514c85c200f115f3",
-  "description": "Zumpo/Mobile tabs: a phone room shows one of board, players and chat at a time. Chat unread marks lines that arrived while another tab was open (Unread count, 9+ at most); opening Chat clears it.",
+  "description": "Zumpo/Mobile tabs: a phone room shows one of board, players and chat at a time. Chat unread marks lines that arrived while another tab was open (Unread count, 9+ at most); opening Chat clears it. Board turn marks the Board tab \"Your turn\" (lime) while another tab is open and it is the viewer's go; opening Board clears it.",
   "properties": {
     "Chat unread": {
       "type": "boolean",
@@ -13,6 +13,10 @@
     "Unread count": {
       "type": "text",
       "default": "3"
+    },
+    "Board turn": {
+      "type": "boolean",
+      "default": false
     },
     "View": {
       "type": "variant",
@@ -79,6 +83,50 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/white"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:75829",
+                "name": "Turn",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Board turn"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/lime"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "166:75830",
+                    "name": "Label",
+                    "w": 52,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Your turn",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
                 ]
               }
             ]
@@ -257,6 +305,50 @@
                 "fills": [
                   "$Zumpo · UI:color/ink"
                 ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:75831",
+                "name": "Turn",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Board turn"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/lime"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "166:75832",
+                    "name": "Label",
+                    "w": 52,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Your turn",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -433,6 +525,50 @@
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:75833",
+                "name": "Turn",
+                "visible": false,
+                "w": 20,
+                "h": 18,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Board turn"
+                },
+                "fills": [
+                  "$Zumpo · Primitives:color/lime"
+                ],
+                "radius": "$Zumpo · UI:radius/999",
+                "clip": true,
+                "layout": {
+                  "mode": "row",
+                  "pad": [
+                    0,
+                    "$Zumpo · UI:space/6"
+                  ],
+                  "justify": "center",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "166:75834",
+                    "name": "Label",
+                    "w": 52,
+                    "h": 18,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Your turn",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · Primitives:color/ink"
+                    ]
+                  }
                 ]
               }
             ]

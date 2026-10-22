@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 150,
     "w": 1440,
-    "h": 1132,
+    "h": 946,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -104,7 +104,7 @@
         "id": "40:51010",
         "name": "Board & room",
         "w": 1312,
-        "h": 962,
+        "h": 776,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -117,7 +117,7 @@
             "id": "40:51011",
             "name": "Board stage",
             "w": 944,
-            "h": 962,
+            "h": 678,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -126,316 +126,48 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "40:51012",
-                "name": "Final scores",
+                "type": "INSTANCE",
+                "id": "166:71607",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 376,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "",
+                  "Main": "All 18 pairs found",
+                  "Category": false,
+                  "Label": "Turn 29"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "40:51013",
-                    "name": "Result heading",
-                    "w": 396,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "40:51014",
-                        "w": 348,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "18 pairs in 29 turns.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "40:51015",
-                        "w": 396,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "A new best on this device. Your last best was 31 turns.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "40:51016",
-                    "name": "Ranking",
-                    "w": 862,
-                    "h": 123,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "40:51168",
-                        "name": "Stat / Time",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:51169",
-                            "w": 37,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Time",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:51170",
-                            "w": 37,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "2:47",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "40:51171",
-                        "name": "Stat / Turns",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:51172",
-                            "w": 41,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Turns",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:51173",
-                            "w": 22,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "29",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "40:51174",
-                        "name": "Stat / Longest streak",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "40:51175",
-                            "w": 108,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Longest streak",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "40:51176",
-                            "w": 131,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "3 pairs in a row",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "40:51029",
-                    "name": "Actions",
-                    "w": 468,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "40:51030",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "163:65942",
-                        "name": "Action / Change board",
-                        "w": 139,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Label": "Change board"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 139
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "40:51031",
-                        "name": "Action / Challenge a friend",
-                        "w": 195,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Challenge a friend"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 195
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "2:47",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -1370,14 +1102,219 @@
             "id": "40:51132",
             "name": "Game sidebar",
             "w": 344,
-            "h": 444,
+            "h": 776,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71572",
+                "name": "Result",
+                "w": 344,
+                "h": 324,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "A new best on this device. Your last best was 31 turns.",
+                  "Title": "18 pairs in 29 turns."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 324,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71576",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 82,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71572;35:13441;166:71585",
+                          "name": "Stat / Time",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71572;35:13441;166:71586",
+                              "w": 37,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Time",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71572;35:13441;166:71587",
+                              "w": 37,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "2:47",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:71572;35:13441;166:71588",
+                          "name": "Stat / Longest streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71572;35:13441;166:71589",
+                              "w": 108,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Longest streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:71572;35:13441;166:71590",
+                              "w": 131,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "3 pairs in a row",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FRAME",
+                      "id": "166:71591",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71572;35:13441;166:71595",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71572;35:13441;166:71596",
+                          "name": "Action / Change board",
+                          "w": 139,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Label": "Change board"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 139
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "40:51344",

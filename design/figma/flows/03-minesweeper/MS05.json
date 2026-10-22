@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 10000,
     "w": 390,
-    "h": 677,
+    "h": 697,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -85,7 +85,7 @@
         "id": "40:60433",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -97,17 +97,17 @@
         "props": {
           "Main": "7 mines left",
           "Category": false,
-          "Meta": "Flag mode: a tap flags",
+          "Meta": "Flag is on: tap to flag",
           "Label": "Clear the board"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -116,12 +116,12 @@
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
               "Time": "0:37",
-              "Tone": "Waiting"
+              "Tone": "Info"
             }
           }
         ]

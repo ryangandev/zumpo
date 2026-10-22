@@ -14,7 +14,7 @@
     "x": 40,
     "y": 1542,
     "w": 1440,
-    "h": 1351,
+    "h": 1097,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,7 +70,7 @@
         "id": "9:1083",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 1125,
+        "h": 871,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -88,7 +88,7 @@
             "id": "35:13541",
             "name": "New Draw & Guess room",
             "w": 560,
-            "h": 1013,
+            "h": 759,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -102,7 +102,7 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 1013,
+                "height": 759,
                 "width": 560
               }
             ],
@@ -134,23 +134,6 @@
                       "width": 496
                     }
                   ]
-                },
-                {
-                  "type": "INSTANCE",
-                  "id": "I35:13541;35:13433;95:113981",
-                  "name": "Zumpo/Chip field",
-                  "w": 496,
-                  "h": 230,
-                  "hSize": "hug",
-                  "component": "Zumpo/Chip field",
-                  "variant": {
-                    "State": "Error"
-                  },
-                  "componentId": "95:113326",
-                  "props": {
-                    "Action": "Choose all",
-                    "Helper": "Pick at least one category."
-                  }
                 },
                 {
                   "type": "FRAME",

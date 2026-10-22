@@ -1,348 +1,488 @@
 {
   "format": 1,
   "name": "Zumpo/Scoreboard",
-  "id": "9:320",
-  "type": "COMPONENT",
-  "key": "ec460730e9310a5489eaa9c829e7c6f4466e1db1",
-  "description": "The room’s players, sorted by score, as Zumpo/Player rows (up to 8; hide the unused ones). Count is players / seats.",
-  "node": {
-    "type": "COMPONENT",
-    "id": "9:320",
-    "name": "Zumpo/Scoreboard",
-    "x": 424,
-    "y": 2088,
-    "w": 344,
-    "h": 304,
-    "hSize": "hug",
-    "fills": [
-      "$Zumpo · UI:color/paper"
-    ],
-    "strokes": [
-      "$Zumpo · UI:color/line"
-    ],
-    "strokeAlign": "inside",
-    "radius": "$Zumpo · UI:radius/24",
-    "layout": {
-      "mode": "column",
-      "gap": "$Zumpo · UI:space/4",
-      "pad": [
-        "$Zumpo · UI:space/20",
-        "$Zumpo · UI:space/16"
-      ],
-      "strokesIncluded": true
-    },
-    "children": [
-      {
-        "type": "FRAME",
-        "id": "26:10664",
-        "name": "Heading",
-        "w": 310,
-        "h": 38,
-        "wSize": "fill",
+  "id": "166:70488",
+  "type": "COMPONENT_SET",
+  "key": "8398498969efa4ffc9fa6569c2c54f10e7eb65da",
+  "description": "Zumpo/Scoreboard: the room's players, sorted by score. Folded=Yes is the Watching list beside a desktop room; a phone's Players tab keeps it open.",
+  "properties": {
+    "Folded": {
+      "type": "variant",
+      "default": "No",
+      "options": [
+        "No",
+        "Yes"
+      ]
+    }
+  },
+  "defaultVariant": "Folded=No",
+  "variants": [
+    {
+      "name": "Folded=No",
+      "id": "9:320",
+      "props": {
+        "Folded": "No"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "9:320",
+        "name": "Folded=No",
+        "w": 344,
+        "h": 304,
         "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
         "layout": {
-          "mode": "row",
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/4",
           "pad": [
-            0,
-            0,
-            "$Zumpo · UI:space/8",
-            0
+            "$Zumpo · UI:space/20",
+            "$Zumpo · UI:space/16"
           ],
-          "justify": "space_between",
-          "align": "center",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "TEXT",
-            "id": "26:10665",
-            "name": "Title",
-            "w": 87,
-            "h": 30,
-            "wSize": "hug",
+            "type": "FRAME",
+            "id": "26:10664",
+            "name": "Heading",
+            "w": 310,
+            "h": 38,
+            "wSize": "fill",
             "hSize": "hug",
-            "text": "Players",
-            "textStyle": "Zumpo/Heading",
-            "fills": [
-              "$Zumpo · UI:color/ink"
+            "layout": {
+              "mode": "row",
+              "pad": [
+                0,
+                0,
+                "$Zumpo · UI:space/8",
+                0
+              ],
+              "justify": "space_between",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "26:10665",
+                "name": "Title",
+                "w": 87,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "Players",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "26:10666",
+                "name": "Count",
+                "w": 31,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "4 / 8",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "26:10666",
-            "name": "Count",
-            "w": 31,
-            "h": 20,
-            "wSize": "hug",
-            "hSize": "hug",
-            "text": "4 / 8",
-            "textStyle": "Zumpo/Label",
-            "fills": [
-              "$Zumpo · UI:color/muted"
+            "type": "INSTANCE",
+            "id": "26:10667",
+            "name": "Player 1",
+            "w": 310,
+            "h": 52,
+            "wSize": "fill",
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Highlight"
+            },
+            "componentId": "26:10597",
+            "props": {
+              "Host": true
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 310
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "MA",
+                  "Tone": "Peach"
+                }
+              }
             ]
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10667",
-        "name": "Player 1",
-        "w": 310,
-        "h": 52,
-        "wSize": "fill",
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Highlight"
-        },
-        "componentId": "26:10597",
-        "props": {
-          "Host": true
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 310
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "MA",
-              "Tone": "Peach"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10687",
-        "name": "Player 2",
-        "w": 310,
-        "h": 52,
-        "wSize": "fill",
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "Score": "320",
-          "Name": "Ryan"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 310
+            "type": "INSTANCE",
+            "id": "26:10687",
+            "name": "Player 2",
+            "w": 310,
+            "h": 52,
+            "wSize": "fill",
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "Score": "320",
+              "Name": "Ryan"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 310
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "RG",
+                  "Tone": "Blue"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "RG",
-              "Tone": "Blue"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10708",
-        "name": "Player 3",
-        "w": 310,
-        "h": 52,
-        "wSize": "fill",
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "Score": "240",
-          "Name": "Leo"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 310
+            "type": "INSTANCE",
+            "id": "26:10708",
+            "name": "Player 3",
+            "w": 310,
+            "h": 52,
+            "wSize": "fill",
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "Score": "240",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 310
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "LE",
+                  "Tone": "Lime"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "LE",
-              "Tone": "Lime"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10729",
-        "name": "Player 4",
-        "w": 310,
-        "h": 52,
-        "wSize": "fill",
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "You": true,
-          "Score": "180",
-          "Name": "Sam"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 310
+            "type": "INSTANCE",
+            "id": "26:10729",
+            "name": "Player 4",
+            "w": 310,
+            "h": 52,
+            "wSize": "fill",
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "You": true,
+              "Score": "180",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 310
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "SA",
+                  "Tone": "Sand"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "SA",
-              "Tone": "Sand"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10750",
-        "name": "Player 5",
-        "visible": false,
-        "w": 294,
-        "h": 52,
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Highlight"
-        },
-        "componentId": "26:10597",
-        "props": {
-          "Host": true
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 294
+            "type": "INSTANCE",
+            "id": "26:10750",
+            "name": "Player 5",
+            "visible": false,
+            "w": 294,
+            "h": 52,
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Highlight"
+            },
+            "componentId": "26:10597",
+            "props": {
+              "Host": true
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 294
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "MA",
+                  "Tone": "Peach"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "MA",
-              "Tone": "Peach"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10770",
-        "name": "Player 6",
-        "visible": false,
-        "w": 294,
-        "h": 52,
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "Score": "320",
-          "Name": "Ryan"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 294
+            "type": "INSTANCE",
+            "id": "26:10770",
+            "name": "Player 6",
+            "visible": false,
+            "w": 294,
+            "h": 52,
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "Score": "320",
+              "Name": "Ryan"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 294
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "RG",
+                  "Tone": "Blue"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "RG",
-              "Tone": "Blue"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10791",
-        "name": "Player 7",
-        "visible": false,
-        "w": 294,
-        "h": 52,
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "Score": "240",
-          "Name": "Leo"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 294
+            "type": "INSTANCE",
+            "id": "26:10791",
+            "name": "Player 7",
+            "visible": false,
+            "w": 294,
+            "h": 52,
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "Score": "240",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 294
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "LE",
+                  "Tone": "Lime"
+                }
+              }
+            ]
           },
           {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "LE",
-              "Tone": "Lime"
-            }
-          }
-        ]
-      },
-      {
-        "type": "INSTANCE",
-        "id": "26:10812",
-        "name": "Player 8",
-        "visible": false,
-        "w": 294,
-        "h": 52,
-        "component": "Zumpo/Player row",
-        "variant": {
-          "State": "Default"
-        },
-        "componentId": "26:10577",
-        "props": {
-          "Status icon": false,
-          "Status": "Guessing",
-          "You": true,
-          "Score": "180",
-          "Name": "Sam"
-        },
-        "overrides": [
-          {
-            "path": ".",
-            "height": 52,
-            "width": 294
-          },
-          {
-            "path": "Avatar",
-            "componentProperties": {
-              "Initials": "SA",
-              "Tone": "Sand"
-            }
+            "type": "INSTANCE",
+            "id": "26:10812",
+            "name": "Player 8",
+            "visible": false,
+            "w": 294,
+            "h": 52,
+            "component": "Zumpo/Player row",
+            "variant": {
+              "State": "Default"
+            },
+            "componentId": "26:10577",
+            "props": {
+              "Status icon": false,
+              "Status": "Guessing",
+              "You": true,
+              "Score": "180",
+              "Name": "Sam"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 52,
+                "width": 294
+              },
+              {
+                "path": "Avatar",
+                "componentProperties": {
+                  "Initials": "SA",
+                  "Tone": "Sand"
+                }
+              }
+            ]
           }
         ]
       }
-    ]
-  }
+    },
+    {
+      "name": "Folded=Yes",
+      "id": "166:70489",
+      "props": {
+        "Folded": "Yes"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "166:70489",
+        "name": "Folded=Yes",
+        "w": 344,
+        "h": 72,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/4",
+          "pad": [
+            "$Zumpo · UI:space/20",
+            "$Zumpo · UI:space/16"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:70490",
+            "name": "Heading",
+            "w": 310,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "166:70491",
+                "name": "Title",
+                "w": 112,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "Watching",
+                "textStyle": "Zumpo/Heading",
+                "fills": [
+                  "$Zumpo · UI:color/ink"
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "166:70653",
+                "name": "Names",
+                "w": 124,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "text": "Sam and Ana",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height",
+                "truncate": {
+                  "maxLines": 1
+                }
+              },
+              {
+                "type": "TEXT",
+                "id": "166:70492",
+                "name": "Count",
+                "w": 30,
+                "h": 20,
+                "wSize": "hug",
+                "hSize": "hug",
+                "text": "2 / 5",
+                "textStyle": "Zumpo/Label",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:70654",
+                "name": "Chevron",
+                "w": 20,
+                "h": 20,
+                "component": "Zumpo/Icon",
+                "variant": {
+                  "Glyph": "chevron-down"
+                },
+                "componentId": "24:5017",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 20,
+                    "width": 20
+                  },
+                  {
+                    "path": "chevron-down",
+                    "strokes": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

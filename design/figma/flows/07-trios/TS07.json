@@ -126,7 +126,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "You can pick again in a moment",
+                  "Meta": "",
                   "Main": "Two are circles and one is a triangle.",
                   "Category": false,
                   "Label": "Not a trio"
@@ -263,7 +263,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:85562",
-                            "name": "Trios card / Default / Two ink solid circles",
+                            "name": "Trios card / Default / Two black solid circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -347,7 +347,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:85642",
-                            "name": "Trios card / Wrong / One ink striped circle",
+                            "name": "Trios card / Wrong / One black striped circle",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -397,7 +397,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:85665",
-                            "name": "Trios card / Default / Three ink outlined circles",
+                            "name": "Trios card / Default / Three black outlined circles",
                             "w": 192,
                             "h": 128,
                             "component": "Zumpo/Trios card",
@@ -494,7 +494,7 @@
                           {
                             "type": "INSTANCE",
                             "id": "79:85783",
-                            "name": "Trios card / Default / One ink solid triangle",
+                            "name": "Trios card / Default / One black solid triangle",
                             "w": 72,
                             "h": 48,
                             "component": "Zumpo/Trios card",
@@ -571,6 +571,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -795,7 +798,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Maya found a trio! (+1)",
+                      "Message": "Maya found a trio, +1.",
                       "Kind": "Score"
                     }
                   },

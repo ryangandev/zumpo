@@ -116,13 +116,12 @@
                 "w": 944,
                 "h": 104,
                 "wSize": "fill",
-                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Word",
-                  "Layout": "Desktop"
+                  "Layout": "Desktop hint row"
                 },
-                "componentId": "26:16822",
+                "componentId": "166:75772",
                 "props": {
                   "Category": false,
                   "Meta": "Leo describes it next",
@@ -136,7 +135,7 @@
                     "width": 944
                   },
                   {
-                    "path": "Turn / Eyebrow / Category",
+                    "path": "Top / Turn / Eyebrow / Category",
                     "componentProperties": {
                       "Icon": "24:5010",
                       "Show icon": false,
@@ -145,7 +144,7 @@
                     }
                   },
                   {
-                    "path": "Countdown",
+                    "path": "Top / Countdown",
                     "componentProperties": {
                       "Show label": true,
                       "Label": "left",
@@ -288,6 +287,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

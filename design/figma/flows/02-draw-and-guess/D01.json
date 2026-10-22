@@ -135,11 +135,11 @@
                   {
                     "type": "TEXT",
                     "id": "27:18017",
-                    "w": 416,
+                    "w": 287,
                     "h": 42,
                     "wSize": "hug",
                     "hSize": "hug",
-                    "text": "A little better with two.",
+                    "text": "Better with two.",
                     "textStyle": "Zumpo/Title",
                     "fills": [
                       "$Zumpo · UI:color/ink"
@@ -310,6 +310,9 @@
                 "h": 136,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

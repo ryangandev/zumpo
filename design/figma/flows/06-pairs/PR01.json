@@ -1,20 +1,20 @@
 {
   "format": 1,
   "code": "PR01",
-  "title": "Solo · choose a board",
-  "id": "40:49758",
+  "title": "Solo · change board",
+  "id": "166:73073",
   "section": "06 / Pairs / complete flow",
   "reviewNotes": [
     "PR01 · Play solo from the hub. The board choice is remembered; Start deals and starts the clock."
   ],
   "frame": {
     "type": "FRAME",
-    "id": "40:49758",
-    "name": "PR01 / Solo · choose a board",
+    "id": "166:73073",
+    "name": "PR01 / Solo · change board",
     "x": 40,
     "y": 150,
     "w": 1440,
-    "h": 852,
+    "h": 946,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -34,30 +34,64 @@
     "children": [
       {
         "type": "INSTANCE",
-        "id": "40:49782",
-        "name": "Zumpo/Header",
+        "id": "166:73074",
+        "name": "Zumpo/Room bar",
         "w": 1312,
-        "h": 104,
-        "component": "Zumpo/Header",
-        "componentId": "4:39",
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Pairs"
+        },
         "overrides": [
           {
-            "path": "Navigation / Games",
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "Board cleared",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
             "reactions": [
               {
                 "on": "on_click",
                 "do": [
                   {
                     "nav": "navigate",
-                    "to": "9:433",
-                    "toName": "P01 / Home"
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
                   }
                 ]
               }
             ]
           },
           {
-            "path": "Navigation / You",
+            "path": "You",
             "componentProperties": {
               "Initials": "MA",
               "Tone": "Peach"
@@ -67,228 +101,1391 @@
       },
       {
         "type": "FRAME",
-        "id": "40:49760",
-        "name": "Page heading",
+        "id": "166:73075",
+        "name": "Board & room",
         "w": 1312,
-        "h": 121,
+        "h": 776,
         "hSize": "hug",
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "INSTANCE",
-            "id": "40:49761",
-            "name": "Tag / COME ON IN",
-            "w": 109,
-            "h": 30,
-            "wSize": "hug",
+            "type": "FRAME",
+            "id": "166:73076",
+            "name": "Board stage",
+            "w": 944,
+            "h": 678,
             "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
             },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "ON YOUR OWN"
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 30,
-                "width": 109
+                "type": "INSTANCE",
+                "id": "166:73077",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Meta": "",
+                  "Main": "All 18 pairs found",
+                  "Category": false,
+                  "Label": "Turn 29"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "2:47",
+                      "Tone": "Info"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:73078",
+                "name": "Board panel",
+                "w": 944,
+                "h": 570,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "166:73079",
+                    "name": "Board / 6 × 6",
+                    "w": 520,
+                    "h": 520,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/8",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "166:73080",
+                        "name": "Row 1",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73081",
+                            "name": "Pairs card / Matched / Sparkle Sun",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Sparkle Sun"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73082",
+                            "name": "Pairs card / Matched / Hexagon Brown",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Hexagon Brown"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73083",
+                            "name": "Pairs card / Matched / Sparkle Red",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Sparkle Red"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73084",
+                            "name": "Pairs card / Matched / Square Red",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Square Red"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73085",
+                            "name": "Pairs card / Matched / Ring Sky",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Ring Sky"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73086",
+                            "name": "Pairs card / Matched / Square Red",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Square Red"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73087",
+                        "name": "Row 2",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73088",
+                            "name": "Pairs card / Matched / Hexagon Leaf",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Hexagon Leaf"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73089",
+                            "name": "Pairs card / Matched / Circle Violet",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Circle Violet"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73090",
+                            "name": "Pairs card / Matched / Square Leaf",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Square Leaf"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73091",
+                            "name": "Pairs card / Matched / Sparkle Red",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Sparkle Red"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73092",
+                            "name": "Pairs card / Matched / Diamond Violet",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Diamond Violet"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73093",
+                            "name": "Pairs card / Matched / Diamond Brown",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Diamond Brown"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73094",
+                        "name": "Row 3",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73095",
+                            "name": "Pairs card / Matched / Square Leaf",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Square Leaf"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73096",
+                            "name": "Pairs card / Matched / Star Sky",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Star Sky"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73097",
+                            "name": "Pairs card / Matched / Ring Green",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Ring Green"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73098",
+                            "name": "Pairs card / Matched / Triangle Green",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Triangle Green"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73099",
+                            "name": "Pairs card / Matched / Star Orange",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Star Orange"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73100",
+                            "name": "Pairs card / Matched / Star Sky",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Star Sky"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73101",
+                        "name": "Row 4",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73102",
+                            "name": "Pairs card / Matched / Star Orange",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Star Orange"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73103",
+                            "name": "Pairs card / Matched / Half Orange",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Half Orange"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73104",
+                            "name": "Pairs card / Matched / Circle Coral",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "overrides": [
+                              {
+                                "path": "Zumpo/Pairs symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73105",
+                            "name": "Pairs card / Matched / Diamond Violet",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Diamond Violet"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73106",
+                            "name": "Pairs card / Matched / Circle Coral",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "overrides": [
+                              {
+                                "path": "Zumpo/Pairs symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73107",
+                            "name": "Pairs card / Matched / Half Orange",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Half Orange"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73108",
+                        "name": "Row 5",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73109",
+                            "name": "Pairs card / Matched / Half Sun",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Half Sun"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73110",
+                            "name": "Pairs card / Matched / Half Sun",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Half Sun"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73111",
+                            "name": "Pairs card / Matched / Triangle Coral",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Triangle Coral"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73112",
+                            "name": "Pairs card / Matched / Ring Sky",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Ring Sky"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73113",
+                            "name": "Pairs card / Matched / Triangle Coral",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Triangle Coral"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73114",
+                            "name": "Pairs card / Matched / Diamond Brown",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Diamond Brown"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73115",
+                        "name": "Row 6",
+                        "w": 520,
+                        "h": 80,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73116",
+                            "name": "Pairs card / Matched / Hexagon Brown",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Hexagon Brown"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73117",
+                            "name": "Pairs card / Matched / Hexagon Leaf",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Hexagon Leaf"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73118",
+                            "name": "Pairs card / Matched / Sparkle Sun",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Sparkle Sun"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73119",
+                            "name": "Pairs card / Matched / Circle Violet",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Circle Violet"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73120",
+                            "name": "Pairs card / Matched / Triangle Green",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Triangle Green"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73121",
+                            "name": "Pairs card / Matched / Ring Green",
+                            "w": 80,
+                            "h": 80,
+                            "component": "Zumpo/Pairs card",
+                            "variant": {
+                              "State": "Matched",
+                              "Size": "Regular"
+                            },
+                            "componentId": "40:22019",
+                            "props": {
+                              "Symbol": "Zumpo/Pairs symbol / Symbol=Ring Green"
+                            },
+                            "overrides": [
+                              {
+                                "path": "Symbol",
+                                "opacity": 0.35
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "40:49762",
-            "name": "Every good game starts with a name.",
-            "w": 1312,
-            "h": 42,
+            "type": "FRAME",
+            "id": "166:73122",
+            "name": "Game sidebar",
+            "w": 344,
+            "h": 776,
             "hSize": "hug",
-            "text": "Pairs",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "40:49763",
-            "name": "No signup. Just pick a name your friends will recognize.",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Flip two cards at a time. Remember where everything is.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "40:49764",
-        "name": "Dialog stage",
-        "w": 1312,
-        "h": 481,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "pad": [
-            "$Zumpo · UI:space/56",
-            0
-          ],
-          "justify": "center",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "40:49765",
-            "name": "Pick a board.",
-            "w": 560,
-            "h": 369,
-            "hSize": "hug",
-            "component": "Zumpo/Card",
-            "variant": {
-              "Kind": "Focused"
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
             },
-            "componentId": "9:400",
-            "props": {
-              "Description": "Fewer turns is better. Your time is kept too.",
-              "Title": "Pick a board."
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 369,
-                "width": 560
-              }
-            ],
-            "slots": {
-              "Content": [
-                {
-                  "type": "FRAME",
-                  "id": "I40:49765;35:13433;40:49850",
-                  "name": "Boards",
-                  "w": 494,
-                  "h": 128,
-                  "wSize": "fill",
-                  "hSize": "hug",
-                  "layout": {
-                    "mode": "column",
-                    "gap": "$Zumpo · UI:space/8",
-                    "strokesIncluded": true
-                  },
-                  "children": [
+                "type": "INSTANCE",
+                "id": "166:73123",
+                "name": "Result",
+                "w": 344,
+                "h": 324,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "A new best on this device. Your last best was 31 turns.",
+                  "Title": "18 pairs in 29 turns."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 324,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
                     {
-                      "type": "INSTANCE",
-                      "id": "I40:49765;35:13433;40:49851",
-                      "name": "Zumpo/Select option",
-                      "w": 494,
-                      "h": 60,
+                      "type": "FRAME",
+                      "id": "I166:73123;35:13441;166:73130",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 82,
                       "wSize": "fill",
                       "hSize": "hug",
-                      "component": "Zumpo/Select option",
-                      "variant": {
-                        "Selected": "False"
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
                       },
-                      "componentId": "24:6171",
-                      "props": {
-                        "Show detail": true,
-                        "Detail": "8 pairs. Best: 11 turns",
-                        "Label": "Small · 4 × 4"
-                      },
-                      "overrides": [
+                      "children": [
                         {
-                          "path": ".",
-                          "height": 60,
-                          "width": 494
+                          "type": "FRAME",
+                          "id": "I166:73123;35:13441;166:73131",
+                          "name": "Stat / Time",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73123;35:13441;166:73132",
+                              "w": 37,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Time",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73123;35:13441;166:73133",
+                              "w": 37,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "2:47",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:73123;35:13441;166:73134",
+                          "name": "Stat / Longest streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73123;35:13441;166:73135",
+                              "w": 108,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Longest streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73123;35:13441;166:73136",
+                              "w": 131,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "3 pairs in a row",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
                     {
-                      "type": "INSTANCE",
-                      "id": "I40:49765;35:13433;40:49852",
-                      "name": "Zumpo/Select option",
-                      "w": 494,
-                      "h": 60,
+                      "type": "FRAME",
+                      "id": "I166:73123;35:13441;166:73137",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
                       "wSize": "fill",
                       "hSize": "hug",
-                      "component": "Zumpo/Select option",
-                      "variant": {
-                        "Selected": "True"
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
                       },
-                      "componentId": "24:6178",
-                      "props": {
-                        "Detail": "18 pairs. Best: 31 turns",
-                        "Show detail": true,
-                        "Label": "Large · 6 × 6"
-                      },
-                      "overrides": [
+                      "children": [
                         {
-                          "path": ".",
-                          "height": 60,
-                          "width": 494
+                          "type": "INSTANCE",
+                          "id": "I166:73123;35:13441;166:73138",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:73123;35:13441;166:73139",
+                          "name": "Action / Change board",
+                          "w": 139,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Label": "Change board"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 139
+                            }
+                          ]
                         }
                       ]
                     }
                   ]
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:73124",
+                "name": "Best on this device",
+                "w": 344,
+                "h": 194,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
                 },
-                {
-                  "type": "FRAME",
-                  "id": "I40:49765;35:13433;40:49868",
-                  "name": "Actions",
-                  "w": 494,
-                  "h": 48,
-                  "wSize": "fill",
-                  "hSize": "hug",
-                  "layout": {
-                    "mode": "row",
-                    "gap": "$Zumpo · UI:space/12",
-                    "align": "center",
-                    "strokesIncluded": true
-                  },
-                  "children": [
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "Best on this device"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 194,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
                     {
-                      "type": "INSTANCE",
-                      "id": "I40:49765;35:13433;40:49869",
-                      "name": "Action / Start",
-                      "w": 75,
-                      "h": 48,
-                      "wSize": "hug",
-                      "component": "Zumpo/Button",
-                      "variant": {
-                        "Style": "Primary",
-                        "State": "Default"
+                      "type": "FRAME",
+                      "id": "I166:73124;35:13441;166:73141",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 82,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
                       },
-                      "componentId": "4:15",
-                      "props": {
-                        "Label": "Start"
-                      },
-                      "overrides": [
+                      "children": [
                         {
-                          "path": ".",
-                          "height": 48,
-                          "width": 75
+                          "type": "FRAME",
+                          "id": "I166:73124;35:13441;166:73142",
+                          "name": "Stat / Small · 4 × 4",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73124;35:13441;166:73143",
+                              "w": 88,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Small · 4 × 4",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73124;35:13441;166:73144",
+                              "w": 64,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "11 turns",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:73124;35:13441;166:73145",
+                          "name": "Stat / Large · 6 × 6",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73124;35:13441;166:73146",
+                              "w": 90,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Large · 6 × 6",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73124;35:13441;166:73147",
+                              "w": 73,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "29 turns",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/green"
+                              ]
+                            }
+                          ]
                         }
                       ]
-                    },
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:73125",
+                "name": "Challenge a friend",
+                "w": 344,
+                "h": 226,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "They get this same deck and try to beat 29 turns.",
+                  "Title": "Challenge a friend"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 226,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
                     {
                       "type": "INSTANCE",
-                      "id": "I40:49765;35:13433;40:49870",
-                      "name": "Action / Back to games",
-                      "w": 171,
+                      "id": "I166:73125;35:13441;166:73149",
+                      "name": "Action / Copy challenge link",
+                      "w": 278,
                       "h": 48,
-                      "wSize": "hug",
+                      "wSize": "fill",
                       "component": "Zumpo/Button",
                       "variant": {
                         "Style": "Secondary",
@@ -296,28 +1493,29 @@
                       },
                       "componentId": "4:18",
                       "props": {
-                        "Icon": "Zumpo/Icon / Glyph=back",
+                        "Icon": "Zumpo/Icon / Glyph=link",
                         "Show icon": true,
-                        "Label": "Back to games"
+                        "Label": "Copy challenge link"
                       },
                       "overrides": [
                         {
                           "path": ".",
                           "height": 48,
-                          "width": 171
+                          "primaryAxisSizingMode": "FIXED",
+                          "width": 278
                         }
                       ]
                     }
                   ]
                 }
-              ]
-            }
+              }
+            ]
           }
         ]
       },
       {
         "type": "FRAME",
-        "id": "40:49766",
+        "id": "166:73126",
         "name": "Footer",
         "w": 1312,
         "h": 18,
@@ -332,7 +1530,7 @@
         "children": [
           {
             "type": "TEXT",
-            "id": "40:49767",
+            "id": "166:73127",
             "w": 650,
             "h": 18,
             "hSize": "hug",
@@ -345,7 +1543,7 @@
           },
           {
             "type": "TEXT",
-            "id": "40:49768",
+            "id": "166:73128",
             "w": 115,
             "h": 18,
             "wSize": "hug",
@@ -357,6 +1555,186 @@
             ]
           }
         ]
+      },
+      {
+        "type": "RECTANGLE",
+        "id": "166:73310",
+        "name": "Scrim",
+        "x": 0,
+        "y": 0,
+        "absolute": true,
+        "w": 1440,
+        "h": 946,
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:73311",
+        "name": "Dialog / Pick a board.",
+        "x": 440,
+        "y": 297,
+        "absolute": true,
+        "w": 560,
+        "h": 369,
+        "hSize": "hug",
+        "component": "Zumpo/Card",
+        "variant": {
+          "Kind": "Dialog"
+        },
+        "componentId": "35:13434",
+        "props": {
+          "Description": "Fewer turns is better. Your time is kept too.",
+          "Title": "Pick a board."
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 369,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 560
+          }
+        ],
+        "slots": {
+          "Content": [
+            {
+              "type": "FRAME",
+              "id": "166:73315",
+              "name": "Boards",
+              "w": 494,
+              "h": 128,
+              "wSize": "fill",
+              "hSize": "hug",
+              "layout": {
+                "mode": "column",
+                "gap": "$Zumpo · UI:space/8",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73311;35:13437;166:73320",
+                  "name": "Zumpo/Select option",
+                  "w": 494,
+                  "h": 60,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "component": "Zumpo/Select option",
+                  "variant": {
+                    "Selected": "False"
+                  },
+                  "componentId": "24:6171",
+                  "props": {
+                    "Show detail": true,
+                    "Detail": "8 pairs. Best: 11 turns",
+                    "Label": "Small · 4 × 4"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 60,
+                      "width": 494
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73311;35:13437;166:73321",
+                  "name": "Zumpo/Select option",
+                  "w": 494,
+                  "h": 60,
+                  "wSize": "fill",
+                  "hSize": "hug",
+                  "component": "Zumpo/Select option",
+                  "variant": {
+                    "Selected": "True"
+                  },
+                  "componentId": "24:6178",
+                  "props": {
+                    "Detail": "18 pairs. Best: 31 turns",
+                    "Show detail": true,
+                    "Label": "Large · 6 × 6"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 60,
+                      "width": 494
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "id": "166:73334",
+              "name": "Actions",
+              "w": 494,
+              "h": 48,
+              "wSize": "fill",
+              "hSize": "hug",
+              "layout": {
+                "mode": "row",
+                "gap": "$Zumpo · UI:space/12",
+                "align": "center",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73311;35:13437;166:73338",
+                  "name": "Action / Play",
+                  "w": 69,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Primary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:15",
+                  "props": {
+                    "Label": "Play"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 69
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73311;35:13437;166:73339",
+                  "name": "Action / Cancel",
+                  "w": 90,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Secondary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:18",
+                  "props": {
+                    "Icon": "Zumpo/Icon / Glyph=back",
+                    "Label": "Cancel"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   }

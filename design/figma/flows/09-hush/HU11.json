@@ -14,7 +14,7 @@
     "x": 2070,
     "y": 2965,
     "w": 390,
-    "h": 819,
+    "h": 803,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -75,7 +75,7 @@
         "id": "74:82194",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -88,17 +88,17 @@
           "Countdown": false,
           "Main": "Get ready",
           "Category": false,
-          "Meta": "Maya and Leo are ready.",
+          "Meta": "2 players are ready.",
           "Label": "Level 2 of 5"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -107,7 +107,7 @@
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to flip",
@@ -122,7 +122,7 @@
         "id": "74:82292",
         "name": "Board panel",
         "w": 350,
-        "h": 495,
+        "h": 459,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -135,7 +135,7 @@
         "radius": "$Zumpo · UI:radius/24",
         "layout": {
           "mode": "column",
-          "gap": "$Zumpo · UI:space/24",
+          "gap": "$Zumpo · UI:space/12",
           "pad": "$Zumpo · UI:space/16",
           "strokesIncluded": true
         },
@@ -145,7 +145,7 @@
             "id": "74:82314",
             "name": "Table head",
             "w": 316,
-            "h": 30,
+            "h": 48,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -161,17 +161,13 @@
                 "type": "FRAME",
                 "id": "74:82315",
                 "name": "Title",
-                "w": 197,
-                "h": 30,
+                "w": 248,
+                "h": 48,
                 "wSize": "fill",
                 "hSize": "hug",
                 "clip": true,
                 "layout": {
-                  "mode": "row",
-                  "gap": "$Zumpo · UI:space/12",
-                  "wrap": true,
-                  "crossGap": "$Zumpo · UI:space/4",
-                  "align": "center",
+                  "mode": "column",
                   "strokesIncluded": true
                 },
                 "children": [
@@ -209,15 +205,25 @@
                 "type": "INSTANCE",
                 "id": "74:82318",
                 "name": "Zumpo/Lives",
-                "w": 119,
-                "h": 20,
+                "w": 68,
+                "h": 18,
                 "wSize": "hug",
                 "hSize": "hug",
                 "component": "Zumpo/Lives",
                 "variant": {
                   "Lives": "3"
                 },
-                "componentId": "44:61119"
+                "componentId": "44:61119",
+                "props": {
+                  "Show label": false
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 18,
+                    "width": 68
+                  }
+                ]
               }
             ]
           },
@@ -241,8 +247,9 @@
                 "type": "FRAME",
                 "id": "74:82325",
                 "name": "Empty pile",
-                "w": 168,
+                "w": 316,
                 "h": 216,
+                "wSize": "fill",
                 "strokes": [
                   "$Zumpo · UI:color/line"
                 ],
@@ -266,8 +273,8 @@
                     "type": "TEXT",
                     "id": "74:82326",
                     "name": "Text",
-                    "w": 132,
-                    "h": 36,
+                    "w": 280,
+                    "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
                     "text": "Cards are dealt when everyone is ready",
@@ -298,7 +305,7 @@
             "id": "74:82328",
             "name": "Your hand",
             "w": 316,
-            "h": 142,
+            "h": 124,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -309,56 +316,90 @@
             },
             "children": [
               {
-                "type": "TEXT",
-                "id": "74:82329",
-                "name": "Label",
-                "w": 138,
-                "h": 20,
-                "wSize": "hug",
+                "type": "FRAME",
+                "id": "166:76087",
+                "name": "Hand",
+                "w": 316,
+                "h": 64,
+                "wSize": "fill",
                 "hSize": "hug",
-                "text": "Ready when you are",
-                "textStyle": "Zumpo/Label",
-                "fills": [
-                  "$Zumpo · UI:color/ink"
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "74:82329",
+                    "name": "Label",
+                    "w": 138,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Ready when you are",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "74:82330",
+                    "name": "Message",
+                    "w": 316,
+                    "h": 36,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "The chat locks when the level starts, and opens when it ends.",
+                    "textStyle": "Zumpo/Small",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
                 ]
               },
               {
-                "type": "TEXT",
-                "id": "74:82330",
-                "name": "Message",
-                "w": 316,
-                "h": 50,
-                "wSize": "fill",
-                "hSize": "hug",
-                "text": "The chat locks when the level starts, and opens when it ends.",
-                "textStyle": "Zumpo/Body",
-                "fills": [
-                  "$Zumpo · UI:color/muted"
-                ],
-                "autoResize": "height"
-              },
-              {
-                "type": "INSTANCE",
-                "id": "74:82331",
-                "name": "Action / I’m ready",
+                "type": "FRAME",
+                "id": "166:76088",
+                "name": "Action",
                 "w": 316,
                 "h": 48,
                 "wSize": "fill",
-                "component": "Zumpo/Button",
-                "variant": {
-                  "Style": "Primary",
-                  "State": "Default"
+                "hSize": "hug",
+                "clip": true,
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
                 },
-                "componentId": "4:15",
-                "props": {
-                  "Label": "I’m ready"
-                },
-                "overrides": [
+                "children": [
                   {
-                    "path": ".",
-                    "height": 48,
-                    "primaryAxisSizingMode": "FIXED",
-                    "width": 316
+                    "type": "INSTANCE",
+                    "id": "74:82331",
+                    "name": "Action / I’m ready",
+                    "w": 316,
+                    "h": 48,
+                    "wSize": "fill",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Primary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:15",
+                    "props": {
+                      "Label": "I’m ready"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "primaryAxisSizingMode": "FIXED",
+                        "width": 316
+                      }
+                    ]
                   }
                 ]
               }

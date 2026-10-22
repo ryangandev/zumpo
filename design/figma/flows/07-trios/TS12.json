@@ -14,7 +14,7 @@
     "x": 3560,
     "y": 3050,
     "w": 390,
-    "h": 739,
+    "h": 740,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -75,7 +75,7 @@
         "id": "79:89114",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 95,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -93,12 +93,12 @@
         "overrides": [
           {
             "path": ".",
-            "height": 95,
-            "paddingBottom": 31,
+            "height": 96,
+            "paddingBottom": 12,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -107,17 +107,17 @@
             }
           },
           {
-            "path": "Text / Answer",
+            "path": "Top / Text / Answer",
             "counterAxisSizingMode": "AUTO",
             "counterAxisSpacing": 19
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to a hint",
               "Time": "0:18",
-              "Tone": "Running"
+              "Tone": "Info"
             }
           }
         ]
@@ -186,7 +186,7 @@
                   {
                     "type": "INSTANCE",
                     "id": "79:89255",
-                    "name": "Trios card / Default / One ink solid triangle",
+                    "name": "Trios card / Default / One black solid triangle",
                     "w": 110,
                     "h": 76,
                     "component": "Zumpo/Trios card",
@@ -236,7 +236,7 @@
                   {
                     "type": "INSTANCE",
                     "id": "79:89278",
-                    "name": "Trios card / Selected / Two ink solid circles",
+                    "name": "Trios card / Selected / Two black solid circles",
                     "w": 110,
                     "h": 76,
                     "component": "Zumpo/Trios card",
@@ -320,7 +320,7 @@
                   {
                     "type": "INSTANCE",
                     "id": "79:89358",
-                    "name": "Trios card / Default / One ink striped circle",
+                    "name": "Trios card / Default / One black striped circle",
                     "w": 110,
                     "h": 76,
                     "component": "Zumpo/Trios card",
@@ -370,7 +370,7 @@
                   {
                     "type": "INSTANCE",
                     "id": "79:89381",
-                    "name": "Trios card / Default / Three ink outlined circles",
+                    "name": "Trios card / Default / Three black outlined circles",
                     "w": 110,
                     "h": 76,
                     "component": "Zumpo/Trios card",
@@ -499,7 +499,7 @@
                   {
                     "type": "INSTANCE",
                     "id": "79:89456",
-                    "name": "Trios card / Default / Two ink outlined circles",
+                    "name": "Trios card / Default / Two black outlined circles",
                     "w": 72,
                     "h": 48,
                     "component": "Zumpo/Trios card",

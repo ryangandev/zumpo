@@ -159,7 +159,7 @@
                       "Show label": true,
                       "Label": "on this card",
                       "Time": "0:02",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -336,6 +336,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

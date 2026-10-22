@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 1550,
     "w": 1440,
-    "h": 1101,
+    "h": 918,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -97,7 +97,7 @@
         "id": "62:75364",
         "name": "Board & room",
         "w": 1312,
-        "h": 931,
+        "h": 748,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -110,7 +110,7 @@
             "id": "62:75365",
             "name": "Board stage",
             "w": 944,
-            "h": 931,
+            "h": 652,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -119,11 +119,58 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "62:75366",
-                "name": "Result",
+                "type": "INSTANCE",
+                "id": "166:76494",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 411,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "Together, with 1 life to spare.",
+                  "Main": "All 5 levels cleared.",
+                  "Category": false,
+                  "Label": "Game over"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "flip back",
+                      "Time": "0:02",
+                      "Tone": "Waiting"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "62:75386",
+                "name": "Board panel",
+                "w": 944,
+                "h": 320,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -137,52 +184,471 @@
                 "layout": {
                   "mode": "column",
                   "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
+                  "pad": "$Zumpo · UI:space/24",
                   "strokesIncluded": true
                 },
                 "children": [
                   {
                     "type": "FRAME",
-                    "id": "62:75367",
-                    "name": "Result heading",
-                    "w": 344,
-                    "h": 75,
-                    "wSize": "hug",
+                    "id": "62:75539",
+                    "name": "Table head",
+                    "w": 894,
+                    "h": 30,
+                    "wSize": "fill",
                     "hSize": "hug",
+                    "clip": true,
                     "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/16",
+                      "justify": "space_between",
+                      "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
                       {
-                        "type": "TEXT",
-                        "id": "62:75368",
-                        "w": 344,
-                        "h": 42,
+                        "type": "FRAME",
+                        "id": "62:75540",
+                        "name": "Title",
+                        "w": 163,
+                        "h": 30,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "All 5 levels cleared.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
+                        "clip": true,
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/12",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "TEXT",
+                            "id": "62:75541",
+                            "name": "Heading",
+                            "w": 83,
+                            "h": 30,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "Level 5",
+                            "textStyle": "Zumpo/Heading",
+                            "fills": [
+                              "$Zumpo · UI:color/ink"
+                            ]
+                          },
+                          {
+                            "type": "TEXT",
+                            "id": "62:75542",
+                            "name": "Note",
+                            "w": 68,
+                            "h": 18,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "text": "All 20 cards",
+                            "textStyle": "Zumpo/Small",
+                            "fills": [
+                              "$Zumpo · UI:color/muted"
+                            ]
+                          }
                         ]
                       },
                       {
-                        "type": "TEXT",
-                        "id": "62:75369",
-                        "w": 207,
-                        "h": 25,
+                        "type": "INSTANCE",
+                        "id": "62:75543",
+                        "name": "Zumpo/Lives",
+                        "w": 106,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
-                        "text": "Together, with 1 life to spare.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
+                        "component": "Zumpo/Lives",
+                        "variant": {
+                          "Lives": "1"
+                        },
+                        "componentId": "44:61131"
                       }
                     ]
                   },
+                  {
+                    "type": "FRAME",
+                    "id": "62:75549",
+                    "name": "Pile",
+                    "w": 894,
+                    "h": 216,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/16",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "62:75550",
+                        "name": "Hush card / 99",
+                        "w": 168,
+                        "h": 216,
+                        "component": "Zumpo/Hush card",
+                        "variant": {
+                          "State": "Pile",
+                          "Size": "Large"
+                        },
+                        "componentId": "44:61092",
+                        "props": {
+                          "Value": "99"
+                        }
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "62:75552",
+                        "name": "Trail",
+                        "w": 710,
+                        "h": 216,
+                        "wSize": "fill",
+                        "hSize": "fill",
+                        "clip": true,
+                        "layout": {
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/8",
+                          "wrap": true,
+                          "crossGap": "$Zumpo · UI:space/8",
+                          "align": "center",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75553",
+                            "name": "Hush card / 2",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "2"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75555",
+                            "name": "Hush card / 7",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "7"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75557",
+                            "name": "Hush card / 12",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "12"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75559",
+                            "name": "Hush card / 16",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "16"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75561",
+                            "name": "Hush card / 21",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "21"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75563",
+                            "name": "Hush card / 27",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "27"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75565",
+                            "name": "Hush card / 31",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "31"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75567",
+                            "name": "Hush card / 36",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "36"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75569",
+                            "name": "Hush card / 40",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "40"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75571",
+                            "name": "Hush card / 44",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "44"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75573",
+                            "name": "Hush card / 49",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "49"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75575",
+                            "name": "Hush card / 55",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "55"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75577",
+                            "name": "Hush card / 60",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Discarded",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61116",
+                            "props": {
+                              "Value": "60"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75579",
+                            "name": "Hush card / 64",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "64"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75581",
+                            "name": "Hush card / 71",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "71"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75583",
+                            "name": "Hush card / 76",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "76"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75585",
+                            "name": "Hush card / 82",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "82"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75587",
+                            "name": "Hush card / 87",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "87"
+                            }
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "62:75589",
+                            "name": "Hush card / 91",
+                            "w": 60,
+                            "h": 80,
+                            "component": "Zumpo/Hush card",
+                            "variant": {
+                              "State": "Played",
+                              "Size": "Small"
+                            },
+                            "componentId": "44:61114",
+                            "props": {
+                              "Value": "91"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:76542",
+                "name": "Team result",
+                "w": 944,
+                "h": 208,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
                   {
                     "type": "FRAME",
                     "id": "62:75467",
@@ -595,18 +1061,60 @@
                         ]
                       }
                     ]
-                  },
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "62:75430",
+            "name": "Room sidebar",
+            "w": 344,
+            "h": 748,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/24",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "166:76512",
+                "name": "Next game",
+                "w": 344,
+                "h": 98,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/12",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
                   {
                     "type": "FRAME",
                     "id": "62:75383",
                     "name": "Actions",
-                    "w": 283,
+                    "w": 294,
                     "h": 48,
-                    "wSize": "hug",
+                    "wSize": "fill",
                     "hSize": "hug",
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
                       "align": "center",
                       "strokesIncluded": true
                     },
@@ -666,484 +1174,6 @@
                 ]
               },
               {
-                "type": "FRAME",
-                "id": "62:75386",
-                "name": "Board panel",
-                "w": 944,
-                "h": 504,
-                "wSize": "fill",
-                "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/24",
-                  "strokesIncluded": true
-                },
-                "children": [
-                  {
-                    "type": "FRAME",
-                    "id": "62:75539",
-                    "name": "Table head",
-                    "w": 894,
-                    "h": 30,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "clip": true,
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/16",
-                      "justify": "space_between",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "62:75540",
-                        "name": "Title",
-                        "w": 163,
-                        "h": 30,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "clip": true,
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/12",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "62:75541",
-                            "name": "Heading",
-                            "w": 83,
-                            "h": 30,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Level 5",
-                            "textStyle": "Zumpo/Heading",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "62:75542",
-                            "name": "Note",
-                            "w": 68,
-                            "h": 18,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "All 20 cards",
-                            "textStyle": "Zumpo/Small",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "62:75543",
-                        "name": "Zumpo/Lives",
-                        "w": 106,
-                        "h": 20,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "component": "Zumpo/Lives",
-                        "variant": {
-                          "Lives": "1"
-                        },
-                        "componentId": "44:61131"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "62:75549",
-                    "name": "Pile",
-                    "w": 894,
-                    "h": 400,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "clip": true,
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/16",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "62:75550",
-                        "name": "Hush card / 99",
-                        "w": 168,
-                        "h": 216,
-                        "component": "Zumpo/Hush card",
-                        "variant": {
-                          "State": "Pile",
-                          "Size": "Large"
-                        },
-                        "componentId": "44:61092",
-                        "props": {
-                          "Value": "99"
-                        }
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "62:75552",
-                        "name": "Trail",
-                        "w": 894,
-                        "h": 168,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "clip": true,
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/8",
-                          "wrap": true,
-                          "crossGap": "$Zumpo · UI:space/8",
-                          "justify": "center",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75553",
-                            "name": "Hush card / 2",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "2"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75555",
-                            "name": "Hush card / 7",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "7"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75557",
-                            "name": "Hush card / 12",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "12"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75559",
-                            "name": "Hush card / 16",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "16"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75561",
-                            "name": "Hush card / 21",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "21"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75563",
-                            "name": "Hush card / 27",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "27"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75565",
-                            "name": "Hush card / 31",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "31"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75567",
-                            "name": "Hush card / 36",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "36"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75569",
-                            "name": "Hush card / 40",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "40"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75571",
-                            "name": "Hush card / 44",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "44"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75573",
-                            "name": "Hush card / 49",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "49"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75575",
-                            "name": "Hush card / 55",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "55"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75577",
-                            "name": "Hush card / 60",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Discarded",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61116",
-                            "props": {
-                              "Value": "60"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75579",
-                            "name": "Hush card / 64",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "64"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75581",
-                            "name": "Hush card / 71",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "71"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75583",
-                            "name": "Hush card / 76",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "76"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75585",
-                            "name": "Hush card / 82",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "82"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75587",
-                            "name": "Hush card / 87",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "87"
-                            }
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "62:75589",
-                            "name": "Hush card / 91",
-                            "w": 60,
-                            "h": 80,
-                            "component": "Zumpo/Hush card",
-                            "variant": {
-                              "State": "Played",
-                              "Size": "Small"
-                            },
-                            "componentId": "44:61114",
-                            "props": {
-                              "Value": "91"
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "FRAME",
-            "id": "62:75430",
-            "name": "Room sidebar",
-            "w": 344,
-            "h": 626,
-            "hSize": "hug",
-            "layout": {
-              "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
-              "strokesIncluded": true
-            },
-            "children": [
-              {
                 "type": "INSTANCE",
                 "id": "62:75431",
                 "name": "Zumpo/Scoreboard",
@@ -1151,6 +1181,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

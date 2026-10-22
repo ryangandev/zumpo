@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 6797,
     "w": 1440,
-    "h": 1149,
+    "h": 1093,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -85,7 +85,7 @@
         "id": "9:9824",
         "name": "Board & room",
         "w": 1312,
-        "h": 979,
+        "h": 923,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -98,7 +98,7 @@
             "id": "27:19637",
             "name": "Board stage",
             "w": 944,
-            "h": 979,
+            "h": 894,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -107,413 +107,43 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "27:19956",
-                "name": "Final scores",
+                "type": "INSTANCE",
+                "id": "166:76143",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 485,
+                "h": 102,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "8 rounds. You finished 4th.",
+                  "Main": "Sam wins with 130 points.",
+                  "Label": "Game over"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "27:19957",
-                    "name": "Result heading",
-                    "w": 461,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "27:19958",
-                        "w": 461,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Sam wins with 130 points.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "27:19959",
-                        "w": 290,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Small board, 8 rounds. You finished 4th.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "27:19960",
-                    "name": "Ranking",
-                    "w": 862,
-                    "h": 232,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "27:19961",
-                        "name": "Place 1",
-                        "w": 862,
-                        "h": 52,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/16",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "27:19962",
-                            "name": "Place",
-                            "w": 24,
-                            "h": 24,
-                            "hSize": "hug",
-                            "text": "1",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ],
-                            "alignH": "center",
-                            "autoResize": "height"
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "27:19963",
-                            "name": "Rank / Sam",
-                            "w": 822,
-                            "h": 52,
-                            "wSize": "fill",
-                            "component": "Zumpo/Player row",
-                            "variant": {
-                              "State": "Highlight"
-                            },
-                            "componentId": "26:10597",
-                            "props": {
-                              "Status icon": false,
-                              "Name": "Sam",
-                              "Status": "Winner",
-                              "Score": "130"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 52,
-                                "width": 822
-                              },
-                              {
-                                "path": "Avatar",
-                                "componentProperties": {
-                                  "Initials": "SA",
-                                  "Tone": "Sand"
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "27:19984",
-                        "name": "Place 2",
-                        "w": 862,
-                        "h": 52,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/16",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "27:19985",
-                            "name": "Place",
-                            "w": 24,
-                            "h": 24,
-                            "hSize": "hug",
-                            "text": "2",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ],
-                            "alignH": "center",
-                            "autoResize": "height"
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "27:19986",
-                            "name": "Rank / Leo",
-                            "w": 822,
-                            "h": 52,
-                            "wSize": "fill",
-                            "component": "Zumpo/Player row",
-                            "variant": {
-                              "State": "Default"
-                            },
-                            "componentId": "26:10577",
-                            "props": {
-                              "Status icon": false,
-                              "Status": "2nd place",
-                              "Score": "115",
-                              "Name": "Leo"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 52,
-                                "width": 822
-                              },
-                              {
-                                "path": "Avatar",
-                                "componentProperties": {
-                                  "Initials": "LE",
-                                  "Tone": "Lime"
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "27:20007",
-                        "name": "Place 3",
-                        "w": 862,
-                        "h": 52,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/16",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "27:20008",
-                            "name": "Place",
-                            "w": 24,
-                            "h": 24,
-                            "hSize": "hug",
-                            "text": "3",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ],
-                            "alignH": "center",
-                            "autoResize": "height"
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "27:20009",
-                            "name": "Rank / Ryan",
-                            "w": 822,
-                            "h": 52,
-                            "wSize": "fill",
-                            "component": "Zumpo/Player row",
-                            "variant": {
-                              "State": "Default"
-                            },
-                            "componentId": "26:10577",
-                            "props": {
-                              "Status icon": false,
-                              "Status": "3rd place",
-                              "Score": "−13",
-                              "Name": "Ryan"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 52,
-                                "width": 822
-                              },
-                              {
-                                "path": "Avatar",
-                                "componentProperties": {
-                                  "Initials": "RG",
-                                  "Tone": "Blue"
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "27:20030",
-                        "name": "Place 4",
-                        "w": 862,
-                        "h": 52,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/16",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "27:20031",
-                            "name": "Place",
-                            "w": 24,
-                            "h": 24,
-                            "hSize": "hug",
-                            "text": "4",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ],
-                            "alignH": "center",
-                            "autoResize": "height"
-                          },
-                          {
-                            "type": "INSTANCE",
-                            "id": "27:20032",
-                            "name": "Rank / Maya",
-                            "w": 822,
-                            "h": 52,
-                            "wSize": "fill",
-                            "component": "Zumpo/Player row",
-                            "variant": {
-                              "State": "Default"
-                            },
-                            "componentId": "26:10577",
-                            "props": {
-                              "Status icon": false,
-                              "Status": "4th place",
-                              "Host": true,
-                              "You": true,
-                              "Score": "−21"
-                            },
-                            "overrides": [
-                              {
-                                "path": ".",
-                                "height": 52,
-                                "width": 822
-                              },
-                              {
-                                "path": "Avatar",
-                                "componentProperties": {
-                                  "Initials": "MA",
-                                  "Tone": "Peach"
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "FRAME",
-                    "id": "27:20052",
-                    "name": "Actions",
-                    "w": 283,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "27:19942",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "27:19948",
-                        "name": "Action / Invite friends",
-                        "w": 161,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Invite friends"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 161
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "to pick",
+                      "Time": "0:10",
+                      "Tone": "Running"
+                    }
                   }
                 ]
               },
@@ -522,7 +152,7 @@
                 "id": "27:20053",
                 "name": "Minefield panel",
                 "w": 944,
-                "h": 478,
+                "h": 776,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -1420,6 +1050,314 @@
                   },
                   {
                     "type": "FRAME",
+                    "id": "166:76184",
+                    "name": "Standings",
+                    "w": 894,
+                    "h": 274,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "column",
+                      "gap": "$Zumpo · UI:space/12",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "166:76186",
+                        "name": "Title",
+                        "w": 117,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Standings",
+                        "textStyle": "Zumpo/Heading",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "27:19960",
+                        "name": "Ranking",
+                        "w": 894,
+                        "h": 232,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "layout": {
+                          "mode": "column",
+                          "gap": "$Zumpo · UI:space/8",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "27:19961",
+                            "name": "Place 1",
+                            "w": 894,
+                            "h": 52,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/16",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "27:19962",
+                                "name": "Place",
+                                "w": 24,
+                                "h": 24,
+                                "hSize": "hug",
+                                "text": "1",
+                                "textStyle": "Zumpo/Number",
+                                "fills": [
+                                  "$Zumpo · UI:color/muted"
+                                ],
+                                "alignH": "center",
+                                "autoResize": "height"
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "27:19963",
+                                "name": "Rank / Sam",
+                                "w": 854,
+                                "h": 52,
+                                "wSize": "fill",
+                                "component": "Zumpo/Player row",
+                                "variant": {
+                                  "State": "Highlight"
+                                },
+                                "componentId": "26:10597",
+                                "props": {
+                                  "Status icon": false,
+                                  "Name": "Sam",
+                                  "Status": "Winner",
+                                  "Score": "130"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 52,
+                                    "width": 854
+                                  },
+                                  {
+                                    "path": "Avatar",
+                                    "componentProperties": {
+                                      "Initials": "SA",
+                                      "Tone": "Sand"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "27:19984",
+                            "name": "Place 2",
+                            "w": 894,
+                            "h": 52,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/16",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "27:19985",
+                                "name": "Place",
+                                "w": 24,
+                                "h": 24,
+                                "hSize": "hug",
+                                "text": "2",
+                                "textStyle": "Zumpo/Number",
+                                "fills": [
+                                  "$Zumpo · UI:color/muted"
+                                ],
+                                "alignH": "center",
+                                "autoResize": "height"
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "27:19986",
+                                "name": "Rank / Leo",
+                                "w": 854,
+                                "h": 52,
+                                "wSize": "fill",
+                                "component": "Zumpo/Player row",
+                                "variant": {
+                                  "State": "Default"
+                                },
+                                "componentId": "26:10577",
+                                "props": {
+                                  "Status icon": false,
+                                  "Status": "2nd place",
+                                  "Score": "115",
+                                  "Name": "Leo"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 52,
+                                    "width": 854
+                                  },
+                                  {
+                                    "path": "Avatar",
+                                    "componentProperties": {
+                                      "Initials": "LE",
+                                      "Tone": "Lime"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "27:20007",
+                            "name": "Place 3",
+                            "w": 894,
+                            "h": 52,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/16",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "27:20008",
+                                "name": "Place",
+                                "w": 24,
+                                "h": 24,
+                                "hSize": "hug",
+                                "text": "3",
+                                "textStyle": "Zumpo/Number",
+                                "fills": [
+                                  "$Zumpo · UI:color/muted"
+                                ],
+                                "alignH": "center",
+                                "autoResize": "height"
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "27:20009",
+                                "name": "Rank / Ryan",
+                                "w": 854,
+                                "h": 52,
+                                "wSize": "fill",
+                                "component": "Zumpo/Player row",
+                                "variant": {
+                                  "State": "Default"
+                                },
+                                "componentId": "26:10577",
+                                "props": {
+                                  "Status icon": false,
+                                  "Status": "3rd place",
+                                  "Score": "−13",
+                                  "Name": "Ryan"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 52,
+                                    "width": 854
+                                  },
+                                  {
+                                    "path": "Avatar",
+                                    "componentProperties": {
+                                      "Initials": "RG",
+                                      "Tone": "Blue"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "FRAME",
+                            "id": "27:20030",
+                            "name": "Place 4",
+                            "w": 894,
+                            "h": 52,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "row",
+                              "gap": "$Zumpo · UI:space/16",
+                              "align": "center",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "TEXT",
+                                "id": "27:20031",
+                                "name": "Place",
+                                "w": 24,
+                                "h": 24,
+                                "hSize": "hug",
+                                "text": "4",
+                                "textStyle": "Zumpo/Number",
+                                "fills": [
+                                  "$Zumpo · UI:color/muted"
+                                ],
+                                "alignH": "center",
+                                "autoResize": "height"
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "27:20032",
+                                "name": "Rank / Maya",
+                                "w": 854,
+                                "h": 52,
+                                "wSize": "fill",
+                                "component": "Zumpo/Player row",
+                                "variant": {
+                                  "State": "Default"
+                                },
+                                "componentId": "26:10577",
+                                "props": {
+                                  "Status icon": false,
+                                  "Status": "4th place",
+                                  "Host": true,
+                                  "You": true,
+                                  "Score": "−21"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 52,
+                                    "width": 854
+                                  },
+                                  {
+                                    "path": "Avatar",
+                                    "componentProperties": {
+                                      "Initials": "MA",
+                                      "Tone": "Peach"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
                     "id": "27:20219",
                     "name": "Round 8 results",
                     "visible": false,
@@ -1608,7 +1546,7 @@
             "id": "9:9839",
             "name": "Room sidebar",
             "w": 344,
-            "h": 665,
+            "h": 923,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1617,6 +1555,155 @@
             },
             "children": [
               {
+                "type": "FRAME",
+                "id": "166:76161",
+                "name": "Next game",
+                "w": 344,
+                "h": 234,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/12",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "27:20052",
+                    "name": "Actions",
+                    "w": 294,
+                    "h": 184,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "166:71448",
+                        "name": "Next game",
+                        "w": 294,
+                        "h": 87,
+                        "hSize": "hug",
+                        "clip": true,
+                        "layout": {
+                          "mode": "column",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:71449",
+                            "name": "Next game",
+                            "w": 294,
+                            "h": 87,
+                            "hSize": "hug",
+                            "component": "Zumpo/Input",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "9:204",
+                            "props": {
+                              "Select": true,
+                              "Value": "Small",
+                              "Show helper": false,
+                              "Label": "Next game"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 87,
+                                "width": 294
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "166:71456",
+                        "name": "Ready",
+                        "w": 294,
+                        "h": 25,
+                        "hSize": "hug",
+                        "text": "Leo and Ryan are ready.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "27:19942",
+                        "name": "Action / Play again",
+                        "w": 110,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:15",
+                        "props": {
+                          "Label": "Play again"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 110
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "27:19948",
+                        "name": "Action / Invite friends",
+                        "w": 161,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Secondary",
+                          "State": "Default"
+                        },
+                        "componentId": "4:18",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=link",
+                          "Show icon": true,
+                          "Label": "Invite friends"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 48,
+                            "width": 161
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
                 "type": "INSTANCE",
                 "id": "9:9840",
                 "name": "Zumpo/Scoreboard",
@@ -1624,6 +1711,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

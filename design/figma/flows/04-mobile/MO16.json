@@ -62,6 +62,9 @@
           "View": "Chat"
         },
         "componentId": "9:16082",
+        "props": {
+          "Board turn": true
+        },
         "overrides": [
           {
             "path": ".",

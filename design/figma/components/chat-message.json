@@ -4,7 +4,7 @@
   "id": "26:16242",
   "type": "COMPONENT_SET",
   "key": "845e8f9707a251d4e4158e3156c51e41b59ae056",
-  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: neutral news, said quietly: joins, the game starting, a word revealed, a round’s mines. Score: somebody scored, said as quietly, with a check: a pair or trio found, a hand’s solves, a level cleared. Divider: a new turn or step begins, such as “Round 2 · Ana draws” or “Step 2 · Draw”. Success: a moment that matters: a correct Draw & Guess guess, the game won. Alert: something went wrong, such as a departure or a mistake. Use the player’s name with “(you)” for the viewer’s own lines.",
+  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: neutral news, said quietly: joins, the game starting, a word revealed, a round’s mines. Score: somebody scored, said as quietly, with a check: a pair or trio found, a hand’s solves, a level cleared. Divider: a new turn or step begins, such as “Round 2 · Ana draws” or “Step 2 · Draw”. Success: a moment that matters: a correct Draw & Guess guess, the game won. Alert: something went wrong, such as a departure or a mistake. The viewer’s own lines are named “You”, as the Players panel tags them.",
   "properties": {
     "Name": {
       "type": "text",
@@ -64,15 +64,15 @@
             "type": "TEXT",
             "id": "26:16217",
             "name": "Name",
-            "w": 34,
-            "h": 20,
+            "w": 39,
+            "h": 25,
             "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Name"
             },
             "text": "Ryan",
-            "textStyle": "Zumpo/Label",
+            "textStyle": "Zumpo/Body strong",
             "fills": [
               "$Zumpo · UI:color/ink"
             ]
@@ -81,7 +81,7 @@
             "type": "TEXT",
             "id": "26:16218",
             "name": "Message",
-            "w": 254,
+            "w": 249,
             "h": 25,
             "wSize": "fill",
             "hSize": "fill",

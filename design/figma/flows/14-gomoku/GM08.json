@@ -266,7 +266,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "Black",
-                                  "State": "Default"
+                                  "State": "Default",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63045",
                                 "props": {
@@ -296,7 +297,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "White",
-                                  "State": "Default"
+                                  "State": "Default",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63087",
                                 "props": {
@@ -408,6 +410,9 @@
                 "h": 192,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -669,6 +674,9 @@
                 "h": 136,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

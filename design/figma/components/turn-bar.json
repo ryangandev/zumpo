@@ -4,7 +4,7 @@
   "id": "26:16873",
   "type": "COMPONENT_SET",
   "key": "afc740a85a15447df5099f4555551bf122d3dbd4",
-  "description": "Sits above the canvas in Draw & Guess and carries the turn: the game’s category (always shown, nested Tag), what to do, the word or the hint, and the phase clock. Word: the drawer sees the word. Hint: guessers see the server’s hint string as is (“__r___”, spaces kept for two-word answers), tracked out 30% so each blank reads as a slot; the server reveals letters at a third and two thirds of the drawing clock, up to a third of the word. Status: choosing, review, waiting. Replaces putting the word or hint in a page Notice. Phone layout: the clock moves up beside the category, and the answer wraps under the label. Category, Countdown, Top row: off when the game has no category (a game on your own), nothing is timed, or (Phone) neither shows.",
+  "description": "Sits above the canvas in Draw & Guess and carries the turn: the game’s category (always shown, nested Tag), what to do, the word or the hint, and the phase clock. Word: the drawer sees the word. Hint: guessers see the server’s hint string as is (“__r___”, spaces kept for two-word answers), tracked out 30% so each blank reads as a slot; the server reveals letters at a third and two thirds of the drawing clock, up to a third of the word. Status: choosing, review, waiting. Replaces putting the word or hint in a page Notice. Phone layout: the clock moves up beside the category, and the answer wraps under the label. Category, Countdown, Top row: off when the game has no category (a game on your own), nothing is timed, or (Phone) neither shows. Layout=Phone stacks the label and main line over the tag and meta, which wrap on a line of their own; Layout=Phone row keeps them on one row, for Gomoku on a phone and any window 800 px tall or less.",
   "properties": {
     "Label": {
       "type": "text",
@@ -40,7 +40,9 @@
       "default": "Desktop",
       "options": [
         "Desktop",
-        "Phone"
+        "Phone",
+        "Desktop hint row",
+        "Phone row"
       ]
     }
   },
@@ -639,8 +641,1296 @@
         "type": "COMPONENT",
         "id": "27:22154",
         "name": "Kind=Word, Layout=Phone",
-        "w": 350,
+        "w": 186,
+        "h": 108,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/20",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/2",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:74873",
+            "name": "Top",
+            "w": 152,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:44736",
+                "name": "Text",
+                "w": 52,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "27:22156",
+                    "name": "Eyebrow",
+                    "w": 52,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22158",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Label"
+                        },
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "27:22159",
+                    "name": "Answer",
+                    "w": 52,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22160",
+                        "name": "Main",
+                        "w": 70,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Main"
+                        },
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Heading",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "27:22162",
+                "name": "Countdown",
+                "w": 88,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Countdown"
+                },
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Running"
+                },
+                "componentId": "9:404",
+                "props": {
+                  "Show label": false,
+                  "Label": "left",
+                  "Time": "1:12"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 88
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "166:74874",
+            "name": "Bottom",
+            "w": 152,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "27:22157",
+                "name": "Category",
+                "w": 69,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Category"
+                },
+                "component": "Zumpo/Tag",
+                "variant": {
+                  "Tone": "Sand"
+                },
+                "componentId": "24:6511",
+                "props": {
+                  "Label": "Animals"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 30,
+                    "width": 69
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "27:22161",
+                "name": "Meta",
+                "w": 75,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Meta"
+                },
+                "text": "6 letters",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Hint, Layout=Phone",
+      "id": "27:22173",
+      "props": {
+        "Kind": "Hint",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "27:22173",
+        "name": "Kind=Hint, Layout=Phone",
+        "w": 186,
+        "h": 108,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/20",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/2",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:74875",
+            "name": "Top",
+            "w": 152,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:44737",
+                "name": "Text",
+                "w": 40,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "27:22175",
+                    "name": "Eyebrow",
+                    "w": 40,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22177",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Label"
+                        },
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "27:22178",
+                    "name": "Answer",
+                    "w": 40,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22179",
+                        "name": "Main",
+                        "w": 106,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Main"
+                        },
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Hint compact",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "27:22181",
+                "name": "Countdown",
+                "w": 100,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Countdown"
+                },
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Running"
+                },
+                "componentId": "9:404",
+                "props": {
+                  "Show label": false,
+                  "Label": "left",
+                  "Time": "0:58"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 100
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "166:74876",
+            "name": "Bottom",
+            "w": 152,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "27:22176",
+                "name": "Category",
+                "w": 69,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Category"
+                },
+                "component": "Zumpo/Tag",
+                "variant": {
+                  "Tone": "Sand"
+                },
+                "componentId": "24:6511",
+                "props": {
+                  "Label": "Animals"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 30,
+                    "width": 69
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "27:22180",
+                "name": "Meta",
+                "w": 75,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Meta"
+                },
+                "text": "6 letters",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Status, Layout=Phone",
+      "id": "27:22192",
+      "props": {
+        "Kind": "Status",
+        "Layout": "Phone"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "27:22192",
+        "name": "Kind=Status, Layout=Phone",
+        "w": 186,
+        "h": 108,
+        "wSize": "hug",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/20",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/2",
+          "pad": [
+            "$Zumpo · UI:space/12",
+            "$Zumpo · UI:space/16"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:74877",
+            "name": "Top",
+            "w": 152,
+            "h": 50,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/12",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "163:44738",
+                "name": "Text",
+                "w": 45,
+                "h": 50,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "27:22194",
+                    "name": "Eyebrow",
+                    "w": 45,
+                    "h": 20,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "clip": true,
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22196",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Label"
+                        },
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "27:22197",
+                    "name": "Answer",
+                    "w": 45,
+                    "h": 30,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "27:22198",
+                        "name": "Main",
+                        "w": 70,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "propRefs": {
+                          "characters": "Main"
+                        },
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Heading",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ],
+                        "truncate": {
+                          "maxLines": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "27:22200",
+                "name": "Countdown",
+                "w": 95,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Countdown"
+                },
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Waiting"
+                },
+                "componentId": "24:5274",
+                "props": {
+                  "Show label": false,
+                  "Label": "to choose",
+                  "Time": "0:12"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 95
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "166:74878",
+            "name": "Bottom",
+            "w": 152,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "27:22195",
+                "name": "Category",
+                "w": 69,
+                "h": 30,
+                "wSize": "hug",
+                "hSize": "hug",
+                "propRefs": {
+                  "visible": "Category"
+                },
+                "component": "Zumpo/Tag",
+                "variant": {
+                  "Tone": "Sand"
+                },
+                "componentId": "24:6511",
+                "props": {
+                  "Label": "Animals"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 30,
+                    "width": 69
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "27:22199",
+                "name": "Meta",
+                "w": 75,
+                "h": 18,
+                "wSize": "fill",
+                "hSize": "hug",
+                "propRefs": {
+                  "characters": "Meta"
+                },
+                "text": "6 letters",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Word, Layout=Desktop hint row",
+      "id": "166:75772",
+      "props": {
+        "Kind": "Word",
+        "Layout": "Desktop hint row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "166:75772",
+        "name": "Kind=Word, Layout=Desktop hint row",
+        "w": 481,
+        "h": 114,
+        "wSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/24"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:75786",
+            "name": "Top",
+            "w": 439,
+            "h": 36,
+            "hSize": "fill",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/24",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "166:75773",
+                "name": "Turn",
+                "w": 295,
+                "h": 80,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "166:75774",
+                    "name": "Eyebrow",
+                    "w": 185,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "166:75775",
+                        "name": "Category",
+                        "w": 69,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Sand"
+                        },
+                        "componentId": "24:6511",
+                        "props": {
+                          "Label": "Animals"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 69
+                          }
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "166:75776",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "166:75777",
+                    "name": "Answer",
+                    "w": 105,
+                    "h": 42,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "166:75778",
+                        "name": "Main",
+                        "w": 105,
+                        "h": 42,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Title",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:75780",
+                "name": "Countdown",
+                "w": 120,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Running"
+                },
+                "componentId": "9:404",
+                "props": {
+                  "Label": "left",
+                  "Time": "1:12"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 120
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "166:75779",
+            "name": "Meta",
+            "w": 439,
+            "h": 36,
+            "hSize": "fill",
+            "text": "6 letters",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Hint, Layout=Desktop hint row",
+      "id": "166:75787",
+      "props": {
+        "Kind": "Hint",
+        "Layout": "Desktop hint row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "166:75787",
+        "name": "Kind=Hint, Layout=Desktop hint row",
+        "w": 481,
+        "h": 114,
+        "wSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/24"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:75801",
+            "name": "Top",
+            "w": 439,
+            "h": 36,
+            "hSize": "fill",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/24",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "166:75788",
+                "name": "Turn",
+                "w": 283,
+                "h": 80,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "166:75789",
+                    "name": "Eyebrow",
+                    "w": 185,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "166:75790",
+                        "name": "Category",
+                        "w": 69,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Sand"
+                        },
+                        "componentId": "24:6511",
+                        "props": {
+                          "Label": "Animals"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 69
+                          }
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "166:75791",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "166:75792",
+                    "name": "Answer",
+                    "w": 159,
+                    "h": 42,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "166:75793",
+                        "name": "Main",
+                        "w": 159,
+                        "h": 42,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Hint",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:75795",
+                "name": "Countdown",
+                "w": 132,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Running"
+                },
+                "componentId": "9:404",
+                "props": {
+                  "Label": "left",
+                  "Time": "0:58"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 132
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "166:75794",
+            "name": "Meta",
+            "w": 439,
+            "h": 36,
+            "hSize": "fill",
+            "text": "6 letters",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Status, Layout=Desktop hint row",
+      "id": "166:75802",
+      "props": {
+        "Kind": "Status",
+        "Layout": "Desktop hint row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "166:75802",
+        "name": "Kind=Status, Layout=Desktop hint row",
+        "w": 481,
+        "h": 102,
+        "wSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/24"
+          ],
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "166:75816",
+            "name": "Top",
+            "w": 439,
+            "h": 30,
+            "hSize": "fill",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/24",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "166:75803",
+                "name": "Turn",
+                "w": 244,
+                "h": 68,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "166:75804",
+                    "name": "Eyebrow",
+                    "w": 185,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/8",
+                      "align": "center",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "INSTANCE",
+                        "id": "166:75805",
+                        "name": "Category",
+                        "w": 69,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "component": "Zumpo/Tag",
+                        "variant": {
+                          "Tone": "Sand"
+                        },
+                        "componentId": "24:6511",
+                        "props": {
+                          "Label": "Animals"
+                        },
+                        "overrides": [
+                          {
+                            "path": ".",
+                            "height": 30,
+                            "width": 69
+                          }
+                        ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "166:75806",
+                        "name": "Label",
+                        "w": 108,
+                        "h": 20,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "Guess the word",
+                        "textStyle": "Zumpo/Label",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "FRAME",
+                    "id": "166:75807",
+                    "name": "Answer",
+                    "w": 70,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/12",
+                      "align": "baseline",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "TEXT",
+                        "id": "166:75808",
+                        "name": "Main",
+                        "w": 70,
+                        "h": 30,
+                        "wSize": "hug",
+                        "hSize": "hug",
+                        "text": "__r___",
+                        "textStyle": "Zumpo/Heading",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:75810",
+                "name": "Countdown",
+                "w": 171,
+                "h": 44,
+                "wSize": "hug",
+                "hSize": "hug",
+                "component": "Zumpo/Countdown",
+                "variant": {
+                  "Tone": "Waiting"
+                },
+                "componentId": "24:5274",
+                "props": {
+                  "Label": "to choose",
+                  "Time": "0:12"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 44,
+                    "width": 171
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "166:75809",
+            "name": "Meta",
+            "w": 439,
+            "h": 30,
+            "hSize": "fill",
+            "text": "6 letters",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Word, Layout=Phone row",
+      "id": "168:76862",
+      "props": {
+        "Kind": "Word",
+        "Layout": "Phone row"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "168:76862",
+        "name": "Kind=Word, Layout=Phone row",
+        "w": 122,
         "h": 86,
+        "wSize": "hug",
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -663,9 +1953,9 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "163:44736",
+            "id": "168:76864",
             "name": "Text",
-            "w": 216,
+            "w": 1,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -676,9 +1966,9 @@
             "children": [
               {
                 "type": "FRAME",
-                "id": "27:22156",
+                "id": "168:76865",
                 "name": "Eyebrow",
-                "w": 216,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -692,7 +1982,7 @@
                 "children": [
                   {
                     "type": "INSTANCE",
-                    "id": "27:22157",
+                    "id": "168:76871",
                     "name": "Category",
                     "w": 69,
                     "h": 30,
@@ -719,7 +2009,7 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22158",
+                    "id": "168:76866",
                     "name": "Label",
                     "w": 108,
                     "h": 20,
@@ -739,9 +2029,9 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22161",
+                    "id": "168:76872",
                     "name": "Meta",
-                    "w": 23,
+                    "w": 1,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -762,9 +2052,9 @@
               },
               {
                 "type": "FRAME",
-                "id": "27:22159",
+                "id": "168:76867",
                 "name": "Answer",
-                "w": 216,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -777,7 +2067,7 @@
                 "children": [
                   {
                     "type": "TEXT",
-                    "id": "27:22160",
+                    "id": "168:76868",
                     "name": "Main",
                     "w": 70,
                     "h": 30,
@@ -801,7 +2091,7 @@
           },
           {
             "type": "INSTANCE",
-            "id": "27:22162",
+            "id": "168:76869",
             "name": "Countdown",
             "w": 88,
             "h": 44,
@@ -832,18 +2122,19 @@
       }
     },
     {
-      "name": "Kind=Hint, Layout=Phone",
-      "id": "27:22173",
+      "name": "Kind=Hint, Layout=Phone row",
+      "id": "168:76882",
       "props": {
         "Kind": "Hint",
-        "Layout": "Phone"
+        "Layout": "Phone row"
       },
       "node": {
         "type": "COMPONENT",
-        "id": "27:22173",
-        "name": "Kind=Hint, Layout=Phone",
-        "w": 350,
+        "id": "168:76882",
+        "name": "Kind=Hint, Layout=Phone row",
+        "w": 134,
         "h": 86,
+        "wSize": "hug",
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -866,9 +2157,9 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "163:44737",
+            "id": "168:76884",
             "name": "Text",
-            "w": 204,
+            "w": 1,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -879,9 +2170,9 @@
             "children": [
               {
                 "type": "FRAME",
-                "id": "27:22175",
+                "id": "168:76885",
                 "name": "Eyebrow",
-                "w": 204,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -895,7 +2186,7 @@
                 "children": [
                   {
                     "type": "INSTANCE",
-                    "id": "27:22176",
+                    "id": "168:76891",
                     "name": "Category",
                     "w": 69,
                     "h": 30,
@@ -922,7 +2213,7 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22177",
+                    "id": "168:76886",
                     "name": "Label",
                     "w": 108,
                     "h": 20,
@@ -942,9 +2233,9 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22180",
+                    "id": "168:76892",
                     "name": "Meta",
-                    "w": 11,
+                    "w": 1,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -965,9 +2256,9 @@
               },
               {
                 "type": "FRAME",
-                "id": "27:22178",
+                "id": "168:76887",
                 "name": "Answer",
-                "w": 204,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -980,7 +2271,7 @@
                 "children": [
                   {
                     "type": "TEXT",
-                    "id": "27:22179",
+                    "id": "168:76888",
                     "name": "Main",
                     "w": 106,
                     "h": 30,
@@ -1004,7 +2295,7 @@
           },
           {
             "type": "INSTANCE",
-            "id": "27:22181",
+            "id": "168:76889",
             "name": "Countdown",
             "w": 100,
             "h": 44,
@@ -1035,18 +2326,19 @@
       }
     },
     {
-      "name": "Kind=Status, Layout=Phone",
-      "id": "27:22192",
+      "name": "Kind=Status, Layout=Phone row",
+      "id": "168:76902",
       "props": {
         "Kind": "Status",
-        "Layout": "Phone"
+        "Layout": "Phone row"
       },
       "node": {
         "type": "COMPONENT",
-        "id": "27:22192",
-        "name": "Kind=Status, Layout=Phone",
-        "w": 350,
+        "id": "168:76902",
+        "name": "Kind=Status, Layout=Phone row",
+        "w": 129,
         "h": 86,
+        "wSize": "hug",
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/paper"
@@ -1069,9 +2361,9 @@
         "children": [
           {
             "type": "FRAME",
-            "id": "163:44738",
+            "id": "168:76904",
             "name": "Text",
-            "w": 209,
+            "w": 1,
             "h": 60,
             "wSize": "fill",
             "hSize": "hug",
@@ -1082,9 +2374,9 @@
             "children": [
               {
                 "type": "FRAME",
-                "id": "27:22194",
+                "id": "168:76905",
                 "name": "Eyebrow",
-                "w": 209,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -1098,7 +2390,7 @@
                 "children": [
                   {
                     "type": "INSTANCE",
-                    "id": "27:22195",
+                    "id": "168:76911",
                     "name": "Category",
                     "w": 69,
                     "h": 30,
@@ -1125,7 +2417,7 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22196",
+                    "id": "168:76906",
                     "name": "Label",
                     "w": 108,
                     "h": 20,
@@ -1145,9 +2437,9 @@
                   },
                   {
                     "type": "TEXT",
-                    "id": "27:22199",
+                    "id": "168:76912",
                     "name": "Meta",
-                    "w": 16,
+                    "w": 1,
                     "h": 18,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -1168,9 +2460,9 @@
               },
               {
                 "type": "FRAME",
-                "id": "27:22197",
+                "id": "168:76907",
                 "name": "Answer",
-                "w": 209,
+                "w": 1,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -1183,7 +2475,7 @@
                 "children": [
                   {
                     "type": "TEXT",
-                    "id": "27:22198",
+                    "id": "168:76908",
                     "name": "Main",
                     "w": 70,
                     "h": 30,
@@ -1207,7 +2499,7 @@
           },
           {
             "type": "INSTANCE",
-            "id": "27:22200",
+            "id": "168:76909",
             "name": "Countdown",
             "w": 95,
             "h": 44,

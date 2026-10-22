@@ -14,7 +14,7 @@
     "x": 4590,
     "y": 4350,
     "w": 390,
-    "h": 1078,
+    "h": 1098,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -75,7 +75,7 @@
         "id": "162:108359",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -87,17 +87,17 @@
         "props": {
           "Main": "Crack the code",
           "Category": false,
-          "Meta": "Maya cracked it",
+          "Meta": "Green: in place. Coral: somewhere else.",
           "Label": "Code 2 of 3"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -106,7 +106,7 @@
             }
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "to guess",

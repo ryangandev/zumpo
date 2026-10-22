@@ -167,7 +167,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "1:12",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -419,7 +419,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "Black",
-                                  "State": "Turn"
+                                  "State": "Turn",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63059",
                                 "props": {
@@ -445,7 +446,8 @@
                                 "component": "Zumpo/Gomoku seat",
                                 "variant": {
                                   "Color": "White",
-                                  "State": "Default"
+                                  "State": "Default",
+                                  "Layout": "Desktop"
                                 },
                                 "componentId": "162:63087",
                                 "props": {
@@ -538,11 +540,11 @@
             "id": "162:67760",
             "name": "Game sidebar",
             "w": 344,
-            "h": 453,
+            "h": 445,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [

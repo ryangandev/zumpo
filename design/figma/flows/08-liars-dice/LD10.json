@@ -103,7 +103,7 @@
             "id": "72:79390",
             "name": "Board stage",
             "w": 944,
-            "h": 552,
+            "h": 585,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -162,7 +162,7 @@
                 "id": "72:79392",
                 "name": "Table panel",
                 "w": 944,
-                "h": 444,
+                "h": 477,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -297,7 +297,7 @@
                     "id": "72:79900",
                     "name": "The count",
                     "w": 894,
-                    "h": 84,
+                    "h": 117,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -325,7 +325,7 @@
                         "type": "FRAME",
                         "id": "73:79902",
                         "name": "Count",
-                        "w": 489,
+                        "w": 332,
                         "h": 56,
                         "wSize": "hug",
                         "hSize": "hug",
@@ -376,34 +376,23 @@
                             "fills": [
                               "$Zumpo · UI:color/muted"
                             ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "73:79911",
-                            "w": 13,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "→",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "73:79912",
-                            "w": 120,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Leo’s bid stands",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
                           }
                         ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "73:79912",
+                        "name": "Verdict",
+                        "w": 894,
+                        "h": 25,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "text": "Leo’s bid stands, so you lose a die",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ],
+                        "autoResize": "height"
                       }
                     ]
                   },
@@ -484,6 +473,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

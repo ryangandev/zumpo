@@ -14,7 +14,7 @@
     "x": 3120,
     "y": 150,
     "w": 1440,
-    "h": 903,
+    "h": 807,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -90,7 +90,7 @@
         "id": "58:73735",
         "name": "Board & room",
         "w": 1312,
-        "h": 733,
+        "h": 637,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -103,7 +103,7 @@
             "id": "58:73736",
             "name": "Board stage",
             "w": 944,
-            "h": 733,
+            "h": 637,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -163,7 +163,7 @@
                 "id": "58:73738",
                 "name": "Board panel",
                 "w": 944,
-                "h": 625,
+                "h": 529,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -265,14 +265,13 @@
                     "id": "58:73846",
                     "name": "Pile",
                     "w": 894,
-                    "h": 312,
+                    "h": 216,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
                     "layout": {
-                      "mode": "column",
+                      "mode": "row",
                       "gap": "$Zumpo · UI:space/16",
-                      "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -296,14 +295,16 @@
                         "type": "FRAME",
                         "id": "58:73849",
                         "name": "Trail",
-                        "w": 196,
+                        "w": 710,
                         "h": 80,
-                        "wSize": "hug",
+                        "wSize": "fill",
                         "hSize": "hug",
                         "clip": true,
                         "layout": {
                           "mode": "row",
                           "gap": "$Zumpo · UI:space/8",
+                          "wrap": true,
+                          "crossGap": "$Zumpo · UI:space/8",
                           "align": "center",
                           "strokesIncluded": true
                         },
@@ -549,6 +550,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -815,7 +819,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Level 2 cleared!",
+                      "Message": "Level 2 cleared.",
                       "Kind": "Score"
                     }
                   },

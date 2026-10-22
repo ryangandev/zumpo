@@ -14,7 +14,7 @@
     "x": 4100,
     "y": 4350,
     "w": 390,
-    "h": 1826,
+    "h": 1846,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -85,7 +85,7 @@
         "id": "162:107920",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 76,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -104,11 +104,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 76,
+            "height": 96,
             "width": 350
           },
           {
-            "path": "Text / Eyebrow / Category",
+            "path": "Bottom / Category",
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
@@ -117,12 +117,16 @@
             }
           },
           {
-            "path": "Countdown",
+            "path": "Bottom / Category / Label",
+            "visible": false
+          },
+          {
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "run time",
               "Time": "0:33",
-              "Tone": "Waiting"
+              "Tone": "Info"
             }
           }
         ]

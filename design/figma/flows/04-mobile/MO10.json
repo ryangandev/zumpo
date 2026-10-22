@@ -14,7 +14,7 @@
     "x": 530,
     "y": 5503,
     "w": 390,
-    "h": 779,
+    "h": 801,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -75,7 +75,7 @@
         "id": "27:22425",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 86,
+        "h": 108,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -92,11 +92,11 @@
         "overrides": [
           {
             "path": ".",
-            "height": 86,
+            "height": 108,
             "width": 350
           },
           {
-            "path": "Countdown",
+            "path": "Top / Countdown",
             "componentProperties": {
               "Show label": false,
               "Label": "next turn",
@@ -203,7 +203,7 @@
             },
             "componentId": "26:16225",
             "props": {
-              "Message": "Ryan guessed the correct word! (+72)"
+              "Message": "Ryan guessed the word, +72."
             },
             "overrides": [
               {

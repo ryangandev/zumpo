@@ -14,7 +14,7 @@
     "x": 1510,
     "y": 4254,
     "w": 390,
-    "h": 843,
+    "h": 865,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -129,7 +129,7 @@
         "id": "27:22285",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 86,
+        "h": 108,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -146,7 +146,7 @@
         "overrides": [
           {
             "path": ".",
-            "height": 86,
+            "height": 108,
             "width": 350
           }
         ]

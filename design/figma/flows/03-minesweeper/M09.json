@@ -114,7 +114,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "You and Leo picked the same cell, so you split its reward",
+                  "Meta": "Another player picked it too, so you split its reward",
                   "Main": "Safe! +12",
                   "Label": "Round 4 results"
                 },
@@ -1342,6 +1342,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

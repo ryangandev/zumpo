@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-21T18:18:13.319Z",
+  "exportedAt": "2026-10-22T05:43:00.631Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,15 +13,15 @@
     "previews": false
   },
   "counts": {
-    "flows": 250,
+    "flows": 257,
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
-    "seconds": 11,
-    "nodes": 14360,
-    "instances": 7315,
-    "grids": 84,
-    "gridCells": 2733
+    "seconds": 12,
+    "nodes": 14878,
+    "instances": 7826,
+    "grids": 90,
+    "gridCells": 2884
   },
   "tokens": {
     "collections": [
@@ -54,7 +54,7 @@
         ]
       }
     ],
-    "textStyles": 26,
+    "textStyles": 27,
     "paintStyles": 0,
     "effectStyles": 6
   },
@@ -177,7 +177,7 @@
       "name": "Zumpo/Countdown",
       "id": "24:5284",
       "file": "components/countdown.json",
-      "variants": 3
+      "variants": 4
     },
     {
       "name": "Zumpo/Cup",
@@ -243,7 +243,7 @@
       "name": "Zumpo/Gomoku seat",
       "id": "162:63129",
       "file": "components/gomoku-seat.json",
-      "variants": 6
+      "variants": 12
     },
     {
       "name": "Zumpo/Header",
@@ -403,9 +403,9 @@
     },
     {
       "name": "Zumpo/Scoreboard",
-      "id": "9:320",
+      "id": "166:70488",
       "file": "components/scoreboard.json",
-      "variants": 1
+      "variants": 2
     },
     {
       "name": "Zumpo/Select menu / Board",
@@ -495,7 +495,7 @@
       "name": "Zumpo/Turn bar",
       "id": "26:16873",
       "file": "components/turn-bar.json",
-      "variants": 6
+      "variants": 12
     },
     {
       "name": "Zumpo/Win line",
@@ -771,7 +771,7 @@
           "id": "9:943",
           "size": [
             1440,
-            730
+            737
           ],
           "file": "flows/02-draw-and-guess/DL02.json",
           "isFlow": true
@@ -793,7 +793,7 @@
           "id": "9:1014",
           "size": [
             1440,
-            992
+            738
           ],
           "file": "flows/02-draw-and-guess/DL04.json",
           "isFlow": true
@@ -804,7 +804,7 @@
           "id": "9:1067",
           "size": [
             1440,
-            1351
+            1097
           ],
           "file": "flows/02-draw-and-guess/DL05.json",
           "isFlow": true
@@ -815,7 +815,7 @@
           "id": "9:1120",
           "size": [
             1440,
-            892
+            638
           ],
           "file": "flows/02-draw-and-guess/DL06.json",
           "isFlow": true
@@ -903,7 +903,7 @@
           "id": "9:1597",
           "size": [
             1440,
-            996
+            950
           ],
           "file": "flows/02-draw-and-guess/D05.json",
           "isFlow": true
@@ -914,7 +914,7 @@
           "id": "9:1675",
           "size": [
             1440,
-            1098
+            950
           ],
           "file": "flows/02-draw-and-guess/D06.json",
           "isFlow": true
@@ -925,7 +925,7 @@
           "id": "9:1777",
           "size": [
             1440,
-            1008
+            950
           ],
           "file": "flows/02-draw-and-guess/D07.json",
           "isFlow": true
@@ -936,7 +936,7 @@
           "id": "9:1863",
           "size": [
             1440,
-            1008
+            950
           ],
           "file": "flows/02-draw-and-guess/D08.json",
           "isFlow": true
@@ -947,7 +947,7 @@
           "id": "9:1949",
           "size": [
             1440,
-            996
+            950
           ],
           "file": "flows/02-draw-and-guess/D09.json",
           "isFlow": true
@@ -991,7 +991,7 @@
           "id": "9:2281",
           "size": [
             1440,
-            952
+            892
           ],
           "file": "flows/02-draw-and-guess/D13.json",
           "isFlow": true
@@ -1002,7 +1002,7 @@
           "id": "9:2364",
           "size": [
             1440,
-            952
+            892
           ],
           "file": "flows/02-draw-and-guess/D14.json",
           "isFlow": true
@@ -1024,7 +1024,7 @@
           "id": "9:15843",
           "size": [
             1440,
-            1325
+            1071
           ],
           "file": "flows/02-draw-and-guess/DL10.json",
           "isFlow": true
@@ -1035,7 +1035,7 @@
           "id": "9:15898",
           "size": [
             1440,
-            992
+            738
           ],
           "file": "flows/02-draw-and-guess/DL11.json",
           "isFlow": true
@@ -1065,7 +1065,7 @@
           "id": "9:2528",
           "size": [
             1440,
-            1035
+            1088
           ],
           "file": "flows/03-minesweeper/ML01.json",
           "isFlow": true
@@ -1076,7 +1076,7 @@
           "id": "9:2603",
           "size": [
             1440,
-            856
+            1088
           ],
           "file": "flows/03-minesweeper/ML02.json",
           "isFlow": true
@@ -1087,7 +1087,7 @@
           "id": "9:2638",
           "size": [
             1440,
-            1018
+            1088
           ],
           "file": "flows/03-minesweeper/ML03.json",
           "isFlow": true
@@ -1307,7 +1307,7 @@
           "id": "9:9799",
           "size": [
             1440,
-            1149
+            1093
           ],
           "file": "flows/03-minesweeper/M14.json",
           "isFlow": true
@@ -1318,7 +1318,7 @@
           "id": "9:9886",
           "size": [
             1440,
-            1126
+            1064
           ],
           "file": "flows/03-minesweeper/M15.json",
           "isFlow": true
@@ -1347,11 +1347,11 @@
         },
         {
           "code": "MS01",
-          "title": "Solo · choose a board",
-          "id": "40:57385",
+          "title": "Solo · change board",
+          "id": "166:72368",
           "size": [
             1440,
-            920
+            1092
           ],
           "file": "flows/03-minesweeper/MS01.json",
           "isFlow": true
@@ -1384,7 +1384,7 @@
           "id": "40:59470",
           "size": [
             1440,
-            1376
+            1092
           ],
           "file": "flows/03-minesweeper/MS04.json",
           "isFlow": true
@@ -1395,7 +1395,7 @@
           "id": "40:60430",
           "size": [
             390,
-            677
+            697
           ],
           "file": "flows/03-minesweeper/MS05.json",
           "isFlow": true
@@ -1436,7 +1436,7 @@
           "id": "9:10156",
           "size": [
             390,
-            1540
+            1623
           ],
           "file": "flows/04-mobile/MO04.json",
           "isFlow": true
@@ -1447,7 +1447,7 @@
           "id": "9:10193",
           "size": [
             390,
-            884
+            538
           ],
           "file": "flows/04-mobile/MO05.json",
           "isFlow": true
@@ -1469,7 +1469,7 @@
           "id": "9:10261",
           "size": [
             390,
-            688
+            710
           ],
           "file": "flows/04-mobile/MO07.json",
           "isFlow": true
@@ -1480,7 +1480,7 @@
           "id": "9:10300",
           "size": [
             390,
-            843
+            865
           ],
           "file": "flows/04-mobile/MO08.json",
           "isFlow": true
@@ -1491,7 +1491,7 @@
           "id": "9:10340",
           "size": [
             390,
-            779
+            801
           ],
           "file": "flows/04-mobile/MO09.json",
           "isFlow": true
@@ -1502,7 +1502,7 @@
           "id": "9:10377",
           "size": [
             390,
-            779
+            801
           ],
           "file": "flows/04-mobile/MO10.json",
           "isFlow": true
@@ -1513,7 +1513,7 @@
           "id": "9:10412",
           "size": [
             390,
-            682
+            692
           ],
           "file": "flows/04-mobile/MO11.json",
           "isFlow": true
@@ -1524,7 +1524,7 @@
           "id": "9:10773",
           "size": [
             390,
-            682
+            692
           ],
           "file": "flows/04-mobile/MO12.json",
           "isFlow": true
@@ -1535,7 +1535,7 @@
           "id": "9:11134",
           "size": [
             390,
-            1074
+            1084
           ],
           "file": "flows/04-mobile/MO13.json",
           "isFlow": true
@@ -1546,7 +1546,7 @@
           "id": "9:11498",
           "size": [
             390,
-            1098
+            1108
           ],
           "file": "flows/04-mobile/MO14.json",
           "isFlow": true
@@ -1601,7 +1601,7 @@
           "id": "96:115189",
           "size": [
             390,
-            1074
+            1096
           ],
           "file": "flows/04-mobile/MO19.json",
           "isFlow": true
@@ -1631,17 +1631,6 @@
       "dir": "05-make-24",
       "flows": [
         {
-          "code": "T01",
-          "title": "Solo · ready to start",
-          "id": "40:40052",
-          "size": [
-            1440,
-            831
-          ],
-          "file": "flows/05-make-24/T01.json",
-          "isFlow": true
-        },
-        {
           "code": "T02",
           "title": "Solo · combining cards",
           "id": "40:40163",
@@ -1658,7 +1647,7 @@
           "id": "40:40648",
           "size": [
             1440,
-            582
+            574
           ],
           "file": "flows/05-make-24/T03.json",
           "isFlow": true
@@ -1713,7 +1702,7 @@
           "id": "40:43542",
           "size": [
             1440,
-            913
+            920
           ],
           "file": "flows/05-make-24/T09.json",
           "isFlow": true
@@ -1724,7 +1713,7 @@
           "id": "40:41578",
           "size": [
             1440,
-            1220
+            987
           ],
           "file": "flows/05-make-24/T05.json",
           "isFlow": true
@@ -1746,7 +1735,7 @@
           "id": "40:44178",
           "size": [
             390,
-            647
+            667
           ],
           "file": "flows/05-make-24/T11.json",
           "isFlow": true
@@ -1757,7 +1746,7 @@
           "id": "40:44375",
           "size": [
             390,
-            637
+            657
           ],
           "file": "flows/05-make-24/T12.json",
           "isFlow": true
@@ -1774,7 +1763,9 @@
           "isFlow": true
         }
       ],
-      "notes": []
+      "notes": [
+        "T01 · Play solo from the hub lands here; the clock starts on Start, not on arrival."
+      ]
     },
     {
       "name": "06 / Pairs / complete flow",
@@ -1783,11 +1774,11 @@
       "flows": [
         {
           "code": "PR01",
-          "title": "Solo · choose a board",
-          "id": "40:49758",
+          "title": "Solo · change board",
+          "id": "166:73073",
           "size": [
             1440,
-            852
+            946
           ],
           "file": "flows/06-pairs/PR01.json",
           "isFlow": true
@@ -1820,7 +1811,7 @@
           "id": "40:51008",
           "size": [
             1440,
-            1132
+            946
           ],
           "file": "flows/06-pairs/PR04.json",
           "isFlow": true
@@ -1853,7 +1844,7 @@
           "id": "40:52794",
           "size": [
             1440,
-            1218
+            1188
           ],
           "file": "flows/06-pairs/PR07.json",
           "isFlow": true
@@ -1875,7 +1866,7 @@
           "id": "40:53550",
           "size": [
             390,
-            610
+            630
           ],
           "file": "flows/06-pairs/PR09.json",
           "isFlow": true
@@ -1886,7 +1877,7 @@
           "id": "40:53838",
           "size": [
             390,
-            666
+            686
           ],
           "file": "flows/06-pairs/PR10.json",
           "isFlow": true
@@ -1911,23 +1902,12 @@
       "dir": "07-trios",
       "flows": [
         {
-          "code": "TS01",
-          "title": "Solo · ready to start",
-          "id": "79:86450",
-          "size": [
-            1440,
-            905
-          ],
-          "file": "flows/07-trios/TS01.json",
-          "isFlow": true
-        },
-        {
           "code": "TS02",
           "title": "Solo · two cards picked",
           "id": "79:87369",
           "size": [
             1440,
-            812
+            928
           ],
           "file": "flows/07-trios/TS02.json",
           "isFlow": true
@@ -1938,7 +1918,7 @@
           "id": "79:87712",
           "size": [
             1440,
-            812
+            928
           ],
           "file": "flows/07-trios/TS03.json",
           "isFlow": true
@@ -1949,7 +1929,7 @@
           "id": "79:86777",
           "size": [
             1440,
-            1450
+            1166
           ],
           "file": "flows/07-trios/TS04.json",
           "isFlow": true
@@ -2004,7 +1984,7 @@
           "id": "79:88033",
           "size": [
             1440,
-            1114
+            1084
           ],
           "file": "flows/07-trios/TS09.json",
           "isFlow": true
@@ -2026,7 +2006,7 @@
           "id": "79:88825",
           "size": [
             390,
-            666
+            686
           ],
           "file": "flows/07-trios/TS11.json",
           "isFlow": true
@@ -2037,7 +2017,7 @@
           "id": "79:89111",
           "size": [
             390,
-            739
+            740
           ],
           "file": "flows/07-trios/TS12.json",
           "isFlow": true
@@ -2065,7 +2045,9 @@
           "isFlow": false
         }
       ],
-      "notes": []
+      "notes": [
+        "TS01 · Play solo from the hub lands here. The table is dealt and the clock starts on Start, so nobody studies the cards first."
+      ]
     },
     {
       "name": "08 / Liar's Dice / complete flow",
@@ -2074,11 +2056,11 @@
       "flows": [
         {
           "code": "LD01",
-          "title": "Solo · pick a table",
-          "id": "75:82404",
+          "title": "Solo · change table",
+          "id": "166:73349",
           "size": [
             1440,
-            893
+            755
           ],
           "file": "flows/08-liars-dice/LD01.json",
           "isFlow": true
@@ -2089,7 +2071,7 @@
           "id": "69:77020",
           "size": [
             1440,
-            623
+            622
           ],
           "file": "flows/08-liars-dice/LD02.json",
           "isFlow": true
@@ -2111,7 +2093,7 @@
           "id": "71:77767",
           "size": [
             1440,
-            722
+            755
           ],
           "file": "flows/08-liars-dice/LD04.json",
           "isFlow": true
@@ -2122,7 +2104,7 @@
           "id": "77:82481",
           "size": [
             1440,
-            1006
+            755
           ],
           "file": "flows/08-liars-dice/LD05.json",
           "isFlow": true
@@ -2133,7 +2115,7 @@
           "id": "78:82778",
           "size": [
             1440,
-            1006
+            755
           ],
           "file": "flows/08-liars-dice/LD06.json",
           "isFlow": true
@@ -2199,7 +2181,7 @@
           "id": "73:80508",
           "size": [
             1440,
-            1092
+            1095
           ],
           "file": "flows/08-liars-dice/LD12.json",
           "isFlow": true
@@ -2210,7 +2192,7 @@
           "id": "79:89587",
           "size": [
             390,
-            1066
+            1086
           ],
           "file": "flows/08-liars-dice/LD13.json",
           "isFlow": true
@@ -2221,7 +2203,7 @@
           "id": "79:89902",
           "size": [
             390,
-            1178
+            1198
           ],
           "file": "flows/08-liars-dice/LD14.json",
           "isFlow": true
@@ -2232,7 +2214,7 @@
           "id": "79:90326",
           "size": [
             390,
-            851
+            867
           ],
           "file": "flows/08-liars-dice/LD15.json",
           "isFlow": true
@@ -2254,7 +2236,7 @@
           "id": "163:65953",
           "size": [
             1440,
-            623
+            622
           ],
           "file": "flows/08-liars-dice/LD16.json",
           "isFlow": true
@@ -2295,7 +2277,7 @@
           "id": "58:73733",
           "size": [
             1440,
-            903
+            807
           ],
           "file": "flows/09-hush/HU03.json",
           "isFlow": true
@@ -2306,7 +2288,7 @@
           "id": "59:74110",
           "size": [
             1440,
-            903
+            807
           ],
           "file": "flows/09-hush/HU04.json",
           "isFlow": true
@@ -2317,7 +2299,7 @@
           "id": "60:74500",
           "size": [
             1440,
-            903
+            807
           ],
           "file": "flows/09-hush/HU05.json",
           "isFlow": true
@@ -2328,7 +2310,7 @@
           "id": "61:74895",
           "size": [
             1440,
-            888
+            808
           ],
           "file": "flows/09-hush/HU06.json",
           "isFlow": true
@@ -2339,7 +2321,7 @@
           "id": "62:75362",
           "size": [
             1440,
-            1101
+            918
           ],
           "file": "flows/09-hush/HU07.json",
           "isFlow": true
@@ -2350,7 +2332,7 @@
           "id": "63:75807",
           "size": [
             1440,
-            1289
+            1098
           ],
           "file": "flows/09-hush/HU08.json",
           "isFlow": true
@@ -2372,7 +2354,7 @@
           "id": "65:76321",
           "size": [
             390,
-            1023
+            873
           ],
           "file": "flows/09-hush/HU10.json",
           "isFlow": true
@@ -2383,7 +2365,7 @@
           "id": "74:82191",
           "size": [
             390,
-            819
+            803
           ],
           "file": "flows/09-hush/HU11.json",
           "isFlow": true
@@ -2446,9 +2428,20 @@
           "id": "79:99297",
           "size": [
             1440,
-            995
+            1057
           ],
           "file": "flows/10-daily-word/DW04.json",
+          "isFlow": true
+        },
+        {
+          "code": "DW17",
+          "title": "Short window · today’s word",
+          "id": "166:73814",
+          "size": [
+            1280,
+            720
+          ],
+          "file": "flows/10-daily-word/DW17.json",
           "isFlow": true
         },
         {
@@ -2501,7 +2494,7 @@
           "id": "79:99581",
           "size": [
             1440,
-            1035
+            1080
           ],
           "file": "flows/10-daily-word/DW05.json",
           "isFlow": true
@@ -2512,7 +2505,7 @@
           "id": "79:99875",
           "size": [
             1440,
-            889
+            855
           ],
           "file": "flows/10-daily-word/DW06.json",
           "isFlow": true
@@ -2534,7 +2527,7 @@
           "id": "79:100145",
           "size": [
             390,
-            778
+            798
           ],
           "file": "flows/10-daily-word/DW12.json",
           "isFlow": true
@@ -2545,7 +2538,7 @@
           "id": "79:102604",
           "size": [
             390,
-            836
+            856
           ],
           "file": "flows/10-daily-word/DW13.json",
           "isFlow": true
@@ -2567,7 +2560,7 @@
           "id": "97:115499",
           "size": [
             390,
-            1170
+            1190
           ],
           "file": "flows/10-daily-word/DW15.json",
           "isFlow": true
@@ -2617,23 +2610,12 @@
       "dir": "11-snap",
       "flows": [
         {
-          "code": "SN01",
-          "title": "Solo · ready to start",
-          "id": "162:86146",
-          "size": [
-            1440,
-            927
-          ],
-          "file": "flows/11-snap/SN01.json",
-          "isFlow": true
-        },
-        {
           "code": "SN02",
           "title": "Solo · find the match",
           "id": "162:86271",
           "size": [
             1440,
-            690
+            927
           ],
           "file": "flows/11-snap/SN02.json",
           "isFlow": true
@@ -2644,7 +2626,7 @@
           "id": "162:86302",
           "size": [
             1440,
-            690
+            927
           ],
           "file": "flows/11-snap/SN03.json",
           "isFlow": true
@@ -2655,7 +2637,7 @@
           "id": "162:86157",
           "size": [
             1440,
-            655
+            1028
           ],
           "file": "flows/11-snap/SN04.json",
           "isFlow": true
@@ -2710,7 +2692,7 @@
           "id": "162:86333",
           "size": [
             1440,
-            1060
+            1030
           ],
           "file": "flows/11-snap/SN09.json",
           "isFlow": true
@@ -2732,7 +2714,7 @@
           "id": "162:86399",
           "size": [
             390,
-            814
+            834
           ],
           "file": "flows/11-snap/SN11.json",
           "isFlow": true
@@ -2743,7 +2725,7 @@
           "id": "162:86426",
           "size": [
             390,
-            891
+            892
           ],
           "file": "flows/11-snap/SN12.json",
           "isFlow": true
@@ -2771,7 +2753,9 @@
           "isFlow": true
         }
       ],
-      "notes": []
+      "notes": [
+        "SN01 · Play solo from the game page lands here. The cards are dealt and the clock starts on Start, so nobody studies the first card. A run is the whole deck: one card is yours, and the other 30 come up in the middle one at a time."
+      ]
     },
     {
       "name": "12 / Doodle Chain / complete flow",
@@ -2938,7 +2922,7 @@
           "id": "162:101381",
           "size": [
             390,
-            1590
+            1623
           ],
           "file": "flows/12-doodle-chain/DC15.json",
           "isFlow": true
@@ -2949,7 +2933,7 @@
           "id": "162:102928",
           "size": [
             390,
-            537
+            569
           ],
           "file": "flows/12-doodle-chain/DC16.json",
           "isFlow": true
@@ -2960,7 +2944,7 @@
           "id": "162:103072",
           "size": [
             390,
-            816
+            848
           ],
           "file": "flows/12-doodle-chain/DC17.json",
           "isFlow": true
@@ -2971,7 +2955,7 @@
           "id": "162:103193",
           "size": [
             390,
-            791
+            823
           ],
           "file": "flows/12-doodle-chain/DC18.json",
           "isFlow": true
@@ -2982,7 +2966,7 @@
           "id": "162:103355",
           "size": [
             390,
-            994
+            1026
           ],
           "file": "flows/12-doodle-chain/DC19.json",
           "isFlow": true
@@ -3012,7 +2996,7 @@
           "id": "162:107053",
           "size": [
             1440,
-            1035
+            1213
           ],
           "file": "flows/13-code-breaker/CB01.json",
           "isFlow": true
@@ -3051,6 +3035,17 @@
           "isFlow": true
         },
         {
+          "code": "CB22",
+          "title": "Short window · today’s code",
+          "id": "166:74110",
+          "size": [
+            1280,
+            720
+          ],
+          "file": "flows/13-code-breaker/CB22.json",
+          "isFlow": true
+        },
+        {
           "code": "CB05",
           "title": "Solo · already guessed",
           "id": "162:68750",
@@ -3067,7 +3062,7 @@
           "id": "162:81487",
           "size": [
             1440,
-            1123
+            1089
           ],
           "file": "flows/13-code-breaker/CB06.json",
           "isFlow": true
@@ -3078,7 +3073,7 @@
           "id": "162:81855",
           "size": [
             1440,
-            1163
+            1112
           ],
           "file": "flows/13-code-breaker/CB07.json",
           "isFlow": true
@@ -3089,7 +3084,7 @@
           "id": "162:82249",
           "size": [
             1440,
-            1017
+            935
           ],
           "file": "flows/13-code-breaker/CB08.json",
           "isFlow": true
@@ -3166,7 +3161,7 @@
           "id": "162:107310",
           "size": [
             390,
-            1792
+            2099
           ],
           "file": "flows/13-code-breaker/CB15.json",
           "isFlow": true
@@ -3177,7 +3172,7 @@
           "id": "162:107560",
           "size": [
             390,
-            1020
+            1040
           ],
           "file": "flows/13-code-breaker/CB16.json",
           "isFlow": true
@@ -3188,7 +3183,7 @@
           "id": "162:107917",
           "size": [
             390,
-            1826
+            1846
           ],
           "file": "flows/13-code-breaker/CB17.json",
           "isFlow": true
@@ -3199,7 +3194,7 @@
           "id": "162:108356",
           "size": [
             390,
-            1078
+            1098
           ],
           "file": "flows/13-code-breaker/CB18.json",
           "isFlow": true
@@ -3221,7 +3216,7 @@
           "id": "162:109211",
           "size": [
             390,
-            1682
+            1702
           ],
           "file": "flows/13-code-breaker/CB20.json",
           "isFlow": true
@@ -3253,18 +3248,18 @@
           "id": "162:97488",
           "size": [
             1440,
-            1035
+            1063
           ],
           "file": "flows/14-gomoku/GM01.json",
           "isFlow": true
         },
         {
           "code": "GM02",
-          "title": "Solo · pick a level",
-          "id": "162:96819",
+          "title": "Solo · change level",
+          "id": "166:73573",
           "size": [
             1440,
-            974
+            892
           ],
           "file": "flows/14-gomoku/GM02.json",
           "isFlow": true
@@ -3297,7 +3292,7 @@
           "id": "162:69258",
           "size": [
             1440,
-            1176
+            892
           ],
           "file": "flows/14-gomoku/GM05.json",
           "isFlow": true
@@ -3308,7 +3303,7 @@
           "id": "162:69506",
           "size": [
             1440,
-            1176
+            892
           ],
           "file": "flows/14-gomoku/GM06.json",
           "isFlow": true
@@ -3385,7 +3380,7 @@
           "id": "162:93373",
           "size": [
             1440,
-            1165
+            909
           ],
           "file": "flows/14-gomoku/GM13.json",
           "isFlow": true
@@ -3396,7 +3391,7 @@
           "id": "162:93965",
           "size": [
             1440,
-            1082
+            892
           ],
           "file": "flows/14-gomoku/GM14.json",
           "isFlow": true
@@ -3407,7 +3402,7 @@
           "id": "162:94526",
           "size": [
             1440,
-            1142
+            892
           ],
           "file": "flows/14-gomoku/GM15.json",
           "isFlow": true
@@ -3429,7 +3424,7 @@
           "id": "162:101867",
           "size": [
             390,
-            972
+            906
           ],
           "file": "flows/14-gomoku/GM17.json",
           "isFlow": true
@@ -3440,7 +3435,7 @@
           "id": "162:102025",
           "size": [
             390,
-            982
+            916
           ],
           "file": "flows/14-gomoku/GM18.json",
           "isFlow": true
@@ -3451,7 +3446,7 @@
           "id": "162:102362",
           "size": [
             390,
-            922
+            856
           ],
           "file": "flows/14-gomoku/GM19.json",
           "isFlow": true
@@ -3462,7 +3457,7 @@
           "id": "162:102701",
           "size": [
             390,
-            1792
+            1974
           ],
           "file": "flows/14-gomoku/GM20.json",
           "isFlow": true
@@ -3480,10 +3475,103 @@
         }
       ],
       "notes": []
+    },
+    {
+      "name": "15 / Phone in play",
+      "id": "163:63239",
+      "dir": "15-phone-in-play",
+      "flows": [
+        {
+          "code": "PH01",
+          "title": "Code Breaker room · 390 × 844",
+          "id": "163:64696",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/15-phone-in-play/PH01.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH02",
+          "title": "Daily Word room · 360 × 640",
+          "id": "163:64910",
+          "size": [
+            360,
+            640
+          ],
+          "file": "flows/15-phone-in-play/PH02.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH03",
+          "title": "Snap room · 390 × 844",
+          "id": "163:65094",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/15-phone-in-play/PH03.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH04",
+          "title": "Gomoku on your own · tap again · 360 × 640",
+          "id": "163:65172",
+          "size": [
+            360,
+            640
+          ],
+          "file": "flows/15-phone-in-play/PH04.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH05",
+          "title": "Draw & Guess drawer · 390 × 844",
+          "id": "163:65269",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/15-phone-in-play/PH05.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH06",
+          "title": "Liar's Dice room · your bid · 390 × 844",
+          "id": "163:65379",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/15-phone-in-play/PH06.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH07",
+          "title": "A player went away · 390 × 844",
+          "id": "166:71052",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/15-phone-in-play/PH07.json",
+          "isFlow": true
+        },
+        {
+          "code": "PH08",
+          "title": "Gomoku on a phone on its side · 844 × 390",
+          "id": "166:71307",
+          "size": [
+            844,
+            390
+          ],
+          "file": "flows/15-phone-in-play/PH08.json",
+          "isFlow": true
+        }
+      ],
+      "notes": []
     }
   ],
-  "warnings": [
-    "Expected 74 component families, found 77",
-    "Expected 247 flow frames, found 250"
-  ]
+  "warnings": []
 }

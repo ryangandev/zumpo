@@ -133,7 +133,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "Waiting for Leo",
+                  "Meta": "Waiting for 1 player",
                   "Main": "Out of guesses",
                   "Category": false,
                   "Label": "Code 2 of 3"
@@ -941,6 +941,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

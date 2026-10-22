@@ -167,7 +167,7 @@
                       "Show label": true,
                       "Label": "run time",
                       "Time": "1:12",
-                      "Tone": "Waiting"
+                      "Tone": "Info"
                     }
                   }
                 ]
@@ -475,11 +475,11 @@
             "id": "69:77464",
             "name": "Game sidebar",
             "w": 344,
-            "h": 453,
+            "h": 445,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [

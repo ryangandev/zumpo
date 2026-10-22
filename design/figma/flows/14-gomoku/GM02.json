@@ -1,20 +1,20 @@
 {
   "format": 1,
   "code": "GM02",
-  "title": "Solo · pick a level",
-  "id": "162:96819",
+  "title": "Solo · change level",
+  "id": "166:73573",
   "section": "14 / Gomoku / complete flow",
   "reviewNotes": [
     "GM02 · On your own: pick a level (Easy, Medium, Hard) and your stones (Black or White). The last picks come first next time; a first game is Medium, playing Black. The record line is for the level picked."
   ],
   "frame": {
     "type": "FRAME",
-    "id": "162:96819",
-    "name": "GM02 / Solo · pick a level",
+    "id": "166:73573",
+    "name": "GM02 / Solo · change level",
     "x": 1580,
     "y": 200,
     "w": 1440,
-    "h": 974,
+    "h": 892,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -34,30 +34,64 @@
     "children": [
       {
         "type": "INSTANCE",
-        "id": "162:96820",
-        "name": "Zumpo/Header",
+        "id": "166:73574",
+        "name": "Zumpo/Room bar",
         "w": 1312,
-        "h": 104,
-        "component": "Zumpo/Header",
-        "componentId": "4:39",
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Gomoku"
+        },
         "overrides": [
           {
-            "path": "Navigation / Games",
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Show icon": false,
+              "Icon": "24:5010",
+              "Label": "You won",
+              "Tone": "Lime"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
             "reactions": [
               {
                 "on": "on_click",
                 "do": [
                   {
                     "nav": "navigate",
-                    "to": "9:433",
-                    "toName": "P01 / Home"
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
                   }
                 ]
               }
             ]
           },
           {
-            "path": "Navigation / You",
+            "path": "You",
             "componentProperties": {
               "Initials": "MA",
               "Tone": "Peach"
@@ -67,243 +101,691 @@
       },
       {
         "type": "FRAME",
-        "id": "162:96821",
-        "name": "Page heading",
+        "id": "166:73575",
+        "name": "Board & room",
         "w": 1312,
-        "h": 121,
+        "h": 722,
         "hSize": "hug",
         "layout": {
-          "mode": "column",
-          "gap": "$Zumpo · UI:space/12",
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
           "strokesIncluded": true
         },
         "children": [
           {
-            "type": "INSTANCE",
-            "id": "162:96822",
-            "name": "Tag / COME ON IN",
-            "w": 109,
-            "h": 30,
-            "wSize": "hug",
+            "type": "FRAME",
+            "id": "166:73576",
+            "name": "Board stage",
+            "w": 944,
+            "h": 722,
             "hSize": "hug",
-            "component": "Zumpo/Tag",
-            "variant": {
-              "Tone": "Sand"
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
             },
-            "componentId": "24:6511",
-            "props": {
-              "Label": "ON YOUR OWN"
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 30,
-                "width": 109
+                "type": "INSTANCE",
+                "id": "166:73577",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "From C11 to G7",
+                  "Main": "You made five in a row",
+                  "Category": false,
+                  "Label": "Game over"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "1:12",
+                      "Tone": "Info"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "166:73578",
+                "name": "Table panel",
+                "w": 944,
+                "h": 614,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/24",
+                  "pad": "$Zumpo · UI:space/24",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "FRAME",
+                    "id": "166:73579",
+                    "name": "Game",
+                    "w": 894,
+                    "h": 564,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "layout": {
+                      "mode": "row",
+                      "gap": "$Zumpo · UI:space/24",
+                      "strokesIncluded": true
+                    },
+                    "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "166:73580",
+                        "name": "Board",
+                        "w": 564,
+                        "h": 564,
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73581",
+                            "name": "Zumpo/Gomoku board",
+                            "x": 0,
+                            "y": 0,
+                            "w": 564,
+                            "h": 564,
+                            "wSize": "hug",
+                            "hSize": "hug",
+                            "component": "Zumpo/Gomoku board",
+                            "variant": {
+                              "Layout": "Desktop"
+                            },
+                            "componentId": "162:62901"
+                          },
+                          {
+                            "type": "GRID",
+                            "rows": 6,
+                            "cols": 8,
+                            "count": 21,
+                            "kind": "Zumpo/Stone",
+                            "firstId": "166:73582",
+                            "pitch": [
+                              36,
+                              36
+                            ],
+                            "holes": 27,
+                            "cell": {
+                              "type": "INSTANCE",
+                              "name": "Stone I9",
+                              "w": "$Zumpo · UI:space/32",
+                              "h": "$Zumpo · UI:space/32",
+                              "component": "Zumpo/Stone",
+                              "variant": {
+                                "Color": "White",
+                                "Mark": "None",
+                                "State": "Placed",
+                                "Size": "Regular"
+                              },
+                              "componentId": "162:62879"
+                            },
+                            "special": [
+                              {
+                                "r": 3,
+                                "c": 5,
+                                "id": "166:73582",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone H8"
+                              },
+                              {
+                                "r": 4,
+                                "c": 4,
+                                "id": "166:73584",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Win",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62877",
+                                "name": "Stone G7"
+                              },
+                              {
+                                "r": 3,
+                                "c": 6,
+                                "id": "166:73586",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone I8"
+                              },
+                              {
+                                "r": 3,
+                                "c": 4,
+                                "id": "166:73588",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone G8"
+                              },
+                              {
+                                "r": 2,
+                                "c": 4,
+                                "id": "166:73590",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone G9"
+                              },
+                              {
+                                "r": 1,
+                                "c": 4,
+                                "id": "166:73592",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone G10"
+                              },
+                              {
+                                "r": 2,
+                                "c": 3,
+                                "id": "166:73594",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "None",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62874",
+                                "name": "Stone F9"
+                              },
+                              {
+                                "r": 3,
+                                "c": 3,
+                                "id": "166:73596",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Win",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62877",
+                                "name": "Stone F8"
+                              },
+                              {
+                                "r": 2,
+                                "c": 2,
+                                "id": "166:73598",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Win",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62877",
+                                "name": "Stone E9"
+                              },
+                              {
+                                "r": 1,
+                                "c": 1,
+                                "id": "166:73600",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Win",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62877",
+                                "name": "Stone D10"
+                              },
+                              {
+                                "r": 0,
+                                "c": 0,
+                                "id": "166:73602",
+                                "variant": {
+                                  "Color": "Black",
+                                  "Mark": "Win",
+                                  "State": "Placed",
+                                  "Size": "Regular"
+                                },
+                                "componentId": "162:62877",
+                                "name": "Stone C11"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "166:73603",
+                            "name": "Win line",
+                            "x": 92.81,
+                            "y": 160.56,
+                            "w": 235.65,
+                            "h": "$Zumpo · UI:space/6",
+                            "rotation": -45,
+                            "component": "Zumpo/Win line",
+                            "variant": {
+                              "Size": "Regular"
+                            },
+                            "componentId": "162:62898",
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": "$Zumpo · UI:space/6",
+                                "width": 235.65
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "FRAME",
+                        "id": "166:73604",
+                        "name": "Side",
+                        "w": 306,
+                        "h": 564,
+                        "wSize": "fill",
+                        "hSize": "fill",
+                        "layout": {
+                          "mode": "column",
+                          "justify": "space_between",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "FRAME",
+                            "id": "166:73605",
+                            "name": "Seats",
+                            "w": 306,
+                            "h": 156,
+                            "wSize": "fill",
+                            "hSize": "hug",
+                            "layout": {
+                              "mode": "column",
+                              "gap": "$Zumpo · UI:space/12",
+                              "strokesIncluded": true
+                            },
+                            "children": [
+                              {
+                                "type": "INSTANCE",
+                                "id": "166:73606",
+                                "name": "Seat / Maya",
+                                "w": 306,
+                                "h": 78,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "Black",
+                                  "State": "Won",
+                                  "Layout": "Desktop"
+                                },
+                                "componentId": "162:63073",
+                                "props": {
+                                  "You": true,
+                                  "Detail": "Black · five in a row"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 78,
+                                    "width": 306
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "166:73607",
+                                "name": "Seat / Computer",
+                                "w": 306,
+                                "h": 66,
+                                "wSize": "fill",
+                                "hSize": "hug",
+                                "component": "Zumpo/Gomoku seat",
+                                "variant": {
+                                  "Color": "White",
+                                  "State": "Default",
+                                  "Layout": "Desktop"
+                                },
+                                "componentId": "162:63087",
+                                "props": {
+                                  "Detail": "White · Medium",
+                                  "Name": "Computer"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 66,
+                                    "width": 306
+                                  },
+                                  {
+                                    "path": "Player / Avatar",
+                                    "componentProperties": {
+                                      "Initials": "CO",
+                                      "Tone": "Coral"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
           {
-            "type": "TEXT",
-            "id": "162:96823",
-            "name": "Title",
-            "w": 1312,
-            "h": 42,
+            "type": "FRAME",
+            "id": "166:73608",
+            "name": "Game sidebar",
+            "w": 344,
+            "h": 411,
             "hSize": "hug",
-            "text": "Gomoku",
-            "textStyle": "Zumpo/Title",
-            "fills": [
-              "$Zumpo · UI:color/ink"
-            ],
-            "autoResize": "height"
-          },
-          {
-            "type": "TEXT",
-            "id": "162:96824",
-            "name": "Subtitle",
-            "w": 1312,
-            "h": 25,
-            "hSize": "hug",
-            "text": "Take turns placing stones. Five in a row, across, down or diagonally, wins.",
-            "textStyle": "Zumpo/Body",
-            "fills": [
-              "$Zumpo · UI:color/muted"
-            ],
-            "autoResize": "height"
-          }
-        ]
-      },
-      {
-        "type": "FRAME",
-        "id": "162:96825",
-        "name": "Dialog stage",
-        "w": 1312,
-        "h": 603,
-        "hSize": "hug",
-        "layout": {
-          "mode": "row",
-          "pad": [
-            "$Zumpo · UI:space/56",
-            0
-          ],
-          "justify": "center",
-          "align": "center",
-          "strokesIncluded": true
-        },
-        "children": [
-          {
-            "type": "INSTANCE",
-            "id": "162:96826",
-            "name": "Pick a game.",
-            "w": 560,
-            "h": 491,
-            "hSize": "hug",
-            "component": "Zumpo/Card",
-            "variant": {
-              "Kind": "Focused"
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
             },
-            "componentId": "9:400",
-            "props": {
-              "Description": "At Medium you have won 4 of 9 games. You are on a run of 2 wins.",
-              "Title": "Pick a game."
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 491,
-                "width": 560
-              }
-            ],
-            "slots": {
-              "Content": [
-                {
-                  "type": "INSTANCE",
-                  "id": "I162:96826;35:13433;162:96831",
-                  "name": "Zumpo/Input",
-                  "w": 494,
-                  "h": 113,
-                  "wSize": "fill",
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Stops simple threats, so a win takes a plan.",
-                    "Value": "Medium",
-                    "Label": "Level"
-                  },
-                  "overrides": [
-                    {
-                      "path": ".",
-                      "height": 113,
-                      "width": 494
-                    }
-                  ]
+                "type": "INSTANCE",
+                "id": "166:73609",
+                "name": "Result",
+                "w": 344,
+                "h": 201,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
                 },
-                {
-                  "type": "INSTANCE",
-                  "id": "I162:96826;35:13433;162:96832",
-                  "name": "Zumpo/Input",
-                  "w": 494,
-                  "h": 113,
-                  "wSize": "fill",
-                  "hSize": "hug",
-                  "component": "Zumpo/Input",
-                  "variant": {
-                    "State": "Default"
-                  },
-                  "componentId": "9:204",
-                  "props": {
-                    "Select": true,
-                    "Helper": "Play again swaps them, so the first move takes turns.",
-                    "Value": "Black, you move first",
-                    "Label": "Your stones"
-                  },
-                  "overrides": [
-                    {
-                      "path": ".",
-                      "height": 113,
-                      "width": 494
-                    }
-                  ]
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "Play again and you take White.",
+                  "Title": "You won on move 21."
                 },
-                {
-                  "type": "FRAME",
-                  "id": "I162:96826;35:13433;162:96833",
-                  "name": "Actions",
-                  "w": 494,
-                  "h": 48,
-                  "wSize": "fill",
-                  "hSize": "hug",
-                  "layout": {
-                    "mode": "row",
-                    "gap": "$Zumpo · UI:space/12",
-                    "align": "center",
-                    "strokesIncluded": true
-                  },
-                  "children": [
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 201,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
                     {
-                      "type": "INSTANCE",
-                      "id": "I162:96826;35:13433;162:96834",
-                      "name": "Action / Start",
-                      "w": 75,
+                      "type": "FRAME",
+                      "id": "I166:73609;35:13441;166:73615",
+                      "name": "Actions",
+                      "w": 278,
                       "h": 48,
-                      "wSize": "hug",
-                      "component": "Zumpo/Button",
-                      "variant": {
-                        "Style": "Primary",
-                        "State": "Default"
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
                       },
-                      "componentId": "4:15",
-                      "props": {
-                        "Label": "Start"
-                      },
-                      "overrides": [
+                      "children": [
                         {
-                          "path": ".",
-                          "height": 48,
-                          "width": 75
-                        }
-                      ]
-                    },
-                    {
-                      "type": "INSTANCE",
-                      "id": "I162:96826;35:13433;162:96835",
-                      "name": "Action / Back to games",
-                      "w": 171,
-                      "h": 48,
-                      "wSize": "hug",
-                      "component": "Zumpo/Button",
-                      "variant": {
-                        "Style": "Secondary",
-                        "State": "Default"
-                      },
-                      "componentId": "4:18",
-                      "props": {
-                        "Icon": "Zumpo/Icon / Glyph=back",
-                        "Show icon": true,
-                        "Label": "Back to games"
-                      },
-                      "overrides": [
+                          "type": "INSTANCE",
+                          "id": "I166:73609;35:13441;166:73616",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        },
                         {
-                          "path": ".",
-                          "height": 48,
-                          "width": 171
+                          "type": "INSTANCE",
+                          "id": "I166:73609;35:13441;166:73617",
+                          "name": "Action / Change level",
+                          "w": 130,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=link",
+                            "Label": "Change level"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 130
+                            }
+                          ]
                         }
                       ]
                     }
                   ]
                 }
-              ]
-            }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "166:73610",
+                "name": "On this device",
+                "w": 344,
+                "h": 194,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "On this device"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 194,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I166:73610;35:13441;166:73619",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 82,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I166:73610;35:13441;166:73620",
+                          "name": "Stat / Games won at Medium",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73610;35:13441;166:73621",
+                              "name": "Label",
+                              "w": 171,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Games won at Medium",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73610;35:13441;166:73622",
+                              "name": "Value",
+                              "w": 57,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "5 of 10",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I166:73610;35:13441;166:73623",
+                          "name": "Stat / Current run",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73610;35:13441;166:73624",
+                              "name": "Label",
+                              "w": 86,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Current run",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I166:73610;35:13441;166:73625",
+                              "name": "Value",
+                              "w": 56,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "3 wins",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/green"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       },
       {
         "type": "FRAME",
-        "id": "162:96827",
+        "id": "166:73611",
         "name": "Footer",
         "w": 1312,
         "h": 18,
@@ -318,7 +800,7 @@
         "children": [
           {
             "type": "TEXT",
-            "id": "162:96828",
+            "id": "166:73612",
             "w": 650,
             "h": 18,
             "hSize": "hug",
@@ -331,7 +813,7 @@
           },
           {
             "type": "TEXT",
-            "id": "162:96829",
+            "id": "166:73613",
             "w": 115,
             "h": 18,
             "wSize": "hug",
@@ -343,6 +825,362 @@
             ]
           }
         ]
+      },
+      {
+        "type": "RECTANGLE",
+        "id": "166:73760",
+        "name": "Scrim",
+        "x": 0,
+        "y": 0,
+        "absolute": true,
+        "w": 1440,
+        "h": 892,
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:73761",
+        "name": "Dialog / Pick a game.",
+        "x": 440,
+        "y": 230,
+        "absolute": true,
+        "w": 560,
+        "h": 449,
+        "hSize": "hug",
+        "component": "Zumpo/Card",
+        "variant": {
+          "Kind": "Dialog"
+        },
+        "componentId": "35:13434",
+        "props": {
+          "Description": "At Medium you have won 4 of 9 games. You are on a run of 2 wins.",
+          "Title": "Pick a game."
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 449,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 560
+          }
+        ],
+        "slots": {
+          "Content": [
+            {
+              "type": "FRAME",
+              "id": "166:73781",
+              "name": "Field / Level",
+              "w": 494,
+              "h": 92,
+              "wSize": "fill",
+              "hSize": "hug",
+              "clip": true,
+              "layout": {
+                "mode": "column",
+                "gap": "$Zumpo · UI:space/8",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "TEXT",
+                  "id": "166:73782",
+                  "name": "Label",
+                  "w": 36,
+                  "h": 20,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "text": "Level",
+                  "textStyle": "Zumpo/Label",
+                  "fills": [
+                    "$Zumpo · UI:color/ink"
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "166:73783",
+                  "name": "Chips",
+                  "w": 239,
+                  "h": 38,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "clip": true,
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/8",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "166:73784",
+                      "name": "Chip / Easy",
+                      "w": 66,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Filter chip",
+                      "variant": {
+                        "State": "Default"
+                      },
+                      "componentId": "90:107171",
+                      "props": {
+                        "Label": "Easy"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 38,
+                          "width": 66
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "166:73786",
+                      "name": "Chip / Medium",
+                      "w": 90,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Filter chip",
+                      "variant": {
+                        "State": "Selected"
+                      },
+                      "componentId": "90:107175",
+                      "props": {
+                        "Label": "Medium"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 38,
+                          "width": 90
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "166:73789",
+                      "name": "Chip / Hard",
+                      "w": 67,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Filter chip",
+                      "variant": {
+                        "State": "Default"
+                      },
+                      "componentId": "90:107171",
+                      "props": {
+                        "Label": "Hard"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 38,
+                          "width": 67
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "TEXT",
+                  "id": "166:73791",
+                  "name": "Helper",
+                  "w": 243,
+                  "h": 18,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "text": "Stops simple threats, so a win takes a plan.",
+                  "textStyle": "Zumpo/Small",
+                  "fills": [
+                    "$Zumpo · UI:color/muted"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "id": "166:73792",
+              "name": "Field / Your stones",
+              "w": 494,
+              "h": 92,
+              "wSize": "fill",
+              "hSize": "hug",
+              "clip": true,
+              "layout": {
+                "mode": "column",
+                "gap": "$Zumpo · UI:space/8",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "TEXT",
+                  "id": "166:73793",
+                  "name": "Label",
+                  "w": 80,
+                  "h": 20,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "text": "Your stones",
+                  "textStyle": "Zumpo/Label",
+                  "fills": [
+                    "$Zumpo · UI:color/ink"
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "166:73794",
+                  "name": "Chips",
+                  "w": 156,
+                  "h": 38,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "clip": true,
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/8",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "166:73795",
+                      "name": "Chip / Black",
+                      "w": 72,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Filter chip",
+                      "variant": {
+                        "State": "Selected"
+                      },
+                      "componentId": "90:107175",
+                      "props": {
+                        "Label": "Black"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 38,
+                          "width": 72
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "166:73798",
+                      "name": "Chip / White",
+                      "w": 76,
+                      "h": 38,
+                      "wSize": "hug",
+                      "hSize": "hug",
+                      "component": "Zumpo/Filter chip",
+                      "variant": {
+                        "State": "Default"
+                      },
+                      "componentId": "90:107171",
+                      "props": {
+                        "Label": "White"
+                      },
+                      "overrides": [
+                        {
+                          "path": "",
+                          "height": 38,
+                          "width": 76
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "TEXT",
+                  "id": "166:73800",
+                  "name": "Helper",
+                  "w": 117,
+                  "h": 18,
+                  "wSize": "hug",
+                  "hSize": "hug",
+                  "text": "Black, you move first",
+                  "textStyle": "Zumpo/Small",
+                  "fills": [
+                    "$Zumpo · UI:color/muted"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "id": "166:73765",
+              "name": "Actions",
+              "w": 494,
+              "h": 48,
+              "wSize": "fill",
+              "hSize": "hug",
+              "layout": {
+                "mode": "row",
+                "gap": "$Zumpo · UI:space/12",
+                "align": "center",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73761;35:13437;166:73770",
+                  "name": "Action / Play",
+                  "w": 69,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Primary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:15",
+                  "props": {
+                    "Label": "Play"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 69
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I166:73761;35:13437;166:73771",
+                  "name": "Action / Cancel",
+                  "w": 90,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Secondary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:18",
+                  "props": {
+                    "Icon": "Zumpo/Icon / Glyph=back",
+                    "Label": "Cancel"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "width": 90
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   }

@@ -252,6 +252,9 @@
                 "h": 136,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -355,7 +358,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
-                      "Message": "Game has ended!",
+                      "Message": "Game has ended.",
                       "Kind": "System"
                     }
                   },

@@ -160,6 +160,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {
@@ -379,15 +382,15 @@
                   "type": "INSTANCE",
                   "id": "I163:66274;35:13437;163:66278",
                   "name": "Action / Full rules",
-                  "w": 188,
+                  "w": 190,
                   "h": 48,
                   "wSize": "hug",
                   "component": "Zumpo/Button",
                   "variant": {
-                    "Style": "Quiet",
+                    "Style": "Secondary",
                     "State": "Default"
                   },
-                  "componentId": "4:21",
+                  "componentId": "4:18",
                   "props": {
                     "Icon": "Zumpo/Icon / Glyph=chevron-up",
                     "Show icon": true,
@@ -397,7 +400,7 @@
                     {
                       "path": ".",
                       "height": 48,
-                      "width": 188
+                      "width": 190
                     }
                   ]
                 },

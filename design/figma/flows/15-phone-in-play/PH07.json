@@ -1,0 +1,380 @@
+{
+  "format": 1,
+  "code": "PH07",
+  "title": "A player went away · 390 × 844",
+  "id": "166:71052",
+  "section": "15 / Phone in play",
+  "reviewNotes": [
+    "PH07 · A player's connection dropped: an info Notice over the top of the board says so for five seconds, on the Menu lift shadow, and goes; nothing under it moves. \"Ana left the room.\" is the same Notice, and \"You're the host now.\" a success one in the same place. A desktop says it in the chat and the Players panel instead."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "166:71052",
+    "name": "PH07 / A player went away · 390 × 844",
+    "x": 3180,
+    "y": 200,
+    "w": 390,
+    "h": 844,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/12",
+      "pad": [
+        "$Zumpo · UI:space/12",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "166:71053",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Phase": "Code 2 of 3",
+          "Game": "Code Breaker"
+        }
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:71054",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:71055",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "Away",
+              "State": "Away"
+            }
+          },
+          {
+            "path": "Standing / MA / Avatar",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:71056",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 96,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Status",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22192",
+        "props": {
+          "Main": "Crack the code",
+          "Category": false,
+          "Meta": "Green: in place. Coral: somewhere else.",
+          "Label": "Code 2 of 3"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 96,
+            "width": 350
+          },
+          {
+            "path": "Bottom / Category",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Small · 9 × 9",
+              "Tone": "Sand"
+            }
+          },
+          {
+            "path": "Top / Countdown",
+            "componentProperties": {
+              "Show label": false,
+              "Label": "to guess",
+              "Time": "1:42",
+              "Tone": "Running"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "166:71057",
+        "name": "Table",
+        "w": 350,
+        "h": 410,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/20",
+          "pad": [
+            "$Zumpo · UI:space/8",
+            0
+          ],
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "166:71058",
+            "name": "Your board",
+            "w": 100.99,
+            "h": 208,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Code board",
+            "variant": {
+              "Size": "Compact"
+            },
+            "componentId": "162:62606",
+            "overrides": [
+              {
+                "path": "Guess 1 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "2",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 1 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "5",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "2",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 2 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "6",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "1",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 3 / Digits / Digit 4",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Guessed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 1",
+                "componentProperties": {
+                  "Digit": "4",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 2",
+                "componentProperties": {
+                  "Digit": "3",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              },
+              {
+                "path": "Guess 4 / Digits / Digit 3",
+                "componentProperties": {
+                  "Digit": "0",
+                  "State": "Typed",
+                  "Size": "Compact"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "166:71059",
+            "name": "Digit pad",
+            "w": 358,
+            "h": 166,
+            "hSize": "hug",
+            "component": "Zumpo/Digit pad",
+            "variant": {
+              "Layout": "Phone"
+            },
+            "componentId": "162:63009",
+            "overrides": [
+              {
+                "path": "Row 1 / Key 1",
+                "componentProperties": {
+                  "Letter": "1",
+                  "Kind": "Letter",
+                  "State": "Absent",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              },
+              {
+                "path": "Row 1 / Key 3",
+                "componentProperties": {
+                  "Letter": "3",
+                  "Kind": "Letter",
+                  "State": "Correct",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              },
+              {
+                "path": "Row 1 / Key 5",
+                "componentProperties": {
+                  "Letter": "5",
+                  "Kind": "Letter",
+                  "State": "Absent",
+                  "Size": "Regular"
+                },
+                "height": 56,
+                "width": 53.67
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "166:71297",
+        "name": "Away notice",
+        "x": 20,
+        "y": 118,
+        "absolute": true,
+        "w": 350,
+        "h": 52,
+        "hSize": "hug",
+        "component": "Zumpo/Notice",
+        "variant": {
+          "Tone": "Info"
+        },
+        "componentId": "9:227",
+        "props": {
+          "Message": "Maya is away."
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "effectStyleId": "Zumpo/Menu lift",
+            "height": 52,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 350
+          }
+        ]
+      }
+    ]
+  }
+}

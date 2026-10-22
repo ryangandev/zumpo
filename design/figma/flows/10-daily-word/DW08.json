@@ -126,7 +126,7 @@
                 },
                 "componentId": "26:16856",
                 "props": {
-                  "Meta": "Waiting for Ryan and Leo",
+                  "Meta": "Waiting for 2 players",
                   "Main": "Got it in 4! +322",
                   "Category": false,
                   "Label": "Word 2 of 3"
@@ -743,6 +743,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

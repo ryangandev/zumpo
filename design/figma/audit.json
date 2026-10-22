@@ -1,6 +1,27 @@
 {
   "unboundColors": {},
-  "unboundSpacing": {},
+  "unboundSpacing": {
+    "17.36": {
+      "count": 1,
+      "samples": [
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards"
+      ]
+    },
+    "13.02": {
+      "count": 2,
+      "samples": [
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Middle card",
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Your card"
+      ]
+    },
+    "8.68": {
+      "count": 2,
+      "samples": [
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Middle card > Label",
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Your card > Label"
+      ]
+    }
+  },
   "unboundRadii": {},
   "unstyledText": {
     "DM Sans Medium 10": {
@@ -19,23 +40,11 @@
         "Zumpo/Pick marker > Outcome=Auto, Size=Compact > Badge > Initials"
       ]
     },
-    "DM Sans Regular 16": {
-      "count": 20,
+    "DM Sans Bold 15.186661720275879": {
+      "count": 2,
       "samples": [
-        "DL01 > DL01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-        "DL02 > DL02 / Game page · no rooms yet > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-        "DL03 > DL03 / Game page · rooms loading > Lobby layout > How to play > Play together > 2–8 players Host chooses 1–4 rounds 15s to choose a word 90s to draw ·",
-        "ML01 > ML01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > On your own > Facts",
-        "ML01 > ML01 / Game page · open, private, full and playing rooms > Lobby layout > How to play > Play together > 2–8 players Small, Medium or Large boards 15s to pick · 4s reveal Same",
-        "ML02 > ML02 / Game page · no rooms yet > Lobby layout > How to play > On your own > Facts"
-      ]
-    },
-    "Inter Regular 12": {
-      "count": 3,
-      "samples": [
-        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Bots > Label",
-        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Dice each > Label",
-        "LD01 > LD01 / Solo · pick a table > Dialog stage > Pick a table. > Field / Dice each > Helper"
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Middle card > Label > Middle card",
+        "PH03 > PH03 / Snap room · 390 × 844 > Board > Cards > Your card > Label > Your card"
       ]
     }
   },
@@ -44,7 +53,7 @@
   "missingComponents": {},
   "hiddenLayers": {
     "INSTANCE": {
-      "count": 99,
+      "count": 106,
       "samples": [
         "Zumpo/Button > Style=Primary, State=Default > Icon",
         "Zumpo/Button > Style=Primary, State=Hover > Icon",
@@ -55,14 +64,14 @@
       ]
     },
     "FRAME": {
-      "count": 64,
+      "count": 59,
       "samples": [
         "Zumpo/How to play > Zumpo/How to play > Steps > Step 4",
+        "Zumpo/Mobile tabs > View=Board > Status / Board > Turn",
         "Zumpo/Mobile tabs > View=Board > Status / Chat > Unread",
+        "Zumpo/Mobile tabs > View=Players > Status / Board > Turn",
         "Zumpo/Mobile tabs > View=Players > Status / Chat > Unread",
-        "Zumpo/Mobile tabs > View=Chat > Status / Chat > Unread",
-        "Zumpo/Snap card > State=Default, Size=Regular > Badge",
-        "Zumpo/Snap card > State=Taken, Size=Regular > Badge"
+        "Zumpo/Mobile tabs > View=Chat > Status / Board > Turn"
       ]
     },
     "TEXT": {

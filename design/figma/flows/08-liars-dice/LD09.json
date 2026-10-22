@@ -212,6 +212,7 @@
                         },
                         "componentId": "44:62463",
                         "props": {
+                          "Detail": "Up next",
                           "Name": "Maya"
                         },
                         "overrides": [
@@ -570,6 +571,9 @@
                 "h": 304,
                 "hSize": "hug",
                 "component": "Zumpo/Scoreboard",
+                "variant": {
+                  "Folded": "No"
+                },
                 "componentId": "9:320",
                 "overrides": [
                   {

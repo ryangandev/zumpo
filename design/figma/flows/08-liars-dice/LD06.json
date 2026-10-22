@@ -14,7 +14,7 @@
     "x": 1580,
     "y": 1550,
     "w": 1440,
-    "h": 1006,
+    "h": 755,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -106,7 +106,7 @@
         "id": "78:82780",
         "name": "Board & room",
         "w": 1312,
-        "h": 836,
+        "h": 585,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -119,7 +119,7 @@
             "id": "78:82781",
             "name": "Board stage",
             "w": 944,
-            "h": 836,
+            "h": 585,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -128,293 +128,49 @@
             },
             "children": [
               {
-                "type": "FRAME",
-                "id": "78:82782",
-                "name": "Result",
+                "type": "INSTANCE",
+                "id": "166:71787",
+                "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 376,
+                "h": 92,
                 "wSize": "fill",
                 "hSize": "hug",
-                "fills": [
-                  "$Zumpo · UI:color/paper"
-                ],
-                "strokes": [
-                  "$Zumpo · UI:color/line"
-                ],
-                "strokeAlign": "inside",
-                "radius": "$Zumpo · UI:radius/24",
-                "layout": {
-                  "mode": "column",
-                  "gap": "$Zumpo · UI:space/24",
-                  "pad": "$Zumpo · UI:space/40",
-                  "strokesIncluded": true
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
                 },
-                "children": [
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "You are out",
+                  "Main": "Your bid was a lie",
+                  "Category": false,
+                  "Label": "Pip called Liar"
+                },
+                "overrides": [
                   {
-                    "type": "FRAME",
-                    "id": "78:82783",
-                    "name": "Result heading",
-                    "w": 370,
-                    "h": 75,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "gap": "$Zumpo · UI:space/8",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "TEXT",
-                        "id": "78:82784",
-                        "name": "Heading",
-                        "w": 370,
-                        "h": 42,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "You finished 3rd of 4.",
-                        "textStyle": "Zumpo/Title",
-                        "fills": [
-                          "$Zumpo · UI:color/ink"
-                        ]
-                      },
-                      {
-                        "type": "TEXT",
-                        "id": "78:82785",
-                        "name": "Body",
-                        "w": 267,
-                        "h": 25,
-                        "wSize": "hug",
-                        "hSize": "hug",
-                        "text": "Pip and Juno were still in, in round 8.",
-                        "textStyle": "Zumpo/Body",
-                        "fills": [
-                          "$Zumpo · UI:color/muted"
-                        ]
-                      }
-                    ]
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
                   },
                   {
-                    "type": "FRAME",
-                    "id": "78:82786",
-                    "name": "Stats",
-                    "w": 862,
-                    "h": 123,
-                    "wSize": "fill",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "column",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "FRAME",
-                        "id": "78:82787",
-                        "name": "Stat / Place",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "78:82788",
-                            "w": 40,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Place",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "78:82789",
-                            "w": 68,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "3rd of 4",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "78:82790",
-                        "name": "Stat / Rounds",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "78:82791",
-                            "w": 55,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Rounds",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "78:82792",
-                            "w": 12,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "8",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "FRAME",
-                        "id": "78:82793",
-                        "name": "Stat / Games won",
-                        "w": 862,
-                        "h": 41,
-                        "wSize": "fill",
-                        "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "pad": [
-                            "$Zumpo · UI:space/8",
-                            0
-                          ],
-                          "justify": "space_between",
-                          "align": "center",
-                          "strokesIncluded": true
-                        },
-                        "children": [
-                          {
-                            "type": "TEXT",
-                            "id": "78:82794",
-                            "w": 87,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Games won",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
-                          },
-                          {
-                            "type": "TEXT",
-                            "id": "78:82795",
-                            "w": 51,
-                            "h": 24,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "5 of 11",
-                            "textStyle": "Zumpo/Number",
-                            "fills": [
-                              "$Zumpo · UI:color/ink"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand"
+                    }
                   },
                   {
-                    "type": "FRAME",
-                    "id": "78:82796",
-                    "name": "Actions",
-                    "w": 256,
-                    "h": 48,
-                    "wSize": "hug",
-                    "hSize": "hug",
-                    "layout": {
-                      "mode": "row",
-                      "gap": "$Zumpo · UI:space/12",
-                      "align": "center",
-                      "strokesIncluded": true
-                    },
-                    "children": [
-                      {
-                        "type": "INSTANCE",
-                        "id": "78:82797",
-                        "name": "Action / Play again",
-                        "w": 110,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Primary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:15",
-                        "props": {
-                          "Label": "Play again"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 110
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "78:82798",
-                        "name": "Action / Change table",
-                        "w": 134,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Label": "Change table"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 134
-                          }
-                        ]
-                      }
-                    ]
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "1:12",
+                      "Tone": "Info"
+                    }
                   }
                 ]
               },
@@ -423,7 +179,7 @@
                 "id": "78:82799",
                 "name": "Table panel",
                 "w": 944,
-                "h": 444,
+                "h": 477,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -533,7 +289,7 @@
                     "id": "79:83089",
                     "name": "The count",
                     "w": 894,
-                    "h": 84,
+                    "h": 117,
                     "wSize": "fill",
                     "hSize": "hug",
                     "clip": true,
@@ -561,7 +317,7 @@
                         "type": "FRAME",
                         "id": "79:83091",
                         "name": "Count",
-                        "w": 488,
+                        "w": 309,
                         "h": 56,
                         "wSize": "hug",
                         "hSize": "hug",
@@ -612,52 +368,23 @@
                             "fills": [
                               "$Zumpo · UI:color/muted"
                             ]
-                          },
-                          {
-                            "type": "FRAME",
-                            "id": "79:83099",
-                            "name": "Outcome",
-                            "w": 167,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "clip": true,
-                            "layout": {
-                              "mode": "row",
-                              "gap": "$Zumpo · UI:space/12",
-                              "align": "center",
-                              "strokesIncluded": true
-                            },
-                            "children": [
-                              {
-                                "type": "TEXT",
-                                "id": "79:83100",
-                                "w": 13,
-                                "h": 25,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "→",
-                                "textStyle": "Zumpo/Body",
-                                "fills": [
-                                  "$Zumpo · UI:color/muted"
-                                ]
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "79:83101",
-                                "w": 142,
-                                "h": 25,
-                                "wSize": "hug",
-                                "hSize": "hug",
-                                "text": "a lie, so you are out",
-                                "textStyle": "Zumpo/Body",
-                                "fills": [
-                                  "$Zumpo · UI:color/ink"
-                                ]
-                              }
-                            ]
                           }
                         ]
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "79:83101",
+                        "name": "Verdict",
+                        "w": 894,
+                        "h": 25,
+                        "wSize": "fill",
+                        "hSize": "hug",
+                        "text": "Your bid was a lie, so you are out",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/ink"
+                        ],
+                        "autoResize": "height"
                       }
                     ]
                   },
@@ -722,14 +449,111 @@
             "id": "78:82843",
             "name": "Game sidebar",
             "w": 344,
-            "h": 194,
+            "h": 411,
             "hSize": "hug",
             "layout": {
               "mode": "column",
-              "gap": "$Zumpo · UI:space/24",
+              "gap": "$Zumpo · UI:space/16",
               "strokesIncluded": true
             },
             "children": [
+              {
+                "type": "INSTANCE",
+                "id": "166:71767",
+                "name": "Result",
+                "w": 344,
+                "h": 201,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Description": "Pip and Juno were still in, in round 8.",
+                  "Title": "You finished 3rd of 4."
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 201,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "166:71771",
+                      "name": "Actions",
+                      "w": 278,
+                      "h": 48,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "row",
+                        "gap": "$Zumpo · UI:space/12",
+                        "wrap": true,
+                        "crossGap": "$Zumpo · UI:space/12",
+                        "align": "center",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71767;35:13441;166:71776",
+                          "name": "Action / Play again",
+                          "w": 110,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Primary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:15",
+                          "props": {
+                            "Label": "Play again"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 110
+                            }
+                          ]
+                        },
+                        {
+                          "type": "INSTANCE",
+                          "id": "I166:71767;35:13441;166:71777",
+                          "name": "Action / Change table",
+                          "w": 134,
+                          "h": 48,
+                          "wSize": "hug",
+                          "component": "Zumpo/Button",
+                          "variant": {
+                            "Style": "Secondary",
+                            "State": "Default"
+                          },
+                          "componentId": "4:18",
+                          "props": {
+                            "Icon": "Zumpo/Icon / Glyph=link",
+                            "Label": "Change table"
+                          },
+                          "overrides": [
+                            {
+                              "path": ".",
+                              "height": 48,
+                              "width": 134
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
               {
                 "type": "INSTANCE",
                 "id": "78:82844",
@@ -866,62 +690,6 @@
                               ]
                             }
                           ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "INSTANCE",
-                "id": "78:82845",
-                "name": "Challenge a friend",
-                "visible": false,
-                "w": 344,
-                "h": 226,
-                "hSize": "hug",
-                "component": "Zumpo/Card",
-                "variant": {
-                  "Kind": "Panel"
-                },
-                "componentId": "35:13438",
-                "props": {
-                  "Description": "They get this same deck and try to beat 29 turns.",
-                  "Title": "Challenge a friend"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 226,
-                    "width": 344
-                  }
-                ],
-                "slots": {
-                  "Content": [
-                    {
-                      "type": "INSTANCE",
-                      "id": "I78:82845;35:13441;78:82858",
-                      "name": "Action / Copy challenge link",
-                      "w": 278,
-                      "h": 48,
-                      "wSize": "fill",
-                      "component": "Zumpo/Button",
-                      "variant": {
-                        "Style": "Secondary",
-                        "State": "Default"
-                      },
-                      "componentId": "4:18",
-                      "props": {
-                        "Icon": "Zumpo/Icon / Glyph=link",
-                        "Show icon": true,
-                        "Label": "Copy challenge link"
-                      },
-                      "overrides": [
-                        {
-                          "path": ".",
-                          "height": 48,
-                          "primaryAxisSizingMode": "FIXED",
-                          "width": 278
                         }
                       ]
                     }
