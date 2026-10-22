@@ -38,10 +38,11 @@ import { GomokuTable, type SeatView } from './table';
  * same board, needs more, and both take its width: a spectator's heading,
  * "Bartholomew Wilson wins: Maximilian Fischer ran out of time twice.",
  * beside "225 stones and nobody made five. Bartholomew Wilson’s seat is free
- * for anybody to take." needs 1372 px on Linux's text, so every desktop bar
- * has the line. 4 px to spare for subpixel text (TurnBar's hintRowBelow).
+ * for anybody to take." needs 1372 px on Linux's text, wider than a turn bar
+ * ever is (944 px), so every desktop bar has the line, as Doodle Chain's does
+ * (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 1376;
+const HINT_ROW_BELOW = Infinity;
 
 type Room = RoomOf<GomokuRoomState>;
 
