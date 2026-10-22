@@ -754,12 +754,10 @@ test('a Minesweeper game', async ({ player }) => {
   await expect(maya!.page.getByText('Pick a cell')).toBeVisible();
   await shot(maya!.page, 'M04');
   await cell(maya!.page, 2, 2).click();
-  await expect(
-    maya!.page.getByText('Waiting for Ryan, Sam and Leo'),
-  ).toBeVisible();
+  await expect(maya!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(maya!.page, 'M05');
   await cell(leo!.page, 8, 2).click();
-  await expect(leo!.page.getByText('Waiting for Ryan and Sam')).toBeVisible();
+  await expect(leo!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(leo!.page, 'MO12');
   // Ryan and Sam share a cell; their reward splits if it is safe.
   await cell(ryan!.page, 5, 5).click();
