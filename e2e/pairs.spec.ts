@@ -16,7 +16,7 @@ test('two players take turns until every pair is found', async ({ player }) => {
   await expect(maya.getByText('0 of 8 pairs')).toBeVisible();
 
   const memory: Memory = new Map();
-  const over = maya.getByText('Game over', { exact: true });
+  const over = maya.getByRole('banner').getByText('Game over', { exact: true });
   while (!(await over.isVisible())) {
     // Whoever is told to flip a card; a miss shows first, then passes on.
     await expect
@@ -41,7 +41,11 @@ test('two players take turns until every pair is found', async ({ player }) => {
     }
   }
 
-  await expect(maya.getByRole('heading', { name: / pairs?\.$/ })).toBeVisible();
+  await expect(
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText(/ (with|on) \d+ pairs?\.$/),
+  ).toBeVisible();
   await expect(
     maya.getByRole('list', { name: 'Standings' }).getByRole('listitem'),
   ).toHaveCount(2);

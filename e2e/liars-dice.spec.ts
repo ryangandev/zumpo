@@ -34,7 +34,7 @@ test('two players bid and call until one of them has dice left', async ({
     ).toHaveCount(3);
   }
 
-  const over = maya.getByText('Game over', { exact: true });
+  const over = maya.getByRole('banner').getByText('Game over', { exact: true });
   let calls = 0;
   while (!(await over.isVisible())) {
     await expect
@@ -64,7 +64,7 @@ test('two players bid and call until one of them has dice left', async ({
       await expect(
         page
           .getByText(`Round ${calls + 1}`, { exact: true })
-          .or(page.getByText('Game over', { exact: true }))
+          .or(page.getByRole('banner').getByText('Game over', { exact: true }))
           .first(),
       ).toBeVisible();
     }
@@ -74,10 +74,10 @@ test('two players bid and call until one of them has dice left', async ({
   expect(calls).toBeGreaterThanOrEqual(3);
   expect(calls).toBeLessThanOrEqual(5);
   await expect(
-    maya.getByRole('heading', {
-      // Maya reads her own win as hers.
-      name: /^(Leo wins|You win) with (1 die|2 dice|3 dice)\.$/,
-    }),
+    // Maya reads her own win as hers.
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText(/^(Leo wins|You win) with (1 die|2 dice|3 dice)\.$/),
   ).toBeVisible();
   await expect(
     maya.getByRole('list', { name: 'Standings' }).getByRole('listitem'),
@@ -93,7 +93,9 @@ test('two players bid and call until one of them has dice left', async ({
     await expect(page.getByRole('img', { name: 'Hidden die' })).toHaveCount(0);
   }
   expect(counts[0]).toBe(counts[1]);
-  await expect(leo.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    leo.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
 });
 
 test('a player with no name plays a table of bots to the end', async ({

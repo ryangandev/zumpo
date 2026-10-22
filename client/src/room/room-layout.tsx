@@ -24,10 +24,12 @@ import {
   TOUCH,
   useMediaQuery,
 } from '../shell/use-media-query';
+import { focusQuietly } from '../shell/quiet-focus';
 import { useStartFocus } from '../shell/use-start-focus';
 import { useTurnTitle } from './use-turn-title';
 import { cx } from '../ui/cx';
 import { RulesDialog } from './dialogs';
+import { NextGamePanel, RESULT_TITLE } from './panels';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
 import { roomNameOf, type RaceStanding, type Seat } from './players';
@@ -96,6 +98,25 @@ export interface RoomLayoutProps {
    * phone with another tab open, on the Game tab.
    */
   yourTurn?: boolean;
+  /**
+   * The game keeps the board a game ended on in its place, under the result
+   * in the turn bar's (`ResultBar`): off a phone, what comes next for a game
+   * played to its end (`NextGamePanel`) is at the top of the side column,
+   * in sight beside it; in one column the game puts it under the board
+   * (`NextGameUnderBoard`). A phone's Board tab has the game's own results.
+   */
+  nextBeside?: boolean;
+}
+
+/** Whether the viewer is in a text field or a dialog, and keeps the focus. */
+function busyElsewhere(): boolean {
+  const active = document.activeElement;
+  return (
+    active instanceof HTMLTextAreaElement ||
+    (active instanceof HTMLInputElement &&
+      !['button', 'checkbox', 'radio', 'submit'].includes(active.type)) ||
+    active?.closest('[role="dialog"]') != null
+  );
 }
 
 /** How long a phone says "You're the host now", who went, or that you are watching, over the board. */
@@ -123,6 +144,7 @@ export function RoomLayout({
   playersAside,
   standings = showScores,
   yourTurn = false,
+  nextBeside = false,
 }: RoomLayoutProps) {
   const room = useRoomContext();
   const { state, reconnecting, reconnectGraceMs } = room;
@@ -163,6 +185,11 @@ export function RoomLayout({
     placeholder: chat.placeholder,
     lockedReason: reconnecting ? m.room.reconnecting : chat.lockedReason,
   };
+
+  const finished =
+    !state.isGameStarted &&
+    state.lastGame !== null &&
+    !state.lastGame.endedEarly;
 
   // Before a first game every score is 0 and everybody is waiting: the rows
   // say only who is here, and who is away.
@@ -243,6 +270,21 @@ export function RoomLayout({
   // keyboard. Only the game itself, not a phone's standings strip over it.
   const stageRef = useRef<HTMLDivElement>(null);
   useStartFocus(state.isGameStarted, stageRef);
+  // A game played to its end while the room is open hands the focus to how
+  // it ended, as a game on your own does: the result's heading, in the turn
+  // bar's place or a phone's results card, with no ring until a key. The bar
+  // there is new, and a live region that mounts already filled is seldom
+  // read out. A viewer typing in the chat, or in a dialog, keeps the focus.
+  const wasPlaying = useRef(state.isGameStarted);
+  useEffect(() => {
+    const was = wasPlaying.current;
+    wasPlaying.current = state.isGameStarted;
+    if (!was || !finished || busyElsewhere()) return;
+    const title = stageRef.current?.querySelector<HTMLElement>(
+      `#${RESULT_TITLE}`,
+    );
+    if (title) focusQuietly(title);
+  }, [state.isGameStarted, finished]);
   const gameView = (
     <div ref={stageRef} className={styles.game}>
       {stage}
@@ -358,6 +400,12 @@ export function RoomLayout({
           </div>
           <div className={styles.side}>
             {watchNotice}
+            {nextBeside && finished && !oneColumn && (
+              <NextGamePanel
+                onPlayAgain={room.startGame}
+                starting={room.starting}
+              />
+            )}
             {scoreboard}
             {watching}
             {chatPanel}

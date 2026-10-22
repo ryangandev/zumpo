@@ -675,7 +675,9 @@ test('a Draw & Guess game', async ({ player }) => {
     }
   }
 
-  await expect(maya!.page.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya!.page.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 30_000,
   });
   await shot(maya!.page, 'D13');
@@ -754,12 +756,10 @@ test('a Minesweeper game', async ({ player }) => {
   await expect(maya!.page.getByText('Pick a cell')).toBeVisible();
   await shot(maya!.page, 'M04');
   await cell(maya!.page, 2, 2).click();
-  await expect(
-    maya!.page.getByText('Waiting for Ryan, Sam and Leo'),
-  ).toBeVisible();
+  await expect(maya!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(maya!.page, 'M05');
   await cell(leo!.page, 8, 2).click();
-  await expect(leo!.page.getByText('Waiting for Ryan and Sam')).toBeVisible();
+  await expect(leo!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(leo!.page, 'MO12');
   // Ryan and Sam share a cell; their reward splits if it is safe.
   await cell(ryan!.page, 5, 5).click();
@@ -802,7 +802,9 @@ test('a Minesweeper game', async ({ player }) => {
 
   // Then everybody picks, riskiest first, until somebody finds a mine and
   // the board is done.
-  const over = maya!.page.getByText('Game over', { exact: true });
+  const over = maya!.page
+    .getByRole('banner')
+    .getByText('Game over', { exact: true });
   for (let round = 3; !(await over.isVisible()); round++) {
     await expect(maya!.page.getByText('Pick a cell').or(over)).toBeVisible({
       timeout: 20_000,
@@ -986,7 +988,9 @@ test('a Make 24 game', async ({ player }) => {
     for (const seat of seats) await solveHand(seat);
   }
   // After the last hand's reveal.
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await shot(sam, 'T09');
@@ -1059,7 +1063,7 @@ test('a Pairs game', async ({ player }) => {
   const samTurn = sam.getByRole('region', { name: 'Turn' });
   const shown = { yourTurn: false, miss: false, phone: false };
   const memory: Memory = new Map();
-  const over = sam.getByText('Game over', { exact: true });
+  const over = sam.getByRole('banner').getByText('Game over', { exact: true });
   while (!(await over.isVisible())) {
     await expect
       .poll(async () => (await whoseTurn(seats)) !== null || over.isVisible())
@@ -1229,7 +1233,9 @@ test('a Trios game', async ({ player }) => {
   await take(sam, 9);
   await readyToFind(maya);
   await pickTrio(maya);
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
   await shot(sam, 'TS09');
 });
 
@@ -1362,7 +1368,9 @@ test('a Snap game', async ({ player }) => {
       await tapMatch(taker);
     } else await take(taker, index + 12);
   }
-  await expect(sam.getByText('Game over', { exact: true })).toBeVisible();
+  await expect(
+    sam.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
   await shot(sam, 'SN09');
 });
 
@@ -1507,7 +1515,7 @@ test('a Liar’s Dice game', async ({ player }) => {
   const samCalled = sam
     .getByRole('region', { name: 'Turn' })
     .getByText('You called Liar');
-  const over = sam.getByText('Game over', { exact: true });
+  const over = sam.getByRole('banner').getByText('Game over', { exact: true });
   // Sam bids with five or six bids in front of him when the round opened
   // one or two seats before him: until such a round, the two seats that
   // could open it call a standing bid, so a die is lost and a fresh round
@@ -1739,7 +1747,9 @@ test('a Hush game', async ({ player }) => {
   await readyUp(seats);
   await playOut();
   await expect(
-    maya.getByRole('heading', { name: 'All 5 levels cleared.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('All 5 levels cleared.'),
   ).toBeVisible();
   await shot(maya, 'HU07');
 
@@ -1756,7 +1766,9 @@ test('a Hush game', async ({ player }) => {
     }
   }
   await expect(
-    maya.getByRole('heading', { name: 'Out of lives on level 3.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('Out of lives on level 3.'),
   ).toBeVisible({ timeout: 15_000 });
   await shot(maya, 'HU08');
 });
@@ -1996,7 +2008,9 @@ test('a Daily Word game', async ({ player }) => {
     ['audio', 'trend', 'slick', 'plumb', 'clamp'],
     true,
   );
-  await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await say(sam, 'by nine points!');
@@ -2321,7 +2335,9 @@ test('a Code Breaker game', async ({ player }) => {
   await guessCodes(leo, leoMisses.slice(0, -1));
   // Leo's tenth guess is the last of the code, which ends the game.
   await typeCode(leo, leoMisses.at(-1)!);
-  await expect(maya.getByText('Game over', { exact: true })).toBeVisible({
+  await expect(
+    maya.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible({
     timeout: 15_000,
   });
   await shot(sam, 'CB13');
@@ -2523,7 +2539,7 @@ test('a Gomoku game', async ({ player }) => {
     );
   }
   await expect(
-    maya.getByText('Game over', { exact: true }).first(),
+    maya.getByRole('banner').getByText('Game over', { exact: true }).first(),
   ).toBeVisible();
 
   // Game 2, the colours swapped: Maya builds on a slant while Leo plays
@@ -2565,7 +2581,9 @@ test('a Gomoku game', async ({ player }) => {
   // Maya's fifth on the slant.
   await placeStone(maya, 'I9');
   await expect(
-    maya.getByRole('heading', { name: 'You win with five in a row.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('You win with five in a row.'),
   ).toBeVisible();
   await shot(maya, 'GM13');
 
@@ -2579,7 +2597,9 @@ test('a Gomoku game', async ({ player }) => {
     .getByRole('button', { name: 'Leave room' })
     .click();
   await expect(
-    maya.getByRole('heading', { name: 'You win: Leo left the room.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('You win: Leo left the room.'),
   ).toBeVisible();
   await shot(maya, 'GM14');
 });
@@ -2607,7 +2627,9 @@ test('a Gomoku game played to a full board', async ({ player }) => {
     blacks.map((name, i) => [name, whites[i] ?? null] as const),
   );
   await expect(
-    maya.getByRole('heading', { name: 'A draw: the board is full.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('A draw: the board is full.'),
   ).toBeVisible();
   await expect(gomokuBoardOf(maya)).toBeVisible();
   await shot(maya, 'GM15');

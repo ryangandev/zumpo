@@ -220,7 +220,19 @@ describe('a Snap room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Maya wins with 17 cards.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Maya wins with 17 cards.',
+      ),
+    ).toBeInTheDocument();
+    // What comes next is beside the board, so the board keeps its place.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
     ).toBeInTheDocument();
     expect(
       screen.getByText('29 cards taken in all. You finished 2nd.'),

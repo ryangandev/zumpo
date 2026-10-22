@@ -312,13 +312,53 @@ describe('a Minesweeper room', () => {
 
     update(picking);
     update(ended);
+    // The result is in the turn bar's place, and what comes next beside the
+    // board, so the board keeps its own.
     expect(
-      screen.getByRole('heading', { name: 'You win with 120 points.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'You win with 120 points.',
+      ),
     ).toBeInTheDocument();
-    // The standings count the last round: its results are not repeated.
+    expect(
+      within(screen.getByRole('region', { name: 'Next game' })).getByRole(
+        'button',
+        { name: 'Play again' },
+      ),
+    ).toBeInTheDocument();
+    // The standings count the last round: they take its place.
+    expect(
+      screen.getByRole('heading', { name: 'Standings' }),
+    ).toBeInTheDocument();
     expect(
       screen.queryByRole('heading', { name: /^Round \d+ results$/ }),
     ).toBeNull();
     expect(confetti()).not.toBeNull();
+    // The result is the stage's heading, and takes the focus, as a new bar
+    // already filled is seldom read out.
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'You win with 120 points.',
+      }),
+    ).toHaveFocus();
+  });
+
+  it('leaves the focus with a viewer typing in the chat as the game ends', async () => {
+    const user = userEvent.setup();
+    const ended = minesweeperState({
+      lastRound: [pick],
+      lastGame: {
+        endedEarly: false,
+        standings: [{ playerId: ME, username: 'Ryan', points: 120 }],
+        difficulty: 'Small',
+        rounds: 6,
+      },
+    });
+    const { update } = await renderSeated(picking);
+    const message = screen.getByRole('textbox', { name: 'Message' });
+    await user.type(message, 'gg');
+
+    update(ended);
+    expect(message).toHaveFocus();
   });
 });

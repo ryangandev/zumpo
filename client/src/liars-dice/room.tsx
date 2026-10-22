@@ -2,10 +2,18 @@ import type { LiarsDiceRoomState } from '../../../shared/wire-types';
 import { BidPicker, Button, TurnBar, type TurnBarProps } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
-import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
+import {
+  EndedEarlyPanel,
+  NextGameUnderBoard,
+  ResultBar,
+  ResultsPanel,
+  StandingsSection,
+  WaitingPanel,
+} from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useBidChoice } from './bid-choice';
 import { fromViewer, Table, type TableSeat } from './table';
 import { bidLine, naming, revealBar, stood, type Naming } from './words';
@@ -40,6 +48,7 @@ export function LiarsDiceRoom() {
       stage={inGame ? <Turn room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.liarsDice.chat }}
+      nextBeside
     />
   );
 }
@@ -90,43 +99,63 @@ function BetweenGames({ room }: { room: Room }) {
   const { state, startGame, starting } = room;
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
+  const phone = useMediaQuery(PHONE);
 
   if (summary && !summary.endedEarly) {
-    return (
+    const detail = m.liarsDice.resultDetail(
+      summary.rounds,
+      summary.dicePerPlayer,
+    );
+    const statusOf = (
+      standing: (typeof summary.standings)[number],
+      place: number,
+    ) =>
+      place === 1
+        ? m.room.winner
+        : standing.outInRound === null
+          ? m.liarsDice.leftGame
+          : m.liarsDice.outRound(standing.outInRound);
+    // LD12: the last call stays open under the result. Off a phone it keeps
+    // its place under the result, in the turn bar's, with the standings
+    // under it and what comes next beside it.
+    const table = state.reveal && (
+      <Table
+        seats={seatsOf(state, m)}
+        youId={room.playerId}
+        // The last game's, as the next game's may have been changed.
+        dicePerPlayer={summary.dicePerPlayer}
+        turnId={null}
+        nextId={null}
+        bids={[]}
+        reveal={state.reveal}
+        who={whoIn(room, m)}
+        countLabel={m.liarsDice.lastCall}
+        inPlay={false}
+      />
+    );
+    return phone ? (
       <>
         <ResultsPanel
           summary={summary}
-          detail={m.liarsDice.resultDetail(
-            summary.rounds,
-            summary.dicePerPlayer,
-          )}
+          detail={detail}
           onPlayAgain={startGame}
           starting={starting}
           ranked
-          statusOf={(standing, place) =>
-            place === 1
-              ? m.room.winner
-              : standing.outInRound === null
-                ? m.liarsDice.leftGame
-                : m.liarsDice.outRound(standing.outInRound)
-          }
+          statusOf={statusOf}
         />
-        {/* LD12: the last call stays open under the results. */}
-        {state.reveal && (
-          <Table
-            seats={seatsOf(state, m)}
-            youId={room.playerId}
-            // The last game's, as the next game's may have been changed.
-            dicePerPlayer={summary.dicePerPlayer}
-            turnId={null}
-            nextId={null}
-            bids={[]}
-            reveal={state.reveal}
-            who={whoIn(room, m)}
-            countLabel={m.liarsDice.lastCall}
-            inPlay={false}
-          />
-        )}
+        {table}
+      </>
+    ) : (
+      <>
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.liarsDice.gameOver}
+          ranked
+        />
+        {table}
+        <NextGameUnderBoard />
+        <StandingsSection summary={summary} ranked statusOf={statusOf} />
       </>
     );
   }

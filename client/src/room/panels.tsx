@@ -9,6 +9,7 @@ import {
   HowToPlay,
   Notice,
   PlayerRow,
+  TurnBar,
 } from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
 import { roomSetting } from '../games/room-setting';
@@ -18,7 +19,12 @@ import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
 import { NameMenuButton } from '../shell/name-menu';
-import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
+import {
+  ONE_COLUMN,
+  PHONE,
+  TOUCH,
+  useMediaQuery,
+} from '../shell/use-media-query';
 import { SwapLabel } from '../shell/swap-label';
 import { useCopy } from '../shell/use-copy';
 import { StatusLine } from '../shell/status-line';
@@ -544,6 +550,13 @@ export function ResultsActions({
  * A finished game's panel: what happened, the game's own account of it, and
  * what comes next (`ResultsActions`).
  */
+/**
+ * The id of a finished game's result heading: a results card's title, or
+ * the turn bar's main line where the result is said there (`ResultBar`).
+ * The room hands it the focus as a game ends (RoomLayout).
+ */
+export const RESULT_TITLE = 'results-title';
+
 export function ResultsFrame({
   title,
   detail,
@@ -558,9 +571,9 @@ export function ResultsFrame({
   starting: boolean;
 }) {
   return (
-    <section className={styles.results} aria-labelledby="results-title">
+    <section className={styles.results} aria-labelledby={RESULT_TITLE}>
       <div className={styles.resultHeading}>
-        <h2 id="results-title" className={styles.title}>
+        <h2 id={RESULT_TITLE} className={styles.title} tabIndex={-1}>
           {title}
         </h2>
         <p className={styles.body}>{detail}</p>
@@ -573,20 +586,8 @@ export function ResultsFrame({
   );
 }
 
-/**
- * D13, D14, M14, M15: the final standings, and what comes next
- * (`ResultsActions`).
- */
-export function ResultsPanel<Summary extends GameSummary>({
-  summary,
-  title,
-  detail,
-  standingDetail,
-  onPlayAgain,
-  starting,
-  ranked = false,
-  statusOf,
-}: {
+/** What a finished game's results are told from. */
+interface ResultsOf<Summary extends GameSummary> {
   summary: Summary;
   /**
    * What happened, where the game says more than who won with what; it says
@@ -595,24 +596,43 @@ export function ResultsPanel<Summary extends GameSummary>({
   title?: string;
   /** "2 rounds of Animals, 8 turns." */
   detail: string;
-  /** More about each player's game after their place: "3 words found". */
-  standingDetail?: (playerId: string) => string;
-  onPlayAgain: () => void;
-  starting: boolean;
   /**
    * The standings are in finishing order and no two share a place, as in
    * Liar's Dice; otherwise an equal score shares one.
    */
   ranked?: boolean;
+}
+
+interface StandingsOf<Summary extends GameSummary> {
+  summary: Summary;
+  ranked?: boolean;
+  /** More about each player's game after their place: "3 words found". */
+  standingDetail?: (playerId: string) => string;
   /** Under each name; "Winner", then "2nd place" and so on, unless given. */
   statusOf?: (standing: Summary['standings'][number], place: number) => string;
-}) {
+}
+
+/** Each standing's place: in order where ranked, else an equal score shares. */
+const placesFor = (summary: GameSummary, ranked: boolean) =>
+  ranked
+    ? summary.standings.map((_, index) => index + 1)
+    : placesOf(summary.standings);
+
+/**
+ * What a finished game's results say first, for the viewer: who won with
+ * what ("You win with 130 points."), and the detail, with the viewer's own
+ * place where the title does not say it.
+ */
+function useResultHeading<Summary extends GameSummary>({
+  summary,
+  title,
+  detail,
+  ranked = false,
+}: ResultsOf<Summary>): { title: string; detail: string } {
   const m = useMessages();
   const { state, playerId } = useRoomContext();
   const { standings } = summary;
-  const places = ranked
-    ? standings.map((_, index) => index + 1)
-    : placesOf(standings);
+  const places = placesFor(summary, ranked);
   const winners = standings.filter((_, index) => places[index] === 1);
   // A spectator has no place.
   const place = places[standings.findIndex((s) => s.playerId === playerId)];
@@ -623,70 +643,203 @@ export function ResultsPanel<Summary extends GameSummary>({
     .filter((w) => w.playerId !== playerId)
     .map((w) => w.username);
   const won = others.length < winners.length;
+  return {
+    title:
+      title ??
+      (winner === undefined || score === undefined
+        ? m.room.gameOver
+        : won
+          ? others.length === 0
+            ? m.room.youWin(score)
+            : m.room.youTie(listNames(others, m), score)
+          : winners.length === 1
+            ? m.room.wins(winner.username, score)
+            : m.room.ties(
+                listNames(
+                  winners.map((w) => w.username),
+                  m,
+                ),
+                score,
+              )),
+    detail:
+      title === undefined && place !== undefined && place > 1
+        ? m.room.finished(detail, ordinal(place, m))
+        : detail,
+  };
+}
 
+/** A finished game's players in their places, with their points. */
+function Standings<Summary extends GameSummary>({
+  summary,
+  ranked = false,
+  standingDetail,
+  statusOf,
+  labelledBy,
+}: StandingsOf<Summary> & {
+  /** The heading that names the list, where it has one of its own. */
+  labelledBy?: string;
+}) {
+  const m = useMessages();
+  const { state, playerId } = useRoomContext();
+  const places = placesFor(summary, ranked);
+  return (
+    <ol
+      className={styles.ranking}
+      aria-label={labelledBy ? undefined : m.room.standings}
+      aria-labelledby={labelledBy}
+    >
+      {summary.standings.map((standing, index) => {
+        const seat = state.playerList[standing.playerId];
+        const standingPlace = itemAt(places, index);
+        return (
+          <li key={standing.playerId} className={styles.place}>
+            <span className={styles.number}>{standingPlace}</span>
+            <PlayerRow
+              as="div"
+              className={styles.row}
+              wrap
+              name={standing.username}
+              initials={initialsOf(standing.username)}
+              tone={toneOf(standing.username)}
+              status={[
+                statusOf
+                  ? statusOf(standing, standingPlace)
+                  : standingPlace === 1
+                    ? m.room.winner
+                    : m.room.place(ordinal(standingPlace, m)),
+                standingDetail?.(standing.playerId),
+              ]
+                .filter(Boolean)
+                .join(' · ')}
+              score={standing.points}
+              host={standing.playerId === state.owner.playerId}
+              you={standing.playerId === playerId}
+              state={
+                standingPlace === 1 ? 'highlight' : seat ? 'default' : 'away'
+              }
+            />
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/**
+ * D13, D14, M14, M15: the final standings and what comes next
+ * (`ResultsActions`) in one panel, on a phone and where no board stays under
+ * the results. Off a phone, over a board the game ended on, the result is
+ * `ResultBar` in the turn bar's place, the standings are `StandingsSection`
+ * under the board, and what comes next is `NextGamePanel` beside it, so the
+ * board keeps its size and place from the game to its results.
+ */
+export function ResultsPanel<Summary extends GameSummary>({
+  onPlayAgain,
+  starting,
+  ...results
+}: ResultsOf<Summary> &
+  StandingsOf<Summary> & {
+    onPlayAgain: () => void;
+    starting: boolean;
+  }) {
+  const { title, detail } = useResultHeading(results);
   return (
     <ResultsFrame
-      title={
-        title ??
-        (winner === undefined || score === undefined
-          ? m.room.gameOver
-          : won
-            ? others.length === 0
-              ? m.room.youWin(score)
-              : m.room.youTie(listNames(others, m), score)
-            : winners.length === 1
-              ? m.room.wins(winner.username, score)
-              : m.room.ties(
-                  listNames(
-                    winners.map((w) => w.username),
-                    m,
-                  ),
-                  score,
-                ))
-      }
-      detail={
-        title === undefined && place !== undefined && place > 1
-          ? m.room.finished(detail, ordinal(place, m))
-          : detail
-      }
+      title={title}
+      detail={detail}
       onPlayAgain={onPlayAgain}
       starting={starting}
     >
-      <ol className={styles.ranking} aria-label={m.room.standings}>
-        {standings.map((standing, index) => {
-          const seat = state.playerList[standing.playerId];
-          const standingPlace = itemAt(places, index);
-          return (
-            <li key={standing.playerId} className={styles.place}>
-              <span className={styles.number}>{standingPlace}</span>
-              <PlayerRow
-                as="div"
-                className={styles.row}
-                wrap
-                name={standing.username}
-                initials={initialsOf(standing.username)}
-                tone={toneOf(standing.username)}
-                status={[
-                  statusOf
-                    ? statusOf(standing, standingPlace)
-                    : standingPlace === 1
-                      ? m.room.winner
-                      : m.room.place(ordinal(standingPlace, m)),
-                  standingDetail?.(standing.playerId),
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
-                score={standing.points}
-                host={standing.playerId === state.owner.playerId}
-                you={standing.playerId === playerId}
-                state={
-                  standingPlace === 1 ? 'highlight' : seat ? 'default' : 'away'
-                }
-              />
-            </li>
-          );
-        })}
-      </ol>
+      <Standings {...results} />
     </ResultsFrame>
   );
+}
+
+/**
+ * Over the board a game ended on, in the turn bar's place: how the game
+ * ended, as `ResultsPanel`'s heading says it, in a bar as tall as the one in
+ * play, so the board under it stays where it was. The game's tag
+ * (`category`) stays where its bar in play has one.
+ */
+export function ResultBar<Summary extends GameSummary>({
+  label,
+  category,
+  stackOnPhone,
+  ...results
+}: ResultsOf<Summary> & {
+  /** The game's "Game over". */
+  label: string;
+  category?: string;
+  /** As the game's bar in play has it (`TurnBar`), so the two are as tall. */
+  stackOnPhone?: boolean;
+}) {
+  const { title, detail } = useResultHeading(results);
+  return (
+    <TurnBar
+      category={category}
+      label={label}
+      kind="status"
+      main={title}
+      meta={detail}
+      stackOnPhone={stackOnPhone}
+      headingId={RESULT_TITLE}
+    />
+  );
+}
+
+/** Under the board a game ended on: the final standings, headed. */
+export function StandingsSection<Summary extends GameSummary>({
+  className,
+  ...standings
+}: StandingsOf<Summary> & {
+  /**
+   * In the board's own panel, as a round's results are; on paper of its
+   * own, under the board's, without.
+   */
+  className?: string;
+}) {
+  const m = useMessages();
+  return (
+    <section
+      className={className ?? styles.standings}
+      aria-labelledby="standings-title"
+    >
+      <h2 id="standings-title" className={styles.standingsTitle}>
+        {m.room.standings}
+      </h2>
+      <Standings {...standings} labelledBy="standings-title" />
+    </section>
+  );
+}
+
+/**
+ * Beside the board a game ended on, at the top of the side column: what
+ * comes next (`ResultsActions`), in sight with the result over the board.
+ */
+export function NextGamePanel({
+  onPlayAgain,
+  starting,
+}: {
+  onPlayAgain: () => void;
+  starting: boolean;
+}) {
+  const m = useMessages();
+  return (
+    <section className={styles.next} aria-label={m.room.nextGame}>
+      <ResultsActions onPlayAgain={onPlayAgain} starting={starting} />
+    </section>
+  );
+}
+
+/**
+ * In one column, under 1024 px and wider than a phone, the side column is
+ * under the whole stage, so what comes next stands here instead: under the
+ * board, over the standings, in sight without scrolling past them.
+ */
+export function NextGameUnderBoard() {
+  const oneColumn = useMediaQuery(ONE_COLUMN);
+  const phone = useMediaQuery(PHONE);
+  const { startGame, starting } = useRoomContext();
+  if (!oneColumn || phone) return null;
+  return <NextGamePanel onPlayAgain={startGame} starting={starting} />;
 }

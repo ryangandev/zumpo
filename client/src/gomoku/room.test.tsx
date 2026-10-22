@@ -316,16 +316,14 @@ describe('a Gomoku room', () => {
         },
       }),
     );
-    expect(screen.getByText('Game over')).toBeInTheDocument();
+    // The result is in the turn bar's place, so the board keeps its own; the
+    // seats and the scoreboard say who played what.
+    expect(turn().getByText('Game over')).toBeInTheDocument();
+    expect(turn().getByText('You win with five in a row.')).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: 'You win with five in a row.' }),
+      turn().getByText('A game of 21 moves. Next game, Maya plays Black.'),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText('A game of 21 moves. Next game, Maya plays Black.'),
-    ).toBeInTheDocument();
-    const standings = within(screen.getByRole('list', { name: 'Standings' }));
-    expect(standings.getByText('Five in a row, C11 to G7')).toBeInTheDocument();
-    expect(standings.getByText('White')).toBeInTheDocument();
+    expect(screen.queryByRole('list', { name: 'Standings' })).toBeNull();
     expect(screen.getByText('Black · five in a row')).toBeInTheDocument();
     expect(point('C11')).toHaveAccessibleName(
       'C11, black stone, in the winning line',
@@ -404,10 +402,10 @@ describe('a Gomoku room', () => {
       }),
     );
     expect(
-      screen.getByRole('heading', { name: 'You win: Maya left the room.' }),
+      turn().getByText('You win: Maya left the room.'),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
+      turn().getByText(
         'A game of 3 moves. Maya’s seat is free for anybody to take.',
       ),
     ).toBeInTheDocument();

@@ -322,7 +322,9 @@ describe('a Hush room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'All 2 levels cleared.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'All 2 levels cleared.',
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText('Together, with 2 lives to spare.'),
@@ -331,6 +333,21 @@ describe('a Hush room', () => {
     expect(screen.getByText('Level 2: clean, a life back')).toBeInTheDocument();
     expect(screen.queryByText('Winner')).toBeNull();
     expect(screen.getByRole('img', { name: '58' })).toBeInTheDocument();
+    // The result heads the stage at level 2, and the team's result under the
+    // pile is named by it, its blocks at level 3.
+    const stage = screen.getByRole('main');
+    const headings = within(stage)
+      .getAllByRole('heading')
+      .map((h) => [
+        h.getAttribute('aria-level') ?? h.tagName.slice(1),
+        h.textContent,
+      ]);
+    expect(headings.slice(0, 1)).toEqual([['2', 'All 2 levels cleared.']]);
+    expect(headings).toContainEqual(['3', 'Level by level']);
+    expect(headings).toContainEqual(['3', 'Played by']);
+    expect(
+      screen.getByRole('region', { name: 'All 2 levels cleared.' }),
+    ).toHaveTextContent('Level 1: a life lost');
   });
 
   it('celebrates a win together, but not a loss', async () => {
@@ -350,7 +367,9 @@ describe('a Hush room', () => {
     const { update } = await renderSeated(playing);
     update(hushState({ lastGame: summary }));
     expect(
-      screen.getByRole('heading', { name: 'Out of lives on level 1.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Out of lives on level 1.',
+      ),
     ).toBeInTheDocument();
     expect(confetti()).toBeNull();
 
@@ -367,7 +386,9 @@ describe('a Hush room', () => {
       }),
     );
     expect(
-      screen.getByRole('heading', { name: 'All 1 level cleared.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'All 1 level cleared.',
+      ),
     ).toBeInTheDocument();
     expect(confetti()).not.toBeNull();
   });
@@ -394,7 +415,9 @@ describe('a Hush room', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Out of lives on level 1.' }),
+      within(screen.getByRole('region', { name: 'Turn' })).getByText(
+        'Out of lives on level 1.',
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText('0 of 7 levels cleared, together.'),

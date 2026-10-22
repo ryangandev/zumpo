@@ -6,7 +6,15 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { useSecondsSince } from '../net/use-seconds-since';
 import { initialsOf } from '../players/avatar';
-import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
+import {
+  EndedEarlyPanel,
+  NextGameUnderBoard,
+  ResultBar,
+  ResultsPanel,
+  StandingsSection,
+  WaitingPanel,
+} from '../room/panels';
+import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
@@ -40,6 +48,7 @@ export function TriosRoom() {
       stage={inGame ? <Play room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.trios.chat }}
+      nextBeside
     />
   );
 }
@@ -76,25 +85,39 @@ function BetweenGames({ room }: { room: Room }) {
   const { state, startGame, starting, playerId } = room;
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
+  const phone = useMediaQuery(PHONE);
 
   if (summary && !summary.endedEarly) {
-    return (
+    const detail = m.trios.resultDetail(summary.trios);
+    // TS09: the finished table stays until the next game is dealt, its last
+    // trio marked with who took it, so no strip repeats it. Off a phone it
+    // keeps its place under the result, in the turn bar's, with the
+    // standings under it and what comes next beside it.
+    const table = (
+      <TablePanel>
+        <TriosTable
+          cards={state.table}
+          places={takenPlaces(state, playerId, m)}
+          inPlay={false}
+        />
+      </TablePanel>
+    );
+    return phone ? (
       <>
         <ResultsPanel
           summary={summary}
-          detail={m.trios.resultDetail(summary.trios)}
+          detail={detail}
           onPlayAgain={startGame}
           starting={starting}
         />
-        {/* TS09: the finished table stays until the next game is dealt, its
-            last trio marked with who took it, so no strip repeats it. */}
-        <TablePanel>
-          <TriosTable
-            cards={state.table}
-            places={takenPlaces(state, playerId, m)}
-            inPlay={false}
-          />
-        </TablePanel>
+        {table}
+      </>
+    ) : (
+      <>
+        <ResultBar summary={summary} detail={detail} label={m.trios.gameOver} />
+        {table}
+        <NextGameUnderBoard />
+        <StandingsSection summary={summary} />
       </>
     );
   }

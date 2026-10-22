@@ -85,6 +85,13 @@ Decisions from the design review rounds (their reports are in git history):
   The board is the one played on, never mounted again, so it keeps its place and its scale; the result's title takes the focus when the game ends, and the next game's board takes it after Play again.
   The side column's other cards follow: the best on this device, and Challenge a friend where the game has it, whose one button is Copy challenge link (#107); the progress during play is not repeated there.
   `Zumpo/Game artwork` is the paper panel both draw, one per game and size, so the artwork is drawn once.
+- A room game with a board ends the same way off a phone (#155): the board keeps its size and place from the game to its results, for players and spectators alike.
+  The result is a Status turn bar labelled Game over in the turn bar's place (`ResultBar`), what comes next heads the side column on paper of its own (`NextGamePanel`, through RoomLayout's `nextBeside`), and the standings go under the board (`StandingsSection`).
+  So a newcomer sees the result and Play again or Ready at once, without scrolling, at 1440 × 900.
+  In one column, under 1024 px, the side column is under the whole stage, so what comes next stands under the board instead, over the standings (`NextGameUnderBoard`).
+  The turn bar's main line is then the stage's level 2 heading (TurnBar `headingId`), and as a game ends it takes the focus with no ring until a key, as a result on your own does, unless the viewer is typing in a field or in a dialog.
+  Minesweeper and Make 24 put the standings in the board's own panel, as a round's results are; Gomoku leaves them out, since its seats say who won, and puts what comes next in its table's actions place, where Resign was; Hush puts the levels and the hands still held under the pile.
+  A phone keeps the results card over the board (`ResultsPanel`), with Play again in its first screen.
 - A new room's page (DL04-DL06, DL10, DL11, ML04-ML06, ML10, MO05, and one per game) asks only what the game needs, so it fits the first screen down to 1280 × 720: its card is titled after the game ("New Draw & Guess room"), and the game's own setting is in view with its default.
   More options, a Quiet button, opens the room's name (the host's by default), its seats (all of them by default) and a password, so Create room is one click away; Ryan asked for this on 2026-10-21.
   Hush keeps its seats in view, because they set how long its game is.
@@ -313,6 +320,8 @@ Code differs from Figma on purpose in a few places:
   The same compact seat, and its short note, is used beside the board on a short wide screen.
 - A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
   On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
+- Until `t-fig-1-room-results-desktop.js` runs, the desktop results screens of a room game with a board (GM13 to GM15, M14, M15, PR07, TS09, SN09, LD12, T09, HU07, HU08) draw the results card over the board, so the board sits lower than in play; code keeps the board in its place, as the #155 decision above says.
+  T09 also draws the last hand's results in the table panel, where code has the standings.
 - Until `j-fig-7-solo-phone-turn-label.js` runs, DW12, CB16 and CB17 draw the turn bar's label on a phone; code says it to a screen reader only in Daily Word and Code Breaker on your own (TurnBar `labelOnPhone={false}`), since the room bar above already names the word or code, and the meta then has the whole first line, so no line is cut at 360 px.
 - Until `j-fig-8-phone-turn-meta-line.js` runs, the Phone turn bar sets the tag, the label and the meta on one first line; at 560 px or narrower code gives the tag and the meta a line of their own under the main line, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
   Gomoku, whose words fit the one row, keeps it (TurnBar `stackOnPhone={false}`), so its board keeps that height.
