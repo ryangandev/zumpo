@@ -166,6 +166,7 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
   const { startGame, starting } = room;
   const lostOn = summary.history.at(-1)?.level ?? summary.levelsCleared + 1;
   const title = summary.won ? m.hush.won(summary.levels) : m.hush.lost(lostOn);
+  const mostHeld = Math.max(0, ...summary.held.map((h) => h.cards.length));
   const detail = summary.won
     ? m.hush.wonDetail(summary.lives)
     : m.hush.lostDetail(summary.levelsCleared, summary.levels);
@@ -233,7 +234,8 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
                   />
                   <span className={styles.name}>{username}</span>
                   {cards.length > 0 ? (
-                    // One row, as a hand is, scaled down when it is wider.
+                    // One row, as a hand is, scaled down when it is wider;
+                    // every row as wide as the longest, so all share a scale.
                     <Fit align="start" className={styles.heldRow}>
                       <ol
                         className={styles.heldCards}
@@ -244,6 +246,18 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
                             <HushCard value={card} size="small" />
                           </li>
                         ))}
+                        {Array.from(
+                          { length: mostHeld - cards.length },
+                          (_, index) => (
+                            <li
+                              key={`room-${index}`}
+                              className={styles.room}
+                              aria-hidden
+                            >
+                              <HushCard value={0} size="small" />
+                            </li>
+                          ),
+                        )}
                       </ol>
                     </Fit>
                   ) : (

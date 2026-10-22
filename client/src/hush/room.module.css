@@ -101,3 +101,9 @@
     width: auto;
   }
 }
+
+/* The room of a card another player held more of, so every row of held
+   cards shares one scale. */
+.room {
+  visibility: hidden;
+}

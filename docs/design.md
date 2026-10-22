@@ -230,9 +230,11 @@ Code differs from Figma on purpose in a few places:
 - Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
 - The create-room card sits at the top of its stage, not centred, so More options grows it downward and nothing moves.
 - On a phone Hush's table is one screen (#149): the pile is scaled to the height between the head and the hand, down to 0.3, so on a 360 by 640 phone the top card is about 70 by 90 px; Figma's HU10 and HU11 are tall frames that draw it at full size.
-  On every width the cards under the top one scroll beside it in play, the newest kept in view, and a hand with more cards than fit in one row is scaled down to the width, keeping the room of cards already played for the whole level; Figma draws neither.
+  On every width the cards under the top one scroll beside it in play, the newest kept in view, drawn at least half size so their numbers stay 12 px, and a keyboard can reach them while they scroll; a hand with more cards than fit in one row is scaled down to the width, keeping the room of cards already played for the whole level; Figma draws neither.
   On a short window beside the side column, such as 1280 by 720, the table in play is scaled down so it ends inside the window, as a board on your own is.
-  On a phone the last pile under a game's results is drawn at half size, and the cards each player still held go under their name; Figma has no phone results screen for Hush.
+  There the side column is as tall as the stage, its chat scrolling, so the page never runs past the window.
+  Before the first play a desktop's empty pile is card-shaped, in the top card's place, so the first play moves nothing; on a phone on its side the pile keeps its own height and the page scrolls as a desktop's does.
+  On a phone the last pile under a game's results is drawn at half size, and the cards each player still held go under their name, every row at the one scale the fullest needs; Figma has no phone results screen for Hush.
   Until `s-fig-1-hush-phone-table.js` and `s-fig-2-hush-desktop-pile-row.js` run, HU01-HU08 draw the pile as a column, HU10 and HU11 draw the hand in Regular cards and the hearts with their words, and the phone table's parts sit 24 apart, not 12.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
 - The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.

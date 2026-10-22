@@ -1,5 +1,5 @@
 import { useMessages } from '../i18n';
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import type { HushDiscard, HushPlay } from '../../../shared/wire-types';
 import { HushCard, Lives } from '../ui';
 import { cx } from '../ui/cx';
@@ -85,11 +85,19 @@ export function Pile({
     ...discards.map(({ card }) => ({ card, discarded: true })),
   ].toSorted((a, b) => a.card - b.card);
 
-  // Folded, the trail shows its newest cards, the ones just under the top.
+  // Folded, the trail shows its newest cards, the ones just under the top,
+  // and while it scrolls a keyboard can reach it to scroll it.
   const count = under.length;
+  const [folded, setFolded] = useState(false);
   useLayoutEffect(() => {
     const list = trail.current;
-    if (list && count > 0) list.scrollTop = list.scrollHeight;
+    if (!list || count === 0) return;
+    list.scrollTop = list.scrollHeight;
+    const measure = () => setFolded(list.scrollHeight > list.clientHeight + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(list);
+    return () => observer.disconnect();
   }, [count]);
 
   const pileOf = (
@@ -105,7 +113,12 @@ export function Pile({
         </p>
       )}
       {count > 0 && (
-        <ol ref={trail} className={styles.trail} aria-label={m.hush.underTop}>
+        <ol
+          ref={trail}
+          className={styles.trail}
+          aria-label={m.hush.underTop}
+          tabIndex={inPlay && folded ? 0 : undefined}
+        >
           {under.map(({ card, discarded }) => (
             <li key={card}>
               <HushCard
@@ -121,7 +134,7 @@ export function Pile({
   );
   // The trail wraps across the width, so the pile is scaled to the height.
   return inPlay ? (
-    <PlayBoard fitWidth={false} min={0.3}>
+    <PlayBoard fitWidth={false} min={0.3} className={styles.board}>
       {pileOf}
     </PlayBoard>
   ) : (
@@ -209,7 +222,7 @@ export function HandRow({
               className={cx(styles.smallStatus, !status && styles.held)}
               aria-hidden={!status || undefined}
             >
-              {status ?? ' '}
+              {status ?? '\u00a0'}
             </p>
           ) : (
             <p className={styles.status}>{status}</p>
