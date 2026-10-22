@@ -160,6 +160,7 @@ export function GomokuRoom() {
               ) : null
             }
             note={!playing && !summary ? m.gomoku.colorsNote : undefined}
+            holdActions={phone && playing && spectating}
             actions={
               playing ? (
                 (tapTwice ? mine !== null : resign) && (

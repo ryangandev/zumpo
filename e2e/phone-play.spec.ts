@@ -586,8 +586,13 @@ test('a Gomoku board keeps its size and place from a game to its results', async
   // that never wraps.
   const maya = await onPhone(player, 'Sparkly Hedgehog', size);
   const leo = await onPhone(player, 'Wandering Squirrel', size);
-  await joinRoom(leo, await createRoom(maya, 'gomoku'));
+  // Somebody watching sees the players' board, and it keeps its size too.
+  const ana = await onPhone(player, 'Curious Hedgehog', size);
+  const link = await createRoom(maya, 'gomoku');
+  await joinRoom(leo, link);
+  await joinRoom(ana, link);
   await maya.getByRole('button', { name: 'Start game' }).click();
+  await expect(ana.getByText('Watching · Game 1')).toBeVisible();
   const black = await blackOf([maya, leo]);
   const white = black === maya ? leo : maya;
   for (const [mine, theirs] of [
@@ -600,15 +605,24 @@ test('a Gomoku board keeps its size and place from a game to its results', async
     await tapStone(white, theirs);
   }
   await expect(black.getByRole('button', { name: 'Resign' })).toBeVisible();
-  const before = await Promise.all([tableLayout(black), tableLayout(white)]);
+  const before = await Promise.all([
+    tableLayout(black),
+    tableLayout(white),
+    tableLayout(ana),
+  ]);
   expect(before[0]).toEqual(before[1]);
+  expect(before[2]).toEqual(before[0]);
 
   await tapStone(black, 'H8');
   for (const page of [black, white]) {
     await expect(page.getByRole('button', { name: 'Resign' })).toHaveCount(0);
     await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
   }
-  const after = await Promise.all([tableLayout(black), tableLayout(white)]);
+  const after = await Promise.all([
+    tableLayout(black),
+    tableLayout(white),
+    tableLayout(ana),
+  ]);
   expect(after).toEqual(before);
 });
 
