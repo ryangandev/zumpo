@@ -19,7 +19,12 @@ import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { useSession } from '../net/session';
 import { NameMenuButton } from '../shell/name-menu';
-import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
+import {
+  ONE_COLUMN,
+  PHONE,
+  TOUCH,
+  useMediaQuery,
+} from '../shell/use-media-query';
 import { SwapLabel } from '../shell/swap-label';
 import { useCopy } from '../shell/use-copy';
 import { StatusLine } from '../shell/status-line';
@@ -816,4 +821,17 @@ export function NextGamePanel({
       <ResultsActions onPlayAgain={onPlayAgain} starting={starting} />
     </section>
   );
+}
+
+/**
+ * In one column, under 1024 px and wider than a phone, the side column is
+ * under the whole stage, so what comes next stands here instead: under the
+ * board, over the standings, in sight without scrolling past them.
+ */
+export function NextGameUnderBoard() {
+  const oneColumn = useMediaQuery(ONE_COLUMN);
+  const phone = useMediaQuery(PHONE);
+  const { startGame, starting } = useRoomContext();
+  if (!oneColumn || phone) return null;
+  return <NextGamePanel onPlayAgain={startGame} starting={starting} />;
 }

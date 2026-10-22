@@ -16,7 +16,12 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { Fit } from '../shell/fit';
 import { initialsOf, toneOf } from '../players/avatar';
-import { EndedEarlyPanel, ResultsFrame, WaitingPanel } from '../room/panels';
+import {
+  EndedEarlyPanel,
+  NextGameUnderBoard,
+  ResultsFrame,
+  WaitingPanel,
+} from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
@@ -133,6 +138,7 @@ function BetweenGames({ room }: { room: Room }) {
             />
           </TablePanel>
         )}
+        <NextGameUnderBoard />
         {!phone && (
           <section className={styles.summary} aria-label={title}>
             <TeamResult summary={summary} />

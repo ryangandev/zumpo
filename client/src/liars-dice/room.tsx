@@ -4,6 +4,7 @@ import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import {
   EndedEarlyPanel,
+  NextGameUnderBoard,
   ResultBar,
   ResultsPanel,
   StandingsSection,
@@ -153,6 +154,7 @@ function BetweenGames({ room }: { room: Room }) {
           ranked
         />
         {table}
+        <NextGameUnderBoard />
         <StandingsSection summary={summary} ranked statusOf={statusOf} />
       </>
     );

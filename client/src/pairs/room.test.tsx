@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import type { PairsCardView } from '../../../shared/wire-types';
 import { ME, pairsState } from '../tests/fixtures';
-import { onPhone } from '../tests/phone';
+import { onPhone, onTablet } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
 
 /** What the page has said politely about a turn. */
@@ -170,6 +170,34 @@ describe('a Pairs room', () => {
       screen.getByText('Small board, 8 pairs. You finished 2nd.'),
     ).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
+  });
+
+  it('puts what comes next under the board in one column, over the standings', async () => {
+    onTablet();
+    await renderSeated(
+      pairsState({
+        cards: board(),
+        lastGame: {
+          endedEarly: false,
+          board: 'Small',
+          pairs: 8,
+          standings: [
+            { playerId: ME, username: 'Ryan', points: 6 },
+            { playerId: 'p2', username: 'Maya', points: 2 },
+          ],
+        },
+      }),
+    );
+
+    const next = screen.getByRole('region', { name: 'Next game' });
+    const grid = screen.getByRole('grid');
+    const standings = screen.getByRole('heading', { name: 'Standings' });
+    expect(grid.compareDocumentPosition(next)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(next.compareDocumentPosition(standings)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
   });
 
   it('marks the Game tab when your turn comes while Chat is open', async () => {

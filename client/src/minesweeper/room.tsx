@@ -9,6 +9,7 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { initialsOf, toneOf } from '../players/avatar';
 import {
   EndedEarlyPanel,
+  NextGameUnderBoard,
   ResultBar,
   ResultsPanel,
   StandingsSection,
@@ -17,7 +18,7 @@ import {
 import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
 import { HIDDEN } from '../../../shared/minesweeper';
 import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
@@ -59,6 +60,7 @@ function BetweenGames({ room }: { room: Room }) {
   const count = Object.keys(state.playerList).length;
   const summary = state.lastGame;
   const phone = useMediaQuery(PHONE);
+  const oneColumn = useMediaQuery(ONE_COLUMN);
 
   if (summary && !summary.endedEarly) {
     const detail = m.minesweeper.resultsDetail(
@@ -68,7 +70,8 @@ function BetweenGames({ room }: { room: Room }) {
     // M14, M15: on a phone the results come over the board. Off a phone the
     // result takes the turn bar's place, the standings the last round's
     // under the board, and what comes next is beside it, so the board keeps
-    // its size and place from the game to its results.
+    // its size and place from the game to its results. In one column what
+    // comes next is under the board, and the standings under that.
     return phone ? (
       <>
         <ResultsPanel
@@ -91,9 +94,13 @@ function BetweenGames({ room }: { room: Room }) {
           room={room}
           showPicks={false}
           standings={
-            <StandingsSection summary={summary} className={styles.results} />
+            !oneColumn && (
+              <StandingsSection summary={summary} className={styles.results} />
+            )
           }
         />
+        <NextGameUnderBoard />
+        {oneColumn && <StandingsSection summary={summary} />}
       </>
     );
   }

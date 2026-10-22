@@ -7,6 +7,7 @@ import { useSecondsSince } from '../net/use-seconds-since';
 import { initialsOf } from '../players/avatar';
 import {
   EndedEarlyPanel,
+  NextGameUnderBoard,
   ResultBar,
   ResultsPanel,
   StandingsSection,
@@ -122,6 +123,7 @@ function BetweenGames({ room }: { room: Room }) {
       <>
         <ResultBar summary={summary} detail={detail} label={m.snap.gameOver} />
         {board}
+        <NextGameUnderBoard />
         <StandingsSection summary={summary} />
       </>
     );

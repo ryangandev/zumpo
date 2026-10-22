@@ -101,7 +101,8 @@ export interface RoomLayoutProps {
    * The game keeps the board a game ended on in its place, under the result
    * in the turn bar's (`ResultBar`): off a phone, what comes next for a game
    * played to its end (`NextGamePanel`) is at the top of the side column,
-   * in sight beside it. A phone's Board tab has the game's own results.
+   * in sight beside it; in one column the game puts it under the board
+   * (`NextGameUnderBoard`). A phone's Board tab has the game's own results.
    */
   nextBeside?: boolean;
 }
@@ -372,7 +373,7 @@ export function RoomLayout({
           </div>
           <div className={styles.side}>
             {watchNotice}
-            {nextBeside && finished && (
+            {nextBeside && finished && !oneColumn && (
               <NextGamePanel
                 onPlayAgain={room.startGame}
                 starting={room.starting}
