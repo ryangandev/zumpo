@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Fit } from './fit';
+import { Fit, SMALLEST_ZOOM } from './fit';
 
 /** The box Fit is given. */
 const GIVEN = 300;
@@ -104,6 +104,13 @@ describe('Fit', () => {
     await act(async () => rerender(line('x'.repeat(60))));
     expect(zoom()).toBeCloseTo(0.5);
     expect(wordsWidth(words())).toBeLessThanOrEqual(GIVEN);
+  });
+
+  it('never scales below the smallest scale', () => {
+    // However small the scale, the words come out wider than the box.
+    rounding = 1000;
+    render(line('x'.repeat(40)));
+    expect(zoom()).toBe(SMALLEST_ZOOM);
   });
 
   it('leaves the room around a box it is given unwatched', () => {

@@ -88,25 +88,35 @@ export function Fit({
 const FIT_TRIES = 8;
 
 /**
+ * The smallest scale: past it nothing in a piece can be read or touched, and
+ * a scale of 0 or less would be read as no scale at all, the piece at full
+ * size. A piece too wide even at it overflows.
+ */
+export const SMALLEST_ZOOM = 0.25;
+
+/**
  * The scale at which the piece, `needed` wide unscaled, is no wider than
  * `given`. Text does not scale in proportion: at a scaled font size its
  * glyphs are laid out again, and where a platform rounds their advances to
  * whole pixels, as Chromium on Linux does, the line comes out a few pixels
  * wider than the scale says. So the scale is measured as applied and brought
- * down until the piece fits, by at least half a percent a try. Leaves the
- * scale applied.
+ * down until the piece fits, by at least half a percent a try, and never
+ * past `SMALLEST_ZOOM`. Leaves the scale applied.
  */
 export function fittingZoom(
   piece: HTMLElement,
   given: number,
   needed: number,
 ): number {
-  let zoom = given / needed;
+  let zoom = Math.max(given / needed, SMALLEST_ZOOM);
   for (let tries = 0; tries < FIT_TRIES; tries++) {
     piece.style.setProperty('zoom', String(zoom));
     const scaled = extentOf(piece);
-    if (scaled <= given) return zoom;
-    zoom = Math.min(zoom * (given / scaled), zoom - 0.005);
+    if (scaled <= given || zoom === SMALLEST_ZOOM) return zoom;
+    zoom = Math.max(
+      Math.min(zoom * (given / scaled), zoom - 0.005),
+      SMALLEST_ZOOM,
+    );
   }
   piece.style.setProperty('zoom', String(zoom));
   return zoom;
