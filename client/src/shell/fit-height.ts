@@ -57,6 +57,10 @@ export function useFitHeight<T extends HTMLElement>(
     remeasure.current = refit;
     const observer = new ResizeObserver(fit);
     observer.observe(element);
+    // What is over the board can grow and move it down without changing its
+    // size, as a turn bar taking a second line for its hints: the page then
+    // grows by as much.
+    observer.observe(document.body);
     window.addEventListener('resize', refit);
     return () => {
       remeasure.current = () => {};
