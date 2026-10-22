@@ -1,7 +1,12 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { onPhone } from '../tests/phone';
-import { KeptScale, useFitHeight, type FitHeight } from './fit-height';
+import {
+  KeptScale,
+  scaleKeeper,
+  useFitHeight,
+  type FitHeight,
+} from './fit-height';
 
 /** Where the board starts on the page, and the footer under it. */
 let top = 100;
@@ -29,13 +34,7 @@ function setWindowHeight(height: number) {
   });
 }
 
-function Board({
-  layout,
-  fit = true,
-}: {
-  layout?: string;
-  fit?: FitHeight;
-}) {
+function Board({ layout, fit = true }: { layout?: string; fit?: FitHeight }) {
   const ref = useFitHeight<HTMLDivElement>(fit, layout);
   return <div ref={ref} data-testid="board" />;
 }
@@ -211,7 +210,7 @@ describe('useFitHeight', () => {
   });
 
   it('gives a room board drawn anew at the end the scale the game had', () => {
-    const kept = { current: null };
+    const kept = scaleKeeper();
     const { unmount } = render(
       <KeptScale value={kept}>
         <Room />
@@ -241,7 +240,7 @@ describe('useFitHeight', () => {
   });
 
   it('measures a finished room board afresh in another window, or with none kept', () => {
-    const kept = { current: null };
+    const kept = scaleKeeper();
     const { unmount } = render(
       <KeptScale value={kept}>
         <Room />
@@ -260,7 +259,7 @@ describe('useFitHeight', () => {
     // Somebody who came in to watch the results.
     setWindowHeight(720);
     render(
-      <KeptScale value={{ current: null }}>
+      <KeptScale value={scaleKeeper()}>
         <Room fit="result" />
       </KeptScale>,
     );

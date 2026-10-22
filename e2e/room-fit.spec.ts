@@ -108,13 +108,17 @@ for (const { game, ready } of DEALT) {
   });
 }
 
+/** The first word offered to a drawer, which says how many letters it has. */
+const offered = (page: Page) =>
+  page.getByRole('button', { name: /\d+ letters?$/ }).first();
+
 test('a Draw & Guess room fits a 1440 × 900 window for the drawer and a guesser', async ({
   player,
 }) => {
   const [a, b] = await startRoom('draw-and-guess', player);
-  const offered = (page: Page) =>
-    page.getByRole('button', { name: /\d+ letters?$/ }).first();
-  await expect(offered(a!).or(a!.getByText(/is choosing a word/))).toBeVisible();
+  await expect(
+    offered(a!).or(a!.getByText(/is choosing a word/)),
+  ).toBeVisible();
   const drawer = (await offered(a!).isVisible()) ? a! : b!;
   const guesser = drawer === a ? b! : a!;
   await expectFits([drawer, guesser], 'choosing a word');
@@ -137,7 +141,9 @@ test('a Daily Word room fits a 1440 × 900 window with its keyboard', async ({
 }) => {
   const pages = await startRoom('daily-word', player);
   for (const page of pages) {
-    await expect(page.getByRole('group', { name: 'Your guesses' })).toBeVisible();
+    await expect(
+      page.getByRole('group', { name: 'Your guesses' }),
+    ).toBeVisible();
     await guessWord(page, 'slate');
     await page.keyboard.type('cra');
   }
@@ -149,7 +155,9 @@ test('a Code Breaker room fits a 1440 × 900 window with its keypad', async ({
 }) => {
   const pages = await startRoom('code-breaker', player);
   for (const page of pages) {
-    await expect(page.getByRole('group', { name: 'Your guesses' })).toBeVisible();
+    await expect(
+      page.getByRole('group', { name: 'Your guesses' }),
+    ).toBeVisible();
     await guessCode(page, '1234');
     await page.keyboard.type('56');
   }

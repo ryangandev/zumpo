@@ -15,12 +15,29 @@ export interface FittedScale {
   height: number;
 }
 
+/** Where a room's board scale is kept, and read back. */
+export interface ScaleKeeper {
+  get: () => FittedScale | null;
+  set: (fitted: FittedScale) => void;
+}
+
+/** A keeper of no scale yet, for one room's page. */
+export function scaleKeeper(): ScaleKeeper {
+  let kept: FittedScale | null = null;
+  return {
+    get: () => kept,
+    set: (fitted) => {
+      kept = fitted;
+    },
+  };
+}
+
 /**
  * A room's board scale, kept for as long as the room's page is open
  * (RoomLayout), so a finished board drawn anew under its result can take
- * the scale the board had in play (`resume`).
+ * the scale the board had in play (`result`).
  */
-export const KeptScale = createContext<{ current: FittedScale | null } | null>(null);
+export const KeptScale = createContext<ScaleKeeper | null>(null);
 
 /**
  * How a board fits the window's height (useFitHeight): not at all, as a
@@ -85,13 +102,13 @@ export function useFitHeight<T extends HTMLElement>(
     // grow back.
     let most = 1;
     // A finished board holds the scale its game was played at.
-    const before = resume ? kept?.current : null;
+    const before = resume ? kept?.get() : null;
     let held =
       before != null &&
       before.width === window.innerWidth &&
       before.height === window.innerHeight;
     if (held && before) most = before.scale;
-    const fit = () => {
+    const measure = () => {
       element.style.removeProperty('zoom');
       const oneColumn = window.matchMedia(ONE_COLUMN).matches;
       element.toggleAttribute('data-fit-height', !oneColumn);
@@ -99,18 +116,18 @@ export function useFitHeight<T extends HTMLElement>(
       if (!held) most = Math.min(most, heightScale(element, room));
       if (room && kept) {
         const { innerWidth: width, innerHeight: height } = window;
-        kept.current = { scale: most, width, height };
+        kept.set({ scale: most, width, height });
       }
       if (most < 1) element.style.setProperty('zoom', String(most));
     };
     const refit = () => {
       most = 1;
       held = false;
-      fit();
+      measure();
     };
-    fit();
+    measure();
     remeasure.current = refit;
-    const observer = new ResizeObserver(fit);
+    const observer = new ResizeObserver(measure);
     observer.observe(element);
     // The bar's new height is measured a frame later, outside the observer
     // pass that reported it, so the board's new scale is never reported back
@@ -119,7 +136,7 @@ export function useFitHeight<T extends HTMLElement>(
     let frame = 0;
     const barObserver = new ResizeObserver(() => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(fit);
+      frame = requestAnimationFrame(measure);
     });
     if (bar) barObserver.observe(bar);
     window.addEventListener('resize', refit);

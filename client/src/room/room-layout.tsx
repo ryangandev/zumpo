@@ -17,7 +17,7 @@ import { gameInfo } from '../games/catalog';
 import { useMessages } from '../i18n';
 import { initialsOf, toneOf } from '../players/avatar';
 import { Page, useViewer } from '../shell/page';
-import { KeptScale, type FittedScale } from '../shell/fit-height';
+import { KeptScale, scaleKeeper } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import {
   ONE_COLUMN,
@@ -287,7 +287,7 @@ export function RoomLayout({
     if (title) focusQuietly(title);
   }, [state.isGameStarted, finished]);
   // The board's scale in play, for its finished board drawn anew.
-  const keptScale = useRef<FittedScale>(null);
+  const [keptScale] = useState(scaleKeeper);
   const gameView = (
     <div ref={stageRef} className={styles.game}>
       <KeptScale value={keptScale}>{stage}</KeptScale>
