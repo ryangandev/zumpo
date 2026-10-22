@@ -52,6 +52,13 @@ import {
 } from './run';
 import styles from './solo-page.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own
+ * (TurnBar's hintRowBelow): none, since every hint fits beside its main line
+ * at every desktop width, from 561 px, in either language.
+ */
+const HINT_ROW_BELOW = 0;
+
 /** Where the best run and the best of each day are kept. */
 const BEST_KEY = 'make-24:ten-hands';
 /** How many days of bests a finished run lists. */
@@ -150,6 +157,7 @@ function RunView({
         stage={
           <>
             <TurnBar
+              hintRowBelow={HINT_ROW_BELOW}
               label={m.make24.solo.thisRun}
               kind="status"
               main={m.make24.solo.tenHands}
@@ -222,7 +230,10 @@ function RunView({
       }}
       stage={
         <>
-          <TurnBar {...turnBar(run, now, last, m)} />
+          <TurnBar
+            {...turnBar(run, now, last, m)}
+            hintRowBelow={HINT_ROW_BELOW}
+          />
           <TablePanel fitHeight>
             {last?.skipped ? (
               <FinalCard

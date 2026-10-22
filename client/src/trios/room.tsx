@@ -21,6 +21,15 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { LastTrio, TablePanel, TriosTable, type PlaceView } from './table';
 import { whyNotATrio } from './words';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, a long name finding a trio beside the new cards coming, with
+ * 18-character names and its clock, in either language, needs this much beside
+ * its main line, with 4 px to spare for a clock's digits and subpixel text
+ * (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 746;
+
 type Room = RoomOf<TriosRoomState>;
 
 /** TS05-TS09, TS12: a Trios room, before, during and after a game. */
@@ -114,7 +123,12 @@ function BetweenGames({ room }: { room: Room }) {
       </>
     ) : (
       <>
-        <ResultBar summary={summary} detail={detail} label={m.trios.gameOver} />
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.trios.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         {table}
         <NextGameUnderBoard />
         <StandingsSection summary={summary} />
@@ -198,6 +212,7 @@ function Play({ room }: { room: Room }) {
   return (
     <>
       <TurnBar
+        hintRowBelow={HINT_ROW_BELOW}
         {...turnBar(
           room,
           picked.length,
@@ -270,12 +285,13 @@ function turnBar(
       countdown: clock(m.trios.newCards, true),
     };
   }
+  // The clock says how long the lockout lasts, so the reason, as long as
+  // "Two have two shapes and one has three.", has the line to itself.
   if (state.lockedOutMs > 0) {
     return {
       label: m.trios.notTrio,
       kind: 'status',
       main: whyNotATrio(state.myMiss, m) ?? m.trios.notTrio,
-      meta: m.trios.pickAgainSoon,
       countdown: clock(m.trios.lockedOut, false, lockedSeconds),
     };
   }

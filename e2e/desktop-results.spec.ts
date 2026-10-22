@@ -34,49 +34,80 @@ const boxesOf = (pages: readonly Page[], board: (page: Page) => Locator) =>
 const inSight = (locator: Locator) =>
   expect(locator).toBeInViewport({ ratio: 1 });
 
-test('a Gomoku board keeps its size and place from a game to its results on a desktop', async ({
-  player,
-}) => {
-  const maya = await player('Maya');
-  const leo = await player('Leo');
-  const link = await createRoom(maya, 'gomoku');
-  await joinRoom(leo, link);
-  await maya.getByRole('button', { name: 'Start game' }).click();
-  // Both seats are taken: a third comes in to watch.
-  const sam = await player('Sam');
-  await joinRoom(sam, link);
-  const black = await blackOf([maya, leo]);
-  const white = black === maya ? leo : maya;
-  for (const [mine, theirs] of [
-    ['D8', 'A1'],
-    ['E8', 'C1'],
-    ['F8', 'E1'],
-    ['G8', 'G1'],
-  ] as const) {
-    await place(black, mine);
-    await place(white, theirs);
-  }
-  const pages = [black, white, sam];
-  const before = await boxesOf(pages, boardOf);
-  expect(before[1]).toEqual(before[0]);
-  expect(before[2]).toEqual(before[0]);
+/**
+ * Windows at which a Gomoku bar has its hints beside the main line, and
+ * under it (TurnBar's hintRowBelow), where the result bar must keep that
+ * line too. Under 1024 px the room is one column, the next game under the
+ * board rather than beside it.
+ */
+const GOMOKU_WINDOWS = [
+  { width: 1440, row: false, beside: true },
+  { width: 900, row: true, beside: false },
+] as const;
 
-  await place(black, 'H8');
+for (const window of GOMOKU_WINDOWS) {
+  test(`a Gomoku board keeps its size and place from a game to its results on a ${window.width} px desktop`, async ({
+    player,
+  }) => {
+    const maya = await player('Maya');
+    const leo = await player('Leo');
+    const link = await createRoom(maya, 'gomoku');
+    await joinRoom(leo, link);
+    await maya.getByRole('button', { name: 'Start game' }).click();
+    // Both seats are taken: a third comes in to watch.
+    const sam = await player('Sam');
+    await joinRoom(sam, link);
+    for (const page of [maya, leo, sam]) {
+      await page.setViewportSize({ width: window.width, height: 900 });
+    }
+    const black = await blackOf([maya, leo]);
+    const white = black === maya ? leo : maya;
+    for (const [mine, theirs] of [
+      ['D8', 'A1'],
+      ['E8', 'C1'],
+      ['F8', 'E1'],
+      ['G8', 'G1'],
+    ] as const) {
+      await place(black, mine);
+      await place(white, theirs);
+    }
+    const pages = [black, white, sam];
+    await expectRow(pages, window.row);
+    const before = await boxesOf(pages, boardOf);
+    expect(before[1]).toEqual(before[0]);
+    expect(before[2]).toEqual(before[0]);
+
+    await place(black, 'H8');
+    for (const page of pages) {
+      await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
+    }
+    expect(await boxesOf(pages, boardOf)).toEqual(before);
+    await expectRow(pages, window.row);
+    // The result and what comes next, at once.
+    await inSight(turnOf(white).getByText(/wins with five in a row/));
+    if (window.beside) {
+      await inSight(maya.getByRole('button', { name: 'Play again' }));
+      await inSight(leo.getByRole('button', { name: 'Ready', exact: true }));
+    }
+    // The result is the stage's heading and takes the focus, for the players
+    // and the spectator alike.
+    for (const page of pages) {
+      await expect(
+        turnOf(page).getByRole('heading', { level: 2, name: /five in a row/ }),
+      ).toBeFocused();
+    }
+  });
+}
+
+/** Whether every page's turn bar has its meta on a line of its own. */
+const expectRow = async (pages: readonly Page[], row: boolean) => {
   for (const page of pages) {
-    await expect(turnOf(page).getByText(/five in a row/i)).toBeVisible();
+    const bar = page.locator('[data-hint-row-below]').first();
+    await (row
+      ? expect(bar).toHaveClass(/rowBelow/)
+      : expect(bar).not.toHaveClass(/rowBelow/));
   }
-  expect(await boxesOf(pages, boardOf)).toEqual(before);
-  // The result and what comes next, at once.
-  await inSight(turnOf(white).getByText(/wins with five in a row/));
-  await inSight(maya.getByRole('button', { name: 'Play again' }));
-  await inSight(leo.getByRole('button', { name: 'Ready', exact: true })); // The result is the stage's heading and takes the focus, for the players
-  // and the spectator alike.
-  for (const page of pages) {
-    await expect(
-      turnOf(page).getByRole('heading', { level: 2, name: /five in a row/ }),
-    ).toBeFocused();
-  }
-});
+};
 
 const minefieldOf = (page: Page) =>
   page.getByRole('grid', { name: /^Board, / });

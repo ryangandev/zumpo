@@ -18,6 +18,12 @@ import { Chain } from './chain';
 import { NEW_DESK, Step, type Desk } from './task';
 import styles from './room.module.css';
 
+/**
+ * The turn bar always gives its hint a line of its own, since its main line
+ * is the last player's words (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = Infinity;
+
 type Room = RoomOf<DoodleChainRoomState>;
 
 /** DC03-DC20: a Doodle Chain room, before, during and after a game. */
@@ -234,6 +240,8 @@ function Reveal({ room }: { room: Room }) {
   return (
     <>
       <TurnBar
+        hintRowBelow={HINT_ROW_BELOW}
+        wordLine
         label={m.doodleChain.revealOf(chain + 1, chains.length)}
         kind="status"
         main={m.doodleChain.chainOf(owner)}

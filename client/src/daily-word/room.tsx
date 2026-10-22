@@ -13,12 +13,7 @@ import { useMessages, type Messages } from '../i18n';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import {
-  listNames,
-  raceStanding,
-  rankedPlayers,
-  type Seat,
-} from '../room/players';
+import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { playColumn } from '../shell/play-board';
@@ -27,6 +22,14 @@ import { cx } from '../ui/cx';
 import { BoardPanel, MarkLegend } from './panel';
 import { PlayArea } from './play';
 import styles from './room.module.css';
+
+/**
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, a score beside how guesses score, with 18-character names and its
+ * clock, in either language, needs this much beside its main line, with 4 px to
+ * spare for a clock's digits and subpixel text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 588;
 
 type Room = RoomOf<DailyWordRoomState>;
 
@@ -164,7 +167,10 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <BoardPanel>
           <Side room={room} />
         </BoardPanel>
@@ -174,7 +180,10 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <RoundResults state={state} />
       </>
     );
@@ -226,7 +235,10 @@ function Round({
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, mine, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <BoardPanel>
         <div className={cx(styles.table, !done && playColumn)}>
           <PlayArea
@@ -395,7 +407,7 @@ function turnBar(
       main: result ? result.word.toUpperCase() : '',
       meta: room.spectating
         ? finders.length
-          ? m.dailyWord.namesFound(listNames(finders, m))
+          ? m.dailyWord.foundCount(finders.length)
           : m.dailyWord.nobodyFound
         : me?.status === 'found'
           ? m.dailyWord.youFound(me.rows.length, me.points)
@@ -423,7 +435,7 @@ function turnBar(
       kind: 'status',
       main: m.dailyWord.gotIt(mine.rows.length, mine.points),
       meta: waitingFor.length
-        ? m.dailyWord.waitingFor(listNames(waitingFor, m))
+        ? m.dailyWord.waitingCount(waitingFor.length)
         : m.dailyWord.everyoneDone,
       countdown: clock(m.dailyWord.toGuess),
     };
@@ -434,7 +446,7 @@ function turnBar(
       kind: 'status',
       main: m.dailyWord.outOfGuesses,
       meta: waitingFor.length
-        ? m.dailyWord.waitingFor(listNames(waitingFor, m))
+        ? m.dailyWord.waitingCount(waitingFor.length)
         : m.dailyWord.everyoneDone,
       countdown: clock(m.dailyWord.toGuess),
     };
@@ -453,7 +465,7 @@ function turnBar(
     meta: phone
       ? m.dailyWord.legendLine
       : finders.length
-        ? m.dailyWord.namesFound(listNames(finders, m))
+        ? m.dailyWord.foundCount(finders.length)
         : m.dailyWord.fewerScore,
     countdown: clock(m.dailyWord.toGuess, room.spectating),
   };

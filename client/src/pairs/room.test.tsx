@@ -166,9 +166,7 @@ describe('a Pairs room', () => {
     expect(
       screen.getByRole('heading', { name: 'Standings' }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText('Small board, 8 pairs. You finished 2nd.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('8 pairs. You finished 2nd.')).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
   });
 

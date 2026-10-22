@@ -17,6 +17,19 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { BoardPanel, PairsGrid } from './board';
 
+/**
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, whose turn is next, by name, beside a miss, with
+ * 18-character names and its clock, in either language, needs 679 px beside
+ * its main line. Its result (ResultBar), as tall as the bar in play over the
+ * same board, needs a little more, and both take its width: "Bartholomew
+ * Wilson wins with 18 pairs." beside "32 pairs. You finished 2nd." needs
+ * 688 px with the heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 692;
+
 type Room = RoomOf<PairsRoomState>;
 
 /** PR05-PR07, PR10: a Pairs room, before, during and after a game. */
@@ -95,7 +108,13 @@ function BetweenGames({ room }: { room: Room }) {
       </>
     ) : (
       <>
-        <ResultBar summary={summary} detail={detail} label={m.pairs.gameOver} />
+        <ResultBar
+          summary={summary}
+          // The board itself is under it.
+          detail={m.pairs.resultBarDetail(summary.pairs)}
+          label={m.pairs.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         {board}
         <NextGameUnderBoard />
         <StandingsSection summary={summary} />
@@ -122,7 +141,10 @@ function Turn({ room }: { room: Room }) {
   const phone = useMediaQuery(PHONE);
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <BoardPanel>
         <PairsGrid
           cards={cardsOf(state.cards)}

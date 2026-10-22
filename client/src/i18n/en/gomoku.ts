@@ -13,6 +13,16 @@ const HOW: Record<Exclude<GomokuEnding, 'five' | 'draw'>, string> = {
   left: 'left the room',
 };
 
+/**
+ * How the winner won when the other did not lose at five in a row, short, so
+ * a desktop result fits beside what comes next with the longest names.
+ */
+const WON_BY: Record<Exclude<GomokuEnding, 'five' | 'draw'>, string> = {
+  resigned: 'by resignation',
+  timeout: 'on time',
+  left: 'by forfeit',
+};
+
 export const gomoku = {
   color: (color: GomokuColor) => COLOR[color],
   /** A seat's line under the name: "Black · your turn", or just "White". */
@@ -117,10 +127,10 @@ export const gomoku = {
   setup: 'Two players, a 15 × 15 board, 30 seconds a move.',
 
   // A game's result in a room.
-  youWin: (ending: GomokuEnding, loser: string) =>
+  youWin: (ending: GomokuEnding) =>
     ending === 'five'
       ? 'You win with five in a row.'
-      : `You win: ${loser} ${HOW[ending as keyof typeof HOW]}.`,
+      : `You win ${WON_BY[ending as keyof typeof WON_BY]}.`,
   youLose: (ending: GomokuEnding, winner: string) =>
     ending === 'five'
       ? `${winner} wins with five in a row.`
@@ -129,17 +139,15 @@ export const gomoku = {
         : ending === 'timeout'
           ? 'You ran out of time twice.'
           : `${winner} wins.`,
-  theyWin: (ending: GomokuEnding, winner: string, loser: string) =>
+  theyWin: (ending: GomokuEnding, winner: string) =>
     ending === 'five'
       ? `${winner} wins with five in a row.`
-      : `${winner} wins: ${loser} ${HOW[ending as keyof typeof HOW]}.`,
+      : `${winner} wins ${WON_BY[ending as keyof typeof WON_BY]}.`,
   draw: 'A draw: the board is full.',
   moves: (count: number) =>
-    count === 0
-      ? 'No moves were played.'
-      : `A game of ${plural(count, 'move')}.`,
-  drawDetail: (stones: number) => `${stones} stones and nobody made five.`,
-  nextBlack: (name: string) => `Next game, ${name} plays Black.`,
+    count === 0 ? 'No moves were played.' : `${plural(count, 'move')}.`,
+  drawDetail: (stones: number) => `${stones} stones, no five.`,
+  nextBlack: (name: string) => `${name} plays Black next.`,
   /** A phone's results turn bar: the viewer's colour next. */
   nextYou: (color: GomokuColor) => `You play ${COLOR[color]} next.`,
   /** The same, with Ready. */
@@ -147,7 +155,7 @@ export const gomoku = {
   /** A phone's results turn bar: who the next game waits on, and the colour. */
   nextWait: (note: string, color: GomokuColor) =>
     `${note} · you play ${COLOR[color]}`,
-  seatFree: (name: string) => `${name}’s seat is free for anybody to take.`,
+  seatFree: (name: string) => `${name}’s seat is free.`,
   /** Two sentences of a result, one after the other. */
   both: (first: string, second: string) => `${first} ${second}`,
 

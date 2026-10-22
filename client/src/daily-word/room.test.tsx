@@ -238,7 +238,7 @@ describe('a Daily Word room', () => {
     expect(
       await screen.findByText('Got it in 2! +540', { exact: false }),
     ).toBeInTheDocument();
-    expect(turn().getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(turn().getByText('Waiting for 1 player')).toBeInTheDocument();
     const message = screen.getByRole('textbox', { name: 'Message' });
     expect(message).toBeDisabled();
     expect(message).toHaveAttribute(

@@ -21,7 +21,7 @@ import {
   StandingsSection,
   WaitingPanel,
 } from '../room/panels';
-import { listNames, rankedPlayers, type Seat } from '../room/players';
+import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -33,6 +33,19 @@ import {
   TablePanel,
 } from './table';
 import styles from './room.module.css';
+
+/**
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, how much time a solve had left, beside its points,
+ * with 18-character names and its clock, in either language, needs 572 px
+ * beside its main line. Its result (ResultBar), as tall as the bar in play
+ * over the same cards, needs more, and both take its width: "Bartholomew
+ * Wilson wins with 1234 points." beside "10 hands. You finished 2nd." needs
+ * 735 px with the heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 739;
 
 type Room = RoomOf<Make24RoomState>;
 
@@ -111,6 +124,7 @@ function BetweenGames({ room }: { room: Room }) {
           summary={summary}
           detail={detail}
           label={m.make24.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
         />
         {oneColumn ? (
           cards && <TablePanel>{cards}</TablePanel>
@@ -160,7 +174,10 @@ function Hand({ room }: { room: Room }) {
   if (state.phase === 'reveal') {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, cards, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, cards, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <HandResults state={state} />
       </>
     );
@@ -170,7 +187,10 @@ function Hand({ room }: { room: Room }) {
   if (room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, cards, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, cards, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <TablePanel>
           <DealtCards deal={state.deal} />
         </TablePanel>
@@ -179,7 +199,10 @@ function Hand({ room }: { room: Room }) {
   }
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, cards, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, cards, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <TablePanel>
         {state.mySolve && !madeIt ? (
           // A refresh keeps the solve but not the steps that made it.
@@ -297,7 +320,7 @@ function turnBar(
       kind: 'status',
       main: m.make24.solvedPoints(state.mySolve.points),
       meta: waitingFor.length
-        ? m.make24.waitingFor(listNames(waitingFor, m))
+        ? m.make24.waitingCount(waitingFor.length)
         : m.make24.everyoneSolved,
       countdown: clock(m.make24.toSolve),
     };
@@ -311,7 +334,7 @@ function turnBar(
       main: m.make24.makes(formatFraction(last.value)),
       // Who has solved it stays in view: the race goes on while you undo.
       meta: solvers.length
-        ? m.make24.solversUndo(listNames(solvers, m))
+        ? m.make24.solvedCountUndo(solvers.length)
         : m.make24.undoPrompt,
       countdown: clock(m.make24.toSolve),
     };
@@ -321,7 +344,7 @@ function turnBar(
     kind: 'status',
     main: m.games.of['make-24'].name,
     meta: solvers.length
-      ? m.make24.solvers(listNames(solvers, m))
+      ? m.make24.solvedCount(solvers.length)
       : m.make24.useEachNumber,
     countdown: clock(m.make24.toSolve, room.spectating),
   };

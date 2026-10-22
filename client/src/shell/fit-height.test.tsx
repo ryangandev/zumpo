@@ -4,14 +4,18 @@ import { onPhone } from '../tests/phone';
 import { useFitHeight } from './fit-height';
 
 /** Where the board starts on the page, and the footer under it. */
-const TOP = 100;
-const BELOW = 40;
+let top = 100;
+let below = 40;
 
 /** The board's height unscaled: 1000 px of rows and keys, as laid out. */
 let natural = 1000;
 /** The column of cards beside the board, when there is one. */
 let side = 0;
 let observed: ResizeObserverCallback[] = [];
+/** What each observer watches, by its callback. */
+let watched = new Map<ResizeObserverCallback, Element[]>();
+/** Callbacks waiting for the next frame. */
+let frames: FrameRequestCallback[] = [];
 
 const zoomOf = (element: HTMLElement) =>
   Number.parseFloat(element.style.zoom) || 1;
@@ -23,9 +27,55 @@ function setWindowHeight(height: number) {
   });
 }
 
-function Board({ layout }: { layout?: string }) {
-  const ref = useFitHeight<HTMLDivElement>(true, layout);
+function Board({
+  layout,
+  underBar = false,
+}: {
+  layout?: string;
+  underBar?: boolean;
+}) {
+  const ref = useFitHeight<HTMLDivElement>(true, layout, underBar);
   return <div ref={ref} data-testid="board" />;
+}
+
+/** A room's turn bar, then its board. */
+function UnderBar() {
+  return (
+    <div>
+      <div data-testid="bar" />
+      <Board underBar />
+    </div>
+  );
+}
+
+/** A board on your own, a bar over it and a status row under it. */
+function Solo() {
+  return (
+    <div>
+      <div data-testid="bar" />
+      <Board />
+      <div data-testid="status" />
+    </div>
+  );
+}
+
+/** Reports a size change of `element` to whatever watches it. */
+function resized(element: Element) {
+  act(() => {
+    for (const [callback, targets] of watched) {
+      if (targets.includes(element)) callback([], {} as never);
+    }
+  });
+}
+
+/** Runs the callbacks waiting for the next frame. */
+function nextFrame() {
+  act(() => {
+    const waiting = frames;
+    frames = [];
+    // forEach skips the frames cancelled since.
+    waiting.forEach((callback) => callback(0));
+  });
 }
 
 /** The board in its column, and a column of cards beside it. */
@@ -48,7 +98,11 @@ const board = () => screen.getByTestId('board');
 beforeEach(() => {
   natural = 1000;
   side = 0;
+  top = 100;
+  below = 40;
   observed = [];
+  watched = new Map();
+  frames = [];
   setWindowHeight(720);
   // jsdom lays nothing out: the board is as tall as its zoom makes it, and
   // the page ends a footer below it.
@@ -61,23 +115,32 @@ beforeEach(() => {
         side,
         row: Math.max(played, side),
       }[this.dataset.testid ?? ''];
-      return new DOMRect(0, TOP, 600, height ?? 0);
+      return new DOMRect(0, top, 600, height ?? 0);
     },
   );
   vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockImplementation(
-    () => TOP + Math.max(natural * zoomOf(board()), side) + BELOW,
+    () => top + Math.max(natural * zoomOf(board()), side) + below,
   );
   vi.stubGlobal(
     'ResizeObserver',
     class {
-      constructor(callback: ResizeObserverCallback) {
+      constructor(private callback: ResizeObserverCallback) {
         observed.push(callback);
+        watched.set(callback, []);
       }
-      observe() {}
+      observe(target: Element) {
+        watched.get(this.callback)?.push(target);
+      }
       unobserve() {}
       disconnect() {}
     },
   );
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) =>
+    frames.push(callback),
+  );
+  vi.stubGlobal('cancelAnimationFrame', (id: number) => {
+    delete frames[id - 1];
+  });
 });
 
 afterEach(() => {
@@ -87,7 +150,7 @@ afterEach(() => {
 
 /** The board's bottom and the footer, against the window. */
 const endsInWindow = () =>
-  TOP + natural * zoomOf(board()) + BELOW <= window.innerHeight;
+  top + natural * zoomOf(board()) + below <= window.innerHeight;
 
 describe('useFitHeight', () => {
   it('scales a board down until it and the page under it end in the window', () => {
@@ -122,6 +185,36 @@ describe('useFitHeight', () => {
     // The keys go at the end; the rows alone would fit at a larger scale.
     natural = 800;
     act(() => observed.forEach((callback) => callback([], {} as never)));
+    expect(zoomOf(board())).toBe(zoom);
+  });
+
+  it('measures a room board again a frame after the bar over it grows', () => {
+    render(<UnderBar />);
+    const zoom = zoomOf(board());
+
+    // The turn bar takes a second line for its hints and moves the board
+    // down; the board's own size is as it was.
+    top = 126;
+    resized(screen.getByTestId('bar'));
+    // Not in the observer's pass, so the new scale is not reported back in it.
+    expect(zoomOf(board())).toBe(zoom);
+    nextFrame();
+    expect(endsInWindow()).toBe(true);
+    expect(zoomOf(board())).toBeLessThan(zoom);
+  });
+
+  it('keeps a board on your own at its size when a row comes under it', () => {
+    render(<Solo />);
+    const zoom = zoomOf(board());
+
+    // A status row comes under the board at the end, and the bar over it
+    // grows: the page grows by both, the board's own size is as it was.
+    below = 90;
+    top = 126;
+    resized(screen.getByTestId('status'));
+    resized(screen.getByTestId('bar'));
+    resized(document.body);
+    nextFrame();
     expect(zoomOf(board())).toBe(zoom);
   });
 

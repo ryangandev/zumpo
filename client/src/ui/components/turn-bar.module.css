@@ -53,17 +53,27 @@
   margin-left: var(--zumpo-space-16);
 }
 
+/* As tall as its main line's box, whatever the main line's scale: the main
+   line's Fit watches this line for the room it has (Fit's hugs), which must
+   not follow the scale it sets. */
 .answer {
   display: flex;
   grid-area: answer;
   align-items: baseline;
   gap: var(--zumpo-space-12);
   min-width: 0;
+  height: var(--zumpo-text-title-line);
+}
+
+.answer:has(.status) {
+  height: var(--zumpo-text-heading-line);
 }
 
 /* One line whatever it says, so the bar keeps its height: the main line
-   hugs its words and is scaled down (Fit) rather than wrap, and the meta
-   beside it ends in an ellipsis. */
+   hugs its words and is scaled down (Fit) rather than wrap. The meta beside
+   it keeps its words, and only the main line gives way: were both to shrink,
+   the scaled main line would shrink its own box again and run over the
+   meta. Only a meta wider than the whole line ends in an ellipsis. */
 .answer > .mainBox {
   display: flex;
   flex: 0 1 auto;
@@ -100,14 +110,55 @@
 }
 
 .meta {
-  flex: 0 1 auto;
+  flex: none;
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Desktop, narrower than a game's hints need beside its main line
+   (TurnBar's hintRowBelow): the meta, often the only instruction on screen,
+   has a line of its own under the main line, where it wraps rather than
+   being cut. The line is kept while there is no meta, so the bar, and the
+   board under it, keep their place from phase to phase. */
+.rowBelow .bar {
+  grid-template-areas:
+    'tag label clock'
+    'main main clock'
+    'meta meta meta';
+}
+
+.rowBelow .untagged {
+  grid-template-areas:
+    'label label clock'
+    'main main clock'
+    'meta meta meta';
+}
+
+.rowBelow .answer {
+  display: contents;
+}
+
+.rowBelow .answer > .mainBox {
+  grid-area: main;
+}
+
+/* A word's height in every phase (TurnBar's wordLine). */
+.desktop .wordLine .answer,
+.desktop .wordLine .answer > .mainBox {
+  height: var(--zumpo-text-title-line);
+}
+
+.rowBelow .meta {
+  grid-area: meta;
+  min-height: var(--zumpo-text-small-line);
+  overflow: visible;
+  white-space: normal;
 }
 
 /* Phone: a compact bar. The tag, what to do and the meta share the first
@@ -229,7 +280,6 @@
 }
 
 .narrow .unlabelled .meta {
-  min-height: 0;
   margin-top: 0;
 }
 

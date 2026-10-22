@@ -765,6 +765,7 @@ export function ResultBar<Summary extends GameSummary>({
   label,
   category,
   stackOnPhone,
+  hintRowBelow,
   ...results
 }: ResultsOf<Summary> & {
   /** The game's "Game over". */
@@ -772,6 +773,12 @@ export function ResultBar<Summary extends GameSummary>({
   category?: string;
   /** As the game's bar in play has it (`TurnBar`), so the two are as tall. */
   stackOnPhone?: boolean;
+  /**
+   * As the game's bar in play has it (`TurnBar`): under this width the
+   * detail has a line of its own, as the bar in play keeps one for its hints,
+   * so the two are as tall and the detail is never cut.
+   */
+  hintRowBelow?: number;
 }) {
   const { title, detail } = useResultHeading(results);
   return (
@@ -782,6 +789,7 @@ export function ResultBar<Summary extends GameSummary>({
       main={title}
       meta={detail}
       stackOnPhone={stackOnPhone}
+      hintRowBelow={hintRowBelow}
       headingId={RESULT_TITLE}
     />
   );

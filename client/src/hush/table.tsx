@@ -12,7 +12,9 @@ import styles from './table.module.css';
 /**
  * The paper panel a level is played on, and the last pile is left on. In
  * play, `fitHeight` keeps it inside a short window beside the side column,
- * such as a 1280 × 720 laptop's, so Play is in view without scrolling.
+ * such as a 1280 × 720 laptop's, so Play is in view without scrolling,
+ * measured again when the turn bar right over it (its previous sibling)
+ * takes a line for its hints.
  */
 export function TablePanel({
   children,
@@ -21,7 +23,7 @@ export function TablePanel({
   children: ReactNode;
   fitHeight?: boolean;
 }) {
-  const ref = useFitHeight<HTMLDivElement>(fitHeight);
+  const ref = useFitHeight<HTMLDivElement>(fitHeight, undefined, true);
   return (
     <div ref={ref} className={cx(styles.panel, playColumn)}>
       {children}

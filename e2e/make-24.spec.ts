@@ -17,7 +17,9 @@ test('two players solve every hand of a game', async ({ player }) => {
     // Maya first, and she waits for Leo; Leo's solve ends the hand.
     await solveHand(maya);
     await expect(
-      maya.getByRole('region', { name: 'Turn' }).getByText('Waiting for Leo'),
+      maya
+        .getByRole('region', { name: 'Turn' })
+        .getByText('Waiting for 1 player'),
     ).toBeVisible();
     await solveHand(leo);
     // Everybody solved it, so the hand ends early, with its results.

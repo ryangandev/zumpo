@@ -20,7 +20,9 @@ const onShortScreen = () => {
   }));
 };
 
-const bar = (props: { labelOnPhone?: boolean; category?: string } = {}) => (
+const bar = (
+  props: { labelOnPhone?: boolean; category?: string; wordLine?: boolean } = {},
+) => (
   <TurnBar
     label="Practice word"
     kind="status"
@@ -34,6 +36,27 @@ const section = () => screen.getByRole('region', { name: 'Turn' });
 
 /** The bar's meta line. */
 const line = () => section().querySelector('[class*="meta"]');
+
+/** The bar's classes at `width`, for a game whose hints need 745 px. */
+const classAt = (width: number) => {
+  barWidth(width);
+  const { container, unmount } = render(
+    <TurnBar
+      label="Your turn"
+      kind="status"
+      main="Place a black stone"
+      meta="Maximilian Fischer played D8"
+      hintRowBelow={745}
+    />,
+  );
+  const className = container.firstElementChild!.className;
+  expect(container.firstElementChild).toHaveAttribute(
+    'data-hint-row-below',
+    '745',
+  );
+  unmount();
+  return className;
+};
 
 describe('TurnBar', () => {
   it('shows its label on a phone unless the page already names it', () => {
@@ -75,6 +98,95 @@ describe('TurnBar', () => {
     );
     expect(line()).toBeInTheDocument();
     expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('keeps the meta’s line on a phone when the label is left out, too', () => {
+    barWidth(328);
+    render(
+      <TurnBar
+        label="Practice word"
+        kind="status"
+        main="You found SHADY"
+        labelOnPhone={false}
+      />,
+    );
+    // A result with nothing more to say keeps the bar the height it was.
+    expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('sets the meta beside the main line on a desktop, as Figma draws it', () => {
+    barWidth(784);
+    const { container, rerender } = render(bar());
+    expect(container.firstElementChild!.className).toMatch(/desktop/);
+    expect(container.firstElementChild!.className).not.toMatch(/phone/);
+    expect(container.firstElementChild!.className).not.toMatch(/rowBelow/);
+    expect(line()).toHaveTextContent('Six guesses. Practice keeps no stats.');
+
+    // A game whose hints fit beside its main line at this width keeps one row.
+    rerender(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={745}
+      />,
+    );
+    expect(container.firstElementChild!.className).not.toMatch(/rowBelow/);
+    expect(line()).not.toBeInTheDocument();
+  });
+
+  it('keeps one row at exactly the game’s width, and gives the meta its line a pixel under it', () => {
+    expect(classAt(745)).not.toMatch(/rowBelow/);
+    expect(classAt(744)).toMatch(/rowBelow/);
+  });
+
+  it('gives the meta a line of its own on a desktop under the game’s width, kept while it is empty', () => {
+    barWidth(625);
+    const { container, rerender } = render(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        meta="Maximilian Fischer played D8"
+        hintRowBelow={745}
+      />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/rowBelow/);
+    expect(line()).toHaveTextContent('Maximilian Fischer played D8');
+
+    // Without a meta the line stays, so the board keeps its place between phases.
+    rerender(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={745}
+      />,
+    );
+    expect(line()).toBeInTheDocument();
+    expect(line()).toBeEmptyDOMElement();
+
+    // Infinity, as Doodle Chain's, gives it the line at any width.
+    barWidth(1500);
+    rerender(
+      <TurnBar
+        label="Your turn"
+        kind="status"
+        main="Place a black stone"
+        hintRowBelow={Infinity}
+      />,
+    );
+    expect(container.firstElementChild!.className).toMatch(/rowBelow/);
+    expect(line()).toBeEmptyDOMElement();
+  });
+
+  it('keeps a word’s height for the main line where the game asks', () => {
+    barWidth(784);
+    const { rerender } = render(bar());
+    expect(section().className).not.toMatch(/wordLine/);
+    rerender(bar({ wordLine: true }));
+    expect(section().className).toMatch(/wordLine/);
   });
 
   it('scales a label a little too long to its line, and wraps one much too long', () => {

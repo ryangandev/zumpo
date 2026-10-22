@@ -30,6 +30,20 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
+/**
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, the last move, by name, beside whose turn it is, with
+ * 18-character names and its clock, in either language, needs 786 px beside
+ * its main line. Its result (ResultBar), as tall as the bar in play over the
+ * same board, fits there too: a heading naming one 18-character player stays
+ * at full size beside its detail, and one where the detail names another,
+ * "Bartholomew Wilson wins with five in a row." beside "225 moves.
+ * Maximilian Fischer plays Black next.", is scaled no smaller than 0.85 from
+ * 792 px on Linux's text. 4 px to spare for subpixel text (TurnBar's
+ * hintRowBelow).
+ */
+const HINT_ROW_BELOW = 796;
+
 type Room = RoomOf<GomokuRoomState>;
 
 /** A point the viewer picked, good while the game is still at that move. */
@@ -138,6 +152,7 @@ export function GomokuRoom() {
             turn={
               playing ? (
                 <TurnBar
+                  hintRowBelow={HINT_ROW_BELOW}
                   {...turnBar(room, seconds, previewing !== null, phone, m)}
                   // Its words fit one row, so the board keeps the height.
                   stackOnPhone={false}
@@ -407,16 +422,12 @@ function resultTitle(
     return m.gomoku.phone.wins(summary.ending, summary.winner, losing);
   }
   if (winner?.playerId === playerId) {
-    return m.gomoku.youWin(summary.ending, loser?.username ?? '');
+    return m.gomoku.youWin(summary.ending);
   }
   if (loser?.playerId === playerId) {
     return m.gomoku.youLose(summary.ending, winner?.username ?? '');
   }
-  return m.gomoku.theyWin(
-    summary.ending,
-    winner?.username ?? '',
-    loser?.username ?? '',
-  );
+  return m.gomoku.theyWin(summary.ending, winner?.username ?? '');
 }
 
 /** What comes next: who plays Black, or whose seat is free. */
@@ -465,6 +476,7 @@ function Results({
       detail={next ? m.gomoku.both(first, next) : first}
       // As the bar in play: one row on a narrow column, as tall.
       stackOnPhone={false}
+      hintRowBelow={HINT_ROW_BELOW}
     />
   );
 }

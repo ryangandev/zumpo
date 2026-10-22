@@ -82,7 +82,7 @@ describe('a Make 24 room', () => {
       }),
     );
     expect(screen.getByText('算出来了！+117')).toBeInTheDocument();
-    expect(screen.getByText('等待 Maya')).toBeInTheDocument();
+    expect(screen.getByText('等待 1 位玩家')).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText('算出来了！本题结束后才能聊天。'),
     ).toBeDisabled();
@@ -152,7 +152,7 @@ describe('a Make 24 room', () => {
     await step(user, '13, from 7 + 6', 'plus', '9');
     expect(screen.getByText('That makes 22')).toBeInTheDocument();
     expect(
-      screen.getByText('Maya solved it · undo a step'),
+      screen.getByText('1 player solved it · undo a step'),
     ).toBeInTheDocument();
   });
 
@@ -165,7 +165,7 @@ describe('a Make 24 room', () => {
 
     // A refresh keeps the solve but not the steps.
     expect(screen.getByText('Solved! +117')).toBeInTheDocument();
-    expect(screen.getByText('Waiting for Maya')).toBeInTheDocument();
+    expect(screen.getByText('Waiting for 1 player')).toBeInTheDocument();
     expect(screen.getByText('(3 + 9 − 6) × 4')).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText('Solved! Chat opens when the hand ends.'),
@@ -177,7 +177,7 @@ describe('a Make 24 room', () => {
       ...solving,
       solved: [{ ...mine, playerId: 'p2', username: 'Maya' }],
     });
-    expect(screen.getByText('Maya solved it')).toBeInTheDocument();
+    expect(screen.getByText('1 player solved it')).toBeInTheDocument();
     expect(screen.getByText('Solved · +117')).toBeInTheDocument();
   });
 

@@ -9,12 +9,7 @@ import { useMessages, type Messages } from '../i18n';
 import { REQUEST_TIMEOUT_MS } from '../net/socket';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
-import {
-  listNames,
-  raceStanding,
-  rankedPlayers,
-  type Seat,
-} from '../room/players';
+import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -28,6 +23,14 @@ import {
 import { BoardPanel, PegLegend } from './panel';
 import { describeRow, PlayArea } from './play';
 import styles from './room.module.css';
+
+/**
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, a score beside how guesses score, with 18-character names and its
+ * clock, in either language, needs this much beside its main line, with 4 px to
+ * spare for a clock's digits and subpixel text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 639;
 
 type Room = RoomOf<CodeBreakerRoomState>;
 
@@ -162,7 +165,10 @@ function Round({
   if (state.phase === 'guessing' && room.spectating) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <BoardPanel>
           <Side room={room} />
         </BoardPanel>
@@ -172,7 +178,10 @@ function Round({
   if (state.phase === 'reveal' || !mine) {
     return (
       <>
-        <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+        <TurnBar
+          {...turnBar(room, seconds, mine, phone, m)}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         <RoundResults state={state} />
       </>
     );
@@ -248,7 +257,10 @@ function Round({
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, mine, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, mine, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <BoardPanel>
         {done ? (
           // CB10, CB11: the pad gone, your board and the others side by side.
@@ -400,7 +412,7 @@ function turnBar(
       main: result?.code ?? '',
       meta: room.spectating
         ? crackers.length
-          ? m.codeBreaker.namesCracked(listNames(crackers, m))
+          ? m.codeBreaker.crackedCount(crackers.length)
           : m.codeBreaker.nobodyCracked
         : me?.status === 'cracked'
           ? m.codeBreaker.youCracked(me.rows.length, me.points)
@@ -423,7 +435,7 @@ function turnBar(
     )
     .map((board) => board.username);
   const waiting = waitingFor.length
-    ? m.codeBreaker.waitingFor(listNames(waitingFor, m))
+    ? m.codeBreaker.waitingCount(waitingFor.length)
     : m.codeBreaker.everyoneDone;
   if (mine?.status === 'cracked') {
     return {
@@ -459,7 +471,7 @@ function turnBar(
     meta: phone
       ? m.codeBreaker.legendLine
       : crackers.length
-        ? m.codeBreaker.namesCracked(listNames(crackers, m))
+        ? m.codeBreaker.crackedCount(crackers.length)
         : m.codeBreaker.fewerScore,
     countdown: clock(m.codeBreaker.toGuess, room.spectating),
   };

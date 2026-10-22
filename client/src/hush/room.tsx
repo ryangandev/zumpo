@@ -30,6 +30,15 @@ import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { Divider, HandRow, Pile, TableHead, TablePanel } from './table';
 import styles from './room.module.css';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, who is away and how many cards they hold, beside a play, with
+ * 18-character names and its clock, in either language, needs this much beside
+ * its main line, with 4 px to spare for a clock's digits and subpixel text
+ * (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 909;
+
 type Room = RoomOf<HushRoomState>;
 type Phase = HushRoomState['phase'];
 
@@ -316,7 +325,7 @@ function Level({ room }: { room: Room }) {
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, m)} />
+      <TurnBar {...turnBar(room, seconds, m)} hintRowBelow={HINT_ROW_BELOW} />
       <TablePanel fitHeight>
         <TableHead {...tableHead(state, m)} />
         <Pile
@@ -511,9 +520,9 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
         kind: 'status',
         main: m.hush.getReady,
         meta: meReady
-          ? m.hush.waitingFor(listNames(waitingFor, m))
+          ? m.hush.waitingCount(waitingFor.length)
           : readyNames.length > 0
-            ? m.hush.namesReady(listNames(readyNames, m), readyNames.length)
+            ? m.hush.readyCount(readyNames.length)
             : m.hush.pressReady,
       };
     }
@@ -528,18 +537,6 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
     case 'mistake': {
       const mistake = state.lastMistake;
       if (!mistake) break;
-      const holders = [...new Set(mistake.discarded.map((d) => d.playerId))];
-      const held = holders.map((holder, index) =>
-        m.hush.heldCards(
-          nameIn(room, holder, m, index === 0),
-          cardsOf(
-            mistake.discarded
-              .filter((d) => d.playerId === holder)
-              .map((d) => d.card),
-            m,
-          ),
-        ),
-      );
       return {
         label,
         kind: 'status',
@@ -547,7 +544,9 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
           nameIn(room, mistake.playerId, m),
           mistake.card,
         ),
-        meta: m.hush.mistake(listNames(held, m)),
+        // Who held which card is in the chat's alert and on the scoreboard;
+        // the bar keeps to a count, which fits it however many held one.
+        meta: m.hush.mistakeCount(mistake.discarded.length),
         countdown: clock(m.hush.toGoOn),
       };
     }
@@ -564,7 +563,7 @@ function turnBar(room: Room, seconds: number, m: Messages): TurnBarProps {
         meta:
           away.length === 1
             ? m.hush.waitingHolder(names, itemAt(away, 0).held)
-            : m.hush.waitingHolders(names),
+            : m.hush.waitingHoldersCount(away.length),
         countdown: clock(m.hush.seatHeld),
       };
     }

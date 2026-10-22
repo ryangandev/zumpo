@@ -19,6 +19,15 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { SnapBoard, type CardView } from './board';
 
+/**
+ * The turn bar width under which its hints take a line of their own: the widest
+ * of them, a long name taking a card beside the symbol it was, with
+ * 18-character names and its clock, in either language, needs this much beside
+ * its main line, with 4 px to spare for a clock's digits and subpixel text
+ * (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 782;
+
 type Room = RoomOf<SnapRoomState>;
 type Marks = Partial<Record<number, SnapSpotMark>>;
 
@@ -121,7 +130,12 @@ function BetweenGames({ room }: { room: Room }) {
       </>
     ) : (
       <>
-        <ResultBar summary={summary} detail={detail} label={m.snap.gameOver} />
+        <ResultBar
+          summary={summary}
+          detail={detail}
+          label={m.snap.gameOver}
+          hintRowBelow={HINT_ROW_BELOW}
+        />
         {board}
         <NextGameUnderBoard />
         <StandingsSection summary={summary} />
@@ -178,7 +192,10 @@ function Play({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)} />
+      <TurnBar
+        {...turnBar(room, { seconds, lockedSeconds, cardSeconds }, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <SnapBoard
         middle={{
           symbols: middle.symbols,

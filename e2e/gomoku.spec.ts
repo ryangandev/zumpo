@@ -85,9 +85,7 @@ test('two players make five in a row while a third watches, then swap colours', 
     turnOf(white).getByText(`${blackName} wins with five in a row.`),
   ).toBeVisible();
   await expect(
-    turnOf(maya).getByText(
-      `A game of 9 moves. Next game, ${whiteName} plays Black.`,
-    ),
+    turnOf(maya).getByText(`9 moves. ${whiteName} plays Black next.`),
   ).toBeVisible();
   await expect(black.getByText('Black · five in a row')).toBeVisible();
   await expect(leo.getByText(`${blackName} made five in a row.`)).toBeVisible();
@@ -106,11 +104,11 @@ test('two players make five in a row while a third watches, then swap colours', 
   ).toBeFocused();
   await dialog.getByRole('button', { name: 'Resign' }).click();
   await expect(
-    turnOf(black).getByText(`You win: ${whiteName} resigned.`),
+    turnOf(black).getByText('You win by resignation.'),
   ).toBeVisible();
   await expect(turnOf(white).getByText('You resigned.')).toBeVisible();
   await expect(
-    turnOf(jo).getByText(`${blackName} wins: ${whiteName} resigned.`),
+    turnOf(jo).getByText(`${blackName} wins by resignation.`),
   ).toBeVisible();
 });
 

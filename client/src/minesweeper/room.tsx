@@ -15,7 +15,7 @@ import {
   StandingsSection,
   WaitingPanel,
 } from '../room/panels';
-import { listNames, rankedPlayers, type Seat } from '../room/players';
+import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -24,6 +24,19 @@ import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
 import { Board } from './board';
 import styles from './room.module.css';
+
+/**
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, a mine's risk beside what it cost, with its clock, in
+ * either language, needs 737 px beside its main line. Its result
+ * (ResultBar), as tall as the bar in play over the same board, needs a
+ * little more, and both take its width: "Bartholomew Wilson wins with 1234
+ * points." beside "12 rounds. You finished 2nd." needs 739 px with the
+ * heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
+ */
+const HINT_ROW_BELOW = 743;
 
 type Room = RoomOf<MinesweeperRoomState>;
 
@@ -86,9 +99,11 @@ function BetweenGames({ room }: { room: Room }) {
       <>
         <ResultBar
           summary={summary}
-          detail={detail}
+          // The tag over it names the board.
+          detail={m.minesweeper.resultBarDetail(summary.rounds)}
           label={m.minesweeper.gameOver}
           category={m.minesweeper.boardLabel(summary.difficulty)}
+          hintRowBelow={HINT_ROW_BELOW}
         />
         <Minefield
           room={room}
@@ -130,7 +145,10 @@ function Round({ room }: { room: Room }) {
 
   return (
     <>
-      <TurnBar {...turnBar(room, seconds, phone, m)} />
+      <TurnBar
+        {...turnBar(room, seconds, phone, m)}
+        hintRowBelow={HINT_ROW_BELOW}
+      />
       <Minefield
         room={room}
         showPicks={state.phase === 'reveal'}
@@ -279,9 +297,7 @@ function turnBar(
       ...base,
       main: m.minesweeper.safePoints(mine.points),
       meta: sharers.length
-        ? m.minesweeper.splitReward(
-            listNames([m.minesweeper.you, ...sharers], m),
-          )
+        ? m.minesweeper.splitCount(sharers.length)
         : m.minesweeper.cellRisk(mine.risk),
     };
   }
