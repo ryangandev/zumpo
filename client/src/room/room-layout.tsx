@@ -106,7 +106,7 @@ export interface RoomLayoutProps {
   nextBeside?: boolean;
 }
 
-/** How long a phone says "You're the host now", or who went, over the board. */
+/** How long a phone says "You're the host now", who went, or that you are watching, over the board. */
 const NOTICE_MS = 5000;
 
 type View = 'board' | 'players' | 'chat';
@@ -146,8 +146,20 @@ export function RoomLayout({
   const { viewer, viewerMenu } = useViewer({
     seatName: room.me.username,
   });
-  const newHost = useBecameHost(state.owner.playerId === room.playerId);
+  const newHost = useBriefly(state.owner.playerId === room.playerId);
   const gone = usePlayerGone(state.playerList, state.spectators, room.playerId);
+  // A spectator watching a game is told so where it takes none of the
+  // board's room: the room bar says Watching beside the phase, and the
+  // notice heads the scoreboard's column, a phone's Players tab. So the
+  // board is the players' size, and keeps it into the results. In one
+  // column that column is out of sight, so the notice also shows over the
+  // board for a moment as the watching starts.
+  const watchingGame = room.spectating && state.isGameStarted;
+  const watchToast = useBriefly(watchingGame, false) && !reconnecting;
+  const watchNotice =
+    watchingGame && !reconnecting ? (
+      <Notice>{m.room.spectatingNotice}</Notice>
+    ) : null;
   // A game cut short as the others left ends on a panel that says so, and
   // who is host now: a notice over its heading would only hide it.
   const endedAlone =
@@ -251,6 +263,12 @@ export function RoomLayout({
     </div>
   );
 
+  const watchToastView = (
+    <div className={styles.toast}>
+      <Notice>{m.room.spectatingNotice}</Notice>
+    </div>
+  );
+
   return (
     <Page
       header={
@@ -258,7 +276,7 @@ export function RoomLayout({
           layout={oneColumn ? 'phone' : 'desktop'}
           game={m.games.of[state.gameType].name}
           room={roomNameOf(state, m)}
-          phase={phase}
+          phase={watchingGame ? { ...phase, lead: m.room.watchingLead } : phase}
           onHowToPlay={() => setRules(true)}
           onLeave={reconnecting ? undefined : room.leave}
           viewer={viewer}
@@ -271,12 +289,7 @@ export function RoomLayout({
           {m.room.reconnectingNotice(roomNameOf(state, m), seconds)}
         </Notice>
       ) : (
-        <>
-          {room.spectating && state.isGameStarted && (
-            <Notice>{m.room.spectatingNotice}</Notice>
-          )}
-          {notice}
-        </>
+        notice
       )}
       {phone ? (
         <MobileTabs<View>
@@ -317,6 +330,8 @@ export function RoomLayout({
                           : m.room.nowHost}
                       </Notice>
                     </div>
+                  ) : watchToast ? (
+                    watchToastView
                   ) : (
                     gone && (
                       <div className={styles.toast}>
@@ -335,8 +350,9 @@ export function RoomLayout({
               value: 'players',
               label: m.room.players(players.length),
               panel:
-                playersAside || watching ? (
+                playersAside || watching || watchNotice ? (
                   <div className={styles.side}>
+                    {watchNotice}
                     {scoreboard}
                     {watching}
                     {playersAside}
@@ -350,8 +366,12 @@ export function RoomLayout({
         />
       ) : (
         <div className={styles.room}>
-          <div className={styles.stage}>{gameView}</div>
+          <div className={styles.stage}>
+            {gameView}
+            {oneColumn && watchToast && watchToastView}
+          </div>
           <div className={styles.side}>
+            {watchNotice}
             {nextBeside && finished && (
               <NextGamePanel
                 onPlayAgain={room.startGame}
@@ -370,17 +390,20 @@ export function RoomLayout({
 }
 
 /**
- * True for a few seconds after the host's crown passes to this player, as
- * when the host leaves mid-game, so a phone, whose Players tab is out of
- * sight, says so over the board.
+ * True for a few seconds after `on` turns true: the host's crown passing to
+ * this player, as when the host leaves mid-game, or a game this spectator
+ * starts watching. A phone's Players tab is out of sight, so it says so over
+ * the board. `was` is what `on` counts as before the first render: true
+ * says nothing for a crown held from the start, false greets a spectator
+ * who joins mid-game.
  */
-function useBecameHost(host: boolean): boolean {
-  const [was, setWas] = useState(host);
+function useBriefly(on: boolean, was = on): boolean {
+  const [before, setBefore] = useState(was);
   const [shown, setShown] = useState(false);
-  // Worked out as the crown moves, not after: the notice shows with it.
-  if (host !== was) {
-    setWas(host);
-    setShown(host);
+  // Worked out as it turns, not after: the notice shows with it.
+  if (on !== before) {
+    setBefore(on);
+    setShown(on);
   }
   useEffect(() => {
     if (!shown) return;

@@ -27,6 +27,12 @@ export interface GomokuTableProps {
   note?: string;
   /** Under the seats on a phone, at the foot of the side on a desktop. */
   actions?: ReactNode;
+  /**
+   * Keeps the actions' row while it has nothing in it, as a spectator's
+   * while a game is on: the results give the row its buttons, so the board
+   * keeps its size from the game to them.
+   */
+  holdActions?: boolean;
   /** A phone's column: no panel, the small board, actions full width. */
   phone: boolean;
   /**
@@ -62,6 +68,7 @@ export function GomokuTable({
   notice,
   note,
   actions,
+  holdActions = false,
   phone,
   fill = false,
   turn,
@@ -103,7 +110,9 @@ export function GomokuTable({
               {notice}
               {note && <p className={styles.note}>{note}</p>}
             </div>
-            {actions && <div className={styles.actions}>{actions}</div>}
+            {(actions || holdActions) && (
+              <div className={styles.actions}>{actions}</div>
+            )}
           </div>
         </div>
       </section>

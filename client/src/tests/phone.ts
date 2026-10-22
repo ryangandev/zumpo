@@ -23,6 +23,18 @@ export function onTouch() {
 }
 
 /**
+ * A tablet held upright, 641 to 1023 px: one column, played by finger, but
+ * no phone's tabs, until the mocks are restored.
+ */
+export function onTablet() {
+  const desktop = window.matchMedia;
+  vi.spyOn(window, 'matchMedia').mockImplementation((query: string) => ({
+    ...desktop(query),
+    matches: query === ONE_COLUMN || query === TOUCH,
+  }));
+}
+
+/**
  * Starts the app on a desktop and returns how to turn it into a phone, as a
  * window narrowed past the breakpoint does, until the mocks are restored.
  */

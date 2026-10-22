@@ -17,6 +17,9 @@
 .message {
   flex: 1;
   min-width: 0;
+  /* A notice of a few lines never ends on one lonely word, or one Chinese
+     character, which has no spaces to break at. */
+  text-wrap-style: pretty;
 }
 
 .success {

@@ -294,10 +294,9 @@ function turnBar(
       meta: m.minesweeper.revealingPicks,
     };
   }
+  // The scoreboard names who is still picking and who is in; the bar's meta
+  // says only as much as fits a phone's one line.
   if (state.myPick !== null || room.spectating) {
-    const waitingFor = connected
-      .filter(([id]) => !state.lockedIn.includes(id))
-      .map(([, player]) => player.username);
     return {
       category,
       label,
@@ -305,22 +304,20 @@ function turnBar(
       main: room.spectating
         ? m.minesweeper.everyonePicking
         : m.minesweeper.lockedIn,
-      meta: m.minesweeper.waitingFor(listNames(waitingFor, m)),
+      meta: m.minesweeper.waitingOthers,
       countdown: clock(m.minesweeper.toPick, room.spectating),
     };
   }
-  // Who is in already, so the race is seen while picking.
-  const lockedIn = state.lockedIn.flatMap(
-    (id) => state.playerList[id]?.username ?? [],
-  );
+  // How many are in already, so the race is seen while picking.
+  const lockedIn = state.lockedIn.filter((id) => state.playerList[id]).length;
   return {
     category,
     label,
     kind: 'status',
     main: m.minesweeper.pickCell,
     meta:
-      lockedIn.length > 0
-        ? m.minesweeper.othersLockedIn(listNames(lockedIn, m))
+      lockedIn > 0
+        ? m.minesweeper.othersLockedIn(lockedIn)
         : phone
           ? m.minesweeper.minesShort(state.totalMines, state.minesFound)
           : state.minesFound > 0
