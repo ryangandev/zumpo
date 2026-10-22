@@ -752,12 +752,10 @@ test('a Minesweeper game', async ({ player }) => {
   await expect(maya!.page.getByText('Pick a cell')).toBeVisible();
   await shot(maya!.page, 'M04');
   await cell(maya!.page, 2, 2).click();
-  await expect(
-    maya!.page.getByText('Waiting for Ryan, Sam and Leo'),
-  ).toBeVisible();
+  await expect(maya!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(maya!.page, 'M05');
   await cell(leo!.page, 8, 2).click();
-  await expect(leo!.page.getByText('Waiting for Ryan and Sam')).toBeVisible();
+  await expect(leo!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(leo!.page, 'MO12');
   // Ryan and Sam share a cell; their reward splits if it is safe.
   await cell(ryan!.page, 5, 5).click();
@@ -2484,7 +2482,7 @@ test('a Gomoku game', async ({ player }) => {
 
   // Game 2, the colours swapped: Maya builds on a slant while Leo plays
   // elsewhere, then it is Maya's turn.
-  await maya.getByRole('button', { name: 'Start game 2' }).click();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   const black = await blackOf([maya, leo]);
   const white = black === maya ? leo : maya;
   const mayaMoves = ['E5', 'F6', 'G7', 'H8', 'D6'];
@@ -2521,12 +2519,14 @@ test('a Gomoku game', async ({ player }) => {
   // Maya's fifth on the slant.
   await placeStone(maya, 'I9');
   await expect(
-    maya.getByRole('heading', { name: 'You win with five in a row.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('You win with five in a row.'),
   ).toBeVisible();
   await shot(maya, 'GM13');
 
   // Game 3: Leo leaves under way, and loses it.
-  await maya.getByRole('button', { name: 'Start game 3' }).click();
+  await maya.getByRole('button', { name: 'Play again' }).click();
   const third = await blackOf([maya, leo]);
   await placeStone(third, 'H8');
   await leo.getByRole('button', { name: 'Leave room' }).click();
@@ -2535,7 +2535,9 @@ test('a Gomoku game', async ({ player }) => {
     .getByRole('button', { name: 'Leave room' })
     .click();
   await expect(
-    maya.getByRole('heading', { name: 'You win: Leo left the room.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('You win: Leo left the room.'),
   ).toBeVisible();
   await shot(maya, 'GM14');
 });
@@ -2563,7 +2565,9 @@ test('a Gomoku game played to a full board', async ({ player }) => {
     blacks.map((name, i) => [name, whites[i] ?? null] as const),
   );
   await expect(
-    maya.getByRole('heading', { name: 'A draw: the board is full.' }),
+    maya
+      .getByRole('region', { name: 'Turn' })
+      .getByText('A draw: the board is full.'),
   ).toBeVisible();
   await expect(gomokuBoardOf(maya)).toBeVisible();
   await shot(maya, 'GM15');
