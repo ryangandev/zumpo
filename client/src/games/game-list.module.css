@@ -41,6 +41,12 @@
   scrollbar-width: none;
 }
 
+/* As wide as its chips, so the strip's padding follows the last of them and
+   it stops 20 px from the screen's edge, not at it. */
+.strip > .filters {
+  width: max-content;
+}
+
 .kind {
   display: flex;
   flex-direction: column;

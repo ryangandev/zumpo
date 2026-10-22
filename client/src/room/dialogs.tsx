@@ -149,6 +149,8 @@ export function RulesDialog({
       onOpenChange={onOpenChange}
       title={m.room.rulesTitle(text.name)}
       description={howTo.goal}
+      // Opens on its title, to read from the top, not on Full rules.
+      initialFocus="title"
       actions={<DialogClose render={<Button>{m.room.backToGame}</Button>} />}
     >
       <HowToPlay steps={[...howTo.steps, howTo.score]} />

@@ -30,13 +30,14 @@
 
 /* Chinese has no spaces to break at, so a short line ends with one lonely
    character: let the browser rebalance the last lines of text, and even out
-   headings. */
+   headings. Only the style: the text-wrap shorthand would also set the wrap
+   mode, outranking a component's own one-line nowrap. */
 .zumpo:lang(zh) :where(p, li, dd) {
-  text-wrap: pretty;
+  text-wrap-style: pretty;
 }
 
 .zumpo:lang(zh) :where(h1, h2, h3, h4) {
-  text-wrap: balance;
+  text-wrap-style: balance;
 }
 
 .zumpo-page {

@@ -34,6 +34,15 @@ test('two players play every card in order, together, without a word', async ({
   await expect(
     low!.page.getByRole('img', { name: `${low!.card}, discarded` }),
   ).toBeVisible();
+  // The discard lies beside the top card, so the table did not grow: at
+  // 1440 by 900 the page still ends inside the window (#149).
+  for (const page of both) {
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollHeight - window.innerHeight,
+      ),
+    ).toBeLessThanOrEqual(0);
+  }
   const holder = low!.page === maya ? 'Maya' : 'Leo';
   const player1 = high!.page === maya ? 'Maya' : 'Leo';
   await expect(

@@ -24,12 +24,12 @@ body {
   }
 }
 
-/* The focus a game takes as it starts (useStartFocus) is not ringed until
-   the first key, so a touch screen shows no frame around its board. */
-:root [data-start-quiet]:focus-visible {
+/* A focus moved by script, as a game starts or a result comes (quiet), is
+   not ringed until the next key, so nobody sees a frame they did not ask for. */
+:root [data-quiet-focus]:focus-visible {
   outline: none;
 }
 
-:root [data-start-quiet]:focus-visible::after {
+:root [data-quiet-focus]:focus-visible::after {
   content: none;
 }

@@ -49,6 +49,14 @@
   .room .side > :last-child {
     flex: 0 1 auto;
   }
+
+  /* A board fitted to the window (fit-height.ts) ends the page inside it;
+     the side column takes the stage's height, not more, so the chat's
+     messages scroll rather than make the page taller than the board did. */
+  .room:has([data-fit-height]) .side {
+    align-self: stretch;
+    contain: size;
+  }
 }
 
 /* Under 1024 px (ONE_COLUMN in use-media-query.ts) the side column would

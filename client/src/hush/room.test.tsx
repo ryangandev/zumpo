@@ -269,6 +269,22 @@ describe('a Hush room', () => {
       ),
     ).toBeInTheDocument();
     expect(chatBox()).toBeEnabled();
+    // Ready keeps its room out of sight until the next level, not pressable.
+    expect(screen.queryByRole('button', { name: 'I’m ready' })).toBeNull();
+  });
+
+  it('keeps the room of the cards already played, out of sight', async () => {
+    await renderSeated({ ...playing, hand: [77] });
+    const hand = within(screen.getByRole('region', { name: 'Your hand' }));
+    expect(hand.getAllByRole('img').map((card) => card.ariaLabel)).toEqual([
+      '77',
+    ]);
+    // Level 3 dealt three: two kept as hidden room on a phone.
+    expect(
+      screen
+        .getByRole('region', { name: 'Your hand' })
+        .querySelectorAll('li[aria-hidden]'),
+    ).toHaveLength(2);
   });
 
   it('never shows a score: the team scores together', async () => {

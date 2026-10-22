@@ -71,6 +71,76 @@ describe('a Draw & Guess room', () => {
     expect(fake.sentArgs('dg:select-word')).toEqual([['r1', 'zebra']]);
   });
 
+  it('hands the focus to the word choices as the drawer’s turn begins', async () => {
+    const { update } = await renderSeated(
+      drawAndGuessState({
+        ...turn,
+        phase: 'drawing',
+        currentDrawer: 'p2',
+        hint: '_ _ _ _ _ _',
+      }),
+    );
+    expect(screen.getByPlaceholderText('Type your guess…')).toHaveFocus();
+
+    update(
+      drawAndGuessState({
+        ...turn,
+        turn: 2,
+        phase: 'choosing',
+        currentDrawer: ME,
+        wordChoices: ['turtle', 'zebra', 'owl'],
+      }),
+    );
+    const first = screen.getByRole('button', { name: /turtle/ });
+    expect(first).toHaveFocus();
+    expect(first).toHaveAttribute('data-quiet-focus');
+
+    // The word chosen, the choices go, and the turn that says it takes over.
+    update(
+      drawAndGuessState({
+        ...turn,
+        turn: 2,
+        phase: 'drawing',
+        currentDrawer: ME,
+        word: 'turtle',
+        hint: '_ _ _ _ _ _',
+      }),
+    );
+    expect(screen.getAllByRole('region', { name: 'Turn' })[0]).toHaveFocus();
+  });
+
+  it('leaves a line half typed in the chat alone as the drawer’s turn begins', async () => {
+    const user = userEvent.setup();
+    const { update } = await renderSeated(
+      drawAndGuessState({
+        ...turn,
+        phase: 'drawing',
+        currentDrawer: 'p2',
+        hint: '_ _ _ _ _ _',
+      }),
+    );
+    const box = screen.getByPlaceholderText('Type your guess…');
+    await user.type(box, 'zeb');
+
+    update(
+      drawAndGuessState({
+        ...turn,
+        turn: 2,
+        phase: 'choosing',
+        currentDrawer: ME,
+        wordChoices: ['turtle', 'zebra', 'owl'],
+      }),
+    );
+    expect(box).toHaveFocus();
+  });
+
+  it('holds a guesser’s focus on the turn while the drawer chooses', async () => {
+    await renderSeated(
+      drawAndGuessState({ ...turn, phase: 'choosing', currentDrawer: 'p2' }),
+    );
+    expect(screen.getAllByRole('region', { name: 'Turn' })[0]).toHaveFocus();
+  });
+
   it('tells a guesser who is choosing', async () => {
     await renderSeated(
       drawAndGuessState({ ...turn, phase: 'choosing', currentDrawer: 'p2' }),

@@ -18,6 +18,11 @@ export const gomoku = {
   /** A seat's line under the name: "Black · your turn", or just "White". */
   seat: (color: GomokuColor, note?: string) =>
     note ? `${COLOR[color]} · ${note}` : COLOR[color],
+  /**
+   * A phone's one-line seat says only the note, "Your turn", after the name:
+   * the stone before the name shows the colour.
+   */
+  phoneSeat: (note: string) => note.charAt(0).toUpperCase() + note.slice(1),
   notes: {
     yourTurn: 'your turn',
     thinking: 'thinking',
@@ -45,11 +50,45 @@ export const gomoku = {
   youPlayed: (point: string) => `You played ${point}`,
   passed: (name: string) => `${name}’s turn passed`,
   yourTurnPassed: 'Your turn passed',
-  firstMove: 'Black moves first, anywhere on the board',
+  firstMove: 'Black moves first, anywhere',
   /** A faint stone is down on a phone: the second tap places it. */
   tapAgain: 'Tap again to place',
   toMove: 'to move',
   paused: 'paused',
+  /**
+   * A phone's turn bar, one line each for what to do and the meta, at 360 px
+   * with the longest names: the seats under the board name the players, so
+   * the bar names nobody, and says their colours.
+   */
+  phone: {
+    /** What to do while the other player moves. */
+    theirTurn: 'Their turn',
+    /** What to do for a spectator. */
+    watching: 'Watching',
+    thinking: (color: GomokuColor) => `${COLOR[color]} is thinking`,
+    lastMove: (point: string) => `Last move ${point}`,
+    passed: (color: GomokuColor) => `${COLOR[color]}’s turn passed`,
+    youWin: (ending: GomokuEnding, loser: GomokuColor) =>
+      ending === 'five'
+        ? 'You win with five in a row.'
+        : `You win: ${COLOR[loser]} ${HOW[ending as keyof typeof HOW]}.`,
+    wins: (ending: GomokuEnding, winner: GomokuColor, loser: GomokuColor) =>
+      ending === 'five'
+        ? `${COLOR[winner]} wins with five in a row.`
+        : `${COLOR[winner]} wins: ${COLOR[loser]} ${HOW[ending as keyof typeof HOW]}.`,
+    /** The other player has said Ready; the next game is the viewer's to start. */
+    theyReady: (color?: GomokuColor) =>
+      color ? `They’re ready · you play ${COLOR[color]}` : 'They’re ready',
+    /** The viewer has said Ready, and the other player has not. */
+    waiting: (color?: GomokuColor) =>
+      color
+        ? `Waiting for them · you play ${COLOR[color]}`
+        : 'Waiting for them',
+    youStart: 'You can start the next game',
+    waitNext: 'Waiting for the next game',
+    seatFree: (color: GomokuColor) => `${COLOR[color]}’s seat is free`,
+    swap: 'Next game, the colours swap.',
+  },
 
   // Under the board.
   placeStone: 'Place stone',
