@@ -35,13 +35,17 @@ import {
 import styles from './room.module.css';
 
 /**
- * The turn bar width under which its hints take a line of their own: the widest
- * of them, how much time a solve had left, beside its points, with 18-character
- * names and its clock, in either language, needs this much beside its main
- * line, with 4 px to spare for a clock's digits and subpixel text (TurnBar's
- * hintRowBelow).
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, how much time a solve had left, beside its points,
+ * with 18-character names and its clock, in either language, needs 572 px
+ * beside its main line. Its result (ResultBar), as tall as the bar in play
+ * over the same cards, needs more, and both take its width: "Bartholomew
+ * Wilson wins with 1234 points." beside "10 hands. You finished 2nd." needs
+ * 735 px with the heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 576;
+const HINT_ROW_BELOW = 739;
 
 type Room = RoomOf<Make24RoomState>;
 

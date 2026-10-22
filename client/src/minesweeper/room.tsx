@@ -26,12 +26,17 @@ import { Board } from './board';
 import styles from './room.module.css';
 
 /**
- * The turn bar width under which its hints take a line of their own: the widest
- * of them, a mine's risk beside what it cost, with its clock, in either
- * language, needs this much beside its main line, with 4 px to spare for a
- * clock's digits and subpixel text (TurnBar's hintRowBelow).
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, a mine's risk beside what it cost, with its clock, in
+ * either language, needs 737 px beside its main line. Its result
+ * (ResultBar), as tall as the bar in play over the same board, needs more,
+ * and both take its width: "Bartholomew Wilson wins with 1234 points."
+ * beside "Medium board, 12 rounds. You finished 2nd." needs 828 px with the
+ * heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 741;
+const HINT_ROW_BELOW = 832;
 
 type Room = RoomOf<MinesweeperRoomState>;
 

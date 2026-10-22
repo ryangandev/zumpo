@@ -20,13 +20,17 @@ import { bidLine, naming, revealBar, stood, type Naming } from './words';
 import styles from './room.module.css';
 
 /**
- * The turn bar width under which its hints take a line of their own: the widest
- * of them, a long name's bid standing beside what it cost, with 18-character
- * names and its clock, in either language, needs this much beside its main
- * line, with 4 px to spare for a clock's digits and subpixel text (TurnBar's
- * hintRowBelow).
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, a long name's bid standing beside what it cost, with
+ * 18-character names and its clock, in either language, needs 734 px beside
+ * its main line. Its result (ResultBar), as tall as the bar in play over the
+ * same table, needs a little more, and both take its width: "你和
+ * Bartholomew Wilson 以 1 颗骰子并列获胜。" beside "23 轮，每人 5 颗骰子。"
+ * needs 744 px with the heading at full size.
+ * A tie of more names is scaled down, as a list of names is. 4 px to spare
+ * for a clock's digits and subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 738;
+const HINT_ROW_BELOW = 748;
 
 type Room = RoomOf<LiarsDiceRoomState>;
 

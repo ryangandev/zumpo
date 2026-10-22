@@ -31,13 +31,17 @@ import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
 /**
- * The turn bar width under which its hints take a line of their own: the widest
- * of them, the last move, by name, beside whose turn it is, with 18-character
- * names and its clock, in either language, needs this much beside its main
- * line, with 4 px to spare for a clock's digits and subpixel text (TurnBar's
- * hintRowBelow).
+ * The turn bar width under which its hints take a line of their own. The
+ * widest hint in play, the last move, by name, beside whose turn it is, with
+ * 18-character names and its clock, in either language, needs 786 px beside
+ * its main line. Its result (ResultBar), as tall as the bar in play over the
+ * same board, needs more, and both take its width: a spectator's heading,
+ * "Bartholomew Wilson wins: Maximilian Fischer ran out of time twice.",
+ * beside "225 stones and nobody made five. Bartholomew Wilson’s seat is free
+ * for anybody to take." needs 1372 px on Linux's text, so every desktop bar
+ * has the line. 4 px to spare for subpixel text (TurnBar's hintRowBelow).
  */
-const HINT_ROW_BELOW = 790;
+const HINT_ROW_BELOW = 1376;
 
 type Room = RoomOf<GomokuRoomState>;
 
