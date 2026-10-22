@@ -63,26 +63,51 @@
   gap: 0;
 }
 
-/* The room and its phase under the game, in one line however long: the
-   phase, a word or two saying where the game is, is always whole, and a
-   room's name too long for the rest of the line ends in an ellipsis. */
+/* The room and its phase under the game, in one line however long. The
+   phase, a few words saying where the game is, is always whole; the lead
+   before it, such as Watching, goes as a whole where both do not fit, and the
+   room's name ends in an ellipsis, or goes too where not even a few letters
+   fit. The pieces wrap in that order of need, the phase first, onto lines
+   the box cuts off, and are laid back in reading order from the right, so
+   what goes takes its separator with it and nothing reaches under the
+   buttons. Pre, so the separators' spaces are kept at the ends of boxes. */
 .context {
   display: flex;
+  overflow: hidden;
+  flex-flow: row-reverse wrap;
+  justify-content: flex-end;
+  height: 1lh;
   min-width: 0;
   color: var(--zumpo-muted);
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
-  white-space: nowrap;
+  white-space: pre;
 }
 
 .room {
+  display: flex;
+  flex: 1 1 var(--zumpo-space-64);
+  order: 3;
+  min-width: 0;
+  max-width: max-content;
+}
+
+.roomName {
   overflow: hidden;
   min-width: 0;
   text-overflow: ellipsis;
 }
 
-/* Pre, so the separator's spaces are kept at the start of its box. */
-.phase {
+.lead {
   flex: none;
-  white-space: pre;
+  order: 2;
+}
+
+/* Cut only where it alone is wider than the line, as no phase is yet. */
+.phase {
+  overflow: hidden;
+  flex: 0 1 auto;
+  order: 1;
+  min-width: 0;
+  text-overflow: ellipsis;
 }

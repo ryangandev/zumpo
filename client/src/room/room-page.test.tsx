@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { Result } from '../../../shared/wire-types';
 import { FakeSocket } from '../tests/fake-socket';
 import { minesweeperState } from '../tests/fixtures';
-import { onPhone } from '../tests/phone';
+import { onPhone, onTablet } from '../tests/phone';
 import { renderApp } from '../tests/render-app';
 
 const ROOM = '/games/minesweeper/rooms/r1';
@@ -33,6 +33,24 @@ function server({ password = '' } = {}) {
   });
   return fake;
 }
+
+/** A game under way that this player, Ryan, is watching. */
+const watched = (round: number) =>
+  minesweeperState({
+    isGameStarted: true,
+    phase: 'picking',
+    round,
+    playerList: {
+      p2: { username: 'Maya', points: 0, isConnected: true },
+      p3: { username: 'Sam', points: 0, isConnected: true },
+    },
+    spectators: { p1: { username: 'Ryan', isConnected: true } },
+  });
+const watchingLine =
+  'You’re watching this game. You can take a seat once it ends.';
+
+/** A phone's Game tab. */
+const gameTab = () => within(screen.getByRole('tabpanel', { name: 'Game' }));
 
 const players = () => within(screen.getByRole('region', { name: /^Players/ }));
 
@@ -633,6 +651,8 @@ describe('a room page', () => {
         'You’re watching this game. You can take a seat once it ends.',
       ),
     ).toBeInTheDocument();
+    // The room bar says so too, beside the phase.
+    expect(screen.getByText('Watching · Round 1')).toBeInTheDocument();
     expect(screen.getByText('Everyone is picking')).toBeInTheDocument();
     // The board takes no picks from a spectator.
     expect(
@@ -642,6 +662,47 @@ describe('a room page', () => {
     expect(within(watching).getByText('1 / 5')).toBeInTheDocument();
     // Named on the folded line and again in the row it opens to.
     expect(within(watching).getAllByText(/Ryan/)).toHaveLength(2);
+  });
+
+  it('tells a phone spectator joining mid-game over the board, once a game', async () => {
+    onPhone();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      const fake = server();
+      await renderApp(ROOM, { fake });
+      act(() => fake.serverEmits('room:state', watched(1)));
+      const board = within(screen.getByRole('tabpanel', { name: 'Game' }));
+      expect(board.getByRole('status')).toHaveTextContent(watchingLine);
+
+      // It goes after a moment, and the next round does not bring it back.
+      await act(() => vi.advanceTimersByTime(5000));
+      expect(board.queryByRole('status')).toBeNull();
+      act(() => fake.serverEmits('room:state', watched(2)));
+      expect(board.queryByRole('status')).toBeNull();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('keeps a phone spectator’s toast back while reconnecting', async () => {
+    onPhone();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', watched(1)));
+    expect(gameTab().getByRole('status')).toHaveTextContent(watchingLine);
+
+    act(() => fake.drop());
+    expect(screen.getByText(/kept for 30 seconds/)).toBeInTheDocument();
+    expect(gameTab().queryByText(watchingLine)).toBeNull();
+  });
+
+  it('tells a tablet spectator over the board too', async () => {
+    onTablet();
+    const fake = server();
+    await renderApp(ROOM, { fake });
+    act(() => fake.serverEmits('room:state', watched(1)));
+    // Over the board, as well as heading the column under it.
+    expect(screen.getAllByText(watchingLine)).toHaveLength(2);
   });
 
   it('offers a spectator a free seat between games', async () => {
