@@ -35,14 +35,14 @@ import { GomokuTable, type SeatView } from './table';
  * widest hint in play, the last move, by name, beside whose turn it is, with
  * 18-character names and its clock, in either language, needs 786 px beside
  * its main line. Its result (ResultBar), as tall as the bar in play over the
- * same board, needs more, and both take its width: a spectator's heading,
- * "Bartholomew Wilson wins: Maximilian Fischer ran out of time twice.",
- * beside "225 stones and nobody made five. Bartholomew Wilson’s seat is free
- * for anybody to take." needs 1372 px on Linux's text, wider than a turn bar
- * ever is (944 px), so every desktop bar has the line, as Doodle Chain's does
- * (TurnBar's hintRowBelow).
+ * same board, fits there too: a heading naming one 18-character player stays
+ * at full size beside its detail, and one where the detail names another,
+ * "Bartholomew Wilson wins with five in a row." beside "225 moves.
+ * Maximilian Fischer plays Black next.", is scaled no smaller than 0.85 from
+ * 792 px on Linux's text. 4 px to spare for subpixel text (TurnBar's
+ * hintRowBelow).
  */
-const HINT_ROW_BELOW = Infinity;
+const HINT_ROW_BELOW = 796;
 
 type Room = RoomOf<GomokuRoomState>;
 
