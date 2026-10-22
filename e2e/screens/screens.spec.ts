@@ -2597,9 +2597,7 @@ test('a Gomoku game', async ({ player }) => {
     .getByRole('button', { name: 'Leave room' })
     .click();
   await expect(
-    maya
-      .getByRole('region', { name: 'Turn' })
-      .getByText('You win: Leo left the room.'),
+    maya.getByRole('region', { name: 'Turn' }).getByText('You win by forfeit.'),
   ).toBeVisible();
   await shot(maya, 'GM14');
 });

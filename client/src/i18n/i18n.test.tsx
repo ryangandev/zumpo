@@ -134,7 +134,7 @@ describe('the language switch', () => {
 describe('result lines that count something', () => {
   it('says so when a Gomoku game had no moves, in both languages', () => {
     expect(en.gomoku.moves(0)).toBe('No moves were played.');
-    expect(en.gomoku.moves(1)).toBe('A game of 1 move.');
+    expect(en.gomoku.moves(1)).toBe('1 move.');
     expect(zh.gomoku.moves(0)).toBe('一手棋也没下。');
     expect(zh.gomoku.moves(12)).toBe('共 12 手。');
   });

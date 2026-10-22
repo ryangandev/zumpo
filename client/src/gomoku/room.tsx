@@ -422,16 +422,12 @@ function resultTitle(
     return m.gomoku.phone.wins(summary.ending, summary.winner, losing);
   }
   if (winner?.playerId === playerId) {
-    return m.gomoku.youWin(summary.ending, loser?.username ?? '');
+    return m.gomoku.youWin(summary.ending);
   }
   if (loser?.playerId === playerId) {
     return m.gomoku.youLose(summary.ending, winner?.username ?? '');
   }
-  return m.gomoku.theyWin(
-    summary.ending,
-    winner?.username ?? '',
-    loser?.username ?? '',
-  );
+  return m.gomoku.theyWin(summary.ending, winner?.username ?? '');
 }
 
 /** What comes next: who plays Black, or whose seat is free. */

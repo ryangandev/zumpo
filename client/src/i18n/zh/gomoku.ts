@@ -10,6 +10,13 @@ const HOW: Record<Exclude<GomokuEnding, 'five' | 'draw'>, string> = {
   left: '离开了房间',
 };
 
+/** 不是连成五子赢的时候，赢在哪里，说得短，桌面的结果才放得下接下来的事。 */
+const WON_BY: Record<Exclude<GomokuEnding, 'five' | 'draw'>, string> = {
+  resigned: '对手认输',
+  timeout: '对手超时',
+  left: '对手离开',
+};
+
 export const gomoku: typeof en = {
   color: (color) => `${COLOR[color]}方`,
   seat: (color, note) =>
@@ -86,10 +93,10 @@ export const gomoku: typeof en = {
   alone: '在等第二位玩家。',
   setup: '两人对弈，15 × 15 的棋盘，每步 30 秒。',
 
-  youWin: (ending, loser) =>
+  youWin: (ending) =>
     ending === 'five'
       ? '你连成五子，获胜！'
-      : `你赢了：${loser} ${HOW[ending as keyof typeof HOW]}。`,
+      : `你赢了：${WON_BY[ending as keyof typeof WON_BY]}。`,
   youLose: (ending, winner) =>
     ending === 'five'
       ? `${winner} 连成五子，获胜。`
@@ -98,18 +105,18 @@ export const gomoku: typeof en = {
         : ending === 'timeout'
           ? '你连续两次超时。'
           : `${winner} 获胜。`,
-  theyWin: (ending, winner, loser) =>
+  theyWin: (ending, winner) =>
     ending === 'five'
       ? `${winner} 连成五子，获胜。`
-      : `${winner} 获胜：${loser} ${HOW[ending as keyof typeof HOW]}。`,
+      : `${winner} 获胜：${WON_BY[ending as keyof typeof WON_BY]}。`,
   draw: '平局：棋盘下满了。',
   moves: (count) => (count === 0 ? '一手棋也没下。' : `共 ${count} 手。`),
-  drawDetail: (stones) => `${stones} 颗子，没有人连成五子。`,
+  drawDetail: (stones) => `${stones} 颗子，无人连成五子。`,
   nextBlack: (name) => `下一局 ${name} 执黑。`,
   nextYou: (color) => `下一局你执${COLOR[color]}。`,
   nextAsk: (color) => `下一局你执${COLOR[color]}，准备好了吗？`,
   nextWait: (note, color) => `${note} · 你执${COLOR[color]}`,
-  seatFree: (name) => `${name} 的座位空出来了，谁都可以坐。`,
+  seatFree: (name) => `${name} 的座位空出来了。`,
   both: (first, second) => `${first}${second}`,
 
   solo: {

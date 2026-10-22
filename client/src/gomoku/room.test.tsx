@@ -321,7 +321,7 @@ describe('a Gomoku room', () => {
     expect(turn().getByText('Game over')).toBeInTheDocument();
     expect(turn().getByText('You win with five in a row.')).toBeInTheDocument();
     expect(
-      turn().getByText('A game of 21 moves. Next game, Maya plays Black.'),
+      turn().getByText('21 moves. Maya plays Black next.'),
     ).toBeInTheDocument();
     expect(screen.queryByRole('list', { name: 'Standings' })).toBeNull();
     expect(screen.getByText('Black · five in a row')).toBeInTheDocument();
@@ -401,13 +401,9 @@ describe('a Gomoku room', () => {
         },
       }),
     );
+    expect(turn().getByText('You win by forfeit.')).toBeInTheDocument();
     expect(
-      turn().getByText('You win: Maya left the room.'),
-    ).toBeInTheDocument();
-    expect(
-      turn().getByText(
-        'A game of 3 moves. Maya’s seat is free for anybody to take.',
-      ),
+      turn().getByText('3 moves. Maya’s seat is free.'),
     ).toBeInTheDocument();
     expect(screen.getByText('Free seat')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /^Start game/ })).toBeNull();
