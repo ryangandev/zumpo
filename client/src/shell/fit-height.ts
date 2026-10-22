@@ -24,10 +24,18 @@ const MIN_SCALE = 0.5;
  * it, where that follows the window from a media query: the query changes in
  * a render after the window's resize, so a new `layout` measures afresh, and
  * a board laid out shorter may grow back.
+ *
+ * `underBar` is for a room board right under its turn bar, the element's
+ * previous sibling: the bar can take a line for its hints and move the board
+ * down without changing the board's size, so its height is watched too, and
+ * the board measured again a frame later. The bar's height never follows the
+ * board's scale. A board on your own leaves it off, so nothing outside the
+ * board, such as a row that comes under it at the end, changes its size.
  */
 export function useFitHeight<T extends HTMLElement>(
   enabled = true,
   layout?: unknown,
+  underBar = false,
 ) {
   const ref = useRef<T>(null);
   /** Measures afresh, letting the board grow back; set while it may scale. */
@@ -57,19 +65,27 @@ export function useFitHeight<T extends HTMLElement>(
     remeasure.current = refit;
     const observer = new ResizeObserver(fit);
     observer.observe(element);
-    // What is over the board can grow and move it down without changing its
-    // size, as a turn bar taking a second line for its hints: the page then
-    // grows by as much.
-    observer.observe(document.body);
+    // The bar's new height is measured a frame later, outside the observer
+    // pass that reported it, so the board's new scale is never reported back
+    // in the same pass.
+    const bar = underBar ? element.previousElementSibling : null;
+    let frame = 0;
+    const barObserver = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(fit);
+    });
+    if (bar) barObserver.observe(bar);
     window.addEventListener('resize', refit);
     return () => {
       remeasure.current = () => {};
       observer.disconnect();
+      barObserver.disconnect();
+      cancelAnimationFrame(frame);
       window.removeEventListener('resize', refit);
       element.style.removeProperty('zoom');
       element.removeAttribute('data-fit-height');
     };
-  }, [enabled]);
+  }, [enabled, underBar]);
 
   // A new layout, which comes a render after the resize that brought it.
   useLayoutEffect(() => {
