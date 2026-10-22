@@ -8,44 +8,49 @@
 @import '@fontsource/dm-sans/700.css';
 @import './generated/tokens.css';
 
-.zumpo {
-  color: var(--zumpo-ink);
-  font: var(--zumpo-text-body);
-  /* Figma renders text with greyscale antialiasing; match it. */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-}
+/* The base styles are a layer under every component's CSS module, so a
+   component's own rule wins whatever order the stylesheets load in: a page
+   that loads when opened brings its components' CSS after this. */
+@layer base {
+  .zumpo {
+    color: var(--zumpo-ink);
+    font: var(--zumpo-text-body);
+    /* Figma renders text with greyscale antialiasing; match it. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
 
-.zumpo *,
-.zumpo *::before,
-.zumpo *::after {
-  box-sizing: border-box;
-}
+  .zumpo *,
+  .zumpo *::before,
+  .zumpo *::after {
+    box-sizing: border-box;
+  }
 
-.zumpo :where(h1, h2, h3, h4, p, ul, ol, figure) {
-  margin: 0;
-}
+  .zumpo :where(h1, h2, h3, h4, p, ul, ol, figure) {
+    margin: 0;
+  }
 
-/* Chinese has no spaces to break at, so a short line ends with one lonely
+  /* Chinese has no spaces to break at, so a short line ends with one lonely
    character: let the browser rebalance the last lines of text, and even out
    headings. Only the style: the text-wrap shorthand would also set the wrap
    mode, outranking a component's own one-line nowrap. */
-.zumpo:lang(zh) :where(p, li, dd) {
-  text-wrap-style: pretty;
-}
+  .zumpo:lang(zh) :where(p, li, dd) {
+    text-wrap-style: pretty;
+  }
 
-.zumpo:lang(zh) :where(h1, h2, h3, h4) {
-  text-wrap-style: balance;
-}
+  .zumpo:lang(zh) :where(h1, h2, h3, h4) {
+    text-wrap-style: balance;
+  }
 
-.zumpo-page {
-  min-height: 100dvh;
-  background: var(--zumpo-cream);
-}
+  .zumpo-page {
+    min-height: 100dvh;
+    background: var(--zumpo-cream);
+  }
 
-.zumpo :where(button, input, select, textarea) {
-  font: inherit;
-  color: inherit;
+  .zumpo :where(button, input, select, textarea) {
+    font: inherit;
+    color: inherit;
+  }
 }
