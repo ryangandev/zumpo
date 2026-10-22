@@ -276,11 +276,10 @@ Code differs from Figma on purpose in a few places:
   The drawer does not see it while choosing the next word: the word choices take the sheet, and the panel over them would hide them; the guessers keep it until a word is chosen.
 - A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
 - Beside the board a Gomoku seat's name is never cut: where the column is too narrow for a default name, its You tag and the stone on one line (291 px at 1440 by 900, 206 px at 1280 by 800), the name wraps between its words and the tag goes under it, and the seat is taller; Figma draws every desktop seat on one line, and the board never moves for it.
-- A phone's Gomoku seat (`Zumpo/Gomoku seat` Layout=Phone, GM17 to GM19, PH04, PH08) is one 34 px line that never wraps, with a Compact You tag; `Zumpo/Tag` has no Compact size, so Figma's seat with You is 46 px tall.
+- A phone's Gomoku seat (`Zumpo/Gomoku seat` Layout=Phone, GM17 to GM19, PH04, PH08) is one 34 px line that never wraps, with a Compact You tag; Figma's seat on its turn is 36 px, its 2 px edge laid out outside the line.
   Its note leaves out the colour, which the stone shows and a screen reader is told, and how a game ended, which the turn bar says and the winner's lime seat shows, so a default name and its You tag fit at 360 px and neither player's seats, nor the board above them, change size when a game ends.
   The same compact Gomoku seat, and its short note, is used beside the board on a short wide screen.
-- PH06 predates a phone piece code has: Liar's Dice's own cup is one row unless it holds five dice.
-  The phone table is spaced close, 12 px under the board and 8 px over the seats, so a solo board in play is the full 320 px on a 360 by 640 phone; a room's, under its tabs, is 275 px.
+- A phone's Gomoku table is spaced close, 12 px under the board and 8 px over the seats, so a solo board in play is the full 320 px on a 360 by 640 phone; a room's, under its tabs, is 275 px.
 - Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
   On a phone the Chain composer's done row is the Notice beside a Keep editing that shows only its pencil, not the Phone variant's Notice over a full-width Keep editing, which made the row 84 px taller than Done's and moved the drawing above it.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
@@ -299,12 +298,11 @@ Code differs from Figma on purpose in a few places:
   There Gomoku's board stands beside the turn: the Turn bar tops the side column, the seats are compact, one under the other, and the actions sit at its foot, so the whole board is in sight; Figma has no landscape Gomoku.
 - A game on your own on a window 800 px tall or less takes the Turn bar's Phone row too, with 16 px around the page and 12 px between the turn bar and the board, and Daily Word's keyboard and Code Breaker's pad stand beside the board from 1240 px wide, as DW17 and CB22 draw them at 1280 × 720.
   Code scales the whole panel to the height; Figma cannot, so CB22 scales its board alone.
-- A phone's Game tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one; neither is in Figma, whose phone frames have no room events on the board.
+- A phone's Game tab says who went away or left, "Ana is away." or "Ana left the room.", in an info Notice over the top of the board for five seconds, as it says "You're the host now." in a success one, as PH07 draws the first.
   A game cut short because everyone else left gets neither: its panel already says "Everyone else left." and who is host now, and a notice would cover that heading.
 - Make 24's keys line under the tools (T02, T04, T06) shows only where there is a mouse and keyboard to play with, so a tablet's desktop layout leaves it out.
 - A board scaled to the window's height (#89) is smaller than Figma's in a window shorter than its frame: Figma draws each screen at one height.
 - Between games every room's results end the same way: the starter gets a Next game select (an Input with no helper, 320 px wide), and everyone else gets a muted line saying the setting, a muted line saying how the next game starts, and Ready.
-  Figma draws this on M14 for the host and on LD12 for a guest; the other results screens still show the host with Play again alone and a guest with "Waiting for … to start another game."
   The lines for Not ready, for a stand-in while the host is away ("Ryan isn’t at the table, so you can start the next game."), and for who is ready are muted body lines too, and Figma does not draw them.
 - The turn bar's meta counts who has locked in on a Minesweeper round ("1 player is locked in") and says "Waiting for everyone else" once you have, leaving the names to the scoreboard's Picking and Locked in, so the line never wraps on a phone and the board stays put.
   It names who has solved a Make 24 hand while you undo.
@@ -313,9 +311,8 @@ Code differs from Figma on purpose in a few places:
 - Doodle Chain's Done is never disabled: pressed with nothing written or drawn it says why in danger text, under the line or beside Done, and sends nothing; Figma does not draw that moment.
 - A Doodle Chain album's Play again, or Ready, is never below every chain: on a phone it sits under the album's title, where DC20 says how the next game starts, and on a wider screen it stays at the foot, as DC14 draws it, but held on screen on the panel's paper while the chains scroll by.
   Each entry the reveal shows scrolls into view with Next under it, at once when the system asks for reduced motion; Figma draws still screens.
-- On a phone the Minesweeper board sits under the turn bar rather than centred in the height left, so the spare height is under it, where a round's results lie; MO11 and MO12 draw it centred.
-- A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next; GM17 to GM19 draw the words under the board.
-  On a phone the in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
+- A phone's Gomoku results say the colour the viewer plays next and what the next game waits on in the turn bar's meta, short ("You play Black next. Ready?", "Waiting for Maya · you play Black"), and leave only buttons under the board, so the board keeps its size and place from a game through its results to the next.
+  On a phone a room's in-play turn bar has no first-move meta, and a faint stone's "Tap again to place" is the main line, scaled to fit, rather than the meta, so nothing in its one row is cut beside the clock at 360 px.
 - At 560 px or narrower the Phone turn bar gives the tag and the meta a line of their own under the main line, as `Zumpo/Turn bar` Layout=Phone draws it, the bar's whole width, wrapped rather than cut and kept while there is no meta, so every instruction reads whole at 360 px in both languages (#139).
   Gomoku, whose words fit the one row, keeps it (TurnBar `stackOnPhone={false}`, Layout=Phone row), so its board keeps that height.
   The label then has the first line beside the clock: one a little too long is scaled down to it, as the main line is, and one much too long, such as Draw & Guess's "Time ran out, so this one was picked for you", wraps.

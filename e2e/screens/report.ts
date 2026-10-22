@@ -61,6 +61,7 @@ const CONTENT: Record<string, string> = {
   CB09: 'The chat holds the game so far, from the start and the first code on; Figma’s example has three lines.',
   CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
   CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
+  PH08: 'Figma crops the page to the phone’s screen, the capture runs on to On this device; Chromium’s touch emulation keeps a fine pointer, so it shows the mouse’s hint where a phone shows Place stone.',
   CB12: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
 };
 
