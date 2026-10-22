@@ -29,14 +29,31 @@ export function Fit({ children, align = 'center', className }: FitProps) {
       const given = outer.getBoundingClientRect().width;
       const needed = extentOf(inner);
       if (given > 0 && needed > given) {
-        inner.style.setProperty('zoom', String(given / needed));
+        inner.style.setProperty(
+          'zoom',
+          String(fittingZoom(inner, given, needed)),
+        );
       }
     };
     fit();
     const observer = new ResizeObserver(fit);
     observer.observe(outer);
     observer.observe(inner);
-    return () => observer.disconnect();
+    // The piece never grows past its box, so content that changes while too
+    // wide, as words in another language or in a font that has just come,
+    // leaves its size as it was: those are watched for themselves.
+    const content = new MutationObserver(fit);
+    content.observe(inner, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+    document.fonts?.addEventListener('loadingdone', fit);
+    return () => {
+      observer.disconnect();
+      content.disconnect();
+      document.fonts?.removeEventListener('loadingdone', fit);
+    };
   }, []);
 
   return (
@@ -49,6 +66,34 @@ export function Fit({ children, align = 'center', className }: FitProps) {
       </div>
     </div>
   );
+}
+
+/** Tries at a scale before the piece is left at the last, smallest one. */
+const FIT_TRIES = 8;
+
+/**
+ * The scale at which the piece, `needed` wide unscaled, is no wider than
+ * `given`. Text does not scale in proportion: at a scaled font size its
+ * glyphs are laid out again, and where a platform rounds their advances to
+ * whole pixels, as Chromium on Linux does, the line comes out a few pixels
+ * wider than the scale says. So the scale is measured as applied and brought
+ * down until the piece fits, by at least half a percent a try. Leaves the
+ * scale applied.
+ */
+export function fittingZoom(
+  piece: HTMLElement,
+  given: number,
+  needed: number,
+): number {
+  let zoom = given / needed;
+  for (let tries = 0; tries < FIT_TRIES; tries++) {
+    piece.style.setProperty('zoom', String(zoom));
+    const scaled = extentOf(piece);
+    if (scaled <= given) return zoom;
+    zoom = Math.min(zoom * (given / scaled), zoom - 0.005);
+  }
+  piece.style.setProperty('zoom', String(zoom));
+  return zoom;
 }
 
 /**
