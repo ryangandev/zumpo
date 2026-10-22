@@ -6,7 +6,7 @@ import {
   type GomokuSeatProps,
 } from '../ui';
 import { cx } from '../ui/cx';
-import { useFitHeight } from '../shell/fit-height';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import { useHeightLeft } from '../shell/use-height-left';
 import { SHORT_SCREEN, useMediaQuery } from '../shell/use-media-query';
@@ -47,11 +47,12 @@ export interface GomokuTableProps {
    */
   turn?: ReactNode;
   /**
-   * On your own, on a desktop: the table scales down to end inside the
-   * window. A short screen fits the board to the window by its own layout
-   * instead (`turn`), so only one of the two ever sizes the table.
+   * On a desktop, on your own or in a room: the table scales down to end
+   * inside the window (useFitHeight). A short screen fits the board to the
+   * window by its own layout instead (`turn`), so only one of the two ever
+   * sizes the table.
    */
-  fitHeight?: boolean;
+  fitHeight?: FitHeight;
 }
 
 /**
@@ -76,7 +77,7 @@ export function GomokuTable({
 }: GomokuTableProps) {
   const short = useMediaQuery(SHORT_SCREEN);
   const beside = short && !phone && turn != null && turn !== false;
-  const section = useFitHeight<HTMLElement>(fitHeight && !beside);
+  const section = useFitHeight<HTMLElement>(beside ? false : fitHeight);
   useHeightLeft(section, beside);
   return (
     <>

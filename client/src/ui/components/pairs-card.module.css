@@ -64,8 +64,8 @@
 
 .hit:focus-visible {
   z-index: 1;
-  outline: 2px solid var(--zumpo-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 /* Turning a card over: it opens from edge on, about its middle, well inside

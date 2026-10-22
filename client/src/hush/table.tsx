@@ -23,7 +23,7 @@ export function TablePanel({
   children: ReactNode;
   fitHeight?: boolean;
 }) {
-  const ref = useFitHeight<HTMLDivElement>(fitHeight, undefined, true);
+  const ref = useFitHeight<HTMLDivElement>(fitHeight && 'room');
   return (
     <div ref={ref} className={cx(styles.panel, playColumn)}>
       {children}

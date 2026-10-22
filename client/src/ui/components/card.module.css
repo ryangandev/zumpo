@@ -27,8 +27,8 @@
 /* A title given the focus from code, as a button's ring. */
 .title:focus-visible {
   border-radius: var(--zumpo-radius-4);
-  outline: var(--zumpo-space-2) solid var(--zumpo-ink);
-  outline-offset: var(--zumpo-space-2);
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 .description {

@@ -24,6 +24,17 @@ body {
   }
 }
 
+/* Every keyboard focus ring is 2 px of ink, and 2 px off what it rings. In a
+   board scaled to the window's height (useFitHeight sets --fit-scale), the
+   ring is drawn larger by as much, so it stays 2 px on screen. */
+:root {
+  --focus-ring: var(--zumpo-space-2);
+}
+
+[data-fit-height] {
+  --focus-ring: calc(var(--zumpo-space-2) / var(--fit-scale, 1));
+}
+
 /* A focus moved by script, as a game starts or a result comes (quiet), is
    not ringed until the next key, so nobody sees a frame they did not ask for. */
 :root [data-quiet-focus]:focus-visible {

@@ -34,8 +34,8 @@
 }
 
 .chip:focus-visible {
-  outline: 2px solid var(--zumpo-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 /* A filter chip is pressed; a chip in a Chip field is a checked radio. */

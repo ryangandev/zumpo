@@ -103,7 +103,7 @@ function BetweenGames({ room }: { room: Room }) {
     // keeps its place under the result, in the turn bar's, with the
     // standings under it and what comes next beside it.
     const table = (
-      <TablePanel>
+      <TablePanel fitHeight="result">
         <TriosTable
           cards={state.table}
           places={takenPlaces(state, playerId, m)}
@@ -224,7 +224,7 @@ function Play({ room }: { room: Room }) {
           m,
         )}
       />
-      <TablePanel>
+      <TablePanel fitHeight="room">
         <TriosTable
           cards={state.table}
           places={places}

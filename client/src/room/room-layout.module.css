@@ -30,15 +30,15 @@
    tall as the window leaves under the room bar, stays in sight as the page
    scrolls, and the chat gives the room, scrolling its messages, so its input
    is always on screen. Above it are the page's top padding and the gap under
-   the room bar (2 × 24), and the Desktop room bar's 48; under it the page's
-   foot padding, 32. */
+   the room bar (2 × 24), and the Desktop room bar's 48; under it the gap over
+   the footer, 24, the footer's line and the page's foot padding, 32. */
 @media (min-width: 1024px) {
   .room .side {
     position: sticky;
     top: var(--zumpo-space-24);
     max-height: calc(
-      100dvh - 2 * var(--zumpo-space-24) - var(--zumpo-space-48) -
-        var(--zumpo-space-32)
+      100dvh - 3 * var(--zumpo-space-24) - var(--zumpo-space-48) -
+        var(--zumpo-text-small-line) - var(--zumpo-space-32)
     );
   }
 

@@ -395,7 +395,7 @@ function Writing({
   return (
     <>
       {task.given?.content.type === 'drawing' && (
-        <PlaySheet>
+        <PlaySheet shown>
           <div className={styles.frame}>
             <EntryDrawing
               drawing={task.given.content.drawing}

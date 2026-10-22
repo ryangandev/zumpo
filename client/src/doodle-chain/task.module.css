@@ -17,13 +17,14 @@
 }
 
 /* A drawing to describe, or the one just made: the canvas's ratio, 600 px
-   wide at most. */
+   wide at most. A drawing to describe is in a play sheet, whose max-width
+   keeps it inside the window with the description under it
+   (canvas.module.css). */
 .frame {
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
-  width: 600px;
-  max-width: 100%;
+  width: min(600px, 100%);
   aspect-ratio: 798 / 598;
   border: 1px solid var(--zumpo-line);
   border-radius: var(--zumpo-radius-16);

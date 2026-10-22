@@ -149,6 +149,8 @@ export function GomokuRoom() {
           <GomokuTable
             phone={phone}
             fill={phone && (playing || summary !== null)}
+            // The table stays through the game's end, so it keeps its scale.
+            fitHeight={(playing || summary !== null) && 'room'}
             turn={
               playing ? (
                 <TurnBar

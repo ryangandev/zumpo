@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useMessages } from '../i18n';
 import { TriosCard, type TriosCardState } from '../ui';
 import { cx } from '../ui/cx';
-import { useFitHeight } from '../shell/fit-height';
+import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import styles from './table.module.css';
@@ -60,13 +60,16 @@ export function TriosTable({
   );
 }
 
-/** The paper panel the table sits on; bare on a phone. */
+/**
+ * The paper panel the table sits on; bare on a phone. `fitHeight` keeps the
+ * table inside the window, on your own or in a room (useFitHeight).
+ */
 export function TablePanel({
   children,
   fitHeight = false,
 }: {
   children: ReactNode;
-  fitHeight?: boolean;
+  fitHeight?: FitHeight;
 }) {
   const ref = useFitHeight<HTMLDivElement>(fitHeight);
   return (

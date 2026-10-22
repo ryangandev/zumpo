@@ -47,8 +47,8 @@
 
 .home:focus-visible,
 .link:focus-visible {
-  outline: 2px solid var(--zumpo-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 /* The avatar as the name menu's trigger: a round button, the avatar's size. */
@@ -71,8 +71,8 @@
 }
 
 .viewerButton:focus-visible {
-  outline: 2px solid var(--zumpo-ink);
-  outline-offset: 2px;
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
 }
 
 @media (max-width: 640px) {
