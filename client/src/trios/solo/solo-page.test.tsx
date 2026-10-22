@@ -197,7 +197,7 @@ describe('Trios on your own', () => {
       turn().getByText('One card of a trio is marked'),
     ).toBeInTheDocument();
     expect(
-      turn().getByText('Find the two that go with it'),
+      turn().getByText('Find the other two'),
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Hint, +10 s' }));
     expect(table().getAllByRole('button', { name: /, hint$/ })).toHaveLength(2);

@@ -68,7 +68,7 @@ Everything before the third pick is yours alone and never leaves your screen.
 Three cards that are not a trio are told why, by the first feature that breaks it, in the order colour, shape, count, fill: "Two are striped and one is solid."
 A feature breaks a trio when exactly two of the three cards share it.
 
-A card a hint marks, on your own or in a room, is ringed in lime with a Hint tag, and the turn bar says what is marked and what is left to find: "One card of a trio is marked, find the two that go with it".
+A card a hint marks, on your own or in a room, is ringed in lime with a Hint tag, and the turn bar says what is marked and what is left to find: "One card of a trio is marked, find the other two".
 
 The table never moves while you look.
 On a narrow screen the turn bar sits above it, so the bar keeps one height through every phase: a clock is always in its top row, and it keeps room for two lines of what it says, the most any phase needs (three on the narrowest phones).

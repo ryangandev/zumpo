@@ -162,7 +162,7 @@ describe('a Trios room', () => {
       turn().getByText('One card of a trio is marked'),
     ).toBeInTheDocument();
     expect(
-      turn().getByText('Find the two that go with it'),
+      turn().getByText('Find the other two'),
     ).toBeInTheDocument();
     expect(turn().getByText('to a second hint')).toBeInTheDocument();
     expect(card(9, ', hint')).toBeInTheDocument();
