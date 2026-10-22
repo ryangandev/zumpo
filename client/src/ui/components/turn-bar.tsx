@@ -97,6 +97,7 @@ export function TurnBar({
         styles.container,
         phone ? styles.phone : styles.desktop,
         stacked && styles.narrow,
+        stackable && !stackOnPhone && styles.oneRow,
         className,
       )}
     >

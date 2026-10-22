@@ -186,3 +186,26 @@ test('a player plays the computer on their own, with nothing sent to the server'
   ).toHaveCount(1);
   expect(sent()).toEqual([]);
 });
+
+test('the widest default name is read in full on a seat beside the board', async ({
+  player,
+}) => {
+  // The widest of the 1,764 English default names in the seat's own font
+  // (126 px); Chinese ones are at most 56 px.
+  const sam = await player('Curious Hedgehog');
+  // 1280 by 800 gives the seats their narrowest column, 206 px.
+  await sam.setViewportSize({ width: 1280, height: 800 });
+  await sam.goto('/games/gomoku/solo');
+  const board = boardOf(sam);
+  await expect(board).toBeVisible();
+  const name = sam.getByText('Curious Hedgehog', { exact: true });
+  expect(
+    await name.evaluate((text) => text.scrollWidth <= text.clientWidth),
+  ).toBe(true);
+  // The seats sit beside the board: however tall a name makes them, the
+  // board neither moves nor shrinks.
+  const seat = (await name.boundingBox())!;
+  const grid = (await board.boundingBox())!;
+  expect(seat.x).toBeGreaterThan(grid.x + grid.width);
+  expect(grid.width).toBeGreaterThan(480);
+});

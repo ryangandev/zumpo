@@ -100,6 +100,50 @@ describe('a Gomoku room', () => {
     expect(scoreboard().getByText('White')).toBeInTheDocument();
   });
 
+  it('on a phone, gives each seat one line, its stone showing the colour', async () => {
+    onPhone();
+    await renderSeated(myTurn);
+    // The turn bar's label, and Ryan's seat.
+    expect(screen.getAllByText('Your turn')).toHaveLength(2);
+    expect(screen.queryByText(/^(Black|White) · /)).toBeNull();
+    // The stone is drawn; a screen reader hears the colour.
+    expect(screen.getByText('Black')).toBeInTheDocument();
+    expect(screen.getByText('White')).toBeInTheDocument();
+  });
+
+  it('on a phone, names nobody in the turn bar, as the seats do', async () => {
+    onPhone();
+    const { update } = await renderSeated(myTurn);
+    expect(turn().getByText('Last move E8')).toBeInTheDocument();
+    expect(turn().queryByText(/Maya/)).toBeNull();
+
+    update(played(myTurn, { color: 'black', point: F8 }));
+    expect(turn().getByText('Their turn')).toBeInTheDocument();
+    expect(turn().getByText('White is thinking')).toBeInTheDocument();
+    expect(turn().getByText('Last move F8')).toBeInTheDocument();
+  });
+
+  it('on a phone, tells a spectator they are watching, and whose stone goes down by its colour', async () => {
+    onPhone();
+    await renderSeated({
+      ...myTurn,
+      turnPlayerId: 'p3',
+      colors: {
+        black: { playerId: 'p3', username: 'Leo' },
+        white: { playerId: 'p2', username: 'Maya' },
+      },
+      playerList: {
+        p2: { username: 'Maya', points: 1, isConnected: true },
+        p3: { username: 'Leo', points: 0, isConnected: true },
+      },
+      spectators: { [ME]: { username: 'Ryan', isConnected: true } },
+    });
+    expect(turn().getByText('Watching')).toBeInTheDocument();
+    expect(turn().getByText('Black is thinking')).toBeInTheDocument();
+    expect(turn().getByText('Last move E8')).toBeInTheDocument();
+    expect(turn().queryByText(/Leo|Maya/)).toBeNull();
+  });
+
   it('places a stone with a click, holding it faint until the server answers', async () => {
     const user = userEvent.setup();
     const { fake, update } = await renderSeated(myTurn);
@@ -300,6 +344,10 @@ describe('a Gomoku room', () => {
       gameNumber: 2,
       samePair: true,
       moves: [{ color: 'white', point: E8 }],
+      playerList: {
+        p1: { username: 'Ryan', points: 1, isConnected: true },
+        p2: { username: 'Maya', points: 0, isConnected: true },
+      },
       lastGame: {
         endedEarly: false,
         ending: 'resigned',
@@ -317,10 +365,15 @@ describe('a Gomoku room', () => {
     expect(turn().getByText('You play White next. Ready?')).toBeInTheDocument();
     expect(screen.queryByText(/^The next game starts once/)).toBeNull();
     expect(screen.getByRole('button', { name: 'Ready' })).toBeInTheDocument();
+    // Each seat one line that never wraps: the score alone, as the turn bar
+    // and the lime seat say who won.
+    expect(screen.getByText('1 win')).toBeInTheDocument();
+    expect(screen.getByText('0 wins')).toBeInTheDocument();
+    expect(screen.queryByText(/^Won\b/)).toBeNull();
 
     update({ ...results, ready: [ME] });
     expect(
-      turn().getByText('Waiting for Maya · you play White'),
+      turn().getByText('Waiting for them · you play White'),
     ).toBeInTheDocument();
     expect(screen.queryByText(/^You’re ready\./)).toBeNull();
 

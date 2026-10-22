@@ -360,10 +360,15 @@ function deviceStats(
   ];
 }
 
-/** You and the computer, Black's seat first. */
+/**
+ * You and the computer, Black's seat first. A compact seat says only what is
+ * happening: the stone shows the colour, and the turn bar and the lime seat
+ * say who made five.
+ */
 function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
   const turn = game.over ? null : toMove(game);
   const computer = m.gomoku.solo.computer;
+  const yourNote = turn === game.color ? m.gomoku.notes.yourTurn : undefined;
   const you: SeatView = {
     key: 'you',
     name: yourName,
@@ -371,16 +376,15 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
     color: game.color,
     detail: m.gomoku.seat(
       game.color,
-      turn === game.color
-        ? m.gomoku.notes.yourTurn
-        : youWon(game)
-          ? m.gomoku.notes.five
-          : undefined,
+      yourNote ?? (youWon(game) ? m.gomoku.notes.five : undefined),
     ),
+    compactDetail: m.gomoku.phoneSeat(yourNote ?? ''),
     state: turn === game.color ? 'turn' : youWon(game) ? 'won' : 'default',
     you: true,
   };
   const theirs = otherColor(game.color);
+  const theirNote =
+    turn === theirs ? m.gomoku.solo.thinking : m.gomoku.solo.levels[game.level];
   const them: SeatView = {
     key: 'computer',
     name: computer,
@@ -388,12 +392,9 @@ function seatsOf(game: SoloGame, yourName: string, m: Messages): SeatView[] {
     color: theirs,
     detail: m.gomoku.seat(
       theirs,
-      turn === theirs
-        ? m.gomoku.solo.thinking
-        : computerWon(game)
-          ? m.gomoku.notes.five
-          : m.gomoku.solo.levels[game.level],
+      computerWon(game) ? m.gomoku.notes.five : theirNote,
     ),
+    compactDetail: m.gomoku.phoneSeat(theirNote),
     state: turn === theirs ? 'turn' : computerWon(game) ? 'won' : 'default',
   };
   return game.color === 'black' ? [you, them] : [them, you];

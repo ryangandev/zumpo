@@ -1,10 +1,16 @@
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import type { PairsCardView } from '../../../shared/wire-types';
 import { ME, pairsState } from '../tests/fixtures';
 import { onPhone } from '../tests/phone';
 import { renderSeated } from '../tests/seated';
+
+/** What the page has said politely about a turn. */
+const said = () =>
+  screen
+    .getAllByRole('status')
+    .filter((status) => status.textContent?.includes('your turn'));
 
 const down: PairsCardView = { state: 'down', symbol: null };
 
@@ -152,6 +158,30 @@ describe('a Pairs room', () => {
       screen.getByText('Small board, 8 pairs. You finished 2nd.'),
     ).toBeInTheDocument();
     expect(screen.getAllByRole('gridcell')).toHaveLength(16);
+  });
+
+  it('marks the Game tab when your turn comes while Chat is open', async () => {
+    onPhone();
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(theirMiss);
+    await user.click(screen.getByRole('tab', { name: 'Chat' }));
+    expect(screen.getByRole('tab', { name: 'Game' })).toBeInTheDocument();
+
+    expect(said()).toHaveLength(0);
+
+    act(() => fake.serverEmits('room:state', myTurn));
+    expect(
+      screen.getByRole('tab', { name: 'Game, your turn' }),
+    ).toBeInTheDocument();
+    // Said once, politely, as the mark appears.
+    expect(said().map((status) => status.textContent)).toEqual([
+      'Game, your turn',
+    ]);
+
+    await user.click(screen.getByRole('tab', { name: 'Game, your turn' }));
+    expect(screen.getByRole('tab', { name: 'Game' })).toBeInTheDocument();
+    expect(said()).toHaveLength(0);
+    expect(turn().getByText('Your turn')).toBeInTheDocument();
   });
 
   it('keeps the turn bar short on a phone', async () => {

@@ -73,7 +73,8 @@ export interface MineGridProps {
   cell: (index: number) => MineGridCell;
   /**
    * The board of a game on, which a phone fits into its one screen: a Small
-   * board scaled to the room left, a wider one panning within it.
+   * board scaled to the room left, a wider one panning within it. Off, it
+   * keeps its place in the page, still scaled to the phone's width.
    */
   inPlay?: boolean;
 }
@@ -189,17 +190,20 @@ export function MineGrid({
   );
   // Wider screens show the board as it is, its cells' focus rings reaching
   // into the panel's padding.
-  if (!inPlay || !phone) return grid;
+  if (!phone) return grid;
   // A board that pans is never scaled: it scrolls, down within the room
   // left and sideways within itself.
-  // It sits under the turn bar, the spare height under it, where a round's
-  // results lie over the board's foot.
+  // In play it sits under the turn bar, the spare height under it, where a
+  // round's results lie over the board's foot; once the game is over it is
+  // still scaled to the width, as in play, and scrolls with the page.
   return pans ? (
-    <PlayBoard min={1} fitWidth={false} align="start">
+    <PlayBoard min={1} fitWidth={false} align="start" inPlay={inPlay}>
       {grid}
     </PlayBoard>
   ) : (
-    <PlayBoard align="start">{grid}</PlayBoard>
+    <PlayBoard align="start" inPlay={inPlay}>
+      {grid}
+    </PlayBoard>
   );
 }
 
