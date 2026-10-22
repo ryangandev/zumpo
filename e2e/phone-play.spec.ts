@@ -440,6 +440,10 @@ for (const size of SIZES) {
       await sheet('a stroke drawn');
       await doneStill('a stroke drawn');
       await done.click();
+      // Checked once the server has the Done, and the turn bar says so.
+      await expect(
+        turnOf(maya).getByText('The step ends when everyone is done.'),
+      ).toBeVisible();
       await sheet('done, waiting for the others');
 
       for (const page of others) {
@@ -458,6 +462,9 @@ for (const size of SIZES) {
       await write(maya, 'Your description', 'A cat, I think');
       await expect(
         maya.getByRole('button', { name: 'Keep editing' }),
+      ).toBeVisible();
+      await expect(
+        turnOf(maya).getByText('The step ends when everyone is done.'),
       ).toBeVisible();
       await field('described, waiting for the others');
       for (const page of others) {
