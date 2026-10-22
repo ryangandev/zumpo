@@ -55,7 +55,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -101,7 +102,7 @@
             "id": "9:2307",
             "name": "Game stage",
             "w": 944,
-            "h": 485,
+            "h": 584,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -114,7 +115,7 @@
                 "id": "27:18825",
                 "name": "Final scores",
                 "w": 944,
-                "h": 485,
+                "h": 584,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -455,17 +456,60 @@
                     "type": "FRAME",
                     "id": "27:18921",
                     "name": "Actions",
-                    "w": 466,
-                    "h": 48,
-                    "wSize": "hug",
+                    "w": 862,
+                    "h": 147,
+                    "wSize": "fill",
                     "hSize": "hug",
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
+                      "wrap": true,
+                      "crossGap": "$Zumpo · UI:space/12",
                       "align": "center",
                       "strokesIncluded": true
                     },
                     "children": [
+                      {
+                        "type": "FRAME",
+                        "id": "171:77175",
+                        "name": "Next game",
+                        "w": 862,
+                        "h": 87,
+                        "hSize": "hug",
+                        "clip": true,
+                        "layout": {
+                          "mode": "column",
+                          "strokesIncluded": true
+                        },
+                        "children": [
+                          {
+                            "type": "INSTANCE",
+                            "id": "171:77176",
+                            "name": "Next game",
+                            "w": 320,
+                            "h": 87,
+                            "hSize": "hug",
+                            "component": "Zumpo/Input",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "9:204",
+                            "props": {
+                              "Select": true,
+                              "Value": "2 rounds",
+                              "Show helper": false,
+                              "Label": "Next game"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 87,
+                                "width": 320
+                              }
+                            ]
+                          }
+                        ]
+                      },
                       {
                         "type": "INSTANCE",
                         "id": "27:18811",
@@ -513,32 +557,6 @@
                             "path": ".",
                             "height": 48,
                             "width": 161
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "95:114250",
-                        "name": "Action / Game settings",
-                        "w": 171,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=edit",
-                          "Show icon": true,
-                          "Label": "Game settings"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 171
                           }
                         ]
                       }

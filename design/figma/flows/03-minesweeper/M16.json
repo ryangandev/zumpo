@@ -52,7 +52,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game ended",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             }
           },
           {

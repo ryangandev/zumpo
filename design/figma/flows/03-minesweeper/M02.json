@@ -52,7 +52,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Waiting room",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {

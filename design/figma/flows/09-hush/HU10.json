@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Level 3 of 5",
+          "Phase": "Maya’s room · Level 3 of 5",
           "Game": "Hush"
         }
       },
@@ -103,7 +103,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {

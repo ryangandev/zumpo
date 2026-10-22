@@ -52,7 +52,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -126,7 +127,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -1539,7 +1541,7 @@
             "id": "9:9926",
             "name": "Room sidebar",
             "w": 344,
-            "h": 764,
+            "h": 886,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -1552,7 +1554,7 @@
                 "id": "166:76205",
                 "name": "Next game",
                 "w": 344,
-                "h": 75,
+                "h": 197,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -1572,12 +1574,13 @@
                 "children": [
                   {
                     "type": "FRAME",
-                    "id": "27:21829",
+                    "id": "169:77041",
                     "name": "Actions",
                     "w": 294,
-                    "h": 25,
+                    "h": 147,
                     "wSize": "fill",
                     "hSize": "hug",
+                    "clip": true,
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
@@ -1588,52 +1591,80 @@
                     },
                     "children": [
                       {
-                        "type": "FRAME",
-                        "id": "27:21729",
-                        "name": "Waiting for host",
-                        "w": 321,
+                        "type": "TEXT",
+                        "id": "169:77042",
+                        "name": "Next game",
+                        "w": 294,
                         "h": 25,
-                        "wSize": "hug",
                         "hSize": "hug",
-                        "layout": {
-                          "mode": "row",
-                          "gap": "$Zumpo · UI:space/8",
-                          "align": "center",
-                          "strokesIncluded": true
+                        "text": "Next game: Small 9 × 9",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "169:77043",
+                        "name": "How it starts",
+                        "w": 294,
+                        "h": 50,
+                        "hSize": "hug",
+                        "text": "The next game starts once everyone is ready, or when Maya starts it.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "169:77044",
+                        "name": "Action / Ready",
+                        "w": 111,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Primary",
+                          "State": "Default"
                         },
-                        "children": [
+                        "componentId": "4:15",
+                        "props": {
+                          "Icon": "Zumpo/Icon / Glyph=check",
+                          "Show icon": true,
+                          "Label": "Ready"
+                        },
+                        "overrides": [
                           {
-                            "type": "INSTANCE",
-                            "id": "27:21730",
-                            "name": "Zumpo/Icon",
-                            "w": 20,
-                            "h": 20,
-                            "component": "Zumpo/Icon",
-                            "variant": {
-                              "Glyph": "pending"
-                            },
-                            "componentId": "24:5002",
-                            "overrides": [
-                              {
-                                "path": "pending",
-                                "strokes": [
-                                  "$Zumpo · UI:color/muted"
-                                ]
-                              }
-                            ]
-                          },
+                            "path": ".",
+                            "height": 48,
+                            "width": 111
+                          }
+                        ]
+                      },
+                      {
+                        "type": "INSTANCE",
+                        "id": "169:77045",
+                        "name": "Action / Watch instead",
+                        "w": 140,
+                        "h": 48,
+                        "wSize": "hug",
+                        "component": "Zumpo/Button",
+                        "variant": {
+                          "Style": "Quiet",
+                          "State": "Default"
+                        },
+                        "componentId": "4:21",
+                        "props": {
+                          "Label": "Watch instead"
+                        },
+                        "overrides": [
                           {
-                            "type": "TEXT",
-                            "id": "27:21732",
-                            "w": 293,
-                            "h": 25,
-                            "wSize": "hug",
-                            "hSize": "hug",
-                            "text": "Waiting for Maya to start another game.",
-                            "textStyle": "Zumpo/Body",
-                            "fills": [
-                              "$Zumpo · UI:color/muted"
-                            ]
+                            "path": ".",
+                            "height": 48,
+                            "width": 140
                           }
                         ]
                       }

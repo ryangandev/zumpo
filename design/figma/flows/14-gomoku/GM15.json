@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -151,7 +153,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -1817,53 +1820,85 @@
                           },
                           {
                             "type": "FRAME",
-                            "id": "162:94547",
+                            "id": "171:77139",
                             "name": "Actions",
                             "w": 306,
-                            "h": 45,
+                            "h": 110,
                             "wSize": "fill",
                             "hSize": "hug",
+                            "clip": true,
                             "layout": {
                               "mode": "row",
-                              "gap": "$Zumpo · UI:space/8",
+                              "gap": "$Zumpo · UI:space/12",
                               "wrap": true,
-                              "crossGap": 0,
+                              "crossGap": "$Zumpo · UI:space/12",
                               "align": "center",
                               "strokesIncluded": true
                             },
                             "children": [
                               {
-                                "type": "INSTANCE",
-                                "id": "162:94548",
-                                "name": "Zumpo/Icon",
-                                "w": 20,
-                                "h": 20,
-                                "component": "Zumpo/Icon",
-                                "variant": {
-                                  "Glyph": "pending"
-                                },
-                                "componentId": "24:5002",
-                                "overrides": [
-                                  {
-                                    "path": "pending",
-                                    "strokes": [
-                                      "$Zumpo · UI:color/muted"
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
                                 "type": "TEXT",
-                                "id": "162:94549",
+                                "id": "171:77141",
+                                "name": "How it starts",
                                 "w": 306,
-                                "h": 25,
+                                "h": 50,
                                 "hSize": "hug",
-                                "text": "Waiting for Maya to start another game.",
+                                "text": "The next game starts once everyone is ready, or when Maya starts it.",
                                 "textStyle": "Zumpo/Body",
                                 "fills": [
                                   "$Zumpo · UI:color/muted"
                                 ],
                                 "autoResize": "height"
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "171:77142",
+                                "name": "Action / Ready",
+                                "w": 111,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
+                                "variant": {
+                                  "Style": "Primary",
+                                  "State": "Default"
+                                },
+                                "componentId": "4:15",
+                                "props": {
+                                  "Icon": "Zumpo/Icon / Glyph=check",
+                                  "Show icon": true,
+                                  "Label": "Ready"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 111
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "171:77143",
+                                "name": "Action / Watch instead",
+                                "w": 140,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
+                                "variant": {
+                                  "Style": "Quiet",
+                                  "State": "Default"
+                                },
+                                "componentId": "4:21",
+                                "props": {
+                                  "Label": "Watch instead"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 140
+                                  }
+                                ]
                               }
                             ]
                           }

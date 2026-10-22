@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Card 12 of 30",
+          "Phase": "Maya’s room · Card 12 of 30",
           "Game": "Snap"
         },
         "overrides": [
@@ -112,7 +112,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -207,7 +208,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {

@@ -173,7 +173,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -356,7 +357,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -539,7 +541,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -721,7 +724,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -904,7 +908,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -1087,7 +1092,8 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -1265,8 +1271,8 @@
                         "id": "166:75939",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -1274,19 +1280,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },
@@ -1438,8 +1438,8 @@
                         "id": "166:75953",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -1447,19 +1447,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },
@@ -1611,8 +1605,8 @@
                         "id": "166:75967",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -1620,19 +1614,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },
@@ -1783,8 +1771,8 @@
                         "id": "166:75981",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -1792,19 +1780,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },
@@ -1956,8 +1938,8 @@
                         "id": "166:75995",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -1965,19 +1947,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },
@@ -2129,8 +2105,8 @@
                         "id": "166:76009",
                         "name": "You",
                         "visible": false,
-                        "w": 45,
-                        "h": 30,
+                        "w": 92,
+                        "h": 20,
                         "wSize": "hug",
                         "hSize": "hug",
                         "propRefs": {
@@ -2138,19 +2114,13 @@
                         },
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Compact"
                         },
-                        "componentId": "24:6511",
+                        "componentId": "171:77262",
                         "props": {
                           "Label": "You"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 30,
-                            "width": 45
-                          }
-                        ]
+                        }
                       }
                     ]
                   },

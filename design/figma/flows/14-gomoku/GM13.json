@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -151,7 +153,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -550,6 +553,32 @@
                                     "path": ".",
                                     "height": 48,
                                     "width": 110
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "INSTANCE",
+                                "id": "171:77220",
+                                "name": "Action / Invite friends",
+                                "w": 161,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
+                                "variant": {
+                                  "Style": "Secondary",
+                                  "State": "Default"
+                                },
+                                "componentId": "4:18",
+                                "props": {
+                                  "Icon": "Zumpo/Icon / Glyph=link",
+                                  "Show icon": true,
+                                  "Label": "Invite friends"
+                                },
+                                "overrides": [
+                                  {
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 161
                                   }
                                 ]
                               }

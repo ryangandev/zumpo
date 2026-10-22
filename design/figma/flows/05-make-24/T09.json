@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 1550,
     "w": 1440,
-    "h": 920,
+    "h": 1019,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -97,7 +99,7 @@
         "id": "40:43544",
         "name": "Board & room",
         "w": 1312,
-        "h": 750,
+        "h": 849,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -151,7 +153,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -608,7 +611,7 @@
             "id": "40:43666",
             "name": "Room sidebar",
             "w": 344,
-            "h": 750,
+            "h": 849,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -621,7 +624,7 @@
                 "id": "166:76472",
                 "name": "Next game",
                 "w": 344,
-                "h": 98,
+                "h": 197,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -641,12 +644,13 @@
                 "children": [
                   {
                     "type": "FRAME",
-                    "id": "40:43563",
+                    "id": "171:77248",
                     "name": "Actions",
                     "w": 294,
-                    "h": 48,
+                    "h": 147,
                     "wSize": "fill",
                     "hSize": "hug",
+                    "clip": true,
                     "layout": {
                       "mode": "row",
                       "gap": "$Zumpo · UI:space/12",
@@ -657,10 +661,38 @@
                     },
                     "children": [
                       {
+                        "type": "TEXT",
+                        "id": "171:77249",
+                        "name": "Next game",
+                        "w": 294,
+                        "h": 25,
+                        "hSize": "hug",
+                        "text": "Next game: 5 hands",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
+                        "type": "TEXT",
+                        "id": "171:77250",
+                        "name": "How it starts",
+                        "w": 294,
+                        "h": 50,
+                        "hSize": "hug",
+                        "text": "The next game starts once everyone is ready, or when Maya starts it.",
+                        "textStyle": "Zumpo/Body",
+                        "fills": [
+                          "$Zumpo · UI:color/muted"
+                        ],
+                        "autoResize": "height"
+                      },
+                      {
                         "type": "INSTANCE",
-                        "id": "40:43564",
-                        "name": "Action / Play again",
-                        "w": 110,
+                        "id": "171:77251",
+                        "name": "Action / Ready",
+                        "w": 111,
                         "h": 48,
                         "wSize": "hug",
                         "component": "Zumpo/Button",
@@ -670,39 +702,39 @@
                         },
                         "componentId": "4:15",
                         "props": {
-                          "Label": "Play again"
+                          "Icon": "Zumpo/Icon / Glyph=check",
+                          "Show icon": true,
+                          "Label": "Ready"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 48,
-                            "width": 110
+                            "width": 111
                           }
                         ]
                       },
                       {
                         "type": "INSTANCE",
-                        "id": "40:43565",
-                        "name": "Action / Invite friends",
-                        "w": 161,
+                        "id": "171:77252",
+                        "name": "Action / Watch instead",
+                        "w": 140,
                         "h": 48,
                         "wSize": "hug",
                         "component": "Zumpo/Button",
                         "variant": {
-                          "Style": "Secondary",
+                          "Style": "Quiet",
                           "State": "Default"
                         },
-                        "componentId": "4:18",
+                        "componentId": "4:21",
                         "props": {
-                          "Icon": "Zumpo/Icon / Glyph=link",
-                          "Show icon": true,
-                          "Label": "Invite friends"
+                          "Label": "Watch instead"
                         },
                         "overrides": [
                           {
                             "path": ".",
                             "height": 48,
-                            "width": 161
+                            "width": 140
                           }
                         ]
                       }

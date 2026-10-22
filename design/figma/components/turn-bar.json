@@ -125,7 +125,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {
@@ -319,7 +320,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {
@@ -513,7 +515,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {
@@ -827,7 +830,8 @@
                 },
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6511",
                 "props": {
@@ -1061,7 +1065,8 @@
                 },
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6511",
                 "props": {
@@ -1295,7 +1300,8 @@
                 },
                 "component": "Zumpo/Tag",
                 "variant": {
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Regular"
                 },
                 "componentId": "24:6511",
                 "props": {
@@ -1420,7 +1426,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -1615,7 +1622,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -1810,7 +1818,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -1993,7 +2002,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {
@@ -2197,7 +2207,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {
@@ -2401,7 +2412,8 @@
                     },
                     "component": "Zumpo/Tag",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "componentId": "24:6511",
                     "props": {

@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "On your own",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Card 12 of 30",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -157,7 +159,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -263,7 +266,8 @@
                                 "hSize": "hug",
                                 "component": "Zumpo/Tag",
                                 "variant": {
-                                  "Tone": "Sand"
+                                  "Tone": "Sand",
+                                  "Size": "Regular"
                                 },
                                 "componentId": "24:6511",
                                 "props": {

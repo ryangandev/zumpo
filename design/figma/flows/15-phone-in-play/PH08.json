@@ -69,6 +69,14 @@
         "h": 306,
         "wSize": "fill",
         "hSize": "fill",
+        "fills": [
+          "$Zumpo · Primitives:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · Primitives:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
         "layout": {
           "mode": "row",
           "gap": "$Zumpo · UI:space/16",
@@ -251,8 +259,8 @@
             "type": "FRAME",
             "id": "166:71445",
             "name": "Side",
-            "w": 474,
-            "h": 282,
+            "w": 472,
+            "h": 280,
             "wSize": "fill",
             "hSize": "fill",
             "clip": true,
@@ -266,7 +274,7 @@
                 "type": "INSTANCE",
                 "id": "166:71309",
                 "name": "Zumpo/Turn bar",
-                "w": 474,
+                "w": 472,
                 "h": 76,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -288,7 +296,7 @@
                     "path": ".",
                     "height": 76,
                     "primaryAxisSizingMode": "FIXED",
-                    "width": 474
+                    "width": 472
                   },
                   {
                     "path": "Countdown",
@@ -305,7 +313,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   }
                 ]
@@ -314,8 +323,8 @@
                 "type": "FRAME",
                 "id": "166:71330",
                 "name": "Seats",
-                "w": 474,
-                "h": 86,
+                "w": 472,
+                "h": 76,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -328,8 +337,8 @@
                     "type": "INSTANCE",
                     "id": "166:71331",
                     "name": "Seat / Maya",
-                    "w": 474,
-                    "h": 46,
+                    "w": 472,
+                    "h": 36,
                     "wSize": "fill",
                     "hSize": "hug",
                     "component": "Zumpo/Gomoku seat",
@@ -347,8 +356,8 @@
                       {
                         "path": ".",
                         "counterAxisSizingMode": "AUTO",
-                        "height": 46,
-                        "width": 474
+                        "height": 36,
+                        "width": 472
                       }
                     ]
                   },
@@ -356,7 +365,7 @@
                     "type": "INSTANCE",
                     "id": "166:71332",
                     "name": "Seat / Computer",
-                    "w": 474,
+                    "w": 472,
                     "h": 34,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -376,7 +385,7 @@
                         "path": ".",
                         "counterAxisSizingMode": "AUTO",
                         "height": 34,
-                        "width": 474
+                        "width": 472
                       }
                     ]
                   }
@@ -386,8 +395,8 @@
                 "type": "FRAME",
                 "id": "166:71446",
                 "name": "Spacer",
-                "w": 474,
-                "h": 38,
+                "w": 472,
+                "h": 46,
                 "wSize": "fill",
                 "hSize": "fill",
                 "clip": true
@@ -396,7 +405,7 @@
                 "type": "FRAME",
                 "id": "166:71333",
                 "name": "Actions",
-                "w": 474,
+                "w": 472,
                 "h": 46,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -410,7 +419,7 @@
                     "type": "INSTANCE",
                     "id": "166:71334",
                     "name": "Action / Place stone",
-                    "w": 232,
+                    "w": 231,
                     "h": 44,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -429,7 +438,7 @@
                         "counterAxisSizingMode": "AUTO",
                         "height": 44,
                         "primaryAxisSizingMode": "FIXED",
-                        "width": 232
+                        "width": 231
                       }
                     ]
                   },
@@ -437,7 +446,7 @@
                     "type": "INSTANCE",
                     "id": "166:71335",
                     "name": "Action / Take back",
-                    "w": 234,
+                    "w": 233,
                     "h": 46,
                     "wSize": "fill",
                     "hSize": "hug",
@@ -458,7 +467,7 @@
                         "counterAxisSizingMode": "AUTO",
                         "height": 46,
                         "primaryAxisSizingMode": "FIXED",
-                        "width": 234
+                        "width": 233
                       }
                     ]
                   }

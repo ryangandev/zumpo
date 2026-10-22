@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Hand 3 of 10",
+          "Phase": "Maya’s room · Hand 3 of 10",
           "Game": "Make 24"
         },
         "overrides": [
@@ -114,7 +114,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {

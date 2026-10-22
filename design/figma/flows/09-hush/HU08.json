@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -151,7 +153,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -544,7 +547,8 @@
                             "hSize": "hug",
                             "component": "Zumpo/Tag",
                             "variant": {
-                              "Tone": "Lime"
+                              "Tone": "Lime",
+                              "Size": "Regular"
                             },
                             "componentId": "24:6521",
                             "props": {
@@ -570,7 +574,8 @@
                             "hSize": "hug",
                             "component": "Zumpo/Tag",
                             "variant": {
-                              "Tone": "Peach"
+                              "Tone": "Peach",
+                              "Size": "Regular"
                             },
                             "componentId": "24:6526",
                             "props": {
@@ -596,7 +601,8 @@
                             "hSize": "hug",
                             "component": "Zumpo/Tag",
                             "variant": {
-                              "Tone": "Peach"
+                              "Tone": "Peach",
+                              "Size": "Regular"
                             },
                             "componentId": "24:6526",
                             "props": {
@@ -622,7 +628,8 @@
                             "hSize": "hug",
                             "component": "Zumpo/Tag",
                             "variant": {
-                              "Tone": "Peach"
+                              "Tone": "Peach",
+                              "Size": "Regular"
                             },
                             "componentId": "24:6526",
                             "props": {

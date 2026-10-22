@@ -43,7 +43,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Code 2 of 3",
+          "Phase": "Maya’s room · Code 2 of 3",
           "Game": "Code Breaker"
         }
       },
@@ -110,7 +110,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -129,16 +130,12 @@
         "id": "163:64700",
         "name": "Table",
         "w": 350,
-        "h": 410,
+        "h": 562,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/20",
-          "pad": [
-            "$Zumpo · UI:space/8",
-            0
-          ],
           "align": "center",
           "strokesIncluded": true
         },
@@ -147,134 +144,134 @@
             "type": "INSTANCE",
             "id": "163:64701",
             "name": "Your board",
-            "w": 100.99,
-            "h": 208,
+            "w": 174.71,
+            "h": 376,
             "wSize": "hug",
             "hSize": "hug",
             "component": "Zumpo/Code board",
             "variant": {
-              "Size": "Compact"
+              "Size": "Small"
             },
-            "componentId": "162:62606",
+            "componentId": "162:62737",
             "overrides": [
               {
-                "path": "Guess 1 / Digits / Digit 1",
+                "path": "Guess 1 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "0",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 1 / Digits / Digit 2",
+                "path": "Guess 1 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "1",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 1 / Digits / Digit 3",
+                "path": "Guess 1 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "2",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 1 / Digits / Digit 4",
+                "path": "Guess 1 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "3",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 2 / Digits / Digit 1",
+                "path": "Guess 2 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "5",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 2 / Digits / Digit 2",
+                "path": "Guess 2 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "2",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 2 / Digits / Digit 3",
+                "path": "Guess 2 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "3",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 2 / Digits / Digit 4",
+                "path": "Guess 2 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "1",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 3 / Digits / Digit 1",
+                "path": "Guess 3 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "6",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 3 / Digits / Digit 2",
+                "path": "Guess 3 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "3",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 3 / Digits / Digit 3",
+                "path": "Guess 3 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "1",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 3 / Digits / Digit 4",
+                "path": "Guess 3 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "0",
                   "State": "Guessed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 4 / Digits / Digit 1",
+                "path": "Guess 4 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "4",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 4 / Digits / Digit 2",
+                "path": "Guess 4 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "3",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
-                "path": "Guess 4 / Digits / Digit 3",
+                "path": "Guess 4 / Digits / Zumpo/Digit tile",
                 "componentProperties": {
                   "Digit": "0",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               }
             ]
@@ -283,8 +280,9 @@
             "type": "INSTANCE",
             "id": "163:64702",
             "name": "Digit pad",
-            "w": 358,
+            "w": 350,
             "h": 166,
+            "wSize": "fill",
             "hSize": "hug",
             "component": "Zumpo/Digit pad",
             "variant": {
@@ -293,15 +291,18 @@
             "componentId": "162:63009",
             "overrides": [
               {
+                "path": ".",
+                "height": 166,
+                "width": 350
+              },
+              {
                 "path": "Row 1 / Key 1",
                 "componentProperties": {
                   "Letter": "1",
                   "Kind": "Letter",
                   "State": "Absent",
                   "Size": "Regular"
-                },
-                "height": 56,
-                "width": 53.67
+                }
               },
               {
                 "path": "Row 1 / Key 3",
@@ -310,9 +311,7 @@
                   "Kind": "Letter",
                   "State": "Correct",
                   "Size": "Regular"
-                },
-                "height": 56,
-                "width": 53.67
+                }
               },
               {
                 "path": "Row 1 / Key 5",
@@ -321,9 +320,7 @@
                   "Kind": "Letter",
                   "State": "Absent",
                   "Size": "Regular"
-                },
-                "height": 56,
-                "width": 53.67
+                }
               }
             ]
           }

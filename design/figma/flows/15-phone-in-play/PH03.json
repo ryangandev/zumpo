@@ -43,7 +43,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "9 of 27 cards",
+          "Phase": "Maya’s room · 9 of 27 cards",
           "Game": "Snap"
         }
       },
@@ -111,7 +111,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -215,7 +216,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {
@@ -332,7 +334,8 @@
                         "hSize": "hug",
                         "component": "Zumpo/Tag",
                         "variant": {
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         },
                         "componentId": "24:6511",
                         "props": {

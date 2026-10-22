@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "8 of 18 pairs",
+          "Phase": "Maya’s room · 8 of 18 pairs",
           "Game": "Pairs"
         }
       },
@@ -102,7 +102,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {

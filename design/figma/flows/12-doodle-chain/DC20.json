@@ -14,7 +14,7 @@
     "x": 5320,
     "y": 4082,
     "w": 390,
-    "h": 1226,
+    "h": 1413,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Game over",
+          "Phase": "Maya’s room · Game over",
           "Game": "Doodle Chain"
         },
         "overrides": [
@@ -131,7 +131,7 @@
         "id": "162:103662",
         "name": "Album panel",
         "w": 350,
-        "h": 1002,
+        "h": 1189,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -155,7 +155,7 @@
             "id": "162:103663",
             "name": "Result",
             "w": 316,
-            "h": 74,
+            "h": 56,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -184,10 +184,122 @@
                 "id": "162:103665",
                 "name": "Summary",
                 "w": 316,
-                "h": 36,
+                "h": 18,
                 "wSize": "fill",
                 "hSize": "hug",
-                "text": "Leo’s hamburger is the crowd favourite, with 3 hearts. Waiting for Maya to start another game.",
+                "text": "Leo’s hamburger is the crowd favourite, with 3 hearts.",
+                "textStyle": "Zumpo/Small",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "171:77205",
+            "name": "Actions",
+            "w": 316,
+            "h": 189,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/16",
+              "wrap": true,
+              "crossGap": "$Zumpo · UI:space/16",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "TEXT",
+                "id": "171:77206",
+                "name": "Next game",
+                "w": 316,
+                "h": 25,
+                "hSize": "hug",
+                "text": "Next game: 60s to draw",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "TEXT",
+                "id": "171:77207",
+                "name": "How it starts",
+                "w": 316,
+                "h": 50,
+                "hSize": "hug",
+                "text": "The next game starts once everyone is ready, or when Maya starts it.",
+                "textStyle": "Zumpo/Body",
+                "fills": [
+                  "$Zumpo · UI:color/muted"
+                ],
+                "autoResize": "height"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "171:77208",
+                "name": "Action / Ready",
+                "w": 111,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Primary",
+                  "State": "Default"
+                },
+                "componentId": "4:15",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=check",
+                  "Show icon": true,
+                  "Label": "Ready"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 111
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "171:77209",
+                "name": "Action / Watch instead",
+                "w": 140,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Quiet",
+                  "State": "Default"
+                },
+                "componentId": "4:21",
+                "props": {
+                  "Label": "Watch instead"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 140
+                  }
+                ]
+              },
+              {
+                "type": "TEXT",
+                "id": "171:77219",
+                "name": "Hint",
+                "w": 316,
+                "h": 18,
+                "hSize": "hug",
+                "text": "The album stays until the next game starts.",
                 "textStyle": "Zumpo/Small",
                 "fills": [
                   "$Zumpo · UI:color/muted"

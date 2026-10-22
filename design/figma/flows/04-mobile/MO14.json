@@ -46,7 +46,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Round 19"
+          "Phase": "Maya’s room · Round 19"
         }
       },
       {
@@ -101,7 +101,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Large · 30 × 16",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {

@@ -43,7 +43,7 @@
         },
         "componentId": "39:19277",
         "props": {
-          "Phase": "Word 2 of 3",
+          "Phase": "Maya’s room · Word 2 of 3",
           "Game": "Daily Word"
         },
         "overrides": [
@@ -124,7 +124,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Small · 9 × 9",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -143,16 +144,12 @@
         "id": "163:64914",
         "name": "Table",
         "w": 320,
-        "h": 236.95,
+        "h": 358,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
           "mode": "column",
           "gap": "$Zumpo · UI:space/20",
-          "pad": [
-            "$Zumpo · UI:space/8",
-            0
-          ],
           "align": "center",
           "strokesIncluded": true
         },
@@ -161,22 +158,22 @@
             "type": "INSTANCE",
             "id": "163:64915",
             "name": "Your board",
-            "w": 49.76,
-            "h": 60,
+            "w": 163.59,
+            "h": 197.05,
             "wSize": "hug",
             "hSize": "hug",
             "component": "Zumpo/Word board",
             "variant": {
-              "Size": "Compact"
+              "Size": "Small"
             },
-            "componentId": "44:62975",
+            "componentId": "44:63012",
             "overrides": [
               {
                 "path": "Row 1 / Tile 1",
                 "componentProperties": {
                   "Letter": "C",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -184,7 +181,7 @@
                 "componentProperties": {
                   "Letter": "R",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -192,7 +189,7 @@
                 "componentProperties": {
                   "Letter": "A",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -200,7 +197,7 @@
                 "componentProperties": {
                   "Letter": "N",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -208,7 +205,7 @@
                 "componentProperties": {
                   "Letter": "E",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -216,7 +213,7 @@
                 "componentProperties": {
                   "Letter": "S",
                   "State": "Present",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -224,7 +221,7 @@
                 "componentProperties": {
                   "Letter": "O",
                   "State": "Present",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -232,7 +229,7 @@
                 "componentProperties": {
                   "Letter": "U",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -240,7 +237,7 @@
                 "componentProperties": {
                   "Letter": "T",
                   "State": "Present",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -248,7 +245,7 @@
                 "componentProperties": {
                   "Letter": "H",
                   "State": "Present",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -256,7 +253,7 @@
                 "componentProperties": {
                   "Letter": "M",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -264,7 +261,7 @@
                 "componentProperties": {
                   "Letter": "O",
                   "State": "Present",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -272,7 +269,7 @@
                 "componentProperties": {
                   "Letter": "I",
                   "State": "Absent",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -280,7 +277,7 @@
                 "componentProperties": {
                   "Letter": "S",
                   "State": "Correct",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -288,7 +285,7 @@
                 "componentProperties": {
                   "Letter": "T",
                   "State": "Correct",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -296,7 +293,7 @@
                 "componentProperties": {
                   "Letter": "G",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -304,7 +301,7 @@
                 "componentProperties": {
                   "Letter": "H",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               },
               {
@@ -312,7 +309,7 @@
                 "componentProperties": {
                   "Letter": "O",
                   "State": "Typed",
-                  "Size": "Compact"
+                  "Size": "Small"
                 }
               }
             ]
@@ -323,7 +320,7 @@
             "name": "Keyboard",
             "w": 320,
             "h": 140.95,
-            "wSize": "hug",
+            "wSize": "fill",
             "hSize": "hug",
             "component": "Zumpo/Keyboard",
             "variant": {
@@ -331,6 +328,10 @@
             },
             "componentId": "44:62289",
             "overrides": [
+              {
+                "path": ".",
+                "counterAxisSizingMode": "FIXED"
+              },
               {
                 "path": "Row 1 / Key / E",
                 "componentProperties": {

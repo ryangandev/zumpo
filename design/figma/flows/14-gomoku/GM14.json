@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Show icon": false,
               "Icon": "24:5010",
               "Label": "Game over",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             }
           },
           {
@@ -151,7 +153,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -474,7 +477,7 @@
                             "id": "162:93986",
                             "name": "Actions",
                             "w": 306,
-                            "h": 70,
+                            "h": 48,
                             "wSize": "fill",
                             "hSize": "hug",
                             "layout": {
@@ -488,36 +491,29 @@
                             "children": [
                               {
                                 "type": "INSTANCE",
-                                "id": "162:93987",
-                                "name": "Zumpo/Icon",
-                                "w": 20,
-                                "h": 20,
-                                "component": "Zumpo/Icon",
+                                "id": "171:77225",
+                                "name": "Action / Invite friends",
+                                "w": 159,
+                                "h": 48,
+                                "wSize": "hug",
+                                "component": "Zumpo/Button",
                                 "variant": {
-                                  "Glyph": "pending"
+                                  "Style": "Primary",
+                                  "State": "Default"
                                 },
-                                "componentId": "24:5002",
+                                "componentId": "4:15",
+                                "props": {
+                                  "Icon": "Zumpo/Icon / Glyph=link",
+                                  "Show icon": true,
+                                  "Label": "Invite friends"
+                                },
                                 "overrides": [
                                   {
-                                    "path": "pending",
-                                    "strokes": [
-                                      "$Zumpo · UI:color/muted"
-                                    ]
+                                    "path": ".",
+                                    "height": 48,
+                                    "width": 159
                                   }
                                 ]
-                              },
-                              {
-                                "type": "TEXT",
-                                "id": "162:93988",
-                                "w": 306,
-                                "h": 50,
-                                "hSize": "hug",
-                                "text": "Waiting for a second player. Sam or Ryan can take the seat.",
-                                "textStyle": "Zumpo/Body",
-                                "fills": [
-                                  "$Zumpo · UI:color/muted"
-                                ],
-                                "autoResize": "height"
                               }
                             ]
                           }

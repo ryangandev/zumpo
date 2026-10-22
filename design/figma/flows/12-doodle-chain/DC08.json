@@ -55,7 +55,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Maya’s room",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           },
           {
@@ -64,7 +65,8 @@
               "Icon": "24:5010",
               "Show icon": false,
               "Label": "Step 3 of 4",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             }
           },
           {
@@ -149,7 +151,8 @@
                       "Icon": "24:5010",
                       "Show icon": false,
                       "Label": "Small · 9 × 9",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     },
                     "visible": false
                   },

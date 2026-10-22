@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-22T05:43:00.631Z",
+  "exportedAt": "2026-10-22T06:46:04.936Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -17,9 +17,9 @@
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
-    "seconds": 12,
-    "nodes": 14878,
-    "instances": 7826,
+    "seconds": 11,
+    "nodes": 14925,
+    "instances": 7848,
     "grids": 90,
     "gridCells": 2884
   },
@@ -471,7 +471,7 @@
       "name": "Zumpo/Tag",
       "id": "24:6541",
       "file": "components/tag.json",
-      "variants": 6
+      "variants": 12
     },
     {
       "name": "Zumpo/Toggle chip",
@@ -1702,7 +1702,7 @@
           "id": "40:43542",
           "size": [
             1440,
-            920
+            1019
           ],
           "file": "flows/05-make-24/T09.json",
           "isFlow": true
@@ -2483,7 +2483,7 @@
           "id": "79:101968",
           "size": [
             1440,
-            1094
+            1168
           ],
           "file": "flows/10-daily-word/DW10.json",
           "isFlow": true
@@ -2571,7 +2571,7 @@
           "id": "97:116186",
           "size": [
             390,
-            1595
+            1717
           ],
           "file": "flows/10-daily-word/DW16.json",
           "isFlow": true
@@ -2911,7 +2911,7 @@
           "id": "162:96212",
           "size": [
             1440,
-            1368
+            1471
           ],
           "file": "flows/12-doodle-chain/DC14.json",
           "isFlow": true
@@ -2977,7 +2977,7 @@
           "id": "162:103558",
           "size": [
             390,
-            1226
+            1413
           ],
           "file": "flows/12-doodle-chain/DC20.json",
           "isFlow": true
@@ -3139,7 +3139,7 @@
           "id": "162:105310",
           "size": [
             1440,
-            1278
+            1352
           ],
           "file": "flows/13-code-breaker/CB13.json",
           "isFlow": true
@@ -3227,7 +3227,7 @@
           "id": "162:110183",
           "size": [
             390,
-            1987
+            2109
           ],
           "file": "flows/13-code-breaker/CB21.json",
           "isFlow": true
@@ -3424,7 +3424,7 @@
           "id": "162:101867",
           "size": [
             390,
-            906
+            760
           ],
           "file": "flows/14-gomoku/GM17.json",
           "isFlow": true
@@ -3435,7 +3435,7 @@
           "id": "162:102025",
           "size": [
             390,
-            916
+            818
           ],
           "file": "flows/14-gomoku/GM18.json",
           "isFlow": true
@@ -3446,7 +3446,7 @@
           "id": "162:102362",
           "size": [
             390,
-            856
+            818
           ],
           "file": "flows/14-gomoku/GM19.json",
           "isFlow": true
