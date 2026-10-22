@@ -10,6 +10,8 @@ export interface MobileTab<View extends string> {
   panel: ReactNode;
   /** Lines that arrived while the tab was out of sight: Chat's unread mark. */
   unread?: number;
+  /** Board's mark: it is your turn, while another tab is open. */
+  turn?: boolean;
 }
 
 /** The mark says 9+ past nine: past that a count is only "a lot". */
@@ -30,6 +32,7 @@ export function MobileTabs<View extends string>({
   className,
 }: MobileTabsProps<View>) {
   const m = useMessages();
+  const turn = tabs.find((tab) => tab.turn);
   return (
     <Tabs.Root
       className={styles.root}
@@ -43,10 +46,19 @@ export function MobileTabs<View extends string>({
             value={tab.value}
             className={styles.tab}
             aria-label={
-              tab.unread ? m.ui.chat.unread(tab.label, tab.unread) : undefined
+              tab.turn
+                ? m.ui.turnTab(tab.label)
+                : tab.unread
+                  ? m.ui.chat.unread(tab.label, tab.unread)
+                  : undefined
             }
           >
             {tab.label}
+            {tab.turn && (
+              <span className={styles.turn} aria-hidden>
+                {m.ui.yourTurn}
+              </span>
+            )}
             {tab.unread ? (
               <span className={styles.unread} aria-hidden>
                 {tab.unread > MOST ? `${MOST}+` : tab.unread}
@@ -55,6 +67,11 @@ export function MobileTabs<View extends string>({
           </Tabs.Tab>
         ))}
       </Tabs.List>
+      {/* Said once as the mark appears, and again only on the next turn: the
+          words stay put while it is your go and go when the mark does. */}
+      <span className={styles.announce} role="status">
+        {turn ? m.ui.turnTab(turn.label) : ''}
+      </span>
       {tabs.map((tab) => (
         <Tabs.Panel key={tab.value} value={tab.value} className={styles.panel}>
           {tab.panel}

@@ -125,8 +125,11 @@ export const doodleChain = {
   describesNext: (name: string) => `${name} describes it next.`,
   drawsYoursNext: (name: string) => `${name} draws your words next.`,
   lastStep: 'Yours is the last step of this chain.',
-  waitingFor: (names: string) =>
-    `Waiting for ${names}. The step ends when everyone is done.`,
+  /**
+   * The turn bar's meta once the viewer is done: one line on a phone, since
+   * the notice under the sheet names who the step still waits for.
+   */
+  endsWhenAllDone: 'The step ends when everyone is done.',
   backIn: (step: number) => `You’re back in step ${step}.`,
   revealNext: 'The reveal comes next.',
   goesOn: {

@@ -136,8 +136,13 @@
     'main main main main clock';
 }
 
-.phone .label,
-.phone .meta {
+/* A bar kept to its compact row on a phone (stackOnPhone false) keeps what
+   to do and the meta on one line each, ending in an ellipsis, so the bar,
+   and the board under it, keep their height from turn to turn; its words
+   are written to fit. Kept below .narrow's own rules, so a stacked bar's
+   label keeps its one scaled line. */
+:where(.phone:not(.oneRow)) .label,
+:where(.phone:not(.oneRow)) .meta {
   white-space: normal;
 }
 

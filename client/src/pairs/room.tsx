@@ -6,7 +6,6 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
-import { useTurnTitle } from '../room/use-turn-title';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { BoardPanel, PairsGrid } from './board';
@@ -23,6 +22,7 @@ export function PairsRoom() {
   const ended = !inGame ? state.lastGame : null;
   return (
     <RoomLayout
+      yourTurn={inGame && flipping(room)}
       phase={
         inGame
           ? {
@@ -44,6 +44,12 @@ export function PairsRoom() {
     />
   );
 }
+
+/** Whether it is this player's turn to flip, and the cards take it. */
+const flipping = ({ state, playerId, reconnecting }: Room) =>
+  state.phase === 'flipping' &&
+  state.turnPlayerId === playerId &&
+  !reconnecting;
 
 const cardsOf = (cards: readonly PairsCardView[]): PairsCardState[] =>
   cards.map((card) =>
@@ -89,14 +95,9 @@ function BetweenGames({ room }: { room: Room }) {
 /** PR05, PR06, PR10: whose turn it is, and the board. */
 function Turn({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, receivedAt, reconnecting, socket, playerId } = room;
+  const { state, receivedAt, reconnecting, socket } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   const phone = useMediaQuery(PHONE);
-  const flipping =
-    state.phase === 'flipping' &&
-    state.turnPlayerId === playerId &&
-    !reconnecting;
-  useTurnTitle(flipping);
   return (
     <>
       <TurnBar {...turnBar(room, seconds, phone, m)} />
@@ -104,7 +105,7 @@ function Turn({ room }: { room: Room }) {
         <PairsGrid
           cards={cardsOf(state.cards)}
           onFlip={
-            flipping
+            flipping(room)
               ? (index) => socket.emit('pairs:flip', state.roomId, index)
               : undefined
           }

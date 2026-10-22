@@ -11,6 +11,8 @@ export const ui: typeof en = {
     unread: (tab, count) => `${tab}，${count} 条新消息`,
   },
   you: '你',
+  yourTurn: '轮到你',
+  turnTab: (tab) => `${tab}，轮到你了`,
   youName: (name) => `${name}（你）`,
   host: '房主',
   players: '玩家',
