@@ -194,6 +194,7 @@ Minesweeper has no other events of its own to send: the snapshot has it all.
 
 When a game ends the final board and its last round stay up, for the results screen and for a refresh.
 The results screen shows the final board with the standings, which already count the last round, so its results are not repeated: under the board on a desktop, over it on a phone.
+On a desktop the results or the standings under the board have room for two rows, left free from the first round so the board never moves; a longer list scrolls inside it.
 `lastGame` holds the standings best first, the board size, how many rounds were played (a round still open for picks when the game stopped does not count), and whether it ended early.
 
 ## Configuration

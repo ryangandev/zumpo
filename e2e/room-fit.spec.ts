@@ -15,7 +15,12 @@ import { readyToTap } from './play/snap';
  */
 
 /** 18 characters, the most a name may have. */
-const LONG = ['Bartholomew Wilson', 'Maximilian Fischer'] as const;
+const LONG = [
+  'Bartholomew Wilson',
+  'Maximilian Fischer',
+  'Constantine Ramos',
+  'Alexandria Brooks',
+] as const;
 
 /**
  * That no page scrolls, once settled, in English and in Chinese; it leaves
@@ -47,15 +52,15 @@ async function expectFits(pages: readonly Page[], what: string) {
 async function startRoom(
   game: GameType,
   player: (name: string) => Promise<Page>,
-  seats = 2,
+  seats: 2 | 3 | 4 = 2,
 ): Promise<Page[]> {
   const pages = [await player(LONG[0]), await player(LONG[1])];
   const link = await createRoom(pages[0]!, game);
   await joinRoom(pages[1]!, link);
-  if (seats === 3) {
-    const third = await player('Constantine Ramos');
-    await joinRoom(third, link);
-    pages.push(third);
+  for (const name of LONG.slice(2, seats)) {
+    const joined = await player(name);
+    await joinRoom(joined, link);
+    pages.push(joined);
   }
   await expect(
     pages[0]!.getByText(LONG[1], { exact: true }).first(),
@@ -239,6 +244,77 @@ test('a Minesweeper board keeps its size as a round is revealed under it', async
     await expect.poll(() => boxOf(page, grid)).toEqual(before[index]);
   }
 });
+
+const hiddenCell = (page: Page) =>
+  page.getByRole('gridcell', { name: /: hidden$/, disabled: false });
+
+/**
+ * A round's results and a game's standings come under the board, and the
+ * page still ends inside the window, with the board where it was in play,
+ * however many players the results list.
+ */
+for (const seats of [2, 4] as const) {
+  test(`a Minesweeper room of ${seats} fits a 1440 × 900 window from a round's reveal to the results`, async ({
+    player,
+  }) => {
+    test.setTimeout(180_000);
+    const pages = await startRoom('minesweeper', player, seats);
+    for (const page of pages) {
+      await expect(
+        page.getByRole('region', { name: 'Turn' }).getByText('Pick a cell'),
+      ).toBeVisible();
+    }
+    await expectFits(pages, 'a round being picked');
+    const before = await Promise.all(
+      pages.map((page) => boxOf(page, '[role="grid"]')),
+    );
+    const sameBoard = async (what: string) => {
+      for (const [index, page] of pages.entries()) {
+        await expect
+          .poll(() => boxOf(page, '[role="grid"]'), {
+            message: `the board moved ${what}`,
+          })
+          .toEqual(before[index]);
+      }
+    };
+
+    // Everyone picks a cell of their own, so every row of the results has a
+    // pick of its own.
+    for (const [index, page] of pages.entries()) {
+      await hiddenCell(page).nth(index).click();
+    }
+    for (const page of pages) {
+      await expect(
+        page.getByRole('heading', { name: 'Round 1 results' }),
+      ).toBeVisible();
+    }
+    await expectFits(pages, 'a round revealed');
+    await sameBoard('as the first round was revealed');
+    if (seats > 2) return;
+
+    // Played to the end, the standings take the results' place.
+    const over = pages[0]!
+      .getByRole('banner')
+      .getByText('Game over', { exact: true });
+    while (!(await over.isVisible())) {
+      const picking = pages[0]!
+        .getByRole('region', { name: 'Turn' })
+        .getByText('Pick a cell');
+      await expect(picking.or(over).first()).toBeVisible();
+      if (await over.isVisible()) break;
+      await hiddenCell(pages[0]!).first().click();
+      await hiddenCell(pages[1]!).last().click();
+      await expect(picking).toBeHidden();
+    }
+    for (const page of pages) {
+      await expect(
+        page.getByRole('heading', { name: 'Standings' }),
+      ).toBeVisible();
+    }
+    await expectFits(pages, 'the results');
+    await sameBoard('as the game ended');
+  });
+}
 
 test('a Daily Word board keeps its size as the other player guesses', async ({
   player,
