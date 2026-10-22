@@ -70,3 +70,40 @@
   font: var(--zumpo-text-small);
   letter-spacing: var(--zumpo-text-small-tracking);
 }
+
+.heldCards {
+  flex-wrap: nowrap;
+}
+
+/* A player's cards, one row, as a hand is (HandRow), scaled down to the
+   room left beside the name when there are more than fit. */
+.heldRow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* On a phone the cards go under the name, beside the avatar, so a row of
+   five or six still reads at most a third smaller. */
+@media (max-width: 640px) {
+  .holder {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--zumpo-space-12);
+    row-gap: var(--zumpo-space-4);
+  }
+
+  .holder > :first-child {
+    grid-row: span 2;
+    align-self: center;
+  }
+
+  .holder .name {
+    width: auto;
+  }
+}
+
+/* The room of a card another player held more of, so every row of held
+   cards shares one scale. */
+.room {
+  visibility: hidden;
+}

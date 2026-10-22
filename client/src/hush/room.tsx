@@ -14,6 +14,7 @@ import {
 } from '../ui';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
+import { Fit } from '../shell/fit';
 import { initialsOf, toneOf } from '../players/avatar';
 import { EndedEarlyPanel, ResultsFrame, WaitingPanel } from '../room/panels';
 import { listNames, rankedPlayers, type Seat } from '../room/players';
@@ -165,6 +166,7 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
   const { startGame, starting } = room;
   const lostOn = summary.history.at(-1)?.level ?? summary.levelsCleared + 1;
   const title = summary.won ? m.hush.won(summary.levels) : m.hush.lost(lostOn);
+  const mostHeld = Math.max(0, ...summary.held.map((h) => h.cards.length));
   const detail = summary.won
     ? m.hush.wonDetail(summary.lives)
     : m.hush.lostDetail(summary.levelsCleared, summary.levels);
@@ -232,16 +234,32 @@ function Results({ room, summary }: { room: Room; summary: HushGameSummary }) {
                   />
                   <span className={styles.name}>{username}</span>
                   {cards.length > 0 ? (
-                    <ol
-                      className={styles.heldCards}
-                      aria-label={m.hush.playerHeld(username)}
-                    >
-                      {cards.map((card) => (
-                        <li key={card}>
-                          <HushCard value={card} size="small" />
-                        </li>
-                      ))}
-                    </ol>
+                    // One row, as a hand is, scaled down when it is wider;
+                    // every row as wide as the longest, so all share a scale.
+                    <Fit align="start" className={styles.heldRow}>
+                      <ol
+                        className={styles.heldCards}
+                        aria-label={m.hush.playerHeld(username)}
+                      >
+                        {cards.map((card) => (
+                          <li key={card}>
+                            <HushCard value={card} size="small" />
+                          </li>
+                        ))}
+                        {Array.from(
+                          { length: mostHeld - cards.length },
+                          (_, index) => (
+                            <li
+                              key={`room-${index}`}
+                              className={styles.room}
+                              aria-hidden
+                            >
+                              <HushCard value={0} size="small" />
+                            </li>
+                          ),
+                        )}
+                      </ol>
+                    </Fit>
                   ) : (
                     <span className={styles.nothing}>{m.hush.nothingLeft}</span>
                   )}
@@ -263,7 +281,7 @@ function Level({ room }: { room: Room }) {
   return (
     <>
       <TurnBar {...turnBar(room, seconds, m)} hintRowBelow={873} />
-      <TablePanel>
+      <TablePanel fitHeight>
         <TableHead {...tableHead(state, m)} />
         <Pile
           pile={state.pile}
@@ -364,10 +382,13 @@ function Hand({ room }: { room: Room }) {
         />
       );
     case 'cleared':
+      // Ready comes back with the next level, where it was.
       return (
         <HandRow
           label={m.hush.nextUp}
           message={m.hush.nextLevel(state.level + 1)}
+          action={<Button disabled>{m.hush.readyButton}</Button>}
+          held
         />
       );
     default:
@@ -375,7 +396,15 @@ function Hand({ room }: { room: Room }) {
   }
 
   if (hand.length === 0) {
-    return <HandRow label={m.hush.hand} message={m.hush.handEmpty} />;
+    // Play keeps its room out of sight, so the table does not move.
+    return (
+      <HandRow
+        label={m.hush.hand}
+        message={m.hush.handEmpty}
+        action={<Button disabled>{m.hush.readyButton}</Button>}
+        held
+      />
+    );
   }
   // Play is held, not taken away, while it cannot be pressed: the cards
   // above it and the button stay where the thumb found them.
@@ -393,6 +422,7 @@ function Hand({ room }: { room: Room }) {
       <HandRow
         label={m.hush.hand}
         cards={hand}
+        dealt={state.level}
         action={play}
         status={m.hush.onlyLowest}
       />
@@ -405,6 +435,7 @@ function Hand({ room }: { room: Room }) {
     <HandRow
       label={m.hush.hand}
       cards={hand}
+      dealt={state.level}
       action={play}
       held
       status={
