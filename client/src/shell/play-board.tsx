@@ -46,6 +46,9 @@ export interface PlayBoardProps {
  *
  * On a wider screen the page scrolls as before, and the board is only scaled
  * down to the width it is given, as `Fit` does.
+ *
+ * The board's scale is also its `--play-scale`, for a line of text on it that
+ * keeps its own size, `zoom: calc(1 / var(--play-scale, 1))`.
  */
 export function PlayBoard({
   children,
@@ -66,6 +69,7 @@ export function PlayBoard({
     if (!outer || !inner) return;
     const fit = () => {
       inner.style.removeProperty('zoom');
+      inner.style.removeProperty('--play-scale');
       const width = outer.clientWidth;
       const height = outer.clientHeight;
       const neededWidth = fitWidth ? extentOf(inner) : width;
@@ -74,7 +78,10 @@ export function PlayBoard({
       const byWidth = width / neededWidth;
       const byHeight = inPlay ? height / neededHeight : 1;
       const scale = Math.min(1, byWidth, Math.max(byHeight, min));
-      if (scale < 1) inner.style.setProperty('zoom', String(scale));
+      if (scale < 1) {
+        inner.style.setProperty('zoom', String(scale));
+        inner.style.setProperty('--play-scale', String(scale));
+      }
       const scrolls = byHeight < min;
       const began = scrolls && !outer.hasAttribute('data-scroll');
       outer.toggleAttribute('data-scroll', scrolls);
