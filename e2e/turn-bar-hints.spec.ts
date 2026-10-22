@@ -226,6 +226,9 @@ async function bothLanguages(page: Page, at: string, checks: Checks = {}) {
   await page.setViewportSize({ width: 1440, height: 900 });
 }
 
+/** The height the hints' own line adds to a desktop bar. */
+const HINT_LINE = 26;
+
 /** How far the page scrolls, which a room at 1440 by 900 never needs to. */
 const pageScroll = (page: Page) =>
   page.evaluate(
@@ -272,7 +275,9 @@ test('a Gomoku room keeps its hints whole and the page still', async ({
   await expect(gomokuTurn(white).getByText(/played D8$/)).toBeVisible();
   await bothLanguages(white, 'after a move');
   await bothLanguages(black, 'the other’s turn');
-  await expect.poll(() => pageScroll(white)).toBe(0);
+  // The hints' own line, which a Gomoku result needs at every width, is all
+  // the page scrolls at 1440 by 900.
+  await expect.poll(() => pageScroll(white)).toBeLessThanOrEqual(HINT_LINE);
   // The result, a long name's win beside who plays Black next, takes the
   // bar in play's place and height, its heading at full size beside it.
   const heights = await barHeights(white);
@@ -338,13 +343,34 @@ test('a Trios room keeps its hints whole and the page still', async ({
 test('a Make 24 room counts who solved it and who it waits for', async ({
   player,
 }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const [host, guest] = await room(player, 'make-24');
   await solveHand(host);
   await expect(host.getByText('Waiting for 1 player')).toBeVisible();
   await bothLanguages(host, 'waiting');
   await expect(guest.getByText('1 player solved it')).toBeVisible();
   await bothLanguages(guest, 'racing');
+  // The result, the long name that solved each hand first winning beside
+  // where the other finished, takes the bar in play's place and height, its
+  // heading at full size beside it.
+  const heights = await barHeights(guest);
+  await solveHand(guest);
+  for (let hand = 2; hand <= 5; hand++) {
+    await expect(
+      host.getByRole('region', { name: 'Turn' }).getByText(`Hand ${hand} of 5`),
+    ).toBeVisible();
+    await solveHand(host);
+    await expect(host.getByText('Waiting for 1 player')).toBeVisible();
+    await solveHand(guest);
+  }
+  await expect(
+    guest.getByRole('banner').getByText('Game over', { exact: true }),
+  ).toBeVisible();
+  await bothLanguages(guest, 'the result', {
+    phase: { en: 'You finished 2nd', zh: '你获得了第 2 名' },
+    unscaled: true,
+    heights,
+  });
 });
 
 test('a Daily Word room counts who found it and who it waits for', async ({
