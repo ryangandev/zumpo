@@ -8,6 +8,7 @@ import {
   pickMiss,
   pickTrio,
   readyToFind,
+  tableOf,
   turnOf as triosTurn,
 } from './play/trios';
 
@@ -190,13 +191,19 @@ test('a Trios room keeps its hints whole and the page still', async ({
   // Its widest hint, beside a long name finding a trio, lasts the 2 s the
   // trio stays on the table: the bar is at the game's width when it comes.
   await barAt(guest, (await read(guest)).below);
-  await pickTrio(host);
+  const taken = await pickTrio(host);
   await expect(
     triosTurn(guest).getByText(`${LONG[0]} found a trio`),
   ).toBeVisible();
   expect((await read(guest)).cut, 'a trio taken').toEqual([]);
   await guest.setViewportSize({ width: 1440, height: 900 });
-  await expect(triosTurn(host).getByText('Find a trio')).toBeVisible();
+  // New cards are dealt into the trio's places before the next pick counts.
+  await expect
+    .poll(async () =>
+      (await tableOf(host)).some((card) => taken.includes(card)),
+    )
+    .toBe(false);
+  await readyToFind(host);
   await pickMiss(host);
   await expect(triosTurn(host).getByText('Not a trio')).toBeVisible();
   await hintsWhole(host, 'locked out');
