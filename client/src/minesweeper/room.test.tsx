@@ -128,7 +128,7 @@ describe('a Minesweeper room', () => {
     expect(
       screen.getByText('Locked in', { selector: '*:not(li *)' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('Waiting for the others')).toBeInTheDocument();
+    expect(screen.getByText('Waiting for everyone else')).toBeInTheDocument();
     expect(
       screen.getByRole('gridcell', { name: 'Row 1, column 1: hidden' }),
     ).toHaveAttribute('aria-disabled', 'true');
@@ -163,6 +163,27 @@ describe('a Minesweeper room', () => {
     expect(
       screen.getByText('10 mines · your pick locks when you click'),
     ).toBeInTheDocument();
+  });
+
+  it('counts more than one player locked in, in English and Chinese', async () => {
+    const four = {
+      ...picking,
+      playerList: {
+        ...picking.playerList,
+        p3: { username: 'Leo', points: 0, isConnected: true },
+        p4: { username: 'Ana', points: 0, isConnected: true },
+      },
+      lockedIn: ['p2', 'p3'],
+    };
+    const { unmount } = await renderSeated(four);
+    expect(screen.getByText('2 players are locked in')).toBeInTheDocument();
+    unmount();
+
+    const fake = new FakeSocket();
+    fake.answer('room:sync', () => ({ ok: true as const }));
+    await renderApp(roomPath('minesweeper', 'r1'), { locale: 'zh', fake });
+    act(() => fake.serverEmits('room:state', four));
+    expect(screen.getByText('已有 2 人选好')).toBeInTheDocument();
   });
 
   it('shows what each pick was worth', async () => {
