@@ -2873,6 +2873,8 @@ test('a Doodle Chain game', async ({ player }) => {
   await revealNext(maya, '3 of 4 shown');
   await shot(maya, 'DC12');
   await revealNext(maya, '4 of 4 shown');
+  // Ryan's page has the whole chain too before his hearts are counted.
+  await expect(chainTurnOf(ryan).getByText('4 of 4 shown')).toBeVisible();
   const hearts = ryan.getByRole('button', {
     name: 'Give a heart, 0 hearts so far',
   });
