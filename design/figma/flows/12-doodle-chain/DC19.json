@@ -232,14 +232,18 @@
                       "Layout": "Phone"
                     },
                     "componentId": "162:66111",
-                    "props": {
-                      "Heart": false
-                    },
                     "overrides": [
                       {
                         "path": ".",
                         "height": 108,
                         "width": 300
+                      },
+                      {
+                        "path": "Body / Head / Heart",
+                        "componentProperties": {
+                          "Count": "0",
+                          "State": "Count"
+                        }
                       }
                     ]
                   },
