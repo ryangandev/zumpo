@@ -112,7 +112,7 @@
             "id": "162:92279",
             "name": "Board stage",
             "w": 944,
-            "h": 264,
+            "h": 302,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -125,8 +125,9 @@
                 "id": "162:92280",
                 "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 92,
+                "h": 130,
                 "wSize": "fill",
+                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Status",
@@ -134,15 +135,16 @@
                 },
                 "componentId": "166:75802",
                 "props": {
+                  "Category": false,
                   "Meta": "The chains stay secret until the reveal.",
                   "Main": "Everybody is drawing",
-                  "Category": false,
                   "Label": "Step 2 of 4"
                 },
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 92,
+                    "height": 130,
+                    "primaryAxisSizingMode": "AUTO",
                     "width": 944
                   },
                   {
@@ -153,8 +155,7 @@
                       "Label": "Small · 9 × 9",
                       "Tone": "Sand",
                       "Size": "Regular"
-                    },
-                    "visible": false
+                    }
                   },
                   {
                     "path": "Top / Countdown",

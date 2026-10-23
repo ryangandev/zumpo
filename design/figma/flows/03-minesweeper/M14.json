@@ -1826,8 +1826,8 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
-                      "Name": "System",
                       "Alert icon": "24:5071",
+                      "Name": "System",
                       "Message": "Round 9: Ryan hit a mine (−70).",
                       "Kind": "System"
                     }

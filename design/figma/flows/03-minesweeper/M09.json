@@ -1556,8 +1556,8 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
-                      "Name": "System",
                       "Alert icon": "24:5071",
+                      "Name": "System",
                       "Message": "Round 2: Maya hit a mine (−109).",
                       "Kind": "System"
                     }
@@ -1574,8 +1574,8 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
-                      "Name": "System",
                       "Alert icon": "24:5071",
+                      "Name": "System",
                       "Message": "Round 4: Ryan hit a mine (−82).",
                       "Kind": "System"
                     }

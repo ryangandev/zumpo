@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-22T16:35:24.965Z",
+  "exportedAt": "2026-10-23T15:43:04.995Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -10,14 +10,14 @@
     }
   },
   "options": {
-    "previews": false
+    "previews": true
   },
   "counts": {
     "flows": 257,
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
-    "seconds": 11,
+    "seconds": 39,
     "nodes": 14893,
     "instances": 7858,
     "grids": 90,
@@ -63,462 +63,539 @@
       "name": "Old/Mine cell (replaced)",
       "id": "4:52",
       "file": "components/old-mine-cell-replaced.json",
+      "preview": "previews/components/old-mine-cell-replaced.png",
       "variants": 4
     },
     {
       "name": "Sample / Chain drawing",
       "id": "162:65802",
       "file": "components/sample-chain-drawing.json",
+      "preview": "previews/components/sample-chain-drawing.png",
       "variants": 2
     },
     {
       "name": "Sample / Turtle drawing",
       "id": "27:17578",
       "file": "components/sample-turtle-drawing.json",
+      "preview": "previews/components/sample-turtle-drawing.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Avatar",
       "id": "26:10576",
       "file": "components/avatar.json",
+      "preview": "previews/components/avatar.png",
       "variants": 5
     },
     {
       "name": "Zumpo/Bid",
       "id": "44:62002",
       "file": "components/bid.json",
+      "preview": "previews/components/bid.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Bid picker",
       "id": "44:62898",
       "file": "components/bid-picker.json",
+      "preview": "previews/components/bid-picker.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Button",
       "id": "4:24",
       "file": "components/button.json",
+      "preview": "previews/components/button.png",
       "variants": 16
     },
     {
       "name": "Zumpo/Card",
       "id": "35:13442",
       "file": "components/card.json",
+      "preview": "previews/components/card.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Chain composer",
       "id": "162:67695",
       "file": "components/chain-composer.json",
+      "preview": "previews/components/chain-composer.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Chain entry",
       "id": "162:66197",
       "file": "components/chain-entry.json",
+      "preview": "previews/components/chain-entry.png",
       "variants": 8
     },
     {
       "name": "Zumpo/Chat",
       "id": "9:334",
       "file": "components/chat.json",
+      "preview": "previews/components/chat.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Chat input",
       "id": "26:16254",
       "file": "components/chat-input.json",
+      "preview": "previews/components/chat-input.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Chat message",
       "id": "26:16242",
       "file": "components/chat-message.json",
+      "preview": "previews/components/chat-message.png",
       "variants": 6
     },
     {
       "name": "Zumpo/Chip field",
       "id": "95:113407",
       "file": "components/chip-field.json",
+      "preview": "previews/components/chip-field.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Code board",
       "id": "162:62868",
       "file": "components/code-board.json",
+      "preview": "previews/components/code-board.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Code marks",
       "id": "162:62578",
       "file": "components/code-marks.json",
+      "preview": "previews/components/code-marks.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Code marks board",
       "id": "162:69758",
       "file": "components/code-marks-board.json",
+      "preview": "previews/components/code-marks-board.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Code race board",
       "id": "162:64470",
       "file": "components/code-race-board.json",
+      "preview": "previews/components/code-race-board.png",
       "variants": 9
     },
     {
       "name": "Zumpo/Code row",
       "id": "162:62605",
       "file": "components/code-row.json",
+      "preview": "previews/components/code-row.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Countdown",
       "id": "24:5284",
       "file": "components/countdown.json",
+      "preview": "previews/components/countdown.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Cup",
       "id": "44:62520",
       "file": "components/cup.json",
+      "preview": "previews/components/cup.png",
       "variants": 9
     },
     {
       "name": "Zumpo/Die",
       "id": "44:61311",
       "file": "components/die.json",
+      "preview": "previews/components/die.png",
       "variants": 40
     },
     {
       "name": "Zumpo/Digit pad",
       "id": "162:63044",
       "file": "components/digit-pad.json",
+      "preview": "previews/components/digit-pad.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Digit tile",
       "id": "162:62565",
       "file": "components/digit-tile.json",
+      "preview": "previews/components/digit-tile.png",
       "variants": 12
     },
     {
       "name": "Zumpo/Drawing toolbar",
       "id": "26:16591",
       "file": "components/drawing-toolbar.json",
+      "preview": "previews/components/drawing-toolbar.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Filter chip",
       "id": "90:107177",
       "file": "components/filter-chip.json",
+      "preview": "previews/components/filter-chip.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Game artwork",
       "id": "120:117076",
       "file": "components/game-artwork.json",
+      "preview": "previews/components/game-artwork.png",
       "variants": 24
     },
     {
       "name": "Zumpo/Game card",
       "id": "90:105409",
       "file": "components/game-card.json",
+      "preview": "previews/components/game-card.png",
       "variants": 48
     },
     {
       "name": "Zumpo/Game intro",
       "id": "120:119324",
       "file": "components/game-intro.json",
+      "preview": "previews/components/game-intro.png",
       "variants": 24
     },
     {
       "name": "Zumpo/Gomoku board",
       "id": "162:62975",
       "file": "components/gomoku-board.json",
+      "preview": "previews/components/gomoku-board.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Gomoku seat",
       "id": "162:63129",
       "file": "components/gomoku-seat.json",
+      "preview": "previews/components/gomoku-seat.png",
       "variants": 12
     },
     {
       "name": "Zumpo/Header",
       "id": "4:39",
       "file": "components/header.json",
+      "preview": "previews/components/header.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Heart button",
       "id": "162:65812",
       "file": "components/heart-button.json",
+      "preview": "previews/components/heart-button.png",
       "variants": 3
     },
     {
       "name": "Zumpo/How to play",
       "id": "163:65908",
       "file": "components/how-to-play.json",
+      "preview": "previews/components/how-to-play.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Hush card",
       "id": "44:61118",
       "file": "components/hush-card.json",
+      "preview": "previews/components/hush-card.png",
       "variants": 15
     },
     {
       "name": "Zumpo/Icon",
       "id": "24:5086",
       "file": "components/icon.json",
+      "preview": "previews/components/icon.png",
       "variants": 26
     },
     {
       "name": "Zumpo/Input",
       "id": "9:223",
       "file": "components/input.json",
+      "preview": "previews/components/input.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Keyboard",
       "id": "44:62351",
       "file": "components/keyboard.json",
+      "preview": "previews/components/keyboard.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Last move marker",
       "id": "162:62873",
       "file": "components/last-move-marker.json",
+      "preview": "previews/components/last-move-marker.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Letter key",
       "id": "44:62031",
       "file": "components/letter-key.json",
+      "preview": "previews/components/letter-key.png",
       "variants": 14
     },
     {
       "name": "Zumpo/Letter tile",
       "id": "44:61344",
       "file": "components/letter-tile.json",
+      "preview": "previews/components/letter-tile.png",
       "variants": 19
     },
     {
       "name": "Zumpo/Lives",
       "id": "44:61143",
       "file": "components/lives.json",
+      "preview": "previews/components/lives.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Mine cell",
       "id": "24:7301",
       "file": "components/mine-cell.json",
+      "preview": "previews/components/mine-cell.png",
       "variants": 30
     },
     {
       "name": "Zumpo/Mobile tabs",
       "id": "9:16089",
       "file": "components/mobile-tabs.json",
+      "preview": "previews/components/mobile-tabs.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Name menu",
       "id": "90:110743",
       "file": "components/name-menu.json",
+      "preview": "previews/components/name-menu.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Notice",
       "id": "9:240",
       "file": "components/notice.json",
+      "preview": "previews/components/notice.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Number card",
       "id": "40:22063",
       "file": "components/number-card.json",
+      "preview": "previews/components/number-card.png",
       "variants": 10
     },
     {
       "name": "Zumpo/Operator key",
       "id": "40:22069",
       "file": "components/operator-key.json",
+      "preview": "previews/components/operator-key.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Pairs card",
       "id": "40:22031",
       "file": "components/pairs-card.json",
+      "preview": "previews/components/pairs-card.png",
       "variants": 9
     },
     {
       "name": "Zumpo/Pairs symbol",
       "id": "40:22011",
       "file": "components/pairs-symbol.json",
+      "preview": "previews/components/pairs-symbol.png",
       "variants": 18
     },
     {
       "name": "Zumpo/Pick marker",
       "id": "24:7320",
       "file": "components/pick-marker.json",
+      "preview": "previews/components/pick-marker.png",
       "variants": 6
     },
     {
       "name": "Zumpo/Pick result",
       "id": "27:19237",
       "file": "components/pick-result.json",
+      "preview": "previews/components/pick-result.png",
       "variants": 6
     },
     {
       "name": "Zumpo/Player row",
       "id": "26:10660",
       "file": "components/player-row.json",
+      "preview": "previews/components/player-row.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Point focus",
       "id": "162:62897",
       "file": "components/point-focus.json",
+      "preview": "previews/components/point-focus.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Race board",
       "id": "44:63737",
       "file": "components/race-board.json",
+      "preview": "previews/components/race-board.png",
       "variants": 9
     },
     {
       "name": "Zumpo/Room bar",
       "id": "39:19319",
       "file": "components/room-bar.json",
+      "preview": "previews/components/room-bar.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Room row",
       "id": "9:289",
       "file": "components/room-row.json",
+      "preview": "previews/components/room-row.png",
       "variants": 8
     },
     {
       "name": "Zumpo/Scoreboard",
       "id": "166:70488",
       "file": "components/scoreboard.json",
+      "preview": "previews/components/scoreboard.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Select menu / Board",
       "id": "9:427",
       "file": "components/select-menu-board.json",
+      "preview": "previews/components/select-menu-board.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Select menu / Rounds",
       "id": "9:15842",
       "file": "components/select-menu-rounds.json",
+      "preview": "previews/components/select-menu-rounds.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Select menu / Seats",
       "id": "9:15831",
       "file": "components/select-menu-seats.json",
+      "preview": "previews/components/select-menu-seats.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Select option",
       "id": "24:6185",
       "file": "components/select-option.json",
+      "preview": "previews/components/select-option.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Snap card",
       "id": "162:39153",
       "file": "components/snap-card.json",
+      "preview": "previews/components/snap-card.png",
       "variants": 9
     },
     {
       "name": "Zumpo/Snap spot",
       "id": "162:38969",
       "file": "components/snap-spot.json",
+      "preview": "previews/components/snap-spot.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Snap symbol",
       "id": "162:38956",
       "file": "components/snap-symbol.json",
+      "preview": "previews/components/snap-symbol.png",
       "variants": 31
     },
     {
       "name": "Zumpo/Standing",
       "id": "163:62758",
       "file": "components/standing.json",
+      "preview": "previews/components/standing.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Standings strip",
       "id": "163:62759",
       "file": "components/standings-strip.json",
+      "preview": "previews/components/standings-strip.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Stone",
       "id": "162:62894",
       "file": "components/stone.json",
+      "preview": "previews/components/stone.png",
       "variants": 16
     },
     {
       "name": "Zumpo/Tag",
       "id": "24:6541",
       "file": "components/tag.json",
+      "preview": "previews/components/tag.png",
       "variants": 12
     },
     {
       "name": "Zumpo/Toggle chip",
       "id": "95:113244",
       "file": "components/toggle-chip.json",
+      "preview": "previews/components/toggle-chip.png",
       "variants": 3
     },
     {
       "name": "Zumpo/Trios card",
       "id": "45:63927",
       "file": "components/trios-card.json",
+      "preview": "previews/components/trios-card.png",
       "variants": 42
     },
     {
       "name": "Zumpo/Trios shape",
       "id": "44:62032",
       "file": "components/trios-shape.json",
+      "preview": "previews/components/trios-shape.png",
       "variants": 36
     },
     {
       "name": "Zumpo/Turn bar",
       "id": "26:16873",
       "file": "components/turn-bar.json",
+      "preview": "previews/components/turn-bar.png",
       "variants": 12
     },
     {
       "name": "Zumpo/Win line",
       "id": "162:62900",
       "file": "components/win-line.json",
+      "preview": "previews/components/win-line.png",
       "variants": 2
     },
     {
       "name": "Zumpo/Word board",
       "id": "44:63086",
       "file": "components/word-board.json",
+      "preview": "previews/components/word-board.png",
       "variants": 4
     },
     {
       "name": "Zumpo/Word choice",
       "id": "9:408",
       "file": "components/word-choice.json",
+      "preview": "previews/components/word-choice.png",
       "variants": 1
     },
     {
       "name": "Zumpo/Wordmark",
       "id": "4:36",
       "file": "components/wordmark.json",
+      "preview": "previews/components/wordmark.png",
       "variants": 1
     }
   ],
@@ -538,6 +615,7 @@
             1586
           ],
           "file": "flows/00-guide/review-guide.json",
+          "preview": "previews/00-guide/review-guide.png",
           "isFlow": false
         }
       ],
@@ -557,6 +635,7 @@
             1542
           ],
           "file": "flows/01-platform/P01.json",
+          "preview": "previews/01-platform/P01.png",
           "isFlow": true
         },
         {
@@ -568,6 +647,7 @@
             640
           ],
           "file": "flows/01-platform/P03.json",
+          "preview": "previews/01-platform/P03.png",
           "isFlow": true
         },
         {
@@ -579,6 +659,7 @@
             527
           ],
           "file": "flows/01-platform/P05.json",
+          "preview": "previews/01-platform/P05.png",
           "isFlow": true
         },
         {
@@ -590,6 +671,7 @@
             555
           ],
           "file": "flows/01-platform/P06.json",
+          "preview": "previews/01-platform/P06.png",
           "isFlow": true
         },
         {
@@ -601,6 +683,7 @@
             1084
           ],
           "file": "flows/01-platform/P07.json",
+          "preview": "previews/01-platform/P07.png",
           "isFlow": true
         },
         {
@@ -612,6 +695,7 @@
             580
           ],
           "file": "flows/01-platform/P08.json",
+          "preview": "previews/01-platform/P08.png",
           "isFlow": true
         },
         {
@@ -623,6 +707,7 @@
             555
           ],
           "file": "flows/01-platform/P09.json",
+          "preview": "previews/01-platform/P09.png",
           "isFlow": true
         },
         {
@@ -634,6 +719,7 @@
             580
           ],
           "file": "flows/01-platform/P10.json",
+          "preview": "previews/01-platform/P10.png",
           "isFlow": true
         },
         {
@@ -645,6 +731,7 @@
             1008
           ],
           "file": "flows/01-platform/P11.json",
+          "preview": "previews/01-platform/P11.png",
           "isFlow": true
         },
         {
@@ -656,6 +743,7 @@
             790
           ],
           "file": "flows/01-platform/P12.json",
+          "preview": "previews/01-platform/P12.png",
           "isFlow": true
         },
         {
@@ -667,6 +755,7 @@
             640
           ],
           "file": "flows/01-platform/P13.json",
+          "preview": "previews/01-platform/P13.png",
           "isFlow": true
         },
         {
@@ -678,6 +767,7 @@
             1008
           ],
           "file": "flows/01-platform/P15.json",
+          "preview": "previews/01-platform/P15.png",
           "isFlow": true
         },
         {
@@ -689,6 +779,7 @@
             693
           ],
           "file": "flows/01-platform/P16.json",
+          "preview": "previews/01-platform/P16.png",
           "isFlow": true
         },
         {
@@ -700,6 +791,7 @@
             580
           ],
           "file": "flows/01-platform/P18.json",
+          "preview": "previews/01-platform/P18.png",
           "isFlow": true
         },
         {
@@ -711,6 +803,7 @@
             1008
           ],
           "file": "flows/01-platform/P21.json",
+          "preview": "previews/01-platform/P21.png",
           "isFlow": true
         },
         {
@@ -722,6 +815,7 @@
             580
           ],
           "file": "flows/01-platform/P17.json",
+          "preview": "previews/01-platform/P17.png",
           "isFlow": true
         },
         {
@@ -733,6 +827,7 @@
             674
           ],
           "file": "flows/01-platform/P19.json",
+          "preview": "previews/01-platform/P19.png",
           "isFlow": true
         },
         {
@@ -744,6 +839,7 @@
             716
           ],
           "file": "flows/01-platform/P20.json",
+          "preview": "previews/01-platform/P20.png",
           "isFlow": true
         }
       ],
@@ -763,6 +859,7 @@
             1035
           ],
           "file": "flows/02-draw-and-guess/DL01.json",
+          "preview": "previews/02-draw-and-guess/DL01.png",
           "isFlow": true
         },
         {
@@ -774,6 +871,7 @@
             737
           ],
           "file": "flows/02-draw-and-guess/DL02.json",
+          "preview": "previews/02-draw-and-guess/DL02.png",
           "isFlow": true
         },
         {
@@ -785,6 +883,7 @@
             1018
           ],
           "file": "flows/02-draw-and-guess/DL03.json",
+          "preview": "previews/02-draw-and-guess/DL03.png",
           "isFlow": true
         },
         {
@@ -796,6 +895,7 @@
             738
           ],
           "file": "flows/02-draw-and-guess/DL04.json",
+          "preview": "previews/02-draw-and-guess/DL04.png",
           "isFlow": true
         },
         {
@@ -807,6 +907,7 @@
             1097
           ],
           "file": "flows/02-draw-and-guess/DL05.json",
+          "preview": "previews/02-draw-and-guess/DL05.png",
           "isFlow": true
         },
         {
@@ -818,6 +919,7 @@
             638
           ],
           "file": "flows/02-draw-and-guess/DL06.json",
+          "preview": "previews/02-draw-and-guess/DL06.png",
           "isFlow": true
         },
         {
@@ -829,6 +931,7 @@
             839
           ],
           "file": "flows/02-draw-and-guess/DL07.json",
+          "preview": "previews/02-draw-and-guess/DL07.png",
           "isFlow": true
         },
         {
@@ -840,6 +943,7 @@
             837
           ],
           "file": "flows/02-draw-and-guess/DL08.json",
+          "preview": "previews/02-draw-and-guess/DL08.png",
           "isFlow": true
         },
         {
@@ -851,6 +955,7 @@
             725
           ],
           "file": "flows/02-draw-and-guess/DL09.json",
+          "preview": "previews/02-draw-and-guess/DL09.png",
           "isFlow": true
         },
         {
@@ -862,6 +967,7 @@
             684
           ],
           "file": "flows/02-draw-and-guess/D01.json",
+          "preview": "previews/02-draw-and-guess/D01.png",
           "isFlow": true
         },
         {
@@ -873,6 +979,7 @@
             730
           ],
           "file": "flows/02-draw-and-guess/D02.json",
+          "preview": "previews/02-draw-and-guess/D02.png",
           "isFlow": true
         },
         {
@@ -884,6 +991,7 @@
             693
           ],
           "file": "flows/02-draw-and-guess/D03.json",
+          "preview": "previews/02-draw-and-guess/D03.png",
           "isFlow": true
         },
         {
@@ -895,6 +1003,7 @@
             996
           ],
           "file": "flows/02-draw-and-guess/D04.json",
+          "preview": "previews/02-draw-and-guess/D04.png",
           "isFlow": true
         },
         {
@@ -906,6 +1015,7 @@
             950
           ],
           "file": "flows/02-draw-and-guess/D05.json",
+          "preview": "previews/02-draw-and-guess/D05.png",
           "isFlow": true
         },
         {
@@ -917,6 +1027,7 @@
             950
           ],
           "file": "flows/02-draw-and-guess/D06.json",
+          "preview": "previews/02-draw-and-guess/D06.png",
           "isFlow": true
         },
         {
@@ -928,6 +1039,7 @@
             950
           ],
           "file": "flows/02-draw-and-guess/D07.json",
+          "preview": "previews/02-draw-and-guess/D07.png",
           "isFlow": true
         },
         {
@@ -939,6 +1051,7 @@
             950
           ],
           "file": "flows/02-draw-and-guess/D08.json",
+          "preview": "previews/02-draw-and-guess/D08.png",
           "isFlow": true
         },
         {
@@ -950,6 +1063,7 @@
             950
           ],
           "file": "flows/02-draw-and-guess/D09.json",
+          "preview": "previews/02-draw-and-guess/D09.png",
           "isFlow": true
         },
         {
@@ -961,6 +1075,7 @@
             1084
           ],
           "file": "flows/02-draw-and-guess/D10.json",
+          "preview": "previews/02-draw-and-guess/D10.png",
           "isFlow": true
         },
         {
@@ -972,6 +1087,7 @@
             996
           ],
           "file": "flows/02-draw-and-guess/D11.json",
+          "preview": "previews/02-draw-and-guess/D11.png",
           "isFlow": true
         },
         {
@@ -983,6 +1099,7 @@
             1098
           ],
           "file": "flows/02-draw-and-guess/D12.json",
+          "preview": "previews/02-draw-and-guess/D12.png",
           "isFlow": true
         },
         {
@@ -994,6 +1111,7 @@
             892
           ],
           "file": "flows/02-draw-and-guess/D13.json",
+          "preview": "previews/02-draw-and-guess/D13.png",
           "isFlow": true
         },
         {
@@ -1005,6 +1123,7 @@
             892
           ],
           "file": "flows/02-draw-and-guess/D14.json",
+          "preview": "previews/02-draw-and-guess/D14.png",
           "isFlow": true
         },
         {
@@ -1016,6 +1135,7 @@
             740
           ],
           "file": "flows/02-draw-and-guess/D15.json",
+          "preview": "previews/02-draw-and-guess/D15.png",
           "isFlow": true
         },
         {
@@ -1027,6 +1147,7 @@
             1071
           ],
           "file": "flows/02-draw-and-guess/DL10.json",
+          "preview": "previews/02-draw-and-guess/DL10.png",
           "isFlow": true
         },
         {
@@ -1038,6 +1159,7 @@
             738
           ],
           "file": "flows/02-draw-and-guess/DL11.json",
+          "preview": "previews/02-draw-and-guess/DL11.png",
           "isFlow": true
         },
         {
@@ -1049,6 +1171,7 @@
             790
           ],
           "file": "flows/02-draw-and-guess/D16.json",
+          "preview": "previews/02-draw-and-guess/D16.png",
           "isFlow": true
         }
       ],
@@ -1068,6 +1191,7 @@
             1088
           ],
           "file": "flows/03-minesweeper/ML01.json",
+          "preview": "previews/03-minesweeper/ML01.png",
           "isFlow": true
         },
         {
@@ -1079,6 +1203,7 @@
             1088
           ],
           "file": "flows/03-minesweeper/ML02.json",
+          "preview": "previews/03-minesweeper/ML02.png",
           "isFlow": true
         },
         {
@@ -1090,6 +1215,7 @@
             1088
           ],
           "file": "flows/03-minesweeper/ML03.json",
+          "preview": "previews/03-minesweeper/ML03.png",
           "isFlow": true
         },
         {
@@ -1101,6 +1227,7 @@
             1103
           ],
           "file": "flows/03-minesweeper/ML04.json",
+          "preview": "previews/03-minesweeper/ML04.png",
           "isFlow": true
         },
         {
@@ -1112,6 +1239,7 @@
             1103
           ],
           "file": "flows/03-minesweeper/ML05.json",
+          "preview": "previews/03-minesweeper/ML05.png",
           "isFlow": true
         },
         {
@@ -1123,6 +1251,7 @@
             1075
           ],
           "file": "flows/03-minesweeper/ML06.json",
+          "preview": "previews/03-minesweeper/ML06.png",
           "isFlow": true
         },
         {
@@ -1134,6 +1263,7 @@
             839
           ],
           "file": "flows/03-minesweeper/ML07.json",
+          "preview": "previews/03-minesweeper/ML07.png",
           "isFlow": true
         },
         {
@@ -1145,6 +1275,7 @@
             837
           ],
           "file": "flows/03-minesweeper/ML08.json",
+          "preview": "previews/03-minesweeper/ML08.png",
           "isFlow": true
         },
         {
@@ -1156,6 +1287,7 @@
             725
           ],
           "file": "flows/03-minesweeper/ML09.json",
+          "preview": "previews/03-minesweeper/ML09.png",
           "isFlow": true
         },
         {
@@ -1167,6 +1299,7 @@
             684
           ],
           "file": "flows/03-minesweeper/M01.json",
+          "preview": "previews/03-minesweeper/M01.png",
           "isFlow": true
         },
         {
@@ -1178,6 +1311,7 @@
             730
           ],
           "file": "flows/03-minesweeper/M02.json",
+          "preview": "previews/03-minesweeper/M02.png",
           "isFlow": true
         },
         {
@@ -1189,6 +1323,7 @@
             693
           ],
           "file": "flows/03-minesweeper/M03.json",
+          "preview": "previews/03-minesweeper/M03.png",
           "isFlow": true
         },
         {
@@ -1200,6 +1335,7 @@
             766
           ],
           "file": "flows/03-minesweeper/M04.json",
+          "preview": "previews/03-minesweeper/M04.png",
           "isFlow": true
         },
         {
@@ -1211,6 +1347,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M05.json",
+          "preview": "previews/03-minesweeper/M05.png",
           "isFlow": true
         },
         {
@@ -1222,6 +1359,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M06.json",
+          "preview": "previews/03-minesweeper/M06.png",
           "isFlow": true
         },
         {
@@ -1233,6 +1371,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M07.json",
+          "preview": "previews/03-minesweeper/M07.png",
           "isFlow": true
         },
         {
@@ -1244,6 +1383,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M08.json",
+          "preview": "previews/03-minesweeper/M08.png",
           "isFlow": true
         },
         {
@@ -1255,6 +1395,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M09.json",
+          "preview": "previews/03-minesweeper/M09.png",
           "isFlow": true
         },
         {
@@ -1266,6 +1407,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M10.json",
+          "preview": "previews/03-minesweeper/M10.png",
           "isFlow": true
         },
         {
@@ -1277,6 +1419,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M11.json",
+          "preview": "previews/03-minesweeper/M11.png",
           "isFlow": true
         },
         {
@@ -1288,6 +1431,7 @@
             1400
           ],
           "file": "flows/03-minesweeper/M12.json",
+          "preview": "previews/03-minesweeper/M12.png",
           "isFlow": true
         },
         {
@@ -1299,6 +1443,7 @@
             1097
           ],
           "file": "flows/03-minesweeper/M13.json",
+          "preview": "previews/03-minesweeper/M13.png",
           "isFlow": true
         },
         {
@@ -1310,6 +1455,7 @@
             1093
           ],
           "file": "flows/03-minesweeper/M14.json",
+          "preview": "previews/03-minesweeper/M14.png",
           "isFlow": true
         },
         {
@@ -1321,6 +1467,7 @@
             1064
           ],
           "file": "flows/03-minesweeper/M15.json",
+          "preview": "previews/03-minesweeper/M15.png",
           "isFlow": true
         },
         {
@@ -1332,6 +1479,7 @@
             710
           ],
           "file": "flows/03-minesweeper/M16.json",
+          "preview": "previews/03-minesweeper/M16.png",
           "isFlow": true
         },
         {
@@ -1343,6 +1491,7 @@
             1103
           ],
           "file": "flows/03-minesweeper/ML10.json",
+          "preview": "previews/03-minesweeper/ML10.png",
           "isFlow": true
         },
         {
@@ -1354,6 +1503,7 @@
             1092
           ],
           "file": "flows/03-minesweeper/MS01.json",
+          "preview": "previews/03-minesweeper/MS01.png",
           "isFlow": true
         },
         {
@@ -1365,6 +1515,7 @@
             1160
           ],
           "file": "flows/03-minesweeper/MS02.json",
+          "preview": "previews/03-minesweeper/MS02.png",
           "isFlow": true
         },
         {
@@ -1376,6 +1527,7 @@
             1092
           ],
           "file": "flows/03-minesweeper/MS03.json",
+          "preview": "previews/03-minesweeper/MS03.png",
           "isFlow": true
         },
         {
@@ -1387,6 +1539,7 @@
             1092
           ],
           "file": "flows/03-minesweeper/MS04.json",
+          "preview": "previews/03-minesweeper/MS04.png",
           "isFlow": true
         },
         {
@@ -1398,6 +1551,7 @@
             697
           ],
           "file": "flows/03-minesweeper/MS05.json",
+          "preview": "previews/03-minesweeper/MS05.png",
           "isFlow": true
         }
       ],
@@ -1417,6 +1571,7 @@
             2912
           ],
           "file": "flows/04-mobile/MO01.json",
+          "preview": "previews/04-mobile/MO01.png",
           "isFlow": true
         },
         {
@@ -1428,6 +1583,7 @@
             560
           ],
           "file": "flows/04-mobile/MO02.json",
+          "preview": "previews/04-mobile/MO02.png",
           "isFlow": true
         },
         {
@@ -1439,6 +1595,7 @@
             1623
           ],
           "file": "flows/04-mobile/MO04.json",
+          "preview": "previews/04-mobile/MO04.png",
           "isFlow": true
         },
         {
@@ -1450,6 +1607,7 @@
             538
           ],
           "file": "flows/04-mobile/MO05.json",
+          "preview": "previews/04-mobile/MO05.png",
           "isFlow": true
         },
         {
@@ -1461,6 +1619,7 @@
             536
           ],
           "file": "flows/04-mobile/MO06.json",
+          "preview": "previews/04-mobile/MO06.png",
           "isFlow": true
         },
         {
@@ -1472,6 +1631,7 @@
             844
           ],
           "file": "flows/04-mobile/MO07.json",
+          "preview": "previews/04-mobile/MO07.png",
           "isFlow": true
         },
         {
@@ -1483,6 +1643,7 @@
             865
           ],
           "file": "flows/04-mobile/MO08.json",
+          "preview": "previews/04-mobile/MO08.png",
           "isFlow": true
         },
         {
@@ -1494,6 +1655,7 @@
             801
           ],
           "file": "flows/04-mobile/MO09.json",
+          "preview": "previews/04-mobile/MO09.png",
           "isFlow": true
         },
         {
@@ -1505,6 +1667,7 @@
             801
           ],
           "file": "flows/04-mobile/MO10.json",
+          "preview": "previews/04-mobile/MO10.png",
           "isFlow": true
         },
         {
@@ -1516,6 +1679,7 @@
             692
           ],
           "file": "flows/04-mobile/MO11.json",
+          "preview": "previews/04-mobile/MO11.png",
           "isFlow": true
         },
         {
@@ -1527,6 +1691,7 @@
             692
           ],
           "file": "flows/04-mobile/MO12.json",
+          "preview": "previews/04-mobile/MO12.png",
           "isFlow": true
         },
         {
@@ -1538,6 +1703,7 @@
             844
           ],
           "file": "flows/04-mobile/MO13.json",
+          "preview": "previews/04-mobile/MO13.png",
           "isFlow": true
         },
         {
@@ -1549,6 +1715,7 @@
             844
           ],
           "file": "flows/04-mobile/MO14.json",
+          "preview": "previews/04-mobile/MO14.png",
           "isFlow": true
         },
         {
@@ -1560,6 +1727,7 @@
             528
           ],
           "file": "flows/04-mobile/MO15.json",
+          "preview": "previews/04-mobile/MO15.png",
           "isFlow": true
         },
         {
@@ -1571,6 +1739,7 @@
             574
           ],
           "file": "flows/04-mobile/MO16.json",
+          "preview": "previews/04-mobile/MO16.png",
           "isFlow": true
         },
         {
@@ -1582,6 +1751,7 @@
             494
           ],
           "file": "flows/04-mobile/MO17.json",
+          "preview": "previews/04-mobile/MO17.png",
           "isFlow": true
         },
         {
@@ -1593,6 +1763,7 @@
             429
           ],
           "file": "flows/04-mobile/MO18.json",
+          "preview": "previews/04-mobile/MO18.png",
           "isFlow": true
         },
         {
@@ -1604,6 +1775,7 @@
             844
           ],
           "file": "flows/04-mobile/MO19.json",
+          "preview": "previews/04-mobile/MO19.png",
           "isFlow": true
         },
         {
@@ -1615,6 +1787,7 @@
             871
           ],
           "file": "flows/04-mobile/MO20.json",
+          "preview": "previews/04-mobile/MO20.png",
           "isFlow": true
         }
       ],
@@ -1639,6 +1812,7 @@
             771
           ],
           "file": "flows/05-make-24/T02.json",
+          "preview": "previews/05-make-24/T02.png",
           "isFlow": true
         },
         {
@@ -1650,6 +1824,7 @@
             574
           ],
           "file": "flows/05-make-24/T03.json",
+          "preview": "previews/05-make-24/T03.png",
           "isFlow": true
         },
         {
@@ -1661,6 +1836,7 @@
             634
           ],
           "file": "flows/05-make-24/T04.json",
+          "preview": "previews/05-make-24/T04.png",
           "isFlow": true
         },
         {
@@ -1672,6 +1848,7 @@
             771
           ],
           "file": "flows/05-make-24/T06.json",
+          "preview": "previews/05-make-24/T06.png",
           "isFlow": true
         },
         {
@@ -1683,6 +1860,7 @@
             767
           ],
           "file": "flows/05-make-24/T07.json",
+          "preview": "previews/05-make-24/T07.png",
           "isFlow": true
         },
         {
@@ -1694,6 +1872,7 @@
             818
           ],
           "file": "flows/05-make-24/T08.json",
+          "preview": "previews/05-make-24/T08.png",
           "isFlow": true
         },
         {
@@ -1705,6 +1884,7 @@
             1019
           ],
           "file": "flows/05-make-24/T09.json",
+          "preview": "previews/05-make-24/T09.png",
           "isFlow": true
         },
         {
@@ -1716,6 +1896,7 @@
             987
           ],
           "file": "flows/05-make-24/T05.json",
+          "preview": "previews/05-make-24/T05.png",
           "isFlow": true
         },
         {
@@ -1727,6 +1908,7 @@
             1103
           ],
           "file": "flows/05-make-24/T10.json",
+          "preview": "previews/05-make-24/T10.png",
           "isFlow": true
         },
         {
@@ -1738,6 +1920,7 @@
             667
           ],
           "file": "flows/05-make-24/T11.json",
+          "preview": "previews/05-make-24/T11.png",
           "isFlow": true
         },
         {
@@ -1749,6 +1932,7 @@
             657
           ],
           "file": "flows/05-make-24/T12.json",
+          "preview": "previews/05-make-24/T12.png",
           "isFlow": true
         },
         {
@@ -1760,6 +1944,7 @@
             641
           ],
           "file": "flows/05-make-24/T13.json",
+          "preview": "previews/05-make-24/T13.png",
           "isFlow": true
         }
       ],
@@ -1781,6 +1966,7 @@
             946
           ],
           "file": "flows/06-pairs/PR01.json",
+          "preview": "previews/06-pairs/PR01.png",
           "isFlow": true
         },
         {
@@ -1792,6 +1978,7 @@
             848
           ],
           "file": "flows/06-pairs/PR02.json",
+          "preview": "previews/06-pairs/PR02.png",
           "isFlow": true
         },
         {
@@ -1803,6 +1990,7 @@
             848
           ],
           "file": "flows/06-pairs/PR03.json",
+          "preview": "previews/06-pairs/PR03.png",
           "isFlow": true
         },
         {
@@ -1814,6 +2002,7 @@
             946
           ],
           "file": "flows/06-pairs/PR04.json",
+          "preview": "previews/06-pairs/PR04.png",
           "isFlow": true
         },
         {
@@ -1825,6 +2014,7 @@
             848
           ],
           "file": "flows/06-pairs/PR05.json",
+          "preview": "previews/06-pairs/PR05.png",
           "isFlow": true
         },
         {
@@ -1836,6 +2026,7 @@
             848
           ],
           "file": "flows/06-pairs/PR06.json",
+          "preview": "previews/06-pairs/PR06.png",
           "isFlow": true
         },
         {
@@ -1847,6 +2038,7 @@
             1188
           ],
           "file": "flows/06-pairs/PR07.json",
+          "preview": "previews/06-pairs/PR07.png",
           "isFlow": true
         },
         {
@@ -1858,6 +2050,7 @@
             1103
           ],
           "file": "flows/06-pairs/PR08.json",
+          "preview": "previews/06-pairs/PR08.png",
           "isFlow": true
         },
         {
@@ -1869,6 +2062,7 @@
             630
           ],
           "file": "flows/06-pairs/PR09.json",
+          "preview": "previews/06-pairs/PR09.png",
           "isFlow": true
         },
         {
@@ -1880,6 +2074,7 @@
             686
           ],
           "file": "flows/06-pairs/PR10.json",
+          "preview": "previews/06-pairs/PR10.png",
           "isFlow": true
         },
         {
@@ -1891,6 +2086,7 @@
             848
           ],
           "file": "flows/06-pairs/PR11.json",
+          "preview": "previews/06-pairs/PR11.png",
           "isFlow": true
         }
       ],
@@ -1910,6 +2106,7 @@
             928
           ],
           "file": "flows/07-trios/TS02.json",
+          "preview": "previews/07-trios/TS02.png",
           "isFlow": true
         },
         {
@@ -1921,6 +2118,7 @@
             928
           ],
           "file": "flows/07-trios/TS03.json",
+          "preview": "previews/07-trios/TS03.png",
           "isFlow": true
         },
         {
@@ -1932,6 +2130,7 @@
             1166
           ],
           "file": "flows/07-trios/TS04.json",
+          "preview": "previews/07-trios/TS04.png",
           "isFlow": true
         },
         {
@@ -1943,6 +2142,7 @@
             812
           ],
           "file": "flows/07-trios/TS05.json",
+          "preview": "previews/07-trios/TS05.png",
           "isFlow": true
         },
         {
@@ -1954,6 +2154,7 @@
             812
           ],
           "file": "flows/07-trios/TS06.json",
+          "preview": "previews/07-trios/TS06.png",
           "isFlow": true
         },
         {
@@ -1965,6 +2166,7 @@
             812
           ],
           "file": "flows/07-trios/TS07.json",
+          "preview": "previews/07-trios/TS07.png",
           "isFlow": true
         },
         {
@@ -1976,6 +2178,7 @@
             812
           ],
           "file": "flows/07-trios/TS08.json",
+          "preview": "previews/07-trios/TS08.png",
           "isFlow": true
         },
         {
@@ -1987,6 +2190,7 @@
             1084
           ],
           "file": "flows/07-trios/TS09.json",
+          "preview": "previews/07-trios/TS09.png",
           "isFlow": true
         },
         {
@@ -1998,6 +2202,7 @@
             1103
           ],
           "file": "flows/07-trios/TS10.json",
+          "preview": "previews/07-trios/TS10.png",
           "isFlow": true
         },
         {
@@ -2009,6 +2214,7 @@
             686
           ],
           "file": "flows/07-trios/TS11.json",
+          "preview": "previews/07-trios/TS11.png",
           "isFlow": true
         },
         {
@@ -2020,6 +2226,7 @@
             740
           ],
           "file": "flows/07-trios/TS12.json",
+          "preview": "previews/07-trios/TS12.png",
           "isFlow": true
         },
         {
@@ -2031,6 +2238,7 @@
             120
           ],
           "file": "flows/07-trios/game-artwork-trios.json",
+          "preview": "previews/07-trios/game-artwork-trios.png",
           "isFlow": false
         },
         {
@@ -2042,6 +2250,7 @@
             120
           ],
           "file": "flows/07-trios/game-artwork-trios-phone.json",
+          "preview": "previews/07-trios/game-artwork-trios-phone.png",
           "isFlow": false
         }
       ],
@@ -2063,6 +2272,7 @@
             755
           ],
           "file": "flows/08-liars-dice/LD01.json",
+          "preview": "previews/08-liars-dice/LD01.png",
           "isFlow": true
         },
         {
@@ -2074,6 +2284,7 @@
             622
           ],
           "file": "flows/08-liars-dice/LD02.json",
+          "preview": "previews/08-liars-dice/LD02.png",
           "isFlow": true
         },
         {
@@ -2085,6 +2296,7 @@
             714
           ],
           "file": "flows/08-liars-dice/LD03.json",
+          "preview": "previews/08-liars-dice/LD03.png",
           "isFlow": true
         },
         {
@@ -2096,6 +2308,7 @@
             755
           ],
           "file": "flows/08-liars-dice/LD04.json",
+          "preview": "previews/08-liars-dice/LD04.png",
           "isFlow": true
         },
         {
@@ -2107,6 +2320,7 @@
             755
           ],
           "file": "flows/08-liars-dice/LD05.json",
+          "preview": "previews/08-liars-dice/LD05.png",
           "isFlow": true
         },
         {
@@ -2118,6 +2332,7 @@
             755
           ],
           "file": "flows/08-liars-dice/LD06.json",
+          "preview": "previews/08-liars-dice/LD06.png",
           "isFlow": true
         },
         {
@@ -2129,6 +2344,7 @@
             1103
           ],
           "file": "flows/08-liars-dice/LD07.json",
+          "preview": "previews/08-liars-dice/LD07.png",
           "isFlow": true
         },
         {
@@ -2140,6 +2356,7 @@
             748
           ],
           "file": "flows/08-liars-dice/LD08.json",
+          "preview": "previews/08-liars-dice/LD08.png",
           "isFlow": true
         },
         {
@@ -2151,6 +2368,7 @@
             785
           ],
           "file": "flows/08-liars-dice/LD09.json",
+          "preview": "previews/08-liars-dice/LD09.png",
           "isFlow": true
         },
         {
@@ -2162,6 +2380,7 @@
             785
           ],
           "file": "flows/08-liars-dice/LD10.json",
+          "preview": "previews/08-liars-dice/LD10.png",
           "isFlow": true
         },
         {
@@ -2173,6 +2392,7 @@
             796
           ],
           "file": "flows/08-liars-dice/LD11.json",
+          "preview": "previews/08-liars-dice/LD11.png",
           "isFlow": true
         },
         {
@@ -2184,6 +2404,7 @@
             1095
           ],
           "file": "flows/08-liars-dice/LD12.json",
+          "preview": "previews/08-liars-dice/LD12.png",
           "isFlow": true
         },
         {
@@ -2195,6 +2416,7 @@
             844
           ],
           "file": "flows/08-liars-dice/LD13.json",
+          "preview": "previews/08-liars-dice/LD13.png",
           "isFlow": true
         },
         {
@@ -2206,6 +2428,7 @@
             844
           ],
           "file": "flows/08-liars-dice/LD14.json",
+          "preview": "previews/08-liars-dice/LD14.png",
           "isFlow": true
         },
         {
@@ -2217,6 +2440,7 @@
             844
           ],
           "file": "flows/08-liars-dice/LD15.json",
+          "preview": "previews/08-liars-dice/LD15.png",
           "isFlow": true
         },
         {
@@ -2228,6 +2452,7 @@
             120
           ],
           "file": "flows/08-liars-dice/game-artwork-liar-s-dice.json",
+          "preview": "previews/08-liars-dice/game-artwork-liar-s-dice.png",
           "isFlow": false
         },
         {
@@ -2239,6 +2464,7 @@
             622
           ],
           "file": "flows/08-liars-dice/LD16.json",
+          "preview": "previews/08-liars-dice/LD16.png",
           "isFlow": true
         }
       ],
@@ -2258,6 +2484,7 @@
             778
           ],
           "file": "flows/09-hush/HU01.json",
+          "preview": "previews/09-hush/HU01.png",
           "isFlow": true
         },
         {
@@ -2269,6 +2496,7 @@
             807
           ],
           "file": "flows/09-hush/HU02.json",
+          "preview": "previews/09-hush/HU02.png",
           "isFlow": true
         },
         {
@@ -2280,6 +2508,7 @@
             807
           ],
           "file": "flows/09-hush/HU03.json",
+          "preview": "previews/09-hush/HU03.png",
           "isFlow": true
         },
         {
@@ -2291,6 +2520,7 @@
             807
           ],
           "file": "flows/09-hush/HU04.json",
+          "preview": "previews/09-hush/HU04.png",
           "isFlow": true
         },
         {
@@ -2302,6 +2532,7 @@
             807
           ],
           "file": "flows/09-hush/HU05.json",
+          "preview": "previews/09-hush/HU05.png",
           "isFlow": true
         },
         {
@@ -2313,6 +2544,7 @@
             808
           ],
           "file": "flows/09-hush/HU06.json",
+          "preview": "previews/09-hush/HU06.png",
           "isFlow": true
         },
         {
@@ -2324,6 +2556,7 @@
             918
           ],
           "file": "flows/09-hush/HU07.json",
+          "preview": "previews/09-hush/HU07.png",
           "isFlow": true
         },
         {
@@ -2335,6 +2568,7 @@
             1098
           ],
           "file": "flows/09-hush/HU08.json",
+          "preview": "previews/09-hush/HU08.png",
           "isFlow": true
         },
         {
@@ -2346,6 +2580,7 @@
             1103
           ],
           "file": "flows/09-hush/HU09.json",
+          "preview": "previews/09-hush/HU09.png",
           "isFlow": true
         },
         {
@@ -2357,6 +2592,7 @@
             844
           ],
           "file": "flows/09-hush/HU10.json",
+          "preview": "previews/09-hush/HU10.png",
           "isFlow": true
         },
         {
@@ -2368,6 +2604,7 @@
             803
           ],
           "file": "flows/09-hush/HU11.json",
+          "preview": "previews/09-hush/HU11.png",
           "isFlow": true
         },
         {
@@ -2379,6 +2616,7 @@
             383
           ],
           "file": "flows/09-hush/game-card-hush.json",
+          "preview": "previews/09-hush/game-card-hush.png",
           "isFlow": false
         }
       ],
@@ -2398,6 +2636,7 @@
             1028
           ],
           "file": "flows/10-daily-word/DW01.json",
+          "preview": "previews/10-daily-word/DW01.png",
           "isFlow": true
         },
         {
@@ -2409,6 +2648,7 @@
             1028
           ],
           "file": "flows/10-daily-word/DW02.json",
+          "preview": "previews/10-daily-word/DW02.png",
           "isFlow": true
         },
         {
@@ -2420,6 +2660,7 @@
             1028
           ],
           "file": "flows/10-daily-word/DW03.json",
+          "preview": "previews/10-daily-word/DW03.png",
           "isFlow": true
         },
         {
@@ -2431,6 +2672,7 @@
             1057
           ],
           "file": "flows/10-daily-word/DW04.json",
+          "preview": "previews/10-daily-word/DW04.png",
           "isFlow": true
         },
         {
@@ -2442,6 +2684,7 @@
             720
           ],
           "file": "flows/10-daily-word/DW17.json",
+          "preview": "previews/10-daily-word/DW17.png",
           "isFlow": true
         },
         {
@@ -2453,6 +2696,7 @@
             956
           ],
           "file": "flows/10-daily-word/DW07.json",
+          "preview": "previews/10-daily-word/DW07.png",
           "isFlow": true
         },
         {
@@ -2464,6 +2708,7 @@
             797
           ],
           "file": "flows/10-daily-word/DW08.json",
+          "preview": "previews/10-daily-word/DW08.png",
           "isFlow": true
         },
         {
@@ -2475,6 +2720,7 @@
             783
           ],
           "file": "flows/10-daily-word/DW09.json",
+          "preview": "previews/10-daily-word/DW09.png",
           "isFlow": true
         },
         {
@@ -2486,6 +2732,7 @@
             1168
           ],
           "file": "flows/10-daily-word/DW10.json",
+          "preview": "previews/10-daily-word/DW10.png",
           "isFlow": true
         },
         {
@@ -2497,6 +2744,7 @@
             1080
           ],
           "file": "flows/10-daily-word/DW05.json",
+          "preview": "previews/10-daily-word/DW05.png",
           "isFlow": true
         },
         {
@@ -2508,6 +2756,7 @@
             855
           ],
           "file": "flows/10-daily-word/DW06.json",
+          "preview": "previews/10-daily-word/DW06.png",
           "isFlow": true
         },
         {
@@ -2519,6 +2768,7 @@
             1103
           ],
           "file": "flows/10-daily-word/DW11.json",
+          "preview": "previews/10-daily-word/DW11.png",
           "isFlow": true
         },
         {
@@ -2530,6 +2780,7 @@
             798
           ],
           "file": "flows/10-daily-word/DW12.json",
+          "preview": "previews/10-daily-word/DW12.png",
           "isFlow": true
         },
         {
@@ -2541,6 +2792,7 @@
             844
           ],
           "file": "flows/10-daily-word/DW13.json",
+          "preview": "previews/10-daily-word/DW13.png",
           "isFlow": true
         },
         {
@@ -2552,6 +2804,7 @@
             1046
           ],
           "file": "flows/10-daily-word/DW14.json",
+          "preview": "previews/10-daily-word/DW14.png",
           "isFlow": true
         },
         {
@@ -2563,6 +2816,7 @@
             1246
           ],
           "file": "flows/10-daily-word/DW15.json",
+          "preview": "previews/10-daily-word/DW15.png",
           "isFlow": true
         },
         {
@@ -2574,6 +2828,7 @@
             1717
           ],
           "file": "flows/10-daily-word/DW16.json",
+          "preview": "previews/10-daily-word/DW16.png",
           "isFlow": true
         },
         {
@@ -2585,6 +2840,7 @@
             120
           ],
           "file": "flows/10-daily-word/game-artwork-daily-word.json",
+          "preview": "previews/10-daily-word/game-artwork-daily-word.png",
           "isFlow": false
         },
         {
@@ -2596,6 +2852,7 @@
             89
           ],
           "file": "flows/10-daily-word/game-card-copy-daily-word.json",
+          "preview": "previews/10-daily-word/game-card-copy-daily-word.png",
           "isFlow": false
         }
       ],
@@ -2618,6 +2875,7 @@
             927
           ],
           "file": "flows/11-snap/SN02.json",
+          "preview": "previews/11-snap/SN02.png",
           "isFlow": true
         },
         {
@@ -2629,6 +2887,7 @@
             927
           ],
           "file": "flows/11-snap/SN03.json",
+          "preview": "previews/11-snap/SN03.png",
           "isFlow": true
         },
         {
@@ -2640,6 +2899,7 @@
             1028
           ],
           "file": "flows/11-snap/SN04.json",
+          "preview": "previews/11-snap/SN04.png",
           "isFlow": true
         },
         {
@@ -2651,6 +2911,7 @@
             737
           ],
           "file": "flows/11-snap/SN05.json",
+          "preview": "previews/11-snap/SN05.png",
           "isFlow": true
         },
         {
@@ -2662,6 +2923,7 @@
             700
           ],
           "file": "flows/11-snap/SN06.json",
+          "preview": "previews/11-snap/SN06.png",
           "isFlow": true
         },
         {
@@ -2673,6 +2935,7 @@
             737
           ],
           "file": "flows/11-snap/SN07.json",
+          "preview": "previews/11-snap/SN07.png",
           "isFlow": true
         },
         {
@@ -2684,6 +2947,7 @@
             737
           ],
           "file": "flows/11-snap/SN08.json",
+          "preview": "previews/11-snap/SN08.png",
           "isFlow": true
         },
         {
@@ -2695,6 +2959,7 @@
             1030
           ],
           "file": "flows/11-snap/SN09.json",
+          "preview": "previews/11-snap/SN09.png",
           "isFlow": true
         },
         {
@@ -2706,6 +2971,7 @@
             1103
           ],
           "file": "flows/11-snap/SN10.json",
+          "preview": "previews/11-snap/SN10.png",
           "isFlow": true
         },
         {
@@ -2717,6 +2983,7 @@
             834
           ],
           "file": "flows/11-snap/SN11.json",
+          "preview": "previews/11-snap/SN11.png",
           "isFlow": true
         },
         {
@@ -2728,6 +2995,7 @@
             844
           ],
           "file": "flows/11-snap/SN12.json",
+          "preview": "previews/11-snap/SN12.png",
           "isFlow": true
         },
         {
@@ -2739,6 +3007,7 @@
             737
           ],
           "file": "flows/11-snap/SN13.json",
+          "preview": "previews/11-snap/SN13.png",
           "isFlow": true
         },
         {
@@ -2750,6 +3019,7 @@
             550
           ],
           "file": "flows/11-snap/SN14.json",
+          "preview": "previews/11-snap/SN14.png",
           "isFlow": true
         }
       ],
@@ -2771,6 +3041,7 @@
             1035
           ],
           "file": "flows/12-doodle-chain/DC01.json",
+          "preview": "previews/12-doodle-chain/DC01.png",
           "isFlow": true
         },
         {
@@ -2782,6 +3053,7 @@
             1103
           ],
           "file": "flows/12-doodle-chain/DC02.json",
+          "preview": "previews/12-doodle-chain/DC02.png",
           "isFlow": true
         },
         {
@@ -2793,6 +3065,7 @@
             604
           ],
           "file": "flows/12-doodle-chain/DC03.json",
+          "preview": "previews/12-doodle-chain/DC03.png",
           "isFlow": true
         },
         {
@@ -2804,6 +3077,7 @@
             730
           ],
           "file": "flows/12-doodle-chain/DC04.json",
+          "preview": "previews/12-doodle-chain/DC04.png",
           "isFlow": true
         },
         {
@@ -2815,6 +3089,7 @@
             767
           ],
           "file": "flows/12-doodle-chain/DC05.json",
+          "preview": "previews/12-doodle-chain/DC05.png",
           "isFlow": true
         },
         {
@@ -2826,6 +3101,7 @@
             804
           ],
           "file": "flows/12-doodle-chain/DC06.json",
+          "preview": "previews/12-doodle-chain/DC06.png",
           "isFlow": true
         },
         {
@@ -2834,9 +3110,10 @@
           "id": "162:81138",
           "size": [
             1440,
-            1152
+            1178
           ],
           "file": "flows/12-doodle-chain/DC07.json",
+          "preview": "previews/12-doodle-chain/DC07.png",
           "isFlow": true
         },
         {
@@ -2845,9 +3122,10 @@
           "id": "162:85630",
           "size": [
             1440,
-            1033
+            1071
           ],
           "file": "flows/12-doodle-chain/DC08.json",
+          "preview": "previews/12-doodle-chain/DC08.png",
           "isFlow": true
         },
         {
@@ -2856,9 +3134,10 @@
           "id": "162:91584",
           "size": [
             1440,
-            854
+            892
           ],
           "file": "flows/12-doodle-chain/DC09.json",
+          "preview": "previews/12-doodle-chain/DC09.png",
           "isFlow": true
         },
         {
@@ -2870,6 +3149,7 @@
             778
           ],
           "file": "flows/12-doodle-chain/DC10.json",
+          "preview": "previews/12-doodle-chain/DC10.png",
           "isFlow": true
         },
         {
@@ -2881,6 +3161,7 @@
             897
           ],
           "file": "flows/12-doodle-chain/DC11.json",
+          "preview": "previews/12-doodle-chain/DC11.png",
           "isFlow": true
         },
         {
@@ -2889,9 +3170,10 @@
           "id": "162:95329",
           "size": [
             1440,
-            978
+            1016
           ],
           "file": "flows/12-doodle-chain/DC12.json",
+          "preview": "previews/12-doodle-chain/DC12.png",
           "isFlow": true
         },
         {
@@ -2900,9 +3182,10 @@
           "id": "162:95749",
           "size": [
             1440,
-            1339
+            1377
           ],
           "file": "flows/12-doodle-chain/DC13.json",
+          "preview": "previews/12-doodle-chain/DC13.png",
           "isFlow": true
         },
         {
@@ -2914,6 +3197,7 @@
             1471
           ],
           "file": "flows/12-doodle-chain/DC14.json",
+          "preview": "previews/12-doodle-chain/DC14.png",
           "isFlow": true
         },
         {
@@ -2925,6 +3209,7 @@
             1623
           ],
           "file": "flows/12-doodle-chain/DC15.json",
+          "preview": "previews/12-doodle-chain/DC15.png",
           "isFlow": true
         },
         {
@@ -2936,6 +3221,7 @@
             597
           ],
           "file": "flows/12-doodle-chain/DC16.json",
+          "preview": "previews/12-doodle-chain/DC16.png",
           "isFlow": true
         },
         {
@@ -2947,6 +3233,7 @@
             844
           ],
           "file": "flows/12-doodle-chain/DC17.json",
+          "preview": "previews/12-doodle-chain/DC17.png",
           "isFlow": true
         },
         {
@@ -2958,6 +3245,7 @@
             844
           ],
           "file": "flows/12-doodle-chain/DC18.json",
+          "preview": "previews/12-doodle-chain/DC18.png",
           "isFlow": true
         },
         {
@@ -2969,6 +3257,7 @@
             844
           ],
           "file": "flows/12-doodle-chain/DC19.json",
+          "preview": "previews/12-doodle-chain/DC19.png",
           "isFlow": true
         },
         {
@@ -2980,6 +3269,7 @@
             1551
           ],
           "file": "flows/12-doodle-chain/DC20.json",
+          "preview": "previews/12-doodle-chain/DC20.png",
           "isFlow": true
         }
       ],
@@ -2999,6 +3289,7 @@
             1213
           ],
           "file": "flows/13-code-breaker/CB01.json",
+          "preview": "previews/13-code-breaker/CB01.png",
           "isFlow": true
         },
         {
@@ -3010,6 +3301,7 @@
             1001
           ],
           "file": "flows/13-code-breaker/CB02.json",
+          "preview": "previews/13-code-breaker/CB02.png",
           "isFlow": true
         },
         {
@@ -3021,6 +3313,7 @@
             1001
           ],
           "file": "flows/13-code-breaker/CB03.json",
+          "preview": "previews/13-code-breaker/CB03.png",
           "isFlow": true
         },
         {
@@ -3032,6 +3325,7 @@
             1001
           ],
           "file": "flows/13-code-breaker/CB04.json",
+          "preview": "previews/13-code-breaker/CB04.png",
           "isFlow": true
         },
         {
@@ -3043,6 +3337,7 @@
             720
           ],
           "file": "flows/13-code-breaker/CB22.json",
+          "preview": "previews/13-code-breaker/CB22.png",
           "isFlow": true
         },
         {
@@ -3054,6 +3349,7 @@
             1028
           ],
           "file": "flows/13-code-breaker/CB05.json",
+          "preview": "previews/13-code-breaker/CB05.png",
           "isFlow": true
         },
         {
@@ -3065,6 +3361,7 @@
             1089
           ],
           "file": "flows/13-code-breaker/CB06.json",
+          "preview": "previews/13-code-breaker/CB06.png",
           "isFlow": true
         },
         {
@@ -3076,6 +3373,7 @@
             1112
           ],
           "file": "flows/13-code-breaker/CB07.json",
+          "preview": "previews/13-code-breaker/CB07.png",
           "isFlow": true
         },
         {
@@ -3087,6 +3385,7 @@
             935
           ],
           "file": "flows/13-code-breaker/CB08.json",
+          "preview": "previews/13-code-breaker/CB08.png",
           "isFlow": true
         },
         {
@@ -3098,6 +3397,7 @@
             968
           ],
           "file": "flows/13-code-breaker/CB09.json",
+          "preview": "previews/13-code-breaker/CB09.png",
           "isFlow": true
         },
         {
@@ -3109,6 +3409,7 @@
             925
           ],
           "file": "flows/13-code-breaker/CB10.json",
+          "preview": "previews/13-code-breaker/CB10.png",
           "isFlow": true
         },
         {
@@ -3120,6 +3421,7 @@
             925
           ],
           "file": "flows/13-code-breaker/CB11.json",
+          "preview": "previews/13-code-breaker/CB11.png",
           "isFlow": true
         },
         {
@@ -3131,6 +3433,7 @@
             856
           ],
           "file": "flows/13-code-breaker/CB12.json",
+          "preview": "previews/13-code-breaker/CB12.png",
           "isFlow": true
         },
         {
@@ -3142,6 +3445,7 @@
             1352
           ],
           "file": "flows/13-code-breaker/CB13.json",
+          "preview": "previews/13-code-breaker/CB13.png",
           "isFlow": true
         },
         {
@@ -3153,6 +3457,7 @@
             1103
           ],
           "file": "flows/13-code-breaker/CB14.json",
+          "preview": "previews/13-code-breaker/CB14.png",
           "isFlow": true
         },
         {
@@ -3164,6 +3469,7 @@
             2099
           ],
           "file": "flows/13-code-breaker/CB15.json",
+          "preview": "previews/13-code-breaker/CB15.png",
           "isFlow": true
         },
         {
@@ -3175,6 +3481,7 @@
             844
           ],
           "file": "flows/13-code-breaker/CB16.json",
+          "preview": "previews/13-code-breaker/CB16.png",
           "isFlow": true
         },
         {
@@ -3186,6 +3493,7 @@
             1753
           ],
           "file": "flows/13-code-breaker/CB17.json",
+          "preview": "previews/13-code-breaker/CB17.png",
           "isFlow": true
         },
         {
@@ -3197,6 +3505,7 @@
             844
           ],
           "file": "flows/13-code-breaker/CB18.json",
+          "preview": "previews/13-code-breaker/CB18.png",
           "isFlow": true
         },
         {
@@ -3208,6 +3517,7 @@
             1206
           ],
           "file": "flows/13-code-breaker/CB19.json",
+          "preview": "previews/13-code-breaker/CB19.png",
           "isFlow": true
         },
         {
@@ -3219,6 +3529,7 @@
             1758
           ],
           "file": "flows/13-code-breaker/CB20.json",
+          "preview": "previews/13-code-breaker/CB20.png",
           "isFlow": true
         },
         {
@@ -3230,6 +3541,7 @@
             2109
           ],
           "file": "flows/13-code-breaker/CB21.json",
+          "preview": "previews/13-code-breaker/CB21.png",
           "isFlow": true
         }
       ],
@@ -3251,6 +3563,7 @@
             1063
           ],
           "file": "flows/14-gomoku/GM01.json",
+          "preview": "previews/14-gomoku/GM01.png",
           "isFlow": true
         },
         {
@@ -3262,6 +3575,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM02.json",
+          "preview": "previews/14-gomoku/GM02.png",
           "isFlow": true
         },
         {
@@ -3273,6 +3587,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM03.json",
+          "preview": "previews/14-gomoku/GM03.png",
           "isFlow": true
         },
         {
@@ -3284,6 +3599,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM04.json",
+          "preview": "previews/14-gomoku/GM04.png",
           "isFlow": true
         },
         {
@@ -3295,6 +3611,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM05.json",
+          "preview": "previews/14-gomoku/GM05.png",
           "isFlow": true
         },
         {
@@ -3306,6 +3623,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM06.json",
+          "preview": "previews/14-gomoku/GM06.png",
           "isFlow": true
         },
         {
@@ -3317,6 +3635,7 @@
             652
           ],
           "file": "flows/14-gomoku/GM07.json",
+          "preview": "previews/14-gomoku/GM07.png",
           "isFlow": true
         },
         {
@@ -3328,6 +3647,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM08.json",
+          "preview": "previews/14-gomoku/GM08.png",
           "isFlow": true
         },
         {
@@ -3339,6 +3659,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM09.json",
+          "preview": "previews/14-gomoku/GM09.png",
           "isFlow": true
         },
         {
@@ -3350,6 +3671,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM10.json",
+          "preview": "previews/14-gomoku/GM10.png",
           "isFlow": true
         },
         {
@@ -3361,6 +3683,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM11.json",
+          "preview": "previews/14-gomoku/GM11.png",
           "isFlow": true
         },
         {
@@ -3372,6 +3695,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM12.json",
+          "preview": "previews/14-gomoku/GM12.png",
           "isFlow": true
         },
         {
@@ -3383,6 +3707,7 @@
             909
           ],
           "file": "flows/14-gomoku/GM13.json",
+          "preview": "previews/14-gomoku/GM13.png",
           "isFlow": true
         },
         {
@@ -3394,6 +3719,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM14.json",
+          "preview": "previews/14-gomoku/GM14.png",
           "isFlow": true
         },
         {
@@ -3405,6 +3731,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM15.json",
+          "preview": "previews/14-gomoku/GM15.png",
           "isFlow": true
         },
         {
@@ -3416,6 +3743,7 @@
             892
           ],
           "file": "flows/14-gomoku/GM16.json",
+          "preview": "previews/14-gomoku/GM16.png",
           "isFlow": true
         },
         {
@@ -3427,6 +3755,7 @@
             760
           ],
           "file": "flows/14-gomoku/GM17.json",
+          "preview": "previews/14-gomoku/GM17.png",
           "isFlow": true
         },
         {
@@ -3438,6 +3767,7 @@
             818
           ],
           "file": "flows/14-gomoku/GM18.json",
+          "preview": "previews/14-gomoku/GM18.png",
           "isFlow": true
         },
         {
@@ -3449,6 +3779,7 @@
             818
           ],
           "file": "flows/14-gomoku/GM19.json",
+          "preview": "previews/14-gomoku/GM19.png",
           "isFlow": true
         },
         {
@@ -3460,6 +3791,7 @@
             1974
           ],
           "file": "flows/14-gomoku/GM20.json",
+          "preview": "previews/14-gomoku/GM20.png",
           "isFlow": true
         },
         {
@@ -3471,6 +3803,7 @@
             576
           ],
           "file": "flows/14-gomoku/GM21.json",
+          "preview": "previews/14-gomoku/GM21.png",
           "isFlow": true
         }
       ],
@@ -3490,6 +3823,7 @@
             844
           ],
           "file": "flows/15-phone-in-play/PH01.json",
+          "preview": "previews/15-phone-in-play/PH01.png",
           "isFlow": true
         },
         {
@@ -3501,6 +3835,7 @@
             640
           ],
           "file": "flows/15-phone-in-play/PH02.json",
+          "preview": "previews/15-phone-in-play/PH02.png",
           "isFlow": true
         },
         {
@@ -3512,6 +3847,7 @@
             844
           ],
           "file": "flows/15-phone-in-play/PH03.json",
+          "preview": "previews/15-phone-in-play/PH03.png",
           "isFlow": true
         },
         {
@@ -3523,6 +3859,7 @@
             640
           ],
           "file": "flows/15-phone-in-play/PH04.json",
+          "preview": "previews/15-phone-in-play/PH04.png",
           "isFlow": true
         },
         {
@@ -3534,6 +3871,7 @@
             844
           ],
           "file": "flows/15-phone-in-play/PH05.json",
+          "preview": "previews/15-phone-in-play/PH05.png",
           "isFlow": true
         },
         {
@@ -3545,6 +3883,7 @@
             844
           ],
           "file": "flows/15-phone-in-play/PH06.json",
+          "preview": "previews/15-phone-in-play/PH06.png",
           "isFlow": true
         },
         {
@@ -3556,6 +3895,7 @@
             844
           ],
           "file": "flows/15-phone-in-play/PH07.json",
+          "preview": "previews/15-phone-in-play/PH07.png",
           "isFlow": true
         },
         {
@@ -3567,6 +3907,7 @@
             390
           ],
           "file": "flows/15-phone-in-play/PH08.json",
+          "preview": "previews/15-phone-in-play/PH08.png",
           "isFlow": true
         }
       ],
