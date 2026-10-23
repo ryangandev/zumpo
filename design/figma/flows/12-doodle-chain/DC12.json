@@ -222,9 +222,6 @@
                           "Layout": "Desktop"
                         },
                         "componentId": "162:66025",
-                        "props": {
-                          "Heart": false
-                        },
                         "overrides": [
                           {
                             "path": ".",

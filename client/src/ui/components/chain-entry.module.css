@@ -20,15 +20,11 @@
   min-width: 0;
 }
 
+/* As tall as what it holds: a heart button's row, or a count's shorter one. */
 .head {
   display: flex;
   align-items: center;
   gap: var(--zumpo-space-8);
-  min-height: 30px;
-}
-
-.empty .head {
-  min-height: 0;
 }
 
 .who {
