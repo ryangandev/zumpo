@@ -208,7 +208,7 @@ function paint(
  * proportions in the height the controls leave it: as wide as the column, or
  * as tall as the room where that is less. Wider, it ends inside the window
  * with what follows it, such as Done (useHeightLeft), and a sheet to draw on
- * is never narrower than half its column; a drawing only `shown`, to work
+ * is never narrower than 40% of its column; a drawing only `shown`, to work
  * from, may be.
  */
 export function PlaySheet({

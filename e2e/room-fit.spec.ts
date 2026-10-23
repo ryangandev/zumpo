@@ -178,7 +178,7 @@ test('a Gomoku room fits a 1440 × 900 window', async ({ player }) => {
   await expectFits(pages, 'a game in play');
 });
 
-test('a Doodle Chain room fits a 1440 × 900 window at each step', async ({
+test('a Doodle Chain room fits a 1440 × 900 window at each step, and its drawing 1280 × 720', async ({
   player,
 }) => {
   const pages = await startRoom('doodle-chain', player, 3);
@@ -193,6 +193,14 @@ test('a Doodle Chain room fits a 1440 × 900 window at each step', async ({
     await expect(page.getByLabel('Drawing canvas')).toBeVisible();
   }
   await expectFits(pages, 'drawing');
+  // A 13-inch laptop's window, where the sheet is at its narrowest.
+  for (const page of pages) {
+    await page.setViewportSize({ width: 1280, height: 720 });
+  }
+  await expectFits(pages, 'drawing at 1280 × 720');
+  for (const page of pages) {
+    await page.setViewportSize({ width: 1440, height: 900 });
+  }
   for (const page of pages) {
     const box = (await page.getByLabel('Drawing canvas').boundingBox())!;
     await page.mouse.move(box.x + 20, box.y + 20);
