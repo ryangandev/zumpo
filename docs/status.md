@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 247 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 257 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).
@@ -70,11 +70,9 @@ Decided by Ryan, and the frame for every design and implementation choice:
 
 ## Next
 
-Four more games, chosen by Ryan on 2026-10-20, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and are being built one at a time: Snap (找相同), Doodle Chain (传话画画), Code Breaker (猜数字) and Gomoku (五子棋).
-Snap, Doodle Chain, Code Breaker and Gomoku are built.
-Gomoku brought a fourth kind of game, Strategy.
-Each game's behaviour contract lands in `docs/games/` with its implementation.
-After them, the [backlog](#backlog) is what comes next unless Ryan picks otherwise.
+The four games Ryan chose on 2026-10-20, Snap, Doodle Chain, Code Breaker and Gomoku, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and built.
+The [backlog](#backlog) is what comes next unless Ryan picks otherwise.
+Each new game's behaviour contract lands in `docs/games/` with its implementation.
 
 ## Open decisions
 
