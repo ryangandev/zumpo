@@ -28,6 +28,7 @@ import {
   solve as solveCode,
   typeGuess as typeCode,
 } from '../play/code-breaker';
+import { scribble, write } from '../play/doodle-chain';
 import { missHand, solveHand, startHand } from '../play/make-24';
 import { deal, handOf, play, pressReady, readyUp } from '../play/hush';
 import {
@@ -2700,4 +2701,241 @@ test('a Gomoku game on a phone', async ({ player }) => {
   await maya.getByRole('button', { name: 'Place stone' }).click();
   await expect(gomokuTurnOf(maya).getByText('Game over')).toBeVisible();
   await shot(maya, 'GM19');
+});
+
+test('a Draw & Guess host waiting on a phone', async ({ player }) => {
+  const maya = await player('Maya', phone);
+  const link = await createRoom(maya, 'draw-and-guess');
+  for (const name of ['Ryan', 'Leo', 'Sam']) {
+    await joinRoom(await player(name, desktop), link);
+  }
+  await expect(maya.getByText('Ryan, Leo and Sam are here.')).toBeVisible();
+  await shot(maya, 'MO20');
+});
+
+test('Doodle Chain rooms and their list', async ({ player }) => {
+  // A room in each state the list shows: open, private, full and playing.
+  const maya = await player('Maya', desktop);
+  await maya.goto('/games/doodle-chain/new');
+  await shot(maya, 'DC02');
+  await createRoom(maya, 'doodle-chain', { name: 'Maya’s room' });
+  const ryan = await player('Ryan', desktop);
+  await createRoom(ryan, 'doodle-chain', {
+    name: 'Ryan’s room',
+    password: 'otter',
+  });
+  const leo = await player('Leo', desktop);
+  const full = await createRoom(leo, 'doodle-chain', {
+    name: 'Leo’s room',
+    seats: 3,
+  });
+  for (const name of ['Ada', 'Kai']) {
+    await joinRoom(await player(name, desktop), full);
+  }
+  const noor = await player('Noor', desktop);
+  const playing = await createRoom(noor, 'doodle-chain', {
+    name: 'Noor’s room',
+  });
+  for (const name of ['Ivy', 'Zed']) {
+    await joinRoom(await player(name, desktop), playing);
+  }
+  await startGame(noor);
+
+  const sam = await player('Sam', desktop);
+  await sam.goto('/games/doodle-chain');
+  await expect(sam.getByRole('article')).toHaveCount(4);
+  await shot(sam, 'DC01');
+  const samOnPhone = await player('Sam', phone);
+  await samOnPhone.goto('/games/doodle-chain');
+  await expect(samOnPhone.getByRole('article')).toHaveCount(4);
+  await shot(samOnPhone, 'DC15');
+});
+
+const chainTurnOf = (page: Page) => page.getByRole('region', { name: 'Turn' });
+
+/**
+ * Maya hosts, and Ryan, Leo and Sam join in that order, the order Figma's
+ * chains pass in: each player passes to the next, Sam to Maya.
+ */
+async function doodleChainRoom(
+  player: (name: string, options?: PlayerOptions) => Promise<Page>,
+  options: PlayerOptions,
+  waiting?: (maya: Page) => Promise<void>,
+) {
+  const maya = await player('Maya', options);
+  const link = await createRoom(maya, 'doodle-chain');
+  const ryan = await player('Ryan', options);
+  await joinRoom(ryan, link);
+  const leo = await player('Leo', options);
+  const sam = await player('Sam', options);
+  if (waiting) await waiting(maya);
+  await joinRoom(leo, link);
+  await joinRoom(sam, link);
+  await expect(
+    maya.getByText(/^4 players, so 4 steps: write, draw, describe, draw\./),
+  ).toBeVisible();
+  return { link, maya, ryan, leo, sam };
+}
+
+/**
+ * Presses the host's Next until the album, each press waiting for the turn
+ * bar to show what it revealed.
+ */
+async function revealAll(host: Page) {
+  const next = host.getByRole('button', {
+    name: /^(Next|Next chain|See the album)$/,
+  });
+  while ((await next.textContent()) !== 'See the album') {
+    const before = await chainTurnOf(host).textContent();
+    await next.click();
+    await expect.poll(() => chainTurnOf(host).textContent()).not.toBe(before);
+  }
+  await next.click();
+  await expect(
+    host.getByRole('heading', { name: 'That’s every chain.' }),
+  ).toBeVisible();
+}
+
+/** Presses the host's Next once, and waits for `shown` in the turn bar. */
+async function revealNext(host: Page, shown: string) {
+  await host.getByRole('button', { name: /^(Next|Next chain)$/ }).click();
+  await expect(chainTurnOf(host).getByText(shown)).toBeVisible();
+}
+
+test('a Doodle Chain game', async ({ player }) => {
+  test.setTimeout(600_000);
+  const { link, maya, ryan, leo, sam } = await doodleChainRoom(
+    player,
+    desktop,
+    (host) => shot(host, 'DC03'),
+  );
+  await shot(maya, 'DC04');
+  await startGame(maya);
+
+  // Step 1: Sam's line goes to Maya; Ryan writes last.
+  await expect(
+    chainTurnOf(sam).getByText('Write the first line'),
+  ).toBeVisible();
+  await sam
+    .getByRole('textbox', { name: 'Your first line' })
+    .fill('A cat riding a bicycle');
+  await shot(sam, 'DC05');
+  await sam.getByRole('button', { name: 'Done' }).click();
+  await write(maya, 'Your first line', 'A dragon at the dentist');
+  await write(leo, 'Your first line', 'A snowman at the beach');
+  await expect(sam.getByText('Waiting for Ryan.')).toBeVisible();
+  await shot(sam, 'DC06');
+  await write(ryan, 'Your first line', 'A ghost doing laundry');
+
+  // Step 2: Maya finishes first, with a spectator watching; Ryan draws but
+  // never presses Done, and Leo draws nothing, so the clock ends the step.
+  for (const page of [maya, ryan, leo, sam]) {
+    await expect(chainTurnOf(page).getByText('Draw this')).toBeVisible();
+  }
+  await scribble(ryan);
+  await shot(ryan, 'DC07');
+  await scribble(maya);
+  await maya.getByRole('button', { name: 'Done' }).click();
+  const ada = await player('Ada', desktop);
+  await ada.goto(link);
+  await expect(ada.getByText('1 of 4 done')).toBeVisible();
+  await shot(ada, 'DC11');
+  await scribble(sam);
+  await sam.getByRole('button', { name: 'Done' }).click();
+  const passing = ryan.getByText('Your drawing goes to Leo, as it is.');
+  await expect(passing).toBeVisible({ timeout: 90_000 });
+  expect(await shotWhile(ryan, 'DC09', passing), 'the pass').toBe(true);
+
+  // Step 3: Leo describes Ryan's drawing; Leo's empty one leaves Sam out.
+  await expect(
+    chainTurnOf(leo).getByText('What does this drawing show?'),
+  ).toBeVisible();
+  await leo
+    .getByRole('textbox', { name: 'Your description' })
+    .fill('A cat on a unicycle');
+  await shot(leo, 'DC08');
+  await leo.getByRole('button', { name: 'Done' }).click();
+  await expect(sam.getByText('Nothing to describe')).toBeVisible();
+  await shot(sam, 'DC10');
+  await write(maya, 'Your description', 'A snowman melting');
+  await write(ryan, 'Your description', 'A dragon with a toothache');
+
+  // Step 4: everybody draws.
+  for (const page of [maya, ryan, leo, sam]) {
+    await expect(chainTurnOf(page).getByText('Draw this')).toBeVisible();
+    await scribble(page);
+    await page.getByRole('button', { name: 'Done' }).click();
+  }
+
+  // The reveal: Maya steps through her own chain, and Ryan hearts its end.
+  await expect(chainTurnOf(maya).getByText('1 of 4 shown')).toBeVisible();
+  await revealNext(maya, '2 of 4 shown');
+  await revealNext(maya, '3 of 4 shown');
+  await shot(maya, 'DC12');
+  await revealNext(maya, '4 of 4 shown');
+  // Ryan's page has the whole chain too before his hearts are counted.
+  await expect(chainTurnOf(ryan).getByText('4 of 4 shown')).toBeVisible();
+  const hearts = ryan.getByRole('button', {
+    name: 'Give a heart, 0 hearts so far',
+  });
+  const unhearted = await hearts.count();
+  await hearts.last().click();
+  await expect(hearts).toHaveCount(unhearted - 1);
+  await shot(ryan, 'DC13');
+  await revealAll(maya);
+  await shot(maya, 'DC14');
+});
+
+test('a Doodle Chain game on a phone', async ({ player }) => {
+  test.setTimeout(600_000);
+  const { maya, ryan, leo, sam } = await doodleChainRoom(player, phone);
+  await startGame(maya);
+  const everybody = [maya, ryan, leo, sam];
+
+  await expect(
+    chainTurnOf(sam).getByText('Write the first line'),
+  ).toBeVisible();
+  await sam
+    .getByRole('textbox', { name: 'Your first line' })
+    .fill('A cat riding a bicycle');
+  await shot(sam, 'DC16');
+  for (const page of everybody) {
+    await write(page, 'Your first line', 'A cat riding a bicycle');
+  }
+
+  for (const page of everybody) {
+    await expect(chainTurnOf(page).getByText('Draw this')).toBeVisible();
+    await scribble(page);
+  }
+  await shot(ryan, 'DC17');
+  for (const page of everybody) {
+    await page.getByRole('button', { name: 'Done' }).click();
+  }
+
+  await expect(
+    chainTurnOf(leo).getByText('What does this drawing show?'),
+  ).toBeVisible();
+  await leo
+    .getByRole('textbox', { name: 'Your description' })
+    .fill('A cat on a unicycle');
+  await shot(leo, 'DC18');
+  for (const page of everybody) {
+    await write(page, 'Your description', 'A cat on a unicycle');
+  }
+
+  for (const page of everybody) {
+    await expect(chainTurnOf(page).getByText('Draw this')).toBeVisible();
+    await scribble(page);
+    await page.getByRole('button', { name: 'Done' }).click();
+  }
+
+  await expect(chainTurnOf(maya).getByText('1 of 4 shown')).toBeVisible();
+  await revealNext(maya, '2 of 4 shown');
+  await revealNext(maya, '3 of 4 shown');
+  await shot(maya, 'DC19');
+  await revealAll(maya);
+  await expect(
+    ryan.getByRole('heading', { name: 'That’s every chain.' }),
+  ).toBeVisible();
+  await shot(ryan, 'DC20');
 });
