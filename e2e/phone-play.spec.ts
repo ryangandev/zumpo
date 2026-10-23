@@ -2,6 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { createRoom, expect, joinRoom, test } from './fixtures';
 import * as codeBreaker from './play/code-breaker';
 import * as dailyWord from './play/daily-word';
+import { write } from './play/doodle-chain';
 import { blackOf, pointOf } from './play/gomoku';
 import { deal, play, readyUp } from './play/hush';
 import { move, yourTurn } from './play/liars-dice';
@@ -117,12 +118,6 @@ const fitsItsScroller = (board: Locator) =>
       scroller.scrollWidth <= scroller.clientWidth + 1
     );
   });
-
-/** Writes `text` in a Doodle Chain step's field and presses Done. */
-async function write(page: Page, field: string, text: string) {
-  await page.getByRole('textbox', { name: field }).fill(text);
-  await page.getByRole('button', { name: 'Done' }).click();
-}
 
 for (const size of SIZES) {
   const at = `${size.width} by ${size.height}`;

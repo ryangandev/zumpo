@@ -1,25 +1,8 @@
 import type { Page } from '@playwright/test';
 import { createRoom, dropConnection, expect, joinRoom, test } from './fixtures';
+import { scribble, write } from './play/doodle-chain';
 
 const turn = (page: Page) => page.getByRole('region', { name: 'Turn' });
-
-/** Writes `text` in the step's field and presses Done. */
-async function write(page: Page, field: string, text: string) {
-  await page.getByRole('textbox', { name: field }).fill(text);
-  await page.getByRole('button', { name: 'Done' }).click();
-}
-
-/** Draws one stroke across the canvas. */
-async function scribble(page: Page) {
-  const canvas = page.getByLabel('Drawing canvas');
-  const box = (await canvas.boundingBox())!;
-  await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.3);
-  await page.mouse.down();
-  await page.mouse.move(box.x + box.width * 0.8, box.y + box.height * 0.6, {
-    steps: 12,
-  });
-  await page.mouse.up();
-}
 
 /** Whether anything has been painted on this page's canvas. */
 function painted(page: Page): Promise<boolean> {
