@@ -14,7 +14,7 @@
     "x": 40,
     "y": 4082,
     "w": 1440,
-    "h": 1339,
+    "h": 1377,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -94,7 +94,7 @@
         "id": "162:95751",
         "name": "Board & room",
         "w": 1312,
-        "h": 1169,
+        "h": 1207,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -107,7 +107,7 @@
             "id": "162:95752",
             "name": "Board stage",
             "w": 944,
-            "h": 1169,
+            "h": 1207,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -120,8 +120,9 @@
                 "id": "162:95753",
                 "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 92,
+                "h": 130,
                 "wSize": "fill",
+                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Status",
@@ -130,15 +131,16 @@
                 "componentId": "166:75802",
                 "props": {
                   "Countdown": false,
+                  "Category": false,
                   "Meta": "4 of 4 shown",
                   "Main": "Maya’s chain",
-                  "Category": false,
                   "Label": "Reveal · chain 1 of 4"
                 },
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 92,
+                    "height": 130,
+                    "primaryAxisSizingMode": "AUTO",
                     "width": 944
                   },
                   {
@@ -149,8 +151,7 @@
                       "Label": "Small · 9 × 9",
                       "Tone": "Sand",
                       "Size": "Regular"
-                    },
-                    "visible": false
+                    }
                   },
                   {
                     "path": "Top / Countdown",

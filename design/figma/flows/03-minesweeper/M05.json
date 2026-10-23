@@ -1240,8 +1240,8 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
-                      "Name": "System",
                       "Alert icon": "24:5071",
+                      "Name": "System",
                       "Message": "Round 2: Maya hit a mine (−109).",
                       "Kind": "System"
                     }

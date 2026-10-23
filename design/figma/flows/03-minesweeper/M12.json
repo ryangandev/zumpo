@@ -1876,8 +1876,8 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
-                      "Name": "System",
                       "Alert icon": "24:5071",
+                      "Name": "System",
                       "Message": "Round 1: Ryan (−104) and Sam (−104) hit mines.",
                       "Kind": "System"
                     }

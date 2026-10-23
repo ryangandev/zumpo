@@ -105,7 +105,7 @@
             "id": "162:84938",
             "name": "Board stage",
             "w": 944,
-            "h": 389,
+            "h": 427,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -118,8 +118,9 @@
                 "id": "162:84939",
                 "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 92,
+                "h": 130,
                 "wSize": "fill",
+                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Status",
@@ -127,15 +128,16 @@
                 },
                 "componentId": "166:75802",
                 "props": {
+                  "Category": false,
                   "Meta": "Maya draws it next.",
                   "Main": "Write the first line",
-                  "Category": false,
                   "Label": "Step 1 of 4"
                 },
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 92,
+                    "height": 130,
+                    "primaryAxisSizingMode": "AUTO",
                     "width": 944
                   },
                   {
@@ -146,8 +148,7 @@
                       "Label": "Small · 9 × 9",
                       "Tone": "Sand",
                       "Size": "Regular"
-                    },
-                    "visible": false
+                    }
                   },
                   {
                     "path": "Top / Countdown",

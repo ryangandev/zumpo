@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 1626,
     "w": 1440,
-    "h": 1033,
+    "h": 1071,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -99,7 +99,7 @@
         "id": "162:85632",
         "name": "Board & room",
         "w": 1312,
-        "h": 863,
+        "h": 901,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -112,7 +112,7 @@
             "id": "162:85633",
             "name": "Board stage",
             "w": 944,
-            "h": 863,
+            "h": 901,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -125,8 +125,9 @@
                 "id": "162:85634",
                 "name": "Zumpo/Turn bar",
                 "w": 944,
-                "h": 92,
+                "h": 130,
                 "wSize": "fill",
+                "hSize": "hug",
                 "component": "Zumpo/Turn bar",
                 "variant": {
                   "Kind": "Status",
@@ -134,15 +135,16 @@
                 },
                 "componentId": "166:75802",
                 "props": {
+                  "Category": false,
                   "Meta": "Sam draws your words next.",
                   "Main": "What does this drawing show?",
-                  "Category": false,
                   "Label": "Step 3 of 4"
                 },
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 92,
+                    "height": 130,
+                    "primaryAxisSizingMode": "AUTO",
                     "width": 944
                   },
                   {
@@ -153,8 +155,7 @@
                       "Label": "Small · 9 × 9",
                       "Tone": "Sand",
                       "Size": "Regular"
-                    },
-                    "visible": false
+                    }
                   },
                   {
                     "path": "Top / Countdown",
