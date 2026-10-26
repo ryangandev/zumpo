@@ -5,7 +5,7 @@
   "id": "162:97983",
   "section": "12 / Doodle Chain / complete flow",
   "reviewNotes": [
-    "DC04 · Ready to start: four players play four steps (write, draw, describe, draw). Game settings changes the drawing time between games."
+    "DC04 · Ready to start: four players play four steps (write, draw, describe, draw). The host sets the drawing time as the room is made, and changes it between games beside Play again, under the album (DC14)."
   ],
   "frame": {
     "type": "FRAME",
@@ -164,7 +164,7 @@
                     "type": "FRAME",
                     "id": "162:97990",
                     "name": "Actions",
-                    "w": 472,
+                    "w": 289,
                     "h": 60,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -228,56 +228,6 @@
                             "path": ".",
                             "height": 48,
                             "width": 161
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "162:97993",
-                        "name": "Action / Game settings",
-                        "w": 171,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=edit",
-                          "Show icon": true,
-                          "Label": "Game settings"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "reactions": [
-                              {
-                                "on": "on_click",
-                                "do": [
-                                  {
-                                    "nav": "navigate",
-                                    "to": "95:114256",
-                                    "toName": "D16 / Host · game settings"
-                                  }
-                                ]
-                              }
-                            ],
-                            "width": 171
-                          }
-                        ],
-                        "reactions": [
-                          {
-                            "on": "on_click",
-                            "do": [
-                              {
-                                "nav": "navigate",
-                                "to": "95:114256",
-                                "toName": "D16 / Host · game settings"
-                              }
-                            ]
                           }
                         ]
                       }

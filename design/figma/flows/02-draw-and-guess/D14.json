@@ -470,7 +470,7 @@
                         "w": 862,
                         "h": 25,
                         "hSize": "hug",
-                        "text": "Next game: 2 rounds",
+                        "text": "Next game: 2 rounds, all 15 categories",
                         "textStyle": "Zumpo/Body",
                         "fills": [
                           "$Zumpo · UI:color/muted"

@@ -17,7 +17,7 @@ const validRequest = {
   username: 'Ada',
   maxPlayers: 4,
   password: '',
-  settings: { rounds: 1 },
+  settings: { rounds: 1, categories: ['Animals'] },
 };
 
 describe('the lobby', () => {
@@ -209,7 +209,14 @@ describe('the lobby', () => {
     const client = await harness.connect();
     const before = harness.server.rooms.size;
 
-    for (const settings of [{ rounds: 99 }, { rounds: 'two' }, {}, undefined]) {
+    for (const settings of [
+      { rounds: 99, categories: ['Animals'] },
+      { rounds: 'two', categories: ['Animals'] },
+      { rounds: 2, categories: null },
+      { rounds: 2, categories: [] },
+      {},
+      undefined,
+    ]) {
       const answer = await request(client, 'room:create', {
         ...validRequest,
         settings,

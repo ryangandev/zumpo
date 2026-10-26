@@ -1,5 +1,5 @@
 import type { notices as en } from '../en/notices';
-import type { WordCategory } from '../../../../shared/wire-types';
+import { drawAndGuess } from './draw-and-guess';
 
 const who = (name: string): string => name || '某位玩家';
 
@@ -13,15 +13,6 @@ const list = (names: readonly string[]): string =>
   names.length < 2
     ? names.join('')
     : `${names.slice(0, -1).join('、')} 和 ${names.at(-1)}`;
-const category = (value: WordCategory): string =>
-  ({
-    Fruits: '水果',
-    Animals: '动物',
-    'League of Legends': 'League of Legends',
-    Electronics: '电子产品',
-    Sports: '运动',
-    Food: '食物',
-  })[value];
 
 export const notices: typeof en = {
   'room:created': (n) => `${who(n.name)} 创建了房间。`,
@@ -52,7 +43,7 @@ export const notices: typeof en = {
     return `游戏结束：${list(n.names)} ${n.names.length === 1 ? '获胜' : '并列获胜'}，${result}！`;
   },
   'dg:started': (n) =>
-    `游戏开始：词语类别“${category(n.category)}”。词语都是英文单词，请用英文猜。`,
+    `游戏开始：词语类别“${drawAndGuess.category(n.category)}”。词语都是英文单词，请用英文猜。`,
   'dg:drawer-left': (_n) => '画画的玩家离开了房间，进入下一回合。',
   'dg:drawer-lost': (_n) => '画画的玩家连接中断，进入下一回合。',
   'dg:drawer-timeout': (_n) => '画画的玩家未能回来，进入下一回合。',

@@ -1,3 +1,38 @@
+/* Zumpo/Chip field: Input's label and helper around a wrapping row of
+   Toggle chips, with a text action at the label's end. */
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--zumpo-space-8);
+}
+
+.action {
+  flex: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--zumpo-radius-4);
+  background: none;
+  color: var(--zumpo-ink);
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* aria-disabled, not disabled: an action pressed into disabling keeps the
+   focus. As a disabled Button. */
+.action[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.action:focus-visible {
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;

@@ -11,6 +11,7 @@ import { createRoomCanvas } from '../../libs/drawing/canvas.js';
 /** A room that has been created but not yet played in. */
 const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({
   rounds: settings.rounds,
+  categories: [...settings.categories],
   phase: 'waiting',
   currentRound: 0,
   turn: 0,
@@ -21,6 +22,7 @@ const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({
   wordAutoPicked: false,
   drawerQueue: new Set(),
   wordCategory: '',
+  dealt: new Set(),
   scoredThisTurn: new Set(),
   closeThisTurn: new Set(),
   turnPoints: new Map(),
@@ -68,6 +70,7 @@ const toRoomState = (
   const roomState: DrawAndGuessRoomState = {
     ...toLobbyInfo(room),
     ...roomBasics(room),
+    categories: [...game.categories],
     phase: game.phase,
     currentRound: game.currentRound,
     turn: game.turn,

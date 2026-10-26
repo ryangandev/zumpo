@@ -141,7 +141,7 @@
             "w": 1092,
             "h": 75,
             "hSize": "hug",
-            "text": "DL01–DL09 Rooms, creation, password and failure states. D01–D03 Waiting room. D04–D05 Word selection by role. D06–D08 Drawing / guessing / correct guess. D09 Reveal. D10–D12 interruption and timeout. D13–D15 end / replay / early end. DL10–DL11 show seats and rounds menus. D16 the host changes the rounds and word categories between games.",
+            "text": "DL01–DL09 Rooms, creation, password and failure states. D01–D03 Waiting room. D04–D05 Word selection by role. D06–D08 Drawing / guessing / correct guess. D09 Reveal. D10–D12 interruption and timeout. D13–D15 end / replay / early end. DL10–DL11 show seats and rounds menus, DL12 the word categories a new room draws from. D16 the host changes the word categories between games. D17 a close guess.",
             "textStyle": "Zumpo/Body",
             "fills": [
               "$Zumpo · UI:color/muted"
@@ -227,7 +227,7 @@
             "w": 1092,
             "h": 50,
             "hSize": "hug",
-            "text": "MO01–MO16 adapt main screens and room tabs at 390px. Large boards preserve tap targets with a horizontal viewport. MO17–MO18 a tab taken over and a room closed by a restart.",
+            "text": "MO01–MO16 adapt main screens and room tabs at 390px. Large boards preserve tap targets with a horizontal viewport. MO17–MO18 a tab taken over and a room closed by a restart. MO22 the word categories on a phone.",
             "textStyle": "Zumpo/Body",
             "fills": [
               "$Zumpo · UI:color/muted"

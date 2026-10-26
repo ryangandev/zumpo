@@ -478,7 +478,10 @@
                         "hSize": "hug",
                         "clip": true,
                         "layout": {
-                          "mode": "column",
+                          "mode": "row",
+                          "gap": "$Zumpo · UI:space/16",
+                          "wrap": true,
+                          "crossGap": "$Zumpo · UI:space/16",
                           "strokesIncluded": true
                         },
                         "children": [
@@ -499,6 +502,32 @@
                               "Value": "2 rounds",
                               "Show helper": false,
                               "Label": "Next game"
+                            },
+                            "overrides": [
+                              {
+                                "path": ".",
+                                "height": 87,
+                                "width": 320
+                              }
+                            ]
+                          },
+                          {
+                            "type": "INSTANCE",
+                            "id": "244:66030",
+                            "name": "Word categories",
+                            "w": 320,
+                            "h": 87,
+                            "hSize": "hug",
+                            "component": "Zumpo/Input",
+                            "variant": {
+                              "State": "Default"
+                            },
+                            "componentId": "9:204",
+                            "props": {
+                              "Select": true,
+                              "Value": "All 15",
+                              "Show helper": false,
+                              "Label": "Word categories"
                             },
                             "overrides": [
                               {

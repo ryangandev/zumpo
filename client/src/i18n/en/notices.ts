@@ -1,6 +1,7 @@
 import type { RoomNotice } from '../../../../shared/wire-types.js';
 import { bidWords, foundWords } from '../../../../shared/liars-dice.js';
 import { duration } from './plural.js';
+import { drawAndGuess } from './draw-and-guess.js';
 
 const who = (name: string): string => name || 'A player';
 
@@ -50,7 +51,7 @@ export const notices = {
     return `Game over: ${list(n.names)} ${n.names.length === 1 ? 'wins' : 'tie'} with ${score}!`;
   },
   'dg:started': (n: Extract<RoomNotice, { type: 'dg:started' }>): string =>
-    `Game started: category ${n.category}.`,
+    `Game started: category ${drawAndGuess.category(n.category)}.`,
   'dg:drawer-left': (
     _n: Extract<RoomNotice, { type: 'dg:drawer-left' }>,
   ): string => 'The drawer left the room. Skipping to the next turn.',

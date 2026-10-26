@@ -35,7 +35,7 @@ const FLOW_SECTIONS = [
   { id: '163:63239', prefix: '15', dir: '15-phone-in-play' },
 ];
 const SHARED_SECTION = { id: '9:198', name: 'Shared pieces' };
-const EXPECTED_FLOWS = 259;
+const EXPECTED_FLOWS = 261;
 const EXPECTED_FAMILIES = 77;
 
 const FLOW_CODE = /^([A-Z]{1,2}\d{2})\b/;

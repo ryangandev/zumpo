@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 259 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 261 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).
@@ -61,6 +61,10 @@ Beyond the issues, the round made the turn bar's hints never cut ([#152](https:/
 Draw & Guess tells a guesser who is a letter or two off the word, or types it inside a sentence, that they are close, at Ryan's request on 2026-10-26, the first item of the backlog ([rules](games/draw-and-guess.md#rules-the-server-enforces)).
 The guess goes back to them alone, marked "So close!", because it all but spells the word, and the room is told "Sam is close!" once a turn; it was designed in Figma first (D17, MO21).
 
+Draw & Guess's word bank grew from six categories to 15, at least 40 words each, and a room picks the categories its games draw from, at Ryan's request on 2026-10-26, the backlog's last item ([rules](games/draw-and-guess.md#the-game-loop)).
+The host narrows them in a dialog when creating the room, and whoever starts the next game changes them between games; each game still draws one category at random, now from the picked set, and at least one always stays picked (DL12, D16, MO22 in Figma).
+No word is dealt twice in a game, and no two words in a category are close guesses for each other.
+
 ## Product direction
 
 Decided by Ryan, and the frame for every design and implementation choice:
@@ -74,7 +78,7 @@ Decided by Ryan, and the frame for every design and implementation choice:
 ## Next
 
 The four games Ryan chose on 2026-10-20, Snap, Doodle Chain, Code Breaker and Gomoku, are designed in Figma (sections 11-14, see [design.md](design.md#the-figma-file)) and built.
-The [backlog](#backlog) is what comes next unless Ryan picks otherwise.
+The [backlog](#backlog) is empty, so what comes next is Ryan's pick.
 Each new game's behaviour contract lands in `docs/games/` with its implementation.
 
 ## Open decisions
@@ -93,9 +97,8 @@ Each new game's behaviour contract lands in `docs/games/` with its implementatio
 
 ## Backlog
 
-Ideas worth doing next, roughly in order:
-
-- A longer word bank and per-room word packs; six fixed categories today, English only.
+The backlog is empty: every idea on it is built.
+New ideas go here, roughly in order, once Ryan picks them.
 
 ## Deliberately not doing
 

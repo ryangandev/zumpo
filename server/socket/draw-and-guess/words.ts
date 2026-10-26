@@ -11,18 +11,18 @@ import { itemAt } from '../../../shared/list.js';
  * to show.
  */
 
+/** One of the room's picked categories, each as likely as the others. */
 const getRandomCategory = (
   wordBank: WordBank,
-): { name: WordCategory; words: string[] } => {
-  const categoryList = Object.keys(wordBank) as WordCategory[];
-  const randomCategoryIndex = getRandomInt(0, categoryList.length);
-  const name = categoryList[randomCategoryIndex]!;
+  picked: readonly WordCategory[],
+): { name: WordCategory; words: readonly string[] } => {
+  const name = itemAt(picked, getRandomInt(0, picked.length));
 
   return { name, words: wordBank[name] };
 };
 
 const getRandomChoicesFromList = (
-  wordList: string[],
+  wordList: readonly string[],
   numberOfChoices: number,
 ): string[] => {
   // Asking for more distinct choices than the list can supply would spin
@@ -35,6 +35,23 @@ const getRandomChoicesFromList = (
   }
 
   return [...selectedIndexes].map((index) => itemAt(wordList, index));
+};
+
+/**
+ * A drawer's choices from a category's words, leaving out the words already
+ * played this game, so a game never deals a word twice; once fewer than
+ * `numberOfChoices` are left, the whole list again rather than fewer choices.
+ */
+const dealChoices = (
+  wordList: readonly string[],
+  dealt: ReadonlySet<string>,
+  numberOfChoices: number,
+): string[] => {
+  const fresh = wordList.filter((word) => !dealt.has(word));
+  return getRandomChoicesFromList(
+    fresh.length >= numberOfChoices ? fresh : wordList,
+    numberOfChoices,
+  );
 };
 
 /**
@@ -163,6 +180,7 @@ const isCloseGuess = (guess: string, word: string): boolean => {
 export {
   getRandomCategory,
   getRandomChoicesFromList,
+  dealChoices,
   buildWordHint,
   revealablePositions,
   isCorrectGuess,

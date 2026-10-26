@@ -1,6 +1,7 @@
 import { textOf } from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { DrawAndGuessRoomState } from '../models/types.js';
+import { wordBank } from '../libs/word-bank.js';
 import {
   collectChat,
   collectStates,
@@ -120,6 +121,84 @@ describe('the game engine', () => {
     expect(textOf(message)).toContain(
       serverRoom(harness, roomId).game.wordCategory,
     );
+  });
+
+  it('draws the category from the ones the room picked, and the words from it', async () => {
+    const alice = await harness.connect();
+    const bob = await harness.connect();
+    const roomId = await createRoom(alice, {
+      username: 'Alice',
+      categories: ['Sea Life'],
+    });
+    await joinRoom(bob, roomId, 'Bob');
+    const announced = waitForChat(alice, (m) => textOf(m).includes('started'));
+    const { drawerView, guesserView } = await startAndAwaitChoosing(
+      alice,
+      bob,
+      roomId,
+    );
+
+    expect((await announced).notice).toEqual({
+      type: 'dg:started',
+      category: 'Sea Life',
+    });
+    expect(drawerView.wordCategory).toBe('Sea Life');
+    expect(guesserView.wordCategory).toBe('Sea Life');
+    expect(guesserView.categories).toEqual(['Sea Life']);
+    for (const choice of drawerView.wordChoices!) {
+      expect(wordBank['Sea Life']).toContain(choice);
+    }
+  });
+
+  it('deals no word twice in a game, and forgets what it dealt when the next starts', async () => {
+    const alice = await harness.connect();
+    const bob = await harness.connect();
+    const roomId = await createRoom(alice, {
+      username: 'Alice',
+      rounds: 2,
+      categories: ['Sea Life'],
+    });
+    await joinRoom(bob, roomId, 'Bob');
+    const { drawerView } = await startAndAwaitChoosing(alice, bob, roomId);
+    const game = serverRoom(harness, roomId).game;
+    // The drawer's view of a turn's word select, whoever draws it.
+    const choicesAt = async (turn: number) => {
+      const views = await Promise.all(
+        [alice, bob].map((client) =>
+          waitForDrawState(
+            client,
+            (s) => s.turn === turn && s.phase === 'choosing',
+          ),
+        ),
+      );
+      return views.find((view) => view.wordChoices !== undefined)!;
+    };
+    expect(game.dealt.size).toBe(0);
+
+    // The clock picks the first choice; it is dealt from then on.
+    const first = drawerView.wordChoices![0]!;
+    await waitForDrawState(alice, (s) => s.phase === 'drawing');
+    expect([...game.dealt]).toEqual([first]);
+
+    // With all but three of the category dealt, the next turn is offered
+    // exactly those three.
+    const left = wordBank['Sea Life'].filter((word) => word !== first);
+    for (const word of left.slice(3)) game.dealt.add(word);
+    const next = await choicesAt(2);
+    expect(next.wordChoices!.toSorted()).toEqual(left.slice(0, 3).toSorted());
+
+    // Once fewer than three are left, the whole category is offered again.
+    await waitForDrawState(alice, (s) => s.turn === 2 && s.phase === 'drawing');
+    for (const word of left.slice(0, 2)) game.dealt.add(word);
+    const third = await choicesAt(3);
+    expect(third.wordChoices).toHaveLength(3);
+    expect(JSON.stringify(third)).not.toContain('dealt');
+
+    await waitForDrawState(alice, (s) => !s.isGameStarted, 6000);
+    const started = waitForDrawState(alice, (s) => s.isGameStarted);
+    await startGame(alice, roomId);
+    await started;
+    expect(game.dealt.size).toBe(0);
   });
 
   it('marks the start of every turn in the chat with whose it is', async () => {

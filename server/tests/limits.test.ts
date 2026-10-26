@@ -78,7 +78,7 @@ describe('what one player and one server may hold', () => {
       username: 'Carol',
       maxPlayers: 4,
       password: '',
-      settings: { rounds: 1 },
+      settings: { rounds: 1, categories: ['Animals'] },
     });
 
     expect(refused).toMatchObject({
@@ -115,7 +115,7 @@ const createFrom = (client: TestClient, roomName: string) =>
     username: 'Someone',
     maxPlayers: 4,
     password: '',
-    settings: { rounds: 1 },
+    settings: { rounds: 1, categories: ['Animals'] },
   });
 
 describe('what one address may hold', () => {

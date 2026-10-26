@@ -12,7 +12,7 @@ import {
   TurnBar,
 } from '../ui';
 import { gameInfo, gamePath, scoreOf } from '../games/catalog';
-import { roomSetting } from '../games/room-setting';
+import { nextGameSetting } from '../games/room-setting';
 import { SettingField, settingsOf } from '../games/setting-field';
 import { cx } from '../ui/cx';
 import { useMessages } from '../i18n';
@@ -388,7 +388,7 @@ function NextGame() {
   return (
     <div className={styles.line}>
       {canStart ? (
-        <div className={styles.setting}>
+        <div className={styles.settings}>
           <SettingField
             gameType={state.gameType}
             settings={settings}
@@ -398,7 +398,7 @@ function NextGame() {
         </div>
       ) : (
         <p className={styles.body}>
-          {m.room.nextGameIs(roomSetting(state, m))}
+          {m.room.nextGameIs(nextGameSetting(state, m))}
         </p>
       )}
     </div>

@@ -42,6 +42,8 @@ interface RoomCanvas {
  */
 interface DrawAndGuessState {
   rounds: number;
+  /** The categories a game draws its one from; at least one, in `WORD_CATEGORIES` order. */
+  categories: WordCategory[];
   phase: DrawAndGuessPhase;
   /** 1-based; 0 when no game is running. */
   currentRound: number;
@@ -60,6 +62,11 @@ interface DrawAndGuessState {
   /** Player ids still to draw this round. */
   drawerQueue: Set<string>;
   wordCategory: WordCategory | ''; // '' when no game is in progress
+  /**
+   * The words played this game, chosen or picked by the clock, so no word is
+   * offered twice in one game; cleared as a game starts, never sent to anybody.
+   */
+  dealt: Set<string>;
   /** Player ids that have already scored this turn, and so cannot guess again. */
   scoredThisTurn: Set<string>;
   /**

@@ -14,6 +14,7 @@ import {
   Button,
   Card,
   ChipField,
+  FilterChipField,
   ChoiceList,
   Chat,
   CodeBoard,
@@ -41,6 +42,7 @@ import {
   MineCell,
   MobileTabs,
   Notice,
+  PickerField,
   NumberCard,
   OperatorKey,
   PairsCard,
@@ -91,6 +93,26 @@ import { Specimen } from './specimen';
 import styles from './gallery.module.css';
 
 const noop = () => {};
+
+/** Chip field's sample: Draw & Guess's word categories, four of them on. */
+const SAMPLE_CATEGORIES: readonly string[] = [
+  'Animals',
+  'Clothing',
+  'Electronics',
+  'Fantasy',
+  'Food',
+  'Fruits',
+  'Household',
+  'Jobs',
+  'League of Legends',
+  'Music',
+  'Nature',
+  'Places',
+  'Sea Life',
+  'Sports',
+  'Vehicles',
+];
+const SAMPLE_PICKED = ['Animals', 'Food', 'Sea Life', 'Sports'];
 
 /** A Gomoku game won by Black on the diagonal from C11 to G7 (GM13). */
 const GOMOKU_LINE = [0, 1, 2, 3, 4].map((step) => pointAt(2 + step, 11 - step));
@@ -239,6 +261,8 @@ export default function Gallery() {
   const [board, setBoard] = useState<'small' | 'medium' | 'large'>('medium');
   const [choice, setChoice] = useState('medium');
   const [bots, setBots] = useState(3);
+  const [categories, setCategories] =
+    useState<readonly string[]>(SAMPLE_PICKED);
   const [colour, setColour] = useState<BrushName>('ink');
   const [size, setSize] = useState<BrushSize>(10);
   const [view, setView] = useState<'board' | 'players' | 'chat'>('board');
@@ -351,8 +375,8 @@ export default function Gallery() {
             Puzzles
           </FilterChip>
         </Specimen>
-        <Specimen label="Chip field: Bots, one choice" width={320}>
-          <ChipField
+        <Specimen label="Filter chip field: Bots, one choice" width={320}>
+          <FilterChipField
             label="Bots"
             value={bots}
             onValueChange={setBots}
@@ -508,6 +532,13 @@ export default function Gallery() {
               }[board]
             }
           />
+        </Specimen>
+        <Specimen
+          family="input"
+          label="Select: Word categories, opening a dialog"
+          width={496}
+        >
+          <PickerField label="Word categories" value="All 15" onOpen={noop} />
         </Specimen>
       </Family>
 
@@ -1825,12 +1856,82 @@ export default function Gallery() {
         ))}
       </Family>
 
+      <Family name="Chip field" file="chip-field">
+        <Specimen
+          family="chip-field"
+          variant="State=Default"
+          label="Default"
+          width={496}
+        >
+          <ChipField
+            label={`${categories.length} of 15 picked`}
+            options={SAMPLE_CATEGORIES.map((name) => ({
+              value: name,
+              label: name,
+            }))}
+            value={categories}
+            onToggle={(name) =>
+              setCategories((current) =>
+                current.includes(name)
+                  ? current.length > 1
+                    ? current.filter((one) => one !== name)
+                    : current
+                  : [...current, name],
+              )
+            }
+            locked={categories.length === 1 ? categories : []}
+            action={{
+              label: 'Choose all',
+              onClick: () => setCategories(SAMPLE_CATEGORIES),
+              disabled: categories.length === SAMPLE_CATEGORIES.length,
+            }}
+            helper="At least one stays picked."
+          />
+        </Specimen>
+        {(
+          [
+            ['All on', SAMPLE_CATEGORIES],
+            ['One on', ['League of Legends']],
+          ] as const
+        ).map(([stateName, picked]) => (
+          <Specimen
+            key={stateName}
+            family="chip-field"
+            variant={`State=${stateName}`}
+            label={stateName}
+            width={496}
+          >
+            <ChipField
+              label={
+                picked.length === SAMPLE_CATEGORIES.length
+                  ? 'All 15 picked'
+                  : `${picked.length} of 15 picked`
+              }
+              options={SAMPLE_CATEGORIES.map((name) => ({
+                value: name,
+                label: name,
+              }))}
+              value={picked}
+              onToggle={noop}
+              locked={picked.length === 1 ? picked : []}
+              action={{
+                label: 'Choose all',
+                onClick: noop,
+                disabled: picked.length === SAMPLE_CATEGORIES.length,
+              }}
+              helper="At least one stays picked."
+            />
+          </Specimen>
+        ))}
+      </Family>
+
       <Family name="Toggle chip" file="toggle-chip">
         <div className={styles.cellRow}>
           {(
             [
               ['Off', false],
               ['On', true],
+              ['Locked', true],
             ] as const
           ).map(([stateName, on]) => (
             <Specimen
@@ -1839,7 +1940,11 @@ export default function Gallery() {
               variant={`State=${stateName}`}
               label={stateName}
             >
-              <ToggleChip on={on} onToggle={noop}>
+              <ToggleChip
+                on={on}
+                locked={stateName === 'Locked'}
+                onToggle={noop}
+              >
                 Notes
               </ToggleChip>
             </Specimen>

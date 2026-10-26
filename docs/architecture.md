@@ -81,7 +81,7 @@ The layer decides who may start, the same way for every game: only the starter, 
 The starter is the host while they are at the table, or while the host is away or watching the player the crown would pass to (`starterOf` in [`shared/room.ts`](../shared/room.ts)), at once rather than once the host's seat is given up: a room never waits on a host who is not there.
 A spectator never starts, changes the settings, says Ready or steps a reveal, even a host who went to watch (`mayStart`).
 Between games anybody at the table may say Ready (`room:ready`), and once everybody here but the starter has, the layer starts the next game itself ([`ready.ts`](../server/libs/rooms/ready.ts)); a player away holds nothing up, and the Readies are forgotten when a game starts.
-Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21).
+Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21); Draw & Guess's word categories are in the snapshot alone, since no lobby row reads them.
 Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
 
 A room's chat is a log on the room (`Room.chat`), not a stream: every message gets the next id in that room, the last 100 are kept, and a page that syncs is sent them as `chat:history`.
@@ -296,6 +296,7 @@ Code outside React takes the catalog as a parameter rather than importing a lang
 English grammar helpers (`plural`, `countWord`) live in `en/` because they are English, and `zh/` writes its own.
 
 What stays English on purpose: the wordmark, the footer's `zumpo. / play a little`, the home hero's FUN tiles, and the games' own content, because the Draw & Guess word bank and Daily Word's words are gameplay content; a Chinese word bank would be its own feature.
+A Draw & Guess word category is an id on the wire (`Sea Life`), worded by the catalog's `drawAndGuess.category`, so its name reads 海洋生物 in Chinese while its words stay English.
 So the Chinese pages say up front that Draw & Guess's words are English, in its tagline, goal, rules, waiting card and the notice as a game starts, and its artwork's word stays the English one a player would type.
 The other words in the games' artwork are the reader's, from `games.artwork` in the catalog: Doodle Chain's lines are in any language.
 A player's name is theirs, in any script; a first visit's random name is picked in the visitor's language, so a Chinese visitor starts as 活泼水獭 rather than Sleepy Otter.

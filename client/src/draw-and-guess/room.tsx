@@ -135,11 +135,13 @@ function BetweenGames({ room }: { room: Room }) {
     );
   }
   if (summary?.endedEarly && count < 2) return <EndedEarlyPanel />;
+  // A guest is told the categories as the host is.
+  const setup = m.drawAndGuess.setup(count, state.rounds, state.categories);
   return (
     <WaitingPanel
       aloneTitle={m.drawAndGuess.aloneTitle}
-      setup={m.drawAndGuess.setup(count, state.rounds)}
-      guestSetup={m.drawAndGuess.guestSetup(count, state.rounds)}
+      setup={setup}
+      guestSetup={setup}
       onStart={startGame}
       starting={starting}
     />

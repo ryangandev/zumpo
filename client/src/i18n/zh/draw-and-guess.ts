@@ -1,18 +1,43 @@
 import type { WordCategory } from '../../../../shared/wire-types';
+import { WORD_CATEGORIES } from '../../../../shared/draw-and-guess';
 import type { drawAndGuess as en } from '../en/draw-and-guess';
 
-const CATEGORIES: Record<WordCategory | '', string> = {
-  '': '',
-  Fruits: '水果',
+/** League of Legends is a name, so it stays as the game calls itself. */
+const CATEGORIES: Record<WordCategory, string> = {
   Animals: '动物',
-  'League of Legends': 'League of Legends',
+  Clothing: '服饰',
   Electronics: '电子产品',
-  Sports: '运动',
+  Fantasy: '奇幻',
   Food: '食物',
+  Fruits: '水果',
+  Household: '家居用品',
+  Jobs: '职业',
+  'League of Legends': 'League of Legends',
+  Music: '音乐',
+  Nature: '自然',
+  Places: '地点',
+  'Sea Life': '海洋生物',
+  Sports: '运动',
+  Vehicles: '交通工具',
 };
 
+const category = (value: WordCategory | ''): string =>
+  value === '' ? '' : CATEGORIES[value];
+
+const ALL = WORD_CATEGORIES.length;
+
+const picked = (
+  categories: readonly WordCategory[],
+  words: { all: string; one: (name: string) => string; some: string },
+) =>
+  categories.length >= ALL
+    ? words.all
+    : categories.length === 1
+      ? words.one(category(categories[0]!))
+      : words.some;
+
 export const drawAndGuess: typeof en = {
-  category: (category) => CATEGORIES[category],
+  category,
   round: (round, rounds) => `第 ${round} 轮，共 ${rounds} 轮`,
   gameOver: '游戏结束',
   gameEnded: '游戏已中止',
@@ -25,13 +50,38 @@ export const drawAndGuess: typeof en = {
   drawer: '画画的人',
   drawerAway: (name, seconds) =>
     `${name} 断开了连接。如果 ${seconds} 秒内没有回来，将跳过这一回合。`,
-  resultsDetail: (rounds, category, turns) =>
-    `${rounds} 轮，类别：${CATEGORIES[category]}，共 ${turns} 个回合。`,
+  resultsDetail: (rounds, played, turns) =>
+    `${rounds} 轮，类别：${category(played)}，共 ${turns} 个回合。`,
   aloneTitle: '两个人更好玩。',
-  setup: (players, rounds) =>
-    `${players} 人，${rounds} 轮。词语都是英文单词，游戏开始时会随机选择词语类别。`,
-  guestSetup: (players, rounds) =>
-    `${players} 人，${rounds} 轮。词语都是英文单词。`,
+  setup: (players, rounds, categories) =>
+    `${players} 人，${rounds} 轮。词语都是英文单词，${picked(categories, {
+      all: `游戏开始时会从全部 ${ALL} 个类别中随机选择词语类别。`,
+      one: (name) => `词语类别是“${name}”。`,
+      some: `游戏开始时会从选中的 ${categories.length} 个类别中随机选择词语类别。`,
+    })}`,
+  nextSetting: (rounds, categories) =>
+    picked(categories, {
+      all: `${rounds} 轮，全部 ${ALL} 个类别`,
+      one: (name) => `${rounds} 轮，${name}`,
+      some: `${rounds} 轮，${categories.length} 个类别`,
+    }),
+  categories: {
+    label: '词语类别',
+    value: (categories) =>
+      picked(categories, {
+        all: `全部 ${ALL} 个`,
+        one: (name) => name,
+        some: `已选 ${categories.length} 个`,
+      }),
+    title: '词语类别',
+    description: '每局游戏从选中的类别里随机抽一个。',
+    count: (count) =>
+      count >= ALL ? `已全选 ${ALL} 个` : `已选 ${count} 个，共 ${ALL} 个`,
+    chooseAll: '全选',
+    keepOne: '至少保留一个类别。',
+    save: '保存',
+    cancel: '取消',
+  },
   away: '暂离',
   waiting: '等待中',
   choosing: '正在选词',

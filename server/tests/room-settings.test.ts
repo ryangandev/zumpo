@@ -1,8 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import type { GameType, LiarsDiceRoomState } from '../models/types.js';
+import type {
+  DrawAndGuessRoomState,
+  GameType,
+  LiarsDiceRoomState,
+} from '../models/types.js';
 import { SEATS } from '../../shared/seats.js';
+import { WORD_CATEGORIES } from '../../shared/draw-and-guess.js';
 import {
   createLiarsDiceRoom,
+  createRoom,
   createMinesweeperRoom,
   joinRoom,
   lobbyView,
@@ -17,7 +23,10 @@ import {
 
 /** Each game's settings as a room is made, and another it may change to. */
 const SETTINGS: Record<GameType, [object, object]> = {
-  'draw-and-guess': [{ rounds: 1 }, { rounds: 3 }],
+  'draw-and-guess': [
+    { rounds: 1, categories: ['Animals', 'Food'] },
+    { rounds: 3, categories: ['Sea Life'] },
+  ],
   minesweeper: [{ difficulty: 'Small' }, { difficulty: 'Large' }],
   'make-24': [{ hands: 5 }, { hands: 10 }],
   pairs: [{ board: 'Small' }, { board: 'Large' }],
@@ -32,6 +41,9 @@ const SETTINGS: Record<GameType, [object, object]> = {
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];
+
+/** Settings only a room reads, which its lobby row leaves out. */
+const LEFT_OUT_OF_THE_LOBBY = ['categories'];
 
 /*
  * Between games the starter may change what the next game is played with.
@@ -78,18 +90,28 @@ describe('changing the next game', () => {
           ?.type,
       ).toBe('invalidRequest');
 
+      // The snapshot and the lobby row both show it, under its own name. The
+      // wait starts first, because the snapshot can land before the
+      // acknowledgement does.
+      const shown = waitForState(guest, (candidate) =>
+        Object.entries(next).every(
+          ([key, value]) =>
+            JSON.stringify(
+              (candidate as unknown as Record<string, unknown>)[key],
+            ) === JSON.stringify(value),
+        ),
+      );
       expect(await request(owner, 'room:settings', roomId, next)).toEqual({
         ok: true,
       });
-      // The snapshot and the lobby row both show it, under its own name.
-      const state = await waitForState(guest, (candidate) =>
-        Object.entries(next).every(
-          ([key, value]) =>
-            (candidate as unknown as Record<string, unknown>)[key] === value,
+      const state = await shown;
+      expect(state.isGameStarted).toBe(false);
+      const listed = Object.fromEntries(
+        Object.entries(next).filter(
+          ([key]) => !LEFT_OUT_OF_THE_LOBBY.includes(key),
         ),
       );
-      expect(state.isGameStarted).toBe(false);
-      expect(await lobbyView(guest, roomId, gameType)).toMatchObject(next);
+      expect(await lobbyView(guest, roomId, gameType)).toMatchObject(listed);
     },
   );
 
@@ -121,6 +143,80 @@ describe('changing the next game', () => {
       (candidate) => candidate.isGameStarted,
     );
     expect(state.cups.map((cup) => cup.diceLeft)).toEqual([5, 5]);
+  });
+
+  it('draws the next Draw & Guess game from the categories picked, and never none', async () => {
+    const {
+      roomId,
+      players: [owner, maya],
+    } = await seatTable(harness, ['Ryan', 'Maya'], (client, username) =>
+      createRoom(client, { username, categories: ['Animals', 'Food'] }),
+    );
+    for (const categories of [[], ['Dinosaurs'], ['Food', 'Food'], null]) {
+      expect(
+        (
+          await request(owner, 'room:settings', roomId, {
+            rounds: 1,
+            categories,
+          })
+        ).error?.type,
+      ).toBe('invalidRequest');
+    }
+    expect(
+      await request(owner, 'room:settings', roomId, {
+        rounds: 1,
+        categories: ['Fantasy'],
+      }),
+    ).toEqual({ ok: true });
+    await startGame(owner, roomId);
+    const state = await waitForState<DrawAndGuessRoomState>(
+      maya,
+      (candidate) => candidate.isGameStarted,
+    );
+    expect(state).toMatchObject({
+      categories: ['Fantasy'],
+      wordCategory: 'Fantasy',
+    });
+  });
+
+  it('takes Draw & Guess settings sent without categories, as an older page sends them, as all of them', async () => {
+    const owner = await harness.connect();
+    const created = await request<{ ok: boolean; roomId: string }>(
+      owner,
+      'room:create',
+      {
+        gameType: 'draw-and-guess',
+        roomName: 'Room',
+        username: 'Owner',
+        maxPlayers: 4,
+        password: '',
+        settings: { rounds: 2 },
+      },
+    );
+    expect(created.ok).toBe(true);
+    const all = [...WORD_CATEGORIES];
+    await settle();
+    expect((owner.state as DrawAndGuessRoomState).categories).toEqual(all);
+
+    // Each wait starts before its request, because the snapshot can land
+    // before the acknowledgement does.
+    const narrowed = waitForState<DrawAndGuessRoomState>(
+      owner,
+      (state) => state.categories.length === 1,
+    );
+    await request(owner, 'room:settings', created.roomId, {
+      rounds: 1,
+      categories: ['Food'],
+    });
+    await narrowed;
+    const widened = waitForState<DrawAndGuessRoomState>(
+      owner,
+      (candidate) => candidate.rounds === 3,
+    );
+    expect(
+      await request(owner, 'room:settings', created.roomId, { rounds: 3 }),
+    ).toEqual({ ok: true });
+    expect((await widened).categories).toEqual(all);
   });
 
   it('keeps showing the last minefield at its own size until the next is dealt', async () => {

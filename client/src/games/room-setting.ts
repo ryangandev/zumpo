@@ -1,4 +1,7 @@
-import type { AnyLobbyRoomInfo } from '../../../shared/wire-types';
+import type {
+  AnyLobbyRoomInfo,
+  AnyRoomState,
+} from '../../../shared/wire-types';
 import { levelsFor } from '../../../shared/hush';
 import { DECK_SIZE as SNAP_DECK } from '../../../shared/snap';
 import type { Messages } from '../i18n';
@@ -39,4 +42,15 @@ export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
         ? m.lobby.watching(room.spectatorCount)
         : '';
   }
+}
+
+/**
+ * The next game's setting as the room's results say it to anybody but the
+ * starter: `roomSetting`, with Draw & Guess's categories too ("2 rounds, all
+ * 15 categories").
+ */
+export function nextGameSetting(room: AnyRoomState, m: Messages): string {
+  return room.gameType === 'draw-and-guess'
+    ? m.drawAndGuess.nextSetting(room.rounds, room.categories)
+    : roomSetting(room, m);
 }

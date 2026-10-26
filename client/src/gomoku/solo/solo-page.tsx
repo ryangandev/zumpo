@@ -9,7 +9,7 @@ import type { GomokuColor } from '../../../../shared/wire-types';
 import {
   Button,
   Card,
-  ChipField,
+  FilterChipField,
   StatList,
   TurnBar,
   type Stat,
@@ -120,7 +120,7 @@ function ChangeLevel({
     >
       {(picked, pick) => (
         <>
-          <ChipField
+          <FilterChipField
             label={m.gomoku.solo.level}
             helper={m.gomoku.solo.levelHelp[picked.level]}
             options={LEVELS.map((level) => ({
@@ -130,7 +130,7 @@ function ChangeLevel({
             value={picked.level}
             onValueChange={(level) => pick({ ...picked, level })}
           />
-          <ChipField
+          <FilterChipField
             label={m.gomoku.solo.stones}
             helper={m.gomoku.solo.stonesOf[picked.color]}
             options={(['black', 'white'] as const).map((color) => ({

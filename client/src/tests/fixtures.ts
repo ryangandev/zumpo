@@ -13,6 +13,7 @@ import type {
   SnapRoomState,
   TriosRoomState,
 } from '../../../shared/wire-types';
+import { WORD_CATEGORIES } from '../../../shared/draw-and-guess';
 
 /** The viewer in every fixture, and the room's host unless a test says not. */
 export const ME = 'p1';
@@ -68,6 +69,7 @@ export function drawAndGuessState(
     ...room,
     gameType: 'draw-and-guess',
     rounds: 2,
+    categories: [...WORD_CATEGORIES],
     phase: 'waiting',
     currentRound: 0,
     turn: 0,

@@ -8,7 +8,8 @@ import {
   roomCreateRequest,
   roomIdOnly,
 } from '../libs/validation.js';
-import { roundsSetting } from '../socket/draw-and-guess/validation.js';
+import { drawAndGuessSettings } from '../socket/draw-and-guess/validation.js';
+import { WORD_CATEGORIES } from '../../shared/draw-and-guess.js';
 import { startDrawingRequest } from '../libs/drawing/validation.js';
 
 const validRoomId = randomUUID();
@@ -19,7 +20,7 @@ const validCreateRequest = {
   username: 'Owner',
   maxPlayers: 4,
   password: '',
-  settings: { rounds: 2 },
+  settings: { rounds: 2, categories: ['Animals'] },
 };
 
 describe('roomCreateRequest', () => {
@@ -33,7 +34,7 @@ describe('roomCreateRequest', () => {
       roomName: 'A Room',
       username: 'Owner',
       maxPlayers: 4,
-      settings: { rounds: 2 },
+      settings: { rounds: 2, categories: ['Animals'] },
     });
 
     expect(result.success).toBe(true);
@@ -127,13 +128,53 @@ describe('roomCreateRequest', () => {
   });
 });
 
-describe('roundsSetting', () => {
+const accepts = (rounds: unknown, categories: unknown) =>
+  drawAndGuessSettings.safeParse({ rounds, categories }).success;
+
+describe('drawAndGuessSettings', () => {
   it('bounds the round count', () => {
-    expect(roundsSetting.safeParse({ rounds: 2 }).success).toBe(true);
-    expect(roundsSetting.safeParse({ rounds: 0 }).success).toBe(false);
-    expect(roundsSetting.safeParse({ rounds: 99 }).success).toBe(false);
-    expect(roundsSetting.safeParse({}).success).toBe(false);
-    expect(roundsSetting.safeParse({ rounds: '2' }).success).toBe(false);
+    expect(accepts(2, ['Animals'])).toBe(true);
+    expect(accepts(0, ['Animals'])).toBe(false);
+    expect(accepts(99, ['Animals'])).toBe(false);
+    expect(accepts(undefined, ['Animals'])).toBe(false);
+    expect(accepts('2', ['Animals'])).toBe(false);
+  });
+
+  it('takes at least one known category, each once', () => {
+    expect(accepts(2, ['Sea Life'])).toBe(true);
+    expect(accepts(2, [...WORD_CATEGORIES])).toBe(true);
+    for (const refused of [
+      [],
+      null,
+      'Animals',
+      ['Animals', 'Animals'],
+      ['Dinosaurs'],
+      ['animals'],
+      ['toString'],
+      [42],
+    ]) {
+      expect(accepts(2, refused)).toBe(false);
+    }
+  });
+
+  it('takes categories left out as all of them, as a page from before them meant', () => {
+    expect(drawAndGuessSettings.parse({ rounds: 2 })).toEqual({
+      rounds: 2,
+      categories: [...WORD_CATEGORIES],
+    });
+    expect(
+      drawAndGuessSettings.parse({ rounds: 2, categories: undefined })
+        .categories,
+    ).toEqual([...WORD_CATEGORIES]);
+  });
+
+  it('keeps the categories in the picker’s order, however they arrive', () => {
+    expect(
+      drawAndGuessSettings.parse({
+        rounds: 2,
+        categories: ['Vehicles', 'Animals', 'Music'],
+      }).categories,
+    ).toEqual(['Animals', 'Music', 'Vehicles']);
   });
 });
 

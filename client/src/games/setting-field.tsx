@@ -1,5 +1,5 @@
 import type {
-  AnyLobbyRoomInfo,
+  AnyRoomState,
   CodeBreakerSettings,
   DailyWordSettings,
   DoodleChainSettings,
@@ -23,7 +23,9 @@ import {
   DRAWING_SECONDS,
 } from '../../../shared/doodle-chain';
 import { BOARDS as PAIRS_BOARDS } from '../../../shared/pairs';
+import { WORD_CATEGORIES } from '../../../shared/draw-and-guess';
 import { SelectField } from '../ui';
+import { CategoriesField } from '../draw-and-guess/categories-field';
 import { useMessages } from '../i18n';
 
 /** The choices the server takes; each game's validation has the same. */
@@ -36,7 +38,7 @@ const CODES = [1, 3] as const;
 export function defaultSettings(gameType: GameType): GameSettings {
   switch (gameType) {
     case 'draw-and-guess':
-      return { rounds: 2 };
+      return { rounds: 2, categories: [...WORD_CATEGORIES] };
     case 'minesweeper':
       return { difficulty: 'Small' };
     case 'make-24':
@@ -61,13 +63,14 @@ export function defaultSettings(gameType: GameType): GameSettings {
 }
 
 /**
- * What a room's next game will be played with, read off its snapshot or its
- * lobby row, which carry each setting under its own name; null for a game
- * with nothing to choose.
+ * What a room's next game will be played with, read off its snapshot, which
+ * carries each setting under its own name; null for a game with nothing to
+ * choose.
  */
-export function settingsOf(room: AnyLobbyRoomInfo): GameSettings | null {
+export function settingsOf(room: AnyRoomState): GameSettings | null {
   switch (room.gameType) {
     case 'draw-and-guess':
+      return { rounds: room.rounds, categories: room.categories };
     case 'daily-word':
     case 'code-breaker':
       return { rounds: room.rounds };
@@ -91,10 +94,11 @@ export function settingsOf(room: AnyLobbyRoomInfo): GameSettings | null {
 }
 
 /**
- * DL04-DL06 and the rest: the one setting a game lets a room choose, as a
- * select of its presets. A new room's form asks it under the setting's own
- * name with its helper; between games the starter is asked it as the next
- * game's (`label`), with no helper. Nothing for a game with nothing to set.
+ * DL04-DL06 and the rest: the setting a game lets a room choose, as a select
+ * of its presets; Draw & Guess adds its word categories beside its rounds.
+ * A new room's form asks it under the setting's own name with its helper;
+ * between games the starter is asked it as the next game's (`label`), with no
+ * helper. Nothing for a game with nothing to set.
  */
 export function SettingField({
   gameType,
@@ -113,18 +117,25 @@ export function SettingField({
   const helper = (text: string) => (label === undefined ? text : undefined);
   switch (gameType) {
     case 'draw-and-guess': {
-      const { rounds } = settings as DrawAndGuessSettings;
+      // Two settings: the rounds, and the categories their game draws from.
+      const current = settings as DrawAndGuessSettings;
       return (
-        <SelectField
-          label={label ?? t.rounds}
-          options={ROUNDS.map((count) => ({
-            value: count,
-            label: t.roundCount(count),
-          }))}
-          value={rounds}
-          onValueChange={(next) => onChange({ rounds: next })}
-          name="rounds"
-        />
+        <>
+          <SelectField
+            label={label ?? t.rounds}
+            options={ROUNDS.map((count) => ({
+              value: count,
+              label: t.roundCount(count),
+            }))}
+            value={current.rounds}
+            onValueChange={(next) => onChange({ ...current, rounds: next })}
+            name="rounds"
+          />
+          <CategoriesField
+            categories={current.categories}
+            onChange={(categories) => onChange({ ...current, categories })}
+          />
+        </>
       );
     }
     case 'make-24': {

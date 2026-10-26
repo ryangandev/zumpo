@@ -12,8 +12,17 @@ The faster you guess, the more it is worth, and the drawer takes a cut of whatev
 A **game** is a number of **rounds**, chosen when the room is created.
 In each round every player draws exactly once, in a random order, so a 2-round game with 4 players is 8 turns.
 
-One word category (Fruits, Animals, League of Legends, Electronics, Sports or Food) is drawn at random for the whole game and shown to everyone.
-The words are English in every language, and a guess is matched in English, ignoring case and the spaces around it.
+One word category is drawn at random for the whole game, from the categories the room picked, and shown to everyone; every turn's words come from it.
+The bank has 15 categories of at least 40 words each: Animals, Clothing, Electronics, Fantasy, Food, Fruits, Household, Jobs, League of Legends, Music, Nature, Places, Sea Life, Sports and Vehicles.
+A room picks its categories when it is created, all 15 unless the host narrows them, and whoever starts the next game can change them between games, as they can the rounds; at least one always stays picked.
+The picked set and the bank were added at Ryan's request on 2026-10-26, and each game still draws one category, as likely as any other picked.
+A game never deals a word twice: the server keeps the words played this game, chosen or picked by the clock, and offers each drawer three from the rest of the category, or from all of it once fewer than three are left.
+
+Every word is something a player can draw and the others can recognise, fit for a family table, and English in every language.
+A word is letters and single spaces, capitalised, at most 14 characters, written as a player would type it (singular unless a player would name it in the plural, like Jeans, Maracas or Darts, and spaced as they would space it, like Dragon Fruit), and appears once in the whole bank; League of Legends is the only category of names, no other word is a brand or a trademark used as a name (Ice Pop, not Popsicle), and Fruits holds fruits alone.
+No two words in a category are close to each other as a guess is (see [the close rule](#rules-the-server-enforces)), either way, so guessing one word is never "So close!" to another in its category: there is no Shirt beside Skirt, or Tree beside Palm Tree.
+[`word-bank.test.ts`](../../server/tests/word-bank.test.ts) holds the bank to all of this.
+A guess is matched in English, ignoring case and the spaces around it.
 
 Each **turn** has three phases, and the server decides when each one ends:
 
@@ -62,7 +71,10 @@ The drawer cannot guess their own word.
 ## How to play
 
 1. Pick Draw & Guess from the games, which opens its page.
-2. **Create a room** (name, 2–8 seats, 1–4 rounds, and an optional password) or join one of the open rooms listed under it.
+2. **Create a room** (1–4 rounds and the word categories, then under More options a name, 2–8 seats and an optional password) or join one of the open rooms listed under it.
+   The categories field says what is picked ("All 15", "3 of 15" or the one category) and opens them as chips in a dialog, where Save keeps the picked set and Cancel forgets it.
+   The last chip on cannot be turned off, and says why; Choose all turns every one back on, and stays in place, disabled, while every one is on.
+   Saving the set already there sends nothing.
    A locked room asks for its password.
 3. The host (the crown in the player list) presses **Start game**.
    It needs at least two players.
@@ -84,6 +96,9 @@ The client shows them, and the server checks them, so a modified client gains no
   That covers drawing, undo and clear: a stranger with a room id off the lobby broadcast used to be able to wipe a room's canvas with one event.
 - **Only the host may start a game**, or while they are away the player next in line, and only with two or more players.
   Between games anybody else at the table may say Ready, and the next game starts once everybody has ([the room layer](../architecture.md#the-room-layer)).
+- **A room's settings are checked on create and between games**: 1–4 rounds, and one or more known word categories, each once.
+  An empty set, an unknown name, a repeat or anything but a list is refused, so no game is ever left without words; the set is kept in the bank's order.
+  Settings sent without categories mean all of them, as they did for a page loaded before categories were a setting and still open after a deploy.
 - **Only a member may read a room's state**, a player or a spectator, so a locked room's player list is not readable by anyone who has a room id.
 - **Only a member may talk** in a room, and a spectator's right guess is swallowed and scores nobody.
 - **During drawing, a spectator talks only to the other spectators.**
@@ -155,6 +170,7 @@ The Draw & Guess snapshot adds:
 | Field                           | What it is                                                                               |
 | ------------------------------- | ---------------------------------------------------------------------------------------- |
 | `phase`                         | `waiting`, `choosing`, `drawing` or `reveal`                                             |
+| `rounds`, `categories`          | The room's settings; the lobby row has `rounds` alone, and `categories` is in bank order |
 | `currentRound`, `turn`          | Both count from 1 during a game and are 0 between games; `turn` counts turns skipped too |
 | `currentDrawer`, `wordCategory` | Who draws, and the game's category; empty between games                                  |
 | `wordChoices`                   | The three words, in the drawer's snapshot alone, during word select                      |
@@ -206,6 +222,8 @@ See [the room layer](../architecture.md#the-room-layer) for the split.
 | [`whiteboard-canvas-events-handler.ts`](../../server/socket/draw-and-guess/whiteboard-canvas-events-handler.ts) | Relay draw, undo and clear                                    |
 | [`libs/drawing/canvas.ts`](../../server/libs/drawing/canvas.ts)                                                 | The room's drawing, as a replayable stroke list               |
 | [`words.ts`](../../server/socket/draw-and-guess/words.ts)                                                       | Picking words, hiding them, and matching guesses to them      |
+| [`libs/word-bank.ts`](../../server/libs/word-bank.ts)                                                           | The words, by category                                        |
+| [`shared/draw-and-guess.ts`](../../shared/draw-and-guess.ts)                                                    | The categories in order, for the server and the client alike  |
 | [`validation.ts`](../../server/socket/draw-and-guess/validation.ts)                                             | This game's inbound shapes; a stroke's are in `libs/drawing/` |
 
 Its own events are all prefixed `dg:`.

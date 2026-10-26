@@ -164,7 +164,7 @@
                     "type": "FRAME",
                     "id": "27:18019",
                     "name": "Actions",
-                    "w": 342,
+                    "w": 159,
                     "h": 60,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -204,32 +204,6 @@
                             "path": ".",
                             "height": 48,
                             "width": 159
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "95:114228",
-                        "name": "Action / Game settings",
-                        "w": 171,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=edit",
-                          "Show icon": true,
-                          "Label": "Game settings"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "width": 171
                           }
                         ]
                       }
