@@ -84,9 +84,21 @@ async function expectScored(watcher: Page, guesser: Seat) {
 }
 
 /**
- * A guess a letter off the word goes back to the guesser alone, marked close,
- * and so does a second; the drawer is told once that they are close and never
- * sees what they typed.
+ * Two guesses the server calls close: a letter off the word, changed and
+ * dropped; or, for a word under four letters, which no misspelling makes
+ * close, the word inside a question and the word shouted.
+ */
+function closeGuesses(word: string): [string, string] {
+  const lower = word.toLowerCase();
+  if (letters(word) < 4) return [`a ${lower}?`, `${lower}!`];
+  const last = lower.at(-1) === 'x' ? 'y' : 'x';
+  return [`${lower.slice(0, -1)}${last}`, lower.slice(0, -1)];
+}
+
+/**
+ * A close guess goes back to the guesser alone, marked close, and so does a
+ * second; the drawer is told once that they are close and never sees what
+ * they typed.
  */
 async function expectClose(
   drawer: Seat,
@@ -94,9 +106,7 @@ async function expectClose(
   word: string,
   turn: number,
 ) {
-  const last = word.at(-1)!.toLowerCase() === 'x' ? 'y' : 'x';
-  const near = `${word.slice(0, -1)}${last}`.toLowerCase();
-  const nearer = word.slice(0, -1).toLowerCase();
+  const [near, nearer] = closeGuesses(word);
   const drawerChat = drawer.page.getByRole('region', { name: 'Chat' });
   // The drawer may have been close themselves as a guesser last turn.
   const theirOwn = await drawerChat.getByText('So close!').count();
@@ -150,7 +160,6 @@ test('two players play a whole game', async ({ player }) => {
   );
   await maya.page.getByRole('button', { name: 'Start game' }).click();
 
-  let closeChecked = false;
   for (let turn = 1; turn <= 2; turn++) {
     const [drawer, guesser] = await whoDraws(maya, leo);
     const word = await drawAWord(drawer.page, 4);
@@ -159,16 +168,10 @@ test('two players play a whole game', async ({ player }) => {
     const miss = `not it, turn ${turn}`;
     await say(guesser.page, miss);
     await expect(drawer.page.getByText(miss)).toBeVisible();
-    if (letters(word) >= 4) {
-      await expectClose(drawer, guesser, word, turn);
-      closeChecked = true;
-    }
+    await expectClose(drawer, guesser, word, turn);
     await say(guesser.page, word.toUpperCase());
     await expectScored(drawer.page, guesser);
   }
-  // A word under four letters is never close; two turns offering only such
-  // words are rare enough to call a failure.
-  expect(closeChecked).toBe(true);
 
   await expect(maya.page.getByText('Game over', { exact: true })).toBeVisible();
   await expect(
@@ -255,14 +258,12 @@ test('a phone player draws from the words alone and guesses under the board', as
       await expect(recent.getByText(/^Round 1 · \w+ draws$/)).toBeVisible();
       // A close guess lands there too, the guesser's alone, and the room's
       // notice under it.
-      if (letters(word) >= 4) {
-        const near = word.slice(0, -1).toLowerCase();
-        await say(leo.page, near, 'Guess');
-        await expect(
-          recent.getByRole('listitem').filter({ hasText: near }),
-        ).toHaveText(`You${near}So close!`);
-        await expect(recent.getByText('Leo is close!')).toBeVisible();
-      }
+      const [near] = closeGuesses(word);
+      await say(leo.page, near, 'Guess');
+      await expect(
+        recent.getByRole('listitem').filter({ hasText: near }),
+      ).toHaveText(`You${near}So close!`);
+      await expect(recent.getByText('Leo is close!')).toBeVisible();
       await say(leo.page, word, 'Guess');
     }
     // The phone's chat is a tab of its own, so the desktop player watches.

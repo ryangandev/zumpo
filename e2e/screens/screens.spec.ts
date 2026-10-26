@@ -537,7 +537,8 @@ async function nextDrawer(seats: Seat[]): Promise<Seat> {
  * Chooses the shortest word offered, as Figma's "Turtle" is short: a long
  * word wraps the turn bar onto another line and makes the screen taller.
  * With `minLetters`, the shortest of those at least that long, if any is: a
- * word under four letters is never close (D17, MO21).
+ * word under four letters is close only with the word inside the guess, and
+ * D17 and MO21 show a misspelling.
  */
 async function chooseAndDraw(drawer: Page, minLetters = 0): Promise<string> {
   const choices = await drawer.getByRole('button', { name: WORD_CHOICE }).all();
@@ -588,9 +589,15 @@ async function wordOf(drawer: Page): Promise<string> {
 /** How many letters closeness counts: spaces and hyphens aside. */
 const letters = (word: string) => word.replace(/[\s-]/g, '').length;
 
-/** A guess a letter off the word: its last letter changed. */
-const nearly = (word: string) =>
-  `${word.slice(0, -1)}${word.at(-1)!.toLowerCase() === 'x' ? 'y' : 'x'}`.toLowerCase();
+/**
+ * A guess the server calls close: a letter off the word, its last letter
+ * changed, as Figma's "turtel" is; or, for a word under four letters, which
+ * no misspelling makes close, the word inside a question.
+ */
+const closeTo = (word: string) =>
+  letters(word) >= 4
+    ? `${word.slice(0, -1)}${word.at(-1)!.toLowerCase() === 'x' ? 'y' : 'x'}`.toLowerCase()
+    : `a ${word.toLowerCase()}?`;
 
 async function guess(seat: Seat, text: string) {
   const box = seat.page.getByRole('textbox', {
@@ -668,20 +675,18 @@ test('a Draw & Guess game', async ({ player }) => {
         .getByRole('button', { name: 'Back to the game' })
         .click();
 
-      // A letter off first: the guesser's own close line and the room's
+      // A close guess first: the guesser's own close line and the room's
       // notice (D17), and the same under Leo's board (MO21).
-      if (letters(word) >= 4) {
-        await guess(watcher, nearly(word));
-        await expect(
-          watcher.page.getByText(`${watcher.name} is close!`, { exact: true }),
-        ).toBeVisible();
-        await shot(watcher.page, 'D17');
-        await guess(leo!, nearly(word));
-        await expect(
-          leo!.page.getByText('Leo is close!', { exact: true }),
-        ).toBeVisible();
-        await shot(leo!.page, 'MO21');
-      }
+      await guess(watcher, closeTo(word));
+      await expect(
+        watcher.page.getByText(`${watcher.name} is close!`, { exact: true }),
+      ).toBeVisible();
+      await shot(watcher.page, 'D17');
+      await guess(leo!, closeTo(word));
+      await expect(
+        leo!.page.getByText('Leo is close!', { exact: true }),
+      ).toBeVisible();
+      await shot(leo!.page, 'MO21');
 
       await guess(watcher, word);
       await expect(watcher.page.getByText(/^You got it! \+\d+$/)).toBeVisible();
