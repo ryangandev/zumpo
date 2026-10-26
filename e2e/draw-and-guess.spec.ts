@@ -111,13 +111,8 @@ async function expectClose(
 ) {
   const [near, nearer] = closeGuesses(word);
   const drawerChat = drawer.page.getByRole('region', { name: 'Chat' });
-  // The drawer may have been close themselves as a guesser last turn, and a
-  // game can deal the same word twice, so their own lines may be there.
+  // The drawer may have been close themselves as a guesser last turn.
   const theirOwn = await drawerChat.getByText('So close!').count();
-  const theirNear = await drawerChat.getByText(near).count();
-  const theirNearer = await drawerChat
-    .getByText(nearer, { exact: true })
-    .count();
   await say(guesser.page, near);
   const own = guesser.page
     .getByRole('region', { name: 'Chat' })
@@ -136,10 +131,8 @@ async function expectClose(
   const after = `still guessing, turn ${turn}`;
   await say(guesser.page, after);
   await expect(drawer.page.getByText(after)).toBeVisible();
-  await expect(drawerChat.getByText(near)).toHaveCount(theirNear);
-  await expect(drawerChat.getByText(nearer, { exact: true })).toHaveCount(
-    theirNearer,
-  );
+  await expect(drawerChat.getByText(near)).toHaveCount(0);
+  await expect(drawerChat.getByText(nearer, { exact: true })).toHaveCount(0);
   await expect(drawerChat.getByText('So close!')).toHaveCount(theirOwn);
   await expect(told).toHaveCount(1);
 }
@@ -223,6 +216,11 @@ test('a room draws its words from the categories picked, and its starter changes
   await expect(
     maya.page.getByText('2 players, 1 round. The word category is Sea Life.'),
   ).toBeVisible();
+  await expect(
+    leo.page.getByText(
+      '2 players, 1 round. The word category is Sea Life. Only the host can start the game.',
+    ),
+  ).toBeVisible();
   await maya.page.getByRole('button', { name: 'Start game' }).click();
   await expect(
     leo.page.getByText('Game started: category Sea Life.'),
@@ -238,7 +236,7 @@ test('a room draws its words from the categories picked, and its starter changes
   ).toBeVisible();
 
   // The starter narrows the next game to two others; the guest reads it.
-  await pickCategories(maya.page, ['Fantasy', 'Nature']);
+  await pickCategories(maya.page, ['League of Legends', 'Nature']);
   await expect(
     maya.page.getByRole('button', { name: 'Word categories 2 of 15' }),
   ).toBeVisible();
@@ -247,10 +245,12 @@ test('a room draws its words from the categories picked, and its starter changes
   ).toBeVisible();
   await maya.page.getByRole('button', { name: 'Play again' }).click();
   const started = leo.page.getByText(
-    /^Game started: category (Fantasy|Nature)\.$/,
+    /^Game started: category (League of Legends|Nature)\.$/,
   );
   await expect(started).toBeVisible();
-  const drawn = /category (\w+)/.exec((await started.textContent())!)![1];
+  const drawn = /^Game started: category (.+)\.$/.exec(
+    (await started.textContent())!,
+  )![1];
   for (const word of await playOut(maya, leo, 2)) {
     expect(wordBank[drawn as WordCategory]).toContain(word);
   }
