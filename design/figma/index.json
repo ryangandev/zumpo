@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-26T07:05:27.232Z",
+  "exportedAt": "2026-10-26T16:23:54.925Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": true
   },
   "counts": {
-    "flows": 259,
+    "flows": 261,
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
-    "seconds": 28,
-    "nodes": 14922,
-    "instances": 7872,
+    "seconds": 27,
+    "nodes": 15006,
+    "instances": 7917,
     "grids": 90,
     "gridCells": 2884
   },
@@ -155,7 +155,7 @@
       "id": "95:113407",
       "file": "components/chip-field.json",
       "preview": "previews/components/chip-field.png",
-      "variants": 2
+      "variants": 3
     },
     {
       "name": "Zumpo/Code board",
@@ -547,7 +547,7 @@
       "id": "95:113244",
       "file": "components/toggle-chip.json",
       "preview": "previews/components/toggle-chip.png",
-      "variants": 3
+      "variants": 4
     },
     {
       "name": "Zumpo/Trios card",
@@ -824,7 +824,7 @@
           "id": "90:112599",
           "size": [
             1440,
-            674
+            693
           ],
           "file": "flows/01-platform/P19.json",
           "preview": "previews/01-platform/P19.png",
@@ -892,7 +892,7 @@
           "id": "9:1014",
           "size": [
             1440,
-            738
+            849
           ],
           "file": "flows/02-draw-and-guess/DL04.json",
           "preview": "previews/02-draw-and-guess/DL04.png",
@@ -904,7 +904,7 @@
           "id": "9:1067",
           "size": [
             1440,
-            1097
+            1208
           ],
           "file": "flows/02-draw-and-guess/DL05.json",
           "preview": "previews/02-draw-and-guess/DL05.png",
@@ -916,7 +916,7 @@
           "id": "9:1120",
           "size": [
             1440,
-            638
+            749
           ],
           "file": "flows/02-draw-and-guess/DL06.json",
           "preview": "previews/02-draw-and-guess/DL06.png",
@@ -1144,7 +1144,7 @@
           "id": "9:15843",
           "size": [
             1440,
-            1071
+            1182
           ],
           "file": "flows/02-draw-and-guess/DL10.json",
           "preview": "previews/02-draw-and-guess/DL10.png",
@@ -1156,7 +1156,7 @@
           "id": "9:15898",
           "size": [
             1440,
-            738
+            849
           ],
           "file": "flows/02-draw-and-guess/DL11.json",
           "preview": "previews/02-draw-and-guess/DL11.png",
@@ -1164,11 +1164,11 @@
         },
         {
           "code": "D16",
-          "title": "Host · game settings",
+          "title": "Final scores · word categories",
           "id": "95:114256",
           "size": [
             1440,
-            790
+            892
           ],
           "file": "flows/02-draw-and-guess/D16.json",
           "preview": "previews/02-draw-and-guess/D16.png",
@@ -1184,6 +1184,18 @@
           ],
           "file": "flows/02-draw-and-guess/D17.json",
           "preview": "previews/02-draw-and-guess/D17.png",
+          "isFlow": true
+        },
+        {
+          "code": "DL12",
+          "title": "Create room · word categories",
+          "id": "244:66468",
+          "size": [
+            1440,
+            851
+          ],
+          "file": "flows/02-draw-and-guess/DL12.json",
+          "preview": "previews/02-draw-and-guess/DL12.png",
           "isFlow": true
         }
       ],
@@ -1616,7 +1628,7 @@
           "id": "9:10193",
           "size": [
             390,
-            538
+            649
           ],
           "file": "flows/04-mobile/MO05.json",
           "preview": "previews/04-mobile/MO05.png",
@@ -1813,13 +1825,26 @@
           "file": "flows/04-mobile/MO21.json",
           "preview": "previews/04-mobile/MO21.png",
           "isFlow": true
+        },
+        {
+          "code": "MO22",
+          "title": "Create room · word categories",
+          "id": "244:67082",
+          "size": [
+            390,
+            844
+          ],
+          "file": "flows/04-mobile/MO22.json",
+          "preview": "previews/04-mobile/MO22.png",
+          "isFlow": true
         }
       ],
       "notes": [
         "MO01 · Home / rows under a heading per kind, with filters that scroll sideways. A tap on a game opens its page.",
         "MO17 · A second tab with the same player took over. This one waits until Use this tab takes the player back; the other tab then shows this card.",
         "MO18 · Zumpo restarted for an update, which closes every room. Everyone in the room sees this card in place of the game.",
-        "MO19 · 390 px, M10’s round seen from Leo’s phone: time ran out on Sam and the safest cell was picked for him. The result rows are the Pick result’s Phone layout, the name above the outcome and its detail, so the Auto-picked tag never squeezes the name; MO13 uses it too."
+        "MO19 · 390 px, M10’s round seen from Leo’s phone: time ran out on Sam and the safest cell was picked for him. The result rows are the Pick result’s Phone layout, the name above the outcome and its detail, so the Auto-picked tag never squeezes the name; MO13 uses it too.",
+        "MO22 · Create room · word categories / the same dialog at 390 px, with four picked."
       ]
     },
     {

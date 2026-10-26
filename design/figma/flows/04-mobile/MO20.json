@@ -122,7 +122,7 @@
             "h": 75,
             "wSize": "fill",
             "hSize": "hug",
-            "text": "4 players, 2 rounds. The word category is drawn at random when the game starts.",
+            "text": "4 players, 2 rounds. The word category is drawn at random from all 15 when the game starts.",
             "textStyle": "Zumpo/Body",
             "fills": [
               "$Zumpo · UI:color/muted"

@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 150,
     "w": 1440,
-    "h": 738,
+    "h": 849,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,7 +70,7 @@
         "id": "9:1030",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 512,
+        "h": 623,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -88,7 +88,7 @@
             "id": "35:13529",
             "name": "New Draw & Guess room",
             "w": 560,
-            "h": 400,
+            "h": 511,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -102,7 +102,7 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 400,
+                "height": 511,
                 "width": 560
               }
             ],
@@ -130,6 +130,33 @@
                   "overrides": [
                     {
                       "path": ".",
+                      "height": 87,
+                      "width": 496
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "244:65983",
+                  "name": "Word categories",
+                  "w": 496,
+                  "h": 87,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "1, 2, 3 or 4 rounds.",
+                    "Value": "All 15",
+                    "Show helper": false,
+                    "Label": "Word categories"
+                  },
+                  "overrides": [
+                    {
+                      "path": "",
                       "height": 87,
                       "width": 496
                     }

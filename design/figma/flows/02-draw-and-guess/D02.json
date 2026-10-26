@@ -153,7 +153,7 @@
                     "h": 25,
                     "wSize": "fill",
                     "hSize": "hug",
-                    "text": "4 players, 2 rounds. The word category is drawn at random when the game starts.",
+                    "text": "4 players, 2 rounds. The word category is drawn at random from all 15 when the game starts.",
                     "textStyle": "Zumpo/Body",
                     "fills": [
                       "$Zumpo · UI:color/muted"
@@ -164,7 +164,7 @@
                     "type": "FRAME",
                     "id": "27:18086",
                     "name": "Actions",
-                    "w": 472,
+                    "w": 289,
                     "h": 60,
                     "wSize": "hug",
                     "hSize": "hug",
@@ -228,56 +228,6 @@
                             "path": ".",
                             "height": 48,
                             "width": 161
-                          }
-                        ]
-                      },
-                      {
-                        "type": "INSTANCE",
-                        "id": "95:114238",
-                        "name": "Action / Game settings",
-                        "w": 171,
-                        "h": 48,
-                        "wSize": "hug",
-                        "component": "Zumpo/Button",
-                        "variant": {
-                          "Style": "Secondary",
-                          "State": "Default"
-                        },
-                        "componentId": "4:18",
-                        "props": {
-                          "Icon": "Zumpo/Icon / Glyph=edit",
-                          "Show icon": true,
-                          "Label": "Game settings"
-                        },
-                        "overrides": [
-                          {
-                            "path": ".",
-                            "height": 48,
-                            "reactions": [
-                              {
-                                "on": "on_click",
-                                "do": [
-                                  {
-                                    "nav": "navigate",
-                                    "to": "95:114256",
-                                    "toName": "D16 / Host · game settings"
-                                  }
-                                ]
-                              }
-                            ],
-                            "width": 171
-                          }
-                        ],
-                        "reactions": [
-                          {
-                            "on": "on_click",
-                            "do": [
-                              {
-                                "nav": "navigate",
-                                "to": "95:114256",
-                                "toName": "D16 / Host · game settings"
-                              }
-                            ]
                           }
                         ]
                       }

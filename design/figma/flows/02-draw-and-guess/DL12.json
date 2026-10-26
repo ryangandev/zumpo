@@ -1,0 +1,530 @@
+{
+  "format": 1,
+  "code": "DL12",
+  "title": "Create room · word categories",
+  "id": "244:66468",
+  "section": "02 / Draw & Guess / complete flow",
+  "reviewNotes": [
+    "DL12 · Create room · word categories / the field under Rounds opens every category as a chip, all picked at first, so Choose all is dimmed; each game draws one of those picked at random."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "244:66468",
+    "name": "DL12 / Create room · word categories",
+    "x": 40,
+    "y": 9739,
+    "w": 1440,
+    "h": 851,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "244:66469",
+        "name": "Zumpo/Header",
+        "w": 1312,
+        "h": 104,
+        "component": "Zumpo/Header",
+        "componentId": "4:39",
+        "overrides": [
+          {
+            "path": "Navigation / Games",
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:433",
+                    "toName": "P01 / Home"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "Navigation / You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "244:66470",
+        "name": "Dialog stage",
+        "w": 1312,
+        "h": 625,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "pad": [
+            "$Zumpo · UI:space/56",
+            0
+          ],
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "244:66471",
+            "name": "New Draw & Guess room",
+            "w": 560,
+            "h": 513,
+            "hSize": "hug",
+            "component": "Zumpo/Card",
+            "variant": {
+              "Kind": "Focused"
+            },
+            "componentId": "9:400",
+            "props": {
+              "Description": "Each round, everyone takes one turn to draw.",
+              "Title": "New Draw & Guess room"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 513,
+                "width": 560
+              }
+            ],
+            "slots": {
+              "Content": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I244:66471;35:13433;244:66476",
+                  "name": "Zumpo/Input",
+                  "w": 496,
+                  "h": 87,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "1, 2, 3 or 4 rounds.",
+                    "Value": "2 rounds",
+                    "Show helper": false,
+                    "Label": "Rounds"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 87,
+                      "width": 496
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I244:66471;35:13433;244:66477",
+                  "name": "Word categories",
+                  "w": 496,
+                  "h": 89,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Focus"
+                  },
+                  "componentId": "9:210",
+                  "props": {
+                    "Show helper": false,
+                    "Helper": "1, 2, 3 or 4 rounds.",
+                    "Select": true,
+                    "Value": "All 15",
+                    "Label": "Word categories"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 89,
+                      "width": 496
+                    }
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I244:66471;35:13433;244:66478",
+                  "name": "More options",
+                  "w": 496,
+                  "h": 48,
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I244:66471;35:13433;244:66479",
+                      "name": "Action / More options",
+                      "w": 159,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Quiet",
+                        "State": "Default"
+                      },
+                      "componentId": "4:21",
+                      "props": {
+                        "Icon": "Zumpo/Icon / Glyph=chevron-down",
+                        "Show icon": true,
+                        "Label": "More options"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 159
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "FRAME",
+                  "id": "I244:66471;35:13433;244:66480",
+                  "name": "Actions",
+                  "w": 496,
+                  "h": 48,
+                  "hSize": "hug",
+                  "layout": {
+                    "mode": "row",
+                    "gap": "$Zumpo · UI:space/12",
+                    "align": "center",
+                    "strokesIncluded": true
+                  },
+                  "children": [
+                    {
+                      "type": "INSTANCE",
+                      "id": "I244:66471;35:13433;244:66481",
+                      "name": "Action / Create room",
+                      "w": 126,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Primary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:15",
+                      "props": {
+                        "Label": "Create room"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "reactions": [
+                            {
+                              "on": "on_click",
+                              "do": [
+                                {
+                                  "nav": "navigate",
+                                  "to": "9:1271",
+                                  "toName": "D01 / Host · waiting for a second player",
+                                  "transition": "dissolve"
+                                }
+                              ]
+                            }
+                          ],
+                          "width": 126
+                        }
+                      ],
+                      "reactions": [
+                        {
+                          "on": "on_click",
+                          "do": [
+                            {
+                              "nav": "navigate",
+                              "to": "9:1271",
+                              "toName": "D01 / Host · waiting for a second player",
+                              "transition": "dissolve"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "INSTANCE",
+                      "id": "I244:66471;35:13433;244:66482",
+                      "name": "Action / Cancel",
+                      "w": 90,
+                      "h": 48,
+                      "wSize": "hug",
+                      "component": "Zumpo/Button",
+                      "variant": {
+                        "Style": "Secondary",
+                        "State": "Default"
+                      },
+                      "componentId": "4:18",
+                      "props": {
+                        "Label": "Cancel"
+                      },
+                      "overrides": [
+                        {
+                          "path": ".",
+                          "height": 48,
+                          "width": 90
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "244:66472",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "244:66473",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "244:66474",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RECTANGLE",
+        "id": "244:66483",
+        "name": "Scrim",
+        "x": 0,
+        "y": 0,
+        "absolute": true,
+        "w": 1440,
+        "h": 851,
+        "opacity": 0.4,
+        "fills": [
+          "$Zumpo · UI:color/ink"
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "244:66484",
+        "name": "Dialog / Word categories",
+        "x": 440,
+        "y": 190,
+        "absolute": true,
+        "w": 560,
+        "h": 471,
+        "hSize": "hug",
+        "component": "Zumpo/Card",
+        "variant": {
+          "Kind": "Dialog"
+        },
+        "componentId": "35:13434",
+        "props": {
+          "Description": "Each game draws one of the picked categories at random.",
+          "Title": "Word categories"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 471,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 560
+          }
+        ],
+        "slots": {
+          "Content": [
+            {
+              "type": "INSTANCE",
+              "id": "I244:66484;35:13437;244:66486",
+              "name": "Zumpo/Chip field",
+              "w": 494,
+              "h": 230,
+              "wSize": "fill",
+              "hSize": "hug",
+              "component": "Zumpo/Chip field",
+              "variant": {
+                "State": "All on"
+              },
+              "componentId": "244:65757",
+              "props": {
+                "Label": "All 15 picked"
+              },
+              "overrides": [
+                {
+                  "path": ".",
+                  "height": 230,
+                  "width": 494
+                }
+              ]
+            },
+            {
+              "type": "FRAME",
+              "id": "I244:66484;35:13437;244:66487",
+              "name": "Actions",
+              "w": 496,
+              "h": 48,
+              "hSize": "hug",
+              "layout": {
+                "mode": "row",
+                "gap": "$Zumpo · UI:space/12",
+                "align": "center",
+                "strokesIncluded": true
+              },
+              "children": [
+                {
+                  "type": "INSTANCE",
+                  "id": "I244:66484;35:13437;244:66488",
+                  "name": "Action / Save",
+                  "w": 73,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Primary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:15",
+                  "props": {
+                    "Icon": "Zumpo/Icon / Glyph=check",
+                    "Label": "Save"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "reactions": [
+                        {
+                          "on": "on_click",
+                          "do": [
+                            {
+                              "nav": "navigate",
+                              "to": "9:1351",
+                              "toName": "D02 / Host · ready to start"
+                            }
+                          ]
+                        }
+                      ],
+                      "width": 73
+                    }
+                  ],
+                  "reactions": [
+                    {
+                      "on": "on_click",
+                      "do": [
+                        {
+                          "nav": "navigate",
+                          "to": "9:1351",
+                          "toName": "D02 / Host · ready to start"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "I244:66484;35:13437;244:66489",
+                  "name": "Action / Cancel",
+                  "w": 90,
+                  "h": 48,
+                  "wSize": "hug",
+                  "component": "Zumpo/Button",
+                  "variant": {
+                    "Style": "Secondary",
+                    "State": "Default"
+                  },
+                  "componentId": "4:18",
+                  "props": {
+                    "Label": "Cancel"
+                  },
+                  "overrides": [
+                    {
+                      "path": ".",
+                      "height": 48,
+                      "reactions": [
+                        {
+                          "on": "on_click",
+                          "do": [
+                            {
+                              "nav": "navigate",
+                              "to": "9:1351",
+                              "toName": "D02 / Host · ready to start"
+                            }
+                          ]
+                        }
+                      ],
+                      "width": 90
+                    }
+                  ],
+                  "reactions": [
+                    {
+                      "on": "on_click",
+                      "do": [
+                        {
+                          "nav": "navigate",
+                          "to": "9:1351",
+                          "toName": "D02 / Host · ready to start"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

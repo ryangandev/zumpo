@@ -14,7 +14,7 @@
     "x": 40,
     "y": 4254,
     "w": 390,
-    "h": 538,
+    "h": 649,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -135,6 +135,33 @@
           "Value": "2 rounds",
           "Show helper": false,
           "Label": "Rounds"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 87,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "244:66023",
+        "name": "Word categories",
+        "w": 350,
+        "h": 87,
+        "hSize": "hug",
+        "component": "Zumpo/Input",
+        "variant": {
+          "State": "Default"
+        },
+        "componentId": "9:204",
+        "props": {
+          "Select": true,
+          "Helper": "1, 2, 3 or 4 rounds.",
+          "Value": "All 15",
+          "Show helper": false,
+          "Label": "Word categories"
         },
         "overrides": [
           {

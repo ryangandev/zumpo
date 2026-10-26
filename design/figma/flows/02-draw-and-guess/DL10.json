@@ -14,7 +14,7 @@
     "x": 40,
     "y": 8253,
     "w": 1440,
-    "h": 1071,
+    "h": 1182,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -70,7 +70,7 @@
         "id": "9:15850",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 845,
+        "h": 956,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -88,7 +88,7 @@
             "id": "35:13590",
             "name": "New Draw & Guess room",
             "w": 560,
-            "h": 733,
+            "h": 844,
             "hSize": "hug",
             "component": "Zumpo/Card",
             "variant": {
@@ -102,7 +102,7 @@
             "overrides": [
               {
                 "path": ".",
-                "height": 733,
+                "height": 844,
                 "width": 560
               }
             ],
@@ -130,6 +130,33 @@
                   "overrides": [
                     {
                       "path": ".",
+                      "height": 87,
+                      "width": 496
+                    }
+                  ]
+                },
+                {
+                  "type": "INSTANCE",
+                  "id": "244:66007",
+                  "name": "Word categories",
+                  "w": 496,
+                  "h": 87,
+                  "hSize": "hug",
+                  "component": "Zumpo/Input",
+                  "variant": {
+                    "State": "Default"
+                  },
+                  "componentId": "9:204",
+                  "props": {
+                    "Select": true,
+                    "Helper": "1, 2, 3 or 4 rounds.",
+                    "Value": "All 15",
+                    "Show helper": false,
+                    "Label": "Word categories"
+                  },
+                  "overrides": [
+                    {
+                      "path": "",
                       "height": 87,
                       "width": 496
                     }
@@ -351,7 +378,7 @@
                   "id": "I35:13590;35:13433;36:13880",
                   "name": "Zumpo/Select menu / Seats",
                   "x": 0,
-                  "y": 639,
+                  "y": 496,
                   "absolute": true,
                   "w": 496,
                   "h": 310,

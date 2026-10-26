@@ -95,7 +95,7 @@
             "id": "9:1457",
             "name": "Game stage",
             "w": 944,
-            "h": 434,
+            "h": 459,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -108,7 +108,7 @@
                 "id": "27:18145",
                 "name": "Waiting room",
                 "w": 944,
-                "h": 434,
+                "h": 459,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -143,10 +143,10 @@
                     "type": "TEXT",
                     "id": "27:18147",
                     "w": 862,
-                    "h": 25,
+                    "h": 50,
                     "wSize": "fill",
                     "hSize": "hug",
-                    "text": "4 players, 2 rounds. Only the host can start the game.",
+                    "text": "4 players, 2 rounds. The word category is drawn at random from all 15 when the game starts. Only the host can start the game.",
                     "textStyle": "Zumpo/Body",
                     "fills": [
                       "$Zumpo · UI:color/muted"
