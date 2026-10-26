@@ -22,6 +22,7 @@ const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({
   drawerQueue: new Set(),
   wordCategory: '',
   scoredThisTurn: new Set(),
+  closeThisTurn: new Set(),
   turnPoints: new Map(),
   roundPoints: new Map(),
   lastRound: null,

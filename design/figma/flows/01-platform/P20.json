@@ -494,6 +494,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan and Brave Noodle have joined the room.",
@@ -503,6 +504,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Brave Noodle has joined the room.",
@@ -513,6 +515,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Brave Noodle is now Leo.",
@@ -522,6 +525,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "Sam",
                       "Message": "Sleepy Otter has joined the room.",

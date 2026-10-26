@@ -1366,6 +1366,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo played 64, but Maya held 60.",
@@ -1375,6 +1376,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "All 5 levels cleared. Well played!",
@@ -1386,6 +1388,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "WE DID IT",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1395,6 +1398,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "without a single word",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -1404,6 +1408,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

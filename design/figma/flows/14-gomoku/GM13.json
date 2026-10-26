@@ -857,6 +857,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "go Maya",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -864,6 +865,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya made five in a row and wins game 2.",
@@ -875,6 +877,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg, that double three",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -884,6 +887,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "next!",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -893,6 +897,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     },

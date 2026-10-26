@@ -1,7 +1,13 @@
 import type { ChatMessage, GameType } from '../../../shared/wire-types.js';
 import { isSpectator, memberOf } from './seats.js';
 import { createRoomTimers, type RoomTimerSet } from './timers.js';
-import type { GameContext, GameModule, Room, RoomLookup } from './types.js';
+import type {
+  GameContext,
+  GameModule,
+  Room,
+  RoomLookup,
+  SenderMark,
+} from './types.js';
 import {
   emitToLobby,
   emitToPlayer,
@@ -15,13 +21,15 @@ const CHAT_HISTORY_LIMIT = 100;
 
 /**
  * A room's chat as this member may read it: a line meant only for the
- * spectators is left out for anybody at the table.
+ * spectators is left out for anybody at the table, and a line meant only for
+ * its sender for everybody else.
  */
 const chatFor = (room: Room, playerId: string): ChatMessage[] =>
-  room.chat.messages.filter(
-    (message) =>
-      message.audience !== 'spectators' || isSpectator(room, playerId),
-  );
+  room.chat.messages.filter((message) => {
+    if (message.audience === 'spectators') return isSpectator(room, playerId);
+    if (message.audience === 'sender') return message.playerId === playerId;
+    return true;
+  });
 
 /**
  * Every room on the server, and which module speaks for each.
@@ -92,7 +100,7 @@ const createRoomRegistry = (io: IoServer) => {
 
   /**
    * Appends to a room's chat, keeps it bounded, and sends it to the room, or
-   * to its spectators alone for a line meant only for them.
+   * to its spectators or its sender alone for a line meant only for them.
    */
   type NewMessage = ChatMessage extends infer M
     ? M extends ChatMessage
@@ -117,6 +125,10 @@ const createRoomRegistry = (io: IoServer) => {
         room.roomId,
         posted,
       );
+      return;
+    }
+    if (posted.audience === 'sender') {
+      emitToPlayer(io, posted.playerId, 'chat:message', room.roomId, posted);
       return;
     }
     emitToRoom(io, room.roomId, 'chat:message', room.roomId, posted);
@@ -149,6 +161,9 @@ const createRoomRegistry = (io: IoServer) => {
       const room = rooms.get(roomId);
       if (room) post(room, { kind, notice });
     },
+    // `say` is declared below; nothing calls this before a connection does.
+    sayToSender: (room, playerId, text, mark) =>
+      say(room, playerId, text, 'sender', mark),
     startPhase: (room, seconds, onEnd) => {
       room.phaseEndsAt = Date.now() + seconds * 1000;
       phaseClocks.set(room.roomId, seconds * 1000, onEnd);
@@ -169,7 +184,8 @@ const createRoomRegistry = (io: IoServer) => {
     room: Room,
     playerId: string,
     text: string,
-    audience?: 'spectators',
+    audience?: 'spectators' | 'sender',
+    mark?: SenderMark,
   ): void => {
     const member = memberOf(room, playerId);
     if (!member) return;
@@ -179,6 +195,7 @@ const createRoomRegistry = (io: IoServer) => {
       username: member.username,
       text,
       ...(audience && { audience }),
+      ...mark,
     });
   };
 

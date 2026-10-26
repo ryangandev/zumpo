@@ -94,6 +94,7 @@
             "componentProperties": {
               "Alert icon": "24:4999",
               "Message": "my turn, brace yourselves",
+              "Note": "So close!",
               "Name": "Maya",
               "Kind": "Player"
             }
@@ -103,6 +104,7 @@
             "componentProperties": {
               "Alert icon": "24:4999",
               "Message": "a hat",
+              "Note": "So close!",
               "Name": "Leo",
               "Kind": "Player"
             }
@@ -112,6 +114,7 @@
             "componentProperties": {
               "Alert icon": "24:4999",
               "Message": "shell",
+              "Note": "So close!",
               "Name": "Ryan",
               "Kind": "Player"
             }
@@ -121,6 +124,7 @@
             "componentProperties": {
               "Alert icon": "24:4999",
               "Message": "tortoise",
+              "Note": "So close!",
               "Name": "Leo",
               "Kind": "Player"
             }
@@ -130,6 +134,7 @@
             "componentProperties": {
               "Alert icon": "24:4999",
               "Message": "snail?",
+              "Note": "So close!",
               "Name": "Sam",
               "Kind": "Player"
             }

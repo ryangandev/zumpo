@@ -19,9 +19,9 @@ They are not copied here, so there is one place to change them.
 | ------------------------------------ | ----------- | ------------------------------------------------------------------------------------- |
 | 00 / Review guide & flow map         | `9:14700`   | Review order, the real rules, which UX is new                                         |
 | 01 / Platform & shared flows         | `9:431`     | P01-P21 without P04, desktop                                                          |
-| 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D15 room, desktop                                            |
+| 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D17 room, desktop                                            |
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
-| 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO19 without MO03, the main flows at 390 px                                      |
+| 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO21 without MO03, the main flows at 390 px                                      |
 | 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone                                             |
 | 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 and PR11 solo, PR05-PR08 room, PR09-PR10 phone                              |
 | 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone                                       |
@@ -160,7 +160,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 257 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 259 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 

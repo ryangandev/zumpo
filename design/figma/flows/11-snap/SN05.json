@@ -656,6 +656,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo took a card! (+1)",
@@ -668,6 +669,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "where is the cloud",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -677,6 +679,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "finally",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -686,6 +689,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "there is one, I can feel it",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

@@ -334,6 +334,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "snail?",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -341,6 +342,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam guessed the word, +112.",
@@ -352,6 +354,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "TORTOISE",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -359,6 +362,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan guessed the word, +72.",
@@ -370,6 +374,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "how is tortoise wrong",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -379,6 +384,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "it’s a turtle, Leo",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

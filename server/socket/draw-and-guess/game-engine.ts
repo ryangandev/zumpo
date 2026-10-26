@@ -18,6 +18,8 @@ import {
   buildWordHint,
   getRandomCategory,
   getRandomChoicesFromList,
+  isCloseGuess,
+  isCorrectGuess,
   revealablePositions,
 } from './words.js';
 import {
@@ -279,6 +281,7 @@ const createDrawAndGuessGameEngine = (
     room.game.hint = '';
     room.game.wordAutoPicked = false;
     room.game.scoredThisTurn.clear();
+    room.game.closeThisTurn.clear();
     room.game.turnPoints.clear();
     room.game.wordChoices = getRandomChoicesFromList(
       wordBank[room.game.wordCategory],
@@ -397,6 +400,7 @@ const createDrawAndGuessGameEngine = (
     game.wordAutoPicked = false;
     game.drawerQueue.clear();
     game.scoredThisTurn.clear();
+    game.closeThisTurn.clear();
     game.turnPoints.clear();
     game.roundPoints.clear();
     game.lastRound = null;
@@ -417,6 +421,7 @@ const createDrawAndGuessGameEngine = (
     // no longer there, and nobody would ever draw it.
     room.game.drawerQueue.delete(playerId);
     room.game.scoredThisTurn.delete(playerId);
+    room.game.closeThisTurn.delete(playerId);
     room.game.turnPoints.delete(playerId);
     room.game.roundPoints.delete(playerId);
 
@@ -483,6 +488,33 @@ const createDrawAndGuessGameEngine = (
   };
 
   /**
+   * A seated guesser's wrong guess while the word is drawn. One a letter or
+   * two off the word, or with the word inside it, would all but spell it for
+   * the room, so it goes back to the guesser alone, marked close, and the
+   * room hears "<name> is close!" the first time this turn; anything further
+   * off is ordinary chat.
+   */
+  const handleWrongGuess = (
+    room: DrawAndGuessRoom,
+    playerId: string,
+    text: string,
+  ): ChatVerdict => {
+    const game = room.game;
+    const guesser = room.playerList[playerId];
+    if (!guesser || !isCloseGuess(text, game.word)) return 'chat';
+
+    ctx.rooms.sayToSender(room, playerId, text, { close: true });
+    if (!game.closeThisTurn.has(playerId)) {
+      game.closeThisTurn.add(playerId);
+      announce(room.roomId, 'system', {
+        type: 'dg:close',
+        name: guesser.username,
+      });
+    }
+    return 'consumed';
+  };
+
+  /**
    * Everything a player types comes through here first, because in this game
    * a chat message may be a guess, and may give the word away.
    *
@@ -491,12 +523,15 @@ const createDrawAndGuessGameEngine = (
    * - A player who has scored this turn is silenced until the next turn
    *   starts, the reveal included: they know the word, and could type it.
    * - During drawing, a guesser's message is a guess. A correct one is scored
-   *   and announced instead of shown; a wrong one is ordinary chat.
+   *   and announced instead of shown; a close one goes back to the guesser
+   *   alone, and the room is told they are close, once a turn; any other
+   *   wrong one is ordinary chat.
    * - During drawing, a spectator talks only to the other spectators: they
    *   cannot score, but they could hint at the word to the players. A
    *   spectator who types the word is swallowed.
    *
-   * Matching ignores case and surrounding spaces.
+   * Matching ignores case and surrounding spaces; closeness also folds
+   * full-width letters and sets punctuation aside (`isCloseGuess`).
    */
   const handleChat = (
     room: DrawAndGuessRoom,
@@ -510,9 +545,10 @@ const createDrawAndGuessGameEngine = (
     if (game.scoredThisTurn.has(playerId)) return 'blocked';
     if (game.phase !== 'drawing' || game.word === '') return 'chat';
 
-    const isCorrect =
-      text.trim().toLowerCase() === game.word.trim().toLowerCase();
-    if (!isCorrect) return isSpectator(room, playerId) ? 'spectators' : 'chat';
+    if (!isCorrectGuess(text, game.word)) {
+      if (isSpectator(room, playerId)) return 'spectators';
+      return handleWrongGuess(room, playerId, text);
+    }
 
     // A correct guess must never be posted as chat, so a turn without a
     // drawer to credit swallows it rather than letting the word through.

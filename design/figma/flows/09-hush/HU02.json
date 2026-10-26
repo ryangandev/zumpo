@@ -770,6 +770,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo played 61, but Ryan held 57.",
@@ -781,6 +782,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Level 2 cleared.",
                       "Kind": "Score"
                     }
@@ -790,6 +792,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "sorry, I froze on 57",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -799,6 +802,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "deep breaths, everyone",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

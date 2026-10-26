@@ -88,6 +88,9 @@ interface GameContext {
   rooms: RoomLookup;
 }
 
+/** Why a line went to its sender alone, which the client shows by it. */
+type SenderMark = { close: true };
+
 interface RoomLookup {
   get(roomId: string): Room | undefined;
   /**
@@ -117,6 +120,18 @@ interface RoomLookup {
     roomId: string,
     kind: Exclude<ChatMessageKind, 'player'>,
     notice: RoomNotice,
+  ): void;
+  /**
+   * Shows a member what they typed, and nobody else: a Draw & Guess guess so
+   * close to the word that the room would read the word in it. The line is
+   * theirs, under the name on their place, marked as the game says, and a
+   * refresh gives it back to them alone.
+   */
+  sayToSender(
+    room: Room,
+    playerId: string,
+    text: string,
+    mark: SenderMark,
   ): void;
   /**
    * Starts the room's one clock: what its players count down from and what
@@ -228,6 +243,7 @@ export type {
   Room,
   RoomChat,
   RoomLookup,
+  SenderMark,
   GameContext,
   GameModule,
   ChatVerdict,

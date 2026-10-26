@@ -1288,6 +1288,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo played 66, but Sam held 58.",
@@ -1297,6 +1298,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Out of lives on level 4: 3 of 5 levels cleared.",
@@ -1308,6 +1310,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "noooo, 58",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -1317,6 +1320,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "one more?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -1326,6 +1330,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

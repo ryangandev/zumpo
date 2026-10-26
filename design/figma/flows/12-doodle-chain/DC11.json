@@ -669,6 +669,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "hi all, just watching",
+                      "Note": "So close!",
                       "Name": "Noor",
                       "Kind": "Player"
                     }
@@ -678,6 +679,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "welcome! next game you’re in",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -687,6 +689,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "done already, sorry",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -696,6 +699,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "deep breaths, everyone",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

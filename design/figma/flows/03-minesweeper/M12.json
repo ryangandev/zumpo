@@ -1867,6 +1867,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game started: 40 mines on a 16×16 board.",
@@ -1876,6 +1877,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 1: Ryan (−104) and Sam (−104) hit mines.",
@@ -1885,6 +1887,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "System",
                       "Alert icon": "24:5071",
                       "Message": "Sam hit a mine (16% risk): −104",
@@ -1897,6 +1900,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "great start",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }

@@ -517,6 +517,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam joined the room.",
@@ -528,6 +529,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "what are we playing",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -537,6 +539,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "you write, we draw, chaos",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -546,6 +549,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "hi all",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     },
@@ -556,6 +560,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "starting in a sec",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

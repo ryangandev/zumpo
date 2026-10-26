@@ -1222,6 +1222,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game started: 10 mines on a 9×9 board.",
@@ -1233,6 +1234,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1240,6 +1242,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 2: Maya hit a mine (−109).",
@@ -1251,6 +1254,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ouch",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

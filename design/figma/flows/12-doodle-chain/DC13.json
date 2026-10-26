@@ -571,6 +571,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "my drawing was perfect",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -580,6 +581,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "A HAMBURGER",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -589,6 +591,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "it was a turtle!!",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -598,6 +601,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "on a skateboard???",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }

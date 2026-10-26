@@ -789,6 +789,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Leo found a trio, +1.",
                       "Kind": "Score"
                     }
@@ -798,6 +799,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "so many circles",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -807,6 +809,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "finally",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -816,6 +819,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Maya found a trio, +1.",
                       "Kind": "Score"
                     }

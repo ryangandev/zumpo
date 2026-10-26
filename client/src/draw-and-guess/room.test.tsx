@@ -373,6 +373,54 @@ describe('a Draw & Guess room', () => {
       expect(screen.getByRole('tab', { name: 'Chat' })).toBeInTheDocument();
     });
 
+    it('shows the viewer’s close guess under the board, with the room’s notice', async () => {
+      onPhone();
+      const { fake } = await renderSeated(
+        drawAndGuessState({
+          ...turn,
+          phase: 'drawing',
+          currentDrawer: 'p2',
+          hint: '______',
+        }),
+      );
+      act(() => {
+        fake.serverEmits('chat:message', 'r1', {
+          id: 1,
+          kind: 'player',
+          playerId: 'p3',
+          username: 'Sam',
+          text: 'shell',
+        });
+        fake.serverEmits('chat:message', 'r1', {
+          id: 2,
+          kind: 'player',
+          playerId: ME,
+          username: 'Ryan',
+          text: 'turtel',
+          audience: 'sender',
+          close: true,
+        });
+        fake.serverEmits('chat:message', 'r1', {
+          id: 3,
+          kind: 'system',
+          notice: { type: 'dg:close', name: 'Ryan' },
+        });
+      });
+
+      const lines = within(board().getByRole('log', { name: 'Chat' }))
+        .getAllByRole('listitem')
+        .map((line) => line.textContent);
+      expect(lines).toEqual([
+        'Samshell',
+        'YouturtelSo close!',
+        'Ryan is close!',
+      ]);
+      // The blue pill is the answer; it does not flash sand over itself.
+      const close = board().getByText('turtel').closest('li')!;
+      expect(close.className).toMatch(/close/);
+      expect(close.className).not.toMatch(/flash/);
+    });
+
     it('tells a spectator their chat stays in the stands while the word is drawn', async () => {
       onPhone();
       await renderSeated(

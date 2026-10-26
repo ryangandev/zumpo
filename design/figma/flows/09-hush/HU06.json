@@ -880,6 +880,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya played 52, but Ryan held 47.",
@@ -891,6 +892,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Level 3 cleared.",
                       "Kind": "Score"
                     }
@@ -900,6 +902,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "slower this time",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -909,6 +912,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Level 4 cleared without a slip: a life back.",
                       "Kind": "Score"
                     }
@@ -918,6 +922,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "we are so in sync",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     },

@@ -62,6 +62,11 @@ interface DrawAndGuessState {
   wordCategory: WordCategory | ''; // '' when no game is in progress
   /** Player ids that have already scored this turn, and so cannot guess again. */
   scoredThisTurn: Set<string>;
+  /**
+   * Player ids the room has been told are close this turn, so it is told once
+   * a turn for each; never sent to anybody.
+   */
+  closeThisTurn: Set<string>;
   /** What each player gained this turn, the drawer included; absent means nothing. */
   turnPoints: Map<string, number>;
   /** What each player has gained this round, the same way. */

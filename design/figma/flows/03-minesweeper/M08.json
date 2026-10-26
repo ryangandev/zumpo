@@ -1610,6 +1610,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1617,6 +1618,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 2: Maya hit a mine (−109).",
@@ -1628,6 +1630,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ouch",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -1635,6 +1638,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 4: Ryan (−82) and Sam (−105) hit mines.",
@@ -1644,6 +1648,7 @@
                   {
                     "path": "Messages / Message 5",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "System",
                       "Alert icon": "24:5071",
                       "Message": "Sam hit a mine (15% risk): −105",

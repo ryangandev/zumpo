@@ -1142,6 +1142,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Maya found a pair, +1.",
                       "Kind": "Score"
                     }
@@ -1151,6 +1152,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "I knew that hexagon was there",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1160,6 +1162,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Sam found a pair, +1.",
                       "Kind": "Score"
                     }
@@ -1169,6 +1172,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ugh",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }

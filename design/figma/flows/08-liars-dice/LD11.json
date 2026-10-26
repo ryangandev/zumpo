@@ -703,6 +703,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "Ryan",
                       "Message": "Leo called Liar on four 2s: there were three. Ryan loses a die.",
@@ -712,6 +713,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan is out.",
@@ -723,6 +725,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "noooo",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -732,6 +735,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "three 4s, for real",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }

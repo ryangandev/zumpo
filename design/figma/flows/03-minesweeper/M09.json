@@ -1549,6 +1549,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1556,6 +1557,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 2: Maya hit a mine (−109).",
@@ -1567,6 +1569,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ouch",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -1574,6 +1577,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 4: Ryan hit a mine (−82).",
@@ -1585,6 +1589,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "stop copying me",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }

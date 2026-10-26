@@ -858,6 +858,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Every chain is in the album.",
@@ -869,6 +870,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "the burger is canon now",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -878,6 +880,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "again!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -887,6 +890,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "deep breaths, everyone",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

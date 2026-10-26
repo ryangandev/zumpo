@@ -4,7 +4,7 @@
   "id": "26:16242",
   "type": "COMPONENT_SET",
   "key": "845e8f9707a251d4e4158e3156c51e41b59ae056",
-  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: neutral news, said quietly: joins, the game starting, a word revealed, a round’s mines. Score: somebody scored, said as quietly, with a check: a pair or trio found, a hand’s solves, a level cleared. Divider: a new turn or step begins, such as “Round 2 · Ana draws” or “Step 2 · Draw”. Success: a moment that matters: a correct Draw & Guess guess, the game won. Alert: something went wrong, such as a departure or a mistake. The viewer’s own lines are named “You”, as the Players panel tags them.",
+  "description": "One line in the room chat. Player: what someone typed (in Draw & Guess a wrong guess is just this). System: neutral news, said quietly: joins, the game starting, a word revealed, a round’s mines, a Draw & Guess player being close (“Sam is close!”). Score: somebody scored, said as quietly, with a check: a pair or trio found, a hand’s solves, a level cleared. Divider: a new turn or step begins, such as “Round 2 · Ana draws” or “Step 2 · Draw”. Success: a moment that matters: a correct Draw & Guess guess, the game won. Alert: something went wrong, such as a departure or a mistake. Close: a Draw & Guess guess a letter or two off the word, shown to the guesser alone with its Note, “So close!”; nobody else sees the guess. The viewer’s own lines are named “You”, as the Players panel tags them.",
   "properties": {
     "Name": {
       "type": "text",
@@ -22,6 +22,10 @@
         "component:13d6d2e5655233b4f17de5fd1326cdded1337374"
       ]
     },
+    "Note": {
+      "type": "text",
+      "default": "So close!"
+    },
     "Kind": {
       "type": "variant",
       "default": "Player",
@@ -31,7 +35,8 @@
         "Success",
         "Alert",
         "Score",
-        "Divider"
+        "Divider",
+        "Close"
       ]
     }
   },
@@ -493,6 +498,89 @@
               "$Zumpo · UI:color/ink"
             ],
             "autoResize": "height"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kind=Close",
+      "id": "243:65327",
+      "props": {
+        "Kind": "Close"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "243:65327",
+        "name": "Kind=Close",
+        "w": 296,
+        "h": 41,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/12",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/8",
+          "pad": [
+            "$Zumpo · UI:space/8",
+            "$Zumpo · UI:space/10"
+          ],
+          "align": "baseline",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "243:65328",
+            "name": "Name",
+            "w": 39,
+            "h": 25,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Name"
+            },
+            "text": "Ryan",
+            "textStyle": "Zumpo/Body strong",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "243:65329",
+            "name": "Message",
+            "w": 159,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "fill",
+            "propRefs": {
+              "characters": "Message"
+            },
+            "text": "a turtle?",
+            "textStyle": "Zumpo/Body",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "243:65330",
+            "name": "Note",
+            "w": 62,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Note"
+            },
+            "text": "So close!",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
           }
         ]
       }

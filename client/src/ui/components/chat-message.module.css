@@ -4,7 +4,8 @@
   overflow-wrap: anywhere;
 }
 
-.player {
+.player,
+.close {
   align-items: baseline;
 }
 
@@ -20,7 +21,8 @@
   min-width: 0;
 }
 
-.player .text {
+.player .text,
+.close .text {
   font: var(--zumpo-text-body);
   letter-spacing: var(--zumpo-text-body-tracking);
 }
@@ -93,6 +95,20 @@
 
 .alert {
   background: var(--zumpo-peach);
+}
+
+/* The viewer's own guess, a letter or two off the word: a Player line on a
+   blue pill, shaped as Success, with its Note at the end. */
+.close {
+  padding: var(--zumpo-space-8) var(--zumpo-space-10);
+  border-radius: var(--zumpo-radius-12);
+  background: var(--zumpo-blue);
+}
+
+.note {
+  flex: none;
+  font: var(--zumpo-text-label);
+  letter-spacing: var(--zumpo-text-label-tracking);
 }
 
 .truncate .text {

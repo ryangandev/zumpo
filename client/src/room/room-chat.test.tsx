@@ -45,6 +45,49 @@ describe('chat lines', () => {
     // The merged line stands for everything up to its newest join.
     expect(chatLines(messages, ME, en)[0]).toMatchObject({ key: 1, id: 3 });
   });
+
+  it('marks the viewer’s close Draw & Guess guess, and words the room’s notice', () => {
+    const messages: ChatMessage[] = [
+      {
+        id: 1,
+        kind: 'player',
+        playerId: ME,
+        username: 'Ryan',
+        text: 'turtel',
+        audience: 'sender',
+        close: true,
+      },
+      { id: 2, kind: 'system', notice: { type: 'dg:close', name: 'Ryan' } },
+    ];
+    expect(chatLines(messages, ME, en)).toEqual([
+      {
+        key: 1,
+        id: 1,
+        kind: 'close',
+        name: 'You',
+        text: 'turtel',
+        note: 'So close!',
+        mine: true,
+      },
+      {
+        key: 2,
+        id: 2,
+        kind: 'system',
+        text: 'Ryan is close!',
+        mine: false,
+      },
+    ]);
+    expect(
+      chatLines(messages, ME, zh).map(({ name, text, note }) => ({
+        name,
+        text,
+        note,
+      })),
+    ).toEqual([
+      { name: '你', text: 'turtel', note: '很接近了！' },
+      { name: undefined, text: 'Ryan 很接近了！', note: undefined },
+    ]);
+  });
 });
 
 describe('the phone’s Chat tab', () => {

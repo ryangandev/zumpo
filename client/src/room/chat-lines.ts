@@ -11,10 +11,16 @@ export interface ChatLine {
   key: number;
   /** The last message it stands for: anything newer arrived after it. */
   id: number;
-  kind: ChatMessage['kind'];
+  /**
+   * As the server sent it, except `close`: the viewer's own Draw & Guess
+   * guess a letter or two off the word, which only they were sent.
+   */
+  kind: ChatMessage['kind'] | 'close';
   /** Who said it, for a player's line; "You" for the viewer's own. */
   name?: string;
   text: string;
+  /** What follows a close guess: "So close!". */
+  note?: string;
   /** The viewer's own line. */
   mine: boolean;
 }
@@ -39,9 +45,10 @@ export function chatLines(
       lines.push({
         key: message.id,
         id: message.id,
-        kind: 'player',
+        kind: message.close ? 'close' : 'player',
         name: mine ? m.chat.you : message.username,
         text: message.text,
+        ...(message.close && { note: m.chat.close }),
         mine,
       });
       continue;
@@ -73,6 +80,6 @@ export function chatLines(
  * would keep the mark lit all game and mean nothing.
  */
 export function isNews(line: ChatLine): boolean {
-  if (line.kind === 'player') return !line.mine;
+  if (line.kind === 'player' || line.kind === 'close') return !line.mine;
   return line.kind === 'success' || line.kind === 'alert';
 }

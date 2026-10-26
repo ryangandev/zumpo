@@ -983,6 +983,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -992,6 +993,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "go Maya",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -1001,6 +1003,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "you’re on",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -1008,6 +1011,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo ran out of time.",

@@ -375,6 +375,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game started: 10 mines on a 9×9 board.",
@@ -386,6 +387,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -395,6 +397,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "no peeking",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
