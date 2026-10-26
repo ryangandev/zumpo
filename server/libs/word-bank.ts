@@ -3,12 +3,13 @@
 // cover exactly them.
 //
 // Every word is something a player can draw and the others can recognise:
-// English only, family-friendly, no brand names outside League of Legends,
-// letters and single spaces only, so a guess never needs punctuation, written
-// the way a player would type it (singular unless the thing comes in a pair),
-// and in one category only. No two words in a category are close to each
-// other as a guess is (`isCloseGuess`), so a player guessing one is never
-// told they are close to another. `word-bank.test.ts` holds the bank to that.
+// English only, family-friendly, no brand names or genericized trademarks
+// outside League of Legends, letters and single spaces only, so a guess never
+// needs punctuation, written the way a player would type it (singular unless
+// a player would name it in the plural, spaced as they would space it), and
+// in one category only. No two words in a category are close to each other
+// as a guess is (`isCloseGuess`), so a player guessing one is never told they
+// are close to another. `word-bank.test.ts` holds the bank to that.
 import type { WordCategory } from '../../shared/wire-types.js';
 
 type WordBank = Readonly<Record<WordCategory, readonly string[]>>;
@@ -242,12 +243,18 @@ const wordBank: WordBank = {
     'Carrot',
     'Broccoli',
     'Corn',
-    'Popsicle',
+    'Ice Pop',
     'Milkshake',
     'Pie',
     'Cotton Candy',
     'Candy Cane',
     'Honey',
+    'Tomato',
+    'Olive',
+    'Pumpkin',
+    'Cucumber',
+    'Eggplant',
+    'Bell Pepper',
   ],
   Fruits: [
     'Apple',
@@ -271,26 +278,25 @@ const wordBank: WordBank = {
     'Coconut',
     'Avocado',
     'Pomegranate',
-    'Dragonfruit',
+    'Dragon Fruit',
     'Fig',
     'Guava',
     'Lychee',
-    'Passionfruit',
+    'Passion Fruit',
     'Papaya',
-    'Starfruit',
+    'Star Fruit',
     'Persimmon',
     'Jackfruit',
     'Apricot',
     'Grapefruit',
     'Cranberry',
     'Durian',
-    'Tomato',
-    'Olive',
-    'Melon',
-    'Pumpkin',
-    'Cucumber',
-    'Eggplant',
-    'Bell Pepper',
+    'Cantaloupe',
+    'Rambutan',
+    'Date',
+    'Raisin',
+    'Mangosteen',
+    'Prune',
   ],
   Household: [
     'Chair',
@@ -627,7 +633,7 @@ const wordBank: WordBank = {
     'Soccer',
     'Basketball',
     'Tennis',
-    'Football',
+    'Yoga',
     'Cricket',
     'Hockey',
     'Golf',
@@ -654,18 +660,18 @@ const wordBank: WordBank = {
     'Paragliding',
     'Climbing',
     'Diving',
-    'Ping Pong',
+    'Fishing',
     'Weightlifting',
     'Skateboarding',
     'Kayaking',
-    'Dart',
+    'Darts',
     'Billiards',
     'Lacrosse',
     'Jump Rope',
     'Water Polo',
     'Javelin',
     'High Jump',
-    'Hurdle',
+    'Hurdles',
     'Trampoline',
     'Sumo',
     'Curling',

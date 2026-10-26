@@ -19,7 +19,7 @@ The picked set and the bank were added at Ryan's request on 2026-10-26, and each
 A game never deals a word twice: the server keeps the words played this game, chosen or picked by the clock, and offers each drawer three from the rest of the category, or from all of it once fewer than three are left.
 
 Every word is something a player can draw and the others can recognise, fit for a family table, and English in every language.
-A word is letters and single spaces, capitalised, at most 14 characters, written as a player would type it (singular, unless the thing comes in a pair, like Jeans or Maracas), and appears once in the whole bank; League of Legends is the only category of names, and no other word is a brand.
+A word is letters and single spaces, capitalised, at most 14 characters, written as a player would type it (singular unless a player would name it in the plural, like Jeans, Maracas or Darts, and spaced as they would space it, like Dragon Fruit), and appears once in the whole bank; League of Legends is the only category of names, no other word is a brand or a trademark used as a name (Ice Pop, not Popsicle), and Fruits holds fruits alone.
 No two words in a category are close to each other as a guess is (see [the close rule](#rules-the-server-enforces)), either way, so guessing one word is never "So close!" to another in its category: there is no Shirt beside Skirt, or Tree beside Palm Tree.
 [`word-bank.test.ts`](../../server/tests/word-bank.test.ts) holds the bank to all of this.
 A guess is matched in English, ignoring case and the spaces around it.
