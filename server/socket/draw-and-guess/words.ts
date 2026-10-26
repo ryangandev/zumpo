@@ -38,6 +38,23 @@ const getRandomChoicesFromList = (
 };
 
 /**
+ * A drawer's choices from a category's words, leaving out the words already
+ * played this game, so a game never deals a word twice; once fewer than
+ * `numberOfChoices` are left, the whole list again rather than fewer choices.
+ */
+const dealChoices = (
+  wordList: readonly string[],
+  dealt: ReadonlySet<string>,
+  numberOfChoices: number,
+): string[] => {
+  const fresh = wordList.filter((word) => !dealt.has(word));
+  return getRandomChoicesFromList(
+    fresh.length >= numberOfChoices ? fresh : wordList,
+    numberOfChoices,
+  );
+};
+
+/**
  * The row of underscores everyone but the drawer sees, with `revealed`
  * character positions filled in.
  *
@@ -163,6 +180,7 @@ const isCloseGuess = (guess: string, word: string): boolean => {
 export {
   getRandomCategory,
   getRandomChoicesFromList,
+  dealChoices,
   buildWordHint,
   revealablePositions,
   isCorrectGuess,

@@ -5,6 +5,7 @@ import type {
   LiarsDiceRoomState,
 } from '../models/types.js';
 import { SEATS } from '../../shared/seats.js';
+import { WORD_CATEGORIES } from '../../shared/draw-and-guess.js';
 import {
   createLiarsDiceRoom,
   createRoom,
@@ -40,6 +41,9 @@ const SETTINGS: Record<GameType, [object, object]> = {
 };
 
 const GAME_TYPES = Object.keys(SETTINGS) as GameType[];
+
+/** Settings only a room reads, which its lobby row leaves out. */
+const LEFT_OUT_OF_THE_LOBBY = ['categories'];
 
 /*
  * Between games the starter may change what the next game is played with.
@@ -99,7 +103,12 @@ describe('changing the next game', () => {
         ),
       );
       expect(state.isGameStarted).toBe(false);
-      expect(await lobbyView(guest, roomId, gameType)).toMatchObject(next);
+      const listed = Object.fromEntries(
+        Object.entries(next).filter(
+          ([key]) => !LEFT_OUT_OF_THE_LOBBY.includes(key),
+        ),
+      );
+      expect(await lobbyView(guest, roomId, gameType)).toMatchObject(listed);
     },
   );
 
@@ -140,7 +149,7 @@ describe('changing the next game', () => {
     } = await seatTable(harness, ['Ryan', 'Maya'], (client, username) =>
       createRoom(client, { username, categories: ['Animals', 'Food'] }),
     );
-    for (const categories of [[], ['Dinosaurs'], ['Food', 'Food']]) {
+    for (const categories of [[], ['Dinosaurs'], ['Food', 'Food'], null]) {
       expect(
         (
           await request(owner, 'room:settings', roomId, {
@@ -165,6 +174,43 @@ describe('changing the next game', () => {
       categories: ['Fantasy'],
       wordCategory: 'Fantasy',
     });
+  });
+
+  it('takes Draw & Guess settings sent without categories, as an older page sends them, as all of them', async () => {
+    const owner = await harness.connect();
+    const created = await request<{ ok: boolean; roomId: string }>(
+      owner,
+      'room:create',
+      {
+        gameType: 'draw-and-guess',
+        roomName: 'Room',
+        username: 'Owner',
+        maxPlayers: 4,
+        password: '',
+        settings: { rounds: 2 },
+      },
+    );
+    expect(created.ok).toBe(true);
+    const all = [...WORD_CATEGORIES];
+    await settle();
+    expect((owner.state as DrawAndGuessRoomState).categories).toEqual(all);
+
+    await request(owner, 'room:settings', created.roomId, {
+      rounds: 1,
+      categories: ['Food'],
+    });
+    await waitForState<DrawAndGuessRoomState>(
+      owner,
+      (state) => state.categories.length === 1,
+    );
+    expect(
+      await request(owner, 'room:settings', created.roomId, { rounds: 3 }),
+    ).toEqual({ ok: true });
+    const state = await waitForState<DrawAndGuessRoomState>(
+      owner,
+      (candidate) => candidate.rounds === 3,
+    );
+    expect(state.categories).toEqual(all);
   });
 
   it('keeps showing the last minefield at its own size until the next is dealt', async () => {

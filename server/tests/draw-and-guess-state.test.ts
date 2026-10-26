@@ -8,6 +8,7 @@ import {
 } from '../socket/draw-and-guess/state.js';
 import {
   buildWordHint,
+  dealChoices,
   getRandomChoicesFromList,
   revealablePositions,
 } from '../socket/draw-and-guess/words.js';
@@ -73,6 +74,10 @@ describe('toLobbyInfo', () => {
   it('carries the round count, which is the game’s own setting', () => {
     expect(toLobbyInfo(makeRoom({}, { rounds: 4 })).rounds).toBe(4);
   });
+
+  it('leaves the word categories to the room, where they are read', () => {
+    expect(toLobbyInfo(makeRoom())).not.toHaveProperty('categories');
+  });
 });
 
 describe('toRoomState', () => {
@@ -94,6 +99,19 @@ describe('toRoomState', () => {
         ...gameOverrides,
       },
     );
+
+  it('carries the categories, and never the words already dealt', () => {
+    const room = inPhase('drawing', {
+      categories: ['Animals', 'Sea Life'],
+      dealt: new Set(['giraffe', 'walrus']),
+    });
+    for (const viewer of [DRAWER, GUESSER]) {
+      const state = toRoomState(room, viewer);
+      expect(state.categories).toEqual(['Animals', 'Sea Life']);
+      expect(state).not.toHaveProperty('dealt');
+      expect(JSON.stringify(state)).not.toContain('walrus');
+    }
+  });
 
   it('shows the choices to the drawer alone while the word is chosen', () => {
     const room = inPhase('choosing', { word: '' });
@@ -265,6 +283,26 @@ describe('getRandomChoicesFromList', () => {
   it('terminates when asked for more choices than the list holds', () => {
     expect(getRandomChoicesFromList(['a', 'b'], 5)).toHaveLength(2);
     expect(getRandomChoicesFromList([], 3)).toEqual([]);
+  });
+});
+
+describe('dealChoices', () => {
+  const words = ['a', 'b', 'c', 'd', 'e'];
+
+  it('offers only words not yet dealt this game', () => {
+    for (let round = 0; round < 20; round++) {
+      expect(dealChoices(words, new Set(['a', 'b']), 3).toSorted()).toEqual([
+        'c',
+        'd',
+        'e',
+      ]);
+    }
+  });
+
+  it('offers the whole list again once fewer than enough are left', () => {
+    const choices = dealChoices(words, new Set(['a', 'b', 'c']), 3);
+    expect(choices).toHaveLength(3);
+    expect(new Set(choices).size).toBe(3);
   });
 });
 

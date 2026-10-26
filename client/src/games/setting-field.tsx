@@ -1,5 +1,5 @@
 import type {
-  AnyLobbyRoomInfo,
+  AnyRoomState,
   CodeBreakerSettings,
   DailyWordSettings,
   DoodleChainSettings,
@@ -63,11 +63,11 @@ export function defaultSettings(gameType: GameType): GameSettings {
 }
 
 /**
- * What a room's next game will be played with, read off its snapshot or its
- * lobby row, which carry each setting under its own name; null for a game
- * with nothing to choose.
+ * What a room's next game will be played with, read off its snapshot, which
+ * carries each setting under its own name; null for a game with nothing to
+ * choose.
  */
-export function settingsOf(room: AnyLobbyRoomInfo): GameSettings | null {
+export function settingsOf(room: AnyRoomState): GameSettings | null {
   switch (room.gameType) {
     case 'draw-and-guess':
       return { rounds: room.rounds, categories: room.categories };

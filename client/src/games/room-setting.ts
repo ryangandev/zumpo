@@ -1,4 +1,7 @@
-import type { AnyLobbyRoomInfo } from '../../../shared/wire-types';
+import type {
+  AnyLobbyRoomInfo,
+  AnyRoomState,
+} from '../../../shared/wire-types';
 import { levelsFor } from '../../../shared/hush';
 import { DECK_SIZE as SNAP_DECK } from '../../../shared/snap';
 import type { Messages } from '../i18n';
@@ -46,7 +49,7 @@ export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
  * starter: `roomSetting`, with Draw & Guess's categories too ("2 rounds, all
  * 15 categories").
  */
-export function nextGameSetting(room: AnyLobbyRoomInfo, m: Messages): string {
+export function nextGameSetting(room: AnyRoomState, m: Messages): string {
   return room.gameType === 'draw-and-guess'
     ? m.drawAndGuess.nextSetting(room.rounds, room.categories)
     : roomSetting(room, m);

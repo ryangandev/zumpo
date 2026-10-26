@@ -17,7 +17,7 @@ import {
 import {
   buildWordHint,
   getRandomCategory,
-  getRandomChoicesFromList,
+  dealChoices,
   isCloseGuess,
   isCorrectGuess,
   revealablePositions,
@@ -207,6 +207,7 @@ const createDrawAndGuessGameEngine = (
     room.game.turn = 0;
     room.game.lastGame = null;
     room.game.lastRound = null;
+    room.game.dealt.clear();
     room.game.wordCategory = getRandomCategory(
       wordBank,
       room.game.categories,
@@ -286,8 +287,9 @@ const createDrawAndGuessGameEngine = (
     room.game.scoredThisTurn.clear();
     room.game.closeThisTurn.clear();
     room.game.turnPoints.clear();
-    room.game.wordChoices = getRandomChoicesFromList(
+    room.game.wordChoices = dealChoices(
       wordBank[room.game.wordCategory],
+      room.game.dealt,
       WORD_CHOICE_COUNT,
     );
 
@@ -309,6 +311,7 @@ const createDrawAndGuessGameEngine = (
     // The last round's summary has had its time: the next round is drawing.
     room.game.lastRound = null;
     room.game.word = word;
+    room.game.dealt.add(word);
     room.game.hint = buildWordHint(word);
     room.game.wordChoices = [];
 

@@ -196,7 +196,9 @@ interface DrawAndGuessSettings {
   rounds: number;
   /**
    * The categories a game may draw its one category from: at least one, each
-   * at most once, in `WORD_CATEGORIES` order. A new room picks them all.
+   * at most once, in `WORD_CATEGORIES` order. A new room picks them all, and
+   * the server reads settings sent without them, from a page loaded before
+   * they were a setting, as all of them.
    */
   categories: WordCategory[];
 }
@@ -277,8 +279,6 @@ interface LobbyRoomInfo {
 interface DrawAndGuessLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'draw-and-guess';
   rounds: number;
-  /** The categories the next game draws from, in `WORD_CATEGORIES` order. */
-  categories: WordCategory[];
 }
 
 interface MinesweeperLobbyRoomInfo extends LobbyRoomInfo {

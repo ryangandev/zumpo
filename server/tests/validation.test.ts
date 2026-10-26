@@ -145,7 +145,7 @@ describe('drawAndGuessSettings', () => {
     expect(accepts(2, [...WORD_CATEGORIES])).toBe(true);
     for (const refused of [
       [],
-      undefined,
+      null,
       'Animals',
       ['Animals', 'Animals'],
       ['Dinosaurs'],
@@ -155,6 +155,17 @@ describe('drawAndGuessSettings', () => {
     ]) {
       expect(accepts(2, refused)).toBe(false);
     }
+  });
+
+  it('takes categories left out as all of them, as a page from before them meant', () => {
+    expect(drawAndGuessSettings.parse({ rounds: 2 })).toEqual({
+      rounds: 2,
+      categories: [...WORD_CATEGORIES],
+    });
+    expect(
+      drawAndGuessSettings.parse({ rounds: 2, categories: undefined })
+        .categories,
+    ).toEqual([...WORD_CATEGORIES]);
   });
 
   it('keeps the categories in the picker’s order, however they arrive', () => {

@@ -22,6 +22,7 @@ const createState = (settings: DrawAndGuessSettings): DrawAndGuessState => ({
   wordAutoPicked: false,
   drawerQueue: new Set(),
   wordCategory: '',
+  dealt: new Set(),
   scoredThisTurn: new Set(),
   closeThisTurn: new Set(),
   turnPoints: new Map(),
@@ -43,7 +44,6 @@ const toLobbyInfo = (
   gameType: 'draw-and-guess',
   ...lobbyBasics(room),
   rounds: room.game.rounds,
-  categories: [...room.game.categories],
 });
 
 /**
@@ -70,6 +70,7 @@ const toRoomState = (
   const roomState: DrawAndGuessRoomState = {
     ...toLobbyInfo(room),
     ...roomBasics(room),
+    categories: [...game.categories],
     phase: game.phase,
     currentRound: game.currentRound,
     turn: game.turn,
