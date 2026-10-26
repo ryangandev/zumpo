@@ -48,7 +48,15 @@ describe('chat lines', () => {
 
   it('marks the viewer’s close Draw & Guess guess, and words the room’s notice', () => {
     const messages: ChatMessage[] = [
-      { ...said(1, ME, 'turtel'), audience: 'sender', close: true },
+      {
+        id: 1,
+        kind: 'player',
+        playerId: ME,
+        username: 'Ryan',
+        text: 'turtel',
+        audience: 'sender',
+        close: true,
+      },
       { id: 2, kind: 'system', notice: { type: 'dg:close', name: 'Ryan' } },
     ];
     expect(chatLines(messages, ME, en)).toEqual([
