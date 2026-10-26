@@ -262,6 +262,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "it was a giraffe!!",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -269,6 +270,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Alert icon": "24:4999",
                       "Message": "Round 2 · Maya draws",
@@ -280,6 +282,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "my turn, brace yourselves",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -289,6 +292,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gl",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -298,6 +302,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "a rock?",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -307,6 +312,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "a hat",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }

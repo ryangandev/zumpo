@@ -2173,6 +2173,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "The board is full: game 3 is a draw.",
@@ -2184,6 +2185,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "that took a while",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -2193,6 +2195,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "one more",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -2202,6 +2205,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     },
@@ -2212,6 +2216,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     },

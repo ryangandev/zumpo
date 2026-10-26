@@ -484,6 +484,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -493,6 +494,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ok this one is easy",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -502,6 +504,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "already?!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -511,6 +514,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Hand 2: Maya +127, Sam +95",
                       "Kind": "Score"
                     }

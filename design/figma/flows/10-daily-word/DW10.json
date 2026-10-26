@@ -1629,6 +1629,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Maya got it in 5! (+208)",
                       "Kind": "Score"
                     }
@@ -1638,6 +1639,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Leo got it in 6! (+101)",
                       "Kind": "Score"
                     }
@@ -1645,6 +1647,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "The word was FLAME.",
@@ -1654,6 +1657,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 964 points!",
@@ -1665,6 +1669,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "by nine points!",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     },
@@ -1675,6 +1680,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     },

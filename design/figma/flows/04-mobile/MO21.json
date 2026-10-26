@@ -1,0 +1,318 @@
+{
+  "format": 1,
+  "code": "MO21",
+  "title": "Guesser · a close guess",
+  "id": "243:65596",
+  "section": "04 / Mobile / 390px flow adaptations",
+  "reviewNotes": [
+    "MO21 · Guesser · a close guess"
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "243:65596",
+    "name": "MO21 / Guesser · a close guess",
+    "x": 40,
+    "y": 9200,
+    "w": 390,
+    "h": 801,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/12",
+      "pad": [
+        "$Zumpo · UI:space/12",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "243:65597",
+        "name": "Zumpo/Room bar",
+        "w": 350,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Phone"
+        },
+        "componentId": "39:19277",
+        "props": {
+          "Phase": "Maya’s room · Round 2 of 2",
+          "Game": "Draw & Guess"
+        }
+      },
+      {
+        "type": "INSTANCE",
+        "id": "243:65598",
+        "name": "Zumpo/Mobile tabs",
+        "w": 350,
+        "h": 34,
+        "hSize": "hug",
+        "component": "Zumpo/Mobile tabs",
+        "variant": {
+          "View": "Board"
+        },
+        "componentId": "9:416",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 34,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "243:65599",
+        "name": "Zumpo/Standings strip",
+        "w": 350,
+        "h": 32,
+        "wSize": "fill",
+        "component": "Zumpo/Standings strip",
+        "componentId": "163:62759",
+        "overrides": [
+          {
+            "path": "Standing / MA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "177",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / SA",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "148",
+              "State": "You"
+            }
+          },
+          {
+            "path": "Standing / LE",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "148",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY",
+            "componentProperties": {
+              "Mark": "24:4994",
+              "Show mark": false,
+              "Value": "148",
+              "State": "Default"
+            }
+          },
+          {
+            "path": "Standing / RY / Avatar",
+            "componentProperties": {
+              "Initials": "RY",
+              "Tone": "Sand"
+            }
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "243:65600",
+        "name": "Zumpo/Turn bar",
+        "w": 350,
+        "h": 108,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Turn bar",
+        "variant": {
+          "Kind": "Hint",
+          "Layout": "Phone"
+        },
+        "componentId": "27:22173",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 108,
+            "width": 350
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "243:65601",
+        "name": "Canvas",
+        "w": 350,
+        "h": 348,
+        "wSize": "fill",
+        "hSize": "fill",
+        "fills": [
+          "$Zumpo · UI:color/white"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "243:65602",
+            "name": "Drawing / Turtle",
+            "w": 297.6,
+            "h": 198.4,
+            "component": "Sample / Turtle drawing",
+            "variant": {
+              "Stage": "Head"
+            },
+            "componentId": "27:17560"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "243:65603",
+        "name": "Recent chat",
+        "w": 350,
+        "h": 91,
+        "wSize": "fill",
+        "clip": true,
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/8",
+          "justify": "max",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "243:65604",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 25,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Player"
+            },
+            "componentId": "26:16216",
+            "props": {
+              "Message": "shell",
+              "Name": "Leo"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 25,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "243:65605",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 41,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "Close"
+            },
+            "componentId": "243:65327",
+            "props": {
+              "Message": "turtel",
+              "Name": "You"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 41,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "243:65606",
+            "name": "Zumpo/Chat message",
+            "w": 350,
+            "h": 18,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Chat message",
+            "variant": {
+              "Kind": "System"
+            },
+            "componentId": "26:16219",
+            "props": {
+              "Name": "You",
+              "Message": "Sam is close!"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 18,
+                "width": 350
+              },
+              {
+                "path": "Message",
+                "maxLines": 1,
+                "textAutoResize": "HEIGHT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "243:65607",
+        "name": "Chat input",
+        "w": 350,
+        "h": 44,
+        "wSize": "fill",
+        "component": "Zumpo/Chat input",
+        "variant": {
+          "State": "Default"
+        },
+        "componentId": "26:16243",
+        "props": {
+          "Placeholder": "Type your guess…"
+        },
+        "overrides": [
+          {
+            "path": ".",
+            "height": 44,
+            "width": 350
+          }
+        ]
+      }
+    ]
+  }
+}

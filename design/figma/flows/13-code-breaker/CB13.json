@@ -1773,6 +1773,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Ryan cracked it in 6! (+516)",
                       "Kind": "Score"
                     }
@@ -1780,6 +1781,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "The code was 5869.",
@@ -1789,6 +1791,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya wins with 1683 points!",
@@ -1800,6 +1803,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "so close",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -1809,6 +1813,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "again?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },
@@ -1819,6 +1824,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     },

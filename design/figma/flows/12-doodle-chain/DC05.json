@@ -435,6 +435,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "everybody in? starting",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -442,6 +443,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "System",
                       "Alert icon": "24:4999",
                       "Message": "Step 1 · Write",
@@ -453,6 +455,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "ok I have a good one",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -462,6 +465,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "no peeking at my screen",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }

@@ -469,6 +469,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "no hints!",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -476,6 +477,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo lost connection.",
@@ -485,6 +487,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Alert icon": "24:4999",
                       "Message": "Step 3 · Describe",
@@ -496,6 +499,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "leo where did you go",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }

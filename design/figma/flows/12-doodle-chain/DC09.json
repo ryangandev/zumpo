@@ -457,6 +457,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "how do you even draw that",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -466,6 +467,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "no hints!",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -475,6 +477,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "NOT DONE",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -484,6 +487,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "too late",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }

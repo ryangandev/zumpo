@@ -430,6 +430,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan, Leo and Sam have joined the room.",
@@ -439,6 +440,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo has joined the room.",
@@ -449,6 +451,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Sam has joined the room.",
@@ -461,6 +464,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "hi all",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }

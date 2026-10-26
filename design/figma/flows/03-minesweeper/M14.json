@@ -1826,6 +1826,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:5071",
                       "Name": "System",
                       "Message": "Round 9: Ryan hit a mine (−70).",
@@ -1837,6 +1838,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "that was a coin flip",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -1844,6 +1846,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Sam wins with 130 points!",
@@ -1855,6 +1858,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -1864,6 +1868,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

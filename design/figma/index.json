@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-23T16:06:54.671Z",
+  "exportedAt": "2026-10-26T07:05:27.232Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": true
   },
   "counts": {
-    "flows": 257,
+    "flows": 259,
     "componentFamilies": 77,
     "outsideComponents": 0,
     "svgs": 127,
-    "seconds": 39,
-    "nodes": 14893,
-    "instances": 7858,
+    "seconds": 28,
+    "nodes": 14922,
+    "instances": 7872,
     "grids": 90,
     "gridCells": 2884
   },
@@ -148,7 +148,7 @@
       "id": "26:16242",
       "file": "components/chat-message.json",
       "preview": "previews/components/chat-message.png",
-      "variants": 6
+      "variants": 7
     },
     {
       "name": "Zumpo/Chip field",
@@ -1173,6 +1173,18 @@
           "file": "flows/02-draw-and-guess/D16.json",
           "preview": "previews/02-draw-and-guess/D16.png",
           "isFlow": true
+        },
+        {
+          "code": "D17",
+          "title": "Guesser · a close guess",
+          "id": "243:65331",
+          "size": [
+            1440,
+            950
+          ],
+          "file": "flows/02-draw-and-guess/D17.json",
+          "preview": "previews/02-draw-and-guess/D17.png",
+          "isFlow": true
         }
       ],
       "notes": []
@@ -1788,6 +1800,18 @@
           ],
           "file": "flows/04-mobile/MO20.json",
           "preview": "previews/04-mobile/MO20.png",
+          "isFlow": true
+        },
+        {
+          "code": "MO21",
+          "title": "Guesser · a close guess",
+          "id": "243:65596",
+          "size": [
+            390,
+            801
+          ],
+          "file": "flows/04-mobile/MO21.json",
+          "preview": "previews/04-mobile/MO21.png",
           "isFlow": true
         }
       ],

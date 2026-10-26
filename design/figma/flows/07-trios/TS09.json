@@ -1147,6 +1147,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Sam found a trio, +1.",
                       "Kind": "Score"
                     }
@@ -1156,6 +1157,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Maya found a trio, +1.",
                       "Kind": "Score"
                     }
@@ -1163,6 +1165,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 4 trios!",
@@ -1174,6 +1177,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -1183,6 +1187,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

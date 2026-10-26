@@ -3281,6 +3281,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "this board is huge",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -3290,6 +3291,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "take the zeros",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -3299,6 +3301,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "there are no zeros left",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }

@@ -321,6 +321,7 @@
                   {
                     "path": "Messages / Message 1",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Previous owner Maya has left the room. Ryan is now the owner.",
@@ -330,6 +331,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo has left the room.",
@@ -339,6 +341,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Previous owner Ryan has left the room. Sam is now the owner.",
@@ -348,6 +351,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Not enough players left to continue. Game has ended.",
@@ -357,6 +361,7 @@
                   {
                     "path": "Messages / Message 5",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game has ended.",

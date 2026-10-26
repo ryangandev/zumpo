@@ -672,6 +672,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -681,6 +682,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Hand 1: Maya +127, Sam +95",
                       "Kind": "Score"
                     }
@@ -690,6 +692,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "already?!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -697,6 +700,7 @@
                   {
                     "path": "Messages / Message 4",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Ryan hit a mine (38% risk): −82",

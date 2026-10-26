@@ -792,6 +792,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -801,6 +802,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "go Maya",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -808,6 +810,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Leo left the room. Maya wins game 2.",
@@ -819,6 +822,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     },
@@ -829,6 +833,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     },

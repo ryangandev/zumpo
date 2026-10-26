@@ -951,6 +951,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "good luck",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -960,6 +961,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Maya got it in 3! (+431)",
                       "Kind": "Score"
                     }
@@ -969,6 +971,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "how?!",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -978,6 +981,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Sam got it in 4! (+322)",
                       "Kind": "Score"
                     },

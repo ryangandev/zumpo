@@ -397,6 +397,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "this is going to go so wrong",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -406,6 +407,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "mine is a good one, trust me",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -413,6 +415,7 @@
                   {
                     "path": "Messages / Message 3",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Alert icon": "24:4999",
                       "Message": "Step 2 · Draw",
@@ -424,6 +427,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "done already, sorry",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -433,6 +437,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "how do you even draw that",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -442,6 +447,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "no hints!",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }

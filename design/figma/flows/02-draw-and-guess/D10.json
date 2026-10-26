@@ -294,6 +294,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "a rock?",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -303,6 +304,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "a hat",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -312,6 +314,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "shell",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -321,6 +324,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "tortoise",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -330,6 +334,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "snail?",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -337,6 +342,7 @@
                   {
                     "path": "Messages / Message 6",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Maya lost connection.",

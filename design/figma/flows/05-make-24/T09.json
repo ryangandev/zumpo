@@ -865,6 +865,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Name": "System",
+                      "Note": "So close!",
                       "Message": "Hand 5: Ryan +118",
                       "Kind": "Score"
                     }
@@ -872,6 +873,7 @@
                   {
                     "path": "Messages / Message 2",
                     "componentProperties": {
+                      "Note": "So close!",
                       "Alert icon": "24:4999",
                       "Name": "System",
                       "Message": "Game over: Maya wins with 611 points!",
@@ -883,6 +885,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gg",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -892,6 +895,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "that last one was evil",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -901,6 +905,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "rematch?",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     },

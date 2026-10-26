@@ -258,6 +258,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "that horse was art",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
@@ -267,6 +268,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "it was a giraffe!!",
+                      "Note": "So close!",
                       "Name": "Sam",
                       "Kind": "Player"
                     }
@@ -276,6 +278,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "my turn, brace yourselves",
+                      "Note": "So close!",
                       "Name": "Maya",
                       "Kind": "Player"
                     }
@@ -285,6 +288,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "gl",
+                      "Note": "So close!",
                       "Name": "Ryan",
                       "Kind": "Player"
                     }
@@ -294,6 +298,7 @@
                     "componentProperties": {
                       "Alert icon": "24:4999",
                       "Message": "maya, you there?",
+                      "Note": "So close!",
                       "Name": "Leo",
                       "Kind": "Player"
                     }
