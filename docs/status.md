@@ -61,8 +61,9 @@ Beyond the issues, the round made the turn bar's hints never cut ([#152](https:/
 Draw & Guess tells a guesser who is a letter or two off the word, or types it inside a sentence, that they are close, at Ryan's request on 2026-10-26, the first item of the backlog ([rules](games/draw-and-guess.md#rules-the-server-enforces)).
 The guess goes back to them alone, marked "So close!", because it all but spells the word, and the room is told "Sam is close!" once a turn; it was designed in Figma first (D17, MO21).
 
-Draw & Guess's word bank grew from six categories to 15, at least 40 words each and 671 in all, and a room picks the categories its games draw from, at Ryan's request on 2026-10-26, the backlog's last item ([rules](games/draw-and-guess.md#the-game-loop)).
+Draw & Guess's word bank grew from six categories to 15, at least 40 words each, and a room picks the categories its games draw from, at Ryan's request on 2026-10-26, the backlog's last item ([rules](games/draw-and-guess.md#the-game-loop)).
 The host narrows them in a dialog when creating the room, and whoever starts the next game changes them between games; each game still draws one category at random, now from the picked set, and at least one always stays picked.
+No word is dealt twice in a game, and no two words in a category are close guesses for each other.
 
 ## Product direction
 

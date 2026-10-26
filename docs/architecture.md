@@ -81,7 +81,7 @@ The layer decides who may start, the same way for every game: only the starter, 
 The starter is the host while they are at the table, or while the host is away or watching the player the crown would pass to (`starterOf` in [`shared/room.ts`](../shared/room.ts)), at once rather than once the host's seat is given up: a room never waits on a host who is not there.
 A spectator never starts, changes the settings, says Ready or steps a reveal, even a host who went to watch (`mayStart`).
 Between games anybody at the table may say Ready (`room:ready`), and once everybody here but the starter has, the layer starts the next game itself ([`ready.ts`](../server/libs/rooms/ready.ts)); a player away holds nothing up, and the Readies are forgotten when a game starts.
-Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21).
+Between games the starter may also change the next game's settings (`room:settings`): the module's `parseSettings` reads them as it reads a create request's, and the layer sets each on the game's state under its own name, which every game keeps them under and its snapshot and lobby row show them by (decided by Ryan on 2026-10-21); Draw & Guess's word categories are in the snapshot alone, since no lobby row reads them.
 Each game's seat limits live once in `shared/seats.ts`, which its module and the client's catalog both read.
 
 A room's chat is a log on the room (`Room.chat`), not a stream: every message gets the next id in that room, the last 100 are kept, and a page that syncs is sent them as `chat:history`.
@@ -206,7 +206,7 @@ Errors are never broadcast; they go to the one request that caused them.
 A request dropped by the rate limiter is answered `invalidRequest` too, so a page awaiting it is not left hanging.
 
 Names are namespaced by concern, not by game: `room:`, `lobby:`, `chat:` and `game:start` belong to the layer; `dg:` to Draw & Guess and `ms:` to Minesweeper.
-`LobbyRoomInfo` and `RoomState` are the generic halves, and each game extends them (`DrawAndGuessLobbyRoomInfo` adds `rounds` and `categories`) rather than carrying an untyped settings blob.
+`LobbyRoomInfo` and `RoomState` are the generic halves, and each game extends them (`DrawAndGuessLobbyRoomInfo` adds `rounds`) rather than carrying an untyped settings blob.
 
 ## Client
 
