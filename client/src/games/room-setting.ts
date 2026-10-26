@@ -40,3 +40,14 @@ export function roomSetting(room: AnyLobbyRoomInfo, m: Messages): string {
         : '';
   }
 }
+
+/**
+ * The next game's setting as the room's results say it to anybody but the
+ * starter: `roomSetting`, with Draw & Guess's categories too ("2 rounds, all
+ * 15 categories").
+ */
+export function nextGameSetting(room: AnyLobbyRoomInfo, m: Messages): string {
+  return room.gameType === 'draw-and-guess'
+    ? m.drawAndGuess.nextSetting(room.rounds, room.categories)
+    : roomSetting(room, m);
+}

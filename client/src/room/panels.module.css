@@ -56,9 +56,16 @@
   margin: 0;
 }
 
-/* The next game's setting, as wide as a create form's field. */
-.setting {
-  max-width: 320px;
+/* The next game's settings, each as wide as a create form's field, side by
+   side while they fit. */
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zumpo-space-16);
+}
+
+.settings > * {
+  flex: 0 1 320px;
 }
 
 .resultHeading {

@@ -29,7 +29,7 @@ export {
 export {
   ChipField,
   type ChipFieldProps,
-  type ChipOption,
+  type ChipFieldOption,
 } from './components/chip-field';
 export { ChoiceList, type ChoiceListProps } from './components/choice-list';
 export { Chat, type ChatProps } from './components/chat';
@@ -90,6 +90,11 @@ export {
   type DrawingToolbarProps,
 } from './components/drawing-toolbar';
 export { FilterChip, type FilterChipProps } from './components/filter-chip';
+export {
+  FilterChipField,
+  type FilterChipFieldProps,
+  type ChipOption,
+} from './components/filter-chip-field';
 export { GomokuBoard, type GomokuBoardProps } from './components/gomoku-board';
 export {
   GomokuSeat,
@@ -184,6 +189,7 @@ export {
   type RoomRowStatus,
 } from './components/room-row';
 export { Scoreboard, type ScoreboardProps } from './components/scoreboard';
+export { PickerField, type PickerFieldProps } from './components/picker-field';
 export {
   SelectField,
   type SelectFieldProps,

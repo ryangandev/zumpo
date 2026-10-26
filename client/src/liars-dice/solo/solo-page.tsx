@@ -7,7 +7,7 @@ import {
   BidPicker,
   Button,
   Card,
-  ChipField,
+  FilterChipField,
   StatList,
   TurnBar,
   type TurnBarProps,
@@ -110,7 +110,7 @@ function ChangeTable({
     >
       {(picked, pick) => (
         <>
-          <ChipField
+          <FilterChipField
             label={m.liarsDice.solo.bots}
             options={BOT_COUNTS.map((count) => ({
               value: count,
@@ -120,7 +120,7 @@ function ChangeTable({
             value={picked.bots}
             onValueChange={(bots: number) => pick({ ...picked, bots })}
           />
-          <ChipField
+          <FilterChipField
             label={m.liarsDice.solo.diceEach}
             helper={
               picked.dicePerPlayer === 3

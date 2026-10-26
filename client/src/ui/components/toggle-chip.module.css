@@ -25,6 +25,10 @@
   }
 }
 
+.chip[aria-disabled='true'] {
+  cursor: default;
+}
+
 .chip:focus-visible {
   outline: var(--focus-ring) solid var(--zumpo-ink);
   outline-offset: var(--focus-ring);

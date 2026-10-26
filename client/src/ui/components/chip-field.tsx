@@ -1,65 +1,81 @@
-import { Radio } from '@base-ui/react/radio';
-import { RadioGroup } from '@base-ui/react/radio-group';
 import { useId, type ReactNode } from 'react';
 import { cx } from '../cx';
+import { ToggleChip } from './toggle-chip';
 import fieldStyles from './field.module.css';
-import chipStyles from './filter-chip.module.css';
 import styles from './chip-field.module.css';
 
-export interface ChipOption<Value extends string | number> {
+export interface ChipFieldOption<Value extends string> {
   value: Value;
-  /** What the chip shows, such as "3". */
+  /** What the chip shows. */
   label: string;
-  /** What it is called when the label alone would be unclear: "3 bots". */
-  name?: string;
 }
 
-export interface ChipFieldProps<Value extends string | number> {
+export interface ChipFieldProps<Value extends string> {
   label: ReactNode;
-  options: readonly ChipOption<Value>[];
-  value: Value;
-  onValueChange: (value: Value) => void;
+  options: readonly ChipFieldOption<Value>[];
+  /** The chips that are on. */
+  value: readonly Value[];
+  onToggle: (value: Value) => void;
+  /**
+   * Chips that may not be turned off, such as the last one on where at least
+   * one must stay; they keep their look and say they are unavailable.
+   */
+  locked?: readonly Value[];
+  /** The text button beside the label, such as Choose all; none when absent. */
+  action?: { label: string; onClick: () => void };
   helper?: ReactNode;
   className?: string;
 }
 
 /**
- * Zumpo/Input's label and helper around a row of Zumpo/Filter chips (LD01):
- * a few presets picked with one tap, where a menu would take two. It is one
- * choice, so it is a radio group: one Tab stop, and the arrow keys move it.
+ * Zumpo/Chip field: a labelled set of Zumpo/Toggle chips, any number on,
+ * with an optional text action beside the label and a helper under them.
+ * Each chip is a toggle button, so Tab walks the chips one by one.
  */
-export function ChipField<Value extends string | number>({
+export function ChipField<Value extends string>({
   label,
   options,
   value,
-  onValueChange,
+  onToggle,
+  locked = [],
+  action,
   helper,
   className,
 }: ChipFieldProps<Value>) {
   const id = useId();
   return (
     <div className={cx(fieldStyles.field, className)}>
-      <span id={`${id}-label`} className={fieldStyles.label}>
-        {label}
-      </span>
-      <RadioGroup<Value>
+      <div className={styles.heading}>
+        <span id={`${id}-label`} className={fieldStyles.label}>
+          {label}
+        </span>
+        {action && (
+          <button
+            type="button"
+            className={styles.action}
+            onClick={action.onClick}
+          >
+            {action.label}
+          </button>
+        )}
+      </div>
+      <div
+        role="group"
         aria-labelledby={`${id}-label`}
         aria-describedby={helper != null ? `${id}-helper` : undefined}
-        value={value}
-        onValueChange={(next) => onValueChange(next)}
         className={styles.chips}
       >
         {options.map((option) => (
-          <Radio.Root
+          <ToggleChip
             key={option.value}
-            value={option.value}
-            aria-label={option.name}
-            className={chipStyles.chip}
+            on={value.includes(option.value)}
+            locked={locked.includes(option.value)}
+            onToggle={() => onToggle(option.value)}
           >
             {option.label}
-          </Radio.Root>
+          </ToggleChip>
         ))}
-      </RadioGroup>
+      </div>
       {helper != null && (
         <span id={`${id}-helper`} className={fieldStyles.helper}>
           {helper}
