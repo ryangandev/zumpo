@@ -158,7 +158,6 @@
         "componentId": "9:204",
         "props": {
           "Select": true,
-          "Helper": "1, 2, 3 or 4 rounds.",
           "Value": "All 15",
           "Show helper": false,
           "Label": "Word categories"

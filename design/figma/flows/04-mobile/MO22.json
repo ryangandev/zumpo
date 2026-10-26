@@ -4,6 +4,9 @@
   "title": "Create room · word categories",
   "id": "244:67082",
   "section": "04 / Mobile / 390px flow adaptations",
+  "reviewNotes": [
+    "MO22 · Create room · word categories at 390 px / the field under Rounds opens the categories as chips in a dialog; four picked here, so Choose all can turn the rest back on, and Save keeps them for the room."
+  ],
   "frame": {
     "type": "FRAME",
     "id": "244:67082",
@@ -154,7 +157,6 @@
         "componentId": "9:210",
         "props": {
           "Show helper": false,
-          "Helper": "1, 2, 3 or 4 rounds.",
           "Select": true,
           "Value": "All 15",
           "Label": "Word categories"
