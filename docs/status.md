@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 257 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 259 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).
@@ -58,6 +58,9 @@ It filed 63 issues ([#62](https://github.com/ryangandev/zumpo/issues/62)-[#124](
 Ryan decided the product calls in it the same day: anyone can press Ready at the results and the next game starts when everybody is ready, the host can still start at once ([#114](https://github.com/ryangandev/zumpo/issues/114)); an invite link lets its holder past a room's password, through a per-room invite key ([#62](https://github.com/ryangandev/zumpo/issues/62)); Doodle Chain's describe step is 45 s; Draw & Guess spectators chat only among themselves while someone draws; solo games come first on Home, and the global How to play page is gone.
 Beyond the issues, the round made the turn bar's hints never cut ([#152](https://github.com/ryangandev/zumpo/pull/152)), kept a room's board still when its game ends ([#157](https://github.com/ryangandev/zumpo/pull/157)), fitted every room to a 1440 by 900 window ([#159](https://github.com/ryangandev/zumpo/pull/159)), and brought the Figma file up to date with all of it ([#160](https://github.com/ryangandev/zumpo/pull/160)).
 
+Draw & Guess tells a guesser who is a letter or two off the word that they are close, at Ryan's request on 2026-10-26, the first item of the backlog ([rules](games/draw-and-guess.md#rules-the-server-enforces)).
+The guess goes back to them alone, marked "So close!", because it all but spells the word, and the room is told "Sam is close!" once a turn; it was designed in Figma first (D17, MO21).
+
 ## Product direction
 
 Decided by Ryan, and the frame for every design and implementation choice:
@@ -92,7 +95,6 @@ Each new game's behaviour contract lands in `docs/games/` with its implementatio
 
 Ideas worth doing next, roughly in order:
 
-- Close-guess feedback in Draw & Guess ("Sam is close!").
 - A longer word bank and per-room word packs; six fixed categories today, English only.
 
 ## Deliberately not doing

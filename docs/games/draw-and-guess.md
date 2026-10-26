@@ -71,6 +71,7 @@ The drawer cannot guess their own word.
 5. **When it is not**, type guesses into the chat box.
    Matching is case-insensitive and ignores surrounding spaces, so `steak`, `Steak` and `STEAK` all count.
 6. A wrong guess is just chat: everyone at the table sees it, which is half the fun.
+   A guess a letter or two off the word is the exception, because it all but spells the word: only you see it, marked "So close!", and the room is told `<name> is close!`.
    On a phone the newest three lines of the chat show under the board, so the guesses can be followed without leaving the drawing, and your own guess lights up as it lands.
 7. Each turn starts with a quiet divider in the chat, `Round <n> · <name> draws`, so it is clear which turn a guess belonged to.
 
@@ -99,7 +100,15 @@ Chat is also where guesses arrive, so every message passes the game before it is
   They can talk again in the review phase and between games.
 - **During drawing, a guesser's message is a guess.**
   A correct one is never shown: it is scored, and the room is told `<name> guessed the word, +<points>.` as a `success` message.
-  A wrong one is ordinary chat.
+  A close one is not posted to the room, because it almost spells the word (see below).
+  Any other wrong one is ordinary chat.
+- **A close guess is the guesser's alone**, added at Ryan's request on 2026-10-26.
+  A guess is close when it is not correct but nearly is: with case, the spaces around it and the spaces and hyphens inside it set aside, it is one edit from a word of 4 to 7 letters, or two from a word of 8 or more, where an edit inserts, deletes or changes a letter or swaps two side by side (the optimal string alignment distance).
+  A word under 4 letters is never close, and a guess that is the word once its inner spaces or hyphens are dropped (`icecream` for "Ice Cream") is close, not correct; correct-guess matching is unchanged.
+  Only a seated guesser who has not scored this turn can be close, and only while drawing; the drawer and anyone who has scored are silent as ever, and a spectator's line stays among the spectators.
+  The guess goes back to the guesser alone, marked close (`audience: 'sender'`, `close: true`), and a refresh gives it back to them and nobody else.
+  The first close guess of a turn from each guesser tells the room `<name> is close!` as a `system` notice (`dg:close`); later ones that turn are the guesser's line alone.
+  It scores nothing and changes no timing or hint.
 - **A player who has scored is silent until the next turn starts**, the review phase included, because they know the word and could type it.
 - **Everyone else may say anything in the other phases**, spectators included.
   Typing the word during the review phase is chat, because the word is on screen by then.
@@ -151,6 +160,7 @@ The Draw & Guess snapshot adds:
 
 A field a player may not see is left out of their snapshot altogether, not blanked.
 The drawing is a stream rather than state: `dg:canvas:start`, `move`, `end`, `undo` and `clear` are relayed as they happen, and `dg:canvas:sync` sends the whole drawing to a page that syncs.
+A close guess is a chat line rather than state: it is sent to its guesser alone, and the snapshot carries nothing about who was close.
 
 ## What the server owns
 
@@ -187,7 +197,7 @@ See [the room layer](../architecture.md#the-room-layer) for the split.
 | [`game-events-handler.ts`](../../server/socket/draw-and-guess/game-events-handler.ts)                           | The drawer's word choice                                      |
 | [`whiteboard-canvas-events-handler.ts`](../../server/socket/draw-and-guess/whiteboard-canvas-events-handler.ts) | Relay draw, undo and clear                                    |
 | [`libs/drawing/canvas.ts`](../../server/libs/drawing/canvas.ts)                                                 | The room's drawing, as a replayable stroke list               |
-| [`words.ts`](../../server/socket/draw-and-guess/words.ts)                                                       | Picking words and hiding them                                 |
+| [`words.ts`](../../server/socket/draw-and-guess/words.ts)                                                       | Picking words, hiding them, and matching guesses to them      |
 | [`validation.ts`](../../server/socket/draw-and-guess/validation.ts)                                             | This game's inbound shapes; a stroke's are in `libs/drawing/` |
 
 Its own events are all prefixed `dg:`.
