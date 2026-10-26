@@ -212,7 +212,7 @@ describe('the lobby', () => {
     for (const settings of [
       { rounds: 99, categories: ['Animals'] },
       { rounds: 'two', categories: ['Animals'] },
-      { rounds: 2 },
+      { rounds: 2, categories: null },
       { rounds: 2, categories: [] },
       {},
       undefined,
