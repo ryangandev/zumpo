@@ -89,8 +89,8 @@ const squashed = (text: string): string[] => [
  */
 const editDistance = (a: readonly string[], b: readonly string[]): number => {
   // rows[i][j]: the distance between the first i letters of a and j of b.
-  const rows = Array.from({ length: a.length + 1 }, (_, i) =>
-    Array.from({ length: b.length + 1 }, (_, j) =>
+  const rows = Array.from({ length: a.length + 1 }, (_row, i) =>
+    Array.from({ length: b.length + 1 }, (_cell, j) =>
       i === 0 ? j : j === 0 ? i : 0,
     ),
   );
