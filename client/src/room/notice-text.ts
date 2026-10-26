@@ -44,6 +44,8 @@ export function noticeText(notice: RoomNotice, m: NoticeCatalog): string {
       return m.notices['dg:all-guessed'](notice);
     case 'dg:guessed':
       return m.notices['dg:guessed'](notice);
+    case 'dg:close':
+      return m.notices['dg:close'](notice);
     case 'dg:turn':
       return m.notices['dg:turn'](notice);
     case 'ms:started':

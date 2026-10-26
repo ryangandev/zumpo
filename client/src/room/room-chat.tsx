@@ -36,6 +36,7 @@ export function RoomChat({
           kind={line.kind}
           alertIcon={alertIcon}
           name={line.name}
+          note={line.note}
         >
           {line.text}
         </ChatMessage>
@@ -50,7 +51,8 @@ const RECENT = 3;
 /**
  * On a phone's Board tab, the newest few lines of the chat under the game,
  * read-only, so the guesses can be watched without leaving the canvas. The
- * viewer's own line flashes as it arrives, so a guess always gets an answer.
+ * viewer's own line flashes as it arrives, so a guess always gets an answer;
+ * a close guess is its own answer, on its blue pill.
  * It is three lines tall whatever they say, so nothing under it moves, and an
  * older line that no longer fits fades out at the top.
  */
@@ -72,7 +74,8 @@ export function RecentChat({ alertIcon }: { alertIcon?: GlyphName }) {
           kind={line.kind}
           alertIcon={alertIcon}
           name={line.name}
-          flash={line.mine && line.id > openedAfter}
+          note={line.note}
+          flash={line.kind === 'player' && line.mine && line.id > openedAfter}
           truncate
         >
           {line.text}

@@ -68,6 +68,8 @@ export const notices = {
   ): string => 'Everybody guessed the word.',
   'dg:guessed': (n: Extract<RoomNotice, { type: 'dg:guessed' }>): string =>
     `${who(n.name)} guessed the word, +${n.points}.`,
+  'dg:close': (n: Extract<RoomNotice, { type: 'dg:close' }>): string =>
+    `${who(n.name)} is close!`,
   'dg:turn': (n: Extract<RoomNotice, { type: 'dg:turn' }>): string =>
     `Round ${n.round} · ${who(n.drawer)} draws`,
   'ms:started': (n: Extract<RoomNotice, { type: 'ms:started' }>): string =>

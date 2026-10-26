@@ -59,6 +59,7 @@ export const notices: typeof en = {
   'dg:drawer-returned': (_n) => '画画的玩家回来了。',
   'dg:all-guessed': (_n) => '大家都猜中了。',
   'dg:guessed': (n) => `${who(n.name)} 猜中了，+${n.points}。`,
+  'dg:close': (n) => `${who(n.name)} 很接近了！`,
   'dg:turn': (n) => `第 ${n.round} 轮 · ${who(n.drawer)} 来画`,
   'ms:started': (n) =>
     `游戏开始：${n.width} × ${n.height} 的棋盘上有 ${n.mines} 颗雷。`,

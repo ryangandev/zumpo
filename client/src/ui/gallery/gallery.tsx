@@ -542,6 +542,15 @@ export default function Gallery() {
             </Specimen>
           ),
         )}
+        <Specimen family="chat-message" variant="Kind=Close" width={296}>
+          <ul
+            style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
+          >
+            <ChatMessage kind="close" name="Ryan" note="So close!">
+              a turtle?
+            </ChatMessage>
+          </ul>
+        </Specimen>
         <Specimen family="chat-message" label="Wrapped" width={296}>
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
