@@ -90,11 +90,10 @@ describe('changing the next game', () => {
           ?.type,
       ).toBe('invalidRequest');
 
-      expect(await request(owner, 'room:settings', roomId, next)).toEqual({
-        ok: true,
-      });
-      // The snapshot and the lobby row both show it, under its own name.
-      const state = await waitForState(guest, (candidate) =>
+      // The snapshot and the lobby row both show it, under its own name. The
+      // wait starts first, because the snapshot can land before the
+      // acknowledgement does.
+      const shown = waitForState(guest, (candidate) =>
         Object.entries(next).every(
           ([key, value]) =>
             JSON.stringify(
@@ -102,6 +101,10 @@ describe('changing the next game', () => {
             ) === JSON.stringify(value),
         ),
       );
+      expect(await request(owner, 'room:settings', roomId, next)).toEqual({
+        ok: true,
+      });
+      const state = await shown;
       expect(state.isGameStarted).toBe(false);
       const listed = Object.fromEntries(
         Object.entries(next).filter(
@@ -195,22 +198,25 @@ describe('changing the next game', () => {
     await settle();
     expect((owner.state as DrawAndGuessRoomState).categories).toEqual(all);
 
+    // Each wait starts before its request, because the snapshot can land
+    // before the acknowledgement does.
+    const narrowed = waitForState<DrawAndGuessRoomState>(
+      owner,
+      (state) => state.categories.length === 1,
+    );
     await request(owner, 'room:settings', created.roomId, {
       rounds: 1,
       categories: ['Food'],
     });
-    await waitForState<DrawAndGuessRoomState>(
+    await narrowed;
+    const widened = waitForState<DrawAndGuessRoomState>(
       owner,
-      (state) => state.categories.length === 1,
+      (candidate) => candidate.rounds === 3,
     );
     expect(
       await request(owner, 'room:settings', created.roomId, { rounds: 3 }),
     ).toEqual({ ok: true });
-    const state = await waitForState<DrawAndGuessRoomState>(
-      owner,
-      (candidate) => candidate.rounds === 3,
-    );
-    expect(state.categories).toEqual(all);
+    expect((await widened).categories).toEqual(all);
   });
 
   it('keeps showing the last minefield at its own size until the next is dealt', async () => {
