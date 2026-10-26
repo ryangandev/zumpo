@@ -82,8 +82,6 @@ export const drawAndGuess: typeof en = {
     save: '保存',
     cancel: '取消',
   },
-  guestSetup: (players, rounds) =>
-    `${players} 人，${rounds} 轮。词语都是英文单词。`,
   away: '暂离',
   waiting: '等待中',
   choosing: '正在选词',

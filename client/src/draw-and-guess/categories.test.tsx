@@ -12,6 +12,7 @@ import { renderSeated } from '../tests/seated';
 import { renderApp } from '../tests/render-app';
 import type { FakeSocket } from '../tests/fake-socket';
 import { drawAndGuess as zhCatalog } from '../i18n/zh/draw-and-guess';
+import { room as zhRoom } from '../i18n/zh/room';
 
 /** The arguments of each `event` request the app made. */
 const asked = (fake: FakeSocket, event: string) =>
@@ -221,6 +222,34 @@ describe('the word categories', () => {
     },
   );
 
+  it.each<[WordCategory[], string]>([
+    [
+      [...WORD_CATEGORIES],
+      'The word category is drawn at random from all 15 when the game starts.',
+    ],
+    [
+      ['Food', 'Jobs'],
+      'The word category is drawn at random from 2 categories when the game starts.',
+    ],
+    [['League of Legends'], 'The word category is League of Legends.'],
+  ])(
+    'tell a waiting guest where the word comes from too',
+    async (categories, text) => {
+      await renderSeated(
+        drawAndGuessState({
+          playerList: players,
+          owner: { username: 'Maya', playerId: 'p2' },
+          categories,
+        }),
+      );
+      expect(
+        screen.getByText(
+          `2 players, 2 rounds. ${text} Only the host can start the game.`,
+        ),
+      ).toBeInTheDocument();
+    },
+  );
+
   it('are worded in Chinese', async () => {
     const user = userEvent.setup();
     const { fake } = await renderApp('/games/draw-and-guess/new', {
@@ -274,5 +303,9 @@ describe('the word categories', () => {
       '4 人，2 轮。词语都是英文单词，词语类别是“家居用品”。',
     );
     expect(t.nextSetting(3, ['Sea Life'])).toBe('3 轮，海洋生物');
+    // A guest reads the host's line, and who starts.
+    expect(zhRoom.guestSetup(t.setup(4, 2, ['Household']))).toBe(
+      '4 人，2 轮。词语都是英文单词，词语类别是“家居用品”。只有房主可以开始游戏。',
+    );
   });
 });

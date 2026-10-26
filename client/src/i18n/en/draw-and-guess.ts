@@ -93,8 +93,6 @@ export const drawAndGuess = {
     save: 'Save',
     cancel: 'Cancel',
   },
-  guestSetup: (players: number, rounds: number) =>
-    `${plural(players, 'player')}, ${plural(rounds, 'round')}.`,
   away: 'Away',
   waiting: 'Waiting',
   choosing: 'Choosing a word',
