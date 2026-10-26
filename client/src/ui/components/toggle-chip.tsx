@@ -10,6 +10,8 @@ export interface ToggleChipProps {
    * keeps its look, says it is unavailable, and a press does nothing.
    */
   locked?: boolean;
+  /** The id of what says more about the chip, such as why it is locked. */
+  describedBy?: string;
   children: ReactNode;
 }
 
@@ -21,6 +23,7 @@ export function ToggleChip({
   on = false,
   onToggle,
   locked = false,
+  describedBy,
   children,
 }: ToggleChipProps) {
   return (
@@ -29,6 +32,7 @@ export function ToggleChip({
       className={styles.chip}
       aria-pressed={on}
       aria-disabled={locked || undefined}
+      aria-describedby={describedBy}
       // A click keeps the focus where it was, so a real keyboard's Enter
       // still goes where it went before.
       onMouseDown={(event) => event.preventDefault()}

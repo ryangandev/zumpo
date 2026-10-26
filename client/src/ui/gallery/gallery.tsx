@@ -1873,14 +1873,11 @@ export default function Gallery() {
               )
             }
             locked={categories.length === 1 ? categories : []}
-            action={
-              categories.length < SAMPLE_CATEGORIES.length
-                ? {
-                    label: 'Choose all',
-                    onClick: () => setCategories(SAMPLE_CATEGORIES),
-                  }
-                : undefined
-            }
+            action={{
+              label: 'Choose all',
+              onClick: () => setCategories(SAMPLE_CATEGORIES),
+              disabled: categories.length === SAMPLE_CATEGORIES.length,
+            }}
             helper="At least one stays picked."
           />
         </Specimen>

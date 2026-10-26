@@ -18,11 +18,15 @@ export interface ChipFieldProps<Value extends string> {
   onToggle: (value: Value) => void;
   /**
    * Chips that may not be turned off, such as the last one on where at least
-   * one must stay; they keep their look and say they are unavailable.
+   * one must stay; they keep their look, say they are unavailable, and point
+   * at the helper, which says why.
    */
   locked?: readonly Value[];
-  /** The text button beside the label, such as Choose all; none when absent. */
-  action?: { label: string; onClick: () => void };
+  /**
+   * The text button beside the label, such as Choose all; none when absent.
+   * A disabled one stays in place, dimmed, and keeps the focus a press gave it.
+   */
+  action?: { label: string; onClick: () => void; disabled?: boolean };
   helper?: ReactNode;
   className?: string;
 }
@@ -53,7 +57,8 @@ export function ChipField<Value extends string>({
           <button
             type="button"
             className={styles.action}
-            onClick={action.onClick}
+            aria-disabled={action.disabled || undefined}
+            onClick={action.disabled ? undefined : action.onClick}
           >
             {action.label}
           </button>
@@ -70,6 +75,11 @@ export function ChipField<Value extends string>({
             key={option.value}
             on={value.includes(option.value)}
             locked={locked.includes(option.value)}
+            describedBy={
+              helper != null && locked.includes(option.value)
+                ? `${id}-helper`
+                : undefined
+            }
             onToggle={() => onToggle(option.value)}
           >
             {option.label}

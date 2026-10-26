@@ -4,14 +4,16 @@ import {
   inCategoryOrder,
   WORD_CATEGORIES,
 } from '../../../shared/draw-and-guess';
-import { Button, ChipField, Dialog, PickerField } from '../ui';
+import { Button, ChipField, Dialog, DialogClose, PickerField } from '../ui';
 import { useMessages } from '../i18n';
 
 /**
  * DL04, DL12, MO22, D13, D16: the word categories a room's games draw from,
  * as a field saying what is picked ("All 15"), which opens them as chips in
- * a dialog. Save hands the picked set on; Cancel forgets it. At least one
- * stays picked: the last chip on cannot be turned off.
+ * a dialog. Save hands the picked set on, unless it is the set already
+ * there; Cancel and Escape forget it. At least one stays picked: the last
+ * chip on cannot be turned off, and Choose all stays in place, disabled, once
+ * every one is on.
  */
 export function CategoriesField({
   categories,
@@ -59,14 +61,20 @@ export function CategoriesField({
             <Button
               onClick={() => {
                 setOpen(false);
-                onChange(inCategoryOrder(picked));
+                const next = inCategoryOrder(picked);
+                const same =
+                  next.length === categories.length &&
+                  next.every(
+                    (category, index) => category === categories[index],
+                  );
+                if (!same) onChange(next);
               }}
             >
               {t.save}
             </Button>
-            <Button variant="secondary" onClick={() => setOpen(false)}>
-              {t.cancel}
-            </Button>
+            <DialogClose
+              render={<Button variant="secondary">{t.cancel}</Button>}
+            />
           </>
         }
       >
@@ -79,14 +87,11 @@ export function CategoriesField({
           value={picked}
           onToggle={toggle}
           locked={picked.length === 1 ? picked : []}
-          action={
-            all
-              ? undefined
-              : {
-                  label: t.chooseAll,
-                  onClick: () => setPicked(WORD_CATEGORIES),
-                }
-          }
+          action={{
+            label: t.chooseAll,
+            onClick: () => setPicked(WORD_CATEGORIES),
+            disabled: all,
+          }}
           helper={t.keepOne}
         />
       </Dialog>

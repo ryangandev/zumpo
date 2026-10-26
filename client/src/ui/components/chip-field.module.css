@@ -21,6 +21,13 @@
   cursor: pointer;
 }
 
+/* aria-disabled, not disabled: an action pressed into disabling keeps the
+   focus. As a disabled Button. */
+.action[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .action:focus-visible {
   outline: var(--focus-ring) solid var(--zumpo-ink);
   outline-offset: var(--focus-ring);

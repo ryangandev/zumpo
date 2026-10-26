@@ -57,10 +57,11 @@ describe('the word categories', () => {
       name: 'Word categories',
     });
     expect(within(dialog).getByText('All 15 picked')).toBeInTheDocument();
-    // With every chip on, there is nothing to choose all of.
-    expect(within(dialog).queryByRole('button', { name: 'Choose all' })).toBe(
-      null,
-    );
+    // With every chip on, there is nothing to choose all of, but the button
+    // stays where it is.
+    expect(
+      within(dialog).getByRole('button', { name: 'Choose all' }),
+    ).toHaveAttribute('aria-disabled', 'true');
 
     await user.click(chip(dialog, 'Vehicles'));
     await user.click(chip(dialog, 'Animals'));
@@ -96,6 +97,10 @@ describe('the word categories', () => {
 
     await user.click(chip(dialog, 'Food'));
     expect(chip(dialog, 'Music')).toHaveAttribute('aria-disabled', 'true');
+    expect(chip(dialog, 'Music')).toHaveAccessibleDescription(
+      'At least one stays picked.',
+    );
+    expect(chip(dialog, 'Food')).not.toHaveAccessibleDescription();
     await user.click(chip(dialog, 'Music'));
     expect(chip(dialog, 'Music')).toHaveAttribute('aria-pressed', 'true');
     expect(within(dialog).getByText('1 of 15 picked')).toBeInTheDocument();
@@ -103,10 +108,15 @@ describe('the word categories', () => {
       within(dialog).getByText('At least one stays picked.'),
     ).toBeInTheDocument();
 
-    await user.click(
-      within(dialog).getByRole('button', { name: 'Choose all' }),
-    );
+    const chooseAll = within(dialog).getByRole('button', {
+      name: 'Choose all',
+    });
+    expect(chooseAll).not.toHaveAttribute('aria-disabled');
+    await user.click(chooseAll);
     expect(within(dialog).getByText('All 15 picked')).toBeInTheDocument();
+    // Disabled now, it keeps the focus the press gave it.
+    expect(chooseAll).toHaveAttribute('aria-disabled', 'true');
+    expect(chooseAll).toHaveFocus();
     await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     expect(asked(fake, 'room:settings')).toEqual([]);
@@ -116,6 +126,65 @@ describe('the word categories', () => {
     expect(
       screen.getByRole('button', { name: 'Word categories Sea Life' }),
     ).toBeInTheDocument();
+  });
+
+  it('send nothing when saved as they were', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(finished());
+    fake.answer('room:settings', (): Result => ({ ok: true }));
+    await user.click(
+      screen.getByRole('button', { name: 'Word categories All 15' }),
+    );
+    const dialog = await screen.findByRole('dialog');
+    await user.click(chip(dialog, 'Jobs'));
+    await user.click(chip(dialog, 'Jobs'));
+    await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(asked(fake, 'room:settings')).toEqual([]);
+  });
+
+  it('are picked from the keyboard, and Escape forgets what was picked', async () => {
+    const user = userEvent.setup();
+    const { fake } = await renderSeated(finished());
+    fake.answer('room:settings', (): Result => ({ ok: true }));
+    const field = screen.getByRole('button', {
+      name: 'Word categories All 15',
+    });
+    field.focus();
+    await user.keyboard('{Enter}');
+    const dialog = await screen.findByRole('dialog');
+    const chooseAll = within(dialog).getByRole('button', {
+      name: 'Choose all',
+    });
+
+    // Choose all, then each chip in turn, then Save and Cancel.
+    await waitFor(() => expect(chooseAll).toHaveFocus());
+    await user.tab();
+    expect(chip(dialog, 'Animals')).toHaveFocus();
+    await user.keyboard(' ');
+    expect(chip(dialog, 'Animals')).toHaveAttribute('aria-pressed', 'false');
+    for (const category of WORD_CATEGORIES.slice(1)) {
+      await user.tab();
+      expect(chip(dialog, category)).toHaveFocus();
+    }
+    await user.tab();
+    expect(within(dialog).getByRole('button', { name: 'Save' })).toHaveFocus();
+    await user.tab();
+    expect(
+      within(dialog).getByRole('button', { name: 'Cancel' }),
+    ).toHaveFocus();
+
+    await user.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    expect(asked(fake, 'room:settings')).toEqual([]);
+    expect(field).toHaveAccessibleName('Word categories All 15');
+    await waitFor(() => expect(field).toHaveFocus());
+
+    await user.keyboard('{Enter}');
+    expect(chip(await screen.findByRole('dialog'), 'Animals')).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
   });
 
   it('are said to a guest with the next game’s rounds', async () => {
