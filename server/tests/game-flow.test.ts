@@ -1,6 +1,7 @@
 import { textOf } from './helpers/test-server.js';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { DrawAndGuessRoomState } from '../models/types.js';
+import { wordBank } from '../libs/word-bank.js';
 import {
   collectChat,
   collectStates,
@@ -120,6 +121,33 @@ describe('the game engine', () => {
     expect(textOf(message)).toContain(
       serverRoom(harness, roomId).game.wordCategory,
     );
+  });
+
+  it('draws the category from the ones the room picked, and the words from it', async () => {
+    const alice = await harness.connect();
+    const bob = await harness.connect();
+    const roomId = await createRoom(alice, {
+      username: 'Alice',
+      categories: ['Sea Life'],
+    });
+    await joinRoom(bob, roomId, 'Bob');
+    const announced = waitForChat(alice, (m) => textOf(m).includes('started'));
+    const { drawerView, guesserView } = await startAndAwaitChoosing(
+      alice,
+      bob,
+      roomId,
+    );
+
+    expect((await announced).notice).toEqual({
+      type: 'dg:started',
+      category: 'Sea Life',
+    });
+    expect(drawerView.wordCategory).toBe('Sea Life');
+    expect(guesserView.wordCategory).toBe('Sea Life');
+    expect(guesserView.categories).toEqual(['Sea Life']);
+    for (const choice of drawerView.wordChoices!) {
+      expect(wordBank['Sea Life']).toContain(choice);
+    }
   });
 
   it('marks the start of every turn in the chat with whose it is', async () => {

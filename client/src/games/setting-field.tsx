@@ -23,6 +23,7 @@ import {
   DRAWING_SECONDS,
 } from '../../../shared/doodle-chain';
 import { BOARDS as PAIRS_BOARDS } from '../../../shared/pairs';
+import { WORD_CATEGORIES } from '../../../shared/draw-and-guess';
 import { SelectField } from '../ui';
 import { useMessages } from '../i18n';
 
@@ -36,7 +37,7 @@ const CODES = [1, 3] as const;
 export function defaultSettings(gameType: GameType): GameSettings {
   switch (gameType) {
     case 'draw-and-guess':
-      return { rounds: 2 };
+      return { rounds: 2, categories: [...WORD_CATEGORIES] };
     case 'minesweeper':
       return { difficulty: 'Small' };
     case 'make-24':
@@ -68,6 +69,7 @@ export function defaultSettings(gameType: GameType): GameSettings {
 export function settingsOf(room: AnyLobbyRoomInfo): GameSettings | null {
   switch (room.gameType) {
     case 'draw-and-guess':
+      return { rounds: room.rounds, categories: room.categories };
     case 'daily-word':
     case 'code-breaker':
       return { rounds: room.rounds };
@@ -122,7 +124,9 @@ export function SettingField({
             label: t.roundCount(count),
           }))}
           value={rounds}
-          onValueChange={(next) => onChange({ rounds: next })}
+          onValueChange={(next) =>
+            onChange({ ...(settings as DrawAndGuessSettings), rounds: next })
+          }
           name="rounds"
         />
       );

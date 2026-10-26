@@ -207,7 +207,10 @@ const createDrawAndGuessGameEngine = (
     room.game.turn = 0;
     room.game.lastGame = null;
     room.game.lastRound = null;
-    room.game.wordCategory = getRandomCategory(wordBank).name;
+    room.game.wordCategory = getRandomCategory(
+      wordBank,
+      room.game.categories,
+    ).name;
 
     // Logged without the room object, which carries the password
     console.log(

@@ -58,8 +58,10 @@ import type {
   GomokuRoomState,
   ServerToClientEvent,
   ServerToClientEvents,
+  WordCategory,
 } from '../../models/types.js';
 import type { Room } from '../../libs/rooms/types.js';
+import { WORD_CATEGORIES } from '../../../shared/draw-and-guess.js';
 
 /**
  * Phases short enough that a full game runs inside a test, but long enough that
@@ -528,6 +530,8 @@ interface CreateRoomOptions {
   username?: string;
   maxPlayers?: number;
   rounds?: number;
+  /** Every category unless the test says. */
+  categories?: WordCategory[];
   password?: string;
 }
 
@@ -545,7 +549,10 @@ const createRoom = async (
     username: options.username ?? 'Owner',
     maxPlayers: options.maxPlayers ?? 4,
     password: options.password ?? '',
-    settings: { rounds: options.rounds ?? 1 },
+    settings: {
+      rounds: options.rounds ?? 1,
+      categories: options.categories ?? [...WORD_CATEGORIES],
+    },
   });
   if (!answer.ok) throw new Error(`room:create refused: ${answer.error.type}`);
   return answer.roomId;

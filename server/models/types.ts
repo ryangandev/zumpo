@@ -42,6 +42,8 @@ interface RoomCanvas {
  */
 interface DrawAndGuessState {
   rounds: number;
+  /** The categories a game draws its one from; at least one, in `WORD_CATEGORIES` order. */
+  categories: WordCategory[];
   phase: DrawAndGuessPhase;
   /** 1-based; 0 when no game is running. */
   currentRound: number;

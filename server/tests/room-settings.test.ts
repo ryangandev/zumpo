@@ -1,8 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import type { GameType, LiarsDiceRoomState } from '../models/types.js';
+import type {
+  DrawAndGuessRoomState,
+  GameType,
+  LiarsDiceRoomState,
+} from '../models/types.js';
 import { SEATS } from '../../shared/seats.js';
 import {
   createLiarsDiceRoom,
+  createRoom,
   createMinesweeperRoom,
   joinRoom,
   lobbyView,
@@ -17,7 +22,10 @@ import {
 
 /** Each game's settings as a room is made, and another it may change to. */
 const SETTINGS: Record<GameType, [object, object]> = {
-  'draw-and-guess': [{ rounds: 1 }, { rounds: 3 }],
+  'draw-and-guess': [
+    { rounds: 1, categories: ['Animals', 'Food'] },
+    { rounds: 3, categories: ['Sea Life'] },
+  ],
   minesweeper: [{ difficulty: 'Small' }, { difficulty: 'Large' }],
   'make-24': [{ hands: 5 }, { hands: 10 }],
   pairs: [{ board: 'Small' }, { board: 'Large' }],
@@ -85,7 +93,9 @@ describe('changing the next game', () => {
       const state = await waitForState(guest, (candidate) =>
         Object.entries(next).every(
           ([key, value]) =>
-            (candidate as unknown as Record<string, unknown>)[key] === value,
+            JSON.stringify(
+              (candidate as unknown as Record<string, unknown>)[key],
+            ) === JSON.stringify(value),
         ),
       );
       expect(state.isGameStarted).toBe(false);
@@ -121,6 +131,40 @@ describe('changing the next game', () => {
       (candidate) => candidate.isGameStarted,
     );
     expect(state.cups.map((cup) => cup.diceLeft)).toEqual([5, 5]);
+  });
+
+  it('draws the next Draw & Guess game from the categories picked, and never none', async () => {
+    const {
+      roomId,
+      players: [owner, maya],
+    } = await seatTable(harness, ['Ryan', 'Maya'], (client, username) =>
+      createRoom(client, { username, categories: ['Animals', 'Food'] }),
+    );
+    for (const categories of [[], ['Dinosaurs'], ['Food', 'Food']]) {
+      expect(
+        (
+          await request(owner, 'room:settings', roomId, {
+            rounds: 1,
+            categories,
+          })
+        ).error?.type,
+      ).toBe('invalidRequest');
+    }
+    expect(
+      await request(owner, 'room:settings', roomId, {
+        rounds: 1,
+        categories: ['Fantasy'],
+      }),
+    ).toEqual({ ok: true });
+    await startGame(owner, roomId);
+    const state = await waitForState<DrawAndGuessRoomState>(
+      maya,
+      (candidate) => candidate.isGameStarted,
+    );
+    expect(state).toMatchObject({
+      categories: ['Fantasy'],
+      wordCategory: 'Fantasy',
+    });
   });
 
   it('keeps showing the last minefield at its own size until the next is dealt', async () => {

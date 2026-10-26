@@ -1,4 +1,9 @@
 import { z } from 'zod';
+import {
+  inCategoryOrder,
+  isWordCategory,
+  WORD_CATEGORIES,
+} from '../../../shared/draw-and-guess.js';
 import { roomId } from '../../libs/validation.js';
 
 /**
@@ -11,10 +16,21 @@ import { roomId } from '../../libs/validation.js';
 
 const WORD_MAX = 64; // longest plausible word-bank entry, with room to spare
 
-const roundsSetting = z.object({
+/**
+ * A room's settings, on creating it and between games: 1 to 4 rounds, and the
+ * categories its games draw from, at least one and each once. They are kept
+ * in `WORD_CATEGORIES` order, however they arrived.
+ */
+const drawAndGuessSettings = z.object({
   rounds: z.number().int().min(1).max(4),
+  categories: z
+    .array(z.string().refine(isWordCategory, 'not a word category'))
+    .min(1)
+    .max(WORD_CATEGORIES.length)
+    .refine((list) => new Set(list).size === list.length, 'a repeat')
+    .transform((list) => inCategoryOrder(list.filter(isWordCategory))),
 });
 
 const selectWordRequest = z.tuple([roomId, z.string().min(1).max(WORD_MAX)]);
 
-export { roundsSetting, selectWordRequest };
+export { drawAndGuessSettings, selectWordRequest };

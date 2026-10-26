@@ -43,7 +43,10 @@ const makeRoom = (
   phaseEndsAt: 0,
   chat: { nextId: 1, messages: [] },
   ...overrides,
-  game: { ...createState({ rounds: 2 }), ...gameOverrides },
+  game: {
+    ...createState({ rounds: 2, categories: ['Animals', 'Food'] }),
+    ...gameOverrides,
+  },
 });
 
 describe('toLobbyInfo', () => {

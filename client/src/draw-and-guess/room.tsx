@@ -138,7 +138,7 @@ function BetweenGames({ room }: { room: Room }) {
   return (
     <WaitingPanel
       aloneTitle={m.drawAndGuess.aloneTitle}
-      setup={m.drawAndGuess.setup(count, state.rounds)}
+      setup={m.drawAndGuess.setup(count, state.rounds, state.categories)}
       guestSetup={m.drawAndGuess.guestSetup(count, state.rounds)}
       onStart={startGame}
       starting={starting}

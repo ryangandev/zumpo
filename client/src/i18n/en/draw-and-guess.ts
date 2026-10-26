@@ -1,8 +1,44 @@
-import type { WordCategory } from '../../../../shared/wire-types';
-import { plural } from './plural';
+import type { WordCategory } from '../../../../shared/wire-types.js';
+import { WORD_CATEGORIES } from '../../../../shared/draw-and-guess.js';
+import { plural } from './plural.js';
+
+const CATEGORIES: Record<WordCategory, string> = {
+  Animals: 'Animals',
+  Clothing: 'Clothing',
+  Electronics: 'Electronics',
+  Fantasy: 'Fantasy',
+  Food: 'Food',
+  Fruits: 'Fruits',
+  Household: 'Household',
+  Jobs: 'Jobs',
+  'League of Legends': 'League of Legends',
+  Music: 'Music',
+  Nature: 'Nature',
+  Places: 'Places',
+  'Sea Life': 'Sea Life',
+  Sports: 'Sports',
+  Vehicles: 'Vehicles',
+};
+
+const category = (value: WordCategory | ''): string =>
+  value === '' ? '' : CATEGORIES[value];
+
+/** Every category in the bank: the 15 of "All 15". */
+const ALL = WORD_CATEGORIES.length;
+
+/** How a room's categories read: all, one by name, or how many. */
+const picked = (
+  categories: readonly WordCategory[],
+  words: { all: string; one: (name: string) => string; some: string },
+) =>
+  categories.length >= ALL
+    ? words.all
+    : categories.length === 1
+      ? words.one(category(categories[0]!))
+      : words.some;
 
 export const drawAndGuess = {
-  category: (category: WordCategory | ''): string => category,
+  category,
   round: (round: number, rounds: number) => `Round ${round} of ${rounds}`,
   gameOver: 'Game over',
   gameEnded: 'Game ended',
@@ -16,11 +52,47 @@ export const drawAndGuess = {
   drawer: 'The drawer',
   drawerAway: (name: string, seconds: number) =>
     `${name} lost connection. Their turn is skipped if they are not back within ${plural(seconds, 'second')}.`,
-  resultsDetail: (rounds: number, category: WordCategory, turns: number) =>
-    `${plural(rounds, 'round')} of ${category}, ${plural(turns, 'turn')}.`,
+  resultsDetail: (rounds: number, played: WordCategory, turns: number) =>
+    `${plural(rounds, 'round')} of ${category(played)}, ${plural(turns, 'turn')}.`,
   aloneTitle: 'Better with two.',
-  setup: (players: number, rounds: number) =>
-    `${plural(players, 'player')}, ${plural(rounds, 'round')}. The word category is drawn at random when the game starts.`,
+  setup: (
+    players: number,
+    rounds: number,
+    categories: readonly WordCategory[],
+  ) =>
+    `${plural(players, 'player')}, ${plural(rounds, 'round')}. ${picked(
+      categories,
+      {
+        all: `The word category is drawn at random from all ${ALL} when the game starts.`,
+        one: (name) => `The word category is ${name}.`,
+        some: `The word category is drawn at random from ${categories.length} categories when the game starts.`,
+      },
+    )}`,
+  /** Between games, for anybody but the starter: "2 rounds, all 15 categories". */
+  nextSetting: (rounds: number, categories: readonly WordCategory[]) =>
+    picked(categories, {
+      all: `${plural(rounds, 'round')}, all ${ALL} categories`,
+      one: (name) => `${plural(rounds, 'round')} of ${name}`,
+      some: `${plural(rounds, 'round')}, ${categories.length} categories`,
+    }),
+  categories: {
+    label: 'Word categories',
+    /** The field's value: "All 15", "5 of 15", or the one picked. */
+    value: (categories: readonly WordCategory[]) =>
+      picked(categories, {
+        all: `All ${ALL}`,
+        one: (name) => name,
+        some: `${categories.length} of ${ALL}`,
+      }),
+    title: 'Word categories',
+    description: 'Each game draws one of the picked categories at random.',
+    count: (count: number) =>
+      count >= ALL ? `All ${ALL} picked` : `${count} of ${ALL} picked`,
+    chooseAll: 'Choose all',
+    keepOne: 'At least one stays picked.',
+    save: 'Save',
+    cancel: 'Cancel',
+  },
   guestSetup: (players: number, rounds: number) =>
     `${plural(players, 'player')}, ${plural(rounds, 'round')}.`,
   away: 'Away',

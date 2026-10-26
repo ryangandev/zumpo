@@ -11,18 +11,18 @@ import { itemAt } from '../../../shared/list.js';
  * to show.
  */
 
+/** One of the room's picked categories, each as likely as the others. */
 const getRandomCategory = (
   wordBank: WordBank,
-): { name: WordCategory; words: string[] } => {
-  const categoryList = Object.keys(wordBank) as WordCategory[];
-  const randomCategoryIndex = getRandomInt(0, categoryList.length);
-  const name = categoryList[randomCategoryIndex]!;
+  picked: readonly WordCategory[],
+): { name: WordCategory; words: readonly string[] } => {
+  const name = itemAt(picked, getRandomInt(0, picked.length));
 
   return { name, words: wordBank[name] };
 };
 
 const getRandomChoicesFromList = (
-  wordList: string[],
+  wordList: readonly string[],
   numberOfChoices: number,
 ): string[] => {
   // Asking for more distinct choices than the list can supply would spin

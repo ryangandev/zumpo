@@ -42,14 +42,27 @@ type GameType =
 
 type RoomStatus = 'Open' | 'Full' | 'In Progress';
 
-/** The word bank's categories. `server/libs/word-bank.ts` is keyed by these. */
+/**
+ * The word bank's categories, as ids: each client words them from its catalog.
+ * `server/libs/word-bank.ts` is keyed by these, and `WORD_CATEGORIES` in
+ * `shared/draw-and-guess.ts` lists them in the order a picker shows them.
+ */
 type WordCategory =
-  | 'Fruits'
   | 'Animals'
-  | 'League of Legends'
+  | 'Clothing'
   | 'Electronics'
+  | 'Fantasy'
+  | 'Food'
+  | 'Fruits'
+  | 'Household'
+  | 'Jobs'
+  | 'League of Legends'
+  | 'Music'
+  | 'Nature'
+  | 'Places'
+  | 'Sea Life'
   | 'Sports'
-  | 'Food';
+  | 'Vehicles';
 
 /** What every game knows about a player, and nothing more. */
 interface PlayerInfo {
@@ -181,6 +194,11 @@ type GameSettings =
 
 interface DrawAndGuessSettings {
   rounds: number;
+  /**
+   * The categories a game may draw its one category from: at least one, each
+   * at most once, in `WORD_CATEGORIES` order. A new room picks them all.
+   */
+  categories: WordCategory[];
 }
 
 type MinesweeperDifficulty = 'Small' | 'Medium' | 'Large';
@@ -259,6 +277,8 @@ interface LobbyRoomInfo {
 interface DrawAndGuessLobbyRoomInfo extends LobbyRoomInfo {
   gameType: 'draw-and-guess';
   rounds: number;
+  /** The categories the next game draws from, in `WORD_CATEGORIES` order. */
+  categories: WordCategory[];
 }
 
 interface MinesweeperLobbyRoomInfo extends LobbyRoomInfo {
@@ -409,6 +429,8 @@ interface DrawAndGuessGameSummary extends GameSummary {
 interface DrawAndGuessRoomState extends RoomState {
   gameType: 'draw-and-guess';
   rounds: number;
+  /** The categories the next game draws from; `wordCategory` is the one in play. */
+  categories: WordCategory[];
   phase: DrawAndGuessPhase;
   /** 1-based; 0 when no game is running. */
   currentRound: number;

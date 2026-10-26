@@ -11,7 +11,7 @@ import { createDrawAndGuessGameEngine } from './game-engine.js';
 import { gameEventsHandler } from './game-events-handler.js';
 import { whiteboardCanvasEventHandler } from './whiteboard-canvas-events-handler.js';
 import { createState, toLobbyInfo, toRoomState } from './state.js';
-import { roundsSetting } from './validation.js';
+import { drawAndGuessSettings } from './validation.js';
 
 /**
  * Draw & Guess, as the room layer sees it.
@@ -37,7 +37,7 @@ const createDrawAndGuessModule = (
     maxPlayers: SEATS['draw-and-guess'].max,
 
     parseSettings: (raw) =>
-      parseArgs(roundsSetting, raw, 'room:create (draw-and-guess)'),
+      parseArgs(drawAndGuessSettings, raw, 'draw-and-guess settings'),
     createState,
     toLobbyInfo,
     toRoomState,

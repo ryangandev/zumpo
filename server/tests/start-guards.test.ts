@@ -11,7 +11,7 @@ import {
 
 /** A valid create request's settings for each game. */
 const SETTINGS: Record<GameType, object> = {
-  'draw-and-guess': { rounds: 1 },
+  'draw-and-guess': { rounds: 1, categories: ['Animals'] },
   minesweeper: { difficulty: 'Small' },
   'make-24': { hands: 5 },
   pairs: { board: 'Small' },
