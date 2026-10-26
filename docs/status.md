@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 259 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 261 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).
@@ -62,7 +62,7 @@ Draw & Guess tells a guesser who is a letter or two off the word, or types it in
 The guess goes back to them alone, marked "So close!", because it all but spells the word, and the room is told "Sam is close!" once a turn; it was designed in Figma first (D17, MO21).
 
 Draw & Guess's word bank grew from six categories to 15, at least 40 words each, and a room picks the categories its games draw from, at Ryan's request on 2026-10-26, the backlog's last item ([rules](games/draw-and-guess.md#the-game-loop)).
-The host narrows them in a dialog when creating the room, and whoever starts the next game changes them between games; each game still draws one category at random, now from the picked set, and at least one always stays picked.
+The host narrows them in a dialog when creating the room, and whoever starts the next game changes them between games; each game still draws one category at random, now from the picked set, and at least one always stays picked (DL12, D16, MO22 in Figma).
 No word is dealt twice in a game, and no two words in a category are close guesses for each other.
 
 ## Product direction

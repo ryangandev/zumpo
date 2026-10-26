@@ -19,9 +19,9 @@ They are not copied here, so there is one place to change them.
 | ------------------------------------ | ----------- | ------------------------------------------------------------------------------------- |
 | 00 / Review guide & flow map         | `9:14700`   | Review order, the real rules, which UX is new                                         |
 | 01 / Platform & shared flows         | `9:431`     | P01-P21 without P04, desktop                                                          |
-| 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL11 game page, D01-D17 room, desktop                                            |
+| 02 / Draw & Guess / complete flow    | `9:866`     | DL01-DL12 game page, D01-D17 room, desktop                                            |
 | 03 / Minesweeper / complete flow     | `9:2526`    | ML01-ML10 game page, M01-M16 room, MS01-MS05 solo                                     |
-| 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO21 without MO03, the main flows at 390 px                                      |
+| 04 / Mobile / 390px flow adaptations | `9:10060`   | MO01-MO22 without MO03, the main flows at 390 px                                      |
 | 05 / Make 24 / complete flow         | `40:60741`  | T01-T05 solo, T06-T10 room, T11-T12 phone                                             |
 | 06 / Pairs / complete flow           | `40:60743`  | PR01-PR04 and PR11 solo, PR05-PR08 room, PR09-PR10 phone                              |
 | 07 / Trios / complete flow           | `43:61070`  | TS01-TS04 solo, TS05-TS10 room, TS11-TS12 phone                                       |
@@ -97,6 +97,8 @@ Decisions from the design review rounds (their reports are in git history):
   Hush keeps its seats in view, because they set how long its game is.
   A blank name opens More options to say so, and a room being made hides the button with the other actions (DL06, ML06).
   A helper says only what the options do not ("60 seconds a hand."), never the options again; a page heading over the card would say the game's name twice, so a wide screen has none, and a phone puts the card's title and description on the page.
+  Draw & Guess's word categories are a field under Rounds that says what is picked and opens the categories as `Zumpo/Toggle chip`s in a `Zumpo/Chip field`, in a Dialog (DL12, MO22); between games the starter has the same field beside Next game (D13, D16).
+  Choose all stays in place, dimmed, while every chip is on, and the last chip on is Locked, pointing at the helper that says why; there is no Clear all, and no error state, since none can be left picked.
 - A game screen states the turn in one `Zumpo/Turn bar` above the canvas or board: what is happening, whose turn, and the server's countdown.
   Only a deadline, a clock whose end ends what you are doing, is a filled `Zumpo/Countdown` pill that can turn urgent; a clock that ends nothing, the time to a Trios hint, the time a Snap card has been out and a run's time on your own, is its Info tone, a line with no fill, so it never reads as time running out.
 - In Draw & Guess the guess is the chat input; it is locked for the drawer and for anyone who has scored this turn, as the server already enforces.
@@ -160,7 +162,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 259 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 261 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 
