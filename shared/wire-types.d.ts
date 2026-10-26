@@ -1303,6 +1303,11 @@ type RoomNotice =
   | { type: 'dg:drawer-returned' }
   | { type: 'dg:all-guessed' }
   | { type: 'dg:guessed'; name: string; points: number }
+  /**
+   * A guesser is a letter or two off the word, said once a turn for each
+   * guesser; what they typed went to them alone (`close` on their line).
+   */
+  | { type: 'dg:close'; name: string }
   /** A turn begins: who draws, in which round. */
   | { type: 'dg:turn'; round: number; drawer: string }
   | { type: 'ms:started'; mines: number; width: number; height: number }
@@ -1381,10 +1386,18 @@ type ChatMessage =
       username: string;
       text: string;
       /**
-       * Sent only to the spectators: one talking while a Draw & Guess word is
-       * being drawn, who could hint at it. Absent for everybody.
+       * Who it was sent to, when not the whole room. `spectators`: the
+       * spectators alone, one of them talking while a Draw & Guess word is
+       * being drawn, who could hint at it. `sender`: the one who said it
+       * alone, a Draw & Guess guess so close to the word that it would give
+       * it away. Absent for everybody.
        */
-      audience?: 'spectators';
+      audience?: 'spectators' | 'sender';
+      /**
+       * A Draw & Guess guess a letter or two off the word, sent to its sender
+       * alone (`audience: 'sender'`); the room is told `dg:close` instead.
+       */
+      close?: true;
       notice?: never;
     }
   | {
@@ -1395,6 +1408,7 @@ type ChatMessage =
       playerId?: never;
       username?: never;
       audience?: never;
+      close?: never;
     };
 
 interface Coordinate {

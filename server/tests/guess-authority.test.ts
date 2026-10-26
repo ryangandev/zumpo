@@ -7,10 +7,12 @@ import {
   joinRoom,
   playToDrawingPhase,
   seatTwoPlayers,
+  serverRoom,
   settle,
   SLOW_DRAWING,
   startGame,
   startTestServer,
+  syncRoom,
   waitForChat,
   waitForDrawState,
   type TestClient,
@@ -390,6 +392,143 @@ describe('guess authority', () => {
     const next = await waitForDrawState(drawer, (s) => s.turn === 2);
     expect(next.turnPoints).toEqual({});
     expect(next.scoredThisTurn).toEqual([]);
+  });
+
+  /*
+   * A guess a letter off the word all but spells it, so the room must never
+   * read it: it goes back to the guesser alone, and the room is told who is
+   * close, once a turn for each guesser.
+   */
+  it('shows a close guess to the guesser alone, and tells the room once', async () => {
+    const { roomId, drawer, guessers, guesserName } =
+      await playToDrawingPhaseWithThree(harness);
+    const [close, other] = guessers as [TestClient, TestClient];
+    // The word is random; the rule is about its letters.
+    serverRoom(harness, roomId).game.word = 'Turtle';
+
+    const drawerHeard = collectChat(drawer);
+    const otherHeard = collectChat(other);
+    const closeHeard = collectChat(close);
+    const notice = waitForChat(drawer, (m) => m.notice?.type === 'dg:close');
+    const own = waitForChat(close, (m) => m.kind === 'player');
+    close.emit('chat:send', roomId, 'turtel');
+
+    expect(await own).toEqual({
+      id: expect.any(Number),
+      kind: 'player',
+      playerId: close.playerId,
+      username: guesserName(close),
+      text: 'turtel',
+      audience: 'sender',
+      close: true,
+    });
+    expect((await notice).kind).toBe('system');
+    expect(textOf(await notice)).toBe(`${guesserName(close)} is close!`);
+
+    // A second close guess that turn is the guesser's alone, with no notice.
+    close.emit('chat:send', roomId, 'turtl');
+    // ...while a guess further off is ordinary chat.
+    const ordinary = waitForChat(drawer, (m) => m.kind === 'player');
+    close.emit('chat:send', roomId, 'tortoise');
+    expect(textOf(await ordinary)).toBe('tortoise');
+    await settle();
+
+    for (const heard of [drawerHeard, otherHeard]) {
+      expect(JSON.stringify(heard)).not.toContain('turtel');
+      expect(JSON.stringify(heard)).not.toContain('turtl"');
+      expect(heard.filter((m) => m.notice?.type === 'dg:close')).toHaveLength(
+        1,
+      );
+    }
+    expect(closeHeard.filter((m) => m.close).map(textOf)).toEqual([
+      'turtel',
+      'turtl',
+    ]);
+    expect(
+      closeHeard.filter((m) => m.notice?.type === 'dg:close'),
+    ).toHaveLength(1);
+    // Nobody scored, and the turn goes on.
+    expect(pointsOf(harness, roomId).every((points) => points === 0)).toBe(
+      true,
+    );
+
+    // A refresh gives the guesser their lines back, and nobody else.
+    const ownHistory = (await syncRoom(close, roomId)).messages;
+    expect(ownHistory.filter((m) => m.close).map(textOf)).toEqual([
+      'turtel',
+      'turtl',
+    ]);
+    for (const client of [drawer, other]) {
+      const { messages } = await syncRoom(client, roomId);
+      expect(messages.some((m) => m.close)).toBe(false);
+      expect(JSON.stringify(messages)).not.toContain('turtel');
+    }
+  });
+
+  it('counts a word run together as close, not correct', async () => {
+    const { roomId, guesser, drawer } = await playToDrawingPhase(harness);
+    serverRoom(harness, roomId).game.word = 'Ice Cream';
+
+    const own = waitForChat(guesser, (m) => m.close === true);
+    const notice = waitForChat(drawer, (m) => m.notice?.type === 'dg:close');
+    guesser.emit('chat:send', roomId, 'icecream');
+
+    expect(textOf(await own)).toBe('icecream');
+    await notice;
+    expect(
+      serverRoom(harness, roomId).game.scoredThisTurn.has(guesser.playerId),
+    ).toBe(false);
+  });
+
+  it('tells the room again in the next turn', async () => {
+    const { roomId, drawer, guessers } =
+      await playToDrawingPhaseWithThree(harness);
+    const [close] = guessers as [TestClient, TestClient];
+    serverRoom(harness, roomId).game.word = 'Turtle';
+    const first = waitForChat(drawer, (m) => m.notice?.type === 'dg:close');
+    close.emit('chat:send', roomId, 'turtel');
+    await first;
+
+    const next = await waitForDrawState(
+      drawer,
+      (s) => s.turn === 2 && s.phase === 'drawing',
+      15_000,
+    );
+    const nextDrawer = [drawer, ...guessers].find(
+      (client) => client.playerId === next.currentDrawer,
+    )!;
+    const guesser = guessers.find((client) => client !== nextDrawer)!;
+    serverRoom(harness, roomId).game.word = 'Turtle';
+    const again = waitForChat(nextDrawer, (m) => m.notice?.type === 'dg:close');
+    guesser.emit('chat:send', roomId, 'turtel');
+    expect((await again).notice).toMatchObject({ type: 'dg:close' });
+  }, 30_000);
+
+  it('leaves the drawer, a scorer and a spectator out of it', async () => {
+    const { roomId, drawer, guessers, word } =
+      await playToDrawingPhaseWithThree(harness);
+    const [scorer, other] = guessers as [TestClient, TestClient];
+    const carol = await harness.connect();
+    await joinRoom(carol, roomId, 'Dave');
+
+    scorer.emit('chat:send', roomId, word);
+    await waitForChat(other, (m) => m.notice?.type === 'dg:guessed');
+    serverRoom(harness, roomId).game.word = 'Turtle';
+
+    const heard = collectChat(other);
+    drawer.emit('chat:send', roomId, 'turtel');
+    scorer.emit('chat:send', roomId, 'turtel');
+    // A spectator's guess stays among the spectators, as any line does then.
+    const stands = waitForChat(carol, (m) => m.kind === 'player');
+    carol.emit('chat:send', roomId, 'turtel');
+    expect(await stands).toMatchObject({
+      audience: 'spectators',
+      text: 'turtel',
+    });
+    expect((await stands).close).toBeUndefined();
+    await settle();
+
+    expect(heard).toEqual([]);
   });
 
   it('posts room chat to everyone, under the name on the seat', async () => {
