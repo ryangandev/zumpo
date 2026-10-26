@@ -116,6 +116,8 @@ export interface RoomSettings {
   seats?: 2 | 3 | 4 | 5 | 6 | 7 | 8;
   /** Draw & Guess: how many rounds. */
   rounds?: 1 | 2 | 3 | 4;
+  /** Draw & Guess: the word categories its games draw from. */
+  categories?: readonly string[];
   /** Minesweeper or Pairs: the board, by its first word. */
   board?: 'Small' | 'Medium' | 'Large';
   /** Make 24: how many hands. */
@@ -164,6 +166,7 @@ export async function createRoom(
   if (settings.rounds) {
     await choose(page, 'Rounds', new RegExp(`^${settings.rounds} rounds?$`));
   }
+  if (settings.categories) await pickCategories(page, settings.categories);
   if (settings.board) {
     await choose(page, 'Board', new RegExp(`^${settings.board}`));
   }
@@ -223,6 +226,36 @@ export async function choose(page: Page, field: string, option: RegExp) {
   });
   await page.getByRole('option', { name: option }).click();
   await expect(trigger).toHaveText(option);
+}
+
+/** Turns a toggle chip on or off, unless it already is. */
+async function toggleTo(chip: Locator, on: boolean) {
+  if ((await chip.getAttribute('aria-pressed')) === String(on)) return;
+  await chip.click();
+  await expect(chip).toHaveAttribute('aria-pressed', String(on));
+}
+
+/**
+ * Picks exactly `categories` in Draw & Guess's word categories dialog, as a
+ * player does, and saves them. The wanted chips go on first, since the last
+ * chip on cannot be turned off.
+ */
+export async function pickCategories(
+  page: Page,
+  categories: readonly string[],
+) {
+  await page.getByRole('button', { name: /^Word categories / }).click();
+  const dialog = page.getByRole('dialog', { name: 'Word categories' });
+  const chips = dialog.getByRole('group', { name: /picked$/ });
+  for (const name of categories) {
+    await toggleTo(chips.getByRole('button', { name, exact: true }), true);
+  }
+  for (const chip of await chips.getByRole('button').all()) {
+    const name = (await chip.textContent())!.trim();
+    if (!categories.includes(name)) await toggleTo(chip, false);
+  }
+  await dialog.getByRole('button', { name: 'Save' }).click();
+  await expect(dialog).toBeHidden();
 }
 
 /** A droppable player's connection, routed through the test. */
