@@ -94,7 +94,7 @@ import styles from './gallery.module.css';
 
 const noop = () => {};
 
-/** Chip field's sample: Draw & Guess's word categories, five of them on. */
+/** Chip field's sample: Draw & Guess's word categories, four of them on. */
 const SAMPLE_CATEGORIES: readonly string[] = [
   'Animals',
   'Clothing',
@@ -112,7 +112,7 @@ const SAMPLE_CATEGORIES: readonly string[] = [
   'Sports',
   'Vehicles',
 ];
-const SAMPLE_PICKED = ['Animals', 'Food', 'Fruits', 'Music', 'Sea Life'];
+const SAMPLE_PICKED = ['Animals', 'Food', 'Sea Life', 'Sports'];
 
 /** A Gomoku game won by Black on the diagonal from C11 to G7 (GM13). */
 const GOMOKU_LINE = [0, 1, 2, 3, 4].map((step) => pointAt(2 + step, 11 - step));
@@ -1857,7 +1857,12 @@ export default function Gallery() {
       </Family>
 
       <Family name="Chip field" file="chip-field">
-        <Specimen family="chip-field" variant="State=Default" width={496}>
+        <Specimen
+          family="chip-field"
+          variant="State=Default"
+          label="Default"
+          width={496}
+        >
           <ChipField
             label={`${categories.length} of 15 picked`}
             options={SAMPLE_CATEGORIES.map((name) => ({
@@ -1868,7 +1873,9 @@ export default function Gallery() {
             onToggle={(name) =>
               setCategories((current) =>
                 current.includes(name)
-                  ? current.filter((one) => one !== name)
+                  ? current.length > 1
+                    ? current.filter((one) => one !== name)
+                    : current
                   : [...current, name],
               )
             }
@@ -1881,6 +1888,41 @@ export default function Gallery() {
             helper="At least one stays picked."
           />
         </Specimen>
+        {(
+          [
+            ['All on', SAMPLE_CATEGORIES],
+            ['One on', ['League of Legends']],
+          ] as const
+        ).map(([stateName, picked]) => (
+          <Specimen
+            key={stateName}
+            family="chip-field"
+            variant={`State=${stateName}`}
+            label={stateName}
+            width={496}
+          >
+            <ChipField
+              label={
+                picked.length === SAMPLE_CATEGORIES.length
+                  ? 'All 15 picked'
+                  : `${picked.length} of 15 picked`
+              }
+              options={SAMPLE_CATEGORIES.map((name) => ({
+                value: name,
+                label: name,
+              }))}
+              value={picked}
+              onToggle={noop}
+              locked={picked.length === 1 ? picked : []}
+              action={{
+                label: 'Choose all',
+                onClick: noop,
+                disabled: picked.length === SAMPLE_CATEGORIES.length,
+              }}
+              helper="At least one stays picked."
+            />
+          </Specimen>
+        ))}
       </Family>
 
       <Family name="Toggle chip" file="toggle-chip">
@@ -1889,6 +1931,7 @@ export default function Gallery() {
             [
               ['Off', false],
               ['On', true],
+              ['Locked', true],
             ] as const
           ).map(([stateName, on]) => (
             <Specimen
@@ -1897,7 +1940,11 @@ export default function Gallery() {
               variant={`State=${stateName}`}
               label={stateName}
             >
-              <ToggleChip on={on} onToggle={noop}>
+              <ToggleChip
+                on={on}
+                locked={stateName === 'Locked'}
+                onToggle={noop}
+              >
                 Notes
               </ToggleChip>
             </Specimen>
