@@ -3,6 +3,7 @@ import path from 'node:path';
 import type { Locator, Page } from '@playwright/test';
 import {
   choose,
+  chooseCategories,
   createRoom,
   dropConnection,
   duplicateTab,
@@ -432,6 +433,16 @@ async function lobbyScreens(
     await shot(samOnPhone, 'MO04');
     await samOnPhone.goto(`/games/${game}/new`);
     await shot(samOnPhone, 'MO05');
+    // MO22: four of the word categories picked, not yet saved.
+    const categories = await chooseCategories(samOnPhone, [
+      'Animals',
+      'Food',
+      'Sea Life',
+      'Sports',
+    ]);
+    await shot(samOnPhone, 'MO22');
+    await categories.getByRole('button', { name: 'Cancel' }).click();
+    await expect(categories).toBeHidden();
     await samOnPhone.goto(privateRoom);
     await shot(samOnPhone, 'MO06');
   }
@@ -474,12 +485,20 @@ test('Draw & Guess rooms and their lists', async ({ player }) => {
   });
 });
 
-test('Draw & Guess rounds menu', async ({ player }) => {
+test('Draw & Guess rounds menu and word categories', async ({ player }) => {
   const maya = await player('Maya', desktop);
   await maya.goto('/games/draw-and-guess/new');
   await maya.getByRole('combobox', { name: 'Rounds', exact: true }).click();
   await expect(maya.getByRole('listbox')).toBeVisible();
   await shot(maya, 'DL11');
+  await maya.keyboard.press('Escape');
+  await expect(maya.getByRole('listbox')).toBeHidden();
+  // DL12: every category picked, as a new room starts.
+  await maya.getByRole('button', { name: 'Word categories All 15' }).click();
+  await expect(
+    maya.getByRole('dialog', { name: 'Word categories' }),
+  ).toBeVisible();
+  await shot(maya, 'DL12');
 });
 
 test('Minesweeper rooms and their lists', async ({ player }) => {
@@ -735,6 +754,11 @@ test('a Draw & Guess game', async ({ player }) => {
   });
   await shot(maya!.page, 'D13');
   await shot(ryan!.page, 'D14');
+  // D16: the next game narrowed to one category, not yet saved.
+  const categories = await chooseCategories(maya!.page, ['League of Legends']);
+  await shot(maya!.page, 'D16');
+  await categories.getByRole('button', { name: 'Cancel' }).click();
+  await expect(categories).toBeHidden();
 });
 
 /** A game left by all but its host: D15 and M16. */

@@ -236,14 +236,15 @@ async function toggleTo(chip: Locator, on: boolean) {
 }
 
 /**
- * Picks exactly `categories` in Draw & Guess's word categories dialog, as a
- * player does, and saves them. The wanted chips go on first, since the last
- * chip on cannot be turned off.
+ * Opens Draw & Guess's word categories dialog and turns on exactly
+ * `categories`, as a player does, leaving it open and unsaved; returns the
+ * dialog. The wanted chips go on first, since the last chip on cannot be
+ * turned off.
  */
-export async function pickCategories(
+export async function chooseCategories(
   page: Page,
   categories: readonly string[],
-) {
+): Promise<Locator> {
   await page.getByRole('button', { name: /^Word categories / }).click();
   const dialog = page.getByRole('dialog', { name: 'Word categories' });
   const chips = dialog.getByRole('group', { name: /picked$/ });
@@ -254,6 +255,15 @@ export async function pickCategories(
     const name = (await chip.textContent())!.trim();
     if (!categories.includes(name)) await toggleTo(chip, false);
   }
+  return dialog;
+}
+
+/** Picks exactly `categories` in the word categories dialog, and saves them. */
+export async function pickCategories(
+  page: Page,
+  categories: readonly string[],
+) {
+  const dialog = await chooseCategories(page, categories);
   await dialog.getByRole('button', { name: 'Save' }).click();
   await expect(dialog).toBeHidden();
 }
