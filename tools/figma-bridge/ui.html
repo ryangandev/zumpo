@@ -89,6 +89,8 @@
       let paused = false;
       let busy = false;
       let online = null;
+      // Whether a GET /next is out, so there is only ever one.
+      let waiting = false;
 
       function log(text, cls) {
         const line = document.createElement('div');
@@ -115,9 +117,12 @@
         $('pause').textContent = paused ? 'Resume' : 'Pause';
       }
 
+      // The server answers the held request when this changes, so the next
+      // one carries the new state; a job it already handed out still runs.
       $('pause').onclick = () => {
         paused = !paused;
         render();
+        send('/pause', { paused }).catch(() => {});
       };
 
       function base64(bytes) {
@@ -140,25 +145,49 @@
         });
       }
 
+      // Asks for the next job and waits: the server holds the request until
+      // one is queued, then this asks again as soon as it is done. Nothing
+      // here waits on a timer except the retry while the server is down,
+      // because Figma throttles timers while macOS reports the window hidden.
       async function poll() {
-        if (busy) return;
+        if (busy || waiting) return;
+        waiting = true;
+        const asked = Date.now();
+        let job = null;
+        let retry = false;
         try {
+          // The held request answers only once a job comes, so a quick look
+          // first shows a server that is back as connected at once.
+          if (!online) {
+            await fetch(SERVER + '/status');
+            setOnline(true);
+          }
           const res = await fetch(
             SERVER + '/next' + (paused ? '?paused=1' : ''),
           );
           setOnline(true);
-          if (res.status !== 200) return;
-          const job = await res.json();
-          busy = true;
-          render();
-          log('▶ ' + (job.label || job.id));
-          parent.postMessage(
-            { pluginMessage: { type: 'job', id: job.id, code: job.code } },
-            '*',
-          );
+          if (res.status === 200) job = await res.json();
+          // 205 is Pause or Resume asking again, and 204 the hold running
+          // out; a 204 at once is something else on the port, so do not spin.
+          else if (res.status !== 205)
+            retry = res.status !== 204 || Date.now() - asked < 1000;
         } catch (e) {
+          retry = true;
           setOnline(false);
         }
+        waiting = false;
+        if (!job) {
+          if (retry) setTimeout(poll, 1000);
+          else poll();
+          return;
+        }
+        busy = true;
+        render();
+        log('▶ ' + (job.label || job.id));
+        parent.postMessage(
+          { pluginMessage: { type: 'job', id: job.id, code: job.code } },
+          '*',
+        );
       }
 
       window.onmessage = async (event) => {
@@ -192,9 +221,9 @@
         }
         busy = false;
         render();
+        poll();
       };
 
-      setInterval(poll, 400);
       poll();
     </script>
   </body>
