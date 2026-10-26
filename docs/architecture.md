@@ -206,7 +206,7 @@ Errors are never broadcast; they go to the one request that caused them.
 A request dropped by the rate limiter is answered `invalidRequest` too, so a page awaiting it is not left hanging.
 
 Names are namespaced by concern, not by game: `room:`, `lobby:`, `chat:` and `game:start` belong to the layer; `dg:` to Draw & Guess and `ms:` to Minesweeper.
-`LobbyRoomInfo` and `RoomState` are the generic halves, and each game extends them (`DrawAndGuessLobbyRoomInfo` adds `rounds`) rather than carrying an untyped settings blob.
+`LobbyRoomInfo` and `RoomState` are the generic halves, and each game extends them (`DrawAndGuessLobbyRoomInfo` adds `rounds` and `categories`) rather than carrying an untyped settings blob.
 
 ## Client
 
@@ -296,6 +296,7 @@ Code outside React takes the catalog as a parameter rather than importing a lang
 English grammar helpers (`plural`, `countWord`) live in `en/` because they are English, and `zh/` writes its own.
 
 What stays English on purpose: the wordmark, the footer's `zumpo. / play a little`, the home hero's FUN tiles, and the games' own content, because the Draw & Guess word bank and Daily Word's words are gameplay content; a Chinese word bank would be its own feature.
+A Draw & Guess word category is an id on the wire (`Sea Life`), worded by the catalog's `drawAndGuess.category`, so its name reads 海洋生物 in Chinese while its words stay English.
 So the Chinese pages say up front that Draw & Guess's words are English, in its tagline, goal, rules, waiting card and the notice as a game starts, and its artwork's word stays the English one a player would type.
 The other words in the games' artwork are the reader's, from `games.artwork` in the catalog: Doodle Chain's lines are in any language.
 A player's name is theirs, in any script; a first visit's random name is picked in the visitor's language, so a Chinese visitor starts as 活泼水獭 rather than Sleepy Otter.
