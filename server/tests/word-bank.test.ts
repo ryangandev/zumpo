@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { wordBank } from '../libs/word-bank.js';
 import { WORD_CATEGORIES } from '../../shared/draw-and-guess.js';
+import { isCloseGuess } from '../socket/draw-and-guess/words.js';
 
 /*
  * The word bank is the game's content, and these are the promises
  * docs/games/draw-and-guess.md makes about it: enough categories to pick
- * from, enough words in each that a game rarely repeats one, every word once,
- * and every word typeable as it is shown.
+ * from, enough words to deal a whole game without a repeat, every word once,
+ * every word typeable as it is shown, and no word in a category a close guess
+ * for another, so guessing one never says "So close!" about the other.
  */
 describe('the word bank', () => {
   const categories = Object.keys(wordBank);
@@ -42,4 +44,20 @@ describe('the word bank', () => {
     );
     expect(odd).toEqual([]);
   });
+
+  it.each(WORD_CATEGORIES)(
+    'has no two words in %s close to each other, either way',
+    (category) => {
+      const list = wordBank[category];
+      const close = list.flatMap((word, index) =>
+        list
+          .slice(index + 1)
+          .filter(
+            (other) => isCloseGuess(word, other) || isCloseGuess(other, word),
+          )
+          .map((other) => `${word} / ${other}`),
+      );
+      expect(close).toEqual([]);
+    },
+  );
 });
