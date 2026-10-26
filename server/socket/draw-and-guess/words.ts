@@ -3,9 +3,9 @@ import type { WordBank, WordCategory } from '../../libs/word-bank.js';
 import { itemAt } from '../../../shared/list.js';
 
 /**
- * Picking words and hiding them.
+ * Picking words, hiding them, and matching guesses to them.
  *
- * All four of these used to live in `libs/utils.ts`, which is where a helper
+ * The first four of these used to live in `libs/utils.ts`, which is where a helper
  * goes when there is only one game to belong to. A row of underscores is not a
  * general-purpose utility; it is how Draw & Guess shows a word it is not ready
  * to show.
@@ -71,16 +71,25 @@ const isCorrectGuess = (guess: string, word: string): boolean =>
   guess.trim().toLowerCase() === word.trim().toLowerCase();
 
 /**
- * A guess or the word as closeness compares them: as a correct guess is
- * matched, and with the spaces and hyphens inside dropped too, so "icecream"
- * is next to "Ice Cream".
+ * The words of a guess or of the word, as closeness reads them: full-width
+ * and other compatibility forms folded to plain ones (NFKC), case set aside,
+ * and every character but a letter, a digit or a space read as a space, so
+ * "ｔｕｒｔｌｅ" is "turtle" and "turtle!!" or "ice-cream" splits into words.
  */
-const squashed = (text: string): string[] => [
-  ...text
-    .trim()
+const wordsOf = (text: string): string[] =>
+  text
+    .normalize('NFKC')
     .toLowerCase()
-    .replace(/[\s-]+/g, ''),
-];
+    .replace(/[^\p{L}\p{M}\p{N}\s]+/gu, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+
+/** Whether `run` appears in `words` as consecutive whole words. */
+const containsRun = (words: readonly string[], run: readonly string[]) =>
+  run.length > 0 &&
+  words.some((_word, start) =>
+    run.every((part, offset) => words[start + offset] === part),
+  );
 
 /**
  * How many single edits turn one into the other, where an edit inserts,
@@ -121,20 +130,34 @@ const closeAllowance = (letters: number): number =>
   letters < 4 ? -1 : letters < 8 ? 1 : 2;
 
 /**
- * Whether a wrong guess nearly is the word: a letter or two off it, once case,
- * spaces and hyphens are set aside. A guess that only drops a space or a
- * hyphen ("icecream", "ice-cream" for "Ice Cream") is close, not correct.
+ * Whether a wrong guess nearly is the word, or carries it, so the room must
+ * not read it. It is close when either holds:
+ *
+ * - Read as `wordsOf` reads it, with the spaces dropped, it is a letter or two
+ *   off the word (`closeAllowance`), so "turtel", "turtle!!", "a turtle?" and
+ *   "icecream" for "Ice Cream" are close. A word under four letters is never
+ *   close this way.
+ * - Its words hold the word's words in a row, whatever the word's length, so
+ *   "i think its a turtle" and "turtle turtle" are close, and so is "a dog?"
+ *   for "Dog".
+ *
  * Call it only for a guess `isCorrectGuess` refused.
  */
 const isCloseGuess = (guess: string, word: string): boolean => {
-  const answer = squashed(word);
-  const allowance = closeAllowance(answer.length);
+  const answer = wordsOf(word);
+  const attempt = wordsOf(guess);
+  if (containsRun(attempt, answer)) return true;
+
+  const answerLetters = [...answer.join('')];
+  const allowance = closeAllowance(answerLetters.length);
   if (allowance < 0) return false;
-  const attempt = squashed(guess);
+  const attemptLetters = [...attempt.join('')];
   // Every letter more or fewer is an edit, so a far longer or shorter guess
   // is not close, however long it would take to measure.
-  if (Math.abs(attempt.length - answer.length) > allowance) return false;
-  return editDistance(attempt, answer) <= allowance;
+  if (Math.abs(attemptLetters.length - answerLetters.length) > allowance) {
+    return false;
+  }
+  return editDistance(attemptLetters, answerLetters) <= allowance;
 };
 
 export {

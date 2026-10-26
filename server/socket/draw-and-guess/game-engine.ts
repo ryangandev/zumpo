@@ -489,9 +489,10 @@ const createDrawAndGuessGameEngine = (
 
   /**
    * A seated guesser's wrong guess while the word is drawn. One a letter or
-   * two off the word would all but spell it for the room, so it goes back to
-   * the guesser alone, marked close, and the room hears "<name> is close!"
-   * the first time this turn; anything further off is ordinary chat.
+   * two off the word, or with the word inside it, would all but spell it for
+   * the room, so it goes back to the guesser alone, marked close, and the
+   * room hears "<name> is close!" the first time this turn; anything further
+   * off is ordinary chat.
    */
   const handleWrongGuess = (
     room: DrawAndGuessRoom,
@@ -529,8 +530,8 @@ const createDrawAndGuessGameEngine = (
    *   cannot score, but they could hint at the word to the players. A
    *   spectator who types the word is swallowed.
    *
-   * Matching ignores case and surrounding spaces; closeness ignores the spaces
-   * and hyphens inside too (`isCloseGuess`).
+   * Matching ignores case and surrounding spaces; closeness also folds
+   * full-width letters and sets punctuation aside (`isCloseGuess`).
    */
   const handleChat = (
     room: DrawAndGuessRoom,
