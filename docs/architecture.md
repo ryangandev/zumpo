@@ -122,7 +122,7 @@ Anyone joining an open room may pick a seat or a spectator seat (`room:join`'s `
 Between games a player may move to watch (`room:watch`) and a spectator may take a free seat (`room:sit`); during a game everybody stays where they are, so a game never gains or loses a player except by leaving.
 A spectator can talk, through the module's `handleChat` like anybody, so a right guess from the spectator seats is swallowed and scores nobody, and Make 24 keeps spectators quiet while a hand is being solved.
 A module may also answer `spectators`, as Draw & Guess does while a word is drawn: the line is posted with `audience: 'spectators'`, sent to the spectator seats alone, and left out of the history (`registry.chatFor`) anybody at the table gets on a refresh.
-Draw & Guess also posts a guess close to the word back to its guesser alone (`sayToSender`): the line is marked `audience: 'sender'`, sent to that player, and left out of everybody else's history, so the room never reads a word spelt a letter off.
+Draw & Guess also posts a guess close to the word back to its guesser alone (`sayToSender`): the line is marked `audience: 'sender'`, sent to that player, and left out of everybody else's history, so the room never reads the word spelt a letter off or typed inside a sentence.
 A spectator's place is held through a refresh like a seat, but quietly: nobody is told they dropped or came back, and the game is never paused for them.
 When the owner leaves, the crown passes to a player here, then a player away, and to a spectator only when no player is left; a host who moves to watch hands it to a player at the table if there is one, and a room ends with its last member.
 The client offers Watch instead only to a guest, because for a host it is a one-way step.
