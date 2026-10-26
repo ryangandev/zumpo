@@ -89,8 +89,8 @@
       let paused = false;
       let busy = false;
       let online = null;
-      // The held GET /next, if one is out; Resume drops it for a fresh one.
-      let waiting = null;
+      // Whether a GET /next is out, so there is only ever one.
+      let waiting = false;
 
       function log(text, cls) {
         const line = document.createElement('div');
@@ -117,10 +117,12 @@
         $('pause').textContent = paused ? 'Resume' : 'Pause';
       }
 
+      // The server answers the held request when this changes, so the next
+      // one carries the new state; a job it already handed out still runs.
       $('pause').onclick = () => {
         paused = !paused;
         render();
-        if (waiting) waiting.abort();
+        send('/pause', { paused }).catch(() => {});
       };
 
       function base64(bytes) {
@@ -149,7 +151,7 @@
       // because Figma throttles timers while macOS reports the window hidden.
       async function poll() {
         if (busy || waiting) return;
-        waiting = new AbortController();
+        waiting = true;
         const asked = Date.now();
         let job = null;
         let retry = false;
@@ -157,23 +159,23 @@
           // The held request answers only once a job comes, so a quick look
           // first shows a server that is back as connected at once.
           if (!online) {
-            await fetch(SERVER + '/status', { signal: waiting.signal });
+            await fetch(SERVER + '/status');
             setOnline(true);
           }
           const res = await fetch(
             SERVER + '/next' + (paused ? '?paused=1' : ''),
-            { signal: waiting.signal },
           );
           setOnline(true);
           if (res.status === 200) job = await res.json();
-          // An empty answer is the server's hold running out; one that comes
-          // back at once is something else on the port, so do not spin on it.
-          else retry = res.status !== 204 || Date.now() - asked < 1000;
+          // 205 is Pause or Resume asking again, and 204 the hold running
+          // out; a 204 at once is something else on the port, so do not spin.
+          else if (res.status !== 205)
+            retry = res.status !== 204 || Date.now() - asked < 1000;
         } catch (e) {
-          retry = e.name !== 'AbortError';
-          if (retry) setOnline(false);
+          retry = true;
+          setOnline(false);
         }
-        waiting = null;
+        waiting = false;
         if (!job) {
           if (retry) setTimeout(poll, 1000);
           else poll();

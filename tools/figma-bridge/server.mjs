@@ -2,7 +2,7 @@
 // The bridge server: a queue of scripts between run.mjs and the Zumpo bridge
 // plugin open in Figma desktop.
 //
-//   run.mjs ──POST /jobs──► server ◄──GET /next, POST /result── plugin
+//   run.mjs ──POST /jobs──► server ◄──GET /next, POST /result, /pause── plugin
 //
 // It listens on 127.0.0.1 only. Queuing a script needs the token written to
 // TOKEN_FILE at start-up, so a web page in a browser cannot queue code; the
@@ -35,9 +35,8 @@ const queue = [];
 let nextId = 1;
 let lastPoll = 0;
 let pluginPaused = false;
-// The plugin's held GET /next requests, and those of them that take a job.
-let held = 0;
-const takers = [];
+// The plugin's held GET /next requests, oldest first: { paused, take, release }.
+const holds = [];
 
 function send(res, status, body, cors) {
   const headers = { 'Cache-Control': 'no-store' };
@@ -70,7 +69,7 @@ function readBody(req) {
 
 function pluginStatus() {
   return {
-    pluginConnected: held > 0 || Date.now() - lastPoll < PLUGIN_SEEN_MS,
+    pluginConnected: holds.length > 0 || Date.now() - lastPoll < PLUGIN_SEEN_MS,
     pluginPaused,
     queued: queue.length,
     running: [...jobs.values()]
@@ -88,11 +87,14 @@ function hand(res, job) {
   send(res, 200, { id: job.id, label: job.label, code: job.code }, true);
 }
 
-// Gives each queued job to a held GET /next, while one is waiting. A request
-// the plugin has just dropped takes nothing, and its job stays first in line.
+// Gives each queued job to a held, unpaused GET /next, while one is waiting.
+// A request the plugin has just dropped takes nothing, and its job stays first
+// in line.
 function dispatch() {
-  while (queue.length > 0 && takers.length > 0) {
-    if (takers.shift()(queue[0])) queue.shift();
+  for (;;) {
+    const hold = holds.find((h) => !h.paused);
+    if (!hold || queue.length === 0) return;
+    if (hold.take(queue[0])) queue.shift();
   }
 }
 
@@ -111,31 +113,38 @@ const server = http.createServer(async (req, res) => {
       pluginPaused = url.searchParams.has('paused');
       if (!pluginPaused && queue.length > 0) return hand(res, queue.shift());
       // Hold the request until a job arrives. A paused plugin is held too, so
-      // it does not spin; it drops this request when Resume is pressed.
-      held++;
-      let open = true;
+      // it does not spin. Every way out answers it once: a job, 204 when the
+      // hold runs out, or 205 when Pause or Resume asks it to ask again.
+      const hold = { paused: pluginPaused };
       const leave = () => {
-        if (!open) return false;
-        open = false;
-        held--;
+        const at = holds.indexOf(hold);
+        if (at === -1) return false;
+        holds.splice(at, 1);
         lastPoll = Date.now();
         clearTimeout(timer);
-        const at = takers.indexOf(take);
-        if (at !== -1) takers.splice(at, 1);
         return true;
       };
-      const take = (job) => {
-        leave();
-        if (res.destroyed) return false;
+      // A client that has hung up can leave its socket unwritable before the
+      // response's 'close' event, and a job written there would be lost.
+      hold.take = (job) => {
+        if (!leave()) return false;
+        if (res.destroyed || !res.socket?.writable) return false;
         hand(res, job);
         return true;
       };
-      const timer = setTimeout(() => {
-        if (leave()) send(res, 204, undefined, true);
-      }, NEXT_WAIT_MS);
+      hold.release = (status) => {
+        if (leave()) send(res, status, undefined, true);
+      };
+      const timer = setTimeout(() => hold.release(204), NEXT_WAIT_MS);
       res.on('close', leave);
-      if (!pluginPaused) takers.push(take);
+      holds.push(hold);
       return;
+    }
+    if (req.method === 'POST' && url.pathname === '/pause') {
+      pluginPaused = JSON.parse(await readBody(req)).paused === true;
+      // Each release takes its hold out of the list, so walk a copy.
+      for (const hold of holds.slice()) hold.release(205);
+      return send(res, 204, undefined, true);
     }
     if (req.method === 'POST' && url.pathname === '/result') {
       const result = JSON.parse(await readBody(req));
