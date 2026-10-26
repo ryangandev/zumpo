@@ -89,6 +89,8 @@
       let paused = false;
       let busy = false;
       let online = null;
+      // The held GET /next, if one is out; Resume drops it for a fresh one.
+      let waiting = null;
 
       function log(text, cls) {
         const line = document.createElement('div');
@@ -118,6 +120,7 @@
       $('pause').onclick = () => {
         paused = !paused;
         render();
+        if (waiting) waiting.abort();
       };
 
       function base64(bytes) {
@@ -140,25 +143,49 @@
         });
       }
 
+      // Asks for the next job and waits: the server holds the request until
+      // one is queued, then this asks again as soon as it is done. Nothing
+      // here waits on a timer except the retry while the server is down,
+      // because Figma throttles timers while macOS reports the window hidden.
       async function poll() {
-        if (busy) return;
+        if (busy || waiting) return;
+        waiting = new AbortController();
+        const asked = Date.now();
+        let job = null;
+        let retry = false;
         try {
+          // The held request answers only once a job comes, so a quick look
+          // first shows a server that is back as connected at once.
+          if (!online) {
+            await fetch(SERVER + '/status', { signal: waiting.signal });
+            setOnline(true);
+          }
           const res = await fetch(
             SERVER + '/next' + (paused ? '?paused=1' : ''),
+            { signal: waiting.signal },
           );
           setOnline(true);
-          if (res.status !== 200) return;
-          const job = await res.json();
-          busy = true;
-          render();
-          log('▶ ' + (job.label || job.id));
-          parent.postMessage(
-            { pluginMessage: { type: 'job', id: job.id, code: job.code } },
-            '*',
-          );
+          if (res.status === 200) job = await res.json();
+          // An empty answer is the server's hold running out; one that comes
+          // back at once is something else on the port, so do not spin on it.
+          else retry = res.status !== 204 || Date.now() - asked < 1000;
         } catch (e) {
-          setOnline(false);
+          retry = e.name !== 'AbortError';
+          if (retry) setOnline(false);
         }
+        waiting = null;
+        if (!job) {
+          if (retry) setTimeout(poll, 1000);
+          else poll();
+          return;
+        }
+        busy = true;
+        render();
+        log('▶ ' + (job.label || job.id));
+        parent.postMessage(
+          { pluginMessage: { type: 'job', id: job.id, code: job.code } },
+          '*',
+        );
       }
 
       window.onmessage = async (event) => {
@@ -192,9 +219,9 @@
         }
         busy = false;
         render();
+        poll();
       };
 
-      setInterval(poll, 400);
       poll();
     </script>
   </body>

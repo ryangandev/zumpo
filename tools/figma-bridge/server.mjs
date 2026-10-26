@@ -8,6 +8,11 @@
 // TOKEN_FILE at start-up, so a web page in a browser cannot queue code; the
 // plugin's endpoints carry no secret because they only hand out work.
 //
+// GET /next is a long poll: the server holds it until a job is queued, so the
+// plugin never waits on a timer. Figma throttles timers in a window macOS
+// reports as hidden (the app hidden, the display asleep, the screen locked),
+// but not the network, so a held request still wakes the plugin at once.
+//
 // Usage: npm run figma:bridge
 
 import { randomBytes } from 'node:crypto';
@@ -21,6 +26,7 @@ export const TOKEN_FILE = join(tmpdir(), 'zumpo-figma-bridge.token');
 
 const LONG_POLL_MS = 25_000;
 const PLUGIN_SEEN_MS = 3_000;
+const NEXT_WAIT_MS = 20_000;
 const MAX_BODY = 256 * 1024 * 1024;
 
 const token = randomBytes(24).toString('hex');
@@ -29,6 +35,9 @@ const queue = [];
 let nextId = 1;
 let lastPoll = 0;
 let pluginPaused = false;
+// The plugin's held GET /next requests, and those of them that take a job.
+let held = 0;
+const takers = [];
 
 function send(res, status, body, cors) {
   const headers = { 'Cache-Control': 'no-store' };
@@ -61,7 +70,7 @@ function readBody(req) {
 
 function pluginStatus() {
   return {
-    pluginConnected: Date.now() - lastPoll < PLUGIN_SEEN_MS,
+    pluginConnected: held > 0 || Date.now() - lastPoll < PLUGIN_SEEN_MS,
     pluginPaused,
     queued: queue.length,
     running: [...jobs.values()]
@@ -72,6 +81,19 @@ function pluginStatus() {
 
 function view(job) {
   return { id: job.id, label: job.label, state: job.state, result: job.result };
+}
+
+function hand(res, job) {
+  job.state = 'running';
+  send(res, 200, { id: job.id, label: job.label, code: job.code }, true);
+}
+
+// Gives each queued job to a held GET /next, while one is waiting. A request
+// the plugin has just dropped takes nothing, and its job stays first in line.
+function dispatch() {
+  while (queue.length > 0 && takers.length > 0) {
+    if (takers.shift()(queue[0])) queue.shift();
+  }
 }
 
 function finish(job, result) {
@@ -87,15 +109,33 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/next') {
       lastPoll = Date.now();
       pluginPaused = url.searchParams.has('paused');
-      const job = pluginPaused ? undefined : queue.shift();
-      if (!job) return send(res, 204, undefined, true);
-      job.state = 'running';
-      return send(
-        res,
-        200,
-        { id: job.id, label: job.label, code: job.code },
-        true,
-      );
+      if (!pluginPaused && queue.length > 0) return hand(res, queue.shift());
+      // Hold the request until a job arrives. A paused plugin is held too, so
+      // it does not spin; it drops this request when Resume is pressed.
+      held++;
+      let open = true;
+      const leave = () => {
+        if (!open) return false;
+        open = false;
+        held--;
+        lastPoll = Date.now();
+        clearTimeout(timer);
+        const at = takers.indexOf(take);
+        if (at !== -1) takers.splice(at, 1);
+        return true;
+      };
+      const take = (job) => {
+        leave();
+        if (res.destroyed) return false;
+        hand(res, job);
+        return true;
+      };
+      const timer = setTimeout(() => {
+        if (leave()) send(res, 204, undefined, true);
+      }, NEXT_WAIT_MS);
+      res.on('close', leave);
+      if (!pluginPaused) takers.push(take);
+      return;
     }
     if (req.method === 'POST' && url.pathname === '/result') {
       const result = JSON.parse(await readBody(req));
@@ -123,6 +163,7 @@ const server = http.createServer(async (req, res) => {
       };
       jobs.set(job.id, job);
       queue.push(job);
+      dispatch();
       console.log(`queued #${job.id} ${label || ''}`);
       return send(res, 200, { ...view(job), ...pluginStatus() });
     }
