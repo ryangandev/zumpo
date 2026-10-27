@@ -32,7 +32,7 @@
         "type": "COMPONENT",
         "id": "162:65803",
         "name": "State=Off",
-        "w": 51,
+        "w": 52,
         "h": 30,
         "wSize": "hug",
         "hSize": "hug",
@@ -67,9 +67,8 @@
             "type": "TEXT",
             "id": "162:65805",
             "name": "Count",
-            "w": 9,
+            "w": 10,
             "h": 20,
-            "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Count"
@@ -78,7 +77,8 @@
             "textStyle": "Zumpo/Label",
             "fills": [
               "$Zumpo · UI:color/muted"
-            ]
+            ],
+            "autoResize": "height"
           }
         ]
       }
@@ -93,7 +93,7 @@
         "type": "COMPONENT",
         "id": "162:65806",
         "name": "State=On",
-        "w": 51,
+        "w": 52,
         "h": 30,
         "wSize": "hug",
         "hSize": "hug",
@@ -128,9 +128,8 @@
             "type": "TEXT",
             "id": "162:65808",
             "name": "Count",
-            "w": 9,
+            "w": 10,
             "h": 20,
-            "wSize": "hug",
             "hSize": "hug",
             "propRefs": {
               "characters": "Count"
@@ -139,7 +138,8 @@
             "textStyle": "Zumpo/Label",
             "fills": [
               "$Zumpo · UI:color/ink"
-            ]
+            ],
+            "autoResize": "height"
           }
         ]
       }
