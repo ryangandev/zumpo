@@ -401,6 +401,10 @@ They live in a folder outside it, `~/Documents/assets/zumpo-audio` on the Mac mi
 | `candidates/`                | Takes being auditioned; never built                                                                 |
 | `masters/<sound-id>/<n>.wav` | The variants that ship: 48 kHz WAV, 24-bit PCM or float, mono unless it needs two channels, trimmed |
 
+Every shipped sound is one of two or three candidates (`candidates/index.json` records each one's recipe and origin), chosen in an audition page that stores a letter per sound.
+`candidates/provisional-picks.json` is Claude's choice until Ryan picks, and every description says which candidate it is.
+`synth/apply_picks.py PICKS.json --repo <checkout>`, run with the masters folder's own `synth/.venv/bin/python -I`, copies the picked candidates into `masters/`, rewrites those sounds' description, origin and variants in `sounds.json` while keeping their tuning, and records what is applied in `masters/picks.json`; then `npm run audio:build -- --rehash` builds them.
+
 [`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui`, `room`, a game's id, or `test`), the loudness class it is normalised to, a gain in dB the engine adds when it plays (so tuning it needs no rebuild of the files), each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
 
 `npm run audio:build`, on the machine with the masters and an ffmpeg with `aac_at` and `libopus` (the Mac mini's), builds [`client/src/audio/generated/`](../client/src/audio/generated/):
