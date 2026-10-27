@@ -119,6 +119,17 @@ describe('createReplayGuard', () => {
     expect(guard.observe(table(4))).toEqual([]);
   });
 
+  it('forgets the keys at a new baseline, where a new game may have begun', () => {
+    // Away as game 1 ended; back in game 2, which had already started.
+    const guard = createReplayGuard(derive, { isNewGame });
+    guard.observe(table(3));
+    guard.observe(table(4));
+    guard.observe(table(null, ME, 2), true);
+    expect(guard.observe(table(4, ME, 2))).toEqual([
+      { sound: 'took', key: 'take:4', other: false },
+    ]);
+  });
+
   it('hears the same keys again in a new game', () => {
     const guard = createReplayGuard(derive, { isNewGame });
     guard.observe(table(3));

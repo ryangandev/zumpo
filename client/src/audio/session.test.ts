@@ -32,6 +32,18 @@ describe('connectAudioSession', () => {
     disconnect();
   });
 
+  it("takes no script's event for a gesture outside the tests", () => {
+    vi.stubEnv('MODE', 'production');
+    const engine = audio.engine();
+    const disconnect = connectAudioSession(engine);
+    window.dispatchEvent(new PointerEvent('pointerdown'));
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
+    expect(engine.state).toBe('locked');
+    expect(audio.made).toBe(0);
+    disconnect();
+    vi.unstubAllEnvs();
+  });
+
   it('does not take Escape as a gesture, as browsers do not', () => {
     const engine = audio.engine();
     const disconnect = connectAudioSession(engine);

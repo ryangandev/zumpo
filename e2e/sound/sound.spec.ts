@@ -115,12 +115,21 @@ test('plays nothing before a gesture, and the sound after one', async ({
   const errors = await open(page);
   await expect(page.getByTestId('engine-state')).toHaveText('locked');
 
-  // A click a script makes is no gesture: no context, nothing fetched.
+  // Input a script makes is no gesture: no context, nothing fetched.
   const fetched: string[] = [];
   page.on('request', (request) => {
     if (/\.(m4a|webm)$/.test(request.url())) fetched.push(request.url());
   });
-  await playButton(page).evaluate((button: HTMLElement) => button.click());
+  await playButton(page).evaluate((button: HTMLElement) => {
+    for (const type of ['pointerdown', 'pointerup', 'mousedown']) {
+      button.dispatchEvent(new PointerEvent(type, { bubbles: true }));
+    }
+    button.dispatchEvent(new Event('touchend', { bubbles: true }));
+    button.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'a', bubbles: true }),
+    );
+    button.click();
+  });
   await page.waitForTimeout(300);
   expect(await probe(page)).toEqual({ contexts: 0, starts: 0 });
   expect(fetched).toEqual([]);

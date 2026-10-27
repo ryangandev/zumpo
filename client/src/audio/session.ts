@@ -14,6 +14,15 @@ const GESTURES = [
 ] as const;
 
 /**
+ * Only the player's own input counts, as only that lets a browser start
+ * audio: a context made on a script's event stays suspended, with a console
+ * warning. jsdom cannot make such input, so the unit tests take any event.
+ */
+function isUserInput(event: Event): boolean {
+  return event.isTrusted || import.meta.env.MODE === 'test';
+}
+
+/**
  * Connects the engine to the page: the first gesture anywhere unlocks it,
  * and the listeners come back whenever the context stops running without
  * being asked to (an interruption: a call, Siri, another app's audio).
@@ -28,6 +37,7 @@ export function connectAudioSession(
   let armed = false;
 
   const onGesture = (event: Event) => {
+    if (!isUserInput(event)) return;
     if (event.type === 'keydown' && (event as KeyboardEvent).key === 'Escape') {
       return;
     }

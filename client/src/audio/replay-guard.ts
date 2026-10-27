@@ -7,7 +7,8 @@ import type { PlaySound } from './types';
  * guard makes that safe. The first state a page sees, and the first after a
  * reconnect, only become the baseline, so arriving, refreshing or coming back
  * plays nothing that already happened; and each event has a key, so a state
- * that repeats or flips back never plays one event twice.
+ * that repeats or flips back never plays one event twice. Keys are forgotten
+ * at a new game and at a new baseline.
  */
 
 /** Something a state change should be heard as. */
@@ -58,7 +59,13 @@ export function createReplayGuard<State, Id extends string>(
     observe(next, resync = false) {
       const base = prev;
       prev = { state: next };
-      if (base === null || resync || Object.is(base.state, next)) return [];
+      if (base === null || resync) {
+        // Whatever happened while away is in the new baseline, and a new
+        // game may have begun there, whose keys must not count as heard.
+        heard = [];
+        return [];
+      }
+      if (Object.is(base.state, next)) return [];
       if (isNewGame?.(base.state, next)) heard = [];
       const out: SoundEvent<Id>[] = [];
       for (const event of derive(base.state, next)) {
