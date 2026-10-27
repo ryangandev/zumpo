@@ -406,24 +406,37 @@ A room and its game are heard through one replay guard, in `RoomLayout`, which e
   Your go is the `yourTurn` a game gives `RoomLayout`, named by the game's `turnOf`, so it sounds once each time a go becomes yours; it opens the game in place of the start for the player whose go it is, since it is the one sound a hidden tab plays.
 - **The game** (`<game>/sounds.ts`): a `<GAME>_SOUNDS = gameSounds({ bank, derive, isNewGame, turnOf })`, a module constant handed to `RoomLayout` as `sounds`.
   `bank` spreads `ROOM_SOUNDS` and the game's own; `derive(viewer)` is a pure `(prev, next) => events` over the game's states, which never gives "your turn" or a start or end stinger, the room's alone.
-  `turnOf(state)` names the go in play, the same for everybody, and a name never comes round again within one game (`2.5`, Liar's Dice's `3.4.2` with its cups, since a round rolled again keeps its number), or "your turn" is silent the second time.
-  `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start itself (`newGameBegan`), so a snapshot from earlier in a game is never taken for a new one.
+  `turnOf(state)` names the go in play, the same for everybody (`2.5`, Liar's Dice's `3.14.2` with the dice still in, since a round rolled again keeps its number).
+  `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start and end itself, so a snapshot from earlier in a game is never taken for a new one.
   Every key names its round or turn (`scored:1.3:p2`), the guard keeps the game's apart (`game:`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
+
+Four ways a game's sounds go quiet without an error, to keep in mind when adding one:
+
+- A `turnOf` name must never come round again within one game, or "your turn" is silent the second time.
+- It must also stay the same for the whole of a go, through every snapshot until the go passes, or "your turn" plays again mid-go: Liar's Dice counts the dice still in, not its cups, since a player already out who leaves takes a cup and no dice.
+- It names a go, not a move: where a go holds several moves (a Pairs match keeps the go), a name per move plays "your turn" after each one and, standing alone, drops the move's own sound.
+- A game's event with a lead sound (`room-your-turn`, `stinger-*`) is dropped, with a console warning in development, and a game that sounds its own end must be in `OWN_ENDING` in `room/sounds.ts`, or the room's end stinger plays over it (Doodle Chain's album).
 
 On one snapshot, "your turn" and the start and end stingers stand alone: the game's events in that change are dropped, the viewer's own included, and never play later, while the room's joins, leaves and Ready play beside them.
 So an opponent's move that hands you the go is heard as your go, and a take that ends a game as its end.
 Several sounds of a game at once are heard as the one that matters to the viewer: the last guess and the end of a turn are one snapshot, which the guesser hears as their own and everybody else as the end.
 What the viewer did plays at full level, anybody else's with `other`, and a spectator, who has no go, hears the others and the game's start and end.
-Keys hold within a game, so somebody who leaves and comes back, or says Ready again, is heard the first time only; the viewer's own Ready counts their presses (`Room.readied`), so each one stamps.
+Keys hold from one game's start or end to the next, so somebody who leaves and comes back, or says Ready again, in that stretch is heard the first time only; the viewer's own Ready counts their presses (`Room.readied`), so each one stamps.
 A notice is never played itself: the sound comes from the snapshot change the notice reports, a `success` or `alert` event has one of its own, a dropped connection aside, a quieter one (`divider`, `system`, `score`) at most a soft one, as a join is, and typed chat is silent.
 The epoch is the connection the snapshot came on (`Room.epoch`), which changes with the first snapshot after a reconnection rather than with the session, so what happened while away arrives in that snapshot and is only a baseline, and the go a page arrives on counts as heard.
 A Draw & Guess close guess is a chat line rather than state, so the game's room hears it from the chat, keyed by the line's id, with `Room.chatEpoch` making each history a baseline.
 
 Two sounds come from no snapshot.
-The connection dropping, each time it drops, and the room closing under a seated player play from the room page (`useConnectionLostSound`), as live edges a refresh never repeats.
+The connection dropping and staying down for 1.5 seconds (`LOST_AFTER_MS`), each time, and the room closing under a seated player, at once, play from the room page (`useConnectionLostSound`), as live edges a refresh never repeats; a phone back from another app, or a laptop waking, reconnects within that and is silent.
 The last seconds of a deadline tick from the clock: `useDeadlineTicks({ seconds, deadline, paused })` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
 A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and passes `paused` while reconnecting; the first seconds seen for a deadline, and after a pause, only set where it stands, and a second never ticks twice.
 What the player does with their own hands, the drawer's pencil, undo and clear, plays where they do it.
+
+Known gaps:
+
+- A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
+- Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
+- A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
 
 ### The asset pipeline
 
