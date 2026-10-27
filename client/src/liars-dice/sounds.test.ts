@@ -394,6 +394,23 @@ describe('a Liar’s Dice room through the replay guard', () => {
     expect(room(next)).toEqual(['room-your-turn']);
   });
 
+  it('never takes a snapshot from earlier for something new', () => {
+    const room = guard(LEO);
+    room(bidding(2, three, [MAYA], LEO));
+    expect(room(bidding(2, three, [MAYA, LEO], ME))).toEqual([
+      'liars-dice-bid',
+    ]);
+    // Round 2 again, a round before, then the round where it was.
+    expect(room(revealed(2))).toEqual([
+      'liars-dice-liar',
+      'liars-dice-reveal',
+      'liars-dice-lose-die',
+    ]);
+    expect(room(bidding(2, three, [MAYA, LEO], ME))).toEqual([]);
+    expect(room(bidding(1, three, [LEO], MAYA))).toEqual([]);
+    expect(room(revealed(2))).toEqual([]);
+  });
+
   it('takes a reconnection as a baseline, and your go on arrival as heard', () => {
     const room = guard();
     room(OPEN);

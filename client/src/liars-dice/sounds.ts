@@ -166,6 +166,18 @@ export const deriveLiarsDiceSolo: DeriveSounds<SoloGame, SoloId> = (
 };
 
 /**
+ * Whether `next` is a snapshot from before `prev`, or from another game than
+ * the one `prev` shows: the rounds only grow within a game, its dice only
+ * go, and a game begins on round 1 with no bids. What came before was heard,
+ * or is only a baseline, and plays nothing now.
+ */
+const isStale = (prev: LiarsDiceRoomState, next: LiarsDiceRoomState) =>
+  prev.isGameStarted
+    ? next.round < prev.round ||
+      (next.round === prev.round && diceIn(next) > diceIn(prev))
+    : next.round > 1 || next.bids.length > 0;
+
+/**
  * What a Liar's Dice snapshot adds for `viewer`: only what moves a round on,
  * so a snapshot from earlier in the round adds nothing. The dice rattle for a
  * player with dice as a roll begins, and a round called off and rolled again
@@ -178,6 +190,7 @@ export function deriveLiarsDiceSounds(
   return (prev, next) => {
     const events: Event[] = [];
     if (!next.isGameStarted) return events;
+    if (isStale(prev, next)) return events;
 
     if (next.phase === 'bidding') {
       const roll = rollOf(next);
