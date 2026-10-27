@@ -880,7 +880,7 @@
           "Content": [
             {
               "type": "INSTANCE",
-              "id": "244:66202",
+              "id": "I95:114274;35:13437;244:66209",
               "name": "Zumpo/Chip field",
               "w": 494,
               "h": 230,
@@ -896,7 +896,7 @@
               },
               "overrides": [
                 {
-                  "path": "",
+                  "path": ".",
                   "height": 230,
                   "width": 494
                 }

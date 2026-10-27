@@ -1,8 +1,11 @@
+import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { useMessages } from '../../i18n';
+import { fittingZoom } from '../../shell/fit';
 import { cx } from '../cx';
 import { Button } from './button';
 import { ViewerAvatar, type Viewer, type ViewerMenu } from './header';
+import { SoundMenu, type SoundMenuProps } from './sound-menu';
 import { Tag, type TagTone } from './tag';
 import { Wordmark } from './wordmark';
 import styles from './room-bar.module.css';
@@ -31,6 +34,8 @@ export interface RoomBarProps {
   leaveLabel?: string;
   viewer?: Viewer;
   viewerMenu?: ViewerMenu;
+  /** The speaker before the avatar; left out where there is no sound to set. */
+  sound?: SoundMenuProps;
   className?: string;
 }
 
@@ -49,10 +54,12 @@ export function RoomBar({
   leaveLabel,
   viewer,
   viewerMenu,
+  sound,
   className,
 }: RoomBarProps) {
   const m = useMessages();
   const phone = layout === 'phone';
+  const gameName = useFittedName(phone);
   const separator = m.ui.room.contextSeparator;
   return (
     <header className={cx(styles.bar, phone && styles.phone, className)}>
@@ -65,7 +72,11 @@ export function RoomBar({
         </>
       )}
       <div className={styles.identity}>
-        <h1 className={styles.game}>{game}</h1>
+        <h1 className={styles.game}>
+          <span ref={gameName} className={styles.name}>
+            {game}
+          </span>
+        </h1>
         {phone ? (
           <p className={styles.context}>
             {room && (
@@ -96,6 +107,7 @@ export function RoomBar({
         variant="secondary"
         icon="info"
         iconOnly={phone}
+        className={phone ? styles.action : undefined}
         onClick={onHowToPlay}
       >
         {m.ui.room.howToPlay}
@@ -105,12 +117,86 @@ export function RoomBar({
           variant="secondary"
           icon="leave"
           iconOnly={phone}
+          className={phone ? styles.action : undefined}
           onClick={onLeave}
         >
           {leaveLabel ?? m.ui.room.leave}
         </Button>
       )}
+      {sound && (
+        <SoundMenu
+          {...sound}
+          triggerClassName={phone ? styles.action : undefined}
+        />
+      )}
       {viewer && <ViewerAvatar viewer={viewer} menu={viewerMenu} />}
     </header>
   );
+}
+
+/**
+ * The smallest a game's name is scaled in the Phone bar: 24 px down to about
+ * 14, still larger than the line under it. Draw & Guess, the longest name,
+ * needs it at 320 px, the narrowest phone; past it the name ends in an
+ * ellipsis instead.
+ */
+const SMALLEST_NAME = 0.6;
+
+/**
+ * The Phone bar's game name, scaled down to the width its three icon buttons
+ * leave it, as the turn bar's main line is, rather than cut: at 390 px every
+ * game's name fits as Figma draws it (SO07), and a narrower phone shrinks
+ * the longest a little. It is measured again as the bar or the name changes.
+ *
+ * A scaled inline box sits on the heading's baseline with its own, smaller
+ * line, which reaches a little out of the heading's and would make the bar
+ * taller than 48 px. So the scaled name takes the heading's whole line, its
+ * line height scaled up as its size is scaled down, and lies at its top
+ * (`.name`): the bar keeps its height, the name centred in its line.
+ */
+function useFittedName(phone: boolean) {
+  const name = useRef<HTMLSpanElement>(null);
+  useLayoutEffect(() => {
+    const element = name.current;
+    const heading = element?.parentElement;
+    if (!element || !heading) return;
+    const unscale = () => {
+      element.style.removeProperty('zoom');
+      element.style.removeProperty('line-height');
+    };
+    const fit = () => {
+      unscale();
+      if (!phone) return;
+      const given = heading.getBoundingClientRect().width;
+      const needed = element.getBoundingClientRect().width;
+      if (given > 0 && needed > given) {
+        let zoom = fittingZoom(element, given, needed);
+        if (zoom < SMALLEST_NAME) {
+          zoom = SMALLEST_NAME;
+          element.style.setProperty('zoom', String(zoom));
+        }
+        const line = parseFloat(getComputedStyle(heading).lineHeight);
+        element.style.setProperty('line-height', `${line / zoom}px`);
+      }
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(heading);
+    // The name's own width is not watched, an inline box having none to
+    // observe: a new name, or one in another language, is.
+    const words = new MutationObserver(fit);
+    words.observe(element, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+    document.fonts?.addEventListener('loadingdone', fit);
+    return () => {
+      observer.disconnect();
+      words.disconnect();
+      document.fonts?.removeEventListener('loadingdone', fit);
+      unscale();
+    };
+  }, [phone]);
+  return name;
 }

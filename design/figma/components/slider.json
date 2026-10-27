@@ -1,0 +1,505 @@
+{
+  "format": 1,
+  "name": "Zumpo/Slider",
+  "id": "253:47040",
+  "type": "COMPONENT_SET",
+  "key": "1060652176ae165116cd461071f7ea17e27cbf3e",
+  "description": "A volume from 0 to 100, set by dragging the thumb or clicking the track; arrow keys move it by 5, Page Up and Page Down by 10, Home and End to the ends. Hover rings the thumb in sand and Dragging in peach; Focus is the 2 px ink ring 2 px outside the thumb, as on every control. The thumb travels inside the track, so at 0 and at 100 it stays whole. Muted is dimmed as a disabled control is, but still works: moving it turns the sound back on.",
+  "properties": {
+    "State": {
+      "type": "variant",
+      "default": "Default",
+      "options": [
+        "Default",
+        "Hover",
+        "Focus",
+        "Dragging",
+        "Muted"
+      ]
+    }
+  },
+  "defaultVariant": "State=Default",
+  "variants": [
+    {
+      "name": "State=Default",
+      "id": "253:47012",
+      "props": {
+        "State": "Default"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47012",
+        "name": "State=Default",
+        "w": 200,
+        "h": 24,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "253:47013",
+            "name": "Track",
+            "x": 0,
+            "y": 9,
+            "w": 200,
+            "h": 6,
+            "constraints": [
+              "stretch",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "253:47014",
+            "name": "Level",
+            "x": 0,
+            "y": 9,
+            "w": 135,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:47015",
+            "name": "Thumb",
+            "x": 123,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "children": [
+              {
+                "type": "ELLIPSE",
+                "id": "253:47016",
+                "name": "Knob",
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/coral"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "inside"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Hover",
+      "id": "253:47017",
+      "props": {
+        "State": "Hover"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47017",
+        "name": "State=Hover",
+        "w": 200,
+        "h": 24,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "253:47018",
+            "name": "Track",
+            "x": 0,
+            "y": 9,
+            "w": 200,
+            "h": 6,
+            "constraints": [
+              "stretch",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "253:47019",
+            "name": "Level",
+            "x": 0,
+            "y": 9,
+            "w": 135,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:47020",
+            "name": "Thumb",
+            "x": 123,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "children": [
+              {
+                "type": "ELLIPSE",
+                "id": "253:47021",
+                "name": "Halo",
+                "x": -8,
+                "y": -8,
+                "w": 40,
+                "h": 40,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/sand"
+                ]
+              },
+              {
+                "type": "ELLIPSE",
+                "id": "253:47022",
+                "name": "Knob",
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/coral"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "inside"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Focus",
+      "id": "253:47023",
+      "props": {
+        "State": "Focus"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47023",
+        "name": "State=Focus",
+        "w": 200,
+        "h": 24,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "253:47024",
+            "name": "Track",
+            "x": 0,
+            "y": 9,
+            "w": 200,
+            "h": 6,
+            "constraints": [
+              "stretch",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "253:47025",
+            "name": "Level",
+            "x": 0,
+            "y": 9,
+            "w": 135,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:47026",
+            "name": "Thumb",
+            "x": 123,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "children": [
+              {
+                "type": "ELLIPSE",
+                "id": "253:47027",
+                "name": "Knob",
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/coral"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "inside"
+              },
+              {
+                "type": "ELLIPSE",
+                "id": "253:47028",
+                "name": "Focus ring",
+                "x": -2,
+                "y": -2,
+                "w": 28,
+                "h": 28,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "outside"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Dragging",
+      "id": "253:47029",
+      "props": {
+        "State": "Dragging"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47029",
+        "name": "State=Dragging",
+        "w": 200,
+        "h": 24,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "253:47030",
+            "name": "Track",
+            "x": 0,
+            "y": 9,
+            "w": 200,
+            "h": 6,
+            "constraints": [
+              "stretch",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "253:47031",
+            "name": "Level",
+            "x": 0,
+            "y": 9,
+            "w": 135,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:47032",
+            "name": "Thumb",
+            "x": 123,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "children": [
+              {
+                "type": "ELLIPSE",
+                "id": "253:47033",
+                "name": "Halo",
+                "x": -8,
+                "y": -8,
+                "w": 40,
+                "h": 40,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/peach"
+                ]
+              },
+              {
+                "type": "ELLIPSE",
+                "id": "253:47034",
+                "name": "Knob",
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/coral"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "inside"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Muted",
+      "id": "253:47035",
+      "props": {
+        "State": "Muted"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47035",
+        "name": "State=Muted",
+        "w": 200,
+        "h": 24,
+        "opacity": 0.45,
+        "children": [
+          {
+            "type": "RECTANGLE",
+            "id": "253:47036",
+            "name": "Track",
+            "x": 0,
+            "y": 9,
+            "w": 200,
+            "h": 6,
+            "constraints": [
+              "stretch",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/line"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "RECTANGLE",
+            "id": "253:47037",
+            "name": "Level",
+            "x": 0,
+            "y": 9,
+            "w": 135,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "radius": "$Zumpo · UI:radius/999"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:47038",
+            "name": "Thumb",
+            "x": 123,
+            "y": 0,
+            "w": 24,
+            "h": 24,
+            "constraints": [
+              "scale",
+              "center"
+            ],
+            "children": [
+              {
+                "type": "ELLIPSE",
+                "id": "253:47039",
+                "name": "Knob",
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24,
+                "constraints": [
+                  "center",
+                  "center"
+                ],
+                "fills": [
+                  "$Zumpo · UI:color/coral"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/ink"
+                ],
+                "strokeWeight": 2,
+                "strokeAlign": "inside"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

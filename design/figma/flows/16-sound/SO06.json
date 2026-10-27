@@ -1,0 +1,932 @@
+{
+  "format": 1,
+  "code": "SO06",
+  "title": "Phone · home · sound menu in Chinese",
+  "id": "253:50691",
+  "section": "16 / Sound",
+  "reviewNotes": [
+    "SO06 · 390px / in Chinese, 音效 and 关 leave room to spare; the slider takes what the words leave."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "253:50691",
+    "name": "SO06 / Phone · home · sound menu in Chinese",
+    "x": 1020,
+    "y": 1100,
+    "w": 390,
+    "h": 279,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "FRAME",
+        "id": "253:50692",
+        "name": "Mobile navigation",
+        "w": 350,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "253:50693",
+            "name": "Zumpo/Wordmark",
+            "w": 140,
+            "h": 44,
+            "wSize": "hug",
+            "component": "Zumpo/Wordmark",
+            "componentId": "4:36"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50694",
+            "name": "Actions",
+            "w": 86,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "253:50695",
+                "name": "Action / Sound",
+                "w": 46,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=sound",
+                  "Show icon": true,
+                  "Label": "Sound"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50696",
+                "name": "Player / YO",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Avatar",
+                "variant": {
+                  "Tone": "Peach"
+                },
+                "componentId": "4:34",
+                "props": {
+                  "Initials": "MA"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "fills": [
+                      "$Zumpo · UI:color/blue"
+                    ],
+                    "height": 32,
+                    "width": 32
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50697",
+        "name": "Page heading",
+        "w": 350,
+        "h": 163,
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "253:50698",
+            "name": "Tag / A LITTLE PLAY",
+            "w": 72,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "component": "Zumpo/Tag",
+            "variant": {
+              "Tone": "Sand",
+              "Size": "Regular"
+            },
+            "componentId": "24:6511",
+            "props": {
+              "Label": "玩一会儿"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 30,
+                "width": 72
+              },
+              {
+                "path": "Label",
+                "fontName": "Noto Sans SC Medium",
+                "fontSize": 12,
+                "letterSpacing": 0,
+                "lineHeight": "18px",
+                "openTypeFeatures": "changed",
+                "textDecorationSkipInk": null,
+                "textStyleId": null
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "253:50699",
+            "name": "A little play. A lot of fun.",
+            "w": 350,
+            "h": 84,
+            "hSize": "hug",
+            "text": "玩一会儿，\n乐一整天。",
+            "font": "Noto Sans SC Black",
+            "size": 36,
+            "lineHeight": "42px",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "253:50700",
+            "name": "Good games for good company.",
+            "w": 350,
+            "h": 25,
+            "hSize": "hug",
+            "text": "好游戏，配好友。",
+            "font": "Noto Sans SC Regular",
+            "size": 16,
+            "lineHeight": "25px",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50701",
+        "name": "Games",
+        "w": 350,
+        "h": 2563,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "253:50702",
+            "name": "Filter strip",
+            "w": 350,
+            "h": 38,
+            "wSize": "fill",
+            "hSize": "hug",
+            "clip": true,
+            "layout": {
+              "mode": "row",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:50703",
+                "name": "Filters",
+                "w": 490,
+                "h": 38,
+                "wSize": "hug",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/8",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:50704",
+                    "name": "Filter / All",
+                    "w": 52,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Selected"
+                    },
+                    "componentId": "90:107175",
+                    "props": {
+                      "Label": "All"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 52
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:50705",
+                    "name": "Filter / Puzzles",
+                    "w": 85,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:50706",
+                    "name": "Filter / Spot & remember",
+                    "w": 156,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Spot & remember"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 156
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:50707",
+                    "name": "Filter / Strategy",
+                    "w": 94,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Strategy"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 94
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:50708",
+                    "name": "Filter / Party",
+                    "w": 71,
+                    "h": 38,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Filter chip",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "90:107171",
+                    "props": {
+                      "Label": "Party"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 38,
+                        "width": 71
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50709",
+            "name": "Kind / Puzzles",
+            "w": 350,
+            "h": 790,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:50710",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 84,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:50711",
+                    "w": 88,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Puzzles",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:50712",
+                    "w": 350,
+                    "h": 50,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "One answer to find, at your own pace or in a race.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50713",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Code Breaker",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:113235"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50714",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Daily Word",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105376",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 152,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50715",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Make 24",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105102",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50716",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Minesweeper",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105033",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50717",
+            "name": "Kind / Spot & remember",
+            "w": 350,
+            "h": 576,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:50718",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 59,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:50719",
+                    "w": 206,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Spot & remember",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:50720",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Sharp eyes and a good memory.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50721",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Pairs",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105157",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50722",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Snap",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:66434",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 152,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50723",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 152,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Trios",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105211",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 152,
+                    "width": 350
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50724",
+            "name": "Kind / Strategy",
+            "w": 350,
+            "h": 248,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:50725",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 59,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:50726",
+                    "w": 102,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Strategy",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:50727",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Think a few moves ahead.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50728",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Gomoku",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:111605"
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50729",
+            "name": "Kind / Party",
+            "w": 350,
+            "h": 815,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:50730",
+                "name": "Kind heading",
+                "w": 350,
+                "h": 59,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/4",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:50731",
+                    "w": 64,
+                    "h": 30,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Party",
+                    "textStyle": "Zumpo/Heading",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:50732",
+                    "w": 350,
+                    "h": 25,
+                    "wSize": "fill",
+                    "hSize": "hug",
+                    "text": "Draw, bluff and read the room.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "autoResize": "height"
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50733",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Doodle Chain",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "162:111368"
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50734",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Draw & Guess",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:104973",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50735",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Hush",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105330",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50736",
+                "name": "Zumpo/Game card",
+                "w": 350,
+                "h": 177,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Game card",
+                "variant": {
+                  "Game": "Liar’s Dice",
+                  "Layout": "Row",
+                  "State": "Default"
+                },
+                "componentId": "90:105270",
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 177,
+                    "width": 350
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50737",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "253:50738",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "253:51116",
+        "name": "Zumpo/Sound menu",
+        "x": 16,
+        "y": 80,
+        "absolute": true,
+        "w": 358,
+        "h": 146,
+        "hSize": "hug",
+        "component": "Zumpo/Sound menu",
+        "variant": {
+          "State": "On"
+        },
+        "componentId": "253:47041",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 146,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 358
+          },
+          {
+            "path": "Effects / Head / Label",
+            "characters": "音效",
+            "fontName": "Noto Sans SC Bold",
+            "fontSize": 14,
+            "letterSpacing": 0,
+            "lineHeight": "20px",
+            "openTypeFeatures": "changed",
+            "textDecorationSkipInk": null,
+            "textStyleId": null
+          }
+        ]
+      }
+    ]
+  }
+}

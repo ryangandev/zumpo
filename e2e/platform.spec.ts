@@ -49,6 +49,28 @@ test('a player goes home and straight back into another game', async ({
   await expect(sam).toHaveURL(/\/games\/make-24\/solo$/);
 });
 
+test('the sound menu closes as the keyboard leaves it', async ({ player }) => {
+  const sam = await player('Sam');
+  await sam.goto('/games/minesweeper');
+  const speaker = sam.getByRole('button', { name: 'Sound on' });
+  await speaker.focus();
+  await sam.keyboard.press('Enter');
+  const menu = sam.getByRole('dialog', { name: 'Sound' });
+  await expect(
+    menu.getByRole('button', { name: 'Mute sound effects' }),
+  ).toBeFocused();
+  await sam.keyboard.press('Tab');
+  await expect(
+    menu.getByRole('slider', { name: 'Sound effects volume' }),
+  ).toBeFocused();
+  // Past the volume, the last thing in it, to what follows the speaker.
+  await sam.keyboard.press('Tab');
+  await expect(menu).toBeHidden();
+  await expect(
+    sam.getByRole('button', { name: 'Sam: your name' }),
+  ).toBeFocused();
+});
+
 test('a player changes their name in place, for good', async ({ player }) => {
   const sam = await player('Sam');
   await sam.goto('/games/minesweeper');

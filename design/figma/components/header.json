@@ -34,8 +34,8 @@
         "type": "FRAME",
         "id": "4:43",
         "name": "Navigation",
-        "w": 121,
-        "h": 40,
+        "w": 199,
+        "h": 48,
         "wSize": "hug",
         "hSize": "hug",
         "clip": true,
@@ -68,6 +68,36 @@
                     "toName": "P01 / Home"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:47082",
+            "name": "Action / Sound",
+            "w": 46,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=sound",
+              "Show icon": true,
+              "Label": "Sound"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "width": 46
+              },
+              {
+                "path": "Let’s play",
+                "visible": false
               }
             ]
           },

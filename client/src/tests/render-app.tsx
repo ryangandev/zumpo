@@ -2,6 +2,7 @@ import { act, render } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { routes } from '../app';
 import { SoundProvider } from '../audio';
+import type { AudioEngine } from '../audio/engine';
 import { LocaleProvider, type Locale } from '../i18n';
 import { SessionProvider } from '../net/session';
 import { ME } from './fixtures';
@@ -20,6 +21,7 @@ export async function renderApp(
     firstVisit = false,
     locale,
     fake = new FakeSocket(),
+    engine,
   }: {
     name?: string;
     picked?: boolean;
@@ -27,6 +29,8 @@ export async function renderApp(
     /** A language chosen from the switch; English, as the browser's, without. */
     locale?: Locale;
     fake?: FakeSocket;
+    /** The sound engine; jsdom's, which has no Web Audio, without. */
+    engine?: AudioEngine;
   } = {},
 ) {
   sessionStorage.clear();
@@ -38,7 +42,7 @@ export async function renderApp(
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   const view = render(
     <LocaleProvider>
-      <SoundProvider>
+      <SoundProvider engine={engine}>
         <SessionProvider socket={fake.asSocket()}>
           <RouterProvider router={router} />
         </SessionProvider>

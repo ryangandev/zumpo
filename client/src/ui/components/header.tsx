@@ -3,6 +3,7 @@ import { useMessages } from '../../i18n';
 import { cx } from '../cx';
 import { Avatar, type AvatarProps } from './avatar';
 import { NameMenu, type NameMenuProps } from './name-menu';
+import { SoundMenu, type SoundMenuProps } from './sound-menu';
 import { Wordmark } from './wordmark';
 import styles from './header.module.css';
 
@@ -20,6 +21,8 @@ export interface HeaderProps {
   viewer?: Viewer;
   /** Opened from the viewer's avatar: their name, and the way to change it. */
   viewerMenu?: ViewerMenu;
+  /** The speaker before the avatar; left out where there is no sound to set. */
+  sound?: SoundMenuProps;
   className?: string;
 }
 
@@ -27,10 +30,17 @@ export interface HeaderProps {
 export type ViewerMenu = Omit<NameMenuProps, 'trigger' | 'align'>;
 
 /**
- * Zumpo/Header: the wordmark home link, the main links and the viewer. On a
- * phone it is the Mobile navigation row: wordmark and a smaller avatar only.
+ * Zumpo/Header: the wordmark home link, the main links, the speaker and the
+ * viewer. On a phone it is the Mobile navigation row: the wordmark, then the
+ * speaker and a smaller avatar.
  */
-export function Header({ links, viewer, viewerMenu, className }: HeaderProps) {
+export function Header({
+  links,
+  viewer,
+  viewerMenu,
+  sound,
+  className,
+}: HeaderProps) {
   const m = useMessages();
   return (
     <header className={cx(styles.header, className)}>
@@ -51,6 +61,7 @@ export function Header({ links, viewer, viewerMenu, className }: HeaderProps) {
             </li>
           ))}
         </ul>
+        {sound && <SoundMenu {...sound} />}
         {viewer && <ViewerAvatar viewer={viewer} menu={viewerMenu} />}
       </nav>
     </header>

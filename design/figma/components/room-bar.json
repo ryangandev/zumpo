@@ -4,7 +4,7 @@
   "id": "39:19319",
   "type": "COMPONENT_SET",
   "key": "2248d763590acc6af76a92430d06294fbbeeba65",
-  "description": "A seated room's one row: the game, the room and its phase, then How to play, Leave room and you. Replaces the header and the room heading in every room; nothing in it leads out of the room without asking. Phone: one row 48 px tall, the game over the phase in small text, then the icon actions; the room's name is on the Players tab.",
+  "description": "A seated room’s one row: the game, the room and its phase, then How to play, Leave room, the speaker and you. Replaces the header and the room heading in every room; nothing in it leads out of the room without asking. Phone: one row 48 px tall, the game over the phase in small text, then the icon actions, each 38 × 48, and you; the room’s name is on the Players tab. At 390 px the game’s name has 172 px, which every game fits; narrower, code scales the name down to fit, as it does the turn bar’s main line.",
   "properties": {
     "Game": {
       "type": "text",
@@ -69,7 +69,7 @@
             "type": "FRAME",
             "id": "39:19282",
             "name": "Room identity",
-            "w": 750,
+            "w": 688,
             "h": 30,
             "wSize": "fill",
             "hSize": "hug",
@@ -229,6 +229,36 @@
           },
           {
             "type": "INSTANCE",
+            "id": "253:47091",
+            "name": "Action / Sound",
+            "w": 46,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=sound",
+              "Show icon": true,
+              "Label": "Sound"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "width": 46
+              },
+              {
+                "path": "Let’s play",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
             "id": "39:19298",
             "name": "You",
             "w": 40,
@@ -269,7 +299,7 @@
             "type": "FRAME",
             "id": "39:19300",
             "name": "Room identity",
-            "w": 202,
+            "w": 172,
             "h": 48,
             "wSize": "fill",
             "hSize": "hug",
@@ -282,7 +312,7 @@
                 "type": "TEXT",
                 "id": "39:19301",
                 "name": "Game",
-                "w": 202,
+                "w": 172,
                 "h": 30,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -303,7 +333,7 @@
                 "type": "TEXT",
                 "id": "163:62568",
                 "name": "Phase",
-                "w": 202,
+                "w": 172,
                 "h": 18,
                 "wSize": "fill",
                 "hSize": "hug",
@@ -326,7 +356,7 @@
             "type": "INSTANCE",
             "id": "39:19305",
             "name": "Action / How to play (icon)",
-            "w": 46,
+            "w": 38,
             "h": 48,
             "wSize": "hug",
             "component": "Zumpo/Button",
@@ -344,9 +374,9 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": "$Zumpo · UI:space/12",
-                "paddingRight": "$Zumpo · UI:space/12",
-                "width": 46
+                "paddingLeft": "$Zumpo · UI:space/8",
+                "paddingRight": "$Zumpo · UI:space/8",
+                "width": 38
               },
               {
                 "path": "Let’s play",
@@ -358,7 +388,7 @@
             "type": "INSTANCE",
             "id": "39:19311",
             "name": "Action / Leave room (icon)",
-            "w": 46,
+            "w": 38,
             "h": 48,
             "wSize": "hug",
             "component": "Zumpo/Button",
@@ -375,9 +405,39 @@
               {
                 "path": ".",
                 "height": 48,
-                "paddingLeft": "$Zumpo · UI:space/12",
-                "paddingRight": "$Zumpo · UI:space/12",
-                "width": 46
+                "paddingLeft": "$Zumpo · UI:space/8",
+                "paddingRight": "$Zumpo · UI:space/8",
+                "width": 38
+              },
+              {
+                "path": "Let’s play",
+                "visible": false
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:70128",
+            "name": "Action / Sound (icon)",
+            "w": 38,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=sound",
+              "Show icon": true,
+              "Label": "Sound"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "width": 38
               },
               {
                 "path": "Let’s play",

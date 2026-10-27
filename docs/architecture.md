@@ -383,6 +383,7 @@ A change in one tab is followed by the others.
 - **`SoundProvider`** sits under `LocaleProvider` in [`app.tsx`](../client/src/app.tsx); it owns the engine, connects it to the page's gestures and visibility, and closes it on unmount.
 - **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
 - **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
+  The speaker before the viewer's avatar takes it through [`shell/sound-menu.ts`](../client/src/shell/sound-menu.ts), which `useViewer` hands to the header and the room bar, and which leaves the speaker out while `available` is false, unless it has already been shown and the engine failed after.
 - **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
   `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`), and a `variant` for a step.
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.

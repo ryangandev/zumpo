@@ -1,0 +1,760 @@
+{
+  "format": 1,
+  "code": "SO03",
+  "title": "On your own · volume by keyboard",
+  "id": "253:49818",
+  "section": "16 / Sound",
+  "reviewNotes": [
+    "SO03 · Volume by keyboard / Tab reaches the toggle, then the slider: the arrows move it by 5, Page Up and Page Down by 10, Home and End to the ends. Escape closes the menu and gives the focus back to the speaker."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "253:49818",
+    "name": "SO03 / On your own · volume by keyboard",
+    "x": 3120,
+    "y": 80,
+    "w": 1440,
+    "h": 1028,
+    "hSize": "hug",
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/24",
+        "$Zumpo · UI:space/64",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/64"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "INSTANCE",
+        "id": "253:49819",
+        "name": "Zumpo/Room bar",
+        "w": 1312,
+        "h": 48,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Room bar",
+        "variant": {
+          "Layout": "Desktop"
+        },
+        "componentId": "39:19276",
+        "props": {
+          "Game": "Daily Word"
+        },
+        "overrides": [
+          {
+            "path": "Room identity / Room",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "On your own",
+              "Tone": "Sand",
+              "Size": "Regular"
+            }
+          },
+          {
+            "path": "Room identity / Phase",
+            "componentProperties": {
+              "Icon": "24:5010",
+              "Show icon": false,
+              "Label": "Word #12",
+              "Tone": "Blue",
+              "Size": "Regular"
+            }
+          },
+          {
+            "path": "Action / Leave room",
+            "componentProperties": {
+              "Icon": "24:5041",
+              "Show icon": true,
+              "Label": "Leave",
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "reactions": [
+              {
+                "on": "on_click",
+                "do": [
+                  {
+                    "nav": "navigate",
+                    "to": "9:2528",
+                    "toName": "ML01 / Game page · open, private, full and playing rooms",
+                    "transition": "dissolve"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "You",
+            "componentProperties": {
+              "Initials": "MA",
+              "Tone": "Peach"
+            }
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:49820",
+        "name": "Board & room",
+        "w": 1312,
+        "h": 858,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "253:49821",
+            "name": "Board stage",
+            "w": 944,
+            "h": 858,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "253:49822",
+                "name": "Zumpo/Turn bar",
+                "w": 944,
+                "h": 92,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Turn bar",
+                "variant": {
+                  "Kind": "Status",
+                  "Layout": "Desktop"
+                },
+                "componentId": "26:16856",
+                "props": {
+                  "Countdown": false,
+                  "Meta": "Six guesses. A new word every day.",
+                  "Main": "Find the word",
+                  "Category": false,
+                  "Label": "Daily word #12"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 92,
+                    "width": 944
+                  },
+                  {
+                    "path": "Turn / Eyebrow / Category",
+                    "componentProperties": {
+                      "Icon": "24:5010",
+                      "Show icon": false,
+                      "Label": "Small · 9 × 9",
+                      "Tone": "Sand",
+                      "Size": "Regular"
+                    }
+                  },
+                  {
+                    "path": "Countdown",
+                    "componentProperties": {
+                      "Show label": true,
+                      "Label": "run time",
+                      "Time": "0:39",
+                      "Tone": "Info"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "253:49823",
+                "name": "Table panel",
+                "w": 944,
+                "h": 750,
+                "wSize": "fill",
+                "hSize": "hug",
+                "fills": [
+                  "$Zumpo · UI:color/paper"
+                ],
+                "strokes": [
+                  "$Zumpo · UI:color/line"
+                ],
+                "strokeAlign": "inside",
+                "radius": "$Zumpo · UI:radius/24",
+                "layout": {
+                  "mode": "column",
+                  "gap": "$Zumpo · UI:space/20",
+                  "pad": "$Zumpo · UI:space/24",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:49824",
+                    "name": "Your board",
+                    "w": 352,
+                    "h": 424,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Word board",
+                    "variant": {
+                      "Size": "Regular"
+                    },
+                    "componentId": "44:62938"
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:49825",
+                    "name": "Prompt",
+                    "w": 301,
+                    "h": 52,
+                    "text": "Type a five-letter word, then press Enter.",
+                    "textStyle": "Zumpo/Body",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ],
+                    "alignV": "center",
+                    "autoResize": "none"
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:49826",
+                    "name": "Keyboard",
+                    "w": 472,
+                    "h": 184,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "component": "Zumpo/Keyboard",
+                    "variant": {
+                      "Layout": "Desktop"
+                    },
+                    "componentId": "44:62227"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "FRAME",
+            "id": "253:49827",
+            "name": "Run sidebar",
+            "w": 344,
+            "h": 524,
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/16",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "253:49828",
+                "name": "This run",
+                "w": 344,
+                "h": 232,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "How to read it"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 232,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I253:49828;35:13441;253:49834",
+                      "name": "Legend",
+                      "w": 278,
+                      "h": 120,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "gap": "$Zumpo · UI:space/12",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49828;35:13441;253:49835",
+                          "name": "Mark / Correct",
+                          "w": 212,
+                          "h": 32,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "INSTANCE",
+                              "id": "I253:49828;35:13441;253:49836",
+                              "name": "Zumpo/Letter tile",
+                              "w": 32,
+                              "h": 32,
+                              "component": "Zumpo/Letter tile",
+                              "variant": {
+                                "State": "Correct",
+                                "Size": "Small"
+                              },
+                              "componentId": "44:61334",
+                              "props": {
+                                "Letter": "P"
+                              }
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49828;35:13441;253:49837",
+                              "w": 168,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Right letter, right place",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49828;35:13441;253:49838",
+                          "name": "Mark / Present",
+                          "w": 254,
+                          "h": 32,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "INSTANCE",
+                              "id": "I253:49828;35:13441;253:49839",
+                              "name": "Zumpo/Letter tile",
+                              "w": 32,
+                              "h": 32,
+                              "component": "Zumpo/Letter tile",
+                              "variant": {
+                                "State": "Present",
+                                "Size": "Small"
+                              },
+                              "componentId": "44:61336",
+                              "props": {
+                                "Letter": "L"
+                              }
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49828;35:13441;253:49840",
+                              "w": 210,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "In the word, somewhere else",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49828;35:13441;253:49841",
+                          "name": "Mark / Absent",
+                          "w": 158,
+                          "h": 32,
+                          "wSize": "hug",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "gap": "$Zumpo · UI:space/12",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "INSTANCE",
+                              "id": "I253:49828;35:13441;253:49842",
+                              "name": "Zumpo/Letter tile",
+                              "w": 32,
+                              "h": 32,
+                              "component": "Zumpo/Letter tile",
+                              "variant": {
+                                "State": "Absent",
+                                "Size": "Small"
+                              },
+                              "componentId": "44:61338",
+                              "props": {
+                                "Letter": "S"
+                              }
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49828;35:13441;253:49843",
+                              "w": 114,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Not in the word",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:49829",
+                "name": "Best on this device",
+                "w": 344,
+                "h": 276,
+                "wSize": "fill",
+                "hSize": "hug",
+                "component": "Zumpo/Card",
+                "variant": {
+                  "Kind": "Panel"
+                },
+                "componentId": "35:13438",
+                "props": {
+                  "Show description": false,
+                  "Title": "On this device"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 276,
+                    "width": 344
+                  }
+                ],
+                "slots": {
+                  "Content": [
+                    {
+                      "type": "FRAME",
+                      "id": "I253:49829;35:13441;253:49845",
+                      "name": "Stats",
+                      "w": 278,
+                      "h": 164,
+                      "wSize": "fill",
+                      "hSize": "hug",
+                      "layout": {
+                        "mode": "column",
+                        "strokesIncluded": true
+                      },
+                      "children": [
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49829;35:13441;253:49846",
+                          "name": "Stat / Played",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49847",
+                              "name": "Ten hands",
+                              "w": 49,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Played",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49848",
+                              "name": "3:05",
+                              "w": 13,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "11",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49829;35:13441;253:49849",
+                          "name": "Stat / Found",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49850",
+                              "name": "Ten hands",
+                              "w": 47,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Found",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49851",
+                              "name": "3:05",
+                              "w": 34,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "91%",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49829;35:13441;253:49852",
+                          "name": "Stat / Current streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49853",
+                              "name": "Ten hands",
+                              "w": 107,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Current streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49854",
+                              "name": "3:05",
+                              "w": 12,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "4",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "FRAME",
+                          "id": "I253:49829;35:13441;253:49855",
+                          "name": "Stat / Best streak",
+                          "w": 278,
+                          "h": 41,
+                          "wSize": "fill",
+                          "hSize": "hug",
+                          "layout": {
+                            "mode": "row",
+                            "pad": [
+                              "$Zumpo · UI:space/8",
+                              0
+                            ],
+                            "justify": "space_between",
+                            "align": "center",
+                            "strokesIncluded": true
+                          },
+                          "children": [
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49856",
+                              "name": "Ten hands",
+                              "w": 83,
+                              "h": 25,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "Best streak",
+                              "textStyle": "Zumpo/Body",
+                              "fills": [
+                                "$Zumpo · UI:color/muted"
+                              ]
+                            },
+                            {
+                              "type": "TEXT",
+                              "id": "I253:49829;35:13441;253:49857",
+                              "name": "3:05",
+                              "w": 12,
+                              "h": 24,
+                              "wSize": "hug",
+                              "hSize": "hug",
+                              "text": "6",
+                              "textStyle": "Zumpo/Number",
+                              "fills": [
+                                "$Zumpo · UI:color/ink"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:49830",
+        "name": "Footer",
+        "w": 1312,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "253:49831",
+            "w": 650,
+            "h": 18,
+            "hSize": "hug",
+            "text": "Good company. One more round.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "253:49832",
+            "w": 115,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "zumpo. / play a little",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "253:50041",
+        "name": "Zumpo/Sound menu",
+        "x": 1000,
+        "y": 88,
+        "absolute": true,
+        "w": 320,
+        "h": 146,
+        "hSize": "hug",
+        "component": "Zumpo/Sound menu",
+        "variant": {
+          "State": "On"
+        },
+        "componentId": "253:47041",
+        "overrides": [
+          {
+            "path": ".",
+            "layoutPositioning": "ABSOLUTE"
+          },
+          {
+            "path": "Effects / Control / Volume",
+            "height": 24,
+            "width": 196
+          }
+        ]
+      }
+    ]
+  }
+}

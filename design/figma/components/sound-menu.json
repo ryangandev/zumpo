@@ -1,0 +1,363 @@
+{
+  "format": 1,
+  "name": "Zumpo/Sound menu",
+  "id": "253:47081",
+  "type": "COMPONENT_SET",
+  "key": "dc493247aa45c1ac92b54c2cfc630b35764c81ce",
+  "description": "The menu the speaker button opens, beside the viewer’s avatar in the header and the room bar, on every page. One row per kind of sound: Sound effects for now, and a Music row under it later. Each row is its name and level over a mute toggle and the volume Slider. Off is muted: the toggle shows sound-off, the level says Off and the Slider is Muted, still working. The trigger is a Secondary icon Button with Glyph=sound, or Glyph=sound-off while muted, like the toggle; its states are the Button’s.",
+  "properties": {
+    "State": {
+      "type": "variant",
+      "default": "On",
+      "options": [
+        "On",
+        "Off"
+      ]
+    }
+  },
+  "defaultVariant": "State=On",
+  "variants": [
+    {
+      "name": "State=On",
+      "id": "253:47041",
+      "props": {
+        "State": "On"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47041",
+        "name": "State=On",
+        "w": 320,
+        "h": 146,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · Primitives:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · Primitives:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B251F",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Menu lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/32",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "253:47042",
+            "name": "Effects",
+            "w": 254,
+            "h": 80,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:47043",
+                "name": "Head",
+                "w": 254,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "justify": "space_between",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:47044",
+                    "name": "Label",
+                    "w": 96,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Sound effects",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:47045",
+                    "name": "Level",
+                    "w": 30,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "70%",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "253:47046",
+                "name": "Control",
+                "w": 254,
+                "h": 48,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:47047",
+                    "name": "Mute",
+                    "w": 46,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Icon": "Zumpo/Icon / Glyph=sound",
+                      "Show icon": true,
+                      "Label": "Mute sound effects"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "width": 46
+                      },
+                      {
+                        "path": "Let’s play",
+                        "visible": false
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:47056",
+                    "name": "Volume",
+                    "w": 196,
+                    "h": 24,
+                    "wSize": "fill",
+                    "component": "Zumpo/Slider",
+                    "variant": {
+                      "State": "Default"
+                    },
+                    "componentId": "253:47012",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 24,
+                        "width": 196
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "State=Off",
+      "id": "253:47061",
+      "props": {
+        "State": "Off"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47061",
+        "name": "State=Off",
+        "w": 320,
+        "h": 146,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · Primitives:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · Primitives:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "effects": [
+          {
+            "type": "drop_shadow",
+            "color": "#282B251F",
+            "offset": [
+              0,
+              8
+            ],
+            "radius": 24
+          }
+        ],
+        "effectStyle": "Zumpo/Menu lift",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/32",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "FRAME",
+            "id": "253:47062",
+            "name": "Effects",
+            "w": 254,
+            "h": 80,
+            "wSize": "fill",
+            "hSize": "hug",
+            "layout": {
+              "mode": "column",
+              "gap": "$Zumpo · UI:space/12",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "FRAME",
+                "id": "253:47063",
+                "name": "Head",
+                "w": 254,
+                "h": 20,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "justify": "space_between",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "TEXT",
+                    "id": "253:47064",
+                    "name": "Label",
+                    "w": 96,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Sound effects",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/ink"
+                    ]
+                  },
+                  {
+                    "type": "TEXT",
+                    "id": "253:47065",
+                    "name": "Level",
+                    "w": 22,
+                    "h": 20,
+                    "wSize": "hug",
+                    "hSize": "hug",
+                    "text": "Off",
+                    "textStyle": "Zumpo/Label",
+                    "fills": [
+                      "$Zumpo · UI:color/muted"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "FRAME",
+                "id": "253:47066",
+                "name": "Control",
+                "w": 254,
+                "h": 48,
+                "wSize": "fill",
+                "hSize": "hug",
+                "layout": {
+                  "mode": "row",
+                  "gap": "$Zumpo · UI:space/12",
+                  "align": "center",
+                  "strokesIncluded": true
+                },
+                "children": [
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:47067",
+                    "name": "Mute",
+                    "w": 46,
+                    "h": 48,
+                    "wSize": "hug",
+                    "component": "Zumpo/Button",
+                    "variant": {
+                      "Style": "Secondary",
+                      "State": "Default"
+                    },
+                    "componentId": "4:18",
+                    "props": {
+                      "Icon": "Zumpo/Icon / Glyph=sound-off",
+                      "Show icon": true,
+                      "Label": "Mute sound effects"
+                    },
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 48,
+                        "width": 46
+                      },
+                      {
+                        "path": "Let’s play",
+                        "visible": false
+                      }
+                    ]
+                  },
+                  {
+                    "type": "INSTANCE",
+                    "id": "253:47076",
+                    "name": "Volume",
+                    "w": 196,
+                    "h": 24,
+                    "wSize": "fill",
+                    "component": "Zumpo/Slider",
+                    "variant": {
+                      "State": "Muted"
+                    },
+                    "componentId": "253:47035",
+                    "overrides": [
+                      {
+                        "path": ".",
+                        "height": 24,
+                        "width": 196
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

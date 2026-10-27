@@ -137,7 +137,7 @@
                 },
                 {
                   "type": "INSTANCE",
-                  "id": "244:65983",
+                  "id": "I35:13529;35:13433;244:65990",
                   "name": "Word categories",
                   "w": 496,
                   "h": 87,
@@ -155,7 +155,7 @@
                   },
                   "overrides": [
                     {
-                      "path": "",
+                      "path": ".",
                       "height": 87,
                       "width": 496
                     }

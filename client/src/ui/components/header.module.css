@@ -77,7 +77,11 @@
 
 @media (max-width: 640px) {
   .header {
-    min-height: 44px;
+    min-height: 48px;
+  }
+
+  .nav {
+    gap: var(--zumpo-space-8);
   }
 
   .links {

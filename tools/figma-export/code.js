@@ -33,10 +33,11 @@ const FLOW_SECTIONS = [
   { id: '162:65717', prefix: '13', dir: '13-code-breaker' },
   { id: '162:67746', prefix: '14', dir: '14-gomoku' },
   { id: '163:63239', prefix: '15', dir: '15-phone-in-play' },
+  { id: '253:48727', prefix: '16', dir: '16-sound' },
 ];
 const SHARED_SECTION = { id: '9:198', name: 'Shared pieces' };
-const EXPECTED_FLOWS = 261;
-const EXPECTED_FAMILIES = 77;
+const EXPECTED_FLOWS = 268;
+const EXPECTED_FAMILIES = 79;
 
 const FLOW_CODE = /^([A-Z]{1,2}\d{2})\b/;
 const PATH_TYPES = ['VECTOR', 'BOOLEAN_OPERATION', 'STAR', 'POLYGON', 'LINE'];

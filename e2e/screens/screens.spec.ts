@@ -214,6 +214,32 @@ async function startGame(host: Page) {
   await host.getByRole('button', { name: 'Start game' }).click();
 }
 
+/** Opens the sound menu from the speaker before the avatar. */
+async function openSound(page: Page) {
+  await page
+    .getByRole('button', { name: /^(Sound (on|off)|声音已[开关])$/ })
+    .click();
+  const menu = page.getByRole('dialog', { name: /^(Sound|声音)$/ });
+  await expect(menu).toBeVisible();
+  return menu;
+}
+
+/**
+ * Captures the sound menu open and muted, then turns sound back on and closes
+ * it, so the player's later screens show sound on as Figma draws them.
+ */
+async function shotMuted(page: Page, code: string) {
+  const menu = await openSound(page);
+  const mute = menu.getByRole('button', { name: 'Mute sound effects' });
+  await mute.click();
+  await expect(mute).toHaveAttribute('aria-pressed', 'true');
+  await shot(page, code);
+  await mute.click();
+  await expect(mute).toHaveAttribute('aria-pressed', 'false');
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeHidden();
+}
+
 test.afterAll(writeReport);
 
 test('platform pages', async ({ player }) => {
@@ -230,6 +256,10 @@ test('platform pages', async ({ player }) => {
   const maya = await player('Maya', desktop);
   await maya.goto('/');
   await shot(maya, 'P01');
+  const mayaSound = await openSound(maya);
+  await shot(maya, 'SO01');
+  await maya.keyboard.press('Escape');
+  await expect(mayaSound).toBeHidden();
   await maya.getByRole('button', { name: 'Maya: your name' }).click();
   await expect(maya.getByRole('dialog', { name: 'Your name' })).toBeVisible();
   await shot(maya, 'P13');
@@ -245,11 +275,20 @@ test('platform pages', async ({ player }) => {
   const samOnPhone = await player('Sam', phone);
   await samOnPhone.goto('/');
   await shot(samOnPhone, 'MO01');
+  const samSound = await openSound(samOnPhone);
+  await shot(samOnPhone, 'SO04');
+  await samOnPhone.keyboard.press('Escape');
+  await expect(samSound).toBeHidden();
   await samOnPhone.getByRole('button', { name: 'Sam: your name' }).click();
   await expect(
     samOnPhone.getByRole('dialog', { name: 'Your name' }),
   ).toBeVisible();
   await shot(samOnPhone, 'MO02');
+
+  const samInChinese = await player('Sam', { ...phone, locale: 'zh' });
+  await samInChinese.goto('/');
+  await openSound(samInChinese);
+  await shot(samInChinese, 'SO06');
 });
 
 test('a picked name in a room, and changing it there', async ({ player }) => {
@@ -431,6 +470,7 @@ async function lobbyScreens(
     await samOnPhone.goto(`/games/${game}`);
     await expect(samOnPhone.getByRole('article')).toHaveCount(4);
     await shot(samOnPhone, 'MO04');
+    await shotMuted(samOnPhone, 'SO05');
     await samOnPhone.goto(`/games/${game}/new`);
     await shot(samOnPhone, 'MO05');
     // MO22: four of the word categories picked, not yet saved.
@@ -664,6 +704,7 @@ test('a Draw & Guess game', async ({ player }) => {
       await shot(drawer.page, 'MO07');
       const word = await chooseAndDraw(drawer.page);
       await shot(drawer.page, 'MO08');
+      await shot(drawer.page, 'SO07');
       await shot(drawer.page, 'PH05');
       for (const seat of guessers) await guess(seat, word);
       continue;
@@ -838,6 +879,7 @@ test('a Minesweeper game', async ({ player }) => {
   await cell(leo!.page, 8, 2).click();
   await expect(leo!.page.getByText('Waiting for everyone else')).toBeVisible();
   await shot(leo!.page, 'MO12');
+  await shotMuted(sam!.page, 'SO02');
   // Ryan and Sam share a cell; their reward splits if it is safe.
   await cell(ryan!.page, 5, 5).click();
   await cell(sam!.page, 5, 5).click();
@@ -1902,6 +1944,19 @@ test('Daily Word on your own', async ({ player }) => {
   await expect(yourGuesses(maya)).toBeVisible();
   await shot(maya, 'DW01');
   await shotAt(maya, 'DW17');
+  await maya.getByRole('button', { name: 'Sound on' }).focus();
+  await maya.keyboard.press('Enter');
+  // Tab from the mute toggle, where the menu opens, to the volume.
+  await expect(
+    maya.getByRole('button', { name: 'Mute sound effects' }),
+  ).toBeFocused();
+  await maya.keyboard.press('Tab');
+  await expect(
+    maya.getByRole('slider', { name: 'Sound effects volume' }),
+  ).toBeFocused();
+  await shot(maya, 'SO03');
+  await maya.keyboard.press('Escape');
+  await expect(maya.getByRole('button', { name: 'Sound on' })).toBeFocused();
 
   // Word #12 is UNITE.
   await guessWords(maya, ['stare', 'cloud']);

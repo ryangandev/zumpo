@@ -33,6 +33,7 @@ They are not copied here, so there is one place to change them.
 | 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
 | 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
 | 15 / Phone in play                   | `163:63239` | PH01-PH06, the one phone layout every game plays in                                   |
+| 16 / Sound                           | `253:48727` | SO01-SO07, the sound menu on desktop and phone, and in Chinese                        |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
 
@@ -123,8 +124,8 @@ Decisions from the design review rounds (their reports are in git history):
 ### The room bar
 
 Ryan approved the room bar on 2026-10-04, after a proposal round in Figma.
-A seated room has one `Zumpo/Room bar` in place of the header and the room heading: the wordmark, the game, the room and phase tags, How to play, Leave room and the viewer.
-On a phone it is one row 48 px tall: no wordmark, the game over one line saying the room and its phase ("Maya's room · Round 2 of 3"), and the two actions as their icons, so it never wraps and never moves the game under it.
+A seated room has one `Zumpo/Room bar` in place of the header and the room heading: the wordmark, the game, the room and phase tags, How to play, Leave room, the speaker and the viewer.
+On a phone it is one row 48 px tall: no wordmark, the game over one line saying the room and its phase ("Maya's room · Round 2 of 3"), and the three actions as their icons, so it never wraps and never moves the game under it.
 Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16), and it is 160 px shorter than the old pair on a desktop and 80 px on a phone.
 
 - A room has no links out but the wordmark: How to play opens over the room (P15), so a game is never lost to a rules check.
@@ -146,6 +147,18 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
   Gomoku draws no seats then either (GM08), since with no colours yet they would only list the same two players again.
 - On a phone, where the scoreboard is on its own tab, the waiting card says who else is at the table, their small avatars over "Maya and Leo are here." (MO20), so "Everyone's here?" is answered where it is asked.
 
+### Sound
+
+The speaker button, a Secondary icon `Zumpo/Button` with Glyph=sound, or sound-off and the name "Sound off" while muted or at 0, sits just before the viewer's avatar in the header, the room bar and a phone's navigation row, so it is on every page.
+It opens `Zumpo/Sound menu` (SO01-SO07): one row per kind of sound, its name and level over a mute toggle and a `Zumpo/Slider`.
+Version 1 has sound effects only, on at 70% by default; a Music row goes under them later.
+Muted, the level says Off and the slider is dimmed but still works, and moving it turns sound back on.
+The menu sits under the speaker, aligned to its end, as the name menu sits under the avatar; on a phone it fills the width.
+Each row is a group named by its visible label, and tabbing past the slider, the menu's last control, closes the menu and moves on to the avatar.
+In the Phone room bar its three icon buttons are 38 × 48, so the game's name keeps 172 px at 390 px, which every game's name fits (SO07); on a narrower phone code scales the name down to fit, as it does the turn bar's main line, down to 60%, which Draw & Guess needs at 320 px, and only below that ends it in an ellipsis.
+Where the browser has no Web Audio the speaker is not shown at all, as no screen shows an action the player cannot take: there is nothing it could turn on.
+A speaker already shown stays, though, if the engine fails at the first gesture, which may be a press on the speaker itself: taking it away would drop the player's focus.
+
 ### Names
 
 Ryan approved dropping the name step on 2026-10-05: it stood between every visitor and every game, and asked again in every new tab.
@@ -162,7 +175,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 261 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 268 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 

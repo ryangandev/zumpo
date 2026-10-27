@@ -43,6 +43,13 @@
   white-space: nowrap;
 }
 
+/* The name scaled to fit a phone's bar takes the heading's whole line and
+   lies at its top, so its smaller line never makes the bar taller
+   (useFittedName in room-bar.tsx). */
+.name {
+  vertical-align: top;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -54,6 +61,12 @@
   --zumpo-avatar-size: 32px;
 
   gap: var(--zumpo-space-8);
+}
+
+/* Option B: the three icon buttons 38 x 48, so the game's name keeps 172 px
+   at 390 px. */
+.phone .action {
+  padding-inline: var(--zumpo-space-8);
 }
 
 .phone .identity {

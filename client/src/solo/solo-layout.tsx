@@ -107,7 +107,7 @@ export function SoloLayout({
   const oneColumn = useMediaQuery(ONE_COLUMN);
   const shortWindow = useMediaQuery(SHORT_WINDOW);
   const navigate = useNavigate();
-  const { viewer, viewerMenu } = useViewer();
+  const { viewer, viewerMenu, sound } = useViewer();
   const [rules, setRules] = useState(false);
   // The Leave button, the wordmark and the browser's back button alike.
   const blocker = useBlocker(
@@ -167,6 +167,7 @@ export function SoloLayout({
           leaveLabel={m.solo.leave}
           viewer={viewer}
           viewerMenu={viewerMenu}
+          sound={sound}
         />
       }
     >

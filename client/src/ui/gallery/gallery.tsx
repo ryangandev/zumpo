@@ -58,6 +58,8 @@ import {
   RoomRow,
   Scoreboard,
   SelectField,
+  Slider,
+  SoundMenuCard,
   StatList,
   Tag,
   TextField,
@@ -267,6 +269,14 @@ export default function Gallery() {
   const [size, setSize] = useState<BrushSize>(10);
   const [view, setView] = useState<'board' | 'players' | 'chat'>('board');
   const [dialog, setDialog] = useState(false);
+  const [volume, setVolume] = useState(0.7);
+  const [muted, setMuted] = useState(false);
+  const sound = {
+    volume,
+    muted,
+    onVolumeChange: setVolume,
+    onMutedChange: setMuted,
+  };
   const stay = useRef<HTMLButtonElement>(null);
 
   return (
@@ -2211,6 +2221,7 @@ export default function Gallery() {
           <Header
             links={[{ label: 'Games', to: '/design', current: true }]}
             viewer={{ ...PLAYERS.maya, label: 'You are Maya' }}
+            sound={sound}
           />
         </Specimen>
         <Specimen family="wordmark">
@@ -2231,6 +2242,7 @@ export default function Gallery() {
             onHowToPlay={noop}
             onLeave={noop}
             viewer={{ ...PLAYERS.sam, label: 'You are Sam' }}
+            sound={sound}
           />
         </Specimen>
         <Specimen family="room-bar" variant="Layout=Phone" width={350}>
@@ -2242,6 +2254,7 @@ export default function Gallery() {
             onHowToPlay={noop}
             onLeave={noop}
             viewer={{ ...PLAYERS.sam, label: 'You are Sam' }}
+            sound={sound}
           />
         </Specimen>
         <Specimen label="Choice list: Board, in the page" width={496}>
@@ -2266,6 +2279,53 @@ export default function Gallery() {
                 detail: '99 mines. No best yet',
               },
             ]}
+          />
+        </Specimen>
+      </Family>
+
+      <Family
+        name="Slider"
+        file="slider"
+        note="Hover, Focus and Dragging are the thumb's own: point at it, tab to it or drag it."
+      >
+        <Specimen family="slider" variant="State=Default">
+          <Slider
+            value={70}
+            onValueChange={noop}
+            label={m.sound.effects.volume}
+            valueText={(percent) => m.sound.valueText(percent, false)}
+          />
+        </Specimen>
+        <Specimen family="slider" variant="State=Muted">
+          <Slider
+            value={70}
+            onValueChange={noop}
+            label={m.sound.effects.volume}
+            valueText={(percent) => m.sound.valueText(percent, true)}
+            muted
+          />
+        </Specimen>
+      </Family>
+
+      <Family
+        name="Sound menu"
+        file="sound-menu"
+        note="What the speaker before the avatar opens, on every page. The header and room bar above open it for real."
+      >
+        <Specimen family="sound-menu" variant="State=On">
+          <SoundMenuCard
+            volume={0.7}
+            muted={false}
+            onVolumeChange={noop}
+            onMutedChange={noop}
+          />
+        </Specimen>
+        <Specimen family="sound-menu" variant="State=Off">
+          <SoundMenuCard
+            volume={0.7}
+            muted
+            onVolumeChange={noop}
+            onMutedChange={noop}
           />
         </Specimen>
       </Family>
