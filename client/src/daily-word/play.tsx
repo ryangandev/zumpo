@@ -1,8 +1,9 @@
 import { itemAt } from '../../../shared/list';
+import { useSounds } from '../audio';
 import { useMessages, type Messages } from '../i18n';
 import type { ReactNode } from 'react';
 import type { DailyWordMark } from '../../../shared/wire-types';
-import { keyMarks, WORD_LENGTH } from '../../../shared/daily-word';
+import { checkGuess, keyMarks, WORD_LENGTH } from '../../../shared/daily-word';
 import { Keyboard, Notice, WordBoard, type WordBoardRow } from '../ui';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
@@ -12,6 +13,7 @@ import {
   useTypingKeys,
   type Typing,
 } from '../shell/board-typing';
+import { DAILY_WORD_KEY_BANK } from './sounds';
 import styles from './play.module.css';
 
 /** A Daily Word row takes letters, from either case. */
@@ -67,7 +69,32 @@ export function PlayArea({
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
   const { play, over } = useNoteOverBoard(problem ? rows.length : null);
-  useTypingKeys(typing, keyboard && !disabled, LETTER);
+  const sound = useSounds(DAILY_WORD_KEY_BANK);
+  // The keys play what the player does: a letter, a delete, a row turned
+  // back. A row that goes is heard as its tiles, from the state it makes.
+  const keys: Typing = {
+    ...typing,
+    onKey: (letter) => {
+      if (typed.length < WORD_LENGTH) sound('ui-key');
+      typing.onKey(letter);
+    },
+    onDelete: () => {
+      if (typed !== '') sound('ui-delete');
+      typing.onDelete();
+    },
+    onEnter: () => {
+      if (
+        checkGuess(
+          typed,
+          rows.map((row) => row.word),
+        )
+      ) {
+        sound('ui-nope');
+      }
+      typing.onEnter();
+    },
+  };
+  useTypingKeys(keys, keyboard && !disabled, LETTER);
   const last = rows.at(-1);
   const board = (
     <WordBoard
@@ -123,9 +150,9 @@ export function PlayArea({
           className={styles.keys}
           marks={Object.fromEntries(keyMarks(rows))}
           disabled={disabled}
-          onLetter={typing.onKey}
-          onDelete={typing.onDelete}
-          onEnter={typing.onEnter}
+          onLetter={keys.onKey}
+          onDelete={keys.onDelete}
+          onEnter={keys.onEnter}
         />
       )}
       <p className={styles.announce} aria-live="polite">

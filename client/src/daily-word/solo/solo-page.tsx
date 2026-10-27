@@ -28,13 +28,16 @@ import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloSounds, type SoloEnd } from '../../solo/sounds';
 import { BoardPanel, MarkLegend } from '../panel';
 import { PlayArea } from '../play';
+import { DAILY_WORD_SOLO_BANK, deriveDailyWordSolo } from '../sounds';
 import { CopyButton, Distribution, formatWait } from '../../solo/daily';
 import {
   deleteLetter,
   guessesToWin,
   isOver,
+  isWon,
   newGame,
   rowsOf,
   submit,
@@ -108,12 +111,24 @@ function promptFor(guesses: number, m: Messages): string {
   return guesses === 0 ? m.dailyWord.freshPrompt : m.dailyWord.nextPrompt;
 }
 
-/** The typing a board takes, as one game changes into the next. */
+/** How a word on your own ended: found, or missed; it keeps no best. */
+const endOf = (game: SoloGame): SoloEnd | null =>
+  isOver(game) ? (isWon(game) ? 'complete' : 'loss') : null;
+
+/**
+ * The typing a board takes, as one game changes into the next, and what the
+ * game sounds like: a daily word restored from this device, finished or
+ * not, is only a baseline.
+ */
 function useSoloGame(
   start: () => SoloGame,
   onGuess?: (game: SoloGame) => void,
 ) {
   const [game, setGame] = useState(start);
+  useSoloSounds(game, endOf(game), {
+    bank: DAILY_WORD_SOLO_BANK,
+    derive: deriveDailyWordSolo,
+  });
   const typing = {
     onKey: (letter: string) => setGame(typeLetter(game, letter)),
     onDelete: () => setGame(deleteLetter(game)),

@@ -16,11 +16,13 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { useDeadlineTicks } from '../room/sounds';
 import { playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
 import { BoardPanel, MarkLegend } from './panel';
 import { PlayArea } from './play';
+import { actingDeadline, DAILY_WORD_SOUNDS } from './sounds';
 import styles from './room.module.css';
 
 /**
@@ -98,6 +100,7 @@ export function DailyWordRoom() {
             ? m.dailyWord.foundChat
             : undefined,
       }}
+      sounds={DAILY_WORD_SOUNDS}
       playersAside={
         phone && guessing && !room.spectating ? (
           <Others room={room} />
@@ -156,6 +159,12 @@ function Round({
   const m = useMessages();
   const { state, receivedAt, reconnecting, socket, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
   const phone = useMediaQuery(PHONE);
   const { typed, problem } = draft;
   const setProblem = (next: GuessProblem | 'network') =>
