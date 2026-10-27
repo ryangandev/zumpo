@@ -45,10 +45,19 @@ export interface SpecimenProps {
   width?: number;
   /** Compare the rendered height only, for content-sized widths. */
   heightOnly?: boolean;
-  /** Why code differs from Figma on purpose: the size is then shown as a
-   * known deviation, not a mismatch. */
-  deviation?: string;
+  /** Why code differs from Figma on purpose, and by how much: within that
+   * difference the size is shown as a known deviation, outside it as a
+   * mismatch, so the reason cannot hide a regression or outlive its cause. */
+  deviation?: Deviation;
   children: ReactNode;
+}
+
+export interface Deviation {
+  reason: string;
+  /** Code's width less Figma's, in px. */
+  dw?: number;
+  /** Code's height less Figma's, in px. */
+  dh?: number;
 }
 
 /**
@@ -106,12 +115,16 @@ export function Specimen({
     };
   }, [family, variant, phone]);
 
-  const differs =
+  const compared = check != null && !check.phone;
+  const off = (dw: number, dh: number) =>
     check != null &&
     !check.phone &&
-    ((!heightOnly && widthOff(check.figma.w, check.code.w)) ||
-      Math.abs(check.figma.h - check.code.h) > 0.5);
-  const mismatch = differs && !deviation;
+    ((!heightOnly && widthOff(check.figma.w, check.code.w - dw)) ||
+      Math.abs(check.figma.h - (check.code.h - dh)) > 0.5);
+  const differs = off(0, 0);
+  const mismatch = deviation
+    ? off(deviation.dw ?? 0, deviation.dh ?? 0)
+    : differs;
 
   return (
     <figure
@@ -119,8 +132,9 @@ export function Specimen({
       data-family={family}
       data-variant={variant}
       data-measured={measured || undefined}
+      data-compared={compared || undefined}
       data-mismatch={mismatch || undefined}
-      data-deviation={(differs && deviation) || undefined}
+      data-deviation={(differs && !mismatch && deviation) || undefined}
     >
       <div
         ref={slot}
@@ -139,8 +153,11 @@ export function Specimen({
               : `${round(check.code.w)} × ${round(check.code.h)}${check.phone ? '' : ' ✓'}`}
           </span>
         )}
-        {differs && deviation && (
-          <span className={styles.deviation}>{deviation}</span>
+        {compared && deviation && (differs || mismatch) && (
+          <span className={styles.deviation}>
+            {deviation.reason}
+            {mismatch && ` Expected code ${expected(deviation)}.`}
+          </span>
         )}
       </figcaption>
     </figure>
@@ -163,6 +180,15 @@ function settled(slot: HTMLElement | null) {
 // text runs can be up to a pixel or two wider there than in the browser.
 function widthOff(figma: number, code: number) {
   return code - figma > 0.5 || figma - code >= 2;
+}
+
+/** "7 px wider", "2 px shorter", "2 px narrower and 1 px taller". */
+function expected({ dw = 0, dh = 0 }: Deviation) {
+  const parts = [
+    dw && `${Math.abs(dw)} px ${dw > 0 ? 'wider' : 'narrower'}`,
+    dh && `${Math.abs(dh)} px ${dh > 0 ? 'taller' : 'shorter'}`,
+  ].filter(Boolean);
+  return parts.length ? parts.join(' and ') : 'the same size';
 }
 
 function round(value: number) {

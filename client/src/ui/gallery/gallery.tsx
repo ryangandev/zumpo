@@ -91,7 +91,7 @@ import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { glyphs } from '../generated/glyphs';
 import { pairsSymbols } from '../generated/pairs-symbols';
 import { snapSymbols } from '../generated/snap-symbols';
-import { Specimen } from './specimen';
+import { Specimen, type Deviation } from './specimen';
 import styles from './gallery.module.css';
 
 const noop = () => {};
@@ -189,14 +189,23 @@ const RACE_ROWS = [
 
 const cap = (word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
 
-const BID_TEXT =
-  'Figma rounds each of the three text runs up to a whole pixel, 2 px in all; the stroke and spacing match.';
+const BID_TEXT: Deviation = {
+  reason:
+    'Figma rounds each of the three text runs up to a whole pixel, 2 px in all; the stroke and spacing match.',
+  dw: -2,
+};
 
-const CLOCK_CELLS =
-  'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.';
+const CLOCK_CELLS: Deviation = {
+  reason:
+    'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.',
+  dw: 7,
+};
 
-const FOCUS_RING =
-  'Figma draws the field focused, its 2 px ring counted in layout; focus never changes a control’s size in code.';
+const FOCUS_RING: Deviation = {
+  reason:
+    'Figma draws the field focused, its 2 px ring counted in layout; focus never changes a control’s size in code.',
+  dh: -2,
+};
 
 function Family({
   name,
