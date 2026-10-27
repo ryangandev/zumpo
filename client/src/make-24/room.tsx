@@ -24,7 +24,9 @@ import {
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { useDeadlineTicks } from '../room/sounds';
 import { ONE_COLUMN, PHONE, useMediaQuery } from '../shell/use-media-query';
+import { actingDeadline, MAKE_24_SOUNDS } from './sounds';
 import {
   cardsAfter,
   DealtCards,
@@ -86,6 +88,7 @@ export function Make24Room() {
             ? m.make24.spectatorChatLocked
             : undefined,
       }}
+      sounds={MAKE_24_SOUNDS}
       nextBeside
     />
   );
@@ -154,8 +157,14 @@ function BetweenGames({ room }: { room: Room }) {
 /** T06-T08, T12: one hand: the turn bar, then the table or its results. */
 function Hand({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, receivedAt, reconnecting, socket } = room;
+  const { state, receivedAt, reconnecting, socket, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
   const [steps, setSteps] = useState<readonly Step[]>([]);
   const cards = cardsAfter(state.deal, steps);
   const last = lastCard(cards);
