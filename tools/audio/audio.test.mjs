@@ -62,6 +62,9 @@ const sound = (over = {}) => ({
   ...over,
 });
 
+const validateOrigin = (origin) =>
+  validateSounds({ sounds: [sound({ origin })] }, schema);
+
 describe('validateSounds', () => {
   it('accepts a complete sound', () => {
     assert.deepEqual(validateSounds({ sounds: [sound()] }, schema), []);
@@ -109,10 +112,8 @@ describe('validateSounds', () => {
   });
 
   it('allows only CC0 downloads, with their address, and our own sounds', () => {
-    const cc0 = (origin) =>
-      validateSounds({ sounds: [sound({ origin })] }, schema);
     assert.deepEqual(
-      cc0({
+      validateOrigin({
         kind: 'cc0',
         source: 'Kenney',
         url: 'https://kenney.nl/assets/ui-audio',
@@ -121,12 +122,14 @@ describe('validateSounds', () => {
       [],
     );
     assert.ok(
-      cc0({ kind: 'cc0', source: 'Kenney', license: 'CC0-1.0' }).includes(
-        'audio/sounds.json: sounds[0] (tap).origin is missing "url"',
-      ),
+      validateOrigin({
+        kind: 'cc0',
+        source: 'Kenney',
+        license: 'CC0-1.0',
+      }).includes('audio/sounds.json: sounds[0] (tap).origin is missing "url"'),
     );
     assert.ok(
-      cc0({
+      validateOrigin({
         kind: 'cc0',
         source: 'Someone',
         url: 'https://example.com',
@@ -136,7 +139,11 @@ describe('validateSounds', () => {
       ),
     );
     assert.ok(
-      cc0({ kind: 'foley', source: 'Ryan', license: 'CC-BY-4.0' }).some((p) =>
+      validateOrigin({
+        kind: 'foley',
+        source: 'Ryan',
+        license: 'CC-BY-4.0',
+      }).some((p) =>
         p.startsWith(
           'audio/sounds.json: sounds[0] (tap).origin.license must be "own"',
         ),
@@ -279,55 +286,53 @@ const canEncode =
   / aac_at /.test(ffmpeg.stdout) &&
   / libopus /.test(ffmpeg.stdout);
 
+/** A master made by ffmpeg from an aevalsrc expression. */
+function master(root, file, expression, seconds, rate = 48000) {
+  const full = path.join(root, file);
+  fs.mkdirSync(path.dirname(full), { recursive: true });
+  const result = spawnSync('ffmpeg', [
+    '-hide_banner',
+    '-loglevel',
+    'error',
+    '-y',
+    '-f',
+    'lavfi',
+    '-i',
+    `aevalsrc='${expression}':s=${rate}:d=${seconds}`,
+    '-c:a',
+    'pcm_s24le',
+    full,
+  ]);
+  assert.equal(result.status, 0, result.stderr?.toString());
+  return fileSha256(full);
+}
+
+const BLIP = '0.5*sin(2*PI*660*t)*exp(-t*20)*min(1,t/0.004)';
+
+/** A repository and a masters folder of their own, with these sounds. */
+function project(sounds) {
+  const repo = temp();
+  const root = temp();
+  const paths = repoPaths(repo);
+  fs.mkdirSync(path.dirname(paths.sounds), { recursive: true });
+  fs.copyFileSync(repoPaths().schema, paths.schema);
+  const write = (list) =>
+    fs.writeFileSync(paths.sounds, JSON.stringify({ sounds: list }, null, 2));
+  write(sounds(root));
+  return { repo, root, paths, write };
+}
+
 describe(
   'buildAudio',
   { skip: !canEncode && 'needs ffmpeg with aac_at and libopus' },
   () => {
-    /** A master made by ffmpeg from an aevalsrc expression. */
-    function master(root, file, expression, seconds, rate = 48000) {
-      const full = path.join(root, file);
-      fs.mkdirSync(path.dirname(full), { recursive: true });
-      const result = spawnSync('ffmpeg', [
-        '-hide_banner',
-        '-loglevel',
-        'error',
-        '-y',
-        '-f',
-        'lavfi',
-        '-i',
-        `aevalsrc='${expression}':s=${rate}:d=${seconds}`,
-        '-c:a',
-        'pcm_s24le',
-        full,
-      ]);
-      assert.equal(result.status, 0, result.stderr?.toString());
-      return fileSha256(full);
-    }
-
-    const BLIP = '0.5*sin(2*PI*660*t)*exp(-t*20)*min(1,t/0.004)';
-
-    function project(sounds) {
-      const repo = temp();
-      const root = temp();
-      const paths = repoPaths(repo);
-      fs.mkdirSync(path.dirname(paths.sounds), { recursive: true });
-      fs.copyFileSync(repoPaths().schema, paths.schema);
-      const write = (list) =>
-        fs.writeFileSync(
-          paths.sounds,
-          JSON.stringify({ sounds: list }, null, 2),
-        );
-      write(sounds(root));
-      return { repo, root, paths, write };
-    }
-
     it('normalises, encodes both formats, and keeps what did not change', () => {
-      const { repo, root, paths, write } = project((root) => [
+      const { repo, root, paths, write } = project((dir) => [
         sound({
           variants: [
             {
               file: 'masters/tap/1.wav',
-              sha256: master(root, 'masters/tap/1.wav', BLIP, 0.2),
+              sha256: master(dir, 'masters/tap/1.wav', BLIP, 0.2),
             },
           ],
         }),
@@ -360,7 +365,7 @@ describe(
     });
 
     it('holds a peaky sound under its true-peak ceiling and says so', () => {
-      const { repo, root } = project((root) => [
+      const { repo, root } = project((dir) => [
         sound({
           loudness: 'event',
           variants: [
@@ -368,7 +373,7 @@ describe(
               file: 'masters/tap/1.wav',
               // A 3 ms click: loud peaks, little loudness.
               sha256: master(
-                root,
+                dir,
                 'masters/tap/1.wav',
                 '0.9*sin(2*PI*2000*t)*lt(t,0.003)',
                 0.1,
@@ -418,9 +423,9 @@ describe(
         ],
       ];
       for (const [name, make, message] of cases) {
-        const { repo, root, paths } = project((root) => [
+        const { repo, root, paths } = project((dir) => [
           sound({
-            variants: [{ file: 'masters/tap/1.wav', sha256: make(root) }],
+            variants: [{ file: 'masters/tap/1.wav', sha256: make(dir) }],
           }),
         ]);
         assert.throws(
@@ -440,8 +445,8 @@ describe(
     });
 
     it("writes each master's hash into sounds.json when asked to", () => {
-      const { repo, root, paths } = project((root) => {
-        master(root, 'masters/tap/1.wav', BLIP, 0.2);
+      const { repo, root, paths } = project((dir) => {
+        master(dir, 'masters/tap/1.wav', BLIP, 0.2);
         return [
           sound({ variants: [{ file: 'masters/tap/1.wav', sha256: '' }] }),
         ];
