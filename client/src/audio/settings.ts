@@ -53,7 +53,20 @@ export function parseSoundSettings(stored: unknown): SoundSettings | null {
   ) as Record<Bus, BusSettings>;
 }
 
-/** The stored form: `{ v: 1, effects: { volume, muted } }`. */
-export function serializeSoundSettings(settings: SoundSettings): string {
-  return JSON.stringify({ v: VERSION, ...settings });
+/**
+ * The stored form: `{ v: 1, effects: { volume, muted } }`. What `previous`
+ * (the value stored before) holds beyond this build's buses is kept, so a tab
+ * still on an older build does not reset a bus a newer one added.
+ */
+export function serializeSoundSettings(
+  settings: SoundSettings,
+  previous: unknown = null,
+): string {
+  const kept =
+    previous &&
+    typeof previous === 'object' &&
+    (previous as Record<string, unknown>).v === VERSION
+      ? previous
+      : {};
+  return JSON.stringify({ ...kept, v: VERSION, ...settings });
 }

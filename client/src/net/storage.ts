@@ -128,7 +128,8 @@ export function readSound(): SoundSettings | null {
 }
 
 export function writeSound(settings: SoundSettings): void {
-  write('localStorage', SOUND_KEY, serializeSoundSettings(settings));
+  const previous = parseJson(read('localStorage', SOUND_KEY));
+  write('localStorage', SOUND_KEY, serializeSoundSettings(settings, previous));
 }
 
 /**

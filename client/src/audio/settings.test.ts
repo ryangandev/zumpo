@@ -66,6 +66,26 @@ describe('sound in storage', () => {
     expect(readSound()).toEqual({ effects: { volume: 0.4, muted: true } });
   });
 
+  it('keeps a bus a newer build added, which this one does not know', () => {
+    localStorage.setItem(
+      'zumpo:sound',
+      '{"v":1,"effects":{"volume":0.7,"muted":false},"music":{"volume":0.2,"muted":true}}',
+    );
+    writeSound({ effects: { volume: 0.4, muted: false } });
+    expect(JSON.parse(localStorage.getItem('zumpo:sound')!)).toEqual({
+      v: 1,
+      effects: { volume: 0.4, muted: false },
+      music: { volume: 0.2, muted: true },
+    });
+    // Another version's value is not this build's to keep.
+    localStorage.setItem('zumpo:sound', '{"v":2,"music":{"volume":0.2}}');
+    writeSound({ effects: { volume: 0.4, muted: false } });
+    expect(JSON.parse(localStorage.getItem('zumpo:sound')!)).toEqual({
+      v: 1,
+      effects: { volume: 0.4, muted: false },
+    });
+  });
+
   it('reads a malformed entry as nothing', () => {
     localStorage.setItem('zumpo:sound', '{oops');
     expect(readSound()).toBeNull();
