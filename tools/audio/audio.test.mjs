@@ -481,5 +481,30 @@ describe(
       );
       assert.deepEqual(checkGenerated(repo), []);
     });
+
+    it('leaves the last build and sounds.json as they were when a rebuild fails', () => {
+      const { repo, root, paths } = project((dir) => [
+        sound({
+          variants: [
+            {
+              file: 'masters/tap/1.wav',
+              sha256: master(dir, 'masters/tap/1.wav', BLIP, 0.2),
+            },
+          ],
+        }),
+      ]);
+      buildAudio({ repo, root });
+      const snapshot = () => [
+        fs.readFileSync(paths.sounds, 'utf8'),
+        fs.readFileSync(paths.manifest, 'utf8'),
+        fs.readdirSync(paths.filesDir).toSorted(),
+      ];
+      const before = snapshot();
+      // Too long for a ui sound: refused, rehash or not.
+      master(root, 'masters/tap/1.wav', BLIP, 1.5);
+      assert.throws(() => buildAudio({ repo, root, rehash: true }), BuildError);
+      assert.deepEqual(snapshot(), before);
+      assert.deepEqual(checkGenerated(repo), []);
+    });
   },
 );

@@ -336,9 +336,27 @@ function reusable(previous, variant, sound, filesDir) {
 }
 
 /**
+ * Puts the folder `next` where `dir` is. A build stopped between the two
+ * renames leaves the old folder beside it, which the next build puts back.
+ */
+function swapIn(next, dir) {
+  const old = path.join(path.dirname(dir), '.generated-old');
+  fs.rmSync(old, { recursive: true, force: true });
+  if (fs.existsSync(dir)) fs.renameSync(dir, old);
+  fs.renameSync(next, dir);
+  fs.rmSync(old, { recursive: true, force: true });
+}
+
+function recover(dir) {
+  const old = path.join(path.dirname(dir), '.generated-old');
+  if (!fs.existsSync(dir) && fs.existsSync(old)) fs.renameSync(old, dir);
+}
+
+/**
  * Builds the generated folder of `repo` from the masters under `root`.
  * Throws a BuildError, having written nothing, when a sound cannot be built;
- * only `rehash`, asked for, writes sounds.json first. Returns what it did.
+ * the new folder replaces the old one only once every sound built, and only
+ * then does `rehash` write the hashes into sounds.json. Returns what it did.
  */
 export function buildAudio({
   repo = REPO,
@@ -360,7 +378,7 @@ export function buildAudio({
         variant.sha256 = fileSha256(master);
       }
     }
-    fs.writeFileSync(paths.sounds, `${JSON.stringify(doc, null, 2)}\n`);
+    // Written with the build, once everything checked out.
     report.push(`Wrote each master's sha256 into audio/sounds.json.`);
   }
 
@@ -371,6 +389,7 @@ export function buildAudio({
     );
   }
 
+  recover(paths.outDir);
   let previous = { sounds: {} };
   try {
     previous = readJson(paths.manifest);
@@ -408,31 +427,37 @@ export function buildAudio({
       manifest.sounds[sound.id] = { declared: sound, variants };
     }
 
-    // Everything checked out: only now does the repository change.
-    fs.mkdirSync(paths.filesDir, { recursive: true });
-    for (const name of fs.readdirSync(work)) {
-      fs.copyFileSync(path.join(work, name), path.join(paths.filesDir, name));
-    }
-    const keep = new Set(
-      Object.values(manifest.sounds).flatMap((sound) =>
-        sound.variants.flatMap((v) =>
-          Object.values(v.files).map((f) => f.file),
-        ),
-      ),
+    // Everything checked out: only now does the repository change, as one
+    // folder swapped for another, so a build cut short leaves the old one.
+    const next = path.join(path.dirname(paths.outDir), '.generated-next');
+    fs.rmSync(next, { recursive: true, force: true });
+    const nextFiles = path.join(
+      next,
+      path.relative(paths.outDir, paths.filesDir),
     );
-    for (const name of fs.readdirSync(paths.filesDir)) {
-      if (!keep.has(name)) fs.rmSync(path.join(paths.filesDir, name));
-    }
-    const modules = renderModules(manifest);
-    for (const name of fs.readdirSync(paths.outDir)) {
-      if (name.endsWith('.ts') && !modules.has(name)) {
-        fs.rmSync(path.join(paths.outDir, name));
+    fs.mkdirSync(nextFiles, { recursive: true });
+    for (const sound of Object.values(manifest.sounds)) {
+      for (const variant of sound.variants) {
+        for (const { file } of Object.values(variant.files)) {
+          const fresh = path.join(work, file);
+          fs.copyFileSync(
+            fs.existsSync(fresh) ? fresh : path.join(paths.filesDir, file),
+            path.join(nextFiles, file),
+          );
+        }
       }
     }
-    for (const [name, content] of modules) {
-      fs.writeFileSync(path.join(paths.outDir, name), content);
+    for (const [name, content] of renderModules(manifest)) {
+      fs.writeFileSync(path.join(next, name), content);
     }
-    fs.writeFileSync(paths.manifest, serializeManifest(manifest));
+    fs.writeFileSync(
+      path.join(next, path.basename(paths.manifest)),
+      serializeManifest(manifest),
+    );
+    swapIn(next, paths.outDir);
+    if (rehash) {
+      fs.writeFileSync(paths.sounds, `${JSON.stringify(doc, null, 2)}\n`);
+    }
   } finally {
     fs.rmSync(work, { recursive: true, force: true });
   }

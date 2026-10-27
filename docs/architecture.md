@@ -360,7 +360,8 @@ Decided by Ryan on 2026-10-26: no paid service, no Git LFS, no audio library, AA
 - **Other players:** `play(id, { other: true })` plays 6 dB softer (`OTHER_DB`), so what another player did reads as background to what the viewer did.
 
 Settings are `{ effects: { volume, muted } }`, kept per browser in `localStorage` under `zumpo:sound` through [`net/storage.ts`](../client/src/net/storage.ts), as `{"v":1,...}` so a later shape can tell an old one apart.
-A missing or broken bus takes its default, so adding a bus never resets the others, and a change in one tab is followed by the others.
+A missing or broken bus takes its default, and a bus this build does not know is kept when it saves, so adding a bus never resets another, even from a tab still on an older build.
+A change in one tab is followed by the others.
 
 ### Playing a sound
 
@@ -372,7 +373,7 @@ A missing or broken bus takes its default, so adding a bus never resets the othe
 - **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
   `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`).
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
-  A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent, until `isNewGame(prev, next)` says a new game began and keys start over.
+  A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent, until `isNewGame(prev, next)` says a new game began; a new baseline forgets them too, since a new game may have begun while the player was away.
   One change plays one sound, the viewer's own if one of its events is theirs.
 
 The words around sound (the settings' labels) come from the i18n catalog like any other; the engine has none.
@@ -388,17 +389,17 @@ They live in a folder outside it, `~/Documents/assets/zumpo-audio` on the Mac mi
 | `candidates/`                | Takes being auditioned; never built                                                                 |
 | `masters/<sound-id>/<n>.wav` | The variants that ship: 48 kHz WAV, 24-bit PCM or float, mono unless it needs two channels, trimmed |
 
-[`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui`, `room`, a game's id, or `test`), the loudness class it is normalised to, a gain in dB on top, each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
+[`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui`, `room`, a game's id, or `test`), the loudness class it is normalised to, a gain in dB the engine adds when it plays (so tuning it needs no rebuild of the files), each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
 
 `npm run audio:build`, on the machine with the masters and an ffmpeg with `aac_at` and `libopus` (the Mac mini's), builds [`client/src/audio/generated/`](../client/src/audio/generated/):
 
 - It refuses a master whose hash is not the declared one, that is not 48 kHz, that starts with more than 20 ms of silence, or that is longer than its class allows.
   `--rehash` takes the masters as they are and writes their hashes into `sounds.json`.
-- It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), adds the sound's gain, and holds the gain back where the true peak would pass -1.5 dBTP, with a warning.
+- It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), and holds the gain back where the true peak would pass -1.5 dBTP, with a warning.
 - It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length or onset, or is bigger than its class allows.
   Encoding is deterministic, so an unchanged master builds byte for byte the same files, and a variant whose master and processing have not changed is kept rather than re-encoded (`--force` re-encodes all).
 - It writes the files, `manifest.json` (every measurement, encoder and hash) and one TypeScript bank per group, so a page imports only its own sounds and their files land in its own chunk.
-  Nothing in the repository changes unless every sound built.
+  The new folder replaces the old one in one rename, and `--rehash` writes `sounds.json`, only once every sound built, so a failed or interrupted build leaves the last one whole.
 
 `npm run audio:check` runs in `npm run verify` and in CI, which have neither ffmpeg nor the masters: it validates `sounds.json`, checks that the manifest matches every declaration, that every file's hash matches the manifest, that no file is missing or left over, and that the banks are what the manifest would write.
 A failure names what drifted and says to run `audio:build` where the masters are.
