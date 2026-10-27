@@ -223,3 +223,157 @@ test(`the sheet sits ${DESKTOP_GAP} px under the toolbar or turn bar beside the 
       .toBeLessThanOrEqual(1);
   }
 });
+
+/**
+ * A short phone (design.md#in-code, PH09): the sheet is never narrower than
+ * 5/8 of its column, the page scrolls instead, and each phase starts with
+ * the whole turn in sight, from the turn bar to the newest chat line or the
+ * guess field. A finger on the drawer's sheet draws and never scrolls. The
+ * sizes are the smallest phones in use, an iPhone SE in Safari among them.
+ */
+const SHORT_PHONES = [
+  { width: 320, height: 568 },
+  { width: 360, height: 640 },
+  { width: 375, height: 548 },
+  { width: 375, height: 667 },
+] as const;
+const FLOOR = 5 / 8;
+
+/** The canvas, the column it stands in, and where the page is scrolled. */
+const layoutOf = (page: Page) =>
+  page.evaluate(() => {
+    const canvas = document.querySelector('canvas')!.getBoundingClientRect();
+    const column = document
+      .querySelector('[data-play-board]')!
+      .getBoundingClientRect();
+    const root = document.documentElement;
+    return {
+      canvas: { width: canvas.width, height: canvas.height },
+      column: column.width,
+      scrollY: window.scrollY,
+      scrolls: root.scrollHeight > innerHeight + 1,
+      innerHeight,
+    };
+  });
+
+/** Whether `locator` is wholly in the window. */
+const wholeInView = (locator: Locator) =>
+  locator.evaluate((element) => {
+    const box = element.getBoundingClientRect();
+    return box.top >= -0.5 && box.bottom <= innerHeight + 0.5;
+  });
+
+/** A finger drawn across the sheet, from `from` to `to` (0 to 1 of it). */
+async function swipe(
+  page: Page,
+  from: readonly [number, number],
+  to: readonly [number, number],
+) {
+  const box = (await sheetOf(page).boundingBox())!;
+  const at = ([fx, fy]: readonly [number, number], t: number) => ({
+    x: box.x + box.width * fx + box.width * (to[0] - fx) * t,
+    y: box.y + box.height * fy + box.height * (to[1] - fy) * t,
+  });
+  const cdp = await page.context().newCDPSession(page);
+  const touch = (
+    type: 'touchStart' | 'touchMove' | 'touchEnd',
+    point?: { x: number; y: number },
+  ) =>
+    cdp.send('Input.dispatchTouchEvent', {
+      type,
+      touchPoints: point ? [{ ...point, id: 1 }] : [],
+    });
+  await touch('touchStart', at(from, 0));
+  for (let step = 1; step <= 12; step++) {
+    await touch('touchMove', at(from, step / 12));
+  }
+  await touch('touchEnd');
+  await cdp.detach();
+}
+
+for (const size of SHORT_PHONES) {
+  const at = `${size.width} by ${size.height}`;
+
+  test(`a short ${at} phone keeps the sheet drawable and the whole turn in sight`, async ({
+    player,
+  }) => {
+    test.setTimeout(90_000);
+    const seats = await inRoom(player, size, true, 1);
+    const { drawer, guesser } = await whoDraws(seats);
+    // The word choices run on down the page rather than over the turn.
+    const choices = drawer.getByRole('button', { name: /\d+ letters?$/ });
+    await expect(choices).toHaveCount(3);
+    const turn = drawer.getByRole('region', { name: 'Turn' });
+    const turnBox = (await turn.boundingBox())!;
+    const first = (await choices.first().boundingBox())!;
+    expect(first.y, 'the choices start under the turn bar').toBeGreaterThan(
+      turnBox.y + turnBox.height,
+    );
+
+    await chooseWord(drawer, guesser);
+    const guess = guesser.getByRole('textbox', { name: 'Guess' });
+    await expect(guess).toBeEnabled();
+    for (const [who, page, foot] of [
+      ['drawer', drawer, drawer.getByRole('log')],
+      ['guesser', guesser, guess],
+    ] as const) {
+      const { canvas, column } = await layoutOf(page);
+      expect(
+        canvas.width,
+        `the ${who}'s sheet is at least 5/8 of the column`,
+      ).toBeGreaterThanOrEqual(column * FLOOR - 3);
+      await expect
+        .poll(() => wholeInView(page.getByRole('region', { name: 'Turn' })), {
+          message: `the ${who}'s turn bar in sight`,
+        })
+        .toBe(true);
+      expect(await wholeInView(sheetOf(page)), `the ${who}'s sheet`).toBe(true);
+      expect(await wholeInView(foot), `the ${who}'s foot`).toBe(true);
+    }
+    // The drawer's page is past the window: the sheet's floor scrolled it.
+    expect((await layoutOf(drawer)).scrolls).toBe(true);
+
+    // A finger on the sheet draws, and the page stays where it is.
+    const before = (await layoutOf(drawer)).scrollY;
+    await swipe(drawer, [0.2, 0.3], [0.8, 0.3]);
+    for (const page of [drawer, guesser]) {
+      await expect.poll(() => paintedAt(page, 0.5, 0.3)).toBe(true);
+    }
+    expect((await layoutOf(drawer)).scrollY, 'the page did not scroll').toBe(
+      before,
+    );
+  });
+}
+
+for (const size of PHONES.filter(({ spare }) => spare)) {
+  const at = `${size.width} by ${size.height}`;
+
+  test(`a tall ${at} phone keeps the sheet the column's width on one screen`, async ({
+    player,
+  }) => {
+    test.setTimeout(90_000);
+    const seats = await inRoom(player, size, true, 1);
+    const { drawer, guesser } = await whoDraws(seats);
+    await chooseWord(drawer, guesser);
+    for (const page of [drawer, guesser]) {
+      const { canvas, column, scrolls } = await layoutOf(page);
+      // The canvas is the sheet's inside, a pixel of border either side.
+      expect(Math.abs(canvas.width - (column - 2))).toBeLessThanOrEqual(1);
+      expect(scrolls, 'the page does not scroll').toBe(false);
+    }
+  });
+}
+
+test('a desktop sheet is in sight without a scroll, as before', async ({
+  player,
+}) => {
+  test.setTimeout(90_000);
+  const seats = await inRoom(player, { width: 1440, height: 900 }, false, 1);
+  const { drawer, guesser } = await whoDraws(seats);
+  await chooseWord(drawer, guesser);
+  for (const page of [drawer, guesser]) {
+    const { scrolls } = await layoutOf(page);
+    expect(scrolls, 'the page does not scroll').toBe(false);
+    expect(await wholeInView(sheetOf(page))).toBe(true);
+  }
+});

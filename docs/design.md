@@ -236,6 +236,15 @@ There the turn bar takes its compact Phone row, and Gomoku sets its board beside
 Wider and taller, a drawing sheet is no taller than the window leaves below its top, less what follows it in its column, such as Doodle Chain's Done, and the page's foot (`useHeightLeft`), so the sheet, the chat's input and Done are in sight together.
 [The phone spec](../e2e/phone-play.spec.ts) plays every game at 360 by 640 and 390 by 844 and checks that the input is on screen, the page does not scroll, and the input stays where it was through a game.
 
+A sheet to draw on is the one thing a phone's one screen does not shrink without end: it is never narrower than 5/8 of its column (`PlaySheet`), as a desktop's is never narrower than 40% (PH09).
+A phone too short for that with everything else, such as an iPhone SE in Safari (375 by 548) or a drawer's turn at 360 by 640, grows the page past the window, which scrolls, rather than leave a sheet nobody can draw on: one screen would leave an iPhone SE's drawer 26 by 19 px.
+Each phase of a turn then starts scrolled to its turn bar, or as far down as the page goes (`useTurnInView`), so the turn bar, the tools, the sheet and the newest chat lines or Done are in sight together, with the room bar, the tabs and the standings a scroll above them; it does not scroll while the viewer is typing or in a dialog.
+5/8 is the largest share at which an iPhone SE's whole Draw & Guess turn is one screen that way, and below the 65% Doodle Chain's sheet has at 360 by 640, so every phone that played on one screen before still does.
+A finger on the drawer's sheet draws and never scrolls the page (`touch-action: none`); a guesser's scrolls it as anywhere else.
+Draw & Guess's word choices keep their own height the same way, so on a short phone they run on down the page rather than over the turn bar and the chat.
+Such a page is at least the small viewport (`100svh`), so the browser's bars sliding away as it scrolls never change its layout.
+[The sheet spec](../e2e/draw-and-guess-sheet.spec.ts) checks the floor, the scroll and the whole turn in sight at 320 by 568, 360 by 640, 375 by 548 and 375 by 667, and that taller phones and a desktop keep their sheet and their one screen.
+
 Figma gives each sample player an avatar tone by hand; code picks one from a hash of the player's name, so a player keeps one colour in the header, the scoreboard and the results, on every screen.
 
 ### Comparing with Figma

@@ -51,18 +51,20 @@ const placeOf = (input: Locator): Promise<Place> =>
 
 /**
  * Checks `input` is on screen, on a page that does not scroll, and returns
- * a check that it is still there, at the same height.
+ * a check that it is still there, at the same height. A drawing sheet at
+ * its floor `scrolls` the page instead, which stays where its turn put it
+ * (design.md#in-code).
  */
-async function heldStill(input: Locator, state: string) {
+async function heldStill(input: Locator, state: string, scrolls = false) {
   await expect(input, state).toBeVisible();
   await expect
     .poll(() => placeOf(input), { message: `${state}: on screen` })
-    .toMatchObject({ inside: true, scrolls: false });
+    .toMatchObject({ inside: true, scrolls });
   const { top } = await placeOf(input);
   return async (later: string) => {
     await expect
       .poll(() => placeOf(input), { message: `${later}: where it was` })
-      .toEqual({ top, inside: true, scrolls: false });
+      .toEqual({ top, inside: true, scrolls });
   };
 }
 
@@ -408,9 +410,15 @@ for (const size of SIZES) {
           name: guesser === leo ? 'Guess' : 'Message',
         });
         await expect(guess).toBeEnabled();
+        // At 360 by 640 the drawer's tools leave the sheet under its floor,
+        // so their page scrolls to the turn; the guesser's still fits.
         const still =
           drawer === leo
-            ? await heldStill(leo.getByLabel('Drawing canvas'), 'drawing')
+            ? await heldStill(
+                leo.getByLabel('Drawing canvas'),
+                'drawing',
+                size.height < 844,
+              )
             : await heldStill(guess, 'guessing');
         await guess.fill('not the word');
         await guess.press('Enter');

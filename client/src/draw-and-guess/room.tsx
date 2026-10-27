@@ -21,6 +21,7 @@ import { useSecondsLeft } from '../net/use-seconds-left';
 import { playColumn } from '../shell/play-board';
 import { focusQuietly } from '../shell/quiet-focus';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { useTurnInView } from '../shell/use-turn-in-view';
 import { cx } from '../ui/cx';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { rankedPlayers, type Seat } from '../room/players';
@@ -302,6 +303,9 @@ function Turn({ room }: { room: Room }) {
     if (active && active !== document.body) return;
     if (turnBox.current) focusQuietly(turnBox.current);
   }, [drawingNow]);
+  // A phone too short for the sheet's floor scrolls: each phase starts with
+  // the turn in sight, its bar at the top.
+  useTurnInView(turnBox, `${state.currentRound}.${state.turn}.${state.phase}`);
 
   const choices =
     choosing && state.wordChoices ? (
@@ -341,12 +345,19 @@ function Turn({ room }: { room: Room }) {
           word sees the choices instead. On a phone the sheet is as large
           as the screen leaves it, right under the toolbar or the turn bar
           as MO08 and MO09 draw it, with the results on its own foot, and
-          the choices are centred in the room as MO07 draws them. */}
+          the choices are centred in the room as MO07 draws them, or, where
+          the room is shorter than they are, run on down the page. */}
       <div className={cx(styles.board, playColumn)}>
-        <PlaySheet align={choices && phone ? 'center' : 'start'}>
-          {choices && phone ? (
-            choices
-          ) : (
+        {choices && phone ? (
+          <div
+            className={styles.choicesRoom}
+            data-play-board=""
+            data-play-grows=""
+          >
+            {choices}
+          </div>
+        ) : (
+          <PlaySheet align="start">
             <div className={styles.sheetWrap}>
               <DrawingCanvas
                 stream={canvas}
@@ -366,8 +377,8 @@ function Turn({ room }: { room: Room }) {
               />
               {state.lastRound && !choices && <RoundResults room={room} />}
             </div>
-          )}
-        </PlaySheet>
+          </PlaySheet>
+        )}
       </div>
     </>
   );

@@ -77,6 +77,23 @@
   .page:has([data-play-board]) .footer {
     display: none;
   }
+
+  /* A play area with a floor ([data-play-grows]), as a drawing sheet's
+     (canvas.module.css) or Draw & Guess's word choices: on a phone too
+     short for it with everything else, the page grows past the window and
+     scrolls, rather than shrink it under its floor. Every column between
+     the page and it then keeps its content's height. The page is at least
+     the small viewport, with the browser's bars out, so its layout never
+     changes as they slide away with the scroll. */
+  .page:has([data-play-grows]) {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .page:has([data-play-grows]) .main,
+  .page:has([data-play-grows]) .main :has([data-play-grows]) {
+    min-height: auto;
+  }
 }
 
 /* A board fitted to the window's height (fit-height.ts) on a short window,

@@ -39,6 +39,7 @@ import { cx } from '../ui/cx';
 import { Picture } from '../drawing/picture';
 import { listNames } from '../room/players';
 import { TOUCH, useMediaQuery } from '../shell/use-media-query';
+import { useTurnInView } from '../shell/use-turn-in-view';
 import type { Room as RoomOf } from '../room/room-context';
 import { EntryDrawing, textOf } from './chain';
 import styles from './task.module.css';
@@ -127,6 +128,11 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
     if (state.phase === 'draw') canvas.clear();
   }, [state.step, state.phase, canvas]);
 
+  // A phone too short for the drawing sheet's floor scrolls: each step
+  // starts with the turn in sight, its bar at the top.
+  const turnBox = useRef<HTMLElement>(null);
+  useTurnInView(turnBox, `${state.step}.${state.phase}`);
+
   const m = useMessages();
   const task = room.spectating ? undefined : state.task;
   return (
@@ -135,6 +141,7 @@ export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
         {...turnBar(room, task, seconds, m)}
         wordLine
         hintRowBelow={HINT_ROW_BELOW}
+        ref={turnBox}
       />
       {state.phase === 'draw' && task && !task.sitsOut ? (
         <Drawing room={room} desk={desk} onDesk={onDesk} />
