@@ -296,7 +296,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Solved · +127",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -331,7 +332,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Solved · +95",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -366,7 +368,8 @@
                       "Score": "135",
                       "Icon": "24:5071",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -443,7 +446,8 @@
                       "Score": "100",
                       "Icon": "24:4994",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

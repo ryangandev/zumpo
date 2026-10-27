@@ -493,16 +493,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Highlight"
+                              "State": "Highlight",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10597",
+                            "componentId": "258:71310",
                             "props": {
                               "Status icon": false,
+                              "Score": "2",
                               "Status": "Winner",
-                              "Host": true,
-                              "Score": "2"
+                              "Host": true
                             },
                             "overrides": [
                               {
@@ -559,17 +561,19 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "Out in round 10",
+                              "Name": "Sam",
                               "You": true,
                               "Score": "0",
-                              "Name": "Sam"
+                              "Status": "Out in round 10"
                             },
                             "overrides": [
                               {
@@ -626,16 +630,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "Out in round 8",
+                              "Name": "Leo",
                               "Score": "0",
-                              "Name": "Leo"
+                              "Status": "Out in round 8"
                             },
                             "overrides": [
                               {
@@ -692,16 +698,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "Out in round 6",
+                              "Name": "Ryan",
                               "Score": "0",
-                              "Name": "Ryan"
+                              "Status": "Out in round 6"
                             },
                             "overrides": [
                               {
@@ -892,7 +900,8 @@
                       "Score": "2",
                       "Icon": "24:5053",
                       "Name": "Maya",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -915,7 +924,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -938,7 +948,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -961,7 +972,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

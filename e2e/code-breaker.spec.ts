@@ -97,6 +97,93 @@ test('two players race to crack the same three codes', async ({ player }) => {
   await expect(maya.getByRole('button', { name: 'Play again' })).toBeVisible();
 });
 
+/**
+ * Pages a code's four results boards are laid out on, by the width beside
+ * the scrollbar: a 1440 px window beside a 17 px one, as on Windows, has
+ * them in a row, the panel's padding 16 px where 24 leaves too little; a
+ * 1366 px window has two rows of two, never three and one. A short window's
+ * panel has 16 px of padding already.
+ */
+const RESULT_PAGES = [
+  { width: 1423, height: 900, rows: 1 },
+  { width: 1349, height: 900, rows: 2 },
+  { width: 1423, height: 720, rows: 1 },
+  { width: 1263, height: 720, rows: 2 },
+] as const;
+
+test('four players’ results boards stand in one row at 1440 px, and two by two where four do not fit', async ({
+  player,
+}) => {
+  test.setTimeout(180_000);
+  const maya = await player('Maya');
+  const others = [
+    await player('Sam'),
+    await player('Ryan'),
+    await player('Leo'),
+  ];
+  const link = await createRoom(maya, 'code-breaker', { codes: 1 });
+  for (const page of others) await joinRoom(page, link);
+  await maya.getByRole('button', { name: 'Start game' }).click();
+  for (const page of [maya, ...others]) {
+    await ready(page);
+    await solve(page);
+  }
+  const results = maya.getByRole('region', { name: 'Code 1 results' });
+  await expect(results.getByRole('group')).toHaveCount(4);
+
+  /** Each board's card, where it is: the children of the row holding all four. */
+  const cards = () =>
+    results.evaluate((region) => {
+      const groups = [...region.querySelectorAll('[role="group"]')];
+      let row = groups[0]!.parentElement!;
+      while (!groups.every((group) => row.contains(group))) {
+        row = row.parentElement!;
+      }
+      return [...row.children].map((card) => {
+        const rect = card.getBoundingClientRect();
+        return {
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          top: Math.round(rect.top),
+          bottom: Math.round(rect.bottom),
+        };
+      });
+    });
+  // The width beside the scrollbar's gutter, which the headless browser
+  // keeps without reporting it in clientWidth.
+  const pageWidth = () =>
+    maya.evaluate(() =>
+      Math.round(document.body.getBoundingClientRect().width),
+    );
+  const gutter =
+    (await maya.evaluate(() => window.innerWidth)) - (await pageWidth());
+
+  for (const size of RESULT_PAGES) {
+    await maya.setViewportSize({
+      width: size.width + gutter,
+      height: size.height,
+    });
+    await expect.poll(pageWidth).toBe(size.width);
+    const [a, b, c, d] = await cards();
+    const at = `a ${size.width} × ${size.height} page`;
+    // 8 px apart across.
+    expect(b!.left - a!.right, at).toBe(8);
+    if (size.rows === 1) {
+      expect([b!.top, c!.top, d!.top], at).toEqual([a!.top, a!.top, a!.top]);
+      expect(d!.left - c!.right, at).toBe(8);
+    } else {
+      // Two by two, the rows 16 px apart under the taller of the two.
+      expect([b!.top, c!.left, d!.left], at).toEqual([
+        a!.top,
+        a!.left,
+        b!.left,
+      ]);
+      expect(c!.top - Math.max(a!.bottom, b!.bottom), at).toBe(16);
+      expect(d!.top, at).toBe(c!.top);
+    }
+  }
+});
+
 test('a player with no name plays today’s code, with notes, then a practice code', async ({
   player,
 }) => {

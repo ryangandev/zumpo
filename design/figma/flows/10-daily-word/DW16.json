@@ -195,16 +195,18 @@
                     "w": 260,
                     "h": 52,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10597",
+                    "componentId": "258:71310",
                     "props": {
                       "Status icon": false,
+                      "Score": "964",
                       "Status": "Winner · 3 words found",
-                      "Host": true,
-                      "Score": "964"
+                      "Host": true
                     },
                     "overrides": [
                       {
@@ -261,16 +263,18 @@
                     "w": 260,
                     "h": 52,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "2nd place · 3 words found",
+                      "Name": "Sam",
                       "Score": "955",
-                      "Name": "Sam"
+                      "Status": "2nd place · 3 words found"
                     },
                     "overrides": [
                       {
@@ -327,16 +331,18 @@
                     "w": 260,
                     "h": 52,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "3rd place · 2 words found",
+                      "Name": "Ryan",
                       "Score": "851",
-                      "Name": "Ryan"
+                      "Status": "3rd place · 2 words found"
                     },
                     "overrides": [
                       {
@@ -393,17 +399,19 @@
                     "w": 260,
                     "h": 52,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "4th place · 3 words found",
+                      "Name": "Leo",
                       "You": true,
                       "Score": "514",
-                      "Name": "Leo"
+                      "Status": "4th place · 3 words found"
                     },
                     "overrides": [
                       {

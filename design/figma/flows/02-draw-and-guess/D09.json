@@ -212,7 +212,8 @@
                       "Score": "534",
                       "Icon": "24:5053",
                       "Name": "Maya",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -235,7 +236,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it · +72",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -270,7 +272,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it · +112",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -305,7 +308,8 @@
                       "Score": "240",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

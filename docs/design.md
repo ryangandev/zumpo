@@ -214,6 +214,7 @@ Figma draws every screen at 1440 px and at 390 px, and nothing between.
 Code has two breakpoints, both in [`use-media-query.ts`](../client/src/shell/use-media-query.ts): under 1024 px (`ONE_COLUMN`) a room, or a game on your own, is one column, the scoreboard and the chat under the stage and the room bar in its Phone layout, because beside the 344 px side column a narrower window leaves a board less than it needs; at 640 px (`PHONE`) the pages take their phone layouts.
 Between the widths Figma draws, a rigid piece, such as a board of fixed-size cards, the keyboard or the row of dice faces, sits in [`Fit`](../client/src/shell/fit.tsx), which scales it down to the width it is given when it would be wider, every proportion kept; at Figma's widths it is Figma's size.
 Where scaling would hurt, something else gives: a Minesweeper board wider than its panel pans sideways, the drawing toolbar takes two lines under the 898 px Desktop stage, the word choices share the sheet's width and wrap, and a tag's words end in an ellipsis.
+A Code Breaker code's four results boards, 888 px across 8 px apart as CB12 and CB13 draw them, take 8 px of the panel's 24 px padding on each side where it leaves less, as beside a scrollbar's gutter at 1440 px, so they stay in a row down to a page about 1416 px wide; narrower, they stand two by two, never three and one ([the Code Breaker spec](../e2e/code-breaker.spec.ts)).
 Beside the side column, a board in play, on your own or in a room (Daily Word's and Code Breaker's with their keys, a Minesweeper board, a Gomoku table, a Pairs board, Trios's table, Snap's two cards, a Make 24 hand, Hush's table) is scaled the same way to the window's height by `useFitHeight` in [`fit-height.ts`](../client/src/shell/fit-height.ts), so the last row, Enter and the bottom of the board are in view without scrolling down to 1280 × 720, down to half size at most; on one column the page scrolls as it is (#89).
 In a room (`useFitHeight('room')`) the board fits under its turn bar, and fits again a frame after the bar grows, as a hint taking a second line does; it measures only down to the page's foot, so the standings and buttons that come under it at a game's end never shrink it, and no room scrolls in play at 1440 × 900 (#158).
 A board with content under it that comes and goes during a game, as a Minesweeper round's results, is fitted only down to the board (`data-fit-end`), so a reveal never rescales it.
@@ -253,10 +254,13 @@ Figma gives each sample player an avatar tone by hand; code picks one from a has
 ### Comparing with Figma
 
 `npm run design:compare` builds the app, serves it on port 3320 (`SCREENS_PORT`), and plays [the screens spec](../e2e/screens/screens.spec.ts) with the players and example data of the Figma story, capturing each screen in the state Figma draws, at Figma's width and frame height.
-It takes about three minutes, because it runs the real phase lengths so every countdown reads as in Figma.
+It takes about 18 minutes, because it runs the real phase lengths so every countdown reads as in Figma.
 It writes `design/compare/index.html`, which is ignored by git: every screen's Figma preview beside its capture, flagged when the two sizes differ.
-A size that differs because the game holds other content than Figma's example, such as a longer chat, is listed with the reason in [report.ts](../e2e/screens/report.ts) and marked apart; any other difference is layout, to fix or to note below.
-So is a screen no state of the app shows.
+A size that differs because the game holds other content than Figma's example, such as a home page Figma crops, is listed with the reason in [report.ts](../e2e/screens/report.ts) and marked apart; any other difference is layout, to fix or to note below.
+A difference noted below is listed there too, with the note it comes from, and so is a screen no state of the app shows, with why.
+Each note pins the size its capture has, to a pixel, so a layout change cannot hide behind it: a capture of another size is flagged as a difference the note does not explain, and one that matches Figma flags the note as stale, to delete.
+So a capture is the same state every run: Daily Word, Code Breaker and Hush deal from a seed (`DAILY_WORD_SEED`, `CODE_BREAKER_SEED`, `HUSH_SEED`), and the chat and the scores in a capture do not depend on who goes first or how fast.
+The report's first line counts what is still unexplained: a layout difference, a note whose size no longer matches or that is stale, or a screen not captured that report.ts gives no reason for.
 It needs the previews from the last `npm run design:import`.
 
 ### On purpose
@@ -286,6 +290,7 @@ Code differs from Figma on purpose in a few places:
   On a phone the last pile under a game's results is drawn at half size, and the cards each player still held go under their name, every row at the one scale the fullest needs; Figma has no phone results screen for Hush.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
 - The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
+  Where a scrollbar takes room, as on Windows or a Mac with a mouse, that leaves a 1440 px window's stage 15 to 17 px narrower than Figma's 944 px, so a row Figma fills exactly is laid out to fit the narrower one.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
 - The drawer's word-choice clock is Running, as the Countdown's own rule says of a phase you act in; D04 and MO07 keep the Status turn bar's default Waiting tone.
 - The header marks the page you are on; Figma draws Games as current on every screen.
@@ -322,9 +327,8 @@ Code differs from Figma on purpose in a few places:
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
-- A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
-- A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
-  In a game's final standings it wraps to a second line instead, since there the detail is what the row is for.
+- A Daily Word word's results boards stand 12 px apart, not DW09's and DW10's 16 px: four at 16 px fill Figma's panel exactly, so beside a scrollbar's gutter the fourth wrapped under the others at 1440 px.
+- A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
 - A drawing sheet on a desktop keeps its 798 × 598 proportions in the height the window leaves below its top, less what follows it and the page's foot, never narrower than 40% of its column, and stands centred in it, so the whole sheet and the chat's input are in sight at 1280 × 720 and 1440 × 900; D01 to D06 draw it the column's full width, taller than such a window.
   A drawing only shown, as the one Doodle Chain's describe step works from, has no such floor, so that step fits at 1280 × 720 too.

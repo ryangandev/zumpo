@@ -563,7 +563,8 @@
                       "Status": "Black · your turn",
                       "Host": true,
                       "Score": "0",
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -598,7 +599,8 @@
                       "Score": "1",
                       "Icon": "24:4994",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -633,7 +635,8 @@
                       "Status": "Bidding",
                       "Host": false,
                       "Score": "2",
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -711,7 +714,8 @@
                       "Score": "2",
                       "Icon": "24:4994",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -775,7 +779,8 @@
                       "Score": "",
                       "Icon": "24:4994",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -810,7 +815,8 @@
                       "Score": "",
                       "Icon": "24:4994",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -845,7 +851,8 @@
                       "Status": "Bidding",
                       "Host": false,
                       "Score": "2",
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -923,7 +930,8 @@
                       "Score": "2",
                       "Icon": "24:4994",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },

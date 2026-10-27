@@ -534,7 +534,7 @@
             "id": "164:69362",
             "name": "Game sidebar",
             "w": 344,
-            "h": 404,
+            "h": 363,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -547,7 +547,7 @@
                 "id": "164:69363",
                 "name": "This game",
                 "w": 344,
-                "h": 194,
+                "h": 153,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Card",
@@ -562,7 +562,7 @@
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 194,
+                    "height": 153,
                     "width": 344
                   }
                 ],
@@ -573,7 +573,7 @@
                       "id": "I164:69363;35:13441;164:69369",
                       "name": "Stats",
                       "w": 278,
-                      "h": 82,
+                      "h": 41,
                       "wSize": "fill",
                       "hSize": "hug",
                       "layout": {
@@ -622,54 +622,6 @@
                               "wSize": "hug",
                               "hSize": "hug",
                               "text": "1 of 8",
-                              "textStyle": "Zumpo/Number",
-                              "fills": [
-                                "$Zumpo · UI:color/ink"
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "FRAME",
-                          "id": "I164:69363;35:13441;164:69373",
-                          "name": "Stat / Turns",
-                          "w": 278,
-                          "h": 41,
-                          "wSize": "fill",
-                          "hSize": "hug",
-                          "layout": {
-                            "mode": "row",
-                            "pad": [
-                              "$Zumpo · UI:space/8",
-                              0
-                            ],
-                            "justify": "space_between",
-                            "align": "center",
-                            "strokesIncluded": true
-                          },
-                          "children": [
-                            {
-                              "type": "TEXT",
-                              "id": "I164:69363;35:13441;164:69374",
-                              "w": 41,
-                              "h": 25,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "Turns",
-                              "textStyle": "Zumpo/Body",
-                              "fills": [
-                                "$Zumpo · UI:color/muted"
-                              ]
-                            },
-                            {
-                              "type": "TEXT",
-                              "id": "I164:69363;35:13441;164:69375",
-                              "name": "14",
-                              "w": 11,
-                              "h": 24,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "3",
                               "textStyle": "Zumpo/Number",
                               "fills": [
                                 "$Zumpo · UI:color/ink"

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-27T10:40:01.923Z",
+  "exportedAt": "2026-10-27T12:06:00.889Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -18,8 +18,8 @@
     "outsideComponents": 0,
     "svgs": 132,
     "seconds": 28,
-    "nodes": 15444,
-    "instances": 8141,
+    "nodes": 15467,
+    "instances": 8157,
     "grids": 91,
     "gridCells": 2965
   },
@@ -428,7 +428,7 @@
       "id": "26:10660",
       "file": "components/player-row.json",
       "preview": "previews/components/player-row.png",
-      "variants": 4
+      "variants": 8
     },
     {
       "name": "Zumpo/Point focus",
@@ -1274,7 +1274,7 @@
           "id": "9:2727",
           "size": [
             1440,
-            1103
+            1123
           ],
           "file": "flows/03-minesweeper/ML05.json",
           "preview": "previews/03-minesweeper/ML05.png",
@@ -3600,7 +3600,7 @@
           "id": "162:110183",
           "size": [
             390,
-            2109
+            2181
           ],
           "file": "flows/13-code-breaker/CB21.json",
           "preview": "previews/13-code-breaker/CB21.png",

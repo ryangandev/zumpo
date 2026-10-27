@@ -826,7 +826,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +633",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -861,7 +862,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +518",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -896,7 +898,8 @@
                       "Score": "608",
                       "Icon": "24:5071",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -973,7 +976,8 @@
                       "Score": "303",
                       "Icon": "24:4994",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

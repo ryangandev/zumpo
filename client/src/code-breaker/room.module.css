@@ -37,9 +37,16 @@
   min-width: 0;
 }
 
+/* A code's results are measured as containers: the section for the room
+   inside the panel's padding, the boards' box for the room they have. */
 .results {
+  container: code-results / inline-size;
   align-self: stretch;
   gap: var(--zumpo-space-20);
+}
+
+.boardsBox {
+  container: code-boards / inline-size;
 }
 
 .heading {
@@ -76,10 +83,36 @@
   gap: var(--zumpo-space-16);
 }
 
-/* Four Small boards 16 px apart are 16 px wider than the panel holds, which
-   Figma lets CB12 overflow; 8 apart, four fit. */
+/* A code's Small boards 8 px apart, and a room of more than four wraps
+   them into rows 16 px apart (CB12, CB13). Each board is as tall as its
+   guesses, as Figma's hug them. */
 .results .boards {
-  gap: var(--zumpo-space-8);
+  align-items: flex-start;
+  column-gap: var(--zumpo-space-8);
+  row-gap: var(--zumpo-space-16);
+}
+
+@media (min-width: 641px) {
+  /* Four boards 8 apart are 888 px wide. Where the panel's 24 px padding
+     leaves less, as beside a scrollbar's gutter at 1440 px, the results take
+     8 px of it on each side, the 16 px a short window's panel has already,
+     so four stay in a row down to a page about 1416 px wide. */
+  @media (min-height: 801px) {
+    @container code-results (width < 888px) {
+      .heading,
+      .boardsBox {
+        margin-inline: calc(-1 * var(--zumpo-space-8));
+      }
+    }
+  }
+
+  /* Where four still do not fit, they stand two by two, not three and one. */
+  @container code-boards (width < 888px) {
+    .results .boards:has(> :nth-child(4):last-child) {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+    }
+  }
 }
 
 /* On a phone the others are on the Players tab, on a paper panel. */
@@ -95,8 +128,11 @@
     gap: var(--zumpo-space-12);
   }
 
-  /* The results' Small boards one under another, each a Row board (CB20). */
+  /* The results' Small boards one under another, each a Row board, 12 px
+     apart (CB20, CB21). */
   .results .boards {
     flex-direction: column;
+    align-items: stretch;
+    row-gap: var(--zumpo-space-12);
   }
 }

@@ -89,6 +89,16 @@
   gap: var(--zumpo-space-12);
 }
 
+/* A word's results 12 px apart in a row too: four at 16 fill Figma's panel
+   exactly, so beside a scrollbar's gutter the last one wrapped at 1440 px.
+   A room of more than four wraps them into rows 16 px apart, as at 16. Each
+   board is as tall as its guesses, as Figma's hug them. */
+.results .boards {
+  align-items: flex-start;
+  column-gap: var(--zumpo-space-12);
+  row-gap: var(--zumpo-space-16);
+}
+
 /* On a phone the others are on the Players tab, on a paper panel. */
 @media (max-width: 640px) {
   .others {
@@ -102,8 +112,11 @@
     gap: var(--zumpo-space-12);
   }
 
-  /* The results' Small boards one under another, each a Row board (DW15). */
+  /* The results' Small boards one under another, each a Row board, 12 px
+     apart (DW15, DW16). */
   .results .boards {
     flex-direction: column;
+    align-items: stretch;
+    row-gap: var(--zumpo-space-12);
   }
 }

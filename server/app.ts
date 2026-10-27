@@ -135,6 +135,12 @@ interface CreateZumpoServerOptions {
   liarsDiceDurations?: LiarsDiceDurationsInSeconds;
   /** Hush's countdown, mistake pause and cleared level. Shortened by tests. */
   hushDurations?: HushDurationsInSeconds;
+  /**
+   * Deals every Hush level from this seed instead of at random, so a test
+   * run plays the same hands each time. Defaults to `process.env.HUSH_SEED`;
+   * never set in production.
+   */
+  hushSeed?: string;
   /** A Daily Word round and its results. Shortened by tests. */
   dailyWordDurations?: DailyWordDurationsInSeconds;
   /** Doodle Chain's steps and the pause between them. Shortened by tests. */
@@ -212,6 +218,7 @@ const createZumpoServer = (
     snapDurations,
     liarsDiceDurations,
     hushDurations,
+    hushSeed = process.env.HUSH_SEED || undefined,
     dailyWordDurations,
     doodleChainDurations,
     gomokuDurations,
@@ -279,7 +286,7 @@ const createZumpoServer = (
   // A Hush level waits for a dropped player as long as their seat is held,
   // and shows that wait as its clock.
   registry.register(
-    createHushModule(registry.context, hushDurations, graceInSeconds),
+    createHushModule(registry.context, hushDurations, graceInSeconds, hushSeed),
   );
   registry.register(
     createLiarsDiceModule(registry.context, liarsDiceDurations),

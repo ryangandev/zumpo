@@ -10,8 +10,10 @@ const PORT = Number(process.env.SCREENS_PORT ?? 3320);
 // Daily Word deals a room's words from this seed, so Figma's story plays the
 // same every time; the screens spec reads it to know the words.
 process.env.DAILY_WORD_SEED ??= 'figma';
-// Code Breaker deals a room's codes the same way.
+// Code Breaker deals a room's codes the same way, and Hush its hands, so a
+// lost game ends holding the same cards.
 process.env.CODE_BREAKER_SEED ??= 'figma';
+process.env.HUSH_SEED ??= 'figma';
 
 export default defineConfig({
   testDir: 'screens',
@@ -35,6 +37,7 @@ export default defineConfig({
       PER_ADDRESS_LIMITS: 'off',
       DAILY_WORD_SEED: process.env.DAILY_WORD_SEED,
       CODE_BREAKER_SEED: process.env.CODE_BREAKER_SEED,
+      HUSH_SEED: process.env.HUSH_SEED,
     },
   },
 });

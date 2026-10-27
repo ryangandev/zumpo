@@ -211,7 +211,8 @@
                       "Status": "Drawing",
                       "Host": true,
                       "Score": "505",
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -226,7 +227,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Guessed it",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -261,7 +263,8 @@
                       "Score": "240",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

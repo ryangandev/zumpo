@@ -9,6 +9,7 @@ import {
   type HushDurationsInSeconds,
 } from '../../libs/game-clock.js';
 import { deal, levelsFor, START_LIVES } from '../../../shared/hush.js';
+import { seededRandom, seedNumber } from '../../../shared/seed.js';
 import type { HushState } from './state.js';
 
 type HushRoom = Room<HushState>;
@@ -39,11 +40,16 @@ const mayChat = (room: HushRoom) => !IN_LEVEL.has(room.game.phase);
  * clock: anybody plays their lowest card at any moment, and the server decides
  * in arrival order whether it went over a card still held. Only the moments
  * around a level are timed, on the room's one clock.
+ *
+ * A level's hands are dealt at random, or, given a seed (a test run's), from
+ * that seed and the level's number, so every game deals the same hands to
+ * the same seats.
  */
 const createHushGameEngine = (
   ctx: GameContext,
   durations: HushDurationsInSeconds = defaultDurations,
   graceInSeconds: number = reconnectGraceInSeconds,
+  seed?: string,
 ) => {
   const roomOf = (roomId: string): HushRoom | undefined =>
     ctx.rooms.ofType<HushState>(roomId, 'hush');
@@ -114,7 +120,10 @@ const createHushGameEngine = (
     const seated = Object.keys(room.playerList);
     if (!seated.every((playerId) => game.ready.has(playerId))) return;
 
-    game.hands = deal(seated, game.level, Math.random);
+    const random = seed
+      ? seededRandom(seedNumber(`${seed} ${game.level}`))
+      : Math.random;
+    game.hands = deal(seated, game.level, random);
     beginCountdown(room);
   };
 

@@ -574,7 +574,8 @@
                       "Score": "1",
                       "Icon": "24:5053",
                       "Name": "Maya",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -597,7 +598,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -621,7 +623,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -645,7 +648,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -697,7 +701,8 @@
                       "Score": "",
                       "Icon": "24:5053",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -720,7 +725,8 @@
                       "Score": "",
                       "Icon": "24:5053",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": true
                   },
@@ -744,7 +750,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },
@@ -768,7 +775,8 @@
                       "Score": "0",
                       "Icon": "24:5053",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     },
                     "visible": false
                   },

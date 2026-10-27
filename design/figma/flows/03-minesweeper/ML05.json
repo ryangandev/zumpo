@@ -14,7 +14,7 @@
     "x": 40,
     "y": 1542,
     "w": 1440,
-    "h": 1103,
+    "h": 1123,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -71,7 +71,8 @@
         "id": "9:2743",
         "name": "Dialog stage",
         "w": 1312,
-        "h": 877,
+        "h": 897,
+        "hSize": "hug",
         "layout": {
           "mode": "row",
           "pad": [

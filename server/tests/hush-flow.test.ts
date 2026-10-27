@@ -202,6 +202,27 @@ describe('a level', () => {
     await harness.teardown();
   });
 
+  it('deals the same hands to the same seats every game when given a seed', async () => {
+    await harness.teardown();
+    harness = await startTestServer(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      { hushSeed: 'figma' },
+    );
+    /** Each seat's level 1 hand, in seat order. */
+    const handsOf = async () => {
+      const { roomId, players } = await playToLevel(harness);
+      const { hands } = hushRoom(harness, roomId).game;
+      return players.map((player) => hands[player.playerId]);
+    };
+    const first = await handsOf();
+    expect(first.every((hand) => hand?.length === 1)).toBe(true);
+    expect(await handsOf()).toEqual(first);
+  });
+
   it('deals nothing until everybody is ready, then counts down and opens', async () => {
     const { roomId, players, owner } = await seat(harness, [
       'Alice',
