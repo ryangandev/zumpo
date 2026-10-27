@@ -8,17 +8,18 @@ import { gameSounds } from '../room/sounds';
  * apart, for "your turn". The game's own sounds join here.
  */
 
+const diceIn = (state: LiarsDiceRoomState) =>
+  state.cups.reduce((sum, cup) => sum + cup.diceLeft, 0);
+
 /**
  * Names a go: each bid is one, numbered within its roll. A round called off
  * because somebody with dice left is rolled again under the same number,
- * with one cup fewer, and a game never gains a player, so the cups tell the
- * rolls of one round apart and a name never comes round again in a game.
+ * with their dice gone, so the dice still in tell the rolls of one round
+ * apart, and a name never comes round again in a game. A player already out
+ * who leaves takes no dice, so the go in play keeps its name.
  */
 export const turnOf = (state: LiarsDiceRoomState) =>
-  `${state.round}.${state.cups.length}.${state.bids.length}`;
-
-const diceIn = (state: LiarsDiceRoomState) =>
-  state.cups.reduce((sum, cup) => sum + cup.diceLeft, 0);
+  `${state.round}.${diceIn(state)}.${state.bids.length}`;
 
 /**
  * Across a reconnection, with a game under way on both sides: another game,

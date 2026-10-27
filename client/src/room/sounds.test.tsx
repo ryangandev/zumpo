@@ -21,6 +21,7 @@ import {
 import {
   deriveRoomSounds,
   gameSounds,
+  LOST_AFTER_MS,
   newGameBegan,
   NO_GAME_SOUNDS,
   roomSoundRules,
@@ -311,6 +312,25 @@ describe('the room sounds through the replay guard', () => {
     expect(sounds.observe(view(playing, { turn: '1.3' }))).toEqual([]);
   });
 
+  it('hears who comes and goes between games afresh after each game', () => {
+    const sounds = guard();
+    const withLeo = { ...lobby.playerList, [LEO]: seat('Leo') };
+    const started = drawAndGuessState({ ...playing, playerList: withLeo });
+    sounds.observe(view(started));
+    // Leo leaves during the game, which ends; he comes back to the lobby
+    // and leaves again before the next one.
+    sounds.observe(view(playing));
+    const over = drawAndGuessState({ lastGame: summary({ [ME]: 10 }) });
+    sounds.observe(view(over));
+    const back = drawAndGuessState({ ...over, playerList: withLeo });
+    expect(sounds.observe(view(back)).map((e) => e.sound)).toEqual([
+      'room-join',
+    ]);
+    expect(sounds.observe(view(over)).map((e) => e.sound)).toEqual([
+      'room-leave',
+    ]);
+  });
+
   it('stamps each Ready of the viewer’s, and pips each other player once a game', () => {
     const sounds = guard();
     const mine = drawAndGuessState({ ready: [ME] });
@@ -425,12 +445,16 @@ describe('one guard for a room and its game', () => {
             ]
           : [],
     });
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const sounds = guard(ME, greedy);
     sounds.observe(view(atTurn(1)));
-    // The game's own `start` is not the room's, and its stinger is dropped.
+    // The game's own `start` is not the room's, and its stinger is dropped,
+    // with a word for whoever wrote it.
     expect(sounds.observe(view(atTurn(2)))).toEqual([
       { sound: 'room-reveal', key: 'game:start' },
     ]);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('stinger-win'));
+    warn.mockRestore();
   });
 
   it('asks the game for a new game only across a reconnection', () => {
@@ -550,33 +574,73 @@ const seated = (reconnecting: boolean): RoomStage => ({
   reconnecting,
 });
 
-describe('useConnectionLostSound', () => {
-  it('hears each drop and the room closing under a seated player, and nothing else', () => {
-    const engine = new AudioEngine({});
-    const play = vi
-      .spyOn(engine, 'play')
-      .mockImplementation(() => Promise.resolve(true));
-    const tree = (stage: RoomStage) => (
+function mountPage(stage: RoomStage) {
+  const engine = new AudioEngine({});
+  const play = vi
+    .spyOn(engine, 'play')
+    .mockImplementation(() => Promise.resolve(true));
+  const tree = (s: RoomStage) => (
+    <StrictMode>
       <SoundProvider engine={engine}>
-        <Page stage={stage} />
+        <Page stage={s} />
       </SoundProvider>
-    );
-    const page = render(tree({ kind: 'connecting' }));
-    page.rerender(tree({ kind: 'closed' }));
-    expect(play).not.toHaveBeenCalled();
-    // Two drops on the way, the second before any new snapshot.
-    page.rerender(tree(seated(false)));
-    page.rerender(tree(seated(true)));
-    page.rerender(tree(seated(false)));
-    page.rerender(tree(seated(true)));
-    // Down already: closing is not another loss.
-    page.rerender(tree({ kind: 'closed' }));
-    page.rerender(tree(seated(false)));
-    page.rerender(tree({ kind: 'closed' }));
-    expect(play.mock.calls.map(([spec]) => spec.id)).toEqual([
-      'ui-connection-lost',
-      'ui-connection-lost',
-      'ui-connection-lost',
-    ]);
+    </StrictMode>
+  );
+  const page = render(tree(stage));
+  return {
+    to: (s: RoomStage) => page.rerender(tree(s)),
+    heard: () => play.mock.calls.length,
+    unmount: page.unmount,
+  };
+}
+
+describe('useConnectionLostSound', () => {
+  it('hears a drop that lasts, each time, and not one that comes back at once', () => {
+    vi.useFakeTimers();
+    const page = mountPage(seated(false));
+    // A phone back from another app: down for a second, then back.
+    page.to(seated(true));
+    vi.advanceTimersByTime(LOST_AFTER_MS - 100);
+    page.to(seated(false));
+    vi.advanceTimersByTime(5_000);
+    expect(page.heard()).toBe(0);
+    // Two drops that last, the second before any new snapshot.
+    page.to(seated(true));
+    vi.advanceTimersByTime(LOST_AFTER_MS);
+    expect(page.heard()).toBe(1);
+    page.to(seated(false));
+    page.to(seated(true));
+    vi.advanceTimersByTime(LOST_AFTER_MS);
+    expect(page.heard()).toBe(2);
+    // Gone from the page before it lasts: nothing later.
+    page.to(seated(false));
+    page.to(seated(true));
+    page.unmount();
+    vi.advanceTimersByTime(LOST_AFTER_MS);
+    expect(page.heard()).toBe(2);
+    vi.useRealTimers();
+  });
+
+  it('hears the room closing at once, and only once', () => {
+    vi.useFakeTimers();
+    const page = mountPage({ kind: 'connecting' });
+    page.to({ kind: 'closed' });
+    expect(page.heard()).toBe(0);
+    page.to(seated(false));
+    page.to({ kind: 'closed' });
+    expect(page.heard()).toBe(1);
+    // Closed while a drop was still waiting: heard at once, not twice.
+    page.to(seated(false));
+    page.to(seated(true));
+    page.to({ kind: 'closed' });
+    vi.advanceTimersByTime(LOST_AFTER_MS);
+    expect(page.heard()).toBe(2);
+    // Closed after a drop already heard: not another loss.
+    page.to(seated(false));
+    page.to(seated(true));
+    vi.advanceTimersByTime(LOST_AFTER_MS);
+    page.to({ kind: 'closed' });
+    expect(page.heard()).toBe(3);
+    vi.useRealTimers();
   });
 });

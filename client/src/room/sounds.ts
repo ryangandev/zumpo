@@ -97,8 +97,9 @@ export function winnersOf(state: AnyRoomState): string[] {
 }
 
 /**
- * Games whose end is their own to sound: a Doodle Chain game ends on its
- * album, which nobody wins.
+ * Games whose end is their own to sound, which the room's end stinger would
+ * play over: a Doodle Chain game ends on its album, which nobody wins. A
+ * game that sounds its own end is added here.
  */
 const OWN_ENDING: ReadonlySet<AnyRoomState['gameType']> = new Set([
   'doodle-chain',
@@ -142,10 +143,12 @@ export interface GameSounds {
  * - `isNewGame`: whether two snapshots on either side of a reconnection, both
  *   with a game under way, are of different games. On one connection the
  *   room sees every start itself.
- * - `turnOf`: names the go in play, the same for everybody. A name never
- *   comes round again within one game, or "your turn" stays silent the
- *   second time (`2.5`: round 2, turn 5). A game that cannot name its goes
- *   gives none, and its turns are silent.
+ * - `turnOf`: names the go in play, the same for everybody (`2.5`: round 2,
+ *   turn 5). A name never comes round again within one game, or "your
+ *   turn" stays silent the second time; it stays the same for the whole of
+ *   a go, or "your turn" plays again mid-go; and it names a go, not a move,
+ *   where a go holds several. A game that cannot name its goes gives none,
+ *   and its turns are silent.
  */
 export function gameSounds<
   State extends AnyRoomState,
@@ -260,16 +263,18 @@ export function deriveRoomSounds(
 }
 
 /**
- * Whether `next` is in a later game than `prev`, for the one guard. On one
- * connection every snapshot arrives, in order, so the room sees each game
- * start (`newGameBegan`), and nothing else forgets the keys: a snapshot
- * from earlier in the game is never taken for a new one. Across a
+ * Whether the keys heard so far are done with, for the one guard: a game
+ * began, or one ended, so who comes, goes and says Ready between games is
+ * heard afresh. On one connection every snapshot arrives, in order, so the
+ * room sees each start and end, and nothing else forgets the keys: a
+ * snapshot from earlier in the game is never taken for a new one. Across a
  * reconnection a whole game may have gone by unseen, which only the game can
  * tell (`GameSounds.isNewGame`).
  */
 export function isNewGameIn(game: GameSounds): IsNewGame<RoomSoundView> {
   return (prev, next) =>
     newGameBegan(prev.state, next.state) ||
+    (prev.state.isGameStarted && !next.state.isGameStarted) ||
     (prev.connection !== next.connection &&
       prev.state.isGameStarted &&
       next.state.isGameStarted &&
@@ -305,7 +310,15 @@ export function roomSoundRules(viewer: string, game: GameSounds) {
   const derive: DeriveSounds<RoomSoundView, string> = (prev, next) => [
     ...room(prev, next),
     ...(own?.(prev.state, next.state) ?? [])
-      .filter((event) => !LEADS.has(event.sound))
+      .filter((event) => {
+        if (!LEADS.has(event.sound)) return true;
+        if (import.meta.env.DEV) {
+          console.warn(
+            `A game's sound "${event.sound}" is the room's alone, and was dropped.`,
+          );
+        }
+        return false;
+      })
       .map((event) => ({ ...event, key: `${GAME_KEY}${event.key}` })),
   ];
   return { derive, isNewGame: isNewGameIn(game), select: leadsAlone, standing };
@@ -391,11 +404,17 @@ export function useDeadlineTicks({
 }
 
 /**
- * The connection dropping under a seated player, each time it drops, and the
- * room closing under them, as a server restart closes it. Neither is in a
- * snapshot, so neither goes through the replay guard: each is a live edge,
- * which a refresh never repeats. Belongs in the room page, which outlives
- * the seated room.
+ * How long a dropped connection may take to come back unheard: a phone back
+ * from another app, or a laptop waking, reconnects within a second or so.
+ */
+export const LOST_AFTER_MS = 1500;
+
+/**
+ * The connection dropping under a seated player and staying down for
+ * `LOST_AFTER_MS`, each time, and the room closing under them, as a server
+ * restart closes it, at once. Neither is in a snapshot, so neither goes
+ * through the replay guard: each is a live edge, which a refresh never
+ * repeats. Belongs in the room page, which outlives the seated room.
  */
 export function useConnectionLostSound(stage: RoomStage): void {
   const play = useSounds(ROOM_SOUNDS);
@@ -405,12 +424,31 @@ export function useConnectionLostSound(stage: RoomStage): void {
         ? 'down'
         : 'up'
       : stage.kind === 'closed'
-        ? 'down'
+        ? 'closed'
         : 'away';
   const was = useRef(now);
+  // A drop not heard yet.
+  const pending = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     const before = was.current;
     was.current = now;
-    if (before === 'up' && now === 'down') play('ui-connection-lost');
+    if (before === now) return;
+    const waiting = pending.current !== null;
+    if (pending.current !== null) clearTimeout(pending.current);
+    pending.current = null;
+    if (before === 'up' && now === 'down') {
+      pending.current = setTimeout(() => {
+        pending.current = null;
+        play('ui-connection-lost');
+      }, LOST_AFTER_MS);
+    } else if (now === 'closed' && (before === 'up' || waiting)) {
+      play('ui-connection-lost');
+    }
   }, [now, play]);
+  useEffect(
+    () => () => {
+      if (pending.current !== null) clearTimeout(pending.current);
+    },
+    [],
+  );
 }

@@ -9,7 +9,11 @@ import { createReplayGuard } from '../audio';
 import { AudioEngine } from '../audio/engine';
 import type { PlayOptions, SoundSpec } from '../audio/types';
 import { roomPath } from '../games/catalog';
-import { roomSoundRules, type RoomSoundView } from '../room/sounds';
+import {
+  LOST_AFTER_MS,
+  roomSoundRules,
+  type RoomSoundView,
+} from '../room/sounds';
 import { drawAndGuessState, ME } from '../tests/fixtures';
 import { FakeSocket } from '../tests/fake-socket';
 import { renderApp } from '../tests/render-app';
@@ -307,6 +311,12 @@ describe('the Draw & Guess sounds through the replay guard', () => {
       true,
     );
     expect(isNewDrawAndGuessGame(late, turnOf(6, LEO))).toBe(false);
+    // The same turn and category, but scores that went back: another game.
+    const scored = turnOf(5, ME, {
+      playerList: { ...table.playerList, [MAYA]: seat('Maya', 300) },
+    });
+    expect(isNewDrawAndGuessGame(scored, turnOf(5, LEO))).toBe(true);
+    expect(isNewDrawAndGuessGame(late, scored)).toBe(false);
   });
 });
 
@@ -460,8 +470,12 @@ describe('a Draw & Guess room, heard in the app', () => {
     send(turnOf(1, MAYA, { scoredThisTurn: [LEO] }));
     expect(played()).toEqual(['room-someone-scored other step 1']);
 
-    // The connection drops, and comes back to a room that moved on.
+    // The connection drops long enough to be heard, and comes back to a
+    // room that moved on.
+    vi.useFakeTimers();
     act(() => fake.drop());
+    act(() => vi.advanceTimersByTime(LOST_AFTER_MS));
+    vi.useRealTimers();
     expect(played()).toEqual([
       'room-someone-scored other step 1',
       'ui-connection-lost',

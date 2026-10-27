@@ -27,18 +27,24 @@ const at = (round: number, cups: LiarsDiceCup[], bids = 0) =>
 const three = [cup(ME), cup(MAYA), cup(LEO)];
 
 describe('a Liar’s Dice room’s goes and games', () => {
-  it('names each bid within its roll', () => {
-    expect(turnOf(at(3, three))).toBe('3.3.0');
-    expect(turnOf(at(3, three, 2))).toBe('3.3.2');
+  it('names each bid within its roll, by the dice still in', () => {
+    expect(turnOf(at(3, three))).toBe('3.15.0');
+    expect(turnOf(at(3, three, 2))).toBe('3.15.2');
   });
 
   it('never names a go twice when a round is rolled again', () => {
     // Leo leaves with dice two bids in: round 3 is rolled again without him.
     const before = [0, 1, 2].map((bids) => turnOf(at(3, three, bids)));
-    const again = [0, 1].map((bids) =>
+    const again = [0, 1, 2].map((bids) =>
       turnOf(at(3, [cup(ME), cup(MAYA)], bids)),
     );
-    expect(new Set([...before, ...again]).size).toBe(5);
+    expect(new Set([...before, ...again]).size).toBe(6);
+  });
+
+  it('keeps the go’s name when a player already out leaves', () => {
+    const out = { ...cup(LEO, 0), outInRound: 2 };
+    const go = at(3, [cup(ME), cup(MAYA), out], 2);
+    expect(turnOf(at(3, [cup(ME), cup(MAYA)], 2))).toBe(turnOf(go));
   });
 
   it('tells another game by its rounds, its players, or its dice', () => {

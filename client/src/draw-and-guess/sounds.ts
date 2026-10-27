@@ -41,14 +41,20 @@ export const turnOf = (state: DrawAndGuessRoomState) =>
 
 /**
  * Across a reconnection, with a game under way on both sides: another game,
- * whose turns started again or whose category is another. Each key names
- * its turn, so a later game that has gone further than the last heard one
- * collides with none of its keys.
+ * whose turns started again, whose category is another, or where somebody
+ * has fewer points, which within a game only ever grow (each game starts
+ * them at 0). Each key names its turn, so a later game that has gone further
+ * than the last heard one collides with none of its keys.
  */
 export const isNewDrawAndGuessGame: IsNewGame<DrawAndGuessRoomState> = (
   prev,
   next,
-) => next.turn < prev.turn || next.wordCategory !== prev.wordCategory;
+) =>
+  next.turn < prev.turn ||
+  next.wordCategory !== prev.wordCategory ||
+  Object.entries(next.playerList).some(
+    ([id, player]) => player.points < (prev.playerList[id]?.points ?? 0),
+  );
 
 /**
  * The clock `viewer` must act against, named, or null: the drawer's word to
