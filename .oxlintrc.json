@@ -16,7 +16,8 @@
     "**/node_modules",
     "**/build",
     "**/dist",
-    "client/src/ui/generated"
+    "client/src/ui/generated",
+    "client/src/audio/generated"
   ],
   "overrides": [
     {

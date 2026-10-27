@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { routes } from '../app';
+import { SoundProvider } from '../audio';
 import { LocaleProvider, type Locale } from '../i18n';
 import { SessionProvider } from '../net/session';
 import { ME } from './fixtures';
@@ -37,9 +38,11 @@ export async function renderApp(
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   const view = render(
     <LocaleProvider>
-      <SessionProvider socket={fake.asSocket()}>
-        <RouterProvider router={router} />
-      </SessionProvider>
+      <SoundProvider>
+        <SessionProvider socket={fake.asSocket()}>
+          <RouterProvider router={router} />
+        </SessionProvider>
+      </SoundProvider>
     </LocaleProvider>,
   );
   // A page that loads when opened, as a room does, is in before the test

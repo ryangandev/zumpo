@@ -27,6 +27,15 @@ function figmaExport(): Plugin {
   };
 }
 
+/**
+ * Sounds are never inlined as `data:` URLs, however small: the engine
+ * fetches them, and the Content Security Policy's `connect-src 'self'` would
+ * refuse a `data:` URL. Anything else keeps Vite's default limit.
+ */
+export function inlineLimit(file: string): boolean | undefined {
+  return /\.(m4a|webm)$/.test(file) ? false : undefined;
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), figmaExport()],
@@ -40,6 +49,7 @@ export default defineConfig({
     outDir: '../server/build/public',
     emptyOutDir: true,
     sourcemap: true,
+    assetsInlineLimit: inlineLimit,
     rolldownOptions: {
       output: {
         // Libraries change far less often than the app, so each ships in a

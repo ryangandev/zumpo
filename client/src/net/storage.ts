@@ -1,4 +1,9 @@
 import type { PlayerIdentity } from '../../../shared/wire-types';
+import {
+  parseSoundSettings,
+  serializeSoundSettings,
+  type SoundSettings,
+} from '../audio/settings';
 import { isLocale, type Locale } from '../i18n/locale';
 
 /*
@@ -14,6 +19,7 @@ import { isLocale, type Locale } from '../i18n/locale';
 const IDENTITY_KEY = 'zumpo:identity';
 const NAME_KEY = 'zumpo:name';
 const LOCALE_KEY = 'zumpo:locale';
+const SOUND_KEY = 'zumpo:sound';
 
 type Store = 'sessionStorage' | 'localStorage';
 
@@ -102,4 +108,41 @@ export function readLocale(): Locale | null {
 
 export function writeLocale(locale: Locale): void {
   write('localStorage', LOCALE_KEY, locale);
+}
+
+function parseJson(value: string | null): unknown {
+  try {
+    return JSON.parse(value ?? 'null') as unknown;
+  } catch {
+    // A malformed entry just means the defaults.
+    return null;
+  }
+}
+
+/**
+ * Sound volume and mute: the browser's, like the language, so every tab and
+ * the next visit start with them.
+ */
+export function readSound(): SoundSettings | null {
+  return parseSoundSettings(parseJson(read('localStorage', SOUND_KEY)));
+}
+
+export function writeSound(settings: SoundSettings): void {
+  write('localStorage', SOUND_KEY, serializeSoundSettings(settings));
+}
+
+/**
+ * Calls `onChange` when another tab of this browser changes the sound, with
+ * null when it was cleared.
+ */
+export function watchSound(
+  onChange: (settings: SoundSettings | null) => void,
+): () => void {
+  const listener = (event: StorageEvent) => {
+    if (event.key === SOUND_KEY || event.key === null) {
+      onChange(parseSoundSettings(parseJson(event.newValue)));
+    }
+  };
+  window.addEventListener('storage', listener);
+  return () => window.removeEventListener('storage', listener);
 }
