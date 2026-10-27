@@ -101,7 +101,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -349,7 +350,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -597,7 +599,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -844,7 +847,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -1092,7 +1096,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -1340,7 +1345,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -1591,7 +1597,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -1843,7 +1850,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {
@@ -2095,7 +2103,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 },
                 "componentId": "26:10570",
                 "props": {

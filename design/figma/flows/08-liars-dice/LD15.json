@@ -181,7 +181,8 @@
                         "path": "Player / Avatar",
                         "componentProperties": {
                           "Initials": "MA",
-                          "Tone": "Peach"
+                          "Tone": "Peach",
+                          "Size": "Regular"
                         }
                       }
                     ]
@@ -210,7 +211,8 @@
                         "path": "Player / Avatar",
                         "componentProperties": {
                           "Initials": "RG",
-                          "Tone": "Blue"
+                          "Tone": "Blue",
+                          "Size": "Regular"
                         }
                       }
                     ]
@@ -384,7 +386,8 @@
                     "path": "Player / Avatar",
                     "componentProperties": {
                       "Initials": "SA",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   }
                 ]

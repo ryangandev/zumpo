@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-27T09:44:33.609Z",
+  "exportedAt": "2026-10-27T10:40:01.923Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -18,7 +18,7 @@
     "outsideComponents": 0,
     "svgs": 132,
     "seconds": 28,
-    "nodes": 15434,
+    "nodes": 15444,
     "instances": 8141,
     "grids": 91,
     "gridCells": 2965
@@ -85,7 +85,7 @@
       "id": "26:10576",
       "file": "components/avatar.json",
       "preview": "previews/components/avatar.png",
-      "variants": 5
+      "variants": 10
     },
     {
       "name": "Zumpo/Bid",

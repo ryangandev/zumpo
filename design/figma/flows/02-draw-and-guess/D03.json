@@ -302,7 +302,8 @@
                     "path": "Player 1 / Avatar",
                     "componentProperties": {
                       "Initials": "MA",
-                      "Tone": "Peach"
+                      "Tone": "Peach",
+                      "Size": "Regular"
                     }
                   },
                   {

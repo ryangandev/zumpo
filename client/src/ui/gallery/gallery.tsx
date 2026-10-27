@@ -77,6 +77,7 @@ import {
   type BrushSize,
   type DieFace,
   type GlyphName,
+  type WordBoardRow,
   ChainComposer,
   ChainEntry,
   HeartButton,
@@ -200,6 +201,38 @@ const CLOCK_CELLS: Deviation = {
     'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.',
   dw: 7,
 };
+
+const SEAT_EDGE: Deviation = {
+  reason:
+    'The thick edge on its turn is drawn inside the hairline, so the seat keeps its size from turn to turn; Figma lays the 2 px edge out around it.',
+  dh: -2,
+};
+
+const A = 'absent';
+const P = 'present';
+const C = 'correct';
+
+/** Five guesses at SOUTH, marked as the game marks them. */
+const RACE_GUESSES: WordBoardRow[] = [
+  { word: 'crane', marks: [A, A, A, A, A] },
+  { word: 'pilot', marks: [A, A, A, P, P] },
+  { word: 'shout', marks: [C, P, P, P, P] },
+  { word: 'mouth', marks: [A, C, C, C, C] },
+  { word: 'youth', marks: [A, C, C, C, C] },
+];
+
+/**
+ * A Small race board is drawn at the reveal with the rows played, and
+ * Figma's is a full board: six guesses, the last one the word when found.
+ */
+function raceRows(found: boolean): WordBoardRow[] {
+  return [
+    ...RACE_GUESSES,
+    found
+      ? { word: 'south', marks: [C, C, C, C, C] }
+      : { word: 'tooth', marks: [A, C, A, C, C] },
+  ];
+}
 
 const FOCUS_RING: Deviation = {
   reason:
@@ -349,12 +382,22 @@ export default function Gallery() {
             ];
           },
         )}
-        <Specimen family="button" label="With icon">
+        <Specimen
+          family="button"
+          variant="Style=Secondary, State=Default"
+          label="With icon"
+          heightOnly
+        >
           <Button variant="secondary" icon="leave">
             Leave room
           </Button>
         </Specimen>
-        <Specimen family="button" label="Icon only">
+        <Specimen
+          family="button"
+          variant="Style=Secondary, State=Default"
+          label="Icon only"
+          heightOnly
+        >
           <Button variant="secondary" icon="leave" iconOnly>
             Leave room
           </Button>
@@ -378,32 +421,65 @@ export default function Gallery() {
         ))}
       </Family>
 
-      <Family name="Avatar" file="avatar">
+      <Family
+        name="Avatar"
+        file="avatar"
+        note="Small is the phone header's, the Phone room bar's and a standing's."
+      >
         {AVATAR_TONES.map((tone) => (
-          <Specimen key={tone} family="avatar" variant={`Tone=${cap(tone)}`}>
+          <Specimen
+            key={tone}
+            family="avatar"
+            variant={`Tone=${cap(tone)}, Size=Regular`}
+          >
             <Avatar initials="RG" tone={tone} />
           </Specimen>
         ))}
-        <Specimen family="avatar" label="Small (phone header)">
-          <Avatar initials="MA" tone="peach" size="small" />
-        </Specimen>
+        {AVATAR_TONES.map((tone) => (
+          <Specimen
+            key={`${tone}-small`}
+            family="avatar"
+            variant={`Tone=${cap(tone)}, Size=Small`}
+          >
+            <Avatar initials="RG" tone={tone} size="small" />
+          </Specimen>
+        ))}
       </Family>
 
       <Family name="Tag" file="tag">
         {(['sand', 'blue', 'lime', 'peach', 'paper', 'ink'] as const).map(
           (tone) => (
-            <Specimen key={tone} family="tag" variant={`Tone=${cap(tone)}`}>
+            <Specimen
+              key={tone}
+              family="tag"
+              variant={`Tone=${cap(tone)}, Size=Regular`}
+            >
               <Tag tone={tone}>Waiting room</Tag>
             </Specimen>
           ),
         )}
-        <Specimen family="tag" label="With icon">
+        {(['sand', 'blue', 'lime', 'peach', 'paper', 'ink'] as const).map(
+          (tone) => (
+            <Specimen
+              key={`${tone}-compact`}
+              family="tag"
+              variant={`Tone=${cap(tone)}, Size=Compact`}
+            >
+              <Tag tone={tone} size="compact">
+                Waiting room
+              </Tag>
+            </Specimen>
+          ),
+        )}
+        <Specimen
+          family="tag"
+          variant="Tone=Lime, Size=Regular"
+          label="With icon"
+          heightOnly
+        >
           <Tag tone="lime" icon="check">
             Safe
           </Tag>
-        </Specimen>
-        <Specimen family="tag" label="Compact">
-          <Tag size="compact">You</Tag>
         </Specimen>
       </Family>
 
@@ -418,7 +494,11 @@ export default function Gallery() {
             Puzzles
           </FilterChip>
         </Specimen>
-        <Specimen label="Filter chip field: Bots, one choice" width={320}>
+        <Specimen
+          label="Filter chip field: Bots, one choice"
+          width={320}
+          uncompared="Figma has no component for it: LD01 draws Input's label and helper around Filter chips."
+        >
           <FilterChipField
             label="Bots"
             value={bots}
@@ -443,7 +523,12 @@ export default function Gallery() {
             <Notice tone={tone}>Connection restored. Welcome back!</Notice>
           </Specimen>
         ))}
-        <Specimen family="notice" label="Two lines" width={360}>
+        <Specimen
+          family="notice"
+          label="Two lines"
+          width={360}
+          uncompared="Figma's Notice holds one line of text."
+        >
           <Notice tone="error">
             That room is full now. Pick another one, or make your own room.
           </Notice>
@@ -462,7 +547,12 @@ export default function Gallery() {
             steps={m.games.of['draw-and-guess'].howToPlay.steps}
           />
         </Specimen>
-        <Specimen label="Dialog: steps only" width={360}>
+        <Specimen
+          family="how-to-play"
+          label="Dialog: steps only"
+          width={360}
+          uncompared="Show heading and Show goal off, which no variant of Figma's How to play draws."
+        >
           <HowToPlay
             steps={[
               ...m.games.of['draw-and-guess'].howToPlay.steps,
@@ -530,7 +620,12 @@ export default function Gallery() {
             disabled
           />
         </Specimen>
-        <Specimen family="input" label="Select: Seats" width={496}>
+        <Specimen
+          family="input"
+          variant="State=Default"
+          label="Select: Seats"
+          width={496}
+        >
           <SelectField
             label="Seats"
             value={seats}
@@ -542,7 +637,12 @@ export default function Gallery() {
             helper="Up to 8 players."
           />
         </Specimen>
-        <Specimen family="input" label="Select: Rounds" width={496}>
+        <Specimen
+          family="input"
+          label="Select: Rounds"
+          width={496}
+          uncompared="Show helper off, which no variant of Figma's Input draws."
+        >
           <SelectField
             label="Rounds"
             value={rounds}
@@ -553,7 +653,12 @@ export default function Gallery() {
             }))}
           />
         </Specimen>
-        <Specimen family="input" label="Select: Board" width={496}>
+        <Specimen
+          family="input"
+          variant="State=Default"
+          label="Select: Board"
+          width={496}
+        >
           <SelectField
             label="Board"
             value={board}
@@ -580,6 +685,7 @@ export default function Gallery() {
           family="input"
           label="Select: Word categories, opening a dialog"
           width={496}
+          uncompared="Show helper off, which no variant of Figma's Input draws."
         >
           <PickerField label="Word categories" value="All 15" onOpen={noop} />
         </Specimen>
@@ -625,7 +731,12 @@ export default function Gallery() {
             </ChatMessage>
           </ul>
         </Specimen>
-        <Specimen family="chat-message" label="Wrapped" width={296}>
+        <Specimen
+          family="chat-message"
+          label="Wrapped"
+          width={296}
+          uncompared="Figma's chat messages hold one line of text."
+        >
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
           >
@@ -695,14 +806,24 @@ export default function Gallery() {
             </ul>
           </Specimen>
         ))}
-        <Specimen family="player-row" label="Host and you" width={312}>
+        <Specimen
+          family="player-row"
+          variant="State=Default"
+          label="Host and you"
+          width={312}
+        >
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
           >
             <PlayerRow {...PLAYERS.sam} status="Waiting" score={180} host you />
           </ul>
         </Specimen>
-        <Specimen family="player-row" label="Show score off" width={312}>
+        <Specimen
+          family="player-row"
+          variant="State=Scored"
+          label="Show score off"
+          width={312}
+        >
           <ul
             style={{ margin: 0, padding: 0, listStyle: 'none', width: '100%' }}
           >
@@ -718,7 +839,7 @@ export default function Gallery() {
       </Family>
 
       <Family name="Scoreboard" file="scoreboard">
-        <Specimen family="scoreboard" width={344}>
+        <Specimen family="scoreboard" variant="Folded=No" width={344}>
           <Scoreboard players={4} seats={8}>
             <PlayerRow
               {...PLAYERS.maya}
@@ -1023,7 +1144,12 @@ export default function Gallery() {
         <div className={styles.cellRow} role="grid" aria-label="Reveal">
           <div role="row" className={styles.cellRow}>
             {(['safe', 'mine', 'auto'] as const).map((outcome, column) => (
-              <Specimen key={outcome} label={`Over a cell: ${outcome}`}>
+              <Specimen
+                key={outcome}
+                family="mine-cell"
+                variant={`State=${outcome === 'mine' ? 'Mine' : '1'}, Size=Regular`}
+                label={`Over a cell: ${outcome}`}
+              >
                 <MineCell
                   state={
                     outcome === 'mine'
@@ -1072,7 +1198,11 @@ export default function Gallery() {
                   />
                 </Specimen>
               ))}
-              <Specimen label="A fraction">
+              <Specimen
+                family="number-card"
+                variant={`State=Made, Size=${sizeName}`}
+                label="A fraction"
+              >
                 <NumberCard
                   value="8/3"
                   formula="8 ÷ 3"
@@ -1080,7 +1210,11 @@ export default function Gallery() {
                   size={cardSize}
                 />
               </Specimen>
-              <Specimen label="A button">
+              <Specimen
+                family="number-card"
+                variant={`State=Default, Size=${sizeName}`}
+                label="A button"
+              >
                 <NumberCard value="7" size={cardSize} label="7" onPick={noop} />
               </Specimen>
             </div>
@@ -1195,7 +1329,12 @@ export default function Gallery() {
         ))}
         <div className={styles.cellRow}>
           {(['match', 'miss'] as const).map((mark) => (
-            <Specimen key={mark} label={`Spot marked ${mark}`}>
+            <Specimen
+              key={mark}
+              family="snap-card"
+              variant="State=Default, Size=Compact"
+              label={`Spot marked ${mark}`}
+            >
               <SnapCard
                 symbols={SNAP_SAMPLE}
                 size="compact"
@@ -1274,7 +1413,7 @@ export default function Gallery() {
       <Family
         name="Trios shape"
         file="trios-shape"
-        note="Three shapes, three fills, three colours: 27 in all, scaled as a whole on smaller cards."
+        note="Three shapes, three fills, three colours: 27 in all, scaled as a whole on smaller cards. A Mini card's 16 px shapes take the coarse stripes."
       >
         {(['circle', 'triangle', 'square'] as const).map((shape) => (
           <div key={shape} className={styles.cellRow}>
@@ -1283,7 +1422,7 @@ export default function Gallery() {
                 <Specimen
                   key={`${fill}-${tone}`}
                   family="trios-shape"
-                  variant={`Shape=${cap(shape)}, Fill=${cap(fill)}, Colour=${cap(tone)}`}
+                  variant={`Shape=${cap(shape)}, Fill=${cap(fill)}, Colour=${cap(tone)}, Stripes=Fine`}
                   label={`${cap(tone)} ${fill}`}
                 >
                   <TriosShape shape={shape} fill={fill} colour={tone} />
@@ -1292,6 +1431,25 @@ export default function Gallery() {
             )}
           </div>
         ))}
+        <div className={styles.cellRow}>
+          {(['circle', 'triangle', 'square'] as const).flatMap((shape) =>
+            (['coral', 'blue', 'ink'] as const).map((tone) => (
+              <Specimen
+                key={`${shape}-${tone}`}
+                family="trios-shape"
+                variant={`Shape=${cap(shape)}, Fill=Striped, Colour=${cap(tone)}, Stripes=Coarse`}
+                label={`${cap(tone)} coarse`}
+              >
+                <TriosShape
+                  shape={shape}
+                  fill="striped"
+                  colour={tone}
+                  stripes="coarse"
+                />
+              </Specimen>
+            )),
+          )}
+        </div>
       </Family>
 
       <Family name="Die" file="die">
@@ -1478,7 +1636,11 @@ export default function Gallery() {
             <Lives lives={lives} />
           </Specimen>
         ))}
-        <Specimen family="lives" label="Show label off">
+        <Specimen
+          family="lives"
+          label="Show label off"
+          uncompared="Show label off, which no variant of Figma's Lives draws; its hearts alone are Figma's 68 × 18."
+        >
           <Lives lives={2} showLabel={false} />
         </Specimen>
       </Family>
@@ -1668,7 +1830,11 @@ export default function Gallery() {
           </div>
         ))}
         <div className={styles.cellRow}>
-          <Specimen label="Disabled">
+          <Specimen
+            family="letter-key"
+            label="Disabled"
+            uncompared="Figma's Letter key has no Disabled state."
+          >
             <LetterKey letter="q" onPress={noop} disabled />
           </Specimen>
         </div>
@@ -1739,7 +1905,7 @@ export default function Gallery() {
               <Specimen
                 key={state}
                 family="race-board"
-                variant={`State=${stateName}, Board=${boardName}`}
+                variant={`State=${stateName}, Board=${boardName}, Layout=Column`}
                 label={`${stateName} · ${boardName}`}
               >
                 <RaceBoard
@@ -1747,12 +1913,40 @@ export default function Gallery() {
                   status="Found · +431"
                   state={state}
                   board={boardSize}
-                  rows={[]}
+                  rows={
+                    boardSize === 'small' ? raceRows(state === 'found') : []
+                  }
                 />
               </Specimen>
             ))}
           </div>
         ))}
+        <div className={styles.cellRow}>
+          {(
+            [
+              ['Guessing', 'guessing'],
+              ['Found', 'found'],
+              ['Out', 'out'],
+            ] as const
+          ).map(([stateName, state]) => (
+            <Specimen
+              key={state}
+              family="race-board"
+              variant={`State=${stateName}, Board=Small, Layout=Row`}
+              label={`${stateName} · Small, Row`}
+              width={350}
+            >
+              <RaceBoard
+                name="Maya"
+                status="Found · +431"
+                state={state}
+                board="small"
+                layout="row"
+                rows={raceRows(state === 'found')}
+              />
+            </Specimen>
+          ))}
+        </div>
       </Family>
 
       <Family name="Digit tile" file="digit-tile">
@@ -1806,7 +2000,11 @@ export default function Gallery() {
               <CodeMarks layout={layout} />
             </Specimen>
           ))}
-          <Specimen label="1 in place, 2 elsewhere">
+          <Specimen
+            family="code-marks"
+            variant="Layout=Grid"
+            label="1 in place, 2 elsewhere"
+          >
             <CodeMarks mark={{ right: 1, moved: 2 }} />
           </Specimen>
         </div>
@@ -1837,7 +2035,11 @@ export default function Gallery() {
               />
             </Specimen>
           ))}
-          <Specimen label="Two guesses and one typing">
+          <Specimen
+            family="code-board"
+            variant="Size=Compact"
+            label="Two guesses and one typing"
+          >
             <CodeBoard
               rows={[
                 { guess: '1234', mark: { right: 0, moved: 2 } },
@@ -2016,30 +2218,33 @@ export default function Gallery() {
       </Family>
 
       <Family name="Pick result" file="pick-result">
-        {(['safe', 'mine', 'auto'] as const).map((outcome) => (
-          <Specimen
-            key={outcome}
-            family="pick-result"
-            variant={`Outcome=${cap(outcome)}`}
-            width={832}
-          >
-            <ul
-              style={{
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-                width: '100%',
-              }}
-            >
-              <PickResult
-                {...PLAYERS.sam}
-                {...SAMPLE_AVATAR}
-                outcome={outcome}
-                detail="23% risk"
-                points={outcome === 'mine' ? -20 : 31}
-              />
-            </ul>
-          </Specimen>
+        {(
+          [
+            ['Desktop', 832],
+            ['Phone', 316],
+          ] as const
+        ).map(([layout, width]) => (
+          <div key={layout} className={styles.cellRow}>
+            {(['safe', 'mine', 'auto'] as const).map((outcome) => (
+              <Specimen
+                key={outcome}
+                family="pick-result"
+                variant={`Outcome=${cap(outcome)}, Layout=${layout}`}
+                width={width}
+              >
+                {/* Its Phone layout follows the width of the list it is in. */}
+                <ul className={styles.list}>
+                  <PickResult
+                    {...PLAYERS.sam}
+                    {...SAMPLE_AVATAR}
+                    outcome={outcome}
+                    detail="23% risk"
+                    points={outcome === 'mine' ? -20 : 31}
+                  />
+                </ul>
+              </Specimen>
+            ))}
+          </div>
         ))}
       </Family>
 
@@ -2117,7 +2322,12 @@ export default function Gallery() {
               />
             </Specimen>
           ))}
-          <Specimen label="Your turn, Black" width={350}>
+          <Specimen
+            family="gomoku-board"
+            variant="Layout=Phone"
+            label="Your turn, Black"
+            width={350}
+          >
             <GomokuBoard
               size="small"
               stones={GOMOKU_STONES.map((stone, point) =>
@@ -2134,46 +2344,60 @@ export default function Gallery() {
       </Family>
 
       <Family name="Gomoku seat" file="gomoku-seat">
-        <div className={styles.cellRow}>
-          {(['black', 'white'] as const).flatMap((color) =>
-            (['default', 'turn', 'won'] as const).map((seatState) => {
-              const colorName = color === 'black' ? 'Black' : 'White';
-              const stateName =
-                seatState === 'default'
-                  ? 'Default'
-                  : seatState === 'turn'
-                    ? 'Turn'
-                    : 'Won';
-              return (
-                <Specimen
-                  key={`${color}-${seatState}`}
-                  family="gomoku-seat"
-                  variant={`Color=${colorName}, State=${stateName}`}
-                  width={306}
-                  heightOnly
-                >
-                  <GomokuSeat
-                    name={color === 'black' ? 'Maya' : 'Leo'}
-                    detail={
-                      seatState === 'turn'
-                        ? `${colorName} · your turn`
-                        : seatState === 'won'
-                          ? `${colorName} · five in a row`
-                          : colorName
-                    }
-                    avatar={
-                      color === 'black'
-                        ? { initials: 'MA', tone: 'peach' }
-                        : { initials: 'LE', tone: 'lime' }
-                    }
-                    color={color}
-                    state={seatState}
-                  />
-                </Specimen>
-              );
-            }),
-          )}
-        </div>
+        {(['Desktop', 'Phone'] as const).map((layout) => (
+          <div key={layout} className={styles.cellRow}>
+            {(['black', 'white'] as const).flatMap((color) =>
+              (['default', 'turn', 'won'] as const).map((seatState) => {
+                const colorName = color === 'black' ? 'Black' : 'White';
+                const stateName =
+                  seatState === 'default'
+                    ? 'Default'
+                    : seatState === 'turn'
+                      ? 'Turn'
+                      : 'Won';
+                const phone = layout === 'Phone';
+                return (
+                  <Specimen
+                    key={`${color}-${seatState}`}
+                    family="gomoku-seat"
+                    variant={`Color=${colorName}, State=${stateName}, Layout=${layout}`}
+                    width={phone ? 296 : 306}
+                    heightOnly={!phone}
+                    deviation={seatState === 'default' ? undefined : SEAT_EDGE}
+                  >
+                    <GomokuSeat
+                      name={color === 'black' ? 'Maya' : 'Leo'}
+                      detail={
+                        seatState === 'turn'
+                          ? `${colorName} · your turn`
+                          : seatState === 'won'
+                            ? `${colorName} · five in a row`
+                            : colorName
+                      }
+                      avatar={
+                        color === 'black'
+                          ? { initials: 'MA', tone: 'peach' }
+                          : { initials: 'LE', tone: 'lime' }
+                      }
+                      // A phone's note leaves out the colour, which the
+                      // stone shows, as a room's seats do.
+                      compactDetail={
+                        seatState === 'turn'
+                          ? m.gomoku.phoneSeat(m.gomoku.notes.yourTurn)
+                          : seatState === 'won'
+                            ? m.gomoku.phoneSeat(scoreOf(m, 'gomoku', 1))
+                            : ''
+                      }
+                      color={color}
+                      state={seatState}
+                      compact={phone}
+                    />
+                  </Specimen>
+                );
+              }),
+            )}
+          </div>
+        ))}
       </Family>
 
       <Family name="Mobile tabs" file="mobile-tabs">
@@ -2188,7 +2412,12 @@ export default function Gallery() {
             ]}
           />
         </Specimen>
-        <Specimen family="mobile-tabs" label="Chat unread" width={480}>
+        <Specimen
+          family="mobile-tabs"
+          variant="View=Board"
+          label="Chat unread"
+          width={480}
+        >
           <MobileTabs
             value="board"
             onValueChange={noop}
@@ -2206,7 +2435,7 @@ export default function Gallery() {
           <Specimen
             key={`${game.type}-tile`}
             family="game-card"
-            variant={`Game=${m.games.of[game.type].name}, Layout=Tile`}
+            variant={`Game=${m.games.of[game.type].name}, Layout=Tile, State=Default`}
             width={310}
           >
             <GameCard game={game} layout="tile" />
@@ -2216,7 +2445,7 @@ export default function Gallery() {
           <Specimen
             key={`${game.type}-row`}
             family="game-card"
-            variant={`Game=${m.games.of[game.type].name}, Layout=Row`}
+            variant={`Game=${m.games.of[game.type].name}, Layout=Row, State=Default`}
             width={350}
           >
             <GameCard game={game} layout="row" />
@@ -2310,7 +2539,11 @@ export default function Gallery() {
             sound={sound}
           />
         </Specimen>
-        <Specimen label="Choice list: Board, in the page" width={496}>
+        <Specimen
+          label="Choice list: Board, in the page"
+          width={496}
+          uncompared="Figma has no component for it: its rows are Select options, laid out in the page."
+        >
           <ChoiceList
             label="Board"
             value={choice}
@@ -2386,9 +2619,14 @@ export default function Gallery() {
       <Family
         name="Card and dialog"
         file="card"
-        note="The focused card of name, create-room and password pages, the dialog over a room, and the panels of an empty or loading lobby. Figma's variants hold an empty Content slot, so the specimens are not measured; the screens that use them are."
+        note="The focused card of name, create-room and password pages, the dialog over a room, and the panels of an empty or loading lobby. Figma's variants hold an empty Content slot, so the specimens are not compared; the screens that use them are."
       >
-        <Specimen label="Kind=Focused" width={560}>
+        <Specimen
+          family="card"
+          label="Kind=Focused"
+          width={560}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card
             title="A little room for you."
             description="Set up your game and invite some good company."
@@ -2407,14 +2645,24 @@ export default function Gallery() {
             />
           </Card>
         </Specimen>
-        <Specimen label="Kind=Panel" width={920}>
+        <Specimen
+          family="card"
+          label="Kind=Panel"
+          width={920}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card
             kind="panel"
             title="A little quiet in here."
             description="Be the first to make a room. Bring a friend and get playing."
           />
         </Specimen>
-        <Specimen label="Kind=Panel: stats beside a game" width={344}>
+        <Specimen
+          family="card"
+          label="Kind=Panel: stats beside a game"
+          width={344}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card kind="panel" title="Best on this device">
             <StatList
               className={styles.stretch}
@@ -2426,7 +2674,11 @@ export default function Gallery() {
             />
           </Card>
         </Specimen>
-        <Specimen label="Kind=Dialog: opens over the page">
+        <Specimen
+          family="card"
+          label="Kind=Dialog: opens over the page"
+          uncompared="The button that opens the Dialog, which renders over the page and is not measured."
+        >
           <Button
             variant="secondary"
             icon="leave"

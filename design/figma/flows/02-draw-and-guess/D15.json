@@ -286,7 +286,8 @@
                     "path": "Player 1 / Avatar",
                     "componentProperties": {
                       "Initials": "SA",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {

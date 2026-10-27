@@ -51,10 +51,9 @@
             "path": "You",
             "componentProperties": {
               "Initials": "RG",
-              "Tone": "Blue"
-            },
-            "height": 32,
-            "width": 32
+              "Tone": "Blue",
+              "Size": "Small"
+            }
           }
         ]
       },

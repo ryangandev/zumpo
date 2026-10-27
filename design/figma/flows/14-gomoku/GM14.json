@@ -89,7 +89,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             }
           }
         ]
@@ -460,7 +461,8 @@
                                     "path": "Player / Avatar",
                                     "componentProperties": {
                                       "Initials": "LE",
-                                      "Tone": "Lime"
+                                      "Tone": "Lime",
+                                      "Size": "Regular"
                                     },
                                     "visible": false
                                   },
@@ -579,7 +581,8 @@
                     "path": "Player 1 / Avatar",
                     "componentProperties": {
                       "Initials": "MA",
-                      "Tone": "Peach"
+                      "Tone": "Peach",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -602,7 +605,8 @@
                     "path": "Player 2 / Avatar",
                     "componentProperties": {
                       "Initials": "SA",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -625,7 +629,8 @@
                     "path": "Player 3 / Avatar",
                     "componentProperties": {
                       "Initials": "LE",
-                      "Tone": "Lime"
+                      "Tone": "Lime",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -648,7 +653,8 @@
                     "path": "Player 4 / Avatar",
                     "componentProperties": {
                       "Initials": "RG",
-                      "Tone": "Blue"
+                      "Tone": "Blue",
+                      "Size": "Regular"
                     }
                   }
                 ]
@@ -698,7 +704,8 @@
                     "path": "Player 1 / Avatar",
                     "componentProperties": {
                       "Initials": "SA",
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -721,7 +728,8 @@
                     "path": "Player 2 / Avatar",
                     "componentProperties": {
                       "Initials": "RG",
-                      "Tone": "Blue"
+                      "Tone": "Blue",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -744,7 +752,8 @@
                     "path": "Player 3 / Avatar",
                     "componentProperties": {
                       "Initials": "LE",
-                      "Tone": "Lime"
+                      "Tone": "Lime",
+                      "Size": "Regular"
                     }
                   },
                   {
@@ -767,7 +776,8 @@
                     "path": "Player 4 / Avatar",
                     "componentProperties": {
                       "Initials": "RG",
-                      "Tone": "Blue"
+                      "Tone": "Blue",
+                      "Size": "Regular"
                     }
                   }
                 ]

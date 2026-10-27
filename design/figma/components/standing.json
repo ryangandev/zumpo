@@ -77,16 +77,10 @@
             "h": 32,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             },
-            "componentId": "4:34",
-            "overrides": [
-              {
-                "path": ".",
-                "height": 32,
-                "width": 32
-              }
-            ]
+            "componentId": "257:71096"
           },
           {
             "type": "INSTANCE",
@@ -187,16 +181,10 @@
             "h": 32,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             },
-            "componentId": "4:34",
-            "overrides": [
-              {
-                "path": ".",
-                "height": 32,
-                "width": 32
-              }
-            ]
+            "componentId": "257:71096"
           },
           {
             "type": "INSTANCE",
@@ -297,15 +285,14 @@
             "h": 32,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             },
-            "componentId": "4:34",
+            "componentId": "257:71096",
             "overrides": [
               {
                 "path": ".",
-                "height": 32,
-                "opacity": 0.5,
-                "width": 32
+                "opacity": 0.5
               }
             ]
           },

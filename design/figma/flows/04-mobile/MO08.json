@@ -51,7 +51,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           }
         ]
@@ -144,7 +145,8 @@
             "path": "Standing / MA / Avatar",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           },
           {
@@ -160,7 +162,8 @@
             "path": "Standing / SA / Avatar",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Small"
             }
           },
           {
@@ -176,7 +179,8 @@
             "path": "Standing / RY / Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]

@@ -120,7 +120,8 @@
             "path": "Standing / RY / Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]
@@ -182,6 +183,7 @@
           "$Zumpo · UI:color/paper"
         ],
         "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
         "children": [
           {
             "type": "FRAME",

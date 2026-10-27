@@ -108,9 +108,10 @@
                 "h": 32,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Small"
                 },
-                "componentId": "4:34",
+                "componentId": "257:71096",
                 "props": {
                   "Initials": "MA"
                 },
@@ -119,9 +120,7 @@
                     "path": ".",
                     "fills": [
                       "$Zumpo · UI:color/blue"
-                    ],
-                    "height": 32,
-                    "width": 32
+                    ]
                   }
                 ]
               }

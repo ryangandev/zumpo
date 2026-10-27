@@ -60,7 +60,8 @@
             "path": "Navigation / You",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             }
           }
         ]

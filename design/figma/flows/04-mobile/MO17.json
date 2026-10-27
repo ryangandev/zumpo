@@ -107,19 +107,13 @@
                 "h": 32,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Small"
                 },
-                "componentId": "26:10572",
+                "componentId": "257:71102",
                 "props": {
                   "Initials": "SA"
-                },
-                "overrides": [
-                  {
-                    "path": ".",
-                    "height": 32,
-                    "width": 32
-                  }
-                ]
+                }
               }
             ]
           }

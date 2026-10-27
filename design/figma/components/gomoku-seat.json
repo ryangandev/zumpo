@@ -106,7 +106,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
@@ -290,7 +291,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
@@ -474,7 +476,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
@@ -657,7 +660,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
@@ -841,7 +845,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
@@ -1025,7 +1030,8 @@
                 "h": 40,
                 "component": "Zumpo/Avatar",
                 "variant": {
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 },
                 "componentId": "4:34",
                 "props": {
