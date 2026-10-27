@@ -361,25 +361,27 @@ function RoundResults({ state }: { state: CodeBreakerRoomState }) {
             <p className={styles.body}>{m.codeBreaker.codeWas(result.code)}</p>
           )}
         </div>
-        <div className={styles.boards}>
-          {result.boards.map((board) => (
-            <CodeRaceBoard
-              key={board.playerId}
-              name={board.username}
-              status={
-                board.status === 'cracked'
-                  ? m.codeBreaker.crackedInPoints(
-                      board.rows.length,
-                      board.points,
-                    )
-                  : m.codeBreaker.missed
-              }
-              state={board.status === 'cracked' ? 'cracked' : 'out'}
-              layout={phone ? 'row' : 'column'}
-              rows={board.rows}
-              describe={(row) => describeRow(row, m)}
-            />
-          ))}
+        <div className={styles.boardsBox}>
+          <div className={styles.boards}>
+            {result.boards.map((board) => (
+              <CodeRaceBoard
+                key={board.playerId}
+                name={board.username}
+                status={
+                  board.status === 'cracked'
+                    ? m.codeBreaker.crackedInPoints(
+                        board.rows.length,
+                        board.points,
+                      )
+                    : m.codeBreaker.missed
+                }
+                state={board.status === 'cracked' ? 'cracked' : 'out'}
+                layout={phone ? 'row' : 'column'}
+                rows={board.rows}
+                describe={(row) => describeRow(row, m)}
+              />
+            ))}
+          </div>
         </div>
       </section>
     </BoardPanel>
