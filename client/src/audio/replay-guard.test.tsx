@@ -364,4 +364,32 @@ describe('a run heard one after another', () => {
       vi.useRealTimers();
     }
   });
+
+  it('cuts short the beats still waiting when a sound that cuts plays', () => {
+    vi.useFakeTimers();
+    try {
+      // -1 is the end: a stinger that must not have pegs over it.
+      const ending: DeriveSounds<number, 'peg' | 'end'> = (prev, next) =>
+        next === -1 ? [{ sound: 'end', key: 'end' }] : pegs(prev, next);
+      const play =
+        vi.fn<(sound: 'peg' | 'end', options?: PlayOptions) => void>();
+      function Ending({ rows }: { rows: number }) {
+        useStateSounds<number, 'peg' | 'end'>(rows, {
+          derive: ending,
+          play,
+          epoch: 1,
+          isNewGame: never,
+          cuts: (sound) => sound === 'end',
+        });
+        return null;
+      }
+      const view = render(<Ending rows={0} />);
+      view.rerender(<Ending rows={1} />);
+      view.rerender(<Ending rows={-1} />);
+      vi.advanceTimersByTime(1000);
+      expect(play.mock.calls.map(([sound]) => sound)).toEqual(['peg', 'end']);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

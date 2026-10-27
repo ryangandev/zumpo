@@ -89,6 +89,10 @@ export const endAlone: SelectSounds<string> = (events) =>
     ? events.filter((event) => event.key === END_KEY)
     : events;
 
+/** An end stinger cuts short a run still waiting to play, such as pegs. */
+const STINGERS: ReadonlySet<string> = new Set(Object.values(STINGER));
+const isStinger = (sound: string) => STINGERS.has(sound);
+
 /**
  * A game on your own is one mount: Play again and a new board mount a new
  * game (`key`), and its guard with it, so its keys need not name the game
@@ -135,6 +139,7 @@ export function useSoloSounds<Game, Bank extends typeof SOLO_BANK>(
     play: play as unknown as PlaySound<string>,
     isNewGame: sameGame,
     select: endAlone,
+    cuts: isStinger,
   });
   return play;
 }

@@ -169,7 +169,9 @@ export function createReplayGuard<
  * Plays what each new `state` should be heard as, through a replay guard.
  * `epoch` is whatever changes when states may have skipped ahead, such as
  * the session's `connection`: the first state after it changes is only a
- * baseline. A null `state` (nothing yet) is skipped.
+ * baseline. A null `state` (nothing yet) is skipped. A sound `cuts` says
+ * yes to, such as a stinger, cuts short the beats of a run still waiting to
+ * play (`delayMs`), so they never land over it.
  */
 export function useStateSounds<
   State,
@@ -184,6 +186,7 @@ export function useStateSounds<
     isNewGame,
     select,
     standing,
+    cuts,
   }: {
     // The steps come from `play`, the bank's own; `derive` must give them.
     derive: DeriveSounds<State, Id, NoInfer<Stepped>>;
@@ -192,11 +195,12 @@ export function useStateSounds<
     isNewGame: IsNewGame<State>;
     select?: SelectSounds<Id, NoInfer<Stepped>>;
     standing?: (state: State) => readonly string[];
+    cuts?: (sound: Id) => boolean;
   },
 ): void {
-  const latest = useRef({ derive, isNewGame, select, standing });
+  const latest = useRef({ derive, isNewGame, select, standing, cuts });
   useEffect(() => {
-    latest.current = { derive, isNewGame, select, standing };
+    latest.current = { derive, isNewGame, select, standing, cuts };
   });
   // A run's later beats, let go with the page that asked for them.
   const pending = useRef(new Set<ReturnType<typeof setTimeout>>());
@@ -242,6 +246,11 @@ export function useStateSounds<
     seen.resync = false;
     // Each event already carries the step its sound needs.
     const playAny = play as (id: Id, options?: PlayOptions) => void;
+    const cut = latest.current.cuts;
+    if (cut && events.some((e) => !e.delayMs && cut(e.sound))) {
+      for (const timer of pending.current) clearTimeout(timer);
+      pending.current.clear();
+    }
     for (const { sound, other, variant, delayMs } of events) {
       const options = variant === undefined ? { other } : { other, variant };
       if (!delayMs) {
