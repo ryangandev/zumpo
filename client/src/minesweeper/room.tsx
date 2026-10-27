@@ -23,7 +23,9 @@ import { HIDDEN } from '../../../shared/minesweeper';
 import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
+import { useDeadlineTicks } from '../room/sounds';
 import { Board } from './board';
+import { actingDeadline, MINESWEEPER_SOUNDS } from './sounds';
 import styles from './room.module.css';
 
 /**
@@ -73,6 +75,7 @@ export function MinesweeperRoom() {
       stage={inGame ? <Round room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.minesweeper.messagePlaceholder }}
+      sounds={MINESWEEPER_SOUNDS}
       nextBeside
     />
   );
@@ -146,8 +149,14 @@ function BetweenGames({ room }: { room: Room }) {
 /** M04-M13: one round: the turn bar, then the board and the last results. */
 function Round({ room }: { room: Room }) {
   const m = useMessages();
-  const { state, receivedAt, reconnecting, socket } = room;
+  const { state, receivedAt, reconnecting, socket, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
   const canPick =
     state.phase === 'picking' &&
     state.myPick === null &&
