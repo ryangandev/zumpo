@@ -246,6 +246,9 @@
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Word choice",
+                "variant": {
+                  "Size": "Regular"
+                },
                 "componentId": "9:408",
                 "overrides": [
                   {
@@ -264,6 +267,9 @@
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Word choice",
+                "variant": {
+                  "Size": "Regular"
+                },
                 "componentId": "9:408",
                 "props": {
                   "Word": "Rabbit"
@@ -285,6 +291,9 @@
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Word choice",
+                "variant": {
+                  "Size": "Regular"
+                },
                 "componentId": "9:408",
                 "props": {
                   "Word": "Parrot"

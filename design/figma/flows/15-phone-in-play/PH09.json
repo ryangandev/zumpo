@@ -5,7 +5,7 @@
   "id": "256:70741",
   "section": "15 / Phone in play",
   "reviewNotes": [
-    "PH09 · A phone too short for the sheet, as an iPhone SE in Safari: the sheet is never narrower than 5/8 of its column, and the page scrolls instead. Each turn starts scrolled to its turn bar, as far as the page goes, so the whole turn is in sight, the room bar and tabs above it."
+    "PH09 · A phone too short for the sheet, as an iPhone SE in Safari: a sheet to draw on is never smaller than 5/8 of its column or 128 px tall, whichever is less, and the page scrolls instead. Each turn starts scrolled to its turn bar, as far as the page goes, so the whole turn is in sight, the room bar and tabs above it."
   ],
   "frame": {
     "type": "FRAME",
@@ -25,9 +25,9 @@
         "id": "256:70742",
         "name": "Page",
         "x": 0,
-        "y": -126,
+        "y": -97,
         "w": 375,
-        "h": 674,
+        "h": 645,
         "hSize": "hug",
         "fills": [
           "$Zumpo · UI:color/cream"
@@ -210,7 +210,7 @@
             "id": "256:70871",
             "name": "Sheet room",
             "w": 335,
-            "h": 157,
+            "h": 128,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
@@ -224,8 +224,8 @@
                 "type": "FRAME",
                 "id": "256:70748",
                 "name": "Canvas",
-                "w": 209.38,
-                "h": 157,
+                "w": 170.14,
+                "h": 128,
                 "fills": [
                   "$Zumpo · UI:color/white"
                 ],
@@ -247,8 +247,8 @@
                     "type": "INSTANCE",
                     "id": "256:70749",
                     "name": "Drawing / Turtle",
-                    "w": 207.38,
-                    "h": 138.25,
+                    "w": 168.14,
+                    "h": 112.09,
                     "component": "Sample / Turtle drawing",
                     "variant": {
                       "Stage": "Outline"
