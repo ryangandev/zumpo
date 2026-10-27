@@ -28,8 +28,21 @@
   padding: var(--zumpo-space-24);
 }
 
+/* The room the sheet stands in. Off a phone it takes no box of its own, and
+   the sheet lies straight in the play sheet's. */
+.fit {
+  display: contents;
+}
+
 @media (max-width: 640px) {
   .playSheet {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    container-type: inline-size;
+  }
+
+  .fit {
     display: flex;
     flex: 1 1 0;
     flex-direction: column;
@@ -39,13 +52,32 @@
     container-type: size;
   }
 
-  .playSheet > * {
+  /* A sheet to draw on is never smaller than 5/8 of its column or 128 px
+     tall, whichever is less (PH09): 128 px is what a drawer's turn leaves
+     it on one screen of an iPhone with Safari's bars showing (393 × 659),
+     so those phones never scroll. A phone too short for the floor grows
+     the page past the window, which scrolls (page.module.css), and each
+     turn starts scrolled to its turn bar (use-turn-in-view.ts): so on an
+     iPhone SE the whole turn, from the turn bar to the newest chat line, is
+     one screen, with the room bar and the tabs above it. A drawing only
+     shown, to work from, has no floor. */
+  [data-play-grows] > .fit {
+    min-height: min(
+      calc(
+        (100cqw * 5 / 8 - 2 * var(--zumpo-space-1)) * 598 / 798 + 2 *
+          var(--zumpo-space-1)
+      ),
+      calc(2 * var(--zumpo-space-64))
+    );
+  }
+
+  .fit > * {
     width: min(100cqw, 100cqh * 798 / 598);
   }
 
   /* Under the controls above it, where Figma draws it (MO08, PH05), the
      height the sheet does not need left under it. */
-  .playSheet.start {
+  .start > .fit {
     justify-content: flex-start;
   }
 }
@@ -64,7 +96,7 @@
     justify-content: center;
   }
 
-  .playSheet > * {
+  .fit > * {
     width: 100%;
     max-width: max(
       40%,
@@ -72,7 +104,7 @@
     );
   }
 
-  .shown > * {
+  .shown .fit > * {
     max-width: calc(
       (var(--height-left, 100dvh) - 2 * var(--zumpo-space-1)) * 798 / 598
     );
@@ -87,7 +119,7 @@
     justify-content: center;
   }
 
-  .playSheet > * {
+  .fit > * {
     width: 100%;
     max-width: calc((100dvh - 2 * var(--zumpo-space-24)) * 798 / 598);
   }

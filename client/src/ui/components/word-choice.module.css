@@ -13,6 +13,24 @@
   transition: transform 80ms ease-out;
 }
 
+/* A row: the word, and its letters at the end on the word's baseline. */
+.compact {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--zumpo-space-16) var(--zumpo-space-24);
+}
+
+.compact .word {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.compact .detail {
+  flex: none;
+  white-space: nowrap;
+}
+
 @media (hover: hover) {
   .choice:hover {
     border-color: var(--zumpo-ink);

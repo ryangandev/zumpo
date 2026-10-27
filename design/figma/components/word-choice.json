@@ -1,10 +1,10 @@
 {
   "format": 1,
   "name": "Zumpo/Word choice",
-  "id": "9:408",
-  "type": "COMPONENT",
-  "key": "12cc636ee21c0ebafaa2bad6a960fafd50d9f400",
-  "description": "Drawer-only word candidate (three per turn, from the game’s category). Never shown to anyone else. Detail: letter count.",
+  "id": "256:70882",
+  "type": "COMPONENT_SET",
+  "key": "839dfbebaff6aa7892ba93acf7425ceee9f7cedb",
+  "description": "Drawer-only word candidate (three per turn, from the game’s category). Never shown to anyone else. Detail: letter count. Regular is a card; Compact, a row, is for a phone shorter than 761 px, such as one with Safari’s bars showing (PH10).",
   "properties": {
     "Word": {
       "type": "text",
@@ -13,68 +13,159 @@
     "Detail": {
       "type": "text",
       "default": "6 letters"
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Compact"
+      ]
     }
   },
-  "node": {
-    "type": "COMPONENT",
-    "id": "9:408",
-    "name": "Zumpo/Word choice",
-    "x": 32,
-    "y": 3098,
-    "w": 260,
-    "h": 110,
-    "hSize": "hug",
-    "fills": [
-      "$Zumpo · UI:color/paper"
-    ],
-    "strokes": [
-      "$Zumpo · UI:color/line"
-    ],
-    "strokeAlign": "inside",
-    "radius": "$Zumpo · UI:radius/16",
-    "layout": {
-      "mode": "column",
-      "gap": "$Zumpo · UI:space/12",
-      "pad": "$Zumpo · UI:space/24",
-      "strokesIncluded": true
-    },
-    "children": [
-      {
-        "type": "TEXT",
-        "id": "9:406",
-        "name": "Word",
-        "w": 210,
-        "h": 30,
-        "wSize": "fill",
-        "hSize": "hug",
-        "propRefs": {
-          "characters": "Word"
-        },
-        "text": "Turtle",
-        "textStyle": "Zumpo/Heading",
-        "fills": [
-          "$Zumpo · UI:color/ink"
-        ],
-        "autoResize": "height"
+  "defaultVariant": "Size=Regular",
+  "variants": [
+    {
+      "name": "Size=Regular",
+      "id": "9:408",
+      "props": {
+        "Size": "Regular"
       },
-      {
-        "type": "TEXT",
-        "id": "9:407",
-        "name": "Detail",
-        "w": 210,
-        "h": 18,
-        "wSize": "fill",
+      "node": {
+        "type": "COMPONENT",
+        "id": "9:408",
+        "name": "Size=Regular",
+        "x": 0,
+        "y": 0,
+        "w": 260,
+        "h": 110,
         "hSize": "hug",
-        "propRefs": {
-          "characters": "Detail"
-        },
-        "text": "6 letters",
-        "textStyle": "Zumpo/Small",
         "fills": [
-          "$Zumpo · UI:color/muted"
+          "$Zumpo · UI:color/paper"
         ],
-        "autoResize": "height"
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/16",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "9:406",
+            "name": "Word",
+            "w": 210,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Word"
+            },
+            "text": "Turtle",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "TEXT",
+            "id": "9:407",
+            "name": "Detail",
+            "w": 210,
+            "h": 18,
+            "wSize": "fill",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Detail"
+            },
+            "text": "6 letters",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
       }
-    ]
-  }
+    },
+    {
+      "name": "Size=Compact",
+      "id": "256:70980",
+      "props": {
+        "Size": "Compact"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "256:70980",
+        "name": "Size=Compact",
+        "x": 0,
+        "y": 126,
+        "w": 260,
+        "h": 64,
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/paper"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/16",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "pad": [
+            "$Zumpo · UI:space/16",
+            "$Zumpo · UI:space/24"
+          ],
+          "justify": "space_between",
+          "align": "baseline",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "256:70981",
+            "name": "Word",
+            "w": 162,
+            "h": 30,
+            "wSize": "fill",
+            "hSize": "fill",
+            "propRefs": {
+              "characters": "Word"
+            },
+            "text": "Turtle",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "none"
+          },
+          {
+            "type": "TEXT",
+            "id": "256:70982",
+            "name": "Detail",
+            "w": 48,
+            "h": 30,
+            "hSize": "fill",
+            "propRefs": {
+              "characters": "Detail"
+            },
+            "text": "6 letters",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "none"
+          }
+        ]
+      }
+    }
+  ]
 }

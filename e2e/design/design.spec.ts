@@ -14,7 +14,7 @@ import { expect, test } from '@playwright/test';
  * compared, so the count would drop without a mismatch: it only changes on
  * purpose. Raise it when a specimen starts to be compared.
  */
-const COMPARED = 427;
+const COMPARED = 428;
 
 test('the design gallery matches Figma', async ({ page }) => {
   await page.goto('/design');

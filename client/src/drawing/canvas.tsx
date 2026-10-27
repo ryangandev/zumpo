@@ -206,10 +206,13 @@ function paint(
  * Where a sheet is played, or a drawing shown to work from. A phone plays on
  * one screen (play-board.tsx), so here the sheet keeps its 798 × 598
  * proportions in the height the controls leave it: as wide as the column, or
- * as tall as the room where that is less. Wider, it ends inside the window
- * with what follows it, such as Done (useHeightLeft), and a sheet to draw on
- * is never narrower than 40% of its column; a drawing only `shown`, to work
- * from, may be.
+ * as tall as the room where that is less, but a sheet to draw on never
+ * smaller than 5/8 of its column or 128 px tall, whichever is less: a phone
+ * too short for that scrolls, and
+ * the game keeps its turn in view (useTurnInView). Wider, it ends inside the
+ * window with what follows it, such as Done (useHeightLeft), and a sheet to
+ * draw on is never narrower than 40% of its column. A drawing only `shown`,
+ * to work from, has no floor at any width.
  */
 export function PlaySheet({
   children,
@@ -236,8 +239,9 @@ export function PlaySheet({
         align === 'start' && styles.start,
       )}
       data-play-board=""
+      data-play-grows={shown ? undefined : ''}
     >
-      {children}
+      <div className={styles.fit}>{children}</div>
     </div>
   );
 }

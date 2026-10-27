@@ -128,9 +128,9 @@ async function shot(page: Page, code: string) {
 
 /**
  * Captures the page in a window of the Figma frame's own size, for the
- * screens drawn at a size of their own: a small phone (PH02, PH04), a phone
- * on its side (PH08), a short window (DW17, CB22), or a phone's view of a
- * desktop player's turn (PH06). A board refits a frame after a resize, so
+ * screens drawn at a size of their own: a small phone (PH02, PH04), one
+ * with Safari's bars (PH10), a phone on its side (PH08), a short window
+ * (DW17, CB22), or a phone's view of a desktop player's turn (PH06). A board refits a frame after a resize, so
  * the capture waits for it to settle.
  */
 async function shotAt(page: Page, code: string) {
@@ -144,6 +144,34 @@ async function shotAt(page: Page, code: string) {
       ),
   );
   await shot(page, code);
+  await page.setViewportSize(viewport);
+}
+
+/**
+ * Captures the window, not the page, for a screen Figma draws as a phone too
+ * short for its page, scrolled as far as it goes (PH09).
+ */
+async function shotScrolled(page: Page, code: string) {
+  const viewport = page.viewportSize()!;
+  const [width, height] = figmaSize(code);
+  await page.setViewportSize({ width, height });
+  await page.evaluate(
+    () =>
+      new Promise((done) =>
+        requestAnimationFrame(() => requestAnimationFrame(done)),
+      ),
+  );
+  await page.evaluate(() =>
+    window.scrollTo({ top: document.documentElement.scrollHeight }),
+  );
+  await page.evaluate(() => document.fonts.ready);
+  await page.mouse.move(0, 0);
+  await page.screenshot({
+    path: path.join(COMPARE_DIR, `${code}.png`),
+    animations: 'disabled',
+    caret: 'hide',
+  });
+  await page.evaluate(() => window.scrollTo({ top: 0 }));
   await page.setViewportSize(viewport);
 }
 
@@ -702,10 +730,12 @@ test('a Draw & Guess game', async ({ player }) => {
 
     if (drawer.phone) {
       await shot(drawer.page, 'MO07');
+      await shotAt(drawer.page, 'PH10');
       const word = await chooseAndDraw(drawer.page);
       await shot(drawer.page, 'MO08');
       await shot(drawer.page, 'SO07');
       await shot(drawer.page, 'PH05');
+      await shotScrolled(drawer.page, 'PH09');
       for (const seat of guessers) await guess(seat, word);
       continue;
     }
@@ -779,7 +809,7 @@ test('a Draw & Guess game', async ({ player }) => {
       });
     } else {
       await expect(
-        drawer.page.getByText('Time ran out, so this one was picked for you'),
+        drawer.page.getByText('Time’s up, picked for you'),
       ).toBeVisible({ timeout: 30_000 });
       await draw(drawer.page);
       await shot(drawer.page, 'D12');

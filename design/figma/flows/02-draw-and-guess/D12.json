@@ -127,7 +127,7 @@
                 "props": {
                   "Meta": "Only you can see the word",
                   "Main": "Turtle",
-                  "Label": "Time ran out, so this one was picked for you"
+                  "Label": "Time’s up, picked for you"
                 },
                 "overrides": [
                   {

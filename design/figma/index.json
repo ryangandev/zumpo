@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-27T07:03:14.281Z",
+  "exportedAt": "2026-10-27T09:44:33.609Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": true
   },
   "counts": {
-    "flows": 268,
+    "flows": 270,
     "componentFamilies": 79,
     "outsideComponents": 0,
     "svgs": 132,
-    "seconds": 29,
-    "nodes": 15403,
-    "instances": 8122,
+    "seconds": 28,
+    "nodes": 15434,
+    "instances": 8141,
     "grids": 91,
     "gridCells": 2965
   },
@@ -600,10 +600,10 @@
     },
     {
       "name": "Zumpo/Word choice",
-      "id": "9:408",
+      "id": "256:70882",
       "file": "components/word-choice.json",
       "preview": "previews/components/word-choice.png",
-      "variants": 1
+      "variants": 2
     },
     {
       "name": "Zumpo/Wordmark",
@@ -3970,6 +3970,30 @@
           ],
           "file": "flows/15-phone-in-play/PH08.json",
           "preview": "previews/15-phone-in-play/PH08.png",
+          "isFlow": true
+        },
+        {
+          "code": "PH09",
+          "title": "Draw & Guess drawer on a short phone · 375 × 548",
+          "id": "256:70741",
+          "size": [
+            375,
+            548
+          ],
+          "file": "flows/15-phone-in-play/PH09.json",
+          "preview": "previews/15-phone-in-play/PH09.png",
+          "isFlow": true
+        },
+        {
+          "code": "PH10",
+          "title": "Draw & Guess word choices on a phone with Safari’s bars · 390 × 664",
+          "id": "256:70983",
+          "size": [
+            390,
+            664
+          ],
+          "file": "flows/15-phone-in-play/PH10.json",
+          "preview": "previews/15-phone-in-play/PH10.png",
           "isFlow": true
         }
       ],
