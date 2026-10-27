@@ -27,6 +27,7 @@ import { listNames, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { HUSH_SOUNDS, useCountdownSounds } from './sounds';
 import { Divider, HandRow, Pile, TableHead, TablePanel } from './table';
 import styles from './room.module.css';
 
@@ -76,6 +77,7 @@ export function HushRoom() {
       // Everybody's points are the levels the team cleared; the rows say
       // what each player holds instead.
       showScores={false}
+      sounds={HUSH_SOUNDS}
       nextBeside
     />
   );
@@ -323,6 +325,13 @@ function Level({ room }: { room: Room }) {
   const m = useMessages();
   const { state, receivedAt, reconnecting } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // The count before a level opens, with the digits the clock shows; none
+  // while it is played, which has no clock and no beat.
+  useCountdownSounds({
+    seconds,
+    counting: state.phase === 'countdown',
+    paused: reconnecting,
+  });
   return (
     <>
       <TurnBar {...turnBar(room, seconds, m)} hintRowBelow={HINT_ROW_BELOW} />
