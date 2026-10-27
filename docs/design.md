@@ -32,7 +32,7 @@ They are not copied here, so there is one place to change them.
 | 12 / Doodle Chain / complete flow    | `162:65089` | DC01-DC14 desktop, DC15-DC20 phone                                                    |
 | 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
 | 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
-| 15 / Phone in play                   | `163:63239` | PH01-PH09, the one phone layout every game plays in                                   |
+| 15 / Phone in play                   | `163:63239` | PH01-PH10, the one phone layout every game plays in                                   |
 | 16 / Sound                           | `253:48727` | SO01-SO07, the sound menu on desktop and phone, and in Chinese                        |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
@@ -175,7 +175,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 269 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 270 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 
@@ -236,14 +236,15 @@ There the turn bar takes its compact Phone row, and Gomoku sets its board beside
 Wider and taller, a drawing sheet is no taller than the window leaves below its top, less what follows it in its column, such as Doodle Chain's Done, and the page's foot (`useHeightLeft`), so the sheet, the chat's input and Done are in sight together.
 [The phone spec](../e2e/phone-play.spec.ts) plays every game at 360 by 640 and 390 by 844 and checks that the input is on screen, the page does not scroll, and the input stays where it was through a game.
 
-A sheet to draw on is the one thing a phone's one screen does not shrink without end: it is never narrower than 5/8 of its column (`PlaySheet`), as a desktop's is never narrower than 40% (PH09).
-A phone too short for that with everything else, such as an iPhone SE in Safari (375 by 548) or a drawer's turn at 360 by 640, grows the page past the window, which scrolls, rather than leave a sheet nobody can draw on: one screen would leave an iPhone SE's drawer 26 by 19 px.
+A sheet to draw on is the one thing a phone's one screen does not shrink without end: on a phone it is never smaller than 5/8 of its column or 128 px tall, whichever is less (`PlaySheet`, PH09), as a desktop's is never narrower than 40%.
+128 px is what a drawer's turn leaves the sheet on one screen of an iPhone 15 or 16 in Safari with its bars showing (393 by 659), so the common iPhones in Safari, 390 by 664, 393 by 659 and 430 by 740, keep every phase on one screen, and the floor engages only on shorter phones.
+A phone too short for the floor with everything else, such as an iPhone SE in Safari (375 by 548) or a drawer's turn at 360 by 640, grows the page past the window, which scrolls, rather than leave a sheet nobody can draw on: one screen would leave an iPhone SE's drawer 26 by 19 px.
 Each phase of a turn then starts scrolled to its turn bar, or as far down as the page goes (`useTurnInView`), so the turn bar, the tools, the sheet and the newest chat lines or Done are in sight together, with the room bar, the tabs and the standings a scroll above them; it does not scroll while the viewer is typing or in a dialog.
-5/8 is the largest share at which an iPhone SE's whole Draw & Guess turn is one screen that way, and below the 65% Doodle Chain's sheet has at 360 by 640, so every phone that played on one screen before still does.
-A finger on the drawer's sheet draws and never scrolls the page (`touch-action: none`); a guesser's scrolls it as anywhere else.
-Draw & Guess's word choices keep their own height the same way, so on a short phone they run on down the page rather than over the turn bar and the chat.
-Such a page is at least the small viewport (`100svh`), so the browser's bars sliding away as it scrolls never change its layout.
-[The sheet spec](../e2e/draw-and-guess-sheet.spec.ts) checks the floor, the scroll and the whole turn in sight at 320 by 568, 360 by 640, 375 by 548 and 375 by 667, and that taller phones and a desktop keep their sheet and their one screen.
+A finger on the drawer's sheet draws and never scrolls the page (`touch-action: none`); anywhere else, a guesser's sheet among them, it scrolls the page.
+On a phone shorter than 761 px (`SHORT_PHONE`), such as one with Safari's bars showing, Draw & Guess's word choices are Compact, a 64 px row each, so choosing is one screen too (PH10).
+Their room keeps its own height the same way as the sheet's, so on a phone too short even for Compact ones they run on down the page rather than over the turn bar and the chat.
+Such a page is at least the window as it is now (`100dvh`), so a phone that fits keeps its one screen to the foot with the browser's bars in or out.
+[The sheet spec](../e2e/draw-and-guess-sheet.spec.ts) checks the floor, the scroll and the whole turn in sight at 320 by 568, 360 by 640 and 375 by 548, that every phase is one screen for both players at 390 by 664, 393 by 659, 430 by 740 and 375 by 667, and that taller phones and a desktop keep their sheet and their one screen.
 
 Figma gives each sample player an avatar tone by hand; code picks one from a hash of the player's name, so a player keeps one colour in the header, the scoreboard and the results, on every screen.
 

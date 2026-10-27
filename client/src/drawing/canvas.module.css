@@ -52,16 +52,22 @@
     container-type: size;
   }
 
-  /* A sheet to draw on is never narrower than 5/8 of its column. A phone
-     too short for that grows the page past the window, which scrolls
-     (page.module.css), and each turn starts scrolled to its turn bar
-     (use-turn-in-view.ts): so on an iPhone SE the whole turn, from the
-     turn bar to the newest chat line, is one screen, with the room bar and
-     the tabs above it. A drawing only shown, to work from, has no floor. */
+  /* A sheet to draw on is never smaller than 5/8 of its column or 128 px
+     tall, whichever is less (PH09): 128 px is what a drawer's turn leaves
+     it on one screen of an iPhone with Safari's bars showing (393 × 659),
+     so those phones never scroll. A phone too short for the floor grows
+     the page past the window, which scrolls (page.module.css), and each
+     turn starts scrolled to its turn bar (use-turn-in-view.ts): so on an
+     iPhone SE the whole turn, from the turn bar to the newest chat line, is
+     one screen, with the room bar and the tabs above it. A drawing only
+     shown, to work from, has no floor. */
   [data-play-grows] > .fit {
-    min-height: calc(
-      (100cqw * 5 / 8 - 2 * var(--zumpo-space-1)) * 598 / 798 + 2 *
-        var(--zumpo-space-1)
+    min-height: min(
+      calc(
+        (100cqw * 5 / 8 - 2 * var(--zumpo-space-1)) * 598 / 798 + 2 *
+          var(--zumpo-space-1)
+      ),
+      calc(2 * var(--zumpo-space-64))
     );
   }
 

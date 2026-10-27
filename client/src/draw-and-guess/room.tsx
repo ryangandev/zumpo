@@ -20,7 +20,7 @@ import { initialsOf, toneOf } from '../players/avatar';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { playColumn } from '../shell/play-board';
 import { focusQuietly } from '../shell/quiet-focus';
-import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { PHONE, SHORT_PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useTurnInView } from '../shell/use-turn-in-view';
 import { cx } from '../ui/cx';
 import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
@@ -238,6 +238,7 @@ function Turn({ room }: { room: Room }) {
   const m = useMessages();
   const { state, receivedAt, reconnecting, playerId, socket, canvas } = room;
   const phone = useMediaQuery(PHONE);
+  const shortPhone = useMediaQuery(SHORT_PHONE);
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   const isDrawer = state.currentDrawer === playerId;
   const drawerName =
@@ -311,7 +312,12 @@ function Turn({ room }: { room: Room }) {
     choosing && state.wordChoices ? (
       <div ref={choicesBox} className={styles.choices}>
         {state.wordChoices.map((word) => (
-          <WordChoice key={word} word={word} onChoose={() => choose(word)} />
+          <WordChoice
+            key={word}
+            word={word}
+            size={shortPhone ? 'compact' : 'regular'}
+            onChoose={() => choose(word)}
+          />
         ))}
       </div>
     ) : null;

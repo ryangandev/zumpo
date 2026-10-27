@@ -207,7 +207,8 @@ function paint(
  * one screen (play-board.tsx), so here the sheet keeps its 798 × 598
  * proportions in the height the controls leave it: as wide as the column, or
  * as tall as the room where that is less, but a sheet to draw on never
- * narrower than 5/8 of its column: a phone too short for that scrolls, and
+ * smaller than 5/8 of its column or 128 px tall, whichever is less: a phone
+ * too short for that scrolls, and
  * the game keeps its turn in view (useTurnInView). Wider, it ends inside the
  * window with what follows it, such as Done (useHeightLeft), and a sheet to
  * draw on is never narrower than 40% of its column. A drawing only `shown`,

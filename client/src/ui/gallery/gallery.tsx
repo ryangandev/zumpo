@@ -867,10 +867,27 @@ export default function Gallery() {
         </Specimen>
       </Family>
 
-      <Family name="Word choice" file="word-choice">
-        <Specimen family="word-choice" width={260}>
-          <WordChoice word="Turtle" onChoose={noop} />
-        </Specimen>
+      <Family
+        name="Word choice"
+        file="word-choice"
+        note="Compact on a phone shorter than 761 px."
+      >
+        {(
+          [
+            ['regular', 'Regular'],
+            ['compact', 'Compact'],
+          ] as const
+        ).map(([choiceSize, sizeName]) => (
+          <Specimen
+            key={choiceSize}
+            family="word-choice"
+            variant={`Size=${sizeName}`}
+            label={sizeName}
+            width={260}
+          >
+            <WordChoice word="Turtle" size={choiceSize} onChoose={noop} />
+          </Specimen>
+        ))}
       </Family>
 
       <Family

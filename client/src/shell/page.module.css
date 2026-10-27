@@ -83,11 +83,11 @@
      short for it with everything else, the page grows past the window and
      scrolls, rather than shrink it under its floor. Every column between
      the page and it then keeps its content's height. The page is at least
-     the small viewport, with the browser's bars out, so its layout never
-     changes as they slide away with the scroll. */
+     the window as it is now, so a phone that fits keeps its one screen to
+     the foot with the browser's bars in or out. */
   .page:has([data-play-grows]) {
     height: auto;
-    min-height: 100svh;
+    min-height: 100dvh;
   }
 
   .page:has([data-play-grows]) .main,

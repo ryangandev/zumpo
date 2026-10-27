@@ -13,9 +13,10 @@
 }
 
 /* On a phone the choices stand in for the canvas, one under another,
-   centred in the room the sheet would have (MO07). Their room is never
-   shorter than they are: a phone too short for them grows the page, which
-   scrolls (page.module.css). */
+   centred in the room the sheet would have (MO07), and Compact on a phone
+   shorter than 761 px (PH10, room.tsx). Their room is never shorter than
+   they are: a phone too short even for Compact ones, such as an iPhone SE,
+   grows the page, which scrolls (page.module.css). */
 @media (max-width: 640px) {
   .choicesRoom {
     display: flex;

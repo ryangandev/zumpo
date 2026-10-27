@@ -241,7 +241,11 @@ export {
   type WordBoardProps,
   type WordBoardRow,
 } from './components/word-board';
-export { WordChoice, type WordChoiceProps } from './components/word-choice';
+export {
+  WordChoice,
+  type WordChoiceProps,
+  type WordChoiceSize,
+} from './components/word-choice';
 export { Wordmark } from './components/wordmark';
 export { brushes, type BrushName } from './generated/brushes';
 export { useFocusFollows } from './use-focus-follows';

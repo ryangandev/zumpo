@@ -225,19 +225,28 @@ test(`the sheet sits ${DESKTOP_GAP} px under the toolbar or turn bar beside the 
 });
 
 /**
- * A short phone (design.md#in-code, PH09): the sheet is never narrower than
- * 5/8 of its column, the page scrolls instead, and each phase starts with
- * the whole turn in sight, from the turn bar to the newest chat line or the
- * guess field. A finger on the drawer's sheet draws and never scrolls. The
- * sizes are the smallest phones in use, an iPhone SE in Safari among them.
+ * A short phone (design.md#in-code, PH09): a sheet to draw on is never
+ * smaller than 5/8 of its column or 128 px tall, whichever is less, the page
+ * scrolls instead, and each phase starts with the whole turn in sight, from
+ * the turn bar to the newest chat line or the guess field. A finger on the
+ * drawer's sheet draws and never scrolls; anywhere else it scrolls the page.
+ * The sizes are the shortest phones in use, an iPhone SE in Safari among
+ * them.
  */
 const SHORT_PHONES = [
   { width: 320, height: 568 },
   { width: 360, height: 640 },
   { width: 375, height: 548 },
-  { width: 375, height: 667 },
 ] as const;
 const FLOOR = 5 / 8;
+const FLOOR_HEIGHT = 128;
+
+/**
+ * The narrowest a canvas to draw on may be in `column`: the sheet's floor,
+ * less its border.
+ */
+const floorOf = (column: number) =>
+  Math.min(column * FLOOR - 2, ((FLOOR_HEIGHT - 2) * 798) / 598);
 
 /** The canvas, the column it stands in, and where the page is scrolled. */
 const layoutOf = (page: Page) =>
@@ -263,17 +272,12 @@ const wholeInView = (locator: Locator) =>
     return box.top >= -0.5 && box.bottom <= innerHeight + 0.5;
   });
 
-/** A finger drawn across the sheet, from `from` to `to` (0 to 1 of it). */
-async function swipe(
+/** A finger drawn across the window, from `from` to `to`. */
+async function touchDrag(
   page: Page,
-  from: readonly [number, number],
-  to: readonly [number, number],
+  from: { x: number; y: number },
+  to: { x: number; y: number },
 ) {
-  const box = (await sheetOf(page).boundingBox())!;
-  const at = ([fx, fy]: readonly [number, number], t: number) => ({
-    x: box.x + box.width * fx + box.width * (to[0] - fx) * t,
-    y: box.y + box.height * fy + box.height * (to[1] - fy) * t,
-  });
   const cdp = await page.context().newCDPSession(page);
   const touch = (
     type: 'touchStart' | 'touchMove' | 'touchEnd',
@@ -283,12 +287,29 @@ async function swipe(
       type,
       touchPoints: point ? [{ ...point, id: 1 }] : [],
     });
-  await touch('touchStart', at(from, 0));
-  for (let step = 1; step <= 12; step++) {
-    await touch('touchMove', at(from, step / 12));
-  }
+  const at = (t: number) => ({
+    x: from.x + (to.x - from.x) * t,
+    y: from.y + (to.y - from.y) * t,
+  });
+  await touch('touchStart', at(0));
+  for (let step = 1; step <= 12; step++)
+    await touch('touchMove', at(step / 12));
   await touch('touchEnd');
   await cdp.detach();
+}
+
+/** A finger drawn across the sheet, from `from` to `to` (0 to 1 of it). */
+async function swipe(
+  page: Page,
+  from: readonly [number, number],
+  to: readonly [number, number],
+) {
+  const box = (await sheetOf(page).boundingBox())!;
+  const on = ([fx, fy]: readonly [number, number]) => ({
+    x: box.x + box.width * fx,
+    y: box.y + box.height * fy,
+  });
+  await touchDrag(page, on(from), on(to));
 }
 
 for (const size of SHORT_PHONES) {
@@ -320,8 +341,8 @@ for (const size of SHORT_PHONES) {
       const { canvas, column } = await layoutOf(page);
       expect(
         canvas.width,
-        `the ${who}'s sheet is at least 5/8 of the column`,
-      ).toBeGreaterThanOrEqual(column * FLOOR - 3);
+        `the ${who}'s sheet is at its floor or larger`,
+      ).toBeGreaterThanOrEqual(floorOf(column) - 1);
       await expect
         .poll(() => wholeInView(page.getByRole('region', { name: 'Turn' })), {
           message: `the ${who}'s turn bar in sight`,
@@ -335,6 +356,7 @@ for (const size of SHORT_PHONES) {
 
     // A finger on the sheet draws, and the page stays where it is.
     const before = (await layoutOf(drawer)).scrollY;
+    expect(before, 'the turn scrolled into view').toBeGreaterThan(0);
     await swipe(drawer, [0.2, 0.3], [0.8, 0.3]);
     for (const page of [drawer, guesser]) {
       await expect.poll(() => paintedAt(page, 0.5, 0.3)).toBe(true);
@@ -342,6 +364,115 @@ for (const size of SHORT_PHONES) {
     expect((await layoutOf(drawer)).scrollY, 'the page did not scroll').toBe(
       before,
     );
+
+    // A finger down the margin beside the sheet scrolls the page as ever.
+    const column = (await drawer.locator('[data-play-board]').boundingBox())!;
+    const sheet = await sheetBox(drawer);
+    const margin = (column.x + sheet.x) / 2;
+    await touchDrag(
+      drawer,
+      { x: margin, y: sheet.y + 10 },
+      { x: margin, y: sheet.y + sheet.height - 10 },
+    );
+    await expect
+      .poll(async () => (await layoutOf(drawer)).scrollY, {
+        message: 'the margin scrolled the page',
+      })
+      .toBeLessThan(before);
+
+    // Back on the Board tab, the turn comes into view again.
+    await drawer.getByRole('tab', { name: /Players/ }).click();
+    await drawer.getByRole('tab', { name: 'Game' }).click();
+    await expect
+      .poll(() => wholeInView(drawer.getByRole('region', { name: 'Turn' })))
+      .toBe(true);
+    expect((await layoutOf(drawer)).scrollY).toBeGreaterThan(0);
+  });
+}
+
+/**
+ * The common iPhones in Safari, with its bars showing: an iPhone 13 or 14
+ * (390 × 664), a 15 or 16 (393 × 659), a Pro Max (430 × 740), and an
+ * iPhone SE without them (375 × 667). Every phase of a turn is one screen
+ * there, for the drawer and the guesser alike: the word choices are Compact
+ * (PH10), and the sheet's floor is under what the turn leaves it.
+ */
+const SAFARI_PHONES = [
+  { width: 390, height: 664 },
+  { width: 393, height: 659 },
+  { width: 430, height: 740 },
+  { width: 375, height: 667 },
+] as const;
+
+/** Whether the first round's results are up on `page`. */
+const resultsShown = (page: Page) =>
+  page.getByRole('region', { name: 'Round 1 results' }).isVisible();
+
+/** Fails unless every page of `pages` fits its window. */
+async function oneScreen(phase: string, pages: Record<string, Page>) {
+  for (const [who, page] of Object.entries(pages)) {
+    await page.evaluate(
+      () =>
+        new Promise((done) =>
+          requestAnimationFrame(() => requestAnimationFrame(done)),
+        ),
+    );
+    const { scrolls } = await page.evaluate(() => ({
+      scrolls: document.documentElement.scrollHeight > innerHeight + 1,
+    }));
+    expect(scrolls, `${phase}: the ${who}'s page fits the window`).toBe(false);
+  }
+}
+
+for (const size of SAFARI_PHONES) {
+  const at = `${size.width} by ${size.height}`;
+
+  test(`every phase is one screen on a ${at} phone`, async ({ player }) => {
+    test.setTimeout(120_000);
+    const seats = await inRoom(player, size, true, 2);
+    const first = await whoDraws(seats);
+
+    const choices = first.drawer.getByRole('button', {
+      name: /\d+ letters?$/,
+    });
+    await expect(choices).toHaveCount(3);
+    for (const choice of await choices.all()) {
+      const box = (await choice.boundingBox())!;
+      expect(box.height, 'a Compact choice').toBeLessThan(110);
+      expect(box.height, 'still a finger wide').toBeGreaterThanOrEqual(44);
+    }
+    await oneScreen('choosing', first);
+
+    const word = await chooseWord(first.drawer, first.guesser);
+    const guess = first.guesser.getByRole('textbox', { name: 'Guess' });
+    await expect(guess).toBeEnabled();
+    await oneScreen('drawing', first);
+    for (const page of [first.drawer, first.guesser]) {
+      expect(await wholeInView(sheetOf(page))).toBe(true);
+    }
+    await expect(guess).toBeInViewport({ ratio: 1 });
+
+    await guess.fill(word);
+    await guess.press('Enter');
+    await expect(
+      first.drawer
+        .getByRole('region', { name: 'Turn' })
+        .getByText('The word was'),
+    ).toBeVisible();
+    await oneScreen('the reveal', first);
+
+    // The second turn, and the round's results over the sheet after it.
+    await expect(offered(first.guesser)).toBeVisible();
+    await oneScreen('choosing again', first);
+    await guessRight(first.guesser, first.drawer);
+    await expect
+      .poll(
+        async () =>
+          (await resultsShown(first.drawer)) ||
+          (await resultsShown(first.guesser)),
+      )
+      .toBe(true);
+    await oneScreen('the results', first);
   });
 }
 

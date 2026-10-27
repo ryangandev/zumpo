@@ -27,6 +27,14 @@ export const TOUCH = '(pointer: coarse)';
 export const PHONE = '(max-width: 640px)';
 
 /**
+ * A phone shorter than three Regular word choices need with the rest of a
+ * Draw & Guess turn (761 px), such as most iPhones with Safari's bars showing
+ * (390 × 664): the choices take their Compact size, a row each, so choosing
+ * is one screen (PH10).
+ */
+export const SHORT_PHONE = '(max-width: 640px) and (max-height: 760px)';
+
+/**
  * Under this a room, or a game on your own, is one column: the side panels
  * under the stage, and the room bar in its Phone layout. Beside the 344 px
  * side column a narrower window leaves a board less than it needs. The same
