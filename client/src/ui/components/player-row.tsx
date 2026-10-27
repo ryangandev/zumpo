@@ -20,7 +20,7 @@ export interface PlayerRowProps {
   statusIcon?: GlyphName;
   /**
    * A long status wraps instead of ending in an ellipsis: the final
-   * standings, where the detail is the point of the row.
+   * standings, where the detail is the point of the row: Figma's Wrap=Yes.
    */
   wrap?: boolean;
   /**

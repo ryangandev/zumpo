@@ -780,35 +780,38 @@ export default function Gallery() {
       </Family>
 
       <Family name="Player row" file="player-row">
-        {(['default', 'highlight', 'scored', 'away'] as const).map((state) => (
-          <Specimen
-            key={state}
-            family="player-row"
-            variant={`State=${cap(state)}`}
-            width={312}
-          >
-            <ul
-              style={{
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-                width: '100%',
-              }}
+        {([false, true] as const).flatMap((wrap) =>
+          (['default', 'highlight', 'scored', 'away'] as const).map((state) => (
+            <Specimen
+              key={`${state}-${wrap}`}
+              family="player-row"
+              variant={`State=${cap(state)}, Wrap=${wrap ? 'Yes' : 'No'}`}
+              width={312}
             >
-              <PlayerRow
-                {...PLAYERS.maya}
-                {...SAMPLE_AVATAR}
-                status="Drawing"
-                statusIcon="brush"
-                score={460}
-                state={state}
-              />
-            </ul>
-          </Specimen>
-        ))}
+              <ul
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  listStyle: 'none',
+                  width: '100%',
+                }}
+              >
+                <PlayerRow
+                  {...PLAYERS.maya}
+                  {...SAMPLE_AVATAR}
+                  status="Drawing"
+                  statusIcon="brush"
+                  score={460}
+                  state={state}
+                  wrap={wrap}
+                />
+              </ul>
+            </Specimen>
+          )),
+        )}
         <Specimen
           family="player-row"
-          variant="State=Default"
+          variant="State=Default, Wrap=No"
           label="Host and you"
           width={312}
         >
@@ -820,7 +823,7 @@ export default function Gallery() {
         </Specimen>
         <Specimen
           family="player-row"
-          variant="State=Scored"
+          variant="State=Scored, Wrap=No"
           label="Show score off"
           width={312}
         >

@@ -14,7 +14,7 @@ import { expect, test } from '@playwright/test';
  * compared, so the count would drop without a mismatch: it only changes on
  * purpose. Raise it when a specimen starts to be compared.
  */
-const COMPARED = 553;
+const COMPARED = 557;
 
 /**
  * The specimens Figma has no size for, each captioned with why
