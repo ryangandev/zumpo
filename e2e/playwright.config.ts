@@ -21,7 +21,9 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
   },
-  outputDir: '../test-results',
+  // A folder of its own beside sound/ and screens/: Playwright empties its
+  // output folder when a run starts, which would wipe another run's traces.
+  outputDir: '../test-results/e2e',
   webServer: {
     command: 'node server/build/server/server.js',
     cwd: '..',
