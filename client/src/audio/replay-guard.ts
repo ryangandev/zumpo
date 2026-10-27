@@ -30,6 +30,12 @@ export type SoundEvent<Id extends string, Stepped extends Id = never> = {
     key: string;
     /** Another player's doing: plays about 6 dB softer. */
     other?: boolean;
+    /**
+     * Milliseconds after the change it plays, for a run that one snapshot
+     * brings at once and that is heard one after another: a guess's pegs
+     * dropping in. Events of one sound at different delays are each heard.
+     */
+    delayMs?: number;
   } & (S extends Stepped
     ? /** Which step, from 1 (see `PlayOptions.variant`). */
       { variant: number }
@@ -139,7 +145,12 @@ export function createReplayGuard<
         // One diff can hold several events of one sound (the server
         // coalesces a run, two players score at once): it is heard once, as
         // the viewer's own if any is, at the highest step any of them reached.
-        const same = out.findIndex((e) => e.sound === event.sound);
+        // A run heard one after another (`delayMs`) keeps each of its beats.
+        const same = out.findIndex(
+          (e) =>
+            e.sound === event.sound &&
+            (e.delayMs ?? 0) === (event.delayMs ?? 0),
+        );
         if (same === -1) {
           out.push(event);
           continue;
@@ -187,6 +198,15 @@ export function useStateSounds<
   useEffect(() => {
     latest.current = { derive, isNewGame, select, standing };
   });
+  // A run's later beats, let go with the page that asked for them.
+  const pending = useRef(new Set<ReturnType<typeof setTimeout>>());
+  useEffect(() => {
+    const timers = pending.current;
+    return () => {
+      for (const timer of timers) clearTimeout(timer);
+      timers.clear();
+    };
+  }, []);
   const track = useRef<{
     guard: ReplayGuard<State, Id, Stepped>;
     epoch: unknown;
@@ -222,8 +242,17 @@ export function useStateSounds<
     seen.resync = false;
     // Each event already carries the step its sound needs.
     const playAny = play as (id: Id, options?: PlayOptions) => void;
-    for (const { sound, other, variant } of events) {
-      playAny(sound, variant === undefined ? { other } : { other, variant });
+    for (const { sound, other, variant, delayMs } of events) {
+      const options = variant === undefined ? { other } : { other, variant };
+      if (!delayMs) {
+        playAny(sound, options);
+        continue;
+      }
+      const timer = setTimeout(() => {
+        pending.current.delete(timer);
+        playAny(sound, options);
+      }, delayMs);
+      pending.current.add(timer);
     }
   }, [state, epoch, play]);
 }

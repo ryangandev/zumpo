@@ -323,3 +323,45 @@ describe('steps', () => {
     expect(play.mock.calls).toEqual([['scored', { other: true, variant: 2 }]]);
   });
 });
+
+/** A guess's pegs: one snapshot, heard one after another. */
+const pegs: DeriveSounds<number, 'peg'> = (prev, next) =>
+  next > prev
+    ? [0, 1, 2].map((beat) => ({
+        sound: 'peg' as const,
+        key: `row:${next}:${beat}`,
+        delayMs: beat * 90,
+      }))
+    : [];
+
+function Pegs({ rows, play }: { rows: number; play: PlaySound<'peg'> }) {
+  useStateSounds(rows, { derive: pegs, play, epoch: 1, isNewGame: never });
+  return null;
+}
+
+describe('a run heard one after another', () => {
+  it('keeps each beat of one sound, rather than hearing it once', () => {
+    const guard = createReplayGuard(pegs, { isNewGame: never });
+    guard.observe(0);
+    expect(guard.observe(1).map((e) => e.delayMs)).toEqual([0, 90, 180]);
+  });
+
+  it('plays each beat after its delay, and none once the page is gone', () => {
+    vi.useFakeTimers();
+    try {
+      const play = vi.fn<(sound: 'peg', options?: PlayOptions) => void>();
+      const view = render(<Pegs rows={0} play={play} />);
+      view.rerender(<Pegs rows={1} play={play} />);
+      expect(play).toHaveBeenCalledTimes(1);
+      vi.advanceTimersByTime(90);
+      expect(play).toHaveBeenCalledTimes(2);
+      view.rerender(<Pegs rows={2} play={play} />);
+      expect(play).toHaveBeenCalledTimes(3);
+      view.unmount();
+      vi.advanceTimersByTime(1000);
+      expect(play).toHaveBeenCalledTimes(3);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
