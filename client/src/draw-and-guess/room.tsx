@@ -32,11 +32,9 @@ import { useDeadlineTicks } from '../room/sounds';
 import {
   actingDeadline,
   deriveCloseGuessSounds,
-  deriveDrawAndGuessSounds,
+  DRAW_AND_GUESS_BANK,
   DRAW_AND_GUESS_SOUNDS,
-  isNewDrawAndGuessGame,
   sameChat,
-  turnOf,
 } from './sounds';
 import styles from './room.module.css';
 
@@ -63,15 +61,10 @@ export function DrawAndGuessRoom() {
   const isDrawer = inGame && state.currentDrawer === room.playerId;
   const scored = state.scoredThisTurn.includes(room.playerId);
 
-  // Here, not in a phase's component: the room's sounds need the room's
-  // lifetime, or the change into a phase is lost.
-  const play = useSounds(DRAW_AND_GUESS_SOUNDS);
-  useStateSounds(state, {
-    derive: deriveDrawAndGuessSounds(room.playerId),
-    play,
-    epoch: room.epoch,
-    isNewGame: isNewDrawAndGuessGame,
-  });
+  // The snapshots are heard in `RoomLayout`, with the room's. A close guess
+  // is only a chat line, heard here, for the room's lifetime: in a phase's
+  // component the change into that phase would be lost.
+  const play = useSounds(DRAW_AND_GUESS_BANK);
   useStateSounds(room.chat, {
     derive: deriveCloseGuessSounds(room.playerId),
     play,
@@ -85,7 +78,7 @@ export function DrawAndGuessRoom() {
     <RoomLayout
       // The drawer has a word to choose, then a clock to draw against.
       yourTurn={isDrawer && state.phase !== 'reveal'}
-      turn={turnOf(state)}
+      sounds={DRAW_AND_GUESS_SOUNDS}
       phase={
         inGame
           ? {
@@ -267,11 +260,12 @@ function Turn({ room }: { room: Room }) {
   const phone = useMediaQuery(PHONE);
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
   // Ticks with the clock's own seconds, so each lands with its digit.
-  useDeadlineTicks(
+  useDeadlineTicks({
     seconds,
-    reconnecting ? null : actingDeadline(state, playerId),
-  );
-  const play = useSounds(DRAW_AND_GUESS_SOUNDS);
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
+  const play = useSounds(DRAW_AND_GUESS_BANK);
   const isDrawer = state.currentDrawer === playerId;
   const drawerName =
     state.playerList[state.currentDrawer]?.username ?? m.drawAndGuess.drawer;

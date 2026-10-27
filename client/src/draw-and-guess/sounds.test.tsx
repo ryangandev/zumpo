@@ -9,6 +9,7 @@ import { createReplayGuard } from '../audio';
 import { AudioEngine } from '../audio/engine';
 import type { PlayOptions, SoundSpec } from '../audio/types';
 import { roomPath } from '../games/catalog';
+import { roomSoundRules, type RoomSoundView } from '../room/sounds';
 import { drawAndGuessState, ME } from '../tests/fixtures';
 import { FakeSocket } from '../tests/fake-socket';
 import { renderApp } from '../tests/render-app';
@@ -16,8 +17,10 @@ import {
   actingDeadline,
   deriveCloseGuessSounds,
   deriveDrawAndGuessSounds,
+  DRAW_AND_GUESS_SOUNDS,
   isNewDrawAndGuessGame,
   sameChat,
+  turnOf as nameOf,
 } from './sounds';
 
 const MAYA = 'p2';
@@ -72,10 +75,36 @@ const sounds = (
   viewer = ME,
 ) => heard(prev, next, viewer).map((e) => e.sound);
 
-const guard = (viewer = ME) =>
-  createReplayGuard(deriveDrawAndGuessSounds(viewer), {
-    isNewGame: isNewDrawAndGuessGame,
-  });
+/** A snapshot as `RoomLayout` hears it: whose go it is, on which connection. */
+const viewOf = (
+  state: DrawAndGuessRoomState,
+  viewer = ME,
+  connection = 1,
+): RoomSoundView => ({
+  state,
+  // The drawer's go, as the room names it for them.
+  turn:
+    state.isGameStarted &&
+    state.currentDrawer === viewer &&
+    state.phase !== 'reveal'
+      ? nameOf(state)
+      : null,
+  connection,
+  readied: 0,
+});
+
+/**
+ * The room's one guard with Draw & Guess's sounds in it, as `RoomLayout`
+ * keeps it; `observe` takes a snapshot and its connection.
+ */
+const guard = (viewer = ME) => {
+  const rules = roomSoundRules(viewer, DRAW_AND_GUESS_SOUNDS);
+  const inner = createReplayGuard(rules.derive, rules);
+  return {
+    observe: (state: DrawAndGuessRoomState, connection = 1, resync = false) =>
+      inner.observe(viewOf(state, viewer, connection), resync),
+  };
+};
 
 describe('the Draw & Guess sounds', () => {
   const choosing = turnOf(1, ME, { phase: 'choosing', hint: '' });
@@ -214,6 +243,29 @@ describe('the Draw & Guess sounds through the replay guard', () => {
     expect(room.observe(reveal)).toEqual([]);
   });
 
+  it('never takes a snapshot from an earlier turn for a new game', () => {
+    const room = guard(MAYA);
+    room.observe(turnOf(4, LEO));
+    room.observe(turnOf(5, LEO));
+    expect(room.observe(turnOf(5, LEO, { scoredThisTurn: [MAYA] }))).toEqual([
+      { sound: 'draw-and-guess-correct', key: 'game:correct:1.5' },
+    ]);
+    // Turn 4 again on the same connection, then turn 5 where it was.
+    expect(room.observe(turnOf(4, LEO))).toEqual([]);
+    expect(room.observe(turnOf(5, LEO, { scoredThisTurn: [MAYA] }))).toEqual(
+      [],
+    );
+  });
+
+  it('lets the drawer’s go stand alone over the word on its snapshot', () => {
+    const room = guard(ME);
+    room.observe(turnOf(1, MAYA, { phase: 'reveal' }));
+    // The choosing snapshot never came: the turn is the drawer's, and drawn.
+    expect(room.observe(turnOf(2, ME, { word: 'Owl' }))).toEqual([
+      { sound: 'room-your-turn', key: 'turn:1.2' },
+    ]);
+  });
+
   it('hears two guesses in one snapshot once, at the higher step', () => {
     const room = guard(ME);
     room.observe(turnOf(1, ME));
@@ -222,7 +274,7 @@ describe('the Draw & Guess sounds through the replay guard', () => {
     ).toEqual([
       {
         sound: 'room-someone-scored',
-        key: `scored:1.1:${MAYA}`,
+        key: `game:scored:1.1:${MAYA}`,
         other: true,
         variant: 2,
       },
@@ -233,30 +285,28 @@ describe('the Draw & Guess sounds through the replay guard', () => {
     const room = guard(MAYA);
     room.observe(turnOf(1, ME));
     expect(room.observe(turnOf(1, ME, { scoredThisTurn: [MAYA] }))).toEqual([
-      { sound: 'draw-and-guess-correct', key: 'correct:1.1' },
+      { sound: 'draw-and-guess-correct', key: 'game:correct:1.1' },
     ]);
     // Back mid-turn 2 after a drop: only a baseline.
     expect(
-      room.observe(turnOf(2, LEO, { scoredThisTurn: [MAYA] }), true),
+      room.observe(turnOf(2, LEO, { scoredThisTurn: [MAYA] }), 2, true),
     ).toEqual([]);
     // Back again in the next game, at its first turn, after a game unseen.
-    room.observe(turnOf(1, ME), true);
+    room.observe(turnOf(1, ME), 3, true);
     expect(
       room
-        .observe(turnOf(1, ME, { scoredThisTurn: [MAYA] }))
+        .observe(turnOf(1, ME, { scoredThisTurn: [MAYA] }), 3)
         .map((e) => e.sound),
     ).toEqual(['draw-and-guess-correct']);
   });
 
-  it('tells a later game from what both are showing', () => {
+  it('tells a later game across a reconnection from what both are showing', () => {
     const late = turnOf(5, ME);
     expect(isNewDrawAndGuessGame(late, turnOf(2, LEO))).toBe(true);
     expect(isNewDrawAndGuessGame(late, { ...late, wordCategory: 'Food' })).toBe(
       true,
     );
     expect(isNewDrawAndGuessGame(late, turnOf(6, LEO))).toBe(false);
-    expect(isNewDrawAndGuessGame(drawAndGuessState(table), late)).toBe(true);
-    expect(isNewDrawAndGuessGame(late, drawAndGuessState(table))).toBe(false);
   });
 });
 

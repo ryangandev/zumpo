@@ -11,44 +11,44 @@ import type {
 } from '../audio';
 import { drawAndGuessSounds } from '../audio/generated/draw-and-guess';
 import { uiSounds } from '../audio/generated/ui';
-import { newGameBegan, ROOM_SOUNDS } from '../room/sounds';
+import { gameSounds, ROOM_SOUNDS } from '../room/sounds';
 
 /*
  * What a Draw & Guess room sounds like, beyond what every room does
  * (`room/sounds.ts`): the drawer's word chosen or picked for them, a guess
  * scored, the turn's end, a close guess, and the drawer's own pencil, undo and
- * clear. The room layer plays "your turn" (the drawer's, from `RoomLayout`)
- * and the start and end of the game; the drawing clock's last seconds are
- * `useDeadlineTicks`, for `actingDeadline`.
+ * clear. `DRAW_AND_GUESS_SOUNDS` hands the snapshot's part to `RoomLayout`,
+ * which hears it with the room's ("your turn", the start and the end); the
+ * last seconds of a clock are `useDeadlineTicks`, for `actingDeadline`.
  */
 
-export const DRAW_AND_GUESS_SOUNDS = {
+export const DRAW_AND_GUESS_BANK = {
   ...ROOM_SOUNDS,
   ...drawAndGuessSounds,
   'ui-undo': uiSounds['ui-undo'],
 } satisfies SoundBank;
 
-type Id = keyof typeof DRAW_AND_GUESS_SOUNDS & string;
-type Stepped = SteppedId<typeof DRAW_AND_GUESS_SOUNDS>;
+type Id = keyof typeof DRAW_AND_GUESS_BANK & string;
+type Stepped = SteppedId<typeof DRAW_AND_GUESS_BANK>;
 type Event = SoundEvent<Id, Stepped>;
 
-/** Names a turn within a game: its round and its number (`2.5`). */
+/**
+ * Names a turn within a game: its round and its number (`2.5`). The number
+ * counts every turn of the game, so a name never comes round again in it.
+ */
 export const turnOf = (state: DrawAndGuessRoomState) =>
   `${state.currentRound}.${state.turn}`;
 
 /**
- * True when `next` is in a later game than `prev`: what any room can tell,
- * and while both are on, a game whose turns started again or whose category
- * is another.
+ * Across a reconnection, with a game under way on both sides: another game,
+ * whose turns started again or whose category is another. Each key names
+ * its turn, so a later game that has gone further than the last heard one
+ * collides with none of its keys.
  */
 export const isNewDrawAndGuessGame: IsNewGame<DrawAndGuessRoomState> = (
   prev,
   next,
-) =>
-  newGameBegan(prev, next) ||
-  (prev.isGameStarted &&
-    next.isGameStarted &&
-    (next.turn < prev.turn || next.wordCategory !== prev.wordCategory));
+) => next.turn < prev.turn || next.wordCategory !== prev.wordCategory;
 
 /**
  * The clock `viewer` must act against, named, or null: the drawer's word to
@@ -193,3 +193,11 @@ export function deriveCloseGuessSounds(
 
 /** The chat's lines never come round again in one room. */
 export const sameChat: IsNewGame<readonly ChatMessage[]> = () => false;
+
+/** What `RoomLayout` hears a Draw & Guess room by, beside the room's own. */
+export const DRAW_AND_GUESS_SOUNDS = gameSounds({
+  bank: DRAW_AND_GUESS_BANK,
+  derive: deriveDrawAndGuessSounds,
+  isNewGame: isNewDrawAndGuessGame,
+  turnOf,
+});

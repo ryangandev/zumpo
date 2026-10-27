@@ -57,6 +57,8 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   starting: boolean;
   /** Between games, at the table: says the viewer is ready, or takes it back. */
   setReady: (ready: boolean) => void;
+  /** How many times this page has said Ready, so each one is heard. */
+  readied: number;
   /** Between games, for the starter: what the next game is played with. */
   changeSettings: (settings: GameSettings) => void;
   /** The room's invite link, with a locked room's key. */

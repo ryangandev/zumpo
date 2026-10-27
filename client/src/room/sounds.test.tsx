@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type {
   AnyRoomState,
   DrawAndGuessGameSummary,
+  DrawAndGuessRoomState,
 } from '../../../shared/wire-types';
 import { createReplayGuard, SoundProvider } from '../audio';
 import { AudioEngine } from '../audio/engine';
@@ -19,11 +20,14 @@ import {
 } from '../tests/fixtures';
 import {
   deriveRoomSounds,
-  isNewRoomGame,
+  gameSounds,
   newGameBegan,
+  NO_GAME_SOUNDS,
+  roomSoundRules,
+  useConnectionLostSound,
   useDeadlineTicks,
-  useRoomClosedSound,
   winnersOf,
+  type GameSounds,
   type RoomSoundView,
 } from './sounds';
 
@@ -40,16 +44,18 @@ const lobby = drawAndGuessState();
 
 const view = (
   state: AnyRoomState,
-  { turn = null, lost = false, connection = 1 }: Partial<RoomSoundView> = {},
-): RoomSoundView => ({ state, turn, lost, connection });
+  { turn = null, connection = 1, readied = 0 }: Partial<RoomSoundView> = {},
+): RoomSoundView => ({ state, turn, connection, readied });
 
 /** What one change from `prev` to `next` plays for `viewer`, guard aside. */
 const heard = (prev: RoomSoundView, next: RoomSoundView, viewer = ME) =>
   deriveRoomSounds(viewer)(prev, next);
 
-/** A guard over the room's sounds, as the page keeps one. */
-const guard = (viewer = ME) =>
-  createReplayGuard(deriveRoomSounds(viewer), { isNewGame: isNewRoomGame });
+/** The one guard over a room and its game, as `RoomLayout` keeps it. */
+const guard = (viewer = ME, game: GameSounds = NO_GAME_SOUNDS) => {
+  const rules = roomSoundRules(viewer, game);
+  return createReplayGuard(rules.derive, rules);
+};
 
 const summary = (
   points: Record<string, number>,
@@ -110,8 +116,8 @@ describe('the room sounds', () => {
   it('stamps the viewer’s own Ready and pips somebody else’s', () => {
     const mine = drawAndGuessState({ ready: [ME] });
     const both = drawAndGuessState({ ready: [ME, MAYA] });
-    expect(heard(view(lobby), view(mine))).toEqual([
-      { sound: 'room-stamp', key: `ready:${ME}` },
+    expect(heard(view(lobby), view(mine, { readied: 1 }))).toEqual([
+      { sound: 'room-stamp', key: `ready:${ME}:1` },
     ]);
     expect(heard(view(mine), view(both))).toEqual([
       { sound: 'room-pip', key: `ready:${MAYA}`, other: true },
@@ -177,6 +183,20 @@ describe('the room sounds', () => {
     ]);
   });
 
+  it('gives everybody at the table the win when nobody scored', () => {
+    const nil = drawAndGuessState({
+      lastGame: summary({ [ME]: 0, [MAYA]: 0 }),
+    });
+    expect(winnersOf(nil)).toEqual([ME, MAYA]);
+    expect(heard(view(playing), view(nil), MAYA).map((e) => e.sound)).toEqual([
+      'stinger-win',
+    ]);
+    // Watching, still nothing won.
+    expect(heard(view(playing), view(nil), LEO).map((e) => e.sound)).toEqual([
+      'stinger-nice-game',
+    ]);
+  });
+
   it('has no result to sound for a game cut short, or found ended', () => {
     const cut = drawAndGuessState({
       lastGame: summary({ [ME]: 40 }, true),
@@ -184,16 +204,6 @@ describe('the room sounds', () => {
     expect(heard(view(playing), view(cut))).toEqual([]);
     const ended = drawAndGuessState({ lastGame: summary({ [ME]: 40 }) });
     expect(heard(view(ended), view(ended))).toEqual([]);
-  });
-
-  it('hears a lost connection once for each connection', () => {
-    expect(heard(view(playing), view(playing, { lost: true }))).toEqual([
-      { sound: 'ui-connection-lost', key: 'lost:1' },
-    ]);
-    expect(
-      heard(view(playing, { lost: true }), view(playing, { lost: true })),
-    ).toEqual([]);
-    expect(heard(view(playing, { lost: true }), view(playing))).toEqual([]);
   });
 
   it('names who won each game as its results do', () => {
@@ -287,10 +297,37 @@ describe('the room sounds through the replay guard', () => {
     expect(sounds.observe(view(playing, { turn: '1.2' }))).toHaveLength(1);
     // A game that names the go only while connected drops it, and names it
     // again before the next snapshot.
-    expect(
-      sounds.observe(view(playing, { turn: null, lost: true })),
-    ).toHaveLength(1); // the lost connection
+    expect(sounds.observe(view(playing, { turn: null }))).toEqual([]);
     expect(sounds.observe(view(playing, { turn: '1.2' }))).toEqual([]);
+  });
+
+  it('has heard the go a page arrives on, or comes back to', () => {
+    const sounds = guard();
+    sounds.observe(view(playing, { turn: '1.2' }));
+    expect(sounds.observe(view(playing, { turn: null }))).toEqual([]);
+    expect(sounds.observe(view(playing, { turn: '1.2' }))).toEqual([]);
+    sounds.observe(view(playing, { turn: '1.3', connection: 2 }), true);
+    expect(sounds.observe(view(playing, { turn: null }))).toEqual([]);
+    expect(sounds.observe(view(playing, { turn: '1.3' }))).toEqual([]);
+  });
+
+  it('stamps each Ready of the viewer’s, and pips each other player once a game', () => {
+    const sounds = guard();
+    const mine = drawAndGuessState({ ready: [ME] });
+    const hers = drawAndGuessState({ ready: [MAYA] });
+    sounds.observe(view(lobby));
+    expect(sounds.observe(view(lobby, { readied: 1 }))).toEqual([]);
+    expect(sounds.observe(view(mine, { readied: 1 }))).toHaveLength(1);
+    // Taken back, and said again: a second press, heard again.
+    expect(sounds.observe(view(lobby, { readied: 1 }))).toEqual([]);
+    expect(sounds.observe(view(lobby, { readied: 2 }))).toEqual([]);
+    expect(sounds.observe(view(mine, { readied: 2 }))).toEqual([
+      { sound: 'room-stamp', key: `ready:${ME}:2` },
+    ]);
+    // Maya's, taken back and said again, is heard the first time only.
+    expect(sounds.observe(view(hers, { readied: 2 }))).toHaveLength(1);
+    sounds.observe(view(lobby, { readied: 2 }));
+    expect(sounds.observe(view(hers, { readied: 2 }))).toEqual([]);
   });
 
   it('forgets its keys when a new game starts', () => {
@@ -321,14 +358,115 @@ describe('the room sounds through the replay guard', () => {
   });
 });
 
+/**
+ * A game of turns for the one guard: each turn somebody else takes is a soft
+ * pip of the game's own, and its turns count up through a game.
+ */
+const turns = gameSounds<DrawAndGuessRoomState>({
+  derive: () => (prev, next) =>
+    next.isGameStarted && next.turn > prev.turn
+      ? [{ sound: 'room-pip', key: `move:${next.turn}`, other: true }]
+      : [],
+  isNewGame: (prev, next) => next.turn < prev.turn,
+  turnOf: (state) => String(state.turn),
+});
+
+const atTurn = (turn: number, extra: Partial<DrawAndGuessRoomState> = {}) =>
+  drawAndGuessState({ ...playing, phase: 'drawing', turn, ...extra });
+
+describe('one guard for a room and its game', () => {
+  it('lets your go stand alone over the game’s sounds on its snapshot', () => {
+    const sounds = guard(ME, turns);
+    sounds.observe(view(atTurn(1)));
+    // Somebody else's turn: the game's pip.
+    expect(sounds.observe(view(atTurn(2)))).toEqual([
+      { sound: 'room-pip', key: 'game:move:2', other: true },
+    ]);
+    // Their move hands the go to the viewer, and Leo arrives: the go and
+    // the arrival, not the move.
+    const withLeo = { ...playing.playerList, [LEO]: seat('Leo') };
+    const joined = atTurn(3, { playerList: withLeo });
+    expect(sounds.observe(view(joined, { turn: '3' }))).toEqual([
+      { sound: 'room-join', key: `join:${LEO}`, other: true },
+      { sound: 'room-your-turn', key: 'turn:3' },
+    ]);
+    // The move dropped was heard all the same: never played later.
+    expect(sounds.observe(view(atTurn(2, { playerList: withLeo })))).toEqual(
+      [],
+    );
+    expect(sounds.observe(view(joined, { turn: '3' }))).toEqual([]);
+  });
+
+  it('lets the start and the end stand alone too', () => {
+    const sounds = guard(ME, turns);
+    sounds.observe(view(lobby));
+    expect(sounds.observe(view(atTurn(1)))).toEqual([
+      { sound: 'stinger-game-start', key: 'start' },
+    ]);
+    sounds.observe(view(atTurn(4)));
+    // A game whose last move ends it in the same snapshot: only the end.
+    const ended = drawAndGuessState({
+      ...atTurn(5),
+      isGameStarted: false,
+      lastGame: summary({ [ME]: 30 }),
+    });
+    expect(sounds.observe(view(ended)).map((e) => e.sound)).toEqual([
+      'stinger-win',
+    ]);
+  });
+
+  it('keeps the game’s keys apart, and its hands off the room’s sounds', () => {
+    const greedy = gameSounds<DrawAndGuessRoomState>({
+      derive: () => (prev, next) =>
+        next.turn > prev.turn
+          ? [
+              { sound: 'room-reveal', key: 'start' },
+              { sound: 'stinger-win', key: `win:${next.turn}` },
+            ]
+          : [],
+    });
+    const sounds = guard(ME, greedy);
+    sounds.observe(view(atTurn(1)));
+    // The game's own `start` is not the room's, and its stinger is dropped.
+    expect(sounds.observe(view(atTurn(2)))).toEqual([
+      { sound: 'room-reveal', key: 'game:start' },
+    ]);
+  });
+
+  it('asks the game for a new game only across a reconnection', () => {
+    const sounds = guard(ME, turns);
+    sounds.observe(view(atTurn(4)));
+    sounds.observe(view(atTurn(5)));
+    // On one connection a snapshot from earlier in the game is not a new
+    // game, and turn 5 is not heard again after it.
+    expect(sounds.observe(view(atTurn(3)))).toEqual([]);
+    expect(sounds.observe(view(atTurn(5)))).toEqual([]);
+    // Back on a new connection in another game, unseen: its turn 5 is news.
+    sounds.observe(view(atTurn(2), { connection: 2 }), true);
+    sounds.observe(view(atTurn(4), { connection: 2 }));
+    expect(sounds.observe(view(atTurn(5), { connection: 2 }))).toHaveLength(1);
+  });
+
+  it('keeps the keys across a reconnection into the same game', () => {
+    const sounds = guard(ME, turns);
+    sounds.observe(view(atTurn(4)));
+    sounds.observe(view(atTurn(5)));
+    sounds.observe(view(atTurn(5), { connection: 2 }), true);
+    expect(sounds.observe(view(atTurn(4), { connection: 2 }))).toEqual([]);
+    expect(sounds.observe(view(atTurn(5), { connection: 2 }))).toEqual([]);
+  });
+});
+
 function Clock({
   seconds,
   deadline,
+  paused,
 }: {
   seconds: number;
   deadline: string | null;
+  paused: boolean;
 }) {
-  useDeadlineTicks(seconds, deadline);
+  useDeadlineTicks({ seconds, deadline, paused });
   return null;
 }
 
@@ -337,10 +475,10 @@ function mount(seconds: number, deadline: string | null) {
   const play = vi
     .spyOn(engine, 'play')
     .mockImplementation(() => Promise.resolve(true));
-  const tree = (s: number, d: string | null) => (
+  const tree = (s: number, d: string | null, paused = false) => (
     <StrictMode>
       <SoundProvider engine={engine}>
-        <Clock seconds={s} deadline={d} />
+        <Clock seconds={s} deadline={d} paused={paused} />
       </SoundProvider>
     </StrictMode>
   );
@@ -351,7 +489,8 @@ function mount(seconds: number, deadline: string | null) {
       return options?.variant;
     });
   return {
-    to: (s: number, d: string | null = deadline) => page.rerender(tree(s, d)),
+    to: (s: number, d: string | null = deadline, paused = false) =>
+      page.rerender(tree(s, d, paused)),
     steps,
   };
 }
@@ -380,36 +519,63 @@ describe('useDeadlineTicks', () => {
     // The deadline becomes this player's at 4 seconds left: a baseline.
     clock.to(4, '1.2:choosing');
     clock.to(3, '1.2:choosing');
-    // Paused while reconnecting, then back.
+    // None to act in for a moment, then back: a baseline again.
     clock.to(3, null);
     clock.to(2, '1.2:choosing');
     clock.to(1, '1.2:choosing');
     expect(clock.steps()).toEqual([3, 5]);
   });
+
+  it('holds still while paused, and comes back to a baseline', () => {
+    const clock = mount(6, '1.1:drawing');
+    clock.to(5);
+    // The connection drops: the clock holds, and nothing ticks.
+    clock.to(4, '1.1:drawing', true);
+    clock.to(3, '1.1:drawing', true);
+    // Back at 3 seconds left: where the clock stands, then on.
+    clock.to(3);
+    clock.to(2);
+    expect(clock.steps()).toEqual([1, 4]);
+  });
 });
 
-function Page({ stage }: { stage: RoomStage['kind'] }) {
-  useRoomClosedSound(stage);
+function Page({ stage }: { stage: RoomStage }) {
+  useConnectionLostSound(stage);
   return null;
 }
 
-describe('useRoomClosedSound', () => {
-  it('hears the room closing under a seated player, and nothing else', () => {
+const seated = (reconnecting: boolean): RoomStage => ({
+  kind: 'seated',
+  snapshot: { state: lobby, receivedAt: 0, connection: 1 },
+  reconnecting,
+});
+
+describe('useConnectionLostSound', () => {
+  it('hears each drop and the room closing under a seated player, and nothing else', () => {
     const engine = new AudioEngine({});
     const play = vi
       .spyOn(engine, 'play')
       .mockImplementation(() => Promise.resolve(true));
-    const tree = (stage: RoomStage['kind']) => (
+    const tree = (stage: RoomStage) => (
       <SoundProvider engine={engine}>
         <Page stage={stage} />
       </SoundProvider>
     );
-    const page = render(tree('connecting'));
-    page.rerender(tree('closed'));
+    const page = render(tree({ kind: 'connecting' }));
+    page.rerender(tree({ kind: 'closed' }));
     expect(play).not.toHaveBeenCalled();
-    page.rerender(tree('seated'));
-    page.rerender(tree('closed'));
+    // Two drops on the way, the second before any new snapshot.
+    page.rerender(tree(seated(false)));
+    page.rerender(tree(seated(true)));
+    page.rerender(tree(seated(false)));
+    page.rerender(tree(seated(true)));
+    // Down already: closing is not another loss.
+    page.rerender(tree({ kind: 'closed' }));
+    page.rerender(tree(seated(false)));
+    page.rerender(tree({ kind: 'closed' }));
     expect(play.mock.calls.map(([spec]) => spec.id)).toEqual([
+      'ui-connection-lost',
+      'ui-connection-lost',
       'ui-connection-lost',
     ]);
   });

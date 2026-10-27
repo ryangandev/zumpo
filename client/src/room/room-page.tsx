@@ -52,7 +52,7 @@ import { Confetti } from './confetti';
 import { InviteDialog, LeaveDialog, leaveCost } from './dialogs';
 import { roomNameOf } from './players';
 import { RoomContext, type Room } from './room-context';
-import { useRoomClosedSound } from './sounds';
+import { useConnectionLostSound } from './sounds';
 
 // Daily Word brings its word lists, so it loads only when played.
 const DailyWordRoom = lazy(() => import('../daily-word/room'));
@@ -77,7 +77,7 @@ export default function RoomPage({
   );
   const connection = useRoom(roomId, invite);
   const { stage } = connection;
-  useRoomClosedSound(stage.kind);
+  useConnectionLostSound(stage);
   // The room's own name once seated, the game's until then.
   usePageTitle(
     ...(stage.kind === 'seated' ? [roomNameOf(stage.snapshot.state, m)] : []),
@@ -414,13 +414,16 @@ function SeatedRoom({
     },
     [m],
   );
+  const [readied, setReadied] = useState(0);
   const setReady = useCallback(
-    (ready: boolean) =>
+    (ready: boolean) => {
+      if (ready) setReadied((count) => count + 1);
       void ask('room:ready', () =>
         socket
           .timeout(REQUEST_TIMEOUT_MS)
           .emitWithAck('room:ready', state.roomId, ready),
-      ),
+      );
+    },
     [ask, socket, state.roomId],
   );
   const changeSettings = useCallback(
@@ -495,6 +498,7 @@ function SeatedRoom({
             startGame,
             starting,
             setReady,
+            readied,
             changeSettings,
             watch: () => void move('room:watch'),
             sit: () => void move('room:sit'),
@@ -522,6 +526,7 @@ function SeatedRoom({
       startGame,
       starting,
       setReady,
+      readied,
       changeSettings,
       move,
       moving,
