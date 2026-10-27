@@ -9,7 +9,7 @@ import type {
   LiarsDiceRoomState,
 } from '../../../shared/wire-types';
 import { seededRandom } from '../../../shared/seed';
-import { createReplayGuard } from '../audio';
+import { BESIDE_AFTER_MS, createReplayGuard } from '../audio';
 import { AudioEngine } from '../audio/engine';
 import type { PlayOptions, SoundSpec } from '../audio/types';
 import { roomPath } from '../games/catalog';
@@ -150,13 +150,18 @@ const viewOf = (
   readied: 0,
 });
 
-const guard = (viewer = ME) => {
+/** The events of each snapshot the room hears, with their delays. */
+const timedGuard = (viewer = ME) => {
   const rules = roomSoundRules(viewer, LIARS_DICE_SOUNDS);
   const inner = createReplayGuard(rules.derive, rules);
   return (state: LiarsDiceRoomState, connection = 1, resync = false) =>
-    inner
-      .observe(viewOf(state, viewer, connection), resync)
-      .map((e) => e.sound);
+    inner.observe(viewOf(state, viewer, connection), resync);
+};
+
+const guard = (viewer = ME) => {
+  const timed = timedGuard(viewer);
+  return (state: LiarsDiceRoomState, connection = 1, resync = false) =>
+    timed(state, connection, resync).map((e) => e.sound);
 };
 
 const OPEN = bidding(2, three, [], MAYA);
@@ -358,11 +363,25 @@ describe('a Liar’s Dice room through the replay guard', () => {
     expect(room(one)).toEqual([]);
   });
 
-  it('hears a bid that hands you the go as your go alone', () => {
+  it('hears a bid that hands you the go, and your go after it', () => {
+    const timed = timedGuard();
+    timed(OPEN);
+    timed(bidding(2, three, [MAYA], LEO));
+    expect(
+      timed(bidding(2, three, [MAYA, LEO], ME)).map((e) => [
+        e.sound,
+        e.other,
+        e.delayMs,
+      ]),
+    ).toEqual([
+      ['liars-dice-bid', true, undefined],
+      ['room-your-turn', undefined, BESIDE_AFTER_MS.turn],
+    ]);
     const room = guard();
     room(OPEN);
     room(bidding(2, three, [MAYA], LEO));
     expect(room(bidding(2, three, [MAYA, LEO], ME))).toEqual([
+      'liars-dice-bid',
       'room-your-turn',
     ]);
     // Your own bid is yours; the next go is somebody else’s.
@@ -374,7 +393,10 @@ describe('a Liar’s Dice room through the replay guard', () => {
   it('plays a whole round once, then the next round’s dice', () => {
     const room = guard(LEO);
     room(OPEN);
-    expect(room(bidding(2, three, [MAYA], LEO))).toEqual(['room-your-turn']);
+    expect(room(bidding(2, three, [MAYA], LEO))).toEqual([
+      'liars-dice-bid',
+      'room-your-turn',
+    ]);
     expect(room(bidding(2, three, [MAYA, LEO], ME))).toEqual([
       'liars-dice-bid',
     ]);
@@ -387,11 +409,43 @@ describe('a Liar’s Dice room through the replay guard', () => {
     expect(room(next)).toEqual(['liars-dice-roll']);
   });
 
-  it('plays the dice of the next round when you open it as your go alone', () => {
-    const room = guard(MAYA);
+  it('plays the dice of the next round when you open it, and your go after them', () => {
+    const room = timedGuard(MAYA);
     room(revealed(2));
     const next = bidding(3, [cup(ME), cup(MAYA, 2), cup(LEO)], [], MAYA);
-    expect(room(next)).toEqual(['room-your-turn']);
+    expect(room(next).map((e) => [e.sound, e.delayMs])).toEqual([
+      ['liars-dice-roll', undefined],
+      ['room-your-turn', BESIDE_AFTER_MS.turn],
+    ]);
+  });
+
+  it('plays only the go, at once, in a hidden tab', () => {
+    const visibility = vi
+      .spyOn(document, 'visibilityState', 'get')
+      .mockReturnValue('hidden');
+    try {
+      const room = timedGuard();
+      room(OPEN);
+      room(bidding(2, three, [MAYA], LEO));
+      expect(room(bidding(2, three, [MAYA, LEO], ME))).toEqual([
+        { sound: 'room-your-turn', key: 'turn:2.9.2' },
+      ]);
+    } finally {
+      visibility.mockRestore();
+    }
+  });
+
+  it('opens the game on your go with the dice, but not the start, when you bid first', () => {
+    const first = guard(MAYA);
+    first(liarsDiceState({ ...table }));
+    expect(first(bidding(1, three, [], MAYA))).toEqual([
+      'liars-dice-roll',
+      'room-your-turn',
+    ]);
+    // Anybody else hears the start, whose stinger stands alone.
+    const other = guard(LEO);
+    other(liarsDiceState({ ...table }));
+    expect(other(bidding(1, three, [], MAYA))).toEqual(['stinger-game-start']);
   });
 
   it('never takes a snapshot from earlier for something new', () => {
@@ -431,6 +485,7 @@ describe('a Liar’s Dice room through the replay guard', () => {
       [],
     );
     expect(room(bidding(2, [cup(ME), cup(MAYA)], [MAYA], ME), 2)).toEqual([
+      'liars-dice-bid',
       'room-your-turn',
     ]);
   });
@@ -488,6 +543,7 @@ describe('a Liar’s Dice room, heard in the app', () => {
     send(bidding(2, [cup(ME, 2), cup(MAYA), cup(LEO)], [], LEO));
     expect(played()).toEqual([
       'stinger-game-start',
+      'liars-dice-bid other',
       'liars-dice-bid other',
       'room-your-turn',
       'room-tick step 1',

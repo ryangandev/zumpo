@@ -16,8 +16,10 @@ import type { SoloGame } from './solo/game';
  * What Gomoku sounds like, on your own and in a room: a faint stone put down
  * by a first tap on a touch screen, played where it is tapped, and each
  * stone placed, yours crisp and your opponent's, or the computer's, softer,
- * so an answer never startles. A stone that makes five is the game's end,
- * which stands alone: the room's win or kind cadence, or the solo stinger.
+ * so an answer never startles. A stone that makes five is the game's end:
+ * the five lights (`gomoku-five`, beside the end), then the room's win or
+ * kind cadence, or the solo stinger, follows. The stone that hands you the
+ * go plays beside your "your turn" (`beside`).
  * In a room, beyond what every room does (`room/sounds.ts`): your go
  * (`turnOf`), a warning when your first lost turn leaves one more to lose
  * the game, and the last seconds of your move (`actingDeadline`). Nothing
@@ -84,15 +86,21 @@ export const deriveGomokuSolo: DeriveSounds<SoloGame, SoloId> = (
 ) => {
   if (next.placed <= prev.placed) return [];
   const mine = next.moves.at(-1)?.color === next.color;
-  return [{ sound: 'gomoku-stone', key: stoneKey(next.placed), other: !mine }];
+  const events: SoundEvent<SoloId>[] = [
+    { sound: 'gomoku-stone', key: stoneKey(next.placed), other: !mine },
+  ];
+  if (next.winLines?.length) {
+    events.push({ sound: 'gomoku-five', key: 'five', beside: true });
+  }
+  return events;
 };
 
 /**
  * What a Gomoku snapshot adds for `viewer`: each new stone, the opponent's
  * and a spectator's softer; and the warning when the viewer's own turn was
  * lost to the clock and the next one would lose them the game. A stone that
- * ends the game is the game's end, heard alone, and so is the second lost
- * turn. A turn the opponent loses is silent: it is their go passing to the
+ * makes five is heard as the five, beside the game's end; the second lost
+ * turn is the game's end, heard alone. A turn the opponent loses is silent: it is their go passing to the
  * viewer, whose "your turn" says so.
  */
 export function deriveGomokuSounds(
@@ -100,6 +108,14 @@ export function deriveGomokuSounds(
 ): DeriveSounds<GomokuRoomState, Id, Stepped> {
   return (prev, next) => {
     const events: SoundEvent<Id, Stepped>[] = [];
+    // The five that ended the game, lit beside the end stinger, which follows.
+    if (prev.isGameStarted && !next.isGameStarted && next.winLines?.length) {
+      events.push({
+        sound: 'gomoku-five',
+        key: `five:${next.gameNumber}`,
+        beside: true,
+      });
+    }
     if (!next.isGameStarted || !next.colors) return events;
     // Only a game moving on is heard: a snapshot from earlier in it, or from
     // another game, holds no stone the viewer has not been through.
@@ -109,10 +125,17 @@ export function deriveGomokuSounds(
       const index = before + offset;
       const player = next.colors?.[move.color].playerId;
       if (move.point !== null) {
+        // The stone that hands the viewer the go plays beside their
+        // "your turn".
+        const handsGo =
+          player !== viewer &&
+          index === next.moves.length - 1 &&
+          next.turnPlayerId === viewer;
         events.push({
           sound: 'gomoku-stone',
           key: stoneKey(index),
           other: player !== viewer,
+          ...(handsGo && { beside: true }),
         });
       } else if (player === viewer && next.missedTurns[viewer] === 1) {
         events.push({ sound: 'gomoku-warning', key: `warning:${index}` });

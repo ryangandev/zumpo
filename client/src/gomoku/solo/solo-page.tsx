@@ -171,9 +171,9 @@ function SoloBoard({
   const [preview, setPreview] = useState<{ point: number; at: number } | null>(
     null,
   );
-  // A win is the player's; five or a full board for the computer, a loss; a
-  // full board, a finished game. Set with the stone that ends it, so that
-  // stone is heard as the end.
+  // Five is a win for the player and a loss when it is the computer's; a full
+  // board is a finished game. Set with the stone that ends it, so that stone
+  // is heard as the end.
   const sound = useSoloSounds(
     game,
     !game.over

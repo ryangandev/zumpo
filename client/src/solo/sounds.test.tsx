@@ -1,7 +1,12 @@
 import { render } from '@testing-library/react';
 import { StrictMode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { createReplayGuard, SoundProvider, type DeriveSounds } from '../audio';
+import {
+  BESIDE_AFTER_MS,
+  createReplayGuard,
+  SoundProvider,
+  type DeriveSounds,
+} from '../audio';
 import { AudioEngine } from '../audio/engine';
 import { uiSounds } from '../audio/generated/ui';
 import {
@@ -35,6 +40,15 @@ const guard = () =>
     select: endAlone,
   });
 
+/** A move that lights a beat of its own, flagged to play beside an end. */
+const lit: DeriveSounds<Taps, 'ui-tap' | 'ui-undo'> = (prev, next) =>
+  next.taps > prev.taps
+    ? [
+        { sound: 'ui-tap', key: `tap:${next.taps}` },
+        { sound: 'ui-undo', key: `lit:${next.taps}`, beside: true },
+      ]
+    : [];
+
 const sounds = (events: { sound: string }[]) => events.map((e) => e.sound);
 
 describe('a game on your own, heard', () => {
@@ -55,6 +69,26 @@ describe('a game on your own, heard', () => {
     ]);
     // A render after the end, with the end still there, is silent.
     expect(game.observe(view(4, 'best'))).toEqual([]);
+  });
+
+  it('plays a move flagged beside the end first, and the end after it', () => {
+    const game = createReplayGuard(deriveSoloSounds(lit), {
+      isNewGame: () => false,
+      select: endAlone,
+    });
+    game.observe(view(3));
+    // Without an end, both play as they are.
+    expect(game.observe(view(4)).map((e) => e.key)).toEqual([
+      'game:tap:4',
+      'game:lit:4',
+    ]);
+    // With one, only the flagged one stays, and the end follows it.
+    expect(
+      game.observe(view(5, 'win')).map((e) => [e.key, e.delayMs ?? 0]),
+    ).toEqual([
+      ['game:lit:5', 0],
+      ['end', BESIDE_AFTER_MS.stinger],
+    ]);
   });
 
   it('plays nothing for a game restored already over', () => {

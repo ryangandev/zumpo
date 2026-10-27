@@ -424,7 +424,11 @@ Four ways a game's sounds go quiet without an error, to keep in mind when adding
 - A game's event with a lead sound (`room-your-turn`, `stinger-*`) is dropped, with a console warning in development, and a game that sounds its own end must be in `OWN_ENDING` in `room/sounds.ts`, or the room's end stinger plays over it (Doodle Chain's album).
 
 On one snapshot, "your turn" and the start and end stingers stand alone: the game's events in that change are dropped, the viewer's own included, and never play later, while the room's joins, leaves and Ready play beside them.
-So an opponent's move that hands you the go is heard as your go, and a take that ends a game as its end.
+So a take that ends a game is heard as its end.
+The one exception is an event the game flags `beside: true`, for what a lead would otherwise bury and the player should hear first: the opponent's move that hands you the go (Gomoku's stone, Liar's Dice's bid and the dice of a round you open), and the five that ended a Gomoku game.
+A flagged event plays at once and the lead follows it (`BESIDE_AFTER_MS`: 300 ms for "your turn", 500 ms for a stinger), so the lead lands after the move; queuing a delayed lead still cuts short the beats waiting from before.
+In a hidden tab the lead plays at once and a flagged event not at all, so "your turn" stays the one sound a hidden tab plays and is never held back by a timer.
+Flag only an event that handed over the go or ended the game, and only when the viewer is the one it handed it to; flagged elsewhere it plays beside nothing, and a flagged event on a change with no lead plays as any does.
 Several sounds of a game at once are heard as the one that matters to the viewer: the last guess and the end of a turn are one snapshot, which the guesser hears as their own and everybody else as the end.
 What the viewer did plays at full level, anybody else's with `other`, and a spectator, who has no go, hears the others and the game's start and end.
 Keys hold from one game's start or end to the next, so somebody who leaves and comes back, or says Ready again, in that stretch is heard the first time only; the viewer's own Ready counts their presses (`Room.readied`), so each one stamps.
@@ -442,8 +446,8 @@ Known gaps:
 
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
-- Gomoku's end stinger stands alone, so `gomoku-five` (the five stones lighting) is never heard; it needs the room layer to let a game's own beat play beside the end.
-- Liar's Dice cannot tell a call the clock made from one a player made, so a time up is not heard there.
+- Liar's Dice's `ld:auto-call` and `ld:auto-bid` notices tell a call or bid the clock made from a player's, but they are not in the snapshot, so a time up is not heard there; hearing it needs the room to listen to those notices.
+- The dice of the first round of a game rattle for the player who opens it (beside their go), and for nobody else: the start stinger stands alone for the rest.
 - Doodle Chain's `isNewGame` tells two games apart by the steps, the players, what the reveal shows and what the viewer was given; two games that match on all of these across one reconnection are taken for the same one.
   A heart given, taken back and given again to one entry at the same count is heard the first time only.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
@@ -463,6 +467,8 @@ A game on your own is heard by the same rules as a room, through [`solo/sounds.t
   A pure input that may come and go, such as a flag on one cell, has no key that stays unique, so it plays in its handler instead.
   A game that can take a move back counts the moves ever made (Gomoku's `placed`), since the moves on the board shrink and would give a key twice.
   Set `end` in the same render as the move that ends the game, or the move is heard before the end and the end after it.
+  An event flagged `beside` (Gomoku's five) plays beside the end, which follows it after `BESIDE_AFTER_MS.stinger`; the rest of the move's events are dropped.
+  The first state is a baseline, so the dice of a solo Liar's Dice game's first round are silent, and its bots' bids after them are heard.
 - **The end** is `end`: `'complete'`, `'best'`, `'win'` (a game against bots or the computer, with the shell's win stinger) or `'loss'`, or null while the game is on.
   A game with a best passes `finishEnd(finish)`, from what `recordBest` said: a new best only when it beat one this device kept, as the result's words say, so a first finish is a finish.
   It plays once, standing alone on its change, so the move that ends a game is heard as its end (the last pair, the mine, the code cracked).

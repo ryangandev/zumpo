@@ -392,4 +392,43 @@ describe('a run heard one after another', () => {
       vi.useRealTimers();
     }
   });
+
+  it('cuts short the beats still waiting the moment a delayed sound that cuts is queued', () => {
+    vi.useFakeTimers();
+    try {
+      // The end follows a beat of its own that plays beside it.
+      const ending: DeriveSounds<number, 'peg' | 'end'> = (prev, next) =>
+        next === -1
+          ? [
+              { sound: 'peg', key: 'five', delayMs: 100 },
+              { sound: 'end', key: 'end', delayMs: 500 },
+            ]
+          : pegs(prev, next);
+      const play =
+        vi.fn<(sound: 'peg' | 'end', options?: PlayOptions) => void>();
+      function Ending({ rows }: { rows: number }) {
+        useStateSounds<number, 'peg' | 'end'>(rows, {
+          derive: ending,
+          play,
+          epoch: 1,
+          isNewGame: never,
+          cuts: (sound) => sound === 'end',
+        });
+        return null;
+      }
+      const view = render(<Ending rows={0} />);
+      view.rerender(<Ending rows={3} />);
+      view.rerender(<Ending rows={-1} />);
+      vi.advanceTimersByTime(1000);
+      // The first change's later pegs never land; this change's own beat and
+      // the end do, in order.
+      expect(play.mock.calls.map(([sound]) => sound)).toEqual([
+        'peg',
+        'peg',
+        'end',
+      ]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import {
+  BESIDE_AFTER_MS,
   useSounds,
   useStateSounds,
   type DeriveSounds,
@@ -91,12 +92,18 @@ export function deriveSoloSounds<
 
 /**
  * The end stands alone on its change: the move that ends a game is heard as
- * its end, never as itself too. What is dropped was heard all the same.
+ * its end, never as itself too. What is dropped was heard all the same. An
+ * event the game flags `beside` (Gomoku's five) plays beside it, and the end
+ * follows after it (`BESIDE_AFTER_MS`).
  */
-export const endAlone: SelectSounds<string> = (events) =>
-  events.some((event) => event.key === END_KEY)
-    ? events.filter((event) => event.key === END_KEY)
-    : events;
+export const endAlone: SelectSounds<string> = (events) => {
+  const end = events.find((event) => event.key === END_KEY);
+  if (!end) return events;
+  const beside = events.filter((event) => event.beside && event !== end);
+  return beside.length === 0
+    ? [end]
+    : [...beside, { ...end, delayMs: BESIDE_AFTER_MS.stinger }];
+};
 
 /** An end stinger cuts short a run still waiting to play, such as pegs. */
 const STINGERS: ReadonlySet<string> = new Set(Object.values(STINGER));

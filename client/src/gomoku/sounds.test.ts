@@ -6,7 +6,7 @@ import type {
   GomokuMove,
   GomokuRoomState,
 } from '../../../shared/wire-types';
-import { createReplayGuard } from '../audio';
+import { BESIDE_AFTER_MS, createReplayGuard } from '../audio';
 import { AudioEngine } from '../audio/engine';
 import type { PlayOptions, SoundSpec } from '../audio/types';
 import { roomPath } from '../games/catalog';
@@ -103,13 +103,18 @@ const viewOf = (
   readied: 0,
 });
 
-const guard = (viewer = ME) => {
+/** The events of each snapshot the room hears, with their delays. */
+const timedGuard = (viewer = ME) => {
   const rules = roomSoundRules(viewer, GOMOKU_SOUNDS);
   const inner = createReplayGuard(rules.derive, rules);
   return (state: GomokuRoomState, connection = 1, resync = false) =>
-    inner
-      .observe(viewOf(state, viewer, connection), resync)
-      .map((e) => e.sound);
+    inner.observe(viewOf(state, viewer, connection), resync);
+};
+
+const guard = (viewer = ME) => {
+  const timed = timedGuard(viewer);
+  return (state: GomokuRoomState, connection = 1, resync = false) =>
+    timed(state, connection, resync).map((e) => e.sound);
 };
 
 describe('a Gomoku room’s goes and games', () => {
@@ -146,8 +151,9 @@ describe('a Gomoku room, heard', () => {
     expect(heard(game(1, 2), next)).toEqual([
       { sound: 'gomoku-stone', key: 'stone:2', other: false },
     ]);
+    // Black's stone hands Maya the go, so hers plays beside her "your turn".
     expect(heard(game(1, 2), next, MAYA)).toEqual([
-      { sound: 'gomoku-stone', key: 'stone:2', other: true },
+      { sound: 'gomoku-stone', key: 'stone:2', other: true, beside: true },
     ]);
     expect(heard(game(1, 2), next, WATCHER)[0]?.other).toBe(true);
     // Nothing new: the same stones again.
@@ -202,13 +208,20 @@ describe('a Gomoku room, heard', () => {
       },
       samePair: true,
     });
-    expect(win(five)).toEqual(['stinger-win']);
+    expect(win(five)).toEqual(['gomoku-five', 'stinger-win']);
     const lose = guard(MAYA);
     lose(last);
-    expect(lose(five)).toEqual(['stinger-nice-game']);
+    expect(lose(five)).toEqual(['gomoku-five', 'stinger-nice-game']);
     const watch = guard(WATCHER);
     watch(last);
-    expect(watch(five)).toEqual(['stinger-nice-game']);
+    expect(watch(five)).toEqual(['gomoku-five', 'stinger-nice-game']);
+    // The five lights first and the end follows it.
+    const timed = timedGuard(ME);
+    timed(last);
+    expect(timed(five).map((e) => [e.sound, e.delayMs ?? 0])).toEqual([
+      ['gomoku-five', 0],
+      ['stinger-win', BESIDE_AFTER_MS.stinger],
+    ]);
   });
 
   it('hears a game lost to the clock as its end, and a leaving player’s as none', () => {
@@ -249,7 +262,7 @@ describe('a Gomoku room through the replay guard', () => {
     const room = guard(ME);
     expect(room(game(1, 2))).toEqual([]);
     expect(room(game(1, 3))).toEqual(['gomoku-stone']);
-    expect(room(game(1, 4))).toEqual(['room-your-turn']);
+    expect(room(game(1, 4))).toEqual(['gomoku-stone', 'room-your-turn']);
     expect(room({ ...game(1, 4) })).toEqual([]);
     // Older snapshots, then the newer ones again.
     expect(room(game(1, 3))).toEqual([]);
@@ -258,13 +271,60 @@ describe('a Gomoku room through the replay guard', () => {
     expect(room(game(1, 5))).toEqual(['gomoku-stone']);
   });
 
-  it('hears an opponent’s stone that hands you the go as your go alone', () => {
-    const room = guard(ME);
+  it('hears an opponent’s stone that hands you the go, and your go after it', () => {
+    const room = timedGuard(ME);
     room(game(1, 1));
-    expect(room(game(1, 2))).toEqual(['room-your-turn']);
+    expect(room(game(1, 2)).map((e) => [e.sound, e.other, e.delayMs])).toEqual([
+      ['gomoku-stone', true, undefined],
+      ['room-your-turn', undefined, BESIDE_AFTER_MS.turn],
+    ]);
     // Your own stone, then theirs.
-    expect(room(game(1, 3))).toEqual(['gomoku-stone']);
-    expect(room(game(1, 4))).toEqual(['room-your-turn']);
+    expect(room(game(1, 3)).map((e) => e.sound)).toEqual(['gomoku-stone']);
+    expect(room(game(1, 4)).map((e) => e.sound)).toEqual([
+      'gomoku-stone',
+      'room-your-turn',
+    ]);
+  });
+
+  it('plays only the go, at once, in a hidden tab', () => {
+    const visibility = vi
+      .spyOn(document, 'visibilityState', 'get')
+      .mockReturnValue('hidden');
+    try {
+      const room = timedGuard(ME);
+      room(game(1, 1));
+      expect(room(game(1, 2))).toEqual([
+        { sound: 'room-your-turn', key: 'turn:2' },
+      ]);
+    } finally {
+      visibility.mockRestore();
+    }
+  });
+
+  it('lights no five for a game that ended otherwise', () => {
+    const room = guard(ME);
+    room(game(1, 8));
+    const resigned = gomokuState({
+      ...sides,
+      gameNumber: 1,
+      colors: pair(ME, MAYA),
+      moves: stones(8),
+      lastGame: {
+        endedEarly: false,
+        standings: [],
+        ending: 'resigned',
+        winner: 'white',
+        stones: 8,
+      },
+    });
+    expect(room(resigned)).toEqual(['stinger-nice-game']);
+  });
+
+  it('hears an opponent’s stone that does not hand you the go as itself alone', () => {
+    // A spectator has no go, and a lost turn hands it on without a stone.
+    const room = guard(WATCHER);
+    room(game(1, 1));
+    expect(room(game(1, 2))).toEqual(['gomoku-stone']);
   });
 
   it('takes a reconnection as a baseline, and your go on arrival as heard', () => {
@@ -336,9 +396,11 @@ describe('a Gomoku room, heard in the app', () => {
     // His turn is lost to the clock: the warning, and Maya's stone after.
     send(game(1, [...stones(2), lost('black')], { missedTurns: { [ME]: 1 } }));
     send(game(1, [...stones(2), lost('black'), { color: 'white', point: 9 }]));
+    await act(() => vi.advanceTimersByTimeAsync(BESIDE_AFTER_MS.turn));
     expect(played()).toEqual([
       'room-your-turn',
       'gomoku-stone',
+      'gomoku-stone other',
       'room-your-turn',
       'room-tick step 1',
       'room-tick step 2',
@@ -346,6 +408,7 @@ describe('a Gomoku room, heard in the app', () => {
       'room-tick step 4',
       'room-tick step 5',
       'gomoku-warning',
+      'gomoku-stone other',
       'room-your-turn',
     ]);
   });
@@ -363,7 +426,8 @@ describe('a Gomoku room, heard in the app', () => {
     again.send({ ...game(1, 3) });
     expect(again.played()).toEqual([]);
     again.send(game(1, 4));
-    expect(again.played()).toEqual(['room-your-turn']);
+    await act(() => vi.advanceTimersByTimeAsync(BESIDE_AFTER_MS.turn));
+    expect(again.played()).toEqual(['gomoku-stone other', 'room-your-turn']);
   });
 });
 
@@ -408,7 +472,7 @@ describe('Gomoku on your own, heard', () => {
     expect(at(play(takeBack(two), 112))).toHaveLength(1);
   });
 
-  it('hears the stone that makes five as the end alone, and a refresh on it not at all', () => {
+  it('hears the stone that makes five as the five, then the end, and a refresh on it not at all', () => {
     // Black has four in a row on the centre line; White has scattered stones.
     const moves: [number, number][] = [
       [112, 0],
@@ -429,8 +493,14 @@ describe('Gomoku on your own, heard', () => {
       select: endAlone,
     });
     expect(run.observe({ game: state, end: null })).toEqual([]);
-    expect(run.observe({ game: won, end: 'win' }).map((e) => e.sound)).toEqual([
-      'stinger-win',
+    // The five lights, and the end follows it.
+    expect(
+      run
+        .observe({ game: won, end: 'win' })
+        .map((e) => [e.sound, e.delayMs ?? 0]),
+    ).toEqual([
+      ['gomoku-five', 0],
+      ['stinger-win', BESIDE_AFTER_MS.stinger],
     ]);
     const refreshed = createReplayGuard(deriveSoloSounds(deriveGomokuSolo), {
       isNewGame: () => false,
@@ -513,10 +583,12 @@ describe('Gomoku on your own, heard in the app', () => {
       await act(() => vi.advanceTimersByTimeAsync(THINKING_MS));
     }
     expect(screen.getByText('Computer won')).toBeInTheDocument();
+    await act(() => vi.advanceTimersByTimeAsync(BESIDE_AFTER_MS.stinger));
     const after = page.played();
     expect(after.filter((id) => id.startsWith('stinger-'))).toEqual([
       'stinger-solo-loss',
     ]);
+    expect(after.slice(-2)).toEqual(['gomoku-five', 'stinger-solo-loss']);
 
     // Play again is a new game; a refresh on it is silent.
     page.unmount();

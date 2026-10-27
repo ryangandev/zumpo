@@ -21,8 +21,10 @@ import { YOU, type SoloGame } from './solo/game';
  * softer), and a call's three beats, Liar, the cups lifting and a die
  * dropping out. The picker's taps are the table's own (`useBidChoice`). In a
  * room, beyond what every room does (`room/sounds.ts`): your go (`turnOf`),
- * and the last seconds of your bid (`actingDeadline`). A call that ends the
- * game is heard as the game's end, which stands alone.
+ * and the last seconds of your bid (`actingDeadline`). The bid that hands you
+ * the go, and the dice of a round you open, play beside your "your turn"
+ * (`beside`). A call that ends the game is heard as the game's end, which
+ * stands alone.
  */
 
 /** What the bid picker plays as the player chooses, on your own or in a room. */
@@ -197,14 +199,23 @@ export function deriveLiarsDiceSounds(
       const same =
         prev.isGameStarted && prev.phase === 'bidding' && rollOf(prev) === roll;
       const mine = next.cups.find((cup) => cup.playerId === viewer);
+      // What hands the viewer the go plays beside their "your turn": the dice
+      // of the round they open, and the bid they must answer.
+      const handsGo = next.turnPlayerId === viewer;
       if (!same && mine && mine.diceLeft > 0) {
-        events.push({ sound: 'liars-dice-roll', key: `roll:${roll}` });
+        events.push({
+          sound: 'liars-dice-roll',
+          key: `roll:${roll}`,
+          ...(handsGo && { beside: true }),
+        });
       }
       const before = same ? prev.bids.length : 0;
       next.bids.slice(before).forEach((bid, index) => {
-        events.push(
-          bidSound(viewer, bid.playerId, `${roll}.${before + index}`),
-        );
+        const last = before + index === next.bids.length - 1;
+        events.push({
+          ...bidSound(viewer, bid.playerId, `${roll}.${before + index}`),
+          ...(handsGo && last && { beside: true }),
+        });
       });
     }
 

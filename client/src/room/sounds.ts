@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyRoomState, GameSummary } from '../../../shared/wire-types';
 import {
+  BESIDE_AFTER_MS,
   useSounds,
   useStateSounds,
   type DeriveSounds,
@@ -331,12 +332,38 @@ export function isNewGameIn(game: GameSounds): IsNewGame<RoomSoundView> {
 
 /**
  * A lead of the room's on a change plays without the game's events beside
- * it. After the keys: what is dropped here was heard, and never plays later.
+ * it, except those the game flags `beside`: the move that handed over the
+ * go, the five that ended the game. Those play first and the lead follows
+ * (`BESIDE_AFTER_MS`), so it lands after them. In a hidden tab the lead
+ * plays at once and the flagged events not at all, since a hidden tab plays
+ * "your turn" alone and a timer there may be held back. After the keys:
+ * what is dropped here was heard, and never plays later.
  */
-const leadsAlone: SelectSounds<string> = (events) =>
-  events.some((e) => LEADS.has(e.sound) && !e.key.startsWith(GAME_KEY))
-    ? events.filter((e) => !e.key.startsWith(GAME_KEY))
-    : events;
+const isGame = (event: { key: string }) => event.key.startsWith(GAME_KEY);
+
+const leadsAlone: SelectSounds<string> = (events) => {
+  if (!events.some((e) => LEADS.has(e.sound) && !isGame(e))) return events;
+  const room = events.filter((e) => !isGame(e));
+  const hidden =
+    typeof document !== 'undefined' && document.visibilityState === 'hidden';
+  const beside = hidden ? [] : events.filter((e) => isGame(e) && e.beside);
+  if (beside.length === 0) return room;
+  return [
+    ...beside,
+    ...room.map((e) =>
+      LEADS.has(e.sound)
+        ? {
+            ...e,
+            delayMs:
+              (e.delayMs ?? 0) +
+              (e.sound === 'room-your-turn'
+                ? BESIDE_AFTER_MS.turn
+                : BESIDE_AFTER_MS.stinger),
+          }
+        : e,
+    ),
+  ];
+};
 
 /**
  * Arriving on your go has heard it: a go that drops while the page

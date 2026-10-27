@@ -36,6 +36,14 @@ export type SoundEvent<Id extends string, Stepped extends Id = never> = {
      * dropping in. Events of one sound at different delays are each heard.
      */
     delayMs?: number;
+    /**
+     * This event may play next to a lead sound on its change (`room-your-turn`,
+     * a stinger), which then plays `BESIDE_AFTER_MS` later, after it. Only an
+     * event the lead would otherwise swallow, and that the player should
+     * hear before it: the move that handed them the go, the five that
+     * ended the game. Nothing else is flagged. Not played in a hidden tab.
+     */
+    beside?: boolean;
   } & (S extends Stepped
     ? /** Which step, from 1 (see `PlayOptions.variant`). */
       { variant: number }
@@ -98,6 +106,13 @@ export interface ReplayGuard<
 }
 
 const MEMORY = 128;
+
+/**
+ * How long a lead sound waits for the events that play beside it, so it lands
+ * after them: "your turn" after the move that handed it over, a stinger after
+ * the five that ended the game.
+ */
+export const BESIDE_AFTER_MS = { turn: 300, stinger: 500 } as const;
 
 /** The higher of two steps, either of which may be missing. */
 const higher = (a: number | undefined, b: number | undefined) =>
@@ -171,7 +186,8 @@ export function createReplayGuard<
  * the session's `connection`: the first state after it changes is only a
  * baseline. A null `state` (nothing yet) is skipped. A sound `cuts` says
  * yes to, such as a stinger, cuts short the beats of a run still waiting to
- * play (`delayMs`), so they never land over it.
+ * play (`delayMs`), so they never land over it, the moment it is queued, even
+ * when it is itself delayed (`beside`).
  */
 export function useStateSounds<
   State,
@@ -247,7 +263,7 @@ export function useStateSounds<
     // Each event already carries the step its sound needs.
     const playAny = play as (id: Id, options?: PlayOptions) => void;
     const cut = latest.current.cuts;
-    if (cut && events.some((e) => !e.delayMs && cut(e.sound))) {
+    if (cut && events.some((e) => cut(e.sound))) {
       for (const timer of pending.current) clearTimeout(timer);
       pending.current.clear();
     }
