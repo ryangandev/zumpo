@@ -252,6 +252,7 @@ Code differs from Figma on purpose in a few places:
 - The chat's send button and the brush swatches keep Figma's drawn size, but take a tap from an invisible area 44 px tall around them, the size a thumb needs; on a phone the swatches sit 8 px apart, so there the area grows only up and down.
   So do the room tabs, the filter chips, the footer's languages and the viewer's avatar.
 - Hover and focus never change a control's size; Figma's hover variants are wider only because strokes count in its auto layout.
+- A pressed control never changes size either: the Heart button's count is at least one digit wide (`min-width: 1ch`), so a 1 and a 2 take one width, where Figma's Off and On variants hug the sample's 2.
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - On a phone Draw & Guess's sheet keeps the bitmap's 798 × 598 proportions, so Figma's 348 px tall Canvas (MO08, MO09), which is only a box that fills the height left, is 263 px tall at 390 px wide.
   The sheet stands 12 px under the toolbar or turn bar, as Figma draws it, and the height it does not need is under it, above the chat lines; centred, it left up to about 115 px over it.
