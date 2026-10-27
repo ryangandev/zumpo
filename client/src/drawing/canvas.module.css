@@ -42,6 +42,12 @@
   .playSheet > * {
     width: min(100cqw, 100cqh * 798 / 598);
   }
+
+  /* Under the controls above it, where Figma draws it (MO08, PH05), the
+     height the sheet does not need left under it. */
+  .playSheet.start {
+    justify-content: flex-start;
+  }
 }
 
 /* Wider than a phone, the sheet is all in sight under the turn bar: never

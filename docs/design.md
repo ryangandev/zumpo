@@ -253,6 +253,9 @@ Code differs from Figma on purpose in a few places:
   So do the room tabs, the filter chips, the footer's languages and the viewer's avatar.
 - Hover and focus never change a control's size; Figma's hover variants are wider only because strokes count in its auto layout.
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
+- On a phone Draw & Guess's sheet keeps the bitmap's 798 × 598 proportions, so Figma's 348 px tall Canvas (MO08, MO09), which is only a box that fills the height left, is 263 px tall at 390 px wide.
+  The sheet stands 12 px under the toolbar or turn bar, as Figma draws it, and the height it does not need is under it, above the chat lines; centred, it left 40 to 70 px over it.
+  The word choices stay centred in the room as MO07's zone draws them, and so does Doodle Chain's sheet as DC17's Canvas zone does ([the sheet spec](../e2e/draw-and-guess-sheet.spec.ts) checks the gap at 360, 390 and 430 px and beside the side column).
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
 - Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.

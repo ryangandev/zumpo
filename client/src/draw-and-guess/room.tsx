@@ -339,9 +339,11 @@ function Turn({ room }: { room: Room }) {
       {/* The sheet, and the round that just ended over its foot, where it
           is seen without a scroll and moves nothing; the drawer choosing a
           word sees the choices instead. On a phone the sheet is as large
-          as the screen leaves it. */}
+          as the screen leaves it, right under the toolbar or the turn bar
+          as MO08 and MO09 draw it, and the choices are centred in the room
+          as MO07 draws them. */}
       <div className={cx(styles.board, playColumn)}>
-        <PlaySheet>
+        <PlaySheet align={choices && phone ? 'center' : 'start'}>
           {choices && phone ? (
             choices
           ) : (
