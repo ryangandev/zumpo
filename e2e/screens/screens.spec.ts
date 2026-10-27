@@ -1187,6 +1187,22 @@ test('Pairs on your own', async ({ player }) => {
   await shot(maya, 'PR04');
   await shotChange(maya, 'Change board', 'PR01');
 
+  // PR11: a Small board on a desktop, three turns and a pair in, one card up.
+  const small = await player('Maya', desktop);
+  await keepOnDevice(small, {
+    'pairs:board': 'Small',
+    'best:pairs:Small': JSON.stringify({ turns: 11, ms: 52_000 }),
+    'best:pairs:Large': JSON.stringify({ turns: 31, ms: 201_000 }),
+  });
+  await small.goto('/games/pairs/solo');
+  const smallMemory: Memory = new Map();
+  let smallTurns = 0;
+  while (smallTurns < 3 || (await pairsFound(small)) < 1) {
+    await playTurn(small, smallMemory);
+    smallTurns++;
+  }
+  await playTurn(small, smallMemory, () => shot(small, 'PR11'));
+
   const onPhone = await player('Maya', phone);
   await onPhone.goto('/games/pairs/solo');
   const phoneMemory: Memory = new Map();
@@ -1548,7 +1564,9 @@ test('Liar’s Dice on your own', async ({ player }) => {
     .getByText(/ is thinking$/);
   const shown = new Set<string>();
   let calledToLose = false;
-  const LD_SOLO = ['LD01', 'LD02', 'LD03', 'LD04', 'LD05', 'LD06'];
+  // A round of this game has been bid on, so Leave asks first (LD16).
+  let bidOn = false;
+  const LD_SOLO = ['LD01', 'LD02', 'LD03', 'LD04', 'LD05', 'LD06', 'LD16'];
   // Until every screen is captured: a mistaken call (LD04) is a chance too.
   for (let games = 1; !LD_SOLO.every((code) => shown.has(code)); games++) {
     // Last of four is a long shot for a player this plain: a game takes a
@@ -1561,9 +1579,23 @@ test('Liar’s Dice on your own', async ({ player }) => {
           shown.add('LD04');
         }
         calledToLose = false;
+        bidOn = true;
         await nextRound.click();
       } else if (await yourLiarsDiceTurn(maya).isVisible()) {
         const opening = !(await bidsOf(maya).isVisible());
+        if (opening && bidOn && !shown.has('LD16')) {
+          // Opening a later round, as Figma's Maya does: Leave asks, and
+          // Stay goes back to the table as it was.
+          await maya
+            .getByRole('button', { name: 'Leave', exact: true })
+            .click();
+          const asking = maya.getByRole('dialog', { name: 'Leave this game?' });
+          await expect(asking).toBeVisible();
+          await shot(maya, 'LD16');
+          await asking.getByRole('button', { name: 'Stay' }).click();
+          await expect(asking).toBeHidden();
+          shown.add('LD16');
+        }
         if (opening && !shown.has('LD02')) {
           // Figma's opening bid: three 4s.
           await pickBid(maya, 3, 4);
@@ -1604,6 +1636,7 @@ test('Liar’s Dice on your own', async ({ player }) => {
         localStorage.setItem(`zumpo:solo:${key}`, value);
       }
     }, LIARS_DICE_RECORD);
+    bidOn = false;
     await maya.getByRole('button', { name: 'Play again' }).click();
   }
   expect(shown).toEqual(new Set(LD_SOLO));
@@ -2181,7 +2214,8 @@ test('a Daily Word game', async ({ player }) => {
   });
   await say(sam, 'by nine points!');
   await say(leo, 'gg', true);
-  await shot(maya, 'DW10');
+  // Sam's view, second to Maya, as Figma's: Ready, not the host's Next game.
+  await shot(sam, 'DW10');
   await shot(leo, 'DW16');
 });
 
