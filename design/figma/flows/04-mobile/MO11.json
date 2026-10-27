@@ -183,6 +183,7 @@
           "$Zumpo · UI:color/paper"
         ],
         "radius": "$Zumpo · UI:radius/16",
+        "clip": true,
         "children": [
           {
             "type": "FRAME",
