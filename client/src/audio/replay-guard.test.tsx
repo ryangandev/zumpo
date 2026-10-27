@@ -219,3 +219,45 @@ describe('useStateSounds', () => {
     expect(play).not.toHaveBeenCalled();
   });
 });
+
+describe('useStateSounds with steps', () => {
+  /** Seconds left on a deadline: each of the last three is its own step. */
+  const countdown: DeriveSounds<number, 'tick'> = (prev, next) =>
+    next < prev && next <= 3
+      ? [{ sound: 'tick', key: `tick:${next}`, variant: 4 - next }]
+      : [];
+
+  function Clock({
+    left,
+    play,
+  }: {
+    left: number;
+    play: (
+      sound: 'tick',
+      options?: { other?: boolean; variant?: number },
+    ) => void;
+  }) {
+    useStateSounds(left, {
+      derive: countdown,
+      play,
+      epoch: 1,
+      isNewGame: never,
+    });
+    return null;
+  }
+
+  it('plays the step each event names', () => {
+    const play =
+      vi.fn<
+        (sound: 'tick', options?: { other?: boolean; variant?: number }) => void
+      >();
+    const view = render(<Clock left={5} play={play} />);
+    for (const left of [4, 3, 2, 1])
+      view.rerender(<Clock left={left} play={play} />);
+    expect(play.mock.calls).toEqual([
+      ['tick', { other: undefined, variant: 1 }],
+      ['tick', { other: undefined, variant: 2 }],
+      ['tick', { other: undefined, variant: 3 }],
+    ]);
+  });
+});

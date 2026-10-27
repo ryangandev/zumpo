@@ -240,6 +240,21 @@ describe('variety', () => {
     ]);
   });
 
+  it('plays the variant asked for by number, from 1, rolling nothing', async () => {
+    const engine = await unlocked();
+    audio.rolls = [0.99];
+    for (const variant of [1, 3, 3, 9, 0]) await engine.play(two, { variant });
+    // A step may repeat, unlike a take; past the ends it plays the nearest.
+    expect(audio.sources().map((s) => audio.urlOf(s))).toEqual([
+      'a.m4a',
+      'c.m4a',
+      'c.m4a',
+      'c.m4a',
+      'a.m4a',
+    ]);
+    expect(audio.rolls).toEqual([0.99]);
+  });
+
   it('detunes each play by up to its pitch spread, in semitones', async () => {
     const engine = await unlocked();
     const spread = spec({ pitchSpread: 2, minGapMs: 0 });

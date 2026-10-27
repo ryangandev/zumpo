@@ -26,6 +26,8 @@ export interface SoundEvent<Id extends string> {
   key: string;
   /** Another player's doing: plays about 6 dB softer. */
   other?: boolean;
+  /** Which step of a stepped sound, from 1 (see `PlayOptions.variant`). */
+  variant?: number;
 }
 
 /** A game's pure rule from one state to the next to what is heard. */
@@ -146,6 +148,8 @@ export function useStateSounds<State, Id extends string>(
     seen.last = { state };
     const events = seen.guard.observe(state, seen.resync);
     seen.resync = false;
-    for (const event of events) play(event.sound, { other: event.other });
+    for (const { sound, other, variant } of events) {
+      play(sound, variant === undefined ? { other } : { other, variant });
+    }
   }, [state, epoch, play]);
 }

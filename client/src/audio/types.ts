@@ -55,6 +55,13 @@ export type SoundBank<Id extends string = string> = Readonly<
 export interface PlayOptions {
   /** Another player's doing: plays about 6 dB softer than the viewer's own. */
   other?: boolean;
+  /**
+   * Which variant, counting from 1 as the masters do (`masters/<id>/<n>.wav`),
+   * for a sound whose variants are steps rather than takes: a countdown's
+   * seconds, a streak rising up the scale. Past the last it plays the last.
+   * Without it a variant is picked at random.
+   */
+  variant?: number;
 }
 
 /** Plays one of a bank's sounds, if sound is on and unlocked; never throws. */

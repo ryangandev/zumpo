@@ -362,6 +362,8 @@ Decided by Ryan on 2026-10-26: no paid service, no Git LFS, no audio library, AA
 - **Kept while used:** a bank stays decoded while any page retains it, and is let go 5 s after the last one does (`RELEASE_MS`), so moving between two pages that share a bank, or React's development double mount, fetches and decodes it once.
   A sound played without its bank retained is kept just as long after it plays.
 - **Rules per sound:** variants are picked at random but never the same one twice in a row, `pitchSpread` detunes each play by up to that many semitones either way, `minGapMs` drops a repeat that comes too soon, and `maxVoices` stops the oldest copy past the cap with a short fade; 16 voices is the engine's own cap.
+- **Steps:** a sound whose variants are steps rather than takes (the last five seconds of a clock rising up the scale, a streak) is played with `play(id, { variant: n })`, counting from 1 as its masters do; it may repeat, and past the last it plays the last.
+  Such a sound has no `pitchSpread`, nor does any sound tuned to the scale, since a detuned note is out of key.
 - **Hidden tabs:** nothing plays while the page is hidden except a sound marked `hiddenTab` ("your turn"), and the context resumes on return only if it ran before.
   At most one sound may be marked `hiddenTab`.
   It plays only where the browser keeps the context running in a hidden tab, as desktop browsers do; iOS suspends the context once the page goes to the background, and nothing can resume it there without a gesture, so on an iPhone it is not heard until the player comes back.
@@ -379,7 +381,7 @@ A change in one tab is followed by the others.
 - **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
 - **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
 - **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
-  `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`).
+  `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`), and a `variant` for a step.
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
   A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent; the keys are kept across a reconnect, and forgotten only when `isNewGame(prev, next)` says a new game began.
   Every game must give `isNewGame`, since its keys (`take:4`) come round again in the next game, and it must work on states that are not consecutive: across a reconnect `prev` may be mid-game 1 and `next` mid-game 2, so it compares what a game leaves behind (the last game's summary, a game number), not a phase change.

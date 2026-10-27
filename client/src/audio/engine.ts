@@ -281,16 +281,20 @@ export class AudioEngine {
     // A sound no page retained is kept only as long as a released one.
     if (!this.retained.has(spec.id)) this.retain([spec])();
     this.lastPlayed.set(spec.id, at);
-    return this.start(ctx, spec, this.pickVariant(spec), options, at).then(
-      (started) => {
-        // A play that never started holds no gap against the next one.
-        if (!started && this.lastPlayed.get(spec.id) === at) {
-          if (last === undefined) this.lastPlayed.delete(spec.id);
-          else this.lastPlayed.set(spec.id, last);
-        }
-        return started;
-      },
-    );
+    return this.start(
+      ctx,
+      spec,
+      this.pickVariant(spec, options.variant),
+      options,
+      at,
+    ).then((started) => {
+      // A play that never started holds no gap against the next one.
+      if (!started && this.lastPlayed.get(spec.id) === at) {
+        if (last === undefined) this.lastPlayed.delete(spec.id);
+        else this.lastPlayed.set(spec.id, last);
+      }
+      return started;
+    });
   }
 
   /** Lets the context go; the next gesture makes a new one. */
@@ -473,11 +477,14 @@ export class AudioEngine {
     throw failure;
   }
 
-  private pickVariant(spec: SoundSpec): SoundVariant {
+  private pickVariant(spec: SoundSpec, chosen?: number): SoundVariant {
     const count = spec.variants.length;
     const last = this.lastVariant.get(spec.id);
     let index = 0;
-    if (count > 1) {
+    if (chosen !== undefined && Number.isFinite(chosen)) {
+      // A step asked for by number, from 1; nothing random is rolled for it.
+      index = Math.min(count, Math.max(1, Math.floor(chosen))) - 1;
+    } else if (count > 1) {
       // Any but the last one, evenly.
       const others = last === undefined ? count : count - 1;
       index = Math.min(others - 1, Math.floor(this.random() * others));
