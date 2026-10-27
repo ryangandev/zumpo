@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   useSyncExternalStore,
   type ReactNode,
@@ -55,26 +56,34 @@ export function SoundProvider({
 
   useEffect(() => engine.applySettings(settings), [engine, settings]);
 
+  // The settings as last set, for changes made before React re-renders.
+  const latest = useRef(settings);
+
   useEffect(
-    () => watchSound((stored) => setSettings(stored ?? DEFAULT_SOUND_SETTINGS)),
+    () =>
+      watchSound((stored) => {
+        latest.current = stored ?? DEFAULT_SOUND_SETTINGS;
+        setSettings(latest.current);
+      }),
     [],
   );
 
   const update = useCallback((bus: Bus, change: Partial<BusSettings>) => {
-    setSettings((current) => {
-      const volume = change.volume ?? current[bus].volume;
-      const next: SoundSettings = {
-        ...current,
-        [bus]: {
-          volume: Number.isFinite(volume)
-            ? clampVolume(volume)
-            : current[bus].volume,
-          muted: change.muted ?? current[bus].muted,
-        },
-      };
-      writeSound(next);
-      return next;
-    });
+    const current = latest.current;
+    const volume = change.volume ?? current[bus].volume;
+    const next: SoundSettings = {
+      ...current,
+      [bus]: {
+        volume: Number.isFinite(volume)
+          ? clampVolume(volume)
+          : current[bus].volume,
+        muted: change.muted ?? current[bus].muted,
+      },
+    };
+    latest.current = next;
+    // Saved here, not in a state updater, which React may call twice.
+    writeSound(next);
+    setSettings(next);
   }, []);
 
   const value = useMemo<SoundState>(
