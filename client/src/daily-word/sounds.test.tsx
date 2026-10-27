@@ -128,7 +128,7 @@ const TILES_A = [
 ];
 
 describe('a guess’s tiles', () => {
-  it('turn one after another, in the board’s order', () => {
+  it('sound one after another, in the board’s order', () => {
     expect(tileSounds(ROW_A, 'row:3')).toEqual([
       { sound: 'daily-word-tile-right', key: 'row:3:tile:0' },
       {

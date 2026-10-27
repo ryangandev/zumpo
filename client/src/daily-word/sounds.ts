@@ -20,7 +20,7 @@ import type { SoloGame } from './solo/game';
 /*
  * What Daily Word sounds like. Typing a row, on your own or in a room, the
  * board plays what the player does: a letter, a delete, a row the rules turn
- * back. A guess's tiles turn one after another, bright for right, middling
+ * back. A guess's tiles sound one after another, bright for right, middling
  * for moved, dull for not in, from the state the guess makes: the game's on
  * your own, the server's in a room, which marks it. In a room, beyond what
  * every room does (`room/sounds.ts`): somebody else finding the word, a step
@@ -81,7 +81,7 @@ export function tileSounds(
 }
 
 /**
- * A guess on your own, its tiles turning. The guesses only grow, so a row's
+ * A guess on your own, its tile sounds. The guesses only grow, so a row's
  * number names it. The guess that finds or misses the word is the game's
  * end, heard alone.
  */
