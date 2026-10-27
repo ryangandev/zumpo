@@ -104,7 +104,8 @@
               "Status": "Drawing",
               "Host": true,
               "Score": "460",
-              "State": "Highlight"
+              "State": "Highlight",
+              "Wrap": "No"
             }
           }
         ]

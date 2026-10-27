@@ -237,16 +237,18 @@
                             "w": 822,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Highlight"
+                              "State": "Highlight",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10597",
+                            "componentId": "258:71310",
                             "props": {
                               "Status icon": false,
+                              "Score": "1683",
                               "Status": "Winner · 3 codes cracked",
-                              "Host": true,
-                              "Score": "1683"
+                              "Host": true
                             },
                             "overrides": [
                               {
@@ -303,17 +305,19 @@
                             "w": 822,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "2nd place · 3 codes cracked",
+                              "Name": "Sam",
                               "You": true,
                               "Score": "1651",
-                              "Name": "Sam"
+                              "Status": "2nd place · 3 codes cracked"
                             },
                             "overrides": [
                               {
@@ -370,16 +374,18 @@
                             "w": 822,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "3rd place · 2 codes cracked",
+                              "Name": "Ryan",
                               "Score": "1124",
-                              "Name": "Ryan"
+                              "Status": "3rd place · 2 codes cracked"
                             },
                             "overrides": [
                               {
@@ -436,16 +442,18 @@
                             "w": 822,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "4th place · 2 codes cracked",
+                              "Name": "Leo",
                               "Score": "609",
-                              "Name": "Leo"
+                              "Status": "4th place · 2 codes cracked"
                             },
                             "overrides": [
                               {
@@ -636,13 +644,13 @@
                     "type": "FRAME",
                     "id": "162:105338",
                     "name": "Boards",
-                    "w": 912,
+                    "w": 888,
                     "h": 478,
                     "wSize": "hug",
                     "hSize": "hug",
                     "layout": {
                       "mode": "row",
-                      "gap": "$Zumpo · UI:space/16",
+                      "gap": "$Zumpo · UI:space/8",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -1680,7 +1688,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +628",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1703,7 +1712,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +620",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1726,7 +1736,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +516",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1749,7 +1760,8 @@
                       "Score": "609",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

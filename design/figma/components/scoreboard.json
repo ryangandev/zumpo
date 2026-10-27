@@ -108,7 +108,8 @@
             "wSize": "fill",
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Highlight"
+              "State": "Highlight",
+              "Wrap": "No"
             },
             "componentId": "26:10597",
             "props": {
@@ -139,7 +140,8 @@
             "wSize": "fill",
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {
@@ -173,7 +175,8 @@
             "wSize": "fill",
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {
@@ -207,7 +210,8 @@
             "wSize": "fill",
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {
@@ -242,7 +246,8 @@
             "h": 52,
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Highlight"
+              "State": "Highlight",
+              "Wrap": "No"
             },
             "componentId": "26:10597",
             "props": {
@@ -273,7 +278,8 @@
             "h": 52,
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {
@@ -307,7 +313,8 @@
             "h": 52,
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {
@@ -341,7 +348,8 @@
             "h": 52,
             "component": "Zumpo/Player row",
             "variant": {
-              "State": "Default"
+              "State": "Default",
+              "Wrap": "No"
             },
             "componentId": "26:10577",
             "props": {

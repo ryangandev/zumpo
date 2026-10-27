@@ -216,13 +216,13 @@
                     "type": "FRAME",
                     "id": "162:104046",
                     "name": "Boards",
-                    "w": 912,
+                    "w": 888,
                     "h": 478,
                     "wSize": "hug",
                     "hSize": "hug",
                     "layout": {
                       "mode": "row",
-                      "gap": "$Zumpo · UI:space/16",
+                      "gap": "$Zumpo · UI:space/8",
                       "strokesIncluded": true
                     },
                     "children": [
@@ -1344,7 +1344,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +633",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1379,7 +1380,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +518",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1414,7 +1416,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Cracked it · +306",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1437,7 +1440,8 @@
                       "Score": "608",
                       "Icon": "24:4994",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

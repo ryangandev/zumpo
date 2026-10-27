@@ -1365,7 +1365,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +12",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1400,7 +1401,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +12",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1435,7 +1437,8 @@
                       "Score": "−3",
                       "Icon": "24:5071",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -1512,7 +1515,8 @@
                       "Show status": true,
                       "Status icon": true,
                       "Status": "Safe · +17",
-                      "State": "Scored"
+                      "State": "Scored",
+                      "Wrap": "No"
                     }
                   },
                   {

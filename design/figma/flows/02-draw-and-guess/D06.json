@@ -223,7 +223,8 @@
                       "Status": "Drawing",
                       "Host": true,
                       "Score": "460",
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -238,7 +239,8 @@
                       "Score": "180",
                       "Icon": "24:5053",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   }
                 ]

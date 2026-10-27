@@ -232,7 +232,8 @@
                       "Show status": true,
                       "Score": "460",
                       "Name": "Maya",
-                      "State": "Away"
+                      "State": "Away",
+                      "Wrap": "No"
                     }
                   },
                   {

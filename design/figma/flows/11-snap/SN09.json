@@ -537,16 +537,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Highlight"
+                              "State": "Highlight",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10597",
+                            "componentId": "258:71310",
                             "props": {
                               "Status icon": false,
+                              "Score": "9",
                               "Status": "Winner",
-                              "Host": true,
-                              "Score": "9"
+                              "Host": true
                             },
                             "overrides": [
                               {
@@ -603,17 +605,19 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "2nd place",
+                              "Name": "Sam",
                               "You": true,
                               "Score": "7",
-                              "Name": "Sam"
+                              "Status": "2nd place"
                             },
                             "overrides": [
                               {
@@ -670,16 +674,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "3rd place",
+                              "Name": "Leo",
                               "Score": "6",
-                              "Name": "Leo"
+                              "Status": "3rd place"
                             },
                             "overrides": [
                               {
@@ -736,16 +742,18 @@
                             "w": 854,
                             "h": 52,
                             "wSize": "fill",
+                            "hSize": "hug",
                             "component": "Zumpo/Player row",
                             "variant": {
-                              "State": "Default"
+                              "State": "Default",
+                              "Wrap": "Yes"
                             },
-                            "componentId": "26:10577",
+                            "componentId": "258:71290",
                             "props": {
                               "Status icon": false,
-                              "Status": "4th place",
+                              "Name": "Ryan",
                               "Score": "5",
-                              "Name": "Ryan"
+                              "Status": "4th place"
                             },
                             "overrides": [
                               {
@@ -922,7 +930,8 @@
                       "Score": "9",
                       "Icon": "24:5053",
                       "Name": "Maya",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -945,7 +954,8 @@
                       "Score": "7",
                       "Icon": "24:5053",
                       "Name": "Sam",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -968,7 +978,8 @@
                       "Score": "6",
                       "Icon": "24:5053",
                       "Name": "Leo",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {
@@ -991,7 +1002,8 @@
                       "Score": "5",
                       "Icon": "24:5053",
                       "Name": "Ryan",
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "No"
                     }
                   },
                   {

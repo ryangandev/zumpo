@@ -201,19 +201,19 @@
                     "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Highlight"
+                      "State": "Highlight",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10597",
+                    "componentId": "258:71310",
                     "props": {
                       "Status icon": false,
+                      "Score": "1683",
                       "Status": "Winner · 3 codes cracked",
-                      "Host": true,
-                      "Score": "1683"
+                      "Host": true
                     },
                     "overrides": [
                       {
                         "path": ".",
-                        "counterAxisSizingMode": "AUTO",
                         "height": 70,
                         "width": 260
                       },
@@ -224,16 +224,6 @@
                           "Tone": "Peach",
                           "Size": "Regular"
                         }
-                      },
-                      {
-                        "path": "Details / Status line",
-                        "layoutAlign": "STRETCH",
-                        "primaryAxisSizingMode": "FIXED"
-                      },
-                      {
-                        "path": "Details / Status line / Status",
-                        "layoutGrow": 1,
-                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -279,19 +269,19 @@
                     "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "2nd place · 3 codes cracked",
+                      "Name": "Sam",
                       "Score": "1651",
-                      "Name": "Sam"
+                      "Status": "2nd place · 3 codes cracked"
                     },
                     "overrides": [
                       {
                         "path": ".",
-                        "counterAxisSizingMode": "AUTO",
                         "height": 70,
                         "width": 260
                       },
@@ -302,16 +292,6 @@
                           "Tone": "Sand",
                           "Size": "Regular"
                         }
-                      },
-                      {
-                        "path": "Details / Status line",
-                        "layoutAlign": "STRETCH",
-                        "primaryAxisSizingMode": "FIXED"
-                      },
-                      {
-                        "path": "Details / Status line / Status",
-                        "layoutGrow": 1,
-                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -357,19 +337,19 @@
                     "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "3rd place · 2 codes cracked",
+                      "Name": "Ryan",
                       "Score": "1124",
-                      "Name": "Ryan"
+                      "Status": "3rd place · 2 codes cracked"
                     },
                     "overrides": [
                       {
                         "path": ".",
-                        "counterAxisSizingMode": "AUTO",
                         "height": 70,
                         "width": 260
                       },
@@ -380,16 +360,6 @@
                           "Tone": "Blue",
                           "Size": "Regular"
                         }
-                      },
-                      {
-                        "path": "Details / Status line",
-                        "layoutAlign": "STRETCH",
-                        "primaryAxisSizingMode": "FIXED"
-                      },
-                      {
-                        "path": "Details / Status line / Status",
-                        "layoutGrow": 1,
-                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -435,20 +405,20 @@
                     "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
-                      "State": "Default"
+                      "State": "Default",
+                      "Wrap": "Yes"
                     },
-                    "componentId": "26:10577",
+                    "componentId": "258:71290",
                     "props": {
                       "Status icon": false,
-                      "Status": "4th place · 2 codes cracked",
+                      "Name": "Leo",
                       "You": true,
                       "Score": "609",
-                      "Name": "Leo"
+                      "Status": "4th place · 2 codes cracked"
                     },
                     "overrides": [
                       {
                         "path": ".",
-                        "counterAxisSizingMode": "AUTO",
                         "height": 70,
                         "width": 260
                       },
@@ -459,16 +429,6 @@
                           "Tone": "Lime",
                           "Size": "Regular"
                         }
-                      },
-                      {
-                        "path": "Details / Status line",
-                        "layoutAlign": "STRETCH",
-                        "primaryAxisSizingMode": "FIXED"
-                      },
-                      {
-                        "path": "Details / Status line / Status",
-                        "layoutGrow": 1,
-                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
