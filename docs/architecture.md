@@ -348,15 +348,23 @@ Decided by Ryan on 2026-10-26: no paid service, no Git LFS, no audio library, AA
 
 - **One graph:** each voice is a buffer source into its own gain, into the effects bus, into the master, into a limiter (a `DynamicsCompressorNode` at -1 dB, ratio 20) and out.
   The bus's gain is the volume cubed, so the slider sounds even across its range, and mute ramps the bus to 0 rather than cutting it, so nothing clicks.
-- **Locked until a gesture:** no `AudioContext` exists before the first `pointerdown`, `pointerup`, `mousedown`, `touchend` or key other than Escape anywhere on the page ([`session.ts`](../client/src/audio/session.ts)), which is what Safari and Chrome count as activation.
+- **Locked until a gesture:** no `AudioContext` exists before the first trusted activation anywhere on the page ([`session.ts`](../client/src/audio/session.ts)): a mouse's `pointerdown` or `mousedown`, a finger's or pen's `pointerup` or `touchend`, or a key other than Escape, which is what Safari and Chrome count as activation.
+  A finger's `pointerdown` does not count, since a touch that turns into a scroll never activates the page.
   The context is made and resumed inside that gesture, and the listeners come back whenever it stops running (a phone call, Siri, a locked screen), so the next touch resumes it.
   A browser without Web Audio, or one that refuses a context, leaves the engine `unsupported`, and every `play` is a quiet no-op.
 - **Ambient on Safari:** before the context exists the engine sets `navigator.audioSession.type = 'ambient'` where it is supported, so effects mix with the player's music, follow the silent switch, and never take over the phone's audio as a media session would.
 - **Formats by decoding:** every sound ships as AAC (`.m4a`) and Opus (`.webm`).
-  The engine decodes AAC first and Opus if that fails, and keeps whichever worked; `canPlayType` does not say what `decodeAudioData` takes, and no browser the games run on lacks both.
-- **Decoded ahead:** a page's sounds are fetched and decoded right after the first gesture, and a sound that cannot start within 200 ms of being asked for (`LATE_MS`) is dropped rather than played late, out of step with what caused it.
+  Before there is a context the engine guesses from a media element's `canPlayType`: Opus only where AAC is refused and Opus is not, AAC everywhere else.
+  It decodes the guess first and the other format if that fails, and keeps whichever worked; `canPlayType` does not promise what `decodeAudioData` takes, and no browser the games run on lacks both.
+- **Fetched ahead, decoded at the gesture:** a page's sounds are fetched as soon as the page retains them, with no context, and kept as bytes until the first gesture decodes them, so the gesture that unlocks sound waits for no network.
+  A sound that cannot start soon enough after being asked for is dropped rather than played late, out of step with what caused it; how late is too late grows with the class (`LATE_MS`: `ui` 200 ms, `event` 500 ms, `stinger` 1 s), and a `hiddenTab` sound waits at least 1 s.
+  A failed or late play holds back no `minGapMs`, so the next ask can still play.
+- **Kept while used:** a bank stays decoded while any page retains it, and is let go 5 s after the last one does (`RELEASE_MS`), so moving between two pages that share a bank, or React's development double mount, fetches and decodes it once.
+  A sound played without its bank retained is kept just as long after it plays.
 - **Rules per sound:** variants are picked at random but never the same one twice in a row, `pitchSpread` detunes each play by up to that many semitones either way, `minGapMs` drops a repeat that comes too soon, and `maxVoices` stops the oldest copy past the cap with a short fade; 16 voices is the engine's own cap.
 - **Hidden tabs:** nothing plays while the page is hidden except a sound marked `hiddenTab` ("your turn"), and the context resumes on return only if it ran before.
+  At most one sound may be marked `hiddenTab`.
+  It plays only where the browser keeps the context running in a hidden tab, as desktop browsers do; iOS suspends the context once the page goes to the background, and nothing can resume it there without a gesture, so on an iPhone it is not heard until the player comes back.
 - **Other players:** `play(id, { other: true })` plays 6 dB softer (`OTHER_DB`), so what another player did reads as background to what the viewer did.
 
 Settings are `{ effects: { volume, muted } }`, kept per browser in `localStorage` under `zumpo:sound` through [`net/storage.ts`](../client/src/net/storage.ts), as `{"v":1,...}` so a later shape can tell an old one apart.
@@ -373,8 +381,10 @@ A change in one tab is followed by the others.
 - **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
   `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`).
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
-  A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent, until `isNewGame(prev, next)` says a new game began; a new baseline forgets them too, since a new game may have begun while the player was away.
-  One change plays one sound, the viewer's own if one of its events is theirs.
+  A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent; the keys are kept across a reconnect, and forgotten only when `isNewGame(prev, next)` says a new game began.
+  Every game must give `isNewGame`, since its keys (`take:4`) come round again in the next game, and it must work on states that are not consecutive: across a reconnect `prev` may be mid-game 1 and `next` mid-game 2, so it compares what a game leaves behind (the last game's summary, a game number), not a phase change.
+  One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is, while different sounds in one change all play.
+  The guard lives as long as the component that holds it, so `useStateSounds` belongs in the room's page, never in a component one phase mounts, or every phase change starts it over and the change into that phase is lost.
 
 The words around sound (the settings' labels) come from the i18n catalog like any other; the engine has none.
 
@@ -393,24 +403,25 @@ They live in a folder outside it, `~/Documents/assets/zumpo-audio` on the Mac mi
 
 `npm run audio:build`, on the machine with the masters and an ffmpeg with `aac_at` and `libopus` (the Mac mini's), builds [`client/src/audio/generated/`](../client/src/audio/generated/):
 
-- It refuses a master whose hash is not the declared one, that is not 48 kHz, that starts with more than 20 ms of silence, or that is longer than its class allows.
+- It refuses a master whose hash is not the declared one, that is not 48 kHz, that stays below -50 dBFS for more than its first 20 ms, or that is longer than its class allows.
   `--rehash` takes the masters as they are and writes their hashes into `sounds.json`.
 - It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), and holds the gain back where the true peak would pass -1.5 dBTP, with a warning.
-- It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length or onset, or is bigger than its class allows.
-  Encoding is deterministic, so an unchanged master builds byte for byte the same files, and a variant whose master and processing have not changed is kept rather than re-encoded (`--force` re-encodes all).
+- It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length, starts more than 2 ms away from its master, or is bigger than its class allows.
+  Where a file would peak too high it is encoded again a little quieter, and the manifest records the gain each format really got (`appliedGainDb`).
+  Encoding is deterministic, so an unchanged master builds byte for byte the same files, and a variant whose master and processing (pipeline, loudness target, channels, bitrates, peak ceilings) have not changed is kept rather than re-encoded (`--force` re-encodes all); a class's length or size limit is checked, not hashed, so changing one re-encodes nothing.
 - It writes the files, `manifest.json` (every measurement, encoder and hash) and one TypeScript bank per group, so a page imports only its own sounds and their files land in its own chunk.
-  The new folder replaces the old one in one rename, and `--rehash` writes `sounds.json`, only once every sound built, so a failed or interrupted build leaves the last one whole.
+  The new folder is staged in `.audio-build/` at the repository's root, outside `client/src`, and replaces the old one in one rename, and `--rehash` writes `sounds.json`, only once every sound built, so a failed or interrupted build leaves the last one whole and no stray TypeScript for the typecheck to find.
 
-`npm run audio:check` runs in `npm run verify` and in CI, which have neither ffmpeg nor the masters: it validates `sounds.json`, checks that the manifest matches every declaration, that every file's hash matches the manifest, that no file is missing or left over, and that the banks are what the manifest would write.
+`npm run audio:check` runs in `npm run verify` and in CI, which have neither ffmpeg nor the masters: it validates `sounds.json` (with at most one `hiddenTab` sound, and the `test` group holding exactly the `test-` ids), checks that the manifest matches every declaration, that every file is named for its sound, variant and format, starts as an MP4 or WebM file does, and matches the manifest's hash and size and its class's size limit, that no file is missing or left over, and that the banks are what the manifest would write.
 A failure names what drifted and says to run `audio:build` where the masters are.
 
 The files are served as files: Vite's `assetsInlineLimit` never inlines `.m4a` or `.webm`, since the CSP's `connect-src 'self'` would refuse the `data:` URL `fetch` asks for.
-The `test` group holds fixtures for the pipeline and the engine (`test-blip`); only the development sound lab imports it, so the build drops it with its files.
+The `test` group holds fixtures for the pipeline and the engine (`test-blip`), and its ids start with `test-`; only the development sound lab imports it, so the build drops it with its files, and a build that would still emit a `test-` file fails ([`vite.config.ts`](../client/vite.config.ts)).
 
 ### The sound lab
 
 `/dev/sound`, in development only like `/design`, plays every declared sound through the real engine and settings, with a volume slider, a mute and an "as another player's" button for each.
-It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that nothing plays before a real gesture, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
+It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that a page's files are fetched before any gesture and nothing plays before a real one, that the first gesture plays its sound on a slow network, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
 It is not in CI, to save Actions minutes; run it when the engine changes, after `npx playwright install webkit` once.
 What it cannot hear is real phones: the silent switch, a call interrupting, and Bluetooth latency need an iPhone and an Android in hand.
 
