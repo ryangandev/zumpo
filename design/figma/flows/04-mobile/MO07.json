@@ -218,7 +218,6 @@
         "hSize": "fill",
         "layout": {
           "mode": "column",
-          "justify": "center",
           "align": "center",
           "strokesIncluded": true
         },
