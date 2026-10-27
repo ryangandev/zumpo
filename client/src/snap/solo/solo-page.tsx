@@ -27,7 +27,9 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
+import { finishEnd, useSoloSounds } from '../../solo/sounds';
 import { SnapBoard } from '../board';
+import { deriveSnapSolo, SNAP_SOLO_BANK } from '../sounds';
 import {
   afterFlash,
   canTap,
@@ -151,6 +153,10 @@ function RunView({
   const clock = useSoloTime();
   const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
+  useSoloSounds(run, finish && finishEnd(finish), {
+    bank: SNAP_SOLO_BANK,
+    derive: deriveSnapSolo,
+  });
   const now = useClock(run.cardStartedAt !== null && !clock.paused, clock.now);
 
   // A tap just judged stays up for a moment, then the run goes on.
