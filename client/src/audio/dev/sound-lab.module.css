@@ -14,6 +14,10 @@
   color: var(--zumpo-muted);
 }
 
+.problem {
+  font: var(--zumpo-text-body-strong);
+}
+
 .status,
 .controls {
   display: flex;
