@@ -74,27 +74,33 @@ export function Specimen({
     /** Measured at phone width, where Figma has nothing to compare with. */
     phone: boolean;
   } | null>(null);
+  /** Done measuring, whether or not Figma had a size to compare with. */
+  const [measured, setMeasured] = useState(false);
 
   useEffect(() => {
     if (!family) return;
     let live = true;
-    void Promise.all([loadFamily(family), document.fonts.ready]).then(
-      ([data]) => {
-        let element = slot.current?.firstElementChild;
-        // A component whose root lays out as contents is measured by what
-        // it draws.
-        while (element && getComputedStyle(element).display === 'contents') {
-          element = element.firstElementChild;
-        }
-        if (!live || !data || !element) return;
-        const figma = variant
-          ? data.variants?.find((v) => v.name === variant)?.node
-          : data.node;
-        if (!figma) return;
-        const rect = element.getBoundingClientRect();
-        setCheck({ figma, code: { w: rect.width, h: rect.height }, phone });
-      },
-    );
+    void Promise.all([
+      loadFamily(family),
+      document.fonts.ready,
+      settled(slot.current),
+    ]).then(([data]) => {
+      let element = slot.current?.firstElementChild;
+      // A component whose root lays out as contents is measured by what
+      // it draws.
+      while (element && getComputedStyle(element).display === 'contents') {
+        element = element.firstElementChild;
+      }
+      if (!live) return;
+      setMeasured(true);
+      if (!data || !element) return;
+      const figma = variant
+        ? data.variants?.find((v) => v.name === variant)?.node
+        : data.node;
+      if (!figma) return;
+      const rect = element.getBoundingClientRect();
+      setCheck({ figma, code: { w: rect.width, h: rect.height }, phone });
+    });
     return () => {
       live = false;
     };
@@ -112,6 +118,7 @@ export function Specimen({
       className={styles.specimen}
       data-family={family}
       data-variant={variant}
+      data-measured={measured || undefined}
       data-mismatch={mismatch || undefined}
       data-deviation={(differs && deviation) || undefined}
     >
@@ -137,6 +144,18 @@ export function Specimen({
         )}
       </figcaption>
     </figure>
+  );
+}
+
+// A specimen that animates as it mounts, as a Pairs card flips open, is
+// measured once it comes to rest, not partway through. An animation that
+// never ends has no resting size to wait for.
+function settled(slot: HTMLElement | null) {
+  const running = (slot?.getAnimations({ subtree: true }) ?? []).filter(
+    (animation) => animation.effect?.getComputedTiming().endTime !== Infinity,
+  );
+  return Promise.all(running.map((animation) => animation.finished)).catch(
+    () => undefined,
   );
 }
 
