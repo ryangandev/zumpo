@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-27T03:47:19.975Z",
+  "exportedAt": "2026-10-27T03:50:24.373Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,13 +13,13 @@
     "previews": true
   },
   "counts": {
-    "flows": 267,
+    "flows": 268,
     "componentFamilies": 79,
     "outsideComponents": 0,
     "svgs": 132,
-    "seconds": 38,
-    "nodes": 15390,
-    "instances": 8112,
+    "seconds": 28,
+    "nodes": 15403,
+    "instances": 8122,
     "grids": 91,
     "gridCells": 2965
   },
@@ -4050,6 +4050,18 @@
           ],
           "file": "flows/16-sound/SO06.json",
           "preview": "previews/16-sound/SO06.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO07",
+          "title": "Phone · room · speaker in the room bar",
+          "id": "253:70137",
+          "size": [
+            390,
+            865
+          ],
+          "file": "flows/16-sound/SO07.json",
+          "preview": "previews/16-sound/SO07.png",
           "isFlow": true
         }
       ],
