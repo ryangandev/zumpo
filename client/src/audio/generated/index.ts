@@ -10,5 +10,5 @@ export type SoundGroup = 'test';
 
 /** Each bank, loaded when asked for, as the development sound lab does. */
 export const SOUND_BANKS: Record<SoundGroup, () => Promise<SoundBank>> = {
-  'test': () => import('./test').then((bank) => bank.testSounds),
+  test: () => import('./test').then((bank) => bank.testSounds),
 };
