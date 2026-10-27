@@ -26,10 +26,11 @@
           "maxLength": 48
         },
         "group": {
-          "description": "Which bank it ships in: ui (the shell), room (every room), a game's id, or test (fixtures, never in the production build).",
+          "description": "Which bank it ships in: ui (the shell, on every page), room (every room), solo (only on your own), a game's id, or test (fixtures, never in the production build).",
           "enum": [
             "ui",
             "room",
+            "solo",
             "test",
             "draw-and-guess",
             "minesweeper",
@@ -55,10 +56,10 @@
           "enum": ["ui", "event", "stinger"]
         },
         "gainDb": {
-          "description": "The relative mix in dB, applied when it plays, on top of the normalised loudness.",
+          "description": "The relative mix in dB, applied when it plays, on top of the normalised loudness. It only lowers: the build already lifts each sound as far as its peak ceiling allows.",
           "type": "number",
           "minimum": -24,
-          "maximum": 6
+          "maximum": 0
         },
         "variants": {
           "description": "One or more recordings; each play picks one, never the same twice in a row.",
@@ -68,6 +69,10 @@
           "items": { "$ref": "#/$defs/variant" }
         },
         "origin": { "$ref": "#/$defs/origin" },
+        "steps": {
+          "description": "Variant n is step n of a rising run (a countdown, a streak): pages play it by number, and it is never detuned, so it takes no pitchSpread.",
+          "const": true
+        },
         "pitchSpread": {
           "description": "Each play is detuned at random by up to this many semitones either way.",
           "type": "number",

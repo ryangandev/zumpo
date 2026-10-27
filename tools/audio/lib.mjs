@@ -55,6 +55,58 @@ export const CLASSES = {
   stinger: { targetLufs: -15, maxSeconds: 5, maxBytes: 80 * 1024 },
 };
 
+/**
+ * Past this many dB under its class target, a sound is heard as quieter than
+ * the rest of its class: its master needs a gentler peak, not more gain.
+ */
+export const MAX_LOUDNESS_GAP = 6;
+
+/**
+ * How far under its class target each sound lands, by class: the worst of its
+ * variants and formats, in dB, as the decoded files measure. Only gaps of
+ * half a dB or more are listed, past what encoding moves, the widest first.
+ */
+export function loudnessGaps(manifest) {
+  const byClass = Object.fromEntries(
+    Object.keys(CLASSES).map((name) => [name, { count: 0, under: [] }]),
+  );
+  for (const [id, { declared, variants }] of Object.entries(manifest.sounds)) {
+    const entry = byClass[declared.loudness];
+    entry.count += 1;
+    const target = CLASSES[declared.loudness].targetLufs;
+    let gap = 0;
+    for (const { loudness } of variants) {
+      for (const lufs of Object.values(loudness.momentaryMax)) {
+        gap = Math.max(gap, target - lufs);
+      }
+    }
+    if (gap >= 0.5) entry.under.push({ id, gap: Math.round(gap * 10) / 10 });
+  }
+  for (const entry of Object.values(byClass)) {
+    entry.under.sort((a, b) => b.gap - a.gap || a.id.localeCompare(b.id));
+  }
+  return byClass;
+}
+
+/** `loudnessGaps` as lines for people, a gap past the limit marked with "!". */
+export function loudnessSummary(manifest) {
+  const lines = [
+    `loudness: dB under each class target (worst variant; ! past ${MAX_LOUDNESS_GAP} dB)`,
+  ];
+  for (const [name, { count, under }] of Object.entries(
+    loudnessGaps(manifest),
+  )) {
+    if (count === 0) continue;
+    const list = under
+      .map(({ id, gap }) => `${id} ${gap}${gap > MAX_LOUDNESS_GAP ? '!' : ''}`)
+      .join(', ');
+    lines.push(
+      `  ${name} (${CLASSES[name].targetLufs} LUFS): ${count - under.length} of ${count} on target${list ? `; under: ${list}` : ''}`,
+    );
+  }
+  return lines;
+}
+
 /** No decoded file may peak above this many dBTP. */
 export const TRUE_PEAK_CEILING = -1;
 /** The gain leaves this much true-peak room before encoding, which adds some. */
@@ -195,6 +247,13 @@ export function validateSounds(doc, schema) {
       }
       files.add(variant.file);
     }
+    // A step is played by number; a detune would blur the run it climbs.
+    if (sound.steps && sound.pitchSpread !== undefined) {
+      problems.push(`${where}: a stepped sound takes no pitchSpread`);
+    }
+    if (sound.steps && sound.variants.length < 2) {
+      problems.push(`${where}: a stepped sound needs at least two steps`);
+    }
     // The schema says so too; kept here so the rule is plain in the check.
     if (!['CC0-1.0', 'own'].includes(sound.origin.license)) {
       problems.push(
@@ -220,7 +279,13 @@ function specOf(sound, variants) {
     loudness: sound.loudness,
     gainDb: sound.gainDb,
   };
-  for (const key of ['pitchSpread', 'minGapMs', 'maxVoices', 'hiddenTab']) {
+  for (const key of [
+    'steps',
+    'pitchSpread',
+    'minGapMs',
+    'maxVoices',
+    'hiddenTab',
+  ]) {
     if (sound[key] !== undefined) spec[key] = sound[key];
   }
   spec.variants = variants;

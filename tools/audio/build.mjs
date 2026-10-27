@@ -26,7 +26,10 @@ import {
   CLASSES,
   encodeKey,
   fileSha256,
+  loudnessGaps,
+  loudnessSummary,
   mastersRoot,
+  MAX_LOUDNESS_GAP,
   NOTICE,
   outputName,
   PIPELINE,
@@ -54,6 +57,12 @@ const MAX_ONSET_DRIFT = 96;
 const MAX_ONSET_SEARCH = 2048;
 /** How much of the sound, around its peak, is lined up. */
 const ONSET_WINDOW = RATE / 10;
+/**
+ * How alike the lined-up file must be to its master (normalised correlation,
+ * 1 for the same shape at any gain): a lossy codec keeps well above it, while
+ * another sound, or one whose start was cut past the search, falls under.
+ */
+const MIN_SIMILARITY = 0.8;
 /** Leading silence past this means the master was not trimmed. */
 const MAX_LEAD_SECONDS = 0.02;
 /** Quieter than this (-50 dBFS) counts as silence before the sound. */
@@ -143,16 +152,19 @@ function samples(file) {
 }
 
 /**
- * How many samples later the decoded file starts than its master: the shift
- * that best lines up the 100 ms of sound around the master's peak, by
- * cross-correlation, so it holds whatever gain the file was given. The peak
- * is the attack, which only one shift lines up, where a steady tone before it
- * would line up every period. A threshold crossing would not do: a soft onset
- * with two near-equal bumps (a page flip, a crumple) crosses it on one bump in
- * the master and the other in the decoded file, hundreds of samples apart
- * while the two are perfectly in line.
+ * How many samples later the decoded file starts than its master, and how
+ * alike the two are there. The shift is the one that best lines up the 100 ms
+ * of sound around the master's peak, by cross-correlation, so it holds
+ * whatever gain the file was given. The peak is the attack, which only one
+ * shift lines up, where a steady tone before it would line up every period. A
+ * threshold crossing would not do: a soft onset with two near-equal bumps (a
+ * page flip, a crumple) crosses it on one bump in the master and the other in
+ * the decoded file, hundreds of samples apart while the two are perfectly in
+ * line. The best shift of any two signals is somewhere, so `similarity`, the
+ * correlation at it normalised to 1 for the same shape, says whether the file
+ * is the master at all.
  */
-export function startOffset(source, data) {
+export function alignment(source, data) {
   let peak = 0;
   for (let i = 1; i < source.length; i += 1) {
     if (Math.abs(source[i]) > Math.abs(source[peak])) peak = i;
@@ -175,7 +187,15 @@ export function startOffset(source, data) {
       best = shift;
     }
   }
-  return best;
+  let sourceEnergy = 0;
+  let dataEnergy = 0;
+  for (let i = from; i < to; i += 1) {
+    sourceEnergy += source[i] ** 2;
+    const j = i + best;
+    if (j >= 0 && j < data.length) dataEnergy += data[j] ** 2;
+  }
+  const scale = Math.sqrt(sourceEnergy * dataEnergy);
+  return { offset: best, similarity: scale > 0 ? bestScore / scale : 0 };
 }
 
 /** The first sample above -50 dBFS: what comes before it is silence. */
@@ -285,15 +305,12 @@ function buildVariant({ sound, variant, root, work, encoder }) {
     );
   }
   const measured = loudness(master);
-  const warnings = [];
-  let gainDb = target.targetLufs - measured.momentaryMax;
-  if (measured.truePeak + gainDb > PRE_ENCODE_CEILING) {
-    const limited = PRE_ENCODE_CEILING - measured.truePeak;
-    warnings.push(
-      `${label}: ${(gainDb - limited).toFixed(1)} dB under its target, held back by its true peak.`,
-    );
-    gainDb = limited;
-  }
+  // A peaky master is held under the ceiling, and lands under its target;
+  // the build's loudness summary says by how much.
+  const gainDb = Math.min(
+    target.targetLufs - measured.momentaryMax,
+    PRE_ENCODE_CEILING - measured.truePeak,
+  );
 
   const files = {};
   const decoded = {};
@@ -324,7 +341,12 @@ function buildVariant({ sound, variant, root, work, encoder }) {
         `${label}: its ${format} decodes to ${data.length} samples, the master has ${frames}.`,
       );
     }
-    const offset = startOffset(source, data);
+    const { offset, similarity } = alignment(source, data);
+    if (similarity < MIN_SIMILARITY) {
+      throw new BuildError(
+        `${label}: its ${format} is not its master: at best ${similarity.toFixed(2)} alike, under ${MIN_SIMILARITY}.`,
+      );
+    }
     if (Math.abs(offset) > MAX_ONSET_DRIFT) {
       throw new BuildError(
         `${label}: its ${format} starts ${offset} samples off the master.`,
@@ -369,7 +391,6 @@ function buildVariant({ sound, variant, root, work, encoder }) {
       },
       files,
     },
-    warnings,
   };
 }
 
@@ -461,7 +482,6 @@ export function buildAudio({
   const work = fs.mkdtempSync(path.join(os.tmpdir(), 'zumpo-audio-'));
   let encoder = null;
   const manifest = { notice: NOTICE, pipeline: PIPELINE, sounds: {} };
-  const warnings = [];
   try {
     for (const sound of doc.sounds.toSorted((a, b) =>
       a.id.localeCompare(b.id),
@@ -479,7 +499,6 @@ export function buildAudio({
         encoder ??= `ffmpeg ${ffmpegVersion()} aac_at, libopus`;
         const built = buildVariant({ sound, variant, root, work, encoder });
         variants.push(built.record);
-        warnings.push(...built.warnings);
         const { loudness: l, files } = built.record;
         report.push(
           `encoded  ${sound.id} ${variant.file}: ${l.masterMomentaryMax} -> ${l.momentaryMax.m4a} / ${l.momentaryMax.webm} LUFS (gain ${l.appliedGainDb.m4a} / ${l.appliedGainDb.webm} dB), peak ${l.truePeak.m4a} / ${l.truePeak.webm} dBTP, ${files.m4a.bytes} / ${files.webm.bytes} bytes`,
@@ -522,6 +541,15 @@ export function buildAudio({
   } finally {
     fs.rmSync(work, { recursive: true, force: true });
   }
+  report.push(...loudnessSummary(manifest));
+  const warnings = Object.values(loudnessGaps(manifest)).flatMap(({ under }) =>
+    under
+      .filter(({ gap }) => gap > MAX_LOUDNESS_GAP)
+      .map(
+        ({ id, gap }) =>
+          `${id}: ${gap} dB under its target, held back by its true peak; past ${MAX_LOUDNESS_GAP} dB it is heard as quieter than its class.`,
+      ),
+  );
   return { manifest, report, warnings };
 }
 
