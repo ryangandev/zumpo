@@ -26,7 +26,7 @@ function Room({ phase, field = false }: { phase: string; field?: boolean }) {
 }
 
 let page = WINDOW;
-const scrollTo = vi.fn();
+const scrollTo = vi.fn<(options: ScrollToOptions) => void>();
 
 beforeEach(() => {
   page = WINDOW;
