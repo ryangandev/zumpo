@@ -362,6 +362,11 @@ Decided by Ryan on 2026-10-26: no paid service, no Git LFS, no audio library, AA
 - **Kept while used:** a bank stays decoded while any page retains it, and is let go 5 s after the last one does (`RELEASE_MS`), so moving between two pages that share a bank, or React's development double mount, fetches and decodes it once.
   A sound played without its bank retained is kept just as long after it plays.
 - **Rules per sound:** variants are picked at random but never the same one twice in a row, `pitchSpread` detunes each play by up to that many semitones either way, `minGapMs` drops a repeat that comes too soon, and `maxVoices` stops the oldest copy past the cap with a short fade; 16 voices is the engine's own cap.
+- **Steps:** a sound marked `steps` in `sounds.json` has steps for variants rather than takes (the last five seconds of a clock rising up the scale, a streak), and is played with `play(id, { variant: n })`, counting from 1 as its masters do; it may repeat, and past the last it plays the last.
+  `useSounds` types such an id to need its step, and in development the engine warns when one plays without it.
+  Its `minGapMs` holds a step back only against the same step, so the next step plays however soon it comes.
+  Such a sound has no `pitchSpread` (the build refuses one), nor does any sound tuned to the scale, since a detuned note is out of key.
+  A clock's last seconds are not derived from snapshots: the page plays them from its own timer as the seconds pass, since a snapshot does not arrive each second.
 - **Hidden tabs:** nothing plays while the page is hidden except a sound marked `hiddenTab` ("your turn"), and the context resumes on return only if it ran before.
   At most one sound may be marked `hiddenTab`.
   It plays only where the browser keeps the context running in a hidden tab, as desktop browsers do; iOS suspends the context once the page goes to the background, and nothing can resume it there without a gesture, so on an iPhone it is not heard until the player comes back.
@@ -379,11 +384,13 @@ A change in one tab is followed by the others.
 - **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
 - **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
 - **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
-  `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`).
+  `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`), and a `variant` for a step.
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
   A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent; the keys are kept across a reconnect, and forgotten only when `isNewGame(prev, next)` says a new game began.
   Every game must give `isNewGame`, since its keys (`take:4`) come round again in the next game, and it must work on states that are not consecutive: across a reconnect `prev` may be mid-game 1 and `next` mid-game 2, so it compares what a game leaves behind (the last game's summary, a game number), not a phase change.
-  One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is, while different sounds in one change all play.
+  One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is and another player's only if all are, at the highest step any of them reached, while different sounds in one change all play.
+  The server merges a run of events into one snapshot, so two players scoring at once arrive together, and the streak still climbs to the second step.
+  A key that comes round each round, a streak's point number, names the round too (`score:3:1`).
   The guard lives as long as the component that holds it, so `useStateSounds` belongs in the room's page, never in a component one phase mounts, or every phase change starts it over and the change into that phase is lost.
 
 The words around sound (the settings' labels) come from the i18n catalog like any other; the engine has none.
@@ -399,14 +406,23 @@ They live in a folder outside it, `~/Documents/assets/zumpo-audio` on the Mac mi
 | `candidates/`                | Takes being auditioned; never built                                                                 |
 | `masters/<sound-id>/<n>.wav` | The variants that ship: 48 kHz WAV, 24-bit PCM or float, mono unless it needs two channels, trimmed |
 
-[`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui`, `room`, a game's id, or `test`), the loudness class it is normalised to, a gain in dB the engine adds when it plays (so tuning it needs no rebuild of the files), each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
+Every shipped sound is one of two or three candidates (`candidates/index.json` records each one's recipe and origin), chosen in an audition page that stores a letter per sound.
+Foley and Kenney candidates end in a lookahead peak limiter (1.5 ms ahead, at most 6 dB off), which rounds off an attack so the build can lift the sound closer to its class before it meets the true-peak ceiling.
+`candidates/provisional-picks.json` is Claude's choice until Ryan picks, and every description says which candidate it is.
+`synth/apply_picks.py PICKS.json --repo <checkout>`, run with the masters folder's own `synth/.venv/bin/python -I`, copies the picked candidates into `masters/`, rewrites those sounds' description, origin and variants in `sounds.json` while keeping their tuning, and records what is applied in `masters/picks.json`; then `npm run audio:build -- --rehash` builds them.
+It also places the three solo stingers in the `solo` group and marks a sound whose catalog variants are a sequence as `steps`.
+
+[`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui` for the shell on every page, `room` for every room, `solo` for what only plays on your own, a game's id, or `test`), the loudness class it is normalised to, a gain in dB the engine adds when it plays (0 at most, since the build already lifts each sound as far as its peak allows; tuning it needs no rebuild of the files), each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `steps`, `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
+The `ui` bank is fetched on every page before any gesture, so a sound only some pages play belongs in a bank of its own.
 
 `npm run audio:build`, on the machine with the masters and an ffmpeg with `aac_at` and `libopus` (the Mac mini's), builds [`client/src/audio/generated/`](../client/src/audio/generated/):
 
 - It refuses a master whose hash is not the declared one, that is not 48 kHz, that stays below -50 dBFS for more than its first 20 ms, or that is longer than its class allows.
   `--rehash` takes the masters as they are and writes their hashes into `sounds.json`.
-- It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), and holds the gain back where the true peak would pass -1.5 dBTP, with a warning.
-- It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length, starts more than 2 ms away from its master, or is bigger than its class allows.
+- It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), and holds the gain back where the true peak would pass -1.5 dBTP.
+  It ends with a summary, per class, of how far under its target each sound lands (its worst variant, as decoded), and warns for each past 6 dB.
+  The 400 ms window undercounts a click or a die that is over in 30 ms, so a gap there overstates how much quieter it sounds; judge such a sound by ear in the lab before tuning it.
+- It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length, is not its master (under 0.8 alike, by normalised correlation, where it lines up best), starts more than 2 ms away from it, or is bigger than its class allows.
   Where a file would peak too high it is encoded again a little quieter, and the manifest records the gain each format really got (`appliedGainDb`).
   Encoding is deterministic, so an unchanged master builds byte for byte the same files, and a variant whose master and processing (pipeline, loudness target, channels, bitrates, peak ceilings) have not changed is kept rather than re-encoded (`--force` re-encodes all); a class's length or size limit is checked, not hashed, so changing one re-encodes nothing.
 - It writes the files, `manifest.json` (every measurement, encoder and hash) and one TypeScript bank per group, so a page imports only its own sounds and their files land in its own chunk.
@@ -421,7 +437,9 @@ The `test` group holds fixtures for the pipeline and the engine (`test-blip`), a
 ### The sound lab
 
 `/dev/sound`, in development only like `/design`, plays every declared sound through the real engine and settings, with a volume slider, a mute and an "as another player's" button for each.
-It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that a page's files are fetched before any gesture and nothing plays before a real one, that the first gesture plays its sound on a slow network, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
+`?bank=hush,ui` keeps only those banks, as a game's page keeps only its own; an empty `?bank=`, or a name no bank has, is said on the page rather than loading nothing quietly.
+A stepped sound has a button per step.
+It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives on the test bank alone: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that a page's files are fetched before any gesture and nothing plays before a real one, that the first gesture plays its sound on a slow network, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
 It is not in CI, to save Actions minutes; run it when the engine changes, after `npx playwright install webkit` once.
 What it cannot hear is real phones: the silent switch, a call interrupting, and Bluetooth latency need an iPhone and an Android in hand.
 

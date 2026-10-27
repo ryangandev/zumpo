@@ -9,9 +9,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, it } from 'node:test';
-import { buildAudio, BuildError } from './build.mjs';
+import { alignment, buildAudio, BuildError } from './build.mjs';
 import {
   checkGenerated,
+  loudnessSummary,
   fileSha256,
   mastersRoot,
   readJson,
@@ -69,6 +70,12 @@ const variantsOf = (id) => [
   { file: `masters/${id}/1.wav`, sha256: 'a'.repeat(64) },
 ];
 
+/** The first built sound with two variants or more, whatever the bank holds. */
+const withTwoVariants = (manifest) =>
+  Object.entries(manifest.sounds).find(
+    ([, built]) => built.variants.length > 1,
+  );
+
 const validateOrigin = (origin) =>
   validateSounds({ sounds: [sound({ origin })] }, schema);
 
@@ -101,7 +108,7 @@ describe('validateSounds', () => {
     );
     assert.ok(
       problems.includes(
-        'audio/sounds.json: sounds[0] (tap).gainDb must be <= 6',
+        'audio/sounds.json: sounds[0] (tap).gainDb must be <= 0',
       ),
     );
     assert.ok(
@@ -205,6 +212,30 @@ describe('validateSounds', () => {
       'audio/sounds.json: only one sound may play in a hidden tab, not turn, ping',
     ]);
   });
+
+  it('plays a stepped sound by number: two steps or more, never detuned', () => {
+    const steps = [
+      { file: 'masters/tap/1.wav', sha256: 'a'.repeat(64) },
+      { file: 'masters/tap/2.wav', sha256: 'b'.repeat(64) },
+    ];
+    assert.deepEqual(
+      validateSounds(
+        { sounds: [sound({ steps: true, variants: steps })] },
+        schema,
+      ),
+      [],
+    );
+    assert.deepEqual(
+      validateSounds(
+        { sounds: [sound({ steps: true, pitchSpread: 0.3 })] },
+        schema,
+      ),
+      [
+        'audio/sounds.json: tap: a stepped sound takes no pitchSpread',
+        'audio/sounds.json: tap: a stepped sound needs at least two steps',
+      ],
+    );
+  });
 });
 
 describe('checkGenerated', () => {
@@ -273,12 +304,14 @@ describe('checkGenerated', () => {
     // entry all gone, consistently.
     const { repo, paths } = copyOfRepo();
     const manifest = JSON.parse(fs.readFileSync(paths.manifest, 'utf8'));
-    const [id, built] = Object.entries(manifest.sounds)[0];
-    const [, dropped] = built.variants;
+    const [id, built] = withTwoVariants(manifest);
+    const dropped = built.variants.slice(1);
     built.variants = built.variants.slice(0, 1);
     fs.writeFileSync(paths.manifest, serializeManifest(manifest));
-    for (const format of ['m4a', 'webm']) {
-      fs.rmSync(path.join(paths.filesDir, dropped.files[format].file));
+    for (const variant of dropped) {
+      for (const format of ['m4a', 'webm']) {
+        fs.rmSync(path.join(paths.filesDir, variant.files[format].file));
+      }
     }
     for (const [name, content] of renderModules(manifest)) {
       fs.writeFileSync(path.join(paths.outDir, name), content);
@@ -292,7 +325,7 @@ describe('checkGenerated', () => {
     // Each consistent with the manifest's hashes, as a careful hand edit is.
     const { repo, paths } = copyOfRepo();
     const manifest = readJson(paths.manifest);
-    const [id, built] = Object.entries(manifest.sounds)[0];
+    const [id, built] = withTwoVariants(manifest);
     const [one, two] = built.variants;
     const renamed = `${id}-9.m4a`;
     fs.renameSync(
@@ -325,7 +358,10 @@ describe('checkGenerated', () => {
   it('fails when a generated module is stale or stray', () => {
     const { repo, paths } = copyOfRepo();
     fs.appendFileSync(path.join(paths.outDir, 'index.ts'), '// edited\n');
-    fs.writeFileSync(path.join(paths.outDir, 'snap.ts'), 'export {};\n');
+    fs.writeFileSync(
+      path.join(paths.outDir, 'no-such-game.ts'),
+      'export {};\n',
+    );
     const problems = checkGenerated(repo);
     assert.ok(
       problems.some((p) =>
@@ -334,7 +370,9 @@ describe('checkGenerated', () => {
     );
     assert.ok(
       problems.some((p) =>
-        p.includes('generated/snap.ts is not a module the build writes'),
+        p.includes(
+          'generated/no-such-game.ts is not a module the build writes',
+        ),
       ),
     );
   });
@@ -350,6 +388,32 @@ describe('checkGenerated', () => {
   });
 });
 
+/** A built sound of one class whose variants measure these LUFS. */
+const built = (loudness, ...lufs) => ({
+  declared: { loudness },
+  variants: lufs.map((m4a) => ({
+    loudness: { momentaryMax: { m4a, webm: m4a + 0.1 } },
+  })),
+});
+
+describe('loudnessSummary', () => {
+  it('lists each class with what lands under its target, worst first, marking a wide gap', () => {
+    const manifest = {
+      sounds: {
+        tap: built('ui', -22.2),
+        key: built('ui', -22, -24.9),
+        card: built('event', -26.5),
+        dice: built('event', -16.1),
+      },
+    };
+    assert.deepEqual(loudnessSummary(manifest), [
+      'loudness: dB under each class target (worst variant; ! past 6 dB)',
+      '  ui (-22 LUFS): 1 of 2 on target; under: key 2.9',
+      '  event (-16 LUFS): 1 of 2 on target; under: card 10.5!',
+    ]);
+  });
+});
+
 describe('mastersRoot', () => {
   it('is ZUMPO_AUDIO_DIR, with ~ for home, or the Documents folder', () => {
     assert.equal(
@@ -361,6 +425,66 @@ describe('mastersRoot', () => {
       path.join(os.homedir(), 'sounds'),
     );
     assert.equal(mastersRoot({ ZUMPO_AUDIO_DIR: '/srv/a' }), '/srv/a');
+  });
+});
+
+/** A soft bump near a tenth of the peak, then the real hit 20 ms later. */
+function softOnset(first) {
+  const data = new Float32Array(4800);
+  for (let i = 0; i < data.length; i += 1) {
+    const t = i / 48000;
+    const bump = first * Math.exp(-(((t - 0.004) / 0.002) ** 2));
+    const hit = 0.5 * Math.exp(-Math.max(0, t - 0.024) * 40);
+    data[i] = Math.sin(2 * Math.PI * 700 * t) * (bump + (t >= 0.024 ? hit : 0));
+  }
+  return data;
+}
+
+describe('alignment', () => {
+  it('lines up a soft onset that a threshold would place on another bump', () => {
+    // The bump crosses a tenth of the peak in the master but not in the copy:
+    // a threshold says 960 samples apart, though nothing moved.
+    const source = softOnset(0.052);
+    const decoded = softOnset(0.048).map((x) => x * 0.8);
+    const { offset, similarity } = alignment(source, decoded);
+    assert.equal(offset, 0);
+    assert.ok(similarity > 0.99, `${similarity}`);
+  });
+
+  it('finds a priming delay the encoder left in', () => {
+    const source = softOnset(0.052);
+    const decoded = new Float32Array(source.length + 312);
+    decoded.set(source, 312);
+    assert.deepEqual(alignment(source, decoded), {
+      offset: 312,
+      similarity: 1,
+    });
+  });
+
+  it('finds another sound unlike its master, wherever it lines up best', () => {
+    const source = softOnset(0.052);
+    const other = new Float32Array(source.length);
+    for (let i = 0; i < other.length; i += 1) {
+      const t = i / 48000;
+      other[i] = 0.5 * Math.sin(2 * Math.PI * 523 * t) * Math.exp(-t * 25);
+    }
+    assert.ok(alignment(source, other).similarity < 0.8);
+  });
+
+  it('finds a start cut off past the search unlike its master', () => {
+    // A burst of noise, which no shift of itself resembles, as a crumple or
+    // a shuffle is; a pure decay would look the same from any point on.
+    let seed = 1;
+    const source = new Float32Array(9600);
+    for (let i = 0; i < source.length; i += 1) {
+      seed = (seed * 1103515245 + 12345) % 2 ** 31;
+      const t = i / 48000;
+      source[i] =
+        (seed / 2 ** 30 - 1) * Math.min(1, t / 0.005) * Math.exp(-t * 15);
+    }
+    assert.ok(alignment(source, source.slice(64)).similarity > 0.99);
+    const { similarity } = alignment(source, source.slice(3000));
+    assert.ok(similarity < 0.8, `${similarity}`);
   });
 });
 
@@ -448,7 +572,11 @@ describe(
       write(doc.sounds);
       assert.notDeepEqual(checkGenerated(repo), []);
       const second = buildAudio({ repo, root });
-      assert.deepEqual(second.report, ['kept     tap masters/tap/1.wav']);
+      assert.deepEqual(second.report, [
+        'kept     tap masters/tap/1.wav',
+        'loudness: dB under each class target (worst variant; ! past 6 dB)',
+        '  ui (-22 LUFS): 1 of 1 on target',
+      ]);
       assert.deepEqual(checkGenerated(repo), []);
       assert.match(
         fs.readFileSync(path.join(paths.outDir, 'ui.ts'), 'utf8'),
@@ -474,7 +602,7 @@ describe(
           ],
         }),
       ]);
-      const { manifest, warnings } = buildAudio({ repo, root });
+      const { manifest, report, warnings } = buildAudio({ repo, root });
       const [variant] = manifest.sounds.tap.variants;
       assert.ok(variant.loudness.truePeak.m4a <= -1);
       assert.ok(variant.loudness.truePeak.webm <= -1);
@@ -483,7 +611,14 @@ describe(
           variant.loudness.appliedGainDb[format] <= variant.loudness.gainDb,
         );
       }
-      assert.match(warnings[0], /under its target, held back by its true peak/);
+      assert.match(
+        warnings[0],
+        /^tap: [\d.]+ dB under its target, held back by its true peak/,
+      );
+      assert.match(
+        report.at(-1),
+        /^ {2}event \(-16 LUFS\): 0 of 1 on target; under: tap [\d.]+!$/,
+      );
     });
 
     it('takes a soft lead-in for sound, not silence, and leaves no staging behind', () => {

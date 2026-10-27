@@ -2,13 +2,28 @@
 import type { SoundBank } from '../types';
 
 /** Every declared sound. */
-export const SOUND_IDS = ['test-blip'] as const;
+export const SOUND_IDS = ['code-breaker-note', 'code-breaker-peg-moved', 'code-breaker-peg-not-in', 'code-breaker-peg-right', 'daily-word-tile-moved', 'daily-word-tile-not-in', 'daily-word-tile-right', 'doodle-chain-album', 'doodle-chain-heart', 'doodle-chain-page', 'doodle-chain-pass', 'draw-and-guess-all-guessed', 'draw-and-guess-clear', 'draw-and-guess-close', 'draw-and-guess-correct', 'draw-and-guess-nobody-guessed', 'draw-and-guess-pencil', 'gomoku-faint', 'gomoku-five', 'gomoku-stone', 'gomoku-warning', 'hush-card', 'hush-count', 'hush-level-cleared', 'hush-life-back', 'hush-mistake', 'liars-dice-bid', 'liars-dice-liar', 'liars-dice-lose-die', 'liars-dice-reveal', 'liars-dice-roll', 'make-24-card', 'make-24-combine', 'make-24-sign', 'make-24-skip', 'make-24-solved', 'minesweeper-cascade', 'minesweeper-flag', 'minesweeper-mine', 'minesweeper-open', 'minesweeper-unflag', 'pairs-flip', 'pairs-match', 'pairs-miss', 'room-join', 'room-leave', 'room-pip', 'room-reveal', 'room-someone-scored', 'room-stamp', 'room-tick', 'room-time-up', 'room-your-turn', 'snap-deal', 'snap-take', 'stinger-game-start', 'stinger-new-best', 'stinger-nice-game', 'stinger-solo-complete', 'stinger-solo-loss', 'stinger-win', 'test-blip', 'trios-found', 'trios-hint', 'trios-pick', 'trios-unpick', 'ui-connection-lost', 'ui-delete', 'ui-key', 'ui-lockout-end', 'ui-nope', 'ui-tap', 'ui-undo'] as const;
 export type SoundId = (typeof SOUND_IDS)[number];
 
 /** The groups that have sounds; each is a bank, a module of its own. */
-export type SoundGroup = 'test';
+export type SoundGroup = 'code-breaker' | 'daily-word' | 'doodle-chain' | 'draw-and-guess' | 'gomoku' | 'hush' | 'liars-dice' | 'make-24' | 'minesweeper' | 'pairs' | 'room' | 'snap' | 'solo' | 'test' | 'trios' | 'ui';
 
 /** Each bank, loaded when asked for, as the development sound lab does. */
 export const SOUND_BANKS: Record<SoundGroup, () => Promise<SoundBank>> = {
+  'code-breaker': () => import('./code-breaker').then((bank) => bank.codeBreakerSounds),
+  'daily-word': () => import('./daily-word').then((bank) => bank.dailyWordSounds),
+  'doodle-chain': () => import('./doodle-chain').then((bank) => bank.doodleChainSounds),
+  'draw-and-guess': () => import('./draw-and-guess').then((bank) => bank.drawAndGuessSounds),
+  'gomoku': () => import('./gomoku').then((bank) => bank.gomokuSounds),
+  'hush': () => import('./hush').then((bank) => bank.hushSounds),
+  'liars-dice': () => import('./liars-dice').then((bank) => bank.liarsDiceSounds),
+  'make-24': () => import('./make-24').then((bank) => bank.make24Sounds),
+  'minesweeper': () => import('./minesweeper').then((bank) => bank.minesweeperSounds),
+  'pairs': () => import('./pairs').then((bank) => bank.pairsSounds),
+  'room': () => import('./room').then((bank) => bank.roomSounds),
+  'snap': () => import('./snap').then((bank) => bank.snapSounds),
+  'solo': () => import('./solo').then((bank) => bank.soloSounds),
   'test': () => import('./test').then((bank) => bank.testSounds),
+  'trios': () => import('./trios').then((bank) => bank.triosSounds),
+  'ui': () => import('./ui').then((bank) => bank.uiSounds),
 };

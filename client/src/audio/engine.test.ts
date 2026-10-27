@@ -240,6 +240,21 @@ describe('variety', () => {
     ]);
   });
 
+  it('plays the variant asked for by number, from 1, rolling nothing', async () => {
+    const engine = await unlocked();
+    audio.rolls = [0.99];
+    for (const variant of [1, 3, 3, 9, 0]) await engine.play(two, { variant });
+    // A step may repeat, unlike a take; past the ends it plays the nearest.
+    expect(audio.sources().map((s) => audio.urlOf(s))).toEqual([
+      'a.m4a',
+      'c.m4a',
+      'c.m4a',
+      'c.m4a',
+      'a.m4a',
+    ]);
+    expect(audio.rolls).toEqual([0.99]);
+  });
+
   it('detunes each play by up to its pitch spread, in semitones', async () => {
     const engine = await unlocked();
     const spread = spec({ pitchSpread: 2, minGapMs: 0 });
@@ -271,6 +286,38 @@ describe('limits', () => {
     expect(await engine.play(tick)).toBe(true);
     // Another sound is not held up by this one's gap.
     expect(await engine.play(spec({ id: 'other' }))).toBe(true);
+  });
+
+  it('holds a step only against itself: the next step plays in the same tick', async () => {
+    const engine = await unlocked();
+    const streak = spec({
+      minGapMs: 100,
+      steps: true,
+      variants: [
+        { m4a: 'a.m4a', webm: 'a.webm', duration: 0.1 },
+        { m4a: 'b.m4a', webm: 'b.webm', duration: 0.1 },
+      ],
+    });
+    expect(await engine.play(streak, { variant: 1 })).toBe(true);
+    expect(await engine.play(streak, { variant: 2 })).toBe(true);
+    expect(await engine.play(streak, { variant: 2 })).toBe(false);
+    expect(audio.sources().map((s) => audio.urlOf(s))).toEqual([
+      'a.m4a',
+      'b.m4a',
+    ]);
+  });
+
+  it('warns in development when a stepped sound plays without its step', async () => {
+    const engine = await unlocked();
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    await engine.play(spec({ id: 'streak', steps: true }));
+    expect(warn).toHaveBeenCalledWith(
+      'Sound "streak" is stepped: say which step to play.',
+    );
+    warn.mockClear();
+    await engine.play(spec({ id: 'streak', steps: true }), { variant: 1 });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 
   it('drops a repeat inside 40 ms without a gap of its own', async () => {

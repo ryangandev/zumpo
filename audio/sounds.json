@@ -25,6 +25,1789 @@
       "pitchSpread": 0.3,
       "minGapMs": 60,
       "maxVoices": 2
+    },
+    {
+      "id": "ui-tap",
+      "group": "ui",
+      "description": "Light tap when you pick a cell, card or option that has no sound of its own. Provisional: candidate A (Paper tap).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-tap/1.wav",
+          "sha256": "928b0c7160068fff8da3924d024b5277bd147e9c666712ce040a4b48e8897003"
+        },
+        {
+          "file": "masters/ui-tap/2.wav",
+          "sha256": "d348fae5ac605639990850c73552cafcdcba488923f52c92e0ed149857249917"
+        },
+        {
+          "file": "masters/ui-tap/3.wav",
+          "sha256": "35b352760fcac748418ca5be7bdc247918f8bdcf1f7b3af69e6f98d7874afdde"
+        },
+        {
+          "file": "masters/ui-tap/4.wav",
+          "sha256": "7e38c06c90b452ce097497665f91e7b3605c050747e9849dd0466739d63e125f"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate ui-tap/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.4,
+      "minGapMs": 50,
+      "maxVoices": 3
+    },
+    {
+      "id": "ui-key",
+      "group": "ui",
+      "description": "A letter or digit typed in Daily Word or Code Breaker. Provisional: candidate A (Small paper key).",
+      "loudness": "ui",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/ui-key/1.wav",
+          "sha256": "30e21c9a22845a9608bad9534a8fcb994047b8981cd77ab999be05ac1e6d2c51"
+        },
+        {
+          "file": "masters/ui-key/2.wav",
+          "sha256": "a0dbdd008ef80eb37ed76938ba0122bee70d0bfd5d0bb52945531ba9a1a67f56"
+        },
+        {
+          "file": "masters/ui-key/3.wav",
+          "sha256": "a572cedec57d60a5e3970367478aa10799176398f64c18cf19535e27f4022291"
+        },
+        {
+          "file": "masters/ui-key/4.wav",
+          "sha256": "44e62db97a3a5ced2f7b3eb968fb56c7cb4cff0212fc8ae217a7a21960b5d3d4"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate ui-key/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.4,
+      "minGapMs": 35,
+      "maxVoices": 3
+    },
+    {
+      "id": "ui-delete",
+      "group": "ui",
+      "description": "Backspace in Daily Word or Code Breaker. Provisional: candidate A (Paper swipe back).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-delete/1.wav",
+          "sha256": "615b040b05a8645da5f30d97e3353d2d20730742a427f0251160884154c7a96e"
+        },
+        {
+          "file": "masters/ui-delete/2.wav",
+          "sha256": "c2b4fcdbc5ff5ef584df0736b3db9fd18a0519127e19e5756ee19c9d0a96be5b"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate ui-delete/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 2
+    },
+    {
+      "id": "ui-nope",
+      "group": "ui",
+      "description": "Not valid: Not 24, not a trio, not a word, a Snap miss. Provisional: candidate A (Muted wood double knock).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-nope/1.wav",
+          "sha256": "f7d9f1487c136a10f32086b9d3490762fe6737b0d0ad7b67baf08a8c3eb6d4bb"
+        },
+        {
+          "file": "masters/ui-nope/2.wav",
+          "sha256": "98e6007a203beec1e776d9e6cd06f5c823d43ec90be9fdefd08da40a821a2fba"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate ui-nope/A",
+        "license": "own"
+      },
+      "minGapMs": 250,
+      "maxVoices": 1
+    },
+    {
+      "id": "ui-undo",
+      "group": "ui",
+      "description": "Undo or start over (Make 24, Draw & Guess). Provisional: candidate A (Paper slide back).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-undo/1.wav",
+          "sha256": "a40e9586f8bebef5269f95755fa64be290663fa7af3fd9f96e60198c510956a6"
+        },
+        {
+          "file": "masters/ui-undo/2.wav",
+          "sha256": "ab9a47e544b18a91a10f8a305e5b4baebb655f20b95bf1574632c9ccc16c023a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate ui-undo/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 80,
+      "maxVoices": 2
+    },
+    {
+      "id": "ui-lockout-end",
+      "group": "ui",
+      "description": "Your short lockout after a wrong pick ends (Trios, Snap). Provisional: candidate A (Marimba).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-lockout-end/1.wav",
+          "sha256": "e654b8c95af232d038ad47319e592cfb8ed12a98b66a19f2f8ac30e281d9229a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate ui-lockout-end/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "ui-connection-lost",
+      "group": "ui",
+      "description": "Connection lost, or the room closed after a server restart. Provisional: candidate A (Felt thud with a low note).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/ui-connection-lost/1.wav",
+          "sha256": "d90b4183867883a9a4b6768f3e324e75f214954c0c81cb2c4eeb4871257e13be"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate ui-connection-lost/A",
+        "license": "own"
+      },
+      "minGapMs": 2000,
+      "maxVoices": 1
+    },
+    {
+      "id": "stinger-win",
+      "group": "ui",
+      "description": "Game over and you won or shared the win (rooms, and solo games against bots). Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-win/1.wav",
+          "sha256": "32e55bc5d51d6c47586f318f38a50bb9ba4cff002b508a8c79f799dd2a2db259"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate stinger-win/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "stinger-solo-complete",
+      "group": "solo",
+      "description": "You finished a solo puzzle (Daily Word, Code Breaker, Minesweeper, Make 24, Pairs, Trios, Snap). Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-solo-complete/1.wav",
+          "sha256": "91bacfcfe1eda642f940b8d927d60c236416f8996800ee3439a55489957f2c44"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate stinger-solo-complete/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "stinger-new-best",
+      "group": "solo",
+      "description": "A solo finish that sets a new best on this device (plays instead of solo complete). Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-new-best/1.wav",
+          "sha256": "5317f967cd3ee59cf162ad07dfbd68a8e702611274b2853d0f2b4910811dc30c"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate stinger-new-best/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "stinger-solo-loss",
+      "group": "solo",
+      "description": "Solo lost: a mine ends the run, you are out in Liar's Dice, or you ran out of guesses. Provisional: candidate A (Marimba with a soft fwump).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-solo-loss/1.wav",
+          "sha256": "0a5a81f8fcbf2ad983d178410df5050bd518c15d94dc5da8dcb40c63e9f695c8"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate stinger-solo-loss/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "room-join",
+      "group": "room",
+      "description": "Someone joins the room (a burst of joins plays once). Provisional: candidate A (Marimba with a paper pop).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-join/1.wav",
+          "sha256": "48681d6721ca8ea7f0b50eea8880381aa60475c7e9a2bb47ace6940dc9a472b6"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate room-join/A",
+        "license": "own"
+      },
+      "minGapMs": 300,
+      "maxVoices": 2
+    },
+    {
+      "id": "room-leave",
+      "group": "room",
+      "description": "Someone leaves the room. Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/room-leave/1.wav",
+          "sha256": "863d489989f208fb9b04333b13cab108fc88ac9bce31360ef8bbbf1543ab936a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-leave/A",
+        "license": "own"
+      },
+      "minGapMs": 300,
+      "maxVoices": 2
+    },
+    {
+      "id": "room-stamp",
+      "group": "room",
+      "description": "You press Ready, lock in a pick, press Done or choose your word. Provisional: candidate A (Rubber stamp).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-stamp/1.wav",
+          "sha256": "175bfa9608c28e31eed651e86301144e26f0277464d7764ec4507ef7bf90375e"
+        },
+        {
+          "file": "masters/room-stamp/2.wav",
+          "sha256": "97858d78bd100e39b9481f042c5430eda79cf6a115ff817c01ad92380c60e9b8"
+        },
+        {
+          "file": "masters/room-stamp/3.wav",
+          "sha256": "01bc831b0bbb5796cbe856a99c343ea3933522c822339f21b3a343c7b8c0978a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate room-stamp/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 120,
+      "maxVoices": 2
+    },
+    {
+      "id": "room-pip",
+      "group": "room",
+      "description": "Someone else is ready, locked in or done (a burst plays once). Provisional: candidate A (Marimba).",
+      "loudness": "ui",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/room-pip/1.wav",
+          "sha256": "ba220d08820098daa47b48af4e521399d605fbaf12d1df656cf1ecc185c2c90d"
+        },
+        {
+          "file": "masters/room-pip/2.wav",
+          "sha256": "be78170ba9e01908b2785c37073d3cee1a793ffa81a2e7db8cad0a8cb936de7f"
+        },
+        {
+          "file": "masters/room-pip/3.wav",
+          "sha256": "f06cec94b9cf3a478f8ca03c5a7ac792327192ce756836bbf11f9054e5d8e304"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-pip/A",
+        "license": "own"
+      },
+      "minGapMs": 150,
+      "maxVoices": 2
+    },
+    {
+      "id": "room-your-turn",
+      "group": "room",
+      "description": "Your turn begins (Pairs, Liar's Dice, Gomoku, the drawer in Draw & Guess, each Doodle Chain step). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-your-turn/1.wav",
+          "sha256": "106296d7b8d635d25e1fa1d8af64eeba587edad468528fd5e6ec1266256f13f3"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-your-turn/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1,
+      "hiddenTab": true
+    },
+    {
+      "id": "room-tick",
+      "group": "room",
+      "description": "Each of the last 5 seconds of a deadline you must act in; variant 1 is 5 s left, variant 5 is 1 s left. Provisional: candidate A (Woodblock, rising).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-tick/1.wav",
+          "sha256": "d1be84308569249c000f9a5e10ba2e2a45f7f1b7c3704fc0e8530164542a346e"
+        },
+        {
+          "file": "masters/room-tick/2.wav",
+          "sha256": "d0f735ffa1dff1fa2eb7040e4212ea791167eb5266b3a83f4bcebb230cc34ed3"
+        },
+        {
+          "file": "masters/room-tick/3.wav",
+          "sha256": "582596c4973442e3ccde9b97260fccb5c5b9db39175233945bff8cf036bcba6f"
+        },
+        {
+          "file": "masters/room-tick/4.wav",
+          "sha256": "9ebb875b2f99e4c3cd63f093283e6d7d73568ef7a86f5b29ce7e8c1f04050a58"
+        },
+        {
+          "file": "masters/room-tick/5.wav",
+          "sha256": "ca1abc8a8d31ca9cdcb98b157f49c667c26aee9088659406e934c3ad3add74a4"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-tick/A",
+        "license": "own"
+      },
+      "steps": true,
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "room-time-up",
+      "group": "room",
+      "description": "Time ran out on you. Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-time-up/1.wav",
+          "sha256": "7c00ea34cf15ba5ec6f78d26fb6aae50ae30da3666a90fcd1f1278b844784362"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-time-up/A",
+        "license": "own"
+      },
+      "minGapMs": 1000,
+      "maxVoices": 1
+    },
+    {
+      "id": "room-reveal",
+      "group": "room",
+      "description": "A round or hand is revealed (one per round). Provisional: candidate A (Card flip and marimba run).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-reveal/1.wav",
+          "sha256": "2e96974f3b8db8677dcf2986165dc2455dedc2ac66569eb71ea0458e099c8a20"
+        },
+        {
+          "file": "masters/room-reveal/2.wav",
+          "sha256": "3e414ade75a1d9cb69a33cec3099dc91f7f8e9ed450f7ac1cbf42d60f95a6ab0"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate room-reveal/A",
+        "license": "own"
+      },
+      "minGapMs": 400,
+      "maxVoices": 1
+    },
+    {
+      "id": "room-someone-scored",
+      "group": "room",
+      "description": "Someone else scored: guessed the word, solved the hand, found the word, cracked the code; one step higher per scorer this turn. Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/room-someone-scored/1.wav",
+          "sha256": "5643e7dc0bfa892723630b7ad63b7354a4a01ea61d4c26c88e0d15958de33e5c"
+        },
+        {
+          "file": "masters/room-someone-scored/2.wav",
+          "sha256": "bf84dc06005ca5c652e71307f5ebc6084ccc9b77cfbc7802f4a78930ab59acd6"
+        },
+        {
+          "file": "masters/room-someone-scored/3.wav",
+          "sha256": "179632428ac2a815709f9d38cc1884dfe1b10cdeff623ac4cac5a56d1ba38498"
+        },
+        {
+          "file": "masters/room-someone-scored/4.wav",
+          "sha256": "f9a34a9ad9ba8947b01d87dc6934397067138ed2ce33d0519d4e436e32fcb89a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-someone-scored/A",
+        "license": "own"
+      },
+      "steps": true,
+      "minGapMs": 150,
+      "maxVoices": 2
+    },
+    {
+      "id": "stinger-game-start",
+      "group": "room",
+      "description": "Everyone is ready and the game starts. Provisional: candidate A (Marimba motif after a paper riffle).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-game-start/1.wav",
+          "sha256": "ce2471a84777f4d1e6eaead3182da6ae1c7ba9f1492cf568abe0c1774cb2760e"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate stinger-game-start/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "stinger-nice-game",
+      "group": "room",
+      "description": "Game over and someone else won: a warm, kind cadence. Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/stinger-nice-game/1.wav",
+          "sha256": "24730db1c33b0b81bf1f616a7606a9db6830984d0fc310e62601dc06e5193653"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate stinger-nice-game/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "draw-and-guess-pencil",
+      "group": "draw-and-guess",
+      "description": "The drawer starts a stroke (very soft, rate-limited, heard by the drawer only). Provisional: candidate A (Pencil on paper).",
+      "loudness": "ui",
+      "gainDb": -4,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-pencil/1.wav",
+          "sha256": "30c0b231fca09a220e9c488953011b865fe2fcbb21606ec06c8d3eb2f4efac00"
+        },
+        {
+          "file": "masters/draw-and-guess-pencil/2.wav",
+          "sha256": "a55eeb266519b6be3bb91a17c36c6d168e70216daa019c4bd87962c0b837e98a"
+        },
+        {
+          "file": "masters/draw-and-guess-pencil/3.wav",
+          "sha256": "11f13695052731d0ded76f0e6549632caff4c7536ce1e070028abb7ed8c93c80"
+        },
+        {
+          "file": "masters/draw-and-guess-pencil/4.wav",
+          "sha256": "9b31b9bbae96e54acfa3465947f149b3db3b56ef184e37dc44b5d67d85afdec1"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate draw-guess-pencil/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.5,
+      "minGapMs": 90,
+      "maxVoices": 2
+    },
+    {
+      "id": "draw-and-guess-clear",
+      "group": "draw-and-guess",
+      "description": "The drawer clears the canvas (paper crumple). Provisional: candidate A (Paper crumple).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-clear/1.wav",
+          "sha256": "deb7eb20cc1c824c4db94de806153eecdf61d6d35b8d1ce56add52432920904c"
+        },
+        {
+          "file": "masters/draw-and-guess-clear/2.wav",
+          "sha256": "1bb19370322fe8fc8322f4bd37cb0fe0174d95f69efd0900eab81d9c26545fe9"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate draw-guess-clear/A",
+        "license": "own"
+      },
+      "minGapMs": 400,
+      "maxVoices": 1
+    },
+    {
+      "id": "draw-and-guess-correct",
+      "group": "draw-and-guess",
+      "description": "You guessed the word (bright ding with your points). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-correct/1.wav",
+          "sha256": "0e745a47d74b38830f19db00c0180cdf7bf8cb98faef46c667d1dacb417b4bff"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate draw-guess-correct/A",
+        "license": "own"
+      },
+      "minGapMs": 200,
+      "maxVoices": 2
+    },
+    {
+      "id": "draw-and-guess-close",
+      "group": "draw-and-guess",
+      "description": "Your guess is close (a little 'hm?' only you hear). Provisional: candidate A (Marimba).",
+      "loudness": "ui",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-close/1.wav",
+          "sha256": "4dcec91b70ad30b88cd91af55a25483604573e1b9e5e580a4594b85d18d9fbeb"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate draw-guess-close/A",
+        "license": "own"
+      },
+      "minGapMs": 300,
+      "maxVoices": 1
+    },
+    {
+      "id": "draw-and-guess-all-guessed",
+      "group": "draw-and-guess",
+      "description": "Everybody guessed this turn. Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-all-guessed/1.wav",
+          "sha256": "db9c385943240e74294e8db79bc00f5e6468f7fe713d46362667de2c254b7e5e"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate draw-guess-all-guessed/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "draw-and-guess-nobody-guessed",
+      "group": "draw-and-guess",
+      "description": "Nobody guessed this turn (kind, never a fail buzzer). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/draw-and-guess-nobody-guessed/1.wav",
+          "sha256": "9f2b31c977e8501c6486908ccb37856d7912bb5b0745fab565370cbb8a121f56"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate draw-guess-nobody-guessed/A",
+        "license": "own"
+      },
+      "minGapMs": 1000,
+      "maxVoices": 1
+    },
+    {
+      "id": "minesweeper-open",
+      "group": "minesweeper",
+      "description": "You open a cell. Provisional: candidate A (Paper press).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/minesweeper-open/1.wav",
+          "sha256": "3f1eca42d74fa8f777082ed90f19f1a05579eb7dc322267e2305bb17bd636863"
+        },
+        {
+          "file": "masters/minesweeper-open/2.wav",
+          "sha256": "abdec68405b28983762e27eb4982577ddb6cf9b8ff64dfb1a2d93dc24e56b44a"
+        },
+        {
+          "file": "masters/minesweeper-open/3.wav",
+          "sha256": "55b9a53348aaf4b81a30b66dc52bb1367dee061e2284273de7ba1f291373ece8"
+        },
+        {
+          "file": "masters/minesweeper-open/4.wav",
+          "sha256": "95b63ab02d16e8e26e547d5acbc0f031b659077f285a124799143d225f74c744"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate minesweeper-open/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 40,
+      "maxVoices": 3
+    },
+    {
+      "id": "minesweeper-cascade",
+      "group": "minesweeper",
+      "description": "An opening clears many cells at once (one sound however many). Provisional: candidate A (Paper riffle).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/minesweeper-cascade/1.wav",
+          "sha256": "0ee21e8c4bde47931e57b1dc00884c0724e82612c80149ee8a47ce8cff53ccd5"
+        },
+        {
+          "file": "masters/minesweeper-cascade/2.wav",
+          "sha256": "b7c239f2c41c7b8976d197667755a81c94756c461e0d4cdce6e704fdd3cad5c3"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate minesweeper-cascade/A",
+        "license": "own"
+      },
+      "minGapMs": 200,
+      "maxVoices": 1
+    },
+    {
+      "id": "minesweeper-flag",
+      "group": "minesweeper",
+      "description": "You plant a flag. Provisional: candidate A (Paper flag pinned).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/minesweeper-flag/1.wav",
+          "sha256": "502bf252faeff3d9ca0302e42a5d9979ca0d548be8ac38e204ad4c2951917ea2"
+        },
+        {
+          "file": "masters/minesweeper-flag/2.wav",
+          "sha256": "438b107587dccf7fe46ba8fdbb107105cd4259ca2e6180f299b00db08b4c76c4"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate minesweeper-flag/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 2
+    },
+    {
+      "id": "minesweeper-unflag",
+      "group": "minesweeper",
+      "description": "You lift a flag. Provisional: candidate A (Paper flag pulled).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/minesweeper-unflag/1.wav",
+          "sha256": "3ec113005fdab89e29ddf2afcba02369c0eab15a3b169b7f00f13e9ba7f695e7"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate minesweeper-unflag/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 2
+    },
+    {
+      "id": "minesweeper-mine",
+      "group": "minesweeper",
+      "description": "You hit a mine: a comic pop-fwump, never harsh (others hear it muffled). Provisional: candidate A (Pop and fwump).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/minesweeper-mine/1.wav",
+          "sha256": "2de175d11e706e639a919c13cddd4e0da66fbf535bdbf00e31e18d7637456598"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate minesweeper-mine/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "make-24-card",
+      "group": "make-24",
+      "description": "You pick or unpick a number card. Provisional: candidate A (Card lift tap).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/make-24-card/1.wav",
+          "sha256": "0b20555232ff21a0d1eb3c7818afaf86962764ba9ee4db23aa2fb45232dd0bab"
+        },
+        {
+          "file": "masters/make-24-card/2.wav",
+          "sha256": "1a9a287464b557b21e935f42b7f2b6603c8c564a68004d436a8b720e343d27c6"
+        },
+        {
+          "file": "masters/make-24-card/3.wav",
+          "sha256": "d4e81aed2649f7a0e37c1131def07617e4b6e56390eb1ac001cb0857596d6fc1"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate make-24-card/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 3
+    },
+    {
+      "id": "make-24-sign",
+      "group": "make-24",
+      "description": "You pick a sign (+ - x /). Provisional: candidate A (Wooden click).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/make-24-sign/1.wav",
+          "sha256": "5c87f0237332d4f2d79f1d24d61dd36047a8e61437564a22e308402a47835169"
+        },
+        {
+          "file": "masters/make-24-sign/2.wav",
+          "sha256": "c1652f3fb0dac4ce4099e21eb4c34d4dea45b9817e98b9c6e60aeb890b312c1c"
+        },
+        {
+          "file": "masters/make-24-sign/3.wav",
+          "sha256": "1bcf380e7a97dee9ce13ae95b43ab9172a949d5197897ed91cb922ece6c52a47"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate make-24-sign/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 2
+    },
+    {
+      "id": "make-24-combine",
+      "group": "make-24",
+      "description": "Two cards snap into one. Provisional: candidate A (Card snap with a marimba note).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/make-24-combine/1.wav",
+          "sha256": "1e540697e409f72bbed2d968155aef73f8dc2e7ed0b570c206d95d83ec707f3c"
+        },
+        {
+          "file": "masters/make-24-combine/2.wav",
+          "sha256": "10cdbb98b64b9164c2ebfd1eb4679ee59aa1bd1173e3b527c63541f798287be4"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate make-24-combine/A",
+        "license": "own"
+      },
+      "minGapMs": 100,
+      "maxVoices": 2
+    },
+    {
+      "id": "make-24-solved",
+      "group": "make-24",
+      "description": "You made 24. Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/make-24-solved/1.wav",
+          "sha256": "ddbf6b6646ed17b1b07f1f3d3f9d03ec8cfdc5cdbc94d0b4385d669ff04efb7d"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate make-24-solved/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "make-24-skip",
+      "group": "make-24",
+      "description": "You skip the hand (page turn). Provisional: candidate A (Page turn).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/make-24-skip/1.wav",
+          "sha256": "2307e1fc45041e403806bc0589dc05402b7e24a0f4ac3e6e13634729dbd6ad24"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate make-24-skip/A",
+        "license": "own"
+      },
+      "minGapMs": 300,
+      "maxVoices": 1
+    },
+    {
+      "id": "pairs-flip",
+      "group": "pairs",
+      "description": "A card turns face up (yours full, others' softer). Provisional: candidate A (Card flip).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/pairs-flip/1.wav",
+          "sha256": "bddd97a0a71fbb756513f764ea64c9a2bbef2759c702c94373fb70e2c58b3977"
+        },
+        {
+          "file": "masters/pairs-flip/2.wav",
+          "sha256": "9a849afa11eaf2b291941da47301c1d39e17dea693ca45c25a946e40dfb5deea"
+        },
+        {
+          "file": "masters/pairs-flip/3.wav",
+          "sha256": "932faba05fd551e8d137b08b592ba234b9dc197a09bb22b90575f6db2bc3c4c9"
+        },
+        {
+          "file": "masters/pairs-flip/4.wav",
+          "sha256": "743042590f03467391a727fd3eaa096d02ee7e4f052d905575e5d33fcbbefc79"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate pairs-flip/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 3
+    },
+    {
+      "id": "pairs-match",
+      "group": "pairs",
+      "description": "A pair is found; each pair in a streak plays one step higher (variant 1 first pair, variant 5 the fifth and after). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/pairs-match/1.wav",
+          "sha256": "00166acb7880093eb620ec47fc0f0bb71e21b511c22e2881146996460ffde13e"
+        },
+        {
+          "file": "masters/pairs-match/2.wav",
+          "sha256": "73544a3af801d4e20c0cd1f40d83211f598d62222527730c80c9b66c9b6df56d"
+        },
+        {
+          "file": "masters/pairs-match/3.wav",
+          "sha256": "fa9638e6887dbf972605f34569da04194e3efb613dca557f7c83b39cbc6476a8"
+        },
+        {
+          "file": "masters/pairs-match/4.wav",
+          "sha256": "df7be0ab9d5fa86b642513d2b78290523cfaefebd3814b442ba0019f57b022be"
+        },
+        {
+          "file": "masters/pairs-match/5.wav",
+          "sha256": "672598d26c028a8c3f499d7a4855a61c87295c350a9e8d2881d0f07011325499"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate pairs-match/A",
+        "license": "own"
+      },
+      "steps": true,
+      "minGapMs": 150,
+      "maxVoices": 2
+    },
+    {
+      "id": "pairs-miss",
+      "group": "pairs",
+      "description": "No pair: the two cards turn back. Provisional: candidate A (Two soft flips back).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/pairs-miss/1.wav",
+          "sha256": "e14b315cd6b3e1590e2fba49a1522c524f7248b61521d40b13f2dde17aef8bd9"
+        },
+        {
+          "file": "masters/pairs-miss/2.wav",
+          "sha256": "d8dc126e239cb59d3c8805a95cb3a2e55c19df9e5dedbab9f2cc0962cb2a9160"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate pairs-miss/A",
+        "license": "own"
+      },
+      "minGapMs": 200,
+      "maxVoices": 2
+    },
+    {
+      "id": "trios-pick",
+      "group": "trios",
+      "description": "You pick a card. Provisional: candidate A (Card lift tap).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/trios-pick/1.wav",
+          "sha256": "f13a620f8424b3248d3181aeb86674efbade7c5b933d99b240df1085c7244ff8"
+        },
+        {
+          "file": "masters/trios-pick/2.wav",
+          "sha256": "284923fbc804835437cacfcd45c6bdd885ab42b8dc23a5a5ea750d5128d1955c"
+        },
+        {
+          "file": "masters/trios-pick/3.wav",
+          "sha256": "ecdb034505d852a4ded5abbc3f5e45463763d69b923148a74a971a4a8945f341"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate trios-pick/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 3
+    },
+    {
+      "id": "trios-unpick",
+      "group": "trios",
+      "description": "You put a picked card back. Provisional: candidate A (Softer, lower tap).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/trios-unpick/1.wav",
+          "sha256": "ee94ab90494780e853a49188a2278829fe2dc19427ca6867013ad41b939d6b80"
+        },
+        {
+          "file": "masters/trios-unpick/2.wav",
+          "sha256": "427b552614118e8a3ca9a15801b9e947ea95baaab5967be2778b07c5bb68291e"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate trios-unpick/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 50,
+      "maxVoices": 2
+    },
+    {
+      "id": "trios-found",
+      "group": "trios",
+      "description": "A trio is found: three rising notes for you; when someone else takes one, the same softer. Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/trios-found/1.wav",
+          "sha256": "40b3334c187c5213ff08c04e3ed2c75429a6254ba9751fdd3a6ce04929ea0df8"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate trios-found/A",
+        "license": "own"
+      },
+      "minGapMs": 150,
+      "maxVoices": 2
+    },
+    {
+      "id": "trios-hint",
+      "group": "trios",
+      "description": "A hint arrives (the 30 s hint in rooms, a hint you take in solo). Provisional: candidate A (Marimba).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/trios-hint/1.wav",
+          "sha256": "ec43c07c7d501af556125066b0efceec4ad5a62cb99cbbff2707f802a5b18263"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate trios-hint/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "snap-take",
+      "group": "snap",
+      "description": "You take the middle card (slap and chime; others' takes play softer). Provisional: candidate A (Card slap and marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/snap-take/1.wav",
+          "sha256": "e5201994716658c92a962fda7b4da8314b1584dd4d555ff5d4c5b329e1dba1ed"
+        },
+        {
+          "file": "masters/snap-take/2.wav",
+          "sha256": "36ec80033b2fa892e83692dce5cb55e9b6ebc0e0fb41aa1c92e6c26994cc3334"
+        },
+        {
+          "file": "masters/snap-take/3.wav",
+          "sha256": "5d2df6d3ea6a7e183713f6f6be84facc9cf92fc6d55982075876c27aab4b42dd"
+        },
+        {
+          "file": "masters/snap-take/4.wav",
+          "sha256": "d0c78d4b6a9c0caaf396058ddb4bc8d9f36aa0841677eb57df8b8dd75721647d"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate snap-take/A",
+        "license": "own"
+      },
+      "minGapMs": 80,
+      "maxVoices": 2
+    },
+    {
+      "id": "snap-deal",
+      "group": "snap",
+      "description": "A new middle card is dealt (quiet). Provisional: candidate A (Card dealt).",
+      "loudness": "ui",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/snap-deal/1.wav",
+          "sha256": "be447eda6df86b8fdaae91afe0c642c08747a550e1797ef745bbc3e4b4bbc624"
+        },
+        {
+          "file": "masters/snap-deal/2.wav",
+          "sha256": "7828c5c4f143e6dce981a3a400bcb7413cc29d23a7983a7bad6c0699a1201206"
+        },
+        {
+          "file": "masters/snap-deal/3.wav",
+          "sha256": "464e345f72ac2c1491ec9d5e6a63055de45ad2e6fdfa74ed075473f12d7f88aa"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate snap-deal/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "liars-dice-roll",
+      "group": "liars-dice",
+      "description": "Dice rattle in the cup at the start of a round. Provisional: candidate B (Kenney dice shake).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/liars-dice-roll/1.wav",
+          "sha256": "30d2988375f81f0e1397f6d76184666b6f9bbc8a83001e6e6ba4775d5232dd65"
+        },
+        {
+          "file": "masters/liars-dice-roll/2.wav",
+          "sha256": "20419e73a15a4b10587054bfac4ab8af7f03795947f07859815c406dc2151d9f"
+        },
+        {
+          "file": "masters/liars-dice-roll/3.wav",
+          "sha256": "74e6876fb53e3c68312405011a262c735ec914f81f3fa8c681698486c085cdec"
+        }
+      ],
+      "origin": {
+        "kind": "cc0",
+        "source": "Kenney Casino Audio: dice-shake-1.ogg, dice-shake-2.ogg, dice-shake-3.ogg",
+        "url": "https://kenney.nl/assets/casino-audio",
+        "license": "CC0-1.0"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 300,
+      "maxVoices": 2
+    },
+    {
+      "id": "liars-dice-bid",
+      "group": "liars-dice",
+      "description": "A bid is placed (yours crisp; others' and bots' softer). Provisional: candidate B (Kenney chip laid).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/liars-dice-bid/1.wav",
+          "sha256": "5bc706c0a591f0b3f71ba86e77d26ea0a4f04f4aafb334783283c909ff567ff0"
+        },
+        {
+          "file": "masters/liars-dice-bid/2.wav",
+          "sha256": "0d8af79cf6526dcbf2c8fb131fbb055fc1f2cf05abea15397c5700006d0df6b0"
+        },
+        {
+          "file": "masters/liars-dice-bid/3.wav",
+          "sha256": "6a90804fdfbdeeb3ce204cbaa16029cfa72e66e76e1f35fa5eefe42593fd760e"
+        },
+        {
+          "file": "masters/liars-dice-bid/4.wav",
+          "sha256": "ace91560d0ade9cd0a1c330c0f2f8491fbcc83f834c9203c3696ae1f4e43517f"
+        }
+      ],
+      "origin": {
+        "kind": "cc0",
+        "source": "Kenney Casino Audio: chip-lay-1.ogg and 3 more",
+        "url": "https://kenney.nl/assets/casino-audio",
+        "license": "CC0-1.0"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 80,
+      "maxVoices": 2
+    },
+    {
+      "id": "liars-dice-liar",
+      "group": "liars-dice",
+      "description": "Someone calls Liar (stamp and a 'dun!'). Provisional: candidate A (Marimba with a stamp).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/liars-dice-liar/1.wav",
+          "sha256": "22b62b2825d268c7a5cb1ce1896493174ef3ed6130cd49121cd89bf20ab1efdc"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate liars-dice-liar/A",
+        "license": "own"
+      },
+      "minGapMs": 1000,
+      "maxVoices": 1
+    },
+    {
+      "id": "liars-dice-reveal",
+      "group": "liars-dice",
+      "description": "Cups lift to show every die. Provisional: candidate B (Kenney dice on the table).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/liars-dice-reveal/1.wav",
+          "sha256": "c4baf1e7448bb29db7a4b4162ef2f9c119e303f59c1ffcd84466fb8b75f58f5a"
+        }
+      ],
+      "origin": {
+        "kind": "cc0",
+        "source": "Kenney Casino Audio: dice-throw-2.ogg",
+        "url": "https://kenney.nl/assets/casino-audio",
+        "license": "CC0-1.0"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "liars-dice-lose-die",
+      "group": "liars-dice",
+      "description": "A player loses a die (it drops out). Provisional: candidate B (Kenney single die thrown).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/liars-dice-lose-die/1.wav",
+          "sha256": "fb5b3d81dab95cc7910f2b67e863fdac20d081512416706d1367dcc21806fb14"
+        },
+        {
+          "file": "masters/liars-dice-lose-die/2.wav",
+          "sha256": "0ad2a4b36dad4b7fc5e026d99b7fa12fa91b3df38ef2d6495b969386f9bb20f6"
+        }
+      ],
+      "origin": {
+        "kind": "cc0",
+        "source": "Kenney Casino Audio: die-throw-1.ogg, die-throw-2.ogg, die-throw-4.ogg",
+        "url": "https://kenney.nl/assets/casino-audio",
+        "license": "CC0-1.0"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 300,
+      "maxVoices": 2
+    },
+    {
+      "id": "hush-count",
+      "group": "hush",
+      "description": "The 3, 2, 1 countdown before a level; the last count is higher (variant 1 = 3, variant 3 = 1). Provisional: candidate A (Woodblock).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/hush-count/1.wav",
+          "sha256": "928c21264cce2cf275f8f8407d8f7e8420dfa8445c44d7557b070e13b5d4f435"
+        },
+        {
+          "file": "masters/hush-count/2.wav",
+          "sha256": "2fc743dfd3d416d7991ef2362de96cce19e602e65632347a16747dd1d7603f3e"
+        },
+        {
+          "file": "masters/hush-count/3.wav",
+          "sha256": "ecdad9c274301b329e28026dad7c822a4c43874bc99cd86f707bbed9f15a47e4"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate hush-count/A",
+        "license": "own"
+      },
+      "steps": true,
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "hush-card",
+      "group": "hush",
+      "description": "A card is played on the pile: the game's only voice (yours full, others' softer). Provisional: candidate A (Card laid on the pile).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/hush-card/1.wav",
+          "sha256": "dddf629ef5c8269cd33516aa4d88e7e591f69728ce030e3820dba8ab8d782d60"
+        },
+        {
+          "file": "masters/hush-card/2.wav",
+          "sha256": "f7134b79dbaa1377e24f34a3733213740d0e119ebf8cfbcc3d433f72ebba0829"
+        },
+        {
+          "file": "masters/hush-card/3.wav",
+          "sha256": "84e2609be25aeeac82928e4c672588b241cea30831a19d1573c99cd0d11ef152"
+        },
+        {
+          "file": "masters/hush-card/4.wav",
+          "sha256": "3bb7a14431db182f07d17d4d1f762311b33c2115db985385a1f8c4eb558bc60e"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate hush-card/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "hush-mistake",
+      "group": "hush",
+      "description": "A card was played over a lower one: a life is lost (soft low thud). Provisional: candidate A (Felt thud with a low marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/hush-mistake/1.wav",
+          "sha256": "29974465c532cd69246cec70b2852e6c9b2ed6a7f6bc5200103690cee02d478c"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate hush-mistake/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "hush-level-cleared",
+      "group": "hush",
+      "description": "A level is cleared (a calm chord). Provisional: candidate A (Marimba).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/hush-level-cleared/1.wav",
+          "sha256": "886f7c771c8c1e038dd130431604263a9f3685f801d6f4fe5ce6c6e2f20e00b0"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate hush-level-cleared/A",
+        "license": "own"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "hush-life-back",
+      "group": "hush",
+      "description": "A clean level wins back a life (sparkle). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/hush-life-back/1.wav",
+          "sha256": "154c35fb5bb0ec72308c94b912b7b7f278978df13bdc45dcc309bff5c3a52eb7"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate hush-life-back/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "daily-word-tile-right",
+      "group": "daily-word",
+      "description": "A tile turns in the row reveal and is Right (brightest). Provisional: candidate A (Marimba on a tile flip).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/daily-word-tile-right/1.wav",
+          "sha256": "5e9c7ae0641d5ebc5e8f3bb28343416b5435243d33c56b5031e5cb90c24c31ee"
+        },
+        {
+          "file": "masters/daily-word-tile-right/2.wav",
+          "sha256": "6332d789d7f2487c29264d3227befc49812a758aa9630a5e76e5ab916661a340"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate daily-word-tile-right/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "daily-word-tile-moved",
+      "group": "daily-word",
+      "description": "A tile turns in the row reveal and is Moved (middle). Provisional: candidate A (Marimba on a tile flip).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/daily-word-tile-moved/1.wav",
+          "sha256": "c8ed3e616cc37b28d00e5b7441a7e4a08df961a66613d42da47c9c733def82a3"
+        },
+        {
+          "file": "masters/daily-word-tile-moved/2.wav",
+          "sha256": "287a5adfd9709f36b64dac07d6ff7a13aef1c7d65e0ce06e5f466aa15cfd8120"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate daily-word-tile-moved/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "daily-word-tile-not-in",
+      "group": "daily-word",
+      "description": "A tile turns in the row reveal and is Not in (dull). Provisional: candidate A (Tile flip with a dull wood note).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/daily-word-tile-not-in/1.wav",
+          "sha256": "a6f350b4dc810c766594389f469517f3214c7eb92351d17c80225ad473471e61"
+        },
+        {
+          "file": "masters/daily-word-tile-not-in/2.wav",
+          "sha256": "4711f3795cb5227b5604b0317dcbadcdabdbc753b85661729b255e5c13020409"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate daily-word-tile-not-in/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "code-breaker-peg-right",
+      "group": "code-breaker",
+      "description": "A peg drops in after a guess: Right (brightest). Provisional: candidate A (Marimba on a wooden peg).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/code-breaker-peg-right/1.wav",
+          "sha256": "b2a1b7ee5fa27f6741933f21a4101b086e2dbd7192390312ebcedac5ee5936d1"
+        },
+        {
+          "file": "masters/code-breaker-peg-right/2.wav",
+          "sha256": "68d1300d528711266ed1b7a599068339599b3060df5641e96c3f3b6871eec9e0"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate code-breaker-peg-right/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "code-breaker-peg-moved",
+      "group": "code-breaker",
+      "description": "A peg drops in after a guess: Moved (middle). Provisional: candidate A (Marimba on a wooden peg).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/code-breaker-peg-moved/1.wav",
+          "sha256": "179ad8d058366654760c89c7606d5d84f2b2e4aa146d0eed2b34b9c13e6205a1"
+        },
+        {
+          "file": "masters/code-breaker-peg-moved/2.wav",
+          "sha256": "3010f92f29d2410208ab4e587becec5ce7918cdb5c91f75275c55d6d726b4921"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate code-breaker-peg-moved/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "code-breaker-peg-not-in",
+      "group": "code-breaker",
+      "description": "A peg drops in after a guess: Not in (dull). Provisional: candidate A (Wooden peg with a dull note).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/code-breaker-peg-not-in/1.wav",
+          "sha256": "d0e1e66bb341cc82692dc4fc6dc8553b68abd647c8ac9c9bbb536f25b07cb26e"
+        },
+        {
+          "file": "masters/code-breaker-peg-not-in/2.wav",
+          "sha256": "e3641eb4189248fc7448432f106f2b5e521d849f46d60a0fb719677770fb522a"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate code-breaker-peg-not-in/A",
+        "license": "own"
+      },
+      "minGapMs": 60,
+      "maxVoices": 3
+    },
+    {
+      "id": "code-breaker-note",
+      "group": "code-breaker",
+      "description": "You toggle a digit note (pencil tick). Provisional: candidate A (Pencil tick).",
+      "loudness": "ui",
+      "gainDb": -2,
+      "variants": [
+        {
+          "file": "masters/code-breaker-note/1.wav",
+          "sha256": "0e39d888f9ffd03e36013cd2807149d058b42838212dd28591f6b54b0aa71143"
+        },
+        {
+          "file": "masters/code-breaker-note/2.wav",
+          "sha256": "038eadd313e1b98ba8dd9399dab8ba4b7c4cb919a232e0c7493bed27bc65f0e7"
+        },
+        {
+          "file": "masters/code-breaker-note/3.wav",
+          "sha256": "43b90e901388ff2b587a2534f487b237d25d5fef36dd868679f822248b395ec1"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate code-breaker-note/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.4,
+      "minGapMs": 50,
+      "maxVoices": 2
+    },
+    {
+      "id": "doodle-chain-pass",
+      "group": "doodle-chain",
+      "description": "The books pass to the next player (whoosh). Provisional: candidate A (Paper whoosh).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/doodle-chain-pass/1.wav",
+          "sha256": "34f78c75fec2468da5755883dbb9b4948cacdbdd67ef6a7e25ea8a6ee57bc3a8"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate doodle-chain-pass/A",
+        "license": "own"
+      },
+      "minGapMs": 500,
+      "maxVoices": 1
+    },
+    {
+      "id": "doodle-chain-page",
+      "group": "doodle-chain",
+      "description": "In the reveal, each entry appears (page flip). Provisional: candidate A (Page flip).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/doodle-chain-page/1.wav",
+          "sha256": "0135f53adfc131c47e462bda8b1f7af08c2596794a77ac4d41e71e3ceac555a6"
+        },
+        {
+          "file": "masters/doodle-chain-page/2.wav",
+          "sha256": "23fecc42789f4dfe8357502cdd7200dd0bf89fb9efccde1a39d74b2c9dbbf3aa"
+        },
+        {
+          "file": "masters/doodle-chain-page/3.wav",
+          "sha256": "85df5b2cd06916534faa7ebea16d7e72023f0340c8c74befc431090bf45a0ba9"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (layer), candidate doodle-chain-page/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 80,
+      "maxVoices": 2
+    },
+    {
+      "id": "doodle-chain-heart",
+      "group": "doodle-chain",
+      "description": "Someone hearts an entry (soft pop; bursts merge). Provisional: candidate A (Tuned bubble pops).",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/doodle-chain-heart/1.wav",
+          "sha256": "e94fe99a55a2e4d0835edd02b716b067e6a2a474bc72b2df0fbd212442fe2475"
+        },
+        {
+          "file": "masters/doodle-chain-heart/2.wav",
+          "sha256": "7215b18cca4115eea9a3f3660ec04db86c4ee520263103fe5a8adf9af5adbf2b"
+        },
+        {
+          "file": "masters/doodle-chain-heart/3.wav",
+          "sha256": "cd154bc56b8eadea9591395a2be20b742e897fce3aea1dabd99520cd71ebf830"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (pop), candidate doodle-chain-heart/A",
+        "license": "own"
+      },
+      "minGapMs": 80,
+      "maxVoices": 3
+    },
+    {
+      "id": "doodle-chain-album",
+      "group": "doodle-chain",
+      "description": "The album ends (closing chord). Provisional: candidate A (Marimba with a Kenney book close).",
+      "loudness": "stinger",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/doodle-chain-album/1.wav",
+          "sha256": "1088212c5a9ebf4b27b69fda376231b62c674a04b3d2a64855991a6cd300bcb8"
+        }
+      ],
+      "origin": {
+        "kind": "cc0",
+        "source": "Kenney RPG Audio: bookClose.ogg, layered with Zumpo synth",
+        "url": "https://kenney.nl/assets/rpg-audio",
+        "license": "CC0-1.0"
+      },
+      "minGapMs": 1500,
+      "maxVoices": 1
+    },
+    {
+      "id": "gomoku-faint",
+      "group": "gomoku",
+      "description": "Your first tap puts a faint stone down (touch screens). Provisional: candidate A (Soft fingertip tap).",
+      "loudness": "ui",
+      "gainDb": -4,
+      "variants": [
+        {
+          "file": "masters/gomoku-faint/1.wav",
+          "sha256": "27f819ce8fdeb53644d188d3edb8cf19632ed1b360465fc00c6e483af0d02118"
+        },
+        {
+          "file": "masters/gomoku-faint/2.wav",
+          "sha256": "35fdfe394076543784f5e47933ae049c4e2f96bc1eed6fcc94518a47e1240825"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate gomoku-faint/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 60,
+      "maxVoices": 2
+    },
+    {
+      "id": "gomoku-stone",
+      "group": "gomoku",
+      "description": "A stone is placed (yours crisp, your opponent's softer). Provisional: candidate A (Stone on a wooden board).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/gomoku-stone/1.wav",
+          "sha256": "ae8e088fafe4770d7211c391984af3736513f044a7d78a074f939480c5a845a9"
+        },
+        {
+          "file": "masters/gomoku-stone/2.wav",
+          "sha256": "daf0420473f8e128e60e34e7aa889f098a3ad97fad473c03179f1dcb309e8e03"
+        },
+        {
+          "file": "masters/gomoku-stone/3.wav",
+          "sha256": "58b392eec01c89fb80f40abee43b2915654ce3f530bf7cb50f4a4474756df4e2"
+        },
+        {
+          "file": "masters/gomoku-stone/4.wav",
+          "sha256": "fb866bd5fe163bb75097fe80170128e3d515dd632f38fb620003263ca515914d"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (foley), candidate gomoku-stone/A",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 80,
+      "maxVoices": 2
+    },
+    {
+      "id": "gomoku-five",
+      "group": "gomoku",
+      "description": "Five in a row (a chime that runs along the line). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/gomoku-five/1.wav",
+          "sha256": "44d37e00deb1c8dab6d8f45945ecafa85a55d38460e33f5792464ce722684f84"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate gomoku-five/A",
+        "license": "own"
+      },
+      "minGapMs": 1000,
+      "maxVoices": 1
+    },
+    {
+      "id": "gomoku-warning",
+      "group": "gomoku",
+      "description": "One more lost turn will lose you the game (a kind warning). Provisional: candidate A (Marimba).",
+      "loudness": "event",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/gomoku-warning/1.wav",
+          "sha256": "39ce5cf7d6e03cdb768829adbbba29c384fc72c89607bb52e61886c6faf9310b"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate gomoku-warning/A",
+        "license": "own"
+      },
+      "minGapMs": 1000,
+      "maxVoices": 1
     }
   ]
 }
