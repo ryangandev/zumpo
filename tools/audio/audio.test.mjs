@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, it } from 'node:test';
-import { buildAudio, BuildError } from './build.mjs';
+import { buildAudio, BuildError, startOffset } from './build.mjs';
 import {
   checkGenerated,
   fileSha256,
@@ -361,6 +361,36 @@ describe('mastersRoot', () => {
       path.join(os.homedir(), 'sounds'),
     );
     assert.equal(mastersRoot({ ZUMPO_AUDIO_DIR: '/srv/a' }), '/srv/a');
+  });
+});
+
+describe('startOffset', () => {
+  /** A soft bump near a tenth of the peak, then the real hit 20 ms later. */
+  function softOnset(first) {
+    const data = new Float32Array(4800);
+    for (let i = 0; i < data.length; i += 1) {
+      const t = i / 48000;
+      const bump = first * Math.exp(-(((t - 0.004) / 0.002) ** 2));
+      const hit = 0.5 * Math.exp(-Math.max(0, t - 0.024) * 40);
+      data[i] =
+        Math.sin(2 * Math.PI * 700 * t) * (bump + (t >= 0.024 ? hit : 0));
+    }
+    return data;
+  }
+
+  it('lines up a soft onset that a threshold would place on another bump', () => {
+    // The bump crosses a tenth of the peak in the master but not in the copy:
+    // a threshold says 960 samples apart, though nothing moved.
+    const source = softOnset(0.052);
+    const decoded = softOnset(0.048).map((x) => x * 0.8);
+    assert.equal(startOffset(source, decoded), 0);
+  });
+
+  it('finds a priming delay the encoder left in', () => {
+    const source = softOnset(0.052);
+    const decoded = new Float32Array(source.length + 312);
+    decoded.set(source, 312);
+    assert.equal(startOffset(source, decoded), 312);
   });
 });
 
