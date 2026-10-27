@@ -17,8 +17,9 @@ const createHushModule = (
   ctx: GameContext,
   durations?: HushDurationsInSeconds,
   graceInSeconds?: number,
+  seed?: string,
 ): GameModule<HushState, HushSettings> => {
-  const engine = createHushGameEngine(ctx, durations, graceInSeconds);
+  const engine = createHushGameEngine(ctx, durations, graceInSeconds, seed);
 
   return {
     gameType: 'hush',
