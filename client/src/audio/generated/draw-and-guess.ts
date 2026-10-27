@@ -28,12 +28,12 @@ export const drawAndGuessSounds = {
       {
         m4a: new URL('./files/draw-and-guess-clear-1.m4a', import.meta.url).href,
         webm: new URL('./files/draw-and-guess-clear-1.webm', import.meta.url).href,
-        duration: 0.745167,
+        duration: 0.795979,
       },
       {
         m4a: new URL('./files/draw-and-guess-clear-2.m4a', import.meta.url).href,
         webm: new URL('./files/draw-and-guess-clear-2.webm', import.meta.url).href,
-        duration: 0.713063,
+        duration: 0.799229,
       },
     ],
   },
@@ -94,7 +94,7 @@ export const drawAndGuessSounds = {
       {
         m4a: new URL('./files/draw-and-guess-pencil-1.m4a', import.meta.url).href,
         webm: new URL('./files/draw-and-guess-pencil-1.webm', import.meta.url).href,
-        duration: 0.395313,
+        duration: 0.400458,
       },
       {
         m4a: new URL('./files/draw-and-guess-pencil-2.m4a', import.meta.url).href,
@@ -104,12 +104,12 @@ export const drawAndGuessSounds = {
       {
         m4a: new URL('./files/draw-and-guess-pencil-3.m4a', import.meta.url).href,
         webm: new URL('./files/draw-and-guess-pencil-3.webm', import.meta.url).href,
-        duration: 0.394958,
+        duration: 0.398813,
       },
       {
         m4a: new URL('./files/draw-and-guess-pencil-4.m4a', import.meta.url).href,
         webm: new URL('./files/draw-and-guess-pencil-4.webm', import.meta.url).href,
-        duration: 0.391521,
+        duration: 0.401313,
       },
     ],
   },

@@ -14,17 +14,17 @@ export const codeBreakerSounds = {
       {
         m4a: new URL('./files/code-breaker-note-1.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-note-1.webm', import.meta.url).href,
-        duration: 0.338708,
+        duration: 0.407562,
       },
       {
         m4a: new URL('./files/code-breaker-note-2.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-note-2.webm', import.meta.url).href,
-        duration: 0.343542,
+        duration: 0.427042,
       },
       {
         m4a: new URL('./files/code-breaker-note-3.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-note-3.webm', import.meta.url).href,
-        duration: 0.341917,
+        duration: 0.421542,
       },
     ],
   },
@@ -39,12 +39,12 @@ export const codeBreakerSounds = {
       {
         m4a: new URL('./files/code-breaker-peg-moved-1.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-moved-1.webm', import.meta.url).href,
-        duration: 0.552833,
+        duration: 0.556187,
       },
       {
         m4a: new URL('./files/code-breaker-peg-moved-2.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-moved-2.webm', import.meta.url).href,
-        duration: 0.551417,
+        duration: 0.553792,
       },
     ],
   },
@@ -59,12 +59,12 @@ export const codeBreakerSounds = {
       {
         m4a: new URL('./files/code-breaker-peg-not-in-1.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-not-in-1.webm', import.meta.url).href,
-        duration: 0.338,
+        duration: 0.403708,
       },
       {
         m4a: new URL('./files/code-breaker-peg-not-in-2.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-not-in-2.webm', import.meta.url).href,
-        duration: 0.336813,
+        duration: 0.403687,
       },
     ],
   },
@@ -79,12 +79,12 @@ export const codeBreakerSounds = {
       {
         m4a: new URL('./files/code-breaker-peg-right-1.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-right-1.webm', import.meta.url).href,
-        duration: 0.54275,
+        duration: 0.546167,
       },
       {
         m4a: new URL('./files/code-breaker-peg-right-2.m4a', import.meta.url).href,
         webm: new URL('./files/code-breaker-peg-right-2.webm', import.meta.url).href,
-        duration: 0.543896,
+        duration: 0.546542,
       },
     ],
   },

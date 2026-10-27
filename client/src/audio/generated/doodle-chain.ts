@@ -13,7 +13,7 @@ export const doodleChainSounds = {
       {
         m4a: new URL('./files/doodle-chain-album-1.m4a', import.meta.url).href,
         webm: new URL('./files/doodle-chain-album-1.webm', import.meta.url).href,
-        duration: 2.553167,
+        duration: 2.542229,
       },
     ],
   },
@@ -54,12 +54,12 @@ export const doodleChainSounds = {
       {
         m4a: new URL('./files/doodle-chain-page-1.m4a', import.meta.url).href,
         webm: new URL('./files/doodle-chain-page-1.webm', import.meta.url).href,
-        duration: 0.390708,
+        duration: 0.395917,
       },
       {
         m4a: new URL('./files/doodle-chain-page-2.m4a', import.meta.url).href,
         webm: new URL('./files/doodle-chain-page-2.webm', import.meta.url).href,
-        duration: 0.39975,
+        duration: 0.394562,
       },
       {
         m4a: new URL('./files/doodle-chain-page-3.m4a', import.meta.url).href,
@@ -79,7 +79,7 @@ export const doodleChainSounds = {
       {
         m4a: new URL('./files/doodle-chain-pass-1.m4a', import.meta.url).href,
         webm: new URL('./files/doodle-chain-pass-1.webm', import.meta.url).href,
-        duration: 0.695458,
+        duration: 0.695354,
       },
     ],
   },

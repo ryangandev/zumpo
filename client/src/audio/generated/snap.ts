@@ -14,17 +14,17 @@ export const snapSounds = {
       {
         m4a: new URL('./files/snap-deal-1.m4a', import.meta.url).href,
         webm: new URL('./files/snap-deal-1.webm', import.meta.url).href,
-        duration: 0.336458,
+        duration: 0.359625,
       },
       {
         m4a: new URL('./files/snap-deal-2.m4a', import.meta.url).href,
         webm: new URL('./files/snap-deal-2.webm', import.meta.url).href,
-        duration: 0.332146,
+        duration: 0.354187,
       },
       {
         m4a: new URL('./files/snap-deal-3.m4a', import.meta.url).href,
         webm: new URL('./files/snap-deal-3.webm', import.meta.url).href,
-        duration: 0.330333,
+        duration: 0.363938,
       },
     ],
   },
@@ -39,22 +39,22 @@ export const snapSounds = {
       {
         m4a: new URL('./files/snap-take-1.m4a', import.meta.url).href,
         webm: new URL('./files/snap-take-1.webm', import.meta.url).href,
-        duration: 0.888958,
+        duration: 0.945479,
       },
       {
         m4a: new URL('./files/snap-take-2.m4a', import.meta.url).href,
         webm: new URL('./files/snap-take-2.webm', import.meta.url).href,
-        duration: 0.895771,
+        duration: 0.943187,
       },
       {
         m4a: new URL('./files/snap-take-3.m4a', import.meta.url).href,
         webm: new URL('./files/snap-take-3.webm', import.meta.url).href,
-        duration: 0.875313,
+        duration: 0.945479,
       },
       {
         m4a: new URL('./files/snap-take-4.m4a', import.meta.url).href,
         webm: new URL('./files/snap-take-4.webm', import.meta.url).href,
-        duration: 0.898042,
+        duration: 0.945479,
       },
     ],
   },

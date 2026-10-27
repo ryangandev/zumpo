@@ -13,12 +13,12 @@ export const minesweeperSounds = {
       {
         m4a: new URL('./files/minesweeper-cascade-1.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-cascade-1.webm', import.meta.url).href,
-        duration: 0.667167,
+        duration: 0.748021,
       },
       {
         m4a: new URL('./files/minesweeper-cascade-2.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-cascade-2.webm', import.meta.url).href,
-        duration: 0.705438,
+        duration: 0.777792,
       },
     ],
   },
@@ -33,12 +33,12 @@ export const minesweeperSounds = {
       {
         m4a: new URL('./files/minesweeper-flag-1.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-flag-1.webm', import.meta.url).href,
-        duration: 0.338333,
+        duration: 0.375854,
       },
       {
         m4a: new URL('./files/minesweeper-flag-2.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-flag-2.webm', import.meta.url).href,
-        duration: 0.337583,
+        duration: 0.384104,
       },
     ],
   },
@@ -69,22 +69,22 @@ export const minesweeperSounds = {
       {
         m4a: new URL('./files/minesweeper-open-1.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-open-1.webm', import.meta.url).href,
-        duration: 0.312875,
+        duration: 0.346687,
       },
       {
         m4a: new URL('./files/minesweeper-open-2.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-open-2.webm', import.meta.url).href,
-        duration: 0.321104,
+        duration: 0.339813,
       },
       {
         m4a: new URL('./files/minesweeper-open-3.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-open-3.webm', import.meta.url).href,
-        duration: 0.334667,
+        duration: 0.339271,
       },
       {
         m4a: new URL('./files/minesweeper-open-4.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-open-4.webm', import.meta.url).href,
-        duration: 0.311958,
+        duration: 0.346625,
       },
     ],
   },
@@ -99,7 +99,7 @@ export const minesweeperSounds = {
       {
         m4a: new URL('./files/minesweeper-unflag-1.m4a', import.meta.url).href,
         webm: new URL('./files/minesweeper-unflag-1.webm', import.meta.url).href,
-        duration: 0.361312,
+        duration: 0.377542,
       },
     ],
   },

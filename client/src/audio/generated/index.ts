@@ -6,7 +6,7 @@ export const SOUND_IDS = ['code-breaker-note', 'code-breaker-peg-moved', 'code-b
 export type SoundId = (typeof SOUND_IDS)[number];
 
 /** The groups that have sounds; each is a bank, a module of its own. */
-export type SoundGroup = 'code-breaker' | 'daily-word' | 'doodle-chain' | 'draw-and-guess' | 'gomoku' | 'hush' | 'liars-dice' | 'make-24' | 'minesweeper' | 'pairs' | 'room' | 'snap' | 'test' | 'trios' | 'ui';
+export type SoundGroup = 'code-breaker' | 'daily-word' | 'doodle-chain' | 'draw-and-guess' | 'gomoku' | 'hush' | 'liars-dice' | 'make-24' | 'minesweeper' | 'pairs' | 'room' | 'snap' | 'solo' | 'test' | 'trios' | 'ui';
 
 /** Each bank, loaded when asked for, as the development sound lab does. */
 export const SOUND_BANKS: Record<SoundGroup, () => Promise<SoundBank>> = {
@@ -22,6 +22,7 @@ export const SOUND_BANKS: Record<SoundGroup, () => Promise<SoundBank>> = {
   'pairs': () => import('./pairs').then((bank) => bank.pairsSounds),
   'room': () => import('./room').then((bank) => bank.roomSounds),
   'snap': () => import('./snap').then((bank) => bank.snapSounds),
+  'solo': () => import('./solo').then((bank) => bank.soloSounds),
   'test': () => import('./test').then((bank) => bank.testSounds),
   'trios': () => import('./trios').then((bank) => bank.triosSounds),
   'ui': () => import('./ui').then((bank) => bank.uiSounds),

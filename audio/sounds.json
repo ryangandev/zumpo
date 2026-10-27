@@ -35,19 +35,19 @@
       "variants": [
         {
           "file": "masters/ui-tap/1.wav",
-          "sha256": "338b937e32699ae0d13dd142487425e9249e8c27461ab3858725d9ac831d889b"
+          "sha256": "928b0c7160068fff8da3924d024b5277bd147e9c666712ce040a4b48e8897003"
         },
         {
           "file": "masters/ui-tap/2.wav",
-          "sha256": "c611504d732bda70596a6ed8cf45215603674ed86039b5c82aafe30a2ee49a49"
+          "sha256": "d348fae5ac605639990850c73552cafcdcba488923f52c92e0ed149857249917"
         },
         {
           "file": "masters/ui-tap/3.wav",
-          "sha256": "6f1db79e527fcc2785585ba86b7745dea95c150d4e102608b913b562226c88de"
+          "sha256": "35b352760fcac748418ca5be7bdc247918f8bdcf1f7b3af69e6f98d7874afdde"
         },
         {
           "file": "masters/ui-tap/4.wav",
-          "sha256": "73c41d922a5477d57fd54471e85995c409da39557efd831a38778ed70f20b3b8"
+          "sha256": "7e38c06c90b452ce097497665f91e7b3605c050747e9849dd0466739d63e125f"
         }
       ],
       "origin": {
@@ -68,19 +68,19 @@
       "variants": [
         {
           "file": "masters/ui-key/1.wav",
-          "sha256": "b96b42d76676eddbdc6f26f98337acd4da4c991543bae8c90b85148ccc22bf35"
+          "sha256": "30e21c9a22845a9608bad9534a8fcb994047b8981cd77ab999be05ac1e6d2c51"
         },
         {
           "file": "masters/ui-key/2.wav",
-          "sha256": "d3e946452d6d167dc6aae5f3b879f5e695691d8ddd497569473740aed7718adb"
+          "sha256": "a0dbdd008ef80eb37ed76938ba0122bee70d0bfd5d0bb52945531ba9a1a67f56"
         },
         {
           "file": "masters/ui-key/3.wav",
-          "sha256": "4fedbcc7bcad0b1e4542d80dd94e5b779d06582f14a0dd196f3f9e87de608f66"
+          "sha256": "a572cedec57d60a5e3970367478aa10799176398f64c18cf19535e27f4022291"
         },
         {
           "file": "masters/ui-key/4.wav",
-          "sha256": "9451360bdc911afd21f6a4590bee3a3a1bdde76295d65f690816556cba4b347d"
+          "sha256": "44e62db97a3a5ced2f7b3eb968fb56c7cb4cff0212fc8ae217a7a21960b5d3d4"
         }
       ],
       "origin": {
@@ -101,11 +101,11 @@
       "variants": [
         {
           "file": "masters/ui-delete/1.wav",
-          "sha256": "366733e3f89f68c4e338db4c3ecad225649232a0c6d55bd9f760ce0bd551e830"
+          "sha256": "615b040b05a8645da5f30d97e3353d2d20730742a427f0251160884154c7a96e"
         },
         {
           "file": "masters/ui-delete/2.wav",
-          "sha256": "f0d24e974181ab5c205b7198142f7ee7c0e86d8112f5eb46cf8877c3fcfa8506"
+          "sha256": "c2b4fcdbc5ff5ef584df0736b3db9fd18a0519127e19e5756ee19c9d0a96be5b"
         }
       ],
       "origin": {
@@ -150,11 +150,11 @@
       "variants": [
         {
           "file": "masters/ui-undo/1.wav",
-          "sha256": "fca2df9b851cfe96ace621a3a81eb20b2539b67b625cddd73b7839bc79b8ad7d"
+          "sha256": "a40e9586f8bebef5269f95755fa64be290663fa7af3fd9f96e60198c510956a6"
         },
         {
           "file": "masters/ui-undo/2.wav",
-          "sha256": "e8d3fc240d8b749c4bcbffd393dbf6e2e13cdf186750fe0731a3b6422e945868"
+          "sha256": "ab9a47e544b18a91a10f8a305e5b4baebb655f20b95bf1574632c9ccc16c023a"
         }
       ],
       "origin": {
@@ -195,7 +195,7 @@
       "variants": [
         {
           "file": "masters/ui-connection-lost/1.wav",
-          "sha256": "d1d141bae28f3908c96283a5452e6d57a706560df248329dbb825906b51263c7"
+          "sha256": "d90b4183867883a9a4b6768f3e324e75f214954c0c81cb2c4eeb4871257e13be"
         }
       ],
       "origin": {
@@ -228,7 +228,7 @@
     },
     {
       "id": "stinger-solo-complete",
-      "group": "ui",
+      "group": "solo",
       "description": "You finished a solo puzzle (Daily Word, Code Breaker, Minesweeper, Make 24, Pairs, Trios, Snap). Provisional: candidate A (Marimba).",
       "loudness": "stinger",
       "gainDb": 0,
@@ -248,7 +248,7 @@
     },
     {
       "id": "stinger-new-best",
-      "group": "ui",
+      "group": "solo",
       "description": "A solo finish that sets a new best on this device (plays instead of solo complete). Provisional: candidate A (Marimba).",
       "loudness": "stinger",
       "gainDb": 0,
@@ -268,7 +268,7 @@
     },
     {
       "id": "stinger-solo-loss",
-      "group": "ui",
+      "group": "solo",
       "description": "Solo lost: a mine ends the run, you are out in Liar's Dice, or you ran out of guesses. Provisional: candidate A (Marimba with a soft fwump).",
       "loudness": "stinger",
       "gainDb": 0,
@@ -335,15 +335,15 @@
       "variants": [
         {
           "file": "masters/room-stamp/1.wav",
-          "sha256": "988fe75055046093e723c6f3f886add06022238b3fc03263b8d8d138b7b3a42f"
+          "sha256": "175bfa9608c28e31eed651e86301144e26f0277464d7764ec4507ef7bf90375e"
         },
         {
           "file": "masters/room-stamp/2.wav",
-          "sha256": "6c1f1b9b71875cb913666026dc4d077b402c87140d416b92c07ace0eee9f006b"
+          "sha256": "97858d78bd100e39b9481f042c5430eda79cf6a115ff817c01ad92380c60e9b8"
         },
         {
           "file": "masters/room-stamp/3.wav",
-          "sha256": "99a1cca8b161e99ac83f349659c5a0dd5be64579cd604e3360480d9c6ab69c23"
+          "sha256": "01bc831b0bbb5796cbe856a99c343ea3933522c822339f21b3a343c7b8c0978a"
         }
       ],
       "origin": {
@@ -437,6 +437,7 @@
         "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-tick/A",
         "license": "own"
       },
+      "steps": true,
       "minGapMs": 500,
       "maxVoices": 1
     },
@@ -469,11 +470,11 @@
       "variants": [
         {
           "file": "masters/room-reveal/1.wav",
-          "sha256": "7815601c3d3bdd24ccd4a5d967279288003ca1da3ba6d7d56a2477e973d9c30f"
+          "sha256": "2e96974f3b8db8677dcf2986165dc2455dedc2ac66569eb71ea0458e099c8a20"
         },
         {
           "file": "masters/room-reveal/2.wav",
-          "sha256": "aa9e1d5314e2ddacf96e29fe085c4b50cebe706c88a21eeda2f07786443a6d84"
+          "sha256": "3e414ade75a1d9cb69a33cec3099dc91f7f8e9ed450f7ac1cbf42d60f95a6ab0"
         }
       ],
       "origin": {
@@ -513,6 +514,7 @@
         "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate room-someone-scored/A",
         "license": "own"
       },
+      "steps": true,
       "minGapMs": 150,
       "maxVoices": 2
     },
@@ -525,7 +527,7 @@
       "variants": [
         {
           "file": "masters/stinger-game-start/1.wav",
-          "sha256": "4685f991047b1daa9bb5a2279a8a12807af13f176cb427e352bd15aa9e7f6f74"
+          "sha256": "ce2471a84777f4d1e6eaead3182da6ae1c7ba9f1492cf568abe0c1774cb2760e"
         }
       ],
       "origin": {
@@ -565,19 +567,19 @@
       "variants": [
         {
           "file": "masters/draw-and-guess-pencil/1.wav",
-          "sha256": "0d2cc182c0e16474f273e9cd39ef91bc641c63289d544d11d2d15be9fc19929f"
+          "sha256": "30c0b231fca09a220e9c488953011b865fe2fcbb21606ec06c8d3eb2f4efac00"
         },
         {
           "file": "masters/draw-and-guess-pencil/2.wav",
-          "sha256": "dd713b548e8fbdd75d0c494cdaf36820cd247bccd81cf0edeab7180924110880"
+          "sha256": "a55eeb266519b6be3bb91a17c36c6d168e70216daa019c4bd87962c0b837e98a"
         },
         {
           "file": "masters/draw-and-guess-pencil/3.wav",
-          "sha256": "aa3910738795ab6ec630aefcda880fa2c9e67535456048f1a53691bdcae62033"
+          "sha256": "11f13695052731d0ded76f0e6549632caff4c7536ce1e070028abb7ed8c93c80"
         },
         {
           "file": "masters/draw-and-guess-pencil/4.wav",
-          "sha256": "b9de8bf006a3e1ff97182ce2e7bfe852c2902ae9a4175f4131c4f19b7c9929cc"
+          "sha256": "9b31b9bbae96e54acfa3465947f149b3db3b56ef184e37dc44b5d67d85afdec1"
         }
       ],
       "origin": {
@@ -598,11 +600,11 @@
       "variants": [
         {
           "file": "masters/draw-and-guess-clear/1.wav",
-          "sha256": "b57194bdf9395bb51496a21133ea0de8b3a2a9b96bc584f1a745a6e22306fa29"
+          "sha256": "deb7eb20cc1c824c4db94de806153eecdf61d6d35b8d1ce56add52432920904c"
         },
         {
           "file": "masters/draw-and-guess-clear/2.wav",
-          "sha256": "852ec59df52b63c2cbb3f996b8571549c13ecaf4ef523211fee234b579281cb4"
+          "sha256": "1bb19370322fe8fc8322f4bd37cb0fe0174d95f69efd0900eab81d9c26545fe9"
         }
       ],
       "origin": {
@@ -702,19 +704,19 @@
       "variants": [
         {
           "file": "masters/minesweeper-open/1.wav",
-          "sha256": "afd7864f5d7041eb48411a5aae47c7ee95e73e03d38651901083fb9300a806a3"
+          "sha256": "3f1eca42d74fa8f777082ed90f19f1a05579eb7dc322267e2305bb17bd636863"
         },
         {
           "file": "masters/minesweeper-open/2.wav",
-          "sha256": "6b50e3062225882fbcb9f7627f621e4a9fca62709ec3de5f2a1e02c917e4c0e3"
+          "sha256": "abdec68405b28983762e27eb4982577ddb6cf9b8ff64dfb1a2d93dc24e56b44a"
         },
         {
           "file": "masters/minesweeper-open/3.wav",
-          "sha256": "845ef6519f0d330affc42e84a0c1f407c24c0f96d9335087578d87f1df392097"
+          "sha256": "55b9a53348aaf4b81a30b66dc52bb1367dee061e2284273de7ba1f291373ece8"
         },
         {
           "file": "masters/minesweeper-open/4.wav",
-          "sha256": "2341a24ee424798404011c47f23fdabefeddae781283965c709081247ee98fc3"
+          "sha256": "95b63ab02d16e8e26e547d5acbc0f031b659077f285a124799143d225f74c744"
         }
       ],
       "origin": {
@@ -735,11 +737,11 @@
       "variants": [
         {
           "file": "masters/minesweeper-cascade/1.wav",
-          "sha256": "db31bf9faef6c2e7160a1b92334720de379628901fe3fa41fe9ced50f79b2bba"
+          "sha256": "0ee21e8c4bde47931e57b1dc00884c0724e82612c80149ee8a47ce8cff53ccd5"
         },
         {
           "file": "masters/minesweeper-cascade/2.wav",
-          "sha256": "801d91d3b5a3243314612ccad17823bfae64e20734b2cc8fb432ba36647f66fd"
+          "sha256": "b7c239f2c41c7b8976d197667755a81c94756c461e0d4cdce6e704fdd3cad5c3"
         }
       ],
       "origin": {
@@ -759,11 +761,11 @@
       "variants": [
         {
           "file": "masters/minesweeper-flag/1.wav",
-          "sha256": "0710d3138d6636be922b125f6b177ab446cebe41f0c6679779bdd14b9d3b8c53"
+          "sha256": "502bf252faeff3d9ca0302e42a5d9979ca0d548be8ac38e204ad4c2951917ea2"
         },
         {
           "file": "masters/minesweeper-flag/2.wav",
-          "sha256": "bbe05355736518458238ce7234df2254061557add0535a93b95acb8d327c600e"
+          "sha256": "438b107587dccf7fe46ba8fdbb107105cd4259ca2e6180f299b00db08b4c76c4"
         }
       ],
       "origin": {
@@ -783,7 +785,7 @@
       "variants": [
         {
           "file": "masters/minesweeper-unflag/1.wav",
-          "sha256": "54b28ae3bd1f1a1f8e4dd44c0d0697137852f5008910c3e3e054bef29f15e628"
+          "sha256": "3ec113005fdab89e29ddf2afcba02369c0eab15a3b169b7f00f13e9ba7f695e7"
         }
       ],
       "origin": {
@@ -823,15 +825,15 @@
       "variants": [
         {
           "file": "masters/make-24-card/1.wav",
-          "sha256": "6851ab8ab2c8c533d6bc7cd7f7eaebef7e3724378a496d4489fc4853689434ac"
+          "sha256": "0b20555232ff21a0d1eb3c7818afaf86962764ba9ee4db23aa2fb45232dd0bab"
         },
         {
           "file": "masters/make-24-card/2.wav",
-          "sha256": "129bbb8e16c0da13edf5f2e3fb08aca4b8552308f2c378fe50e3f66548930697"
+          "sha256": "1a9a287464b557b21e935f42b7f2b6603c8c564a68004d436a8b720e343d27c6"
         },
         {
           "file": "masters/make-24-card/3.wav",
-          "sha256": "32fcd696996413e23593e9a8939209907a1e7edcb752c858b2beaa940b2404e2"
+          "sha256": "d4e81aed2649f7a0e37c1131def07617e4b6e56390eb1ac001cb0857596d6fc1"
         }
       ],
       "origin": {
@@ -852,15 +854,15 @@
       "variants": [
         {
           "file": "masters/make-24-sign/1.wav",
-          "sha256": "91e876aed926cafe117687b18243a2566aecd5897b434008f22d7544d45bc993"
+          "sha256": "5c87f0237332d4f2d79f1d24d61dd36047a8e61437564a22e308402a47835169"
         },
         {
           "file": "masters/make-24-sign/2.wav",
-          "sha256": "8d0c52a3d59f4a154a4c35980d53f6c30a60550346fec4b07dc3a74581f4ae82"
+          "sha256": "c1652f3fb0dac4ce4099e21eb4c34d4dea45b9817e98b9c6e60aeb890b312c1c"
         },
         {
           "file": "masters/make-24-sign/3.wav",
-          "sha256": "ee5b6bf14e39333a1a803c1b2922c51483a71bef79eee6b2cd4387090f704203"
+          "sha256": "1bcf380e7a97dee9ce13ae95b43ab9172a949d5197897ed91cb922ece6c52a47"
         }
       ],
       "origin": {
@@ -881,11 +883,11 @@
       "variants": [
         {
           "file": "masters/make-24-combine/1.wav",
-          "sha256": "926a4e3130ee17db2a12a4cee78f8ea2beb1c27d44e87c7659b5093f2e0c299d"
+          "sha256": "1e540697e409f72bbed2d968155aef73f8dc2e7ed0b570c206d95d83ec707f3c"
         },
         {
           "file": "masters/make-24-combine/2.wav",
-          "sha256": "893de3977187547b26712df1efa85661ac89c623b157900582e0b220c3755215"
+          "sha256": "10cdbb98b64b9164c2ebfd1eb4679ee59aa1bd1173e3b527c63541f798287be4"
         }
       ],
       "origin": {
@@ -925,7 +927,7 @@
       "variants": [
         {
           "file": "masters/make-24-skip/1.wav",
-          "sha256": "fde5d73e54e9b5893abea0d3056ce882b23ced52769901a951f06f3e37c4070b"
+          "sha256": "2307e1fc45041e403806bc0589dc05402b7e24a0f4ac3e6e13634729dbd6ad24"
         }
       ],
       "origin": {
@@ -945,19 +947,19 @@
       "variants": [
         {
           "file": "masters/pairs-flip/1.wav",
-          "sha256": "5ff76d6eaa0df6d4c0d9993e15f88eb222c84db197c9dd327e2a4f2210480fd2"
+          "sha256": "bddd97a0a71fbb756513f764ea64c9a2bbef2759c702c94373fb70e2c58b3977"
         },
         {
           "file": "masters/pairs-flip/2.wav",
-          "sha256": "95a04a09ffa253f183bc0f535f93cde5aec9b72b43c264c6e724d1e220241717"
+          "sha256": "9a849afa11eaf2b291941da47301c1d39e17dea693ca45c25a946e40dfb5deea"
         },
         {
           "file": "masters/pairs-flip/3.wav",
-          "sha256": "cdb00d77156fdc84f46d7f88df9395bf41d4d7569b6076e02b01364bbc69585a"
+          "sha256": "932faba05fd551e8d137b08b592ba234b9dc197a09bb22b90575f6db2bc3c4c9"
         },
         {
           "file": "masters/pairs-flip/4.wav",
-          "sha256": "df8b29f37c577ffa96c1eca96d96e435b179690e2b920ab9c83a62a4d11fa29b"
+          "sha256": "743042590f03467391a727fd3eaa096d02ee7e4f052d905575e5d33fcbbefc79"
         }
       ],
       "origin": {
@@ -1002,6 +1004,7 @@
         "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate pairs-match/A",
         "license": "own"
       },
+      "steps": true,
       "minGapMs": 150,
       "maxVoices": 2
     },
@@ -1014,11 +1017,11 @@
       "variants": [
         {
           "file": "masters/pairs-miss/1.wav",
-          "sha256": "8f1fb9fdbf0b9e35c24652e24a63c30cd8881aaf6fe4a9c91ee22761d19b7ea4"
+          "sha256": "e14b315cd6b3e1590e2fba49a1522c524f7248b61521d40b13f2dde17aef8bd9"
         },
         {
           "file": "masters/pairs-miss/2.wav",
-          "sha256": "beb00478533911bb72522c30db631c96053420322ea7245fd03b37728ae890e0"
+          "sha256": "d8dc126e239cb59d3c8805a95cb3a2e55c19df9e5dedbab9f2cc0962cb2a9160"
         }
       ],
       "origin": {
@@ -1038,15 +1041,15 @@
       "variants": [
         {
           "file": "masters/trios-pick/1.wav",
-          "sha256": "d13c5e6b04d68c266dc28fbeb1bd13d917b03b85882c1958a9e5eaad8e4d857d"
+          "sha256": "f13a620f8424b3248d3181aeb86674efbade7c5b933d99b240df1085c7244ff8"
         },
         {
           "file": "masters/trios-pick/2.wav",
-          "sha256": "ddb2c05da7e2b94f7b168de5864c081992493ccfea4d75f914a8e24215ae66a6"
+          "sha256": "284923fbc804835437cacfcd45c6bdd885ab42b8dc23a5a5ea750d5128d1955c"
         },
         {
           "file": "masters/trios-pick/3.wav",
-          "sha256": "429d0f365418aaba7277ed6078455dc17b889cff1fd6182af927f4ada8a78d1c"
+          "sha256": "ecdb034505d852a4ded5abbc3f5e45463763d69b923148a74a971a4a8945f341"
         }
       ],
       "origin": {
@@ -1067,11 +1070,11 @@
       "variants": [
         {
           "file": "masters/trios-unpick/1.wav",
-          "sha256": "e662cd7acbe6265b342ecd69a8d47a3181457f3e3bb70c3abaaca58380572cb0"
+          "sha256": "ee94ab90494780e853a49188a2278829fe2dc19427ca6867013ad41b939d6b80"
         },
         {
           "file": "masters/trios-unpick/2.wav",
-          "sha256": "6cc1fb4a56735b89db67855ea8c06f4656c1c4335e34f51c565477040887a446"
+          "sha256": "427b552614118e8a3ca9a15801b9e947ea95baaab5967be2778b07c5bb68291e"
         }
       ],
       "origin": {
@@ -1132,19 +1135,19 @@
       "variants": [
         {
           "file": "masters/snap-take/1.wav",
-          "sha256": "b790a595332cc176cbeef46a7354b389c6c86271d5c2a72a4f81dfe976fafe0e"
+          "sha256": "e5201994716658c92a962fda7b4da8314b1584dd4d555ff5d4c5b329e1dba1ed"
         },
         {
           "file": "masters/snap-take/2.wav",
-          "sha256": "e2a71a52bc8214e37204d274629b6ae996084948047c5df5823d4ac97532c640"
+          "sha256": "36ec80033b2fa892e83692dce5cb55e9b6ebc0e0fb41aa1c92e6c26994cc3334"
         },
         {
           "file": "masters/snap-take/3.wav",
-          "sha256": "d853b9cc1950cdd7c93d40d5f9cb396f178eafad1d6c5a3341eac15c586f5da7"
+          "sha256": "5d2df6d3ea6a7e183713f6f6be84facc9cf92fc6d55982075876c27aab4b42dd"
         },
         {
           "file": "masters/snap-take/4.wav",
-          "sha256": "78ec5fc0b36b5f386d0ddf25de79e2a656061ae8b7dda56533ba2002fa793046"
+          "sha256": "d0c78d4b6a9c0caaf396058ddb4bc8d9f36aa0841677eb57df8b8dd75721647d"
         }
       ],
       "origin": {
@@ -1164,15 +1167,15 @@
       "variants": [
         {
           "file": "masters/snap-deal/1.wav",
-          "sha256": "40e7ad409ffe92b21c617045763f17ac18ce7f3991525feaa0c830c3a5ec62c1"
+          "sha256": "be447eda6df86b8fdaae91afe0c642c08747a550e1797ef745bbc3e4b4bbc624"
         },
         {
           "file": "masters/snap-deal/2.wav",
-          "sha256": "29382d5ab06010fc4abff0dbba1513b173fbcf68e22e020586ff87283565e1ba"
+          "sha256": "7828c5c4f143e6dce981a3a400bcb7413cc29d23a7983a7bad6c0699a1201206"
         },
         {
           "file": "masters/snap-deal/3.wav",
-          "sha256": "18356e4d2c9f85ae927bbed4e55a1dce1b7dd828b0246bbb9985c33ff9c30323"
+          "sha256": "464e345f72ac2c1491ec9d5e6a63055de45ad2e6fdfa74ed075473f12d7f88aa"
         }
       ],
       "origin": {
@@ -1193,15 +1196,15 @@
       "variants": [
         {
           "file": "masters/liars-dice-roll/1.wav",
-          "sha256": "b79ce9d8a04793a349a1df4fb4a75aa5f23ab444d546a7aa97a4b9be8424cb52"
+          "sha256": "30d2988375f81f0e1397f6d76184666b6f9bbc8a83001e6e6ba4775d5232dd65"
         },
         {
           "file": "masters/liars-dice-roll/2.wav",
-          "sha256": "2ef29f01d486b4c0be7995e8e1d7f0f96d9d90399a022737348c5c0b1f7bf27c"
+          "sha256": "20419e73a15a4b10587054bfac4ab8af7f03795947f07859815c406dc2151d9f"
         },
         {
           "file": "masters/liars-dice-roll/3.wav",
-          "sha256": "c97427bed3dbde927851d57c95059c0652c57804ee43251c7acfa6c90b81c0ac"
+          "sha256": "74e6876fb53e3c68312405011a262c735ec914f81f3fa8c681698486c085cdec"
         }
       ],
       "origin": {
@@ -1223,24 +1226,24 @@
       "variants": [
         {
           "file": "masters/liars-dice-bid/1.wav",
-          "sha256": "169412e80ced0b2929cfa0f9bfa68c8613e606e9798079e47db3f38144e38311"
+          "sha256": "5bc706c0a591f0b3f71ba86e77d26ea0a4f04f4aafb334783283c909ff567ff0"
         },
         {
           "file": "masters/liars-dice-bid/2.wav",
-          "sha256": "44524764cf39529f2ef3c2a7aa6d40048e37ea83fe7a991046fc2ea66ba63789"
+          "sha256": "0d8af79cf6526dcbf2c8fb131fbb055fc1f2cf05abea15397c5700006d0df6b0"
         },
         {
           "file": "masters/liars-dice-bid/3.wav",
-          "sha256": "276f81db5c84c2f1f2cbed03451d6a327304dd8525ab6a13fc63ebd7010d75e5"
+          "sha256": "6a90804fdfbdeeb3ce204cbaa16029cfa72e66e76e1f35fa5eefe42593fd760e"
         },
         {
           "file": "masters/liars-dice-bid/4.wav",
-          "sha256": "169412e80ced0b2929cfa0f9bfa68c8613e606e9798079e47db3f38144e38311"
+          "sha256": "ace91560d0ade9cd0a1c330c0f2f8491fbcc83f834c9203c3696ae1f4e43517f"
         }
       ],
       "origin": {
         "kind": "cc0",
-        "source": "Kenney Casino Audio: chip-lay-1.ogg, chip-lay-2.ogg, chip-lay-3.ogg",
+        "source": "Kenney Casino Audio: chip-lay-1.ogg and 3 more",
         "url": "https://kenney.nl/assets/casino-audio",
         "license": "CC0-1.0"
       },
@@ -1257,7 +1260,7 @@
       "variants": [
         {
           "file": "masters/liars-dice-liar/1.wav",
-          "sha256": "5f8db0343af2946437db1d4ae9a21dd04346d96b399533ec1e24ff4efb287f9d"
+          "sha256": "22b62b2825d268c7a5cb1ce1896493174ef3ed6130cd49121cd89bf20ab1efdc"
         }
       ],
       "origin": {
@@ -1277,7 +1280,7 @@
       "variants": [
         {
           "file": "masters/liars-dice-reveal/1.wav",
-          "sha256": "37da951544d97c3224c5d953670c9bd1010c37faef1e85a5effee134d2c90844"
+          "sha256": "c4baf1e7448bb29db7a4b4162ef2f9c119e303f59c1ffcd84466fb8b75f58f5a"
         }
       ],
       "origin": {
@@ -1298,11 +1301,11 @@
       "variants": [
         {
           "file": "masters/liars-dice-lose-die/1.wav",
-          "sha256": "375bb4c338c564fa750c69fbbb5568e053c08a459fe430db806c165f554a8cb7"
+          "sha256": "fb5b3d81dab95cc7910f2b67e863fdac20d081512416706d1367dcc21806fb14"
         },
         {
           "file": "masters/liars-dice-lose-die/2.wav",
-          "sha256": "6cb872e9f232a21606d4b3e611f743628cb5d0b22eca68c5e4b4d8092a566d98"
+          "sha256": "0ad2a4b36dad4b7fc5e026d99b7fa12fa91b3df38ef2d6495b969386f9bb20f6"
         }
       ],
       "origin": {
@@ -1340,6 +1343,7 @@
         "source": "Zumpo synth, zumpo-audio/synth (tonal), candidate hush-count/A",
         "license": "own"
       },
+      "steps": true,
       "minGapMs": 500,
       "maxVoices": 1
     },
@@ -1352,19 +1356,19 @@
       "variants": [
         {
           "file": "masters/hush-card/1.wav",
-          "sha256": "9c13f01cecec22c50ed40aafbf572ac43966b1222e9f24c609daa15e3b6121ec"
+          "sha256": "dddf629ef5c8269cd33516aa4d88e7e591f69728ce030e3820dba8ab8d782d60"
         },
         {
           "file": "masters/hush-card/2.wav",
-          "sha256": "30d80ce3d5f26041ed78e40511d2ece998f7c47a0c0b16d5beb10417c3c39623"
+          "sha256": "f7134b79dbaa1377e24f34a3733213740d0e119ebf8cfbcc3d433f72ebba0829"
         },
         {
           "file": "masters/hush-card/3.wav",
-          "sha256": "69d85b2086373f40a3fa6468e460540f7b842ff7f3d6215de9839cb931f918af"
+          "sha256": "84e2609be25aeeac82928e4c672588b241cea30831a19d1573c99cd0d11ef152"
         },
         {
           "file": "masters/hush-card/4.wav",
-          "sha256": "8d7841a9ac7d74fd64527992de9183e6b95735ddefa39bf16c94cb1ba1caed57"
+          "sha256": "3bb7a14431db182f07d17d4d1f762311b33c2115db985385a1f8c4eb558bc60e"
         }
       ],
       "origin": {
@@ -1385,7 +1389,7 @@
       "variants": [
         {
           "file": "masters/hush-mistake/1.wav",
-          "sha256": "8871f6a79044ab01732efe1ef0c2faf1c3f125be533c9cd2f2077ab5f8208c00"
+          "sha256": "29974465c532cd69246cec70b2852e6c9b2ed6a7f6bc5200103690cee02d478c"
         }
       ],
       "origin": {
@@ -1445,11 +1449,11 @@
       "variants": [
         {
           "file": "masters/daily-word-tile-right/1.wav",
-          "sha256": "c03163b82e54a4dacc8e72285984e8b52c8c0fb92b42557346fc12ff1a060564"
+          "sha256": "5e9c7ae0641d5ebc5e8f3bb28343416b5435243d33c56b5031e5cb90c24c31ee"
         },
         {
           "file": "masters/daily-word-tile-right/2.wav",
-          "sha256": "0255f030567740a408bf12192f252986e83107828a020d32be16e9929f87210a"
+          "sha256": "6332d789d7f2487c29264d3227befc49812a758aa9630a5e76e5ab916661a340"
         }
       ],
       "origin": {
@@ -1469,11 +1473,11 @@
       "variants": [
         {
           "file": "masters/daily-word-tile-moved/1.wav",
-          "sha256": "ba81e54ab3e686a4f2ba2dfded1d79946b14fecd8cbd52a3f09a3cb97a6bb539"
+          "sha256": "c8ed3e616cc37b28d00e5b7441a7e4a08df961a66613d42da47c9c733def82a3"
         },
         {
           "file": "masters/daily-word-tile-moved/2.wav",
-          "sha256": "7f0ecf1cfee997a27a8a2ae8115a63056228235c649f6dfa68c0c03afd570ed2"
+          "sha256": "287a5adfd9709f36b64dac07d6ff7a13aef1c7d65e0ce06e5f466aa15cfd8120"
         }
       ],
       "origin": {
@@ -1493,11 +1497,11 @@
       "variants": [
         {
           "file": "masters/daily-word-tile-not-in/1.wav",
-          "sha256": "7a35ffd00c0db553621942d6c7a99e57b23c6f73845bc8a06c721a9dd5c548bd"
+          "sha256": "a6f350b4dc810c766594389f469517f3214c7eb92351d17c80225ad473471e61"
         },
         {
           "file": "masters/daily-word-tile-not-in/2.wav",
-          "sha256": "d00208ebfe44ad4f3f294b18f747797113495069dd1842fd246c7aea36b2702c"
+          "sha256": "4711f3795cb5227b5604b0317dcbadcdabdbc753b85661729b255e5c13020409"
         }
       ],
       "origin": {
@@ -1517,11 +1521,11 @@
       "variants": [
         {
           "file": "masters/code-breaker-peg-right/1.wav",
-          "sha256": "abce3b219a99df6a5417c078e03948477b026ee7cf2a89ad5e9565d4255ee4e5"
+          "sha256": "b2a1b7ee5fa27f6741933f21a4101b086e2dbd7192390312ebcedac5ee5936d1"
         },
         {
           "file": "masters/code-breaker-peg-right/2.wav",
-          "sha256": "8e9e59a5e3ff623d4473e042365a25744863529a7041949f426b7bf1eb1eccc2"
+          "sha256": "68d1300d528711266ed1b7a599068339599b3060df5641e96c3f3b6871eec9e0"
         }
       ],
       "origin": {
@@ -1541,11 +1545,11 @@
       "variants": [
         {
           "file": "masters/code-breaker-peg-moved/1.wav",
-          "sha256": "f04c24f1f84e71cf110d31dadf813f2542554cef3400d3fe3edef0651d9ed352"
+          "sha256": "179ad8d058366654760c89c7606d5d84f2b2e4aa146d0eed2b34b9c13e6205a1"
         },
         {
           "file": "masters/code-breaker-peg-moved/2.wav",
-          "sha256": "eeda8e9f59e8dae848c14f870fb1ce0b3136da2b269a57fd0e9534256667a9fe"
+          "sha256": "3010f92f29d2410208ab4e587becec5ce7918cdb5c91f75275c55d6d726b4921"
         }
       ],
       "origin": {
@@ -1565,11 +1569,11 @@
       "variants": [
         {
           "file": "masters/code-breaker-peg-not-in/1.wav",
-          "sha256": "07abe0301d99c4bbf9d70853c022d78f7b416f47b456938fc0aad7f771f03a15"
+          "sha256": "d0e1e66bb341cc82692dc4fc6dc8553b68abd647c8ac9c9bbb536f25b07cb26e"
         },
         {
           "file": "masters/code-breaker-peg-not-in/2.wav",
-          "sha256": "a70f3efee244f5a366a83a1e7aad5eba1ff091e14b2735a31cce6ab321486d6d"
+          "sha256": "e3641eb4189248fc7448432f106f2b5e521d849f46d60a0fb719677770fb522a"
         }
       ],
       "origin": {
@@ -1589,15 +1593,15 @@
       "variants": [
         {
           "file": "masters/code-breaker-note/1.wav",
-          "sha256": "b7dd1648e216d88be28fd01b35f1414cb2b540ae2915aa12695c3ec51f4d3619"
+          "sha256": "0e39d888f9ffd03e36013cd2807149d058b42838212dd28591f6b54b0aa71143"
         },
         {
           "file": "masters/code-breaker-note/2.wav",
-          "sha256": "758a07af7c238b5ef35d3e10aa754ecc19f12ad2c2943087ea35c994932877f6"
+          "sha256": "038eadd313e1b98ba8dd9399dab8ba4b7c4cb919a232e0c7493bed27bc65f0e7"
         },
         {
           "file": "masters/code-breaker-note/3.wav",
-          "sha256": "e470d22db8fb7269b93af673b29fce43b3542d7312b83acee39841207ce67731"
+          "sha256": "43b90e901388ff2b587a2534f487b237d25d5fef36dd868679f822248b395ec1"
         }
       ],
       "origin": {
@@ -1618,7 +1622,7 @@
       "variants": [
         {
           "file": "masters/doodle-chain-pass/1.wav",
-          "sha256": "ead964c07b598d7b99629dcd573b8d9ade888247f8034a16194b36a928b12363"
+          "sha256": "34f78c75fec2468da5755883dbb9b4948cacdbdd67ef6a7e25ea8a6ee57bc3a8"
         }
       ],
       "origin": {
@@ -1638,15 +1642,15 @@
       "variants": [
         {
           "file": "masters/doodle-chain-page/1.wav",
-          "sha256": "3bdfab14bbac208bf32a13ef2915fee9e7cd0dd9a3d141233c3f0223ca372de0"
+          "sha256": "0135f53adfc131c47e462bda8b1f7af08c2596794a77ac4d41e71e3ceac555a6"
         },
         {
           "file": "masters/doodle-chain-page/2.wav",
-          "sha256": "f2137186d078d2a6142831daf11cb70d33dba5eeff5ee1bed1041c261a1f1455"
+          "sha256": "23fecc42789f4dfe8357502cdd7200dd0bf89fb9efccde1a39d74b2c9dbbf3aa"
         },
         {
           "file": "masters/doodle-chain-page/3.wav",
-          "sha256": "8005f1fc29b4e5d629b997cd72979dde762a47c697467e82a26d886752669eaa"
+          "sha256": "85df5b2cd06916534faa7ebea16d7e72023f0340c8c74befc431090bf45a0ba9"
         }
       ],
       "origin": {
@@ -1695,7 +1699,7 @@
       "variants": [
         {
           "file": "masters/doodle-chain-album/1.wav",
-          "sha256": "728a60f67257f86f3483bd01cc21f2086423ea475e14477f849abe8e205f8c4d"
+          "sha256": "1088212c5a9ebf4b27b69fda376231b62c674a04b3d2a64855991a6cd300bcb8"
         }
       ],
       "origin": {
@@ -1716,11 +1720,11 @@
       "variants": [
         {
           "file": "masters/gomoku-faint/1.wav",
-          "sha256": "b653c249e601856246c8768f1d1dc1f3b2ef0f93a8c8e2c302406d905d5da519"
+          "sha256": "27f819ce8fdeb53644d188d3edb8cf19632ed1b360465fc00c6e483af0d02118"
         },
         {
           "file": "masters/gomoku-faint/2.wav",
-          "sha256": "af10bfe6c39cca854c7a2e4df7fbb3ac680ee7c9f1e017619a7fd5c5a12adfe8"
+          "sha256": "35fdfe394076543784f5e47933ae049c4e2f96bc1eed6fcc94518a47e1240825"
         }
       ],
       "origin": {
@@ -1741,19 +1745,19 @@
       "variants": [
         {
           "file": "masters/gomoku-stone/1.wav",
-          "sha256": "c2338b7683e0e3b85ca60df9c001b63bbbe37b74f21e83bd7411f4fddab15073"
+          "sha256": "ae8e088fafe4770d7211c391984af3736513f044a7d78a074f939480c5a845a9"
         },
         {
           "file": "masters/gomoku-stone/2.wav",
-          "sha256": "d140e1cdd5686c96dd01ccd249878e86561bac1a100c10d6f9f34d802f63c744"
+          "sha256": "daf0420473f8e128e60e34e7aa889f098a3ad97fad473c03179f1dcb309e8e03"
         },
         {
           "file": "masters/gomoku-stone/3.wav",
-          "sha256": "fb5400a2ff38e8982bb8c580991a4763126e816058a9b2fae7f9d5c4279df418"
+          "sha256": "58b392eec01c89fb80f40abee43b2915654ce3f530bf7cb50f4a4474756df4e2"
         },
         {
           "file": "masters/gomoku-stone/4.wav",
-          "sha256": "9df65b331cf28678877fc25a3433ae11426bdc99f9fb7b1be200115aaec4448c"
+          "sha256": "fb866bd5fe163bb75097fe80170128e3d515dd632f38fb620003263ca515914d"
         }
       ],
       "origin": {

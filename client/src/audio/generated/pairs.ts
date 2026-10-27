@@ -14,22 +14,22 @@ export const pairsSounds = {
       {
         m4a: new URL('./files/pairs-flip-1.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-flip-1.webm', import.meta.url).href,
-        duration: 0.357625,
+        duration: 0.389146,
       },
       {
         m4a: new URL('./files/pairs-flip-2.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-flip-2.webm', import.meta.url).href,
-        duration: 0.359708,
+        duration: 0.38625,
       },
       {
         m4a: new URL('./files/pairs-flip-3.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-flip-3.webm', import.meta.url).href,
-        duration: 0.353979,
+        duration: 0.384604,
       },
       {
         m4a: new URL('./files/pairs-flip-4.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-flip-4.webm', import.meta.url).href,
-        duration: 0.353042,
+        duration: 0.3845,
       },
     ],
   },
@@ -38,6 +38,7 @@ export const pairsSounds = {
     group: 'pairs',
     loudness: 'event',
     gainDb: 0,
+    steps: true,
     minGapMs: 150,
     maxVoices: 2,
     variants: [
@@ -79,12 +80,12 @@ export const pairsSounds = {
       {
         m4a: new URL('./files/pairs-miss-1.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-miss-1.webm', import.meta.url).href,
-        duration: 0.373021,
+        duration: 0.402625,
       },
       {
         m4a: new URL('./files/pairs-miss-2.m4a', import.meta.url).href,
         webm: new URL('./files/pairs-miss-2.webm', import.meta.url).href,
-        duration: 0.380521,
+        duration: 0.400667,
       },
     ],
   },

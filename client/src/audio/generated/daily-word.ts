@@ -13,12 +13,12 @@ export const dailyWordSounds = {
       {
         m4a: new URL('./files/daily-word-tile-moved-1.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-moved-1.webm', import.meta.url).href,
-        duration: 0.560479,
+        duration: 0.560792,
       },
       {
         m4a: new URL('./files/daily-word-tile-moved-2.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-moved-2.webm', import.meta.url).href,
-        duration: 0.558937,
+        duration: 0.562458,
       },
     ],
   },
@@ -33,12 +33,12 @@ export const dailyWordSounds = {
       {
         m4a: new URL('./files/daily-word-tile-not-in-1.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-not-in-1.webm', import.meta.url).href,
-        duration: 0.372771,
+        duration: 0.379479,
       },
       {
         m4a: new URL('./files/daily-word-tile-not-in-2.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-not-in-2.webm', import.meta.url).href,
-        duration: 0.373604,
+        duration: 0.382896,
       },
     ],
   },
@@ -53,12 +53,12 @@ export const dailyWordSounds = {
       {
         m4a: new URL('./files/daily-word-tile-right-1.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-right-1.webm', import.meta.url).href,
-        duration: 0.548667,
+        duration: 0.552438,
       },
       {
         m4a: new URL('./files/daily-word-tile-right-2.m4a', import.meta.url).href,
         webm: new URL('./files/daily-word-tile-right-2.webm', import.meta.url).href,
-        duration: 0.550937,
+        duration: 0.550979,
       },
     ],
   },

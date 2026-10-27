@@ -14,17 +14,17 @@ export const make24Sounds = {
       {
         m4a: new URL('./files/make-24-card-1.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-card-1.webm', import.meta.url).href,
-        duration: 0.313771,
+        duration: 0.347604,
       },
       {
         m4a: new URL('./files/make-24-card-2.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-card-2.webm', import.meta.url).href,
-        duration: 0.311542,
+        duration: 0.342979,
       },
       {
         m4a: new URL('./files/make-24-card-3.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-card-3.webm', import.meta.url).href,
-        duration: 0.316417,
+        duration: 0.345229,
       },
     ],
   },
@@ -39,12 +39,12 @@ export const make24Sounds = {
       {
         m4a: new URL('./files/make-24-combine-1.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-combine-1.webm', import.meta.url).href,
-        duration: 0.855125,
+        duration: 0.918833,
       },
       {
         m4a: new URL('./files/make-24-combine-2.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-combine-2.webm', import.meta.url).href,
-        duration: 0.877875,
+        duration: 0.917687,
       },
     ],
   },
@@ -60,17 +60,17 @@ export const make24Sounds = {
       {
         m4a: new URL('./files/make-24-sign-1.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-sign-1.webm', import.meta.url).href,
-        duration: 0.326729,
+        duration: 0.352479,
       },
       {
         m4a: new URL('./files/make-24-sign-2.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-sign-2.webm', import.meta.url).href,
-        duration: 0.325188,
+        duration: 0.352812,
       },
       {
         m4a: new URL('./files/make-24-sign-3.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-sign-3.webm', import.meta.url).href,
-        duration: 0.326771,
+        duration: 0.351771,
       },
     ],
   },
@@ -85,7 +85,7 @@ export const make24Sounds = {
       {
         m4a: new URL('./files/make-24-skip-1.m4a', import.meta.url).href,
         webm: new URL('./files/make-24-skip-1.webm', import.meta.url).href,
-        duration: 0.399958,
+        duration: 0.414917,
       },
     ],
   },

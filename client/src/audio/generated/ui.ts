@@ -2,51 +2,6 @@
 import type { SoundBank } from '../types';
 
 export const uiSounds = {
-  'stinger-new-best': {
-    id: 'stinger-new-best',
-    group: 'ui',
-    loudness: 'stinger',
-    gainDb: 0,
-    minGapMs: 1500,
-    maxVoices: 1,
-    variants: [
-      {
-        m4a: new URL('./files/stinger-new-best-1.m4a', import.meta.url).href,
-        webm: new URL('./files/stinger-new-best-1.webm', import.meta.url).href,
-        duration: 2.266417,
-      },
-    ],
-  },
-  'stinger-solo-complete': {
-    id: 'stinger-solo-complete',
-    group: 'ui',
-    loudness: 'stinger',
-    gainDb: 0,
-    minGapMs: 1500,
-    maxVoices: 1,
-    variants: [
-      {
-        m4a: new URL('./files/stinger-solo-complete-1.m4a', import.meta.url).href,
-        webm: new URL('./files/stinger-solo-complete-1.webm', import.meta.url).href,
-        duration: 2.184229,
-      },
-    ],
-  },
-  'stinger-solo-loss': {
-    id: 'stinger-solo-loss',
-    group: 'ui',
-    loudness: 'stinger',
-    gainDb: 0,
-    minGapMs: 1500,
-    maxVoices: 1,
-    variants: [
-      {
-        m4a: new URL('./files/stinger-solo-loss-1.m4a', import.meta.url).href,
-        webm: new URL('./files/stinger-solo-loss-1.webm', import.meta.url).href,
-        duration: 2.641396,
-      },
-    ],
-  },
   'stinger-win': {
     id: 'stinger-win',
     group: 'ui',
@@ -73,7 +28,7 @@ export const uiSounds = {
       {
         m4a: new URL('./files/ui-connection-lost-1.m4a', import.meta.url).href,
         webm: new URL('./files/ui-connection-lost-1.webm', import.meta.url).href,
-        duration: 0.975917,
+        duration: 1.017021,
       },
     ],
   },
@@ -89,12 +44,12 @@ export const uiSounds = {
       {
         m4a: new URL('./files/ui-delete-1.m4a', import.meta.url).href,
         webm: new URL('./files/ui-delete-1.webm', import.meta.url).href,
-        duration: 0.399021,
+        duration: 0.493792,
       },
       {
         m4a: new URL('./files/ui-delete-2.m4a', import.meta.url).href,
         webm: new URL('./files/ui-delete-2.webm', import.meta.url).href,
-        duration: 0.421146,
+        duration: 0.477854,
       },
     ],
   },
@@ -110,22 +65,22 @@ export const uiSounds = {
       {
         m4a: new URL('./files/ui-key-1.m4a', import.meta.url).href,
         webm: new URL('./files/ui-key-1.webm', import.meta.url).href,
-        duration: 0.338396,
+        duration: 0.337438,
       },
       {
         m4a: new URL('./files/ui-key-2.m4a', import.meta.url).href,
         webm: new URL('./files/ui-key-2.webm', import.meta.url).href,
-        duration: 0.39925,
+        duration: 0.399271,
       },
       {
         m4a: new URL('./files/ui-key-3.m4a', import.meta.url).href,
         webm: new URL('./files/ui-key-3.webm', import.meta.url).href,
-        duration: 0.395771,
+        duration: 0.382708,
       },
       {
         m4a: new URL('./files/ui-key-4.m4a', import.meta.url).href,
         webm: new URL('./files/ui-key-4.webm', import.meta.url).href,
-        duration: 0.382688,
+        duration: 0.337396,
       },
     ],
   },
@@ -176,22 +131,22 @@ export const uiSounds = {
       {
         m4a: new URL('./files/ui-tap-1.m4a', import.meta.url).href,
         webm: new URL('./files/ui-tap-1.webm', import.meta.url).href,
-        duration: 0.321354,
+        duration: 0.344458,
       },
       {
         m4a: new URL('./files/ui-tap-2.m4a', import.meta.url).href,
         webm: new URL('./files/ui-tap-2.webm', import.meta.url).href,
-        duration: 0.336708,
+        duration: 0.346625,
       },
       {
         m4a: new URL('./files/ui-tap-3.m4a', import.meta.url).href,
         webm: new URL('./files/ui-tap-3.webm', import.meta.url).href,
-        duration: 0.332188,
+        duration: 0.352208,
       },
       {
         m4a: new URL('./files/ui-tap-4.m4a', import.meta.url).href,
         webm: new URL('./files/ui-tap-4.webm', import.meta.url).href,
-        duration: 0.334833,
+        duration: 0.353312,
       },
     ],
   },
@@ -207,12 +162,12 @@ export const uiSounds = {
       {
         m4a: new URL('./files/ui-undo-1.m4a', import.meta.url).href,
         webm: new URL('./files/ui-undo-1.webm', import.meta.url).href,
-        duration: 0.380292,
+        duration: 0.391292,
       },
       {
         m4a: new URL('./files/ui-undo-2.m4a', import.meta.url).href,
         webm: new URL('./files/ui-undo-2.webm', import.meta.url).href,
-        duration: 0.372937,
+        duration: 0.400917,
       },
     ],
   },

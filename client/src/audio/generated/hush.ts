@@ -14,22 +14,22 @@ export const hushSounds = {
       {
         m4a: new URL('./files/hush-card-1.m4a', import.meta.url).href,
         webm: new URL('./files/hush-card-1.webm', import.meta.url).href,
-        duration: 0.480563,
+        duration: 0.534687,
       },
       {
         m4a: new URL('./files/hush-card-2.m4a', import.meta.url).href,
         webm: new URL('./files/hush-card-2.webm', import.meta.url).href,
-        duration: 0.482292,
+        duration: 0.530896,
       },
       {
         m4a: new URL('./files/hush-card-3.m4a', import.meta.url).href,
         webm: new URL('./files/hush-card-3.webm', import.meta.url).href,
-        duration: 0.479167,
+        duration: 0.559604,
       },
       {
         m4a: new URL('./files/hush-card-4.m4a', import.meta.url).href,
         webm: new URL('./files/hush-card-4.webm', import.meta.url).href,
-        duration: 0.515563,
+        duration: 0.555896,
       },
     ],
   },
@@ -38,6 +38,7 @@ export const hushSounds = {
     group: 'hush',
     loudness: 'event',
     gainDb: 0,
+    steps: true,
     minGapMs: 500,
     maxVoices: 1,
     variants: [
@@ -99,7 +100,7 @@ export const hushSounds = {
       {
         m4a: new URL('./files/hush-mistake-1.m4a', import.meta.url).href,
         webm: new URL('./files/hush-mistake-1.webm', import.meta.url).href,
-        duration: 0.996917,
+        duration: 1.014146,
       },
     ],
   },

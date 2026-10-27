@@ -68,12 +68,12 @@ export const roomSounds = {
       {
         m4a: new URL('./files/room-reveal-1.m4a', import.meta.url).href,
         webm: new URL('./files/room-reveal-1.webm', import.meta.url).href,
-        duration: 0.986812,
+        duration: 0.987688,
       },
       {
         m4a: new URL('./files/room-reveal-2.m4a', import.meta.url).href,
         webm: new URL('./files/room-reveal-2.webm', import.meta.url).href,
-        duration: 0.991229,
+        duration: 0.989833,
       },
     ],
   },
@@ -82,6 +82,7 @@ export const roomSounds = {
     group: 'room',
     loudness: 'event',
     gainDb: 0,
+    steps: true,
     minGapMs: 150,
     maxVoices: 2,
     variants: [
@@ -119,17 +120,17 @@ export const roomSounds = {
       {
         m4a: new URL('./files/room-stamp-1.m4a', import.meta.url).href,
         webm: new URL('./files/room-stamp-1.webm', import.meta.url).href,
-        duration: 0.462062,
+        duration: 0.543396,
       },
       {
         m4a: new URL('./files/room-stamp-2.m4a', import.meta.url).href,
         webm: new URL('./files/room-stamp-2.webm', import.meta.url).href,
-        duration: 0.462104,
+        duration: 0.547146,
       },
       {
         m4a: new URL('./files/room-stamp-3.m4a', import.meta.url).href,
         webm: new URL('./files/room-stamp-3.webm', import.meta.url).href,
-        duration: 0.461625,
+        duration: 0.543021,
       },
     ],
   },
@@ -138,6 +139,7 @@ export const roomSounds = {
     group: 'room',
     loudness: 'ui',
     gainDb: 0,
+    steps: true,
     minGapMs: 500,
     maxVoices: 1,
     variants: [
@@ -210,7 +212,7 @@ export const roomSounds = {
       {
         m4a: new URL('./files/stinger-game-start-1.m4a', import.meta.url).href,
         webm: new URL('./files/stinger-game-start-1.webm', import.meta.url).href,
-        duration: 2.47925,
+        duration: 2.479125,
       },
     ],
   },

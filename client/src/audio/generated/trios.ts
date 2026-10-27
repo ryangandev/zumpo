@@ -44,17 +44,17 @@ export const triosSounds = {
       {
         m4a: new URL('./files/trios-pick-1.m4a', import.meta.url).href,
         webm: new URL('./files/trios-pick-1.webm', import.meta.url).href,
-        duration: 0.324396,
+        duration: 0.347708,
       },
       {
         m4a: new URL('./files/trios-pick-2.m4a', import.meta.url).href,
         webm: new URL('./files/trios-pick-2.webm', import.meta.url).href,
-        duration: 0.347896,
+        duration: 0.381979,
       },
       {
         m4a: new URL('./files/trios-pick-3.m4a', import.meta.url).href,
         webm: new URL('./files/trios-pick-3.webm', import.meta.url).href,
-        duration: 0.377854,
+        duration: 0.377812,
       },
     ],
   },
@@ -70,12 +70,12 @@ export const triosSounds = {
       {
         m4a: new URL('./files/trios-unpick-1.m4a', import.meta.url).href,
         webm: new URL('./files/trios-unpick-1.webm', import.meta.url).href,
-        duration: 0.299229,
+        duration: 0.345479,
       },
       {
         m4a: new URL('./files/trios-unpick-2.m4a', import.meta.url).href,
         webm: new URL('./files/trios-unpick-2.webm', import.meta.url).href,
-        duration: 0.298875,
+        duration: 0.348375,
       },
     ],
   },

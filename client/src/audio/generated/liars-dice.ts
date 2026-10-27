@@ -24,12 +24,12 @@ export const liarsDiceSounds = {
       {
         m4a: new URL('./files/liars-dice-bid-3.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-bid-3.webm', import.meta.url).href,
-        duration: 0.175187,
+        duration: 0.178437,
       },
       {
         m4a: new URL('./files/liars-dice-bid-4.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-bid-4.webm', import.meta.url).href,
-        duration: 0.125354,
+        duration: 0.158375,
       },
     ],
   },
@@ -60,12 +60,12 @@ export const liarsDiceSounds = {
       {
         m4a: new URL('./files/liars-dice-lose-die-1.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-lose-die-1.webm', import.meta.url).href,
-        duration: 0.375458,
+        duration: 0.375229,
       },
       {
         m4a: new URL('./files/liars-dice-lose-die-2.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-lose-die-2.webm', import.meta.url).href,
-        duration: 0.448417,
+        duration: 0.448062,
       },
     ],
   },
@@ -80,7 +80,7 @@ export const liarsDiceSounds = {
       {
         m4a: new URL('./files/liars-dice-reveal-1.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-reveal-1.webm', import.meta.url).href,
-        duration: 0.384875,
+        duration: 0.384854,
       },
     ],
   },
@@ -96,17 +96,17 @@ export const liarsDiceSounds = {
       {
         m4a: new URL('./files/liars-dice-roll-1.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-roll-1.webm', import.meta.url).href,
-        duration: 0.899042,
+        duration: 0.898958,
       },
       {
         m4a: new URL('./files/liars-dice-roll-2.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-roll-2.webm', import.meta.url).href,
-        duration: 0.897833,
+        duration: 0.89775,
       },
       {
         m4a: new URL('./files/liars-dice-roll-3.m4a', import.meta.url).href,
         webm: new URL('./files/liars-dice-roll-3.webm', import.meta.url).href,
-        duration: 0.898958,
+        duration: 0.898937,
       },
     ],
   },

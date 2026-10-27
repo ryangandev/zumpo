@@ -14,12 +14,12 @@ export const gomokuSounds = {
       {
         m4a: new URL('./files/gomoku-faint-1.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-faint-1.webm', import.meta.url).href,
-        duration: 0.301646,
+        duration: 0.346813,
       },
       {
         m4a: new URL('./files/gomoku-faint-2.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-faint-2.webm', import.meta.url).href,
-        duration: 0.349646,
+        duration: 0.381729,
       },
     ],
   },
@@ -50,22 +50,22 @@ export const gomokuSounds = {
       {
         m4a: new URL('./files/gomoku-stone-1.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-stone-1.webm', import.meta.url).href,
-        duration: 0.438708,
+        duration: 0.506229,
       },
       {
         m4a: new URL('./files/gomoku-stone-2.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-stone-2.webm', import.meta.url).href,
-        duration: 0.537021,
+        duration: 0.505083,
       },
       {
         m4a: new URL('./files/gomoku-stone-3.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-stone-3.webm', import.meta.url).href,
-        duration: 0.508229,
+        duration: 0.481229,
       },
       {
         m4a: new URL('./files/gomoku-stone-4.m4a', import.meta.url).href,
         webm: new URL('./files/gomoku-stone-4.webm', import.meta.url).href,
-        duration: 0.431542,
+        duration: 0.506229,
       },
     ],
   },
