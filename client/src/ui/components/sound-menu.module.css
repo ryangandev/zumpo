@@ -7,10 +7,10 @@
   width: 320px;
   padding: var(--zumpo-space-32);
   border-radius: var(--zumpo-radius-24);
+  border: 1px solid var(--zumpo-line);
   background: var(--zumpo-paper);
-  box-shadow:
-    inset 0 0 0 1px var(--zumpo-line),
-    var(--zumpo-shadow-menu-lift);
+  /* A border, as Figma's stroke takes a pixel inside the padding: 146 tall. */
+  box-shadow: var(--zumpo-shadow-menu-lift);
   outline: none;
   transition:
     opacity 150ms ease-out,
