@@ -195,8 +195,8 @@ const BID_TEXT =
 const CLOCK_CELLS =
   'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.';
 
-const HEART_COUNT =
-  'A pressed control never changes size: the count is at least one digit wide (1ch), so 1 and 2 take one width; Figma hugs the sample 2.';
+const FOCUS_RING =
+  'Figma draws the field focused, its 2 px ring counted in layout; focus never changes a control’s size in code.';
 
 function Family({
   name,
@@ -494,7 +494,7 @@ export default function Gallery() {
           variant="Tone=Info"
           deviation={CLOCK_CELLS}
         >
-          <Countdown seconds={28} label="to a hint" deadline={false} />
+          <Countdown seconds={15} label="to pick" deadline={false} />
         </Specimen>
       </Family>
 
@@ -1468,7 +1468,6 @@ export default function Gallery() {
             family="heart-button"
             variant={`State=${cap(state)}`}
             label={cap(state)}
-            deviation={state === 'count' ? undefined : HEART_COUNT}
           >
             <HeartButton count={2} state={state} onPress={noop} />
           </Specimen>
@@ -1520,6 +1519,7 @@ export default function Gallery() {
               family="chain-composer"
               variant={`State=${done ? 'Done' : 'Editing'}, Layout=${cap(layout)}`}
               width={layout === 'desktop' ? 600 : 310}
+              deviation={done ? undefined : FOCUS_RING}
             >
               <ChainComposer
                 label="Your first line"

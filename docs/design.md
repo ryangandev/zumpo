@@ -252,7 +252,7 @@ Code differs from Figma on purpose in a few places:
 - The chat's send button and the brush swatches keep Figma's drawn size, but take a tap from an invisible area 44 px tall around them, the size a thumb needs; on a phone the swatches sit 8 px apart, so there the area grows only up and down.
   So do the room tabs, the filter chips, the footer's languages and the viewer's avatar.
 - Hover and focus never change a control's size; Figma's hover variants are wider only because strokes count in its auto layout.
-- A pressed control never changes size either: the Heart button's count is at least one digit wide (`min-width: 1ch`), so a 1 and a 2 take one width, where Figma's Off and On variants hug the sample's 2.
+  So is a focused field in Figma, 2 px taller with its ring, as in the Chain composer's Editing variants.
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
 - On a phone Draw & Guess's sheet keeps the bitmap's 798 × 598 proportions, so Figma's 348 px tall Canvas (MO08, MO09), which is only a box that fills the height left, is 263 px tall at 390 px wide.
   The sheet stands 12 px under the toolbar or turn bar, as Figma draws it, and the height it does not need is under it, above the chat lines; centred, it left up to about 115 px over it.
@@ -303,7 +303,6 @@ Code differs from Figma on purpose in a few places:
   The same compact Gomoku seat, and its short note, is used beside the board on a short wide screen.
 - A phone's Gomoku table is spaced close, 12 px under the board and 8 px over the seats, so a solo board in play is the full 320 px on a 360 by 640 phone; a room's, under its tabs, is 275 px.
 - Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
-  On a phone the Chain composer's done row is the Notice beside a Keep editing that shows only its pencil, not the Phone variant's Notice over a full-width Keep editing, which made the row 84 px taller than Done's and moved the drawing above it.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
@@ -320,7 +319,6 @@ Code differs from Figma on purpose in a few places:
   Where a board is scaled to the room it has, Figma draws the size the code lands on at 390 x 844; Code Breaker's board is the Compact one down to 0.75 and the Small one below that.
 - A phone's turn bar scales its main line down to fit one line, which Figma cannot draw: DC16 to DC18 and DW12 show the ellipsis where the code shows the whole line smaller.
 - Minesweeper's round results lie over the foot of the board on a phone (MO13, MO19), up to 60% of the stage on the Menu lift shadow, as Draw & Guess's do; the minefield keeps its place under them.
-- A phone's Doodle Chain composer keeps the done row's 72 px under the field in both of its states, so Figma's composer is 24 px taller there than the Chain composer component, whose row is 48.
 - Code Breaker's daily results (CB17) are a solo page on a phone: the result card, then the turn bar, board and the two panels, with no tabs and without the Guesses row the room's Final scores card has.
 
 - A short screen wider than a phone, 500 px tall or less, as a phone turned on its side is, takes the Turn bar's Phone row, which Figma draws only at phone widths, and a game in play sits 12 px from the header.
