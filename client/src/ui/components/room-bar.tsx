@@ -133,10 +133,12 @@ export function RoomBar({
 }
 
 /**
- * Below this a game's name scaled to fit the Phone bar is too small to read,
- * and it ends in an ellipsis at this size instead.
+ * The smallest a game's name is scaled in the Phone bar: 24 px down to about
+ * 14, still larger than the line under it. Draw & Guess, the longest name,
+ * needs it at 320 px, the narrowest phone; past it the name ends in an
+ * ellipsis instead.
  */
-const SMALLEST_NAME = 0.75;
+const SMALLEST_NAME = 0.6;
 
 /**
  * The Phone bar's game name, scaled down to the width its three icon buttons
