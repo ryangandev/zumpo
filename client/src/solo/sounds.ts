@@ -10,6 +10,7 @@ import {
   type SteppedId,
 } from '../audio';
 import { soloSounds } from '../audio/generated/solo';
+import { uiSounds } from '../audio/generated/ui';
 
 /*
  * What a game on your own sounds like: what the player does, played in their
@@ -20,17 +21,25 @@ import { soloSounds } from '../audio/generated/solo';
  * however the game stood. How and why: docs/architecture.md#sounds-on-your-own.
  */
 
-/** The solo bank: how a game on your own ends. Every solo bank holds it. */
-export const SOLO_BANK = { ...soloSounds } satisfies SoundBank;
+/**
+ * The solo bank: how a game on your own ends, and the shell's win, for a
+ * game against bots or the computer. Every solo bank holds it.
+ */
+export const SOLO_BANK = {
+  ...soloSounds,
+  'stinger-win': uiSounds['stinger-win'],
+} satisfies SoundBank;
 
 /**
  * How a game on your own ended: finished, finished with a new best on this
- * device, or lost (a mine, a code missed).
+ * device, won against bots or the computer, or lost (a mine, a code missed,
+ * out of dice).
  */
-export type SoloEnd = 'complete' | 'best' | 'loss';
+export type SoloEnd = 'complete' | 'best' | 'win' | 'loss';
 
 const STINGER = {
   complete: 'stinger-solo-complete',
+  win: 'stinger-win',
   best: 'stinger-new-best',
   loss: 'stinger-solo-loss',
 } as const satisfies Record<SoloEnd, keyof typeof SOLO_BANK>;

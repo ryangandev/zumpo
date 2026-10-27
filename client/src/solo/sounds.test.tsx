@@ -67,6 +67,7 @@ describe('a game on your own, heard', () => {
     const ends: Record<SoloEnd, string> = {
       complete: 'stinger-solo-complete',
       best: 'stinger-new-best',
+      win: 'stinger-win',
       loss: 'stinger-solo-loss',
     };
     for (const [end, stinger] of Object.entries(ends)) {
