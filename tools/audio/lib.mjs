@@ -23,6 +23,8 @@ export function repoPaths(repo = REPO) {
     outDir,
     filesDir: path.join(outDir, 'files'),
     manifest: path.join(outDir, 'manifest.json'),
+    // Where a build stages the next generated folder; never inside client/.
+    staging: path.join(repo, '.audio-build'),
   };
 }
 
@@ -73,17 +75,17 @@ export const sha256 = (bytes) =>
 export const fileSha256 = (file) => sha256(fs.readFileSync(file));
 
 /**
- * What an encoded variant was made from and how. A variant whose key has not
- * changed is not encoded again, so tuning `gainDb` or `minGapMs` needs no
- * masters and no ffmpeg.
+ * What an encoded variant was made from and how: the master and every
+ * parameter of the processing, and nothing the build only checks (a class's
+ * length and size limits). A variant whose key has not changed is not encoded
+ * again, so tuning `gainDb` or `minGapMs` needs no masters and no ffmpeg.
  */
 export function encodeKey({ sourceSha256, loudness, channels }) {
   return sha256(
     JSON.stringify({
       pipeline: PIPELINE,
       sourceSha256,
-      loudness,
-      target: CLASSES[loudness],
+      targetLufs: CLASSES[loudness].targetLufs,
       channels,
       bitrates: BITRATES[channels],
       ceilings: [TRUE_PEAK_CEILING, PRE_ENCODE_CEILING],
@@ -174,6 +176,13 @@ export function validateSounds(doc, schema) {
     const where = `audio/sounds.json: ${sound.id}`;
     if (ids.has(sound.id)) problems.push(`${where} is declared twice`);
     ids.add(sound.id);
+    // The production build refuses files named test-*, so a fixture's name
+    // is what keeps it out.
+    if ((sound.group === 'test') !== sound.id.startsWith('test-')) {
+      problems.push(
+        `${where}: a sound is in the test group exactly when its id starts with test-`,
+      );
+    }
     const files = new Set();
     for (const variant of sound.variants) {
       if (!variant.file.startsWith(`masters/${sound.id}/`)) {
@@ -193,6 +202,13 @@ export function validateSounds(doc, schema) {
       );
     }
   }
+  // "Your turn" is the one sound a hidden page may make.
+  const hidden = doc.sounds.filter((sound) => sound.hiddenTab);
+  if (hidden.length > 1) {
+    problems.push(
+      `audio/sounds.json: only one sound may play in a hidden tab, not ${hidden.map((sound) => sound.id).join(', ')}`,
+    );
+  }
   return problems;
 }
 
@@ -201,6 +217,7 @@ function specOf(sound, variants) {
   const spec = {
     id: sound.id,
     group: sound.group,
+    loudness: sound.loudness,
     gainDb: sound.gainDb,
   };
   for (const key of ['pitchSpread', 'minGapMs', 'maxVoices', 'hiddenTab']) {
@@ -297,6 +314,13 @@ export function serializeManifest(manifest) {
   return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
+/** Whether a file begins as its container does: MP4's `ftyp` box, WebM's EBML header. */
+const CONTAINERS = {
+  m4a: (content) => content.subarray(4, 8).toString('latin1') === 'ftyp',
+  webm: (content) =>
+    content.subarray(0, 4).equals(Buffer.from([0x1a, 0x45, 0xdf, 0xa3])),
+};
+
 /** Each variant's master and its hash, in order, from either side. */
 const masters = (variants, file, sha) =>
   variants.map((variant) => `${variant[file]} ${variant[sha]}`);
@@ -375,14 +399,38 @@ export function checkGenerated(repo = REPO) {
         );
       }
       for (const format of ['m4a', 'webm']) {
-        const { file, sha256: expected } = variant.files[format];
+        const { file, sha256: expected, bytes } = variant.files[format];
         expectedFiles.add(file);
         const full = path.join(paths.filesDir, file);
+        const named = outputName(id, variant.source, format);
+        if (file !== named) {
+          problems.push(
+            `"${id}" ${variant.source} is in ${file}, not ${named}. ${FIX}`,
+          );
+        }
         if (!fs.existsSync(full)) {
           problems.push(`generated/files/${file} is missing. ${FIX}`);
-        } else if (fileSha256(full) !== expected) {
+          continue;
+        }
+        const content = fs.readFileSync(full);
+        if (sha256(content) !== expected) {
           problems.push(
             `generated/files/${file} differs from the build; it was edited or replaced. ${FIX}`,
+          );
+        } else if (!CONTAINERS[format](content)) {
+          problems.push(
+            `generated/files/${file} is not ${format} audio. ${FIX}`,
+          );
+        }
+        if (bytes !== content.length) {
+          problems.push(
+            `generated/files/${file} is ${content.length} bytes; the manifest says ${bytes}. ${FIX}`,
+          );
+        }
+        const limit = CLASSES[sound.loudness].maxBytes;
+        if (content.length > limit) {
+          problems.push(
+            `generated/files/${file} is ${content.length} bytes; a ${sound.loudness} file is at most ${limit}. ${FIX}`,
           );
         }
       }

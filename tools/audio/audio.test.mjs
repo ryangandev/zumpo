@@ -4,6 +4,7 @@
 
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -63,6 +64,10 @@ const sound = (over = {}) => ({
   origin: { kind: 'synth', source: 'test', license: 'own' },
   ...over,
 });
+
+const variantsOf = (id) => [
+  { file: `masters/${id}/1.wav`, sha256: 'a'.repeat(64) },
+];
 
 const validateOrigin = (origin) =>
   validateSounds({ sounds: [sound({ origin })] }, schema);
@@ -175,6 +180,31 @@ describe('validateSounds', () => {
       'audio/sounds.json: tap is declared twice',
     ]);
   });
+
+  it('keeps test- ids and the test group together', () => {
+    const doc = {
+      sounds: [
+        sound({ id: 'test-tap', variants: variantsOf('test-tap') }),
+        sound({ id: 'tap', group: 'test' }),
+      ],
+    };
+    assert.deepEqual(validateSounds(doc, schema), [
+      'audio/sounds.json: test-tap: a sound is in the test group exactly when its id starts with test-',
+      'audio/sounds.json: tap: a sound is in the test group exactly when its id starts with test-',
+    ]);
+  });
+
+  it('allows one sound in a hidden tab, not two', () => {
+    const doc = {
+      sounds: [
+        sound({ id: 'turn', hiddenTab: true, variants: variantsOf('turn') }),
+        sound({ id: 'ping', hiddenTab: true, variants: variantsOf('ping') }),
+      ],
+    };
+    assert.deepEqual(validateSounds(doc, schema), [
+      'audio/sounds.json: only one sound may play in a hidden tab, not turn, ping',
+    ]);
+  });
 });
 
 describe('checkGenerated', () => {
@@ -256,6 +286,40 @@ describe('checkGenerated', () => {
     assert.deepEqual(checkGenerated(repo), [
       `"${id}" was built from other masters than sounds.json declares. Run \`npm run audio:build\` where the masters are (ZUMPO_AUDIO_DIR), and commit what it writes.`,
     ]);
+  });
+
+  it('fails on a misnamed file, one that is not audio, and a wrong size', () => {
+    // Each consistent with the manifest's hashes, as a careful hand edit is.
+    const { repo, paths } = copyOfRepo();
+    const manifest = readJson(paths.manifest);
+    const [id, built] = Object.entries(manifest.sounds)[0];
+    const [one, two] = built.variants;
+    const renamed = `${id}-9.m4a`;
+    fs.renameSync(
+      path.join(paths.filesDir, one.files.m4a.file),
+      path.join(paths.filesDir, renamed),
+    );
+    one.files.m4a.file = renamed;
+    const junk = Buffer.from('not audio at all');
+    fs.writeFileSync(path.join(paths.filesDir, one.files.webm.file), junk);
+    one.files.webm.sha256 = createHash('sha256').update(junk).digest('hex');
+    one.files.webm.bytes = junk.length;
+    two.files.m4a.bytes += 1;
+    fs.writeFileSync(paths.manifest, serializeManifest(manifest));
+    for (const [name, content] of renderModules(manifest)) {
+      fs.writeFileSync(path.join(paths.outDir, name), content);
+    }
+    const problems = checkGenerated(repo);
+    const has = (text) =>
+      assert.ok(
+        problems.some((p) => p.includes(text)),
+        text,
+      );
+    has(`"${id}" ${one.source} is in ${renamed}, not ${id}-1.m4a`);
+    has(`generated/files/${one.files.webm.file} is not webm audio`);
+    has(
+      `generated/files/${two.files.m4a.file} is ${two.files.m4a.bytes - 1} bytes; the manifest says ${two.files.m4a.bytes}`,
+    );
   });
 
   it('fails when a generated module is stale or stray', () => {
@@ -362,7 +426,13 @@ describe(
       const first = buildAudio({ repo, root });
       const [variant] = first.manifest.sounds.tap.variants;
       assert.equal(variant.frames, 9600);
-      assert.ok(Math.abs(variant.loudness.momentaryMax - -22) < 0.5);
+      for (const format of ['m4a', 'webm']) {
+        assert.ok(Math.abs(variant.loudness.momentaryMax[format] - -22) < 0.5);
+        assert.equal(
+          variant.loudness.appliedGainDb[format],
+          variant.loudness.gainDb,
+        );
+      }
       assert.ok(variant.loudness.truePeak.m4a <= -1);
       assert.ok(variant.loudness.truePeak.webm <= -1);
       assert.deepEqual(fs.readdirSync(paths.filesDir).toSorted(), [
@@ -408,7 +478,34 @@ describe(
       const [variant] = manifest.sounds.tap.variants;
       assert.ok(variant.loudness.truePeak.m4a <= -1);
       assert.ok(variant.loudness.truePeak.webm <= -1);
+      for (const format of ['m4a', 'webm']) {
+        assert.ok(
+          variant.loudness.appliedGainDb[format] <= variant.loudness.gainDb,
+        );
+      }
       assert.match(warnings[0], /under its target, held back by its true peak/);
+    });
+
+    it('takes a soft lead-in for sound, not silence, and leaves no staging behind', () => {
+      // 0.1 s at about -30 dBFS before the hit: quiet, but not silence.
+      const { repo, root, paths } = project((dir) => [
+        sound({
+          variants: [
+            {
+              file: 'masters/tap/1.wav',
+              sha256: master(
+                dir,
+                'masters/tap/1.wav',
+                `if(lt(t,0.1),0.03*sin(2*PI*660*t),${BLIP.replaceAll('t', '(t-0.1)')})`,
+                0.3,
+              ),
+            },
+          ],
+        }),
+      ]);
+      buildAudio({ repo, root });
+      assert.deepEqual(checkGenerated(repo), []);
+      assert.equal(fs.existsSync(paths.staging), false);
     });
 
     it('refuses a master that is too long, untrimmed, not 48 kHz or changed', () => {

@@ -17,7 +17,8 @@
     "**/build",
     "**/dist",
     "client/src/ui/generated",
-    "client/src/audio/generated"
+    "client/src/audio/generated",
+    ".audio-build"
   ],
   "overrides": [
     {

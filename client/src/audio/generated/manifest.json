@@ -32,7 +32,7 @@
         {
           "source": "masters/test-blip/1.wav",
           "sourceSha256": "5790770d72e1f86849129983eadd41c183ccbd0b37dcee627699356c9be5416c",
-          "encodeKey": "8aff850c9026269d424ebc825e86dd3cd3dc6203742c70b53fe0dd752d64b233",
+          "encodeKey": "f9a9885211bc1ba65b89646850e2469a87b2b67ec9b4c922f7e287eb1413aed1",
           "encoder": "ffmpeg 9.0.2 aac_at, libopus",
           "channels": 1,
           "frames": 10560,
@@ -41,7 +41,14 @@
             "masterMomentaryMax": -21.3,
             "masterTruePeak": -6.7,
             "gainDb": -0.7,
-            "momentaryMax": -22,
+            "appliedGainDb": {
+              "m4a": -0.7,
+              "webm": -0.7
+            },
+            "momentaryMax": {
+              "m4a": -22,
+              "webm": -22
+            },
             "truePeak": {
               "m4a": -7.4,
               "webm": -7.4
@@ -63,7 +70,7 @@
         {
           "source": "masters/test-blip/2.wav",
           "sourceSha256": "223d131851e9267748c17bacf86bb731a4a6dea2c0f4e25ca11d6b0efb08a47c",
-          "encodeKey": "2b68647fdf62468e8cc8616a2092d3614c6ee49695717012f87da1a306a70c21",
+          "encodeKey": "b64b96b7aa28e4c50a0ea376253c5b58799f2c1727f0bfd75f9ce4a55b3d03f7",
           "encoder": "ffmpeg 9.0.2 aac_at, libopus",
           "channels": 1,
           "frames": 10560,
@@ -72,7 +79,14 @@
             "masterMomentaryMax": -20.9,
             "masterTruePeak": -6.7,
             "gainDb": -1.1,
-            "momentaryMax": -22,
+            "appliedGainDb": {
+              "m4a": -1.1,
+              "webm": -1.1
+            },
+            "momentaryMax": {
+              "m4a": -22,
+              "webm": -22
+            },
             "truePeak": {
               "m4a": -7.8,
               "webm": -7.7

@@ -44,10 +44,16 @@ const RATE = 48000;
 const ACCEPTED_CODECS = ['pcm_s24le', 'pcm_f32le'];
 /** An AAC stream ends on a whole 1024-sample frame. */
 const MAX_EXTRA_FRAMES = 1024;
-/** How far the decoded start may drift from the master's, in samples. */
-const MAX_ONSET_DRIFT = 4;
+/**
+ * How far the decoded start may drift from the master's, in samples (2 ms):
+ * a lossy codec smears a transient by a few dozen, while a priming delay the
+ * encoder failed to trim is hundreds (Opus 312, AAC 1024 or more).
+ */
+const MAX_ONSET_DRIFT = 96;
 /** Leading silence past this means the master was not trimmed. */
 const MAX_LEAD_SECONDS = 0.02;
+/** Quieter than this (-50 dBFS) counts as silence before the sound. */
+const SILENCE_FLOOR = 10 ** (-50 / 20);
 
 /** A build that stopped for a reason a person can fix. */
 export class BuildError extends Error {}
@@ -132,11 +138,20 @@ function samples(file) {
   );
 }
 
-/** The first sample at a tenth of the peak: where the sound starts. */
+/**
+ * The first sample at a tenth of the peak: where the sound starts, whatever
+ * gain it was given, which lines an encoded file up with its master.
+ */
 function onset(data) {
   let peak = 0;
   for (const x of data) peak = Math.max(peak, Math.abs(x));
   return data.findIndex((x) => Math.abs(x) >= peak / 10);
+}
+
+/** The first sample above -50 dBFS: what comes before it is silence. */
+function firstSound(data) {
+  const index = data.findIndex((x) => Math.abs(x) >= SILENCE_FLOOR);
+  return index === -1 ? data.length : index;
 }
 
 /** The loudest 400 ms window (LUFS) and the true peak (dBTP). */
@@ -233,12 +248,13 @@ function buildVariant({ sound, variant, root, work, encoder }) {
       `${label}: is ${seconds.toFixed(2)} s; a ${sound.loudness} sound is at most ${target.maxSeconds} s.`,
     );
   }
-  const sourceOnset = onset(source);
-  if (sourceOnset / RATE > MAX_LEAD_SECONDS) {
+  const lead = firstSound(source) / RATE;
+  if (lead > MAX_LEAD_SECONDS) {
     throw new BuildError(
-      `${label}: starts after ${(sourceOnset / RATE).toFixed(3)} s of silence; trim the master.`,
+      `${label}: starts after ${lead.toFixed(3)} s of silence; trim the master.`,
     );
   }
+  const sourceOnset = onset(source);
   const measured = loudness(master);
   const warnings = [];
   let gainDb = target.targetLufs - measured.momentaryMax;
@@ -252,6 +268,7 @@ function buildVariant({ sound, variant, root, work, encoder }) {
 
   const files = {};
   const decoded = {};
+  const applied = {};
   for (const format of ['m4a', 'webm']) {
     const name = outputName(sound.id, variant.file, format);
     const out = path.join(work, name);
@@ -262,6 +279,7 @@ function buildVariant({ sound, variant, root, work, encoder }) {
       const check = loudness(out);
       if (check.truePeak <= TRUE_PEAK_CEILING) {
         decoded[format] = check;
+        applied[format] = gain;
         break;
       }
       if (attempt === 2) {
@@ -306,8 +324,14 @@ function buildVariant({ sound, variant, root, work, encoder }) {
       loudness: {
         masterMomentaryMax: round(measured.momentaryMax),
         masterTruePeak: round(measured.truePeak),
+        // The gain the class asked for, and what each file was given once
+        // its true peak was checked.
         gainDb: round(gainDb),
-        momentaryMax: round(decoded.m4a.momentaryMax),
+        appliedGainDb: { m4a: round(applied.m4a), webm: round(applied.webm) },
+        momentaryMax: {
+          m4a: round(decoded.m4a.momentaryMax),
+          webm: round(decoded.webm.momentaryMax),
+        },
         truePeak: {
           m4a: round(decoded.m4a.truePeak),
           webm: round(decoded.webm.truePeak),
@@ -336,20 +360,27 @@ function reusable(previous, variant, sound, filesDir) {
 }
 
 /**
- * Puts the folder `next` where `dir` is. A build stopped between the two
- * renames leaves the old folder beside it, which the next build puts back.
+ * Puts the folder `next` where `dir` is, through `staging` (outside any
+ * source folder, so nothing left there is ever compiled or bundled). A build
+ * stopped between the two renames leaves the old folder there, which the
+ * next build puts back.
  */
-function swapIn(next, dir) {
-  const old = path.join(path.dirname(dir), '.generated-old');
+function swapIn(next, dir, staging) {
+  const old = path.join(staging, 'old');
   fs.rmSync(old, { recursive: true, force: true });
   if (fs.existsSync(dir)) fs.renameSync(dir, old);
+  else fs.mkdirSync(path.dirname(dir), { recursive: true });
   fs.renameSync(next, dir);
-  fs.rmSync(old, { recursive: true, force: true });
+  fs.rmSync(staging, { recursive: true, force: true });
 }
 
-function recover(dir) {
-  const old = path.join(path.dirname(dir), '.generated-old');
-  if (!fs.existsSync(dir) && fs.existsSync(old)) fs.renameSync(old, dir);
+function recover(dir, staging) {
+  const old = path.join(staging, 'old');
+  if (!fs.existsSync(dir) && fs.existsSync(old)) {
+    fs.mkdirSync(path.dirname(dir), { recursive: true });
+    fs.renameSync(old, dir);
+  }
+  fs.rmSync(staging, { recursive: true, force: true });
 }
 
 /**
@@ -389,7 +420,7 @@ export function buildAudio({
     );
   }
 
-  recover(paths.outDir);
+  recover(paths.outDir, paths.staging);
   let previous = { sounds: {} };
   try {
     previous = readJson(paths.manifest);
@@ -421,7 +452,7 @@ export function buildAudio({
         warnings.push(...built.warnings);
         const { loudness: l, files } = built.record;
         report.push(
-          `encoded  ${sound.id} ${variant.file}: ${l.masterMomentaryMax} -> ${l.momentaryMax} LUFS (gain ${l.gainDb} dB), peak ${l.truePeak.m4a} / ${l.truePeak.webm} dBTP, ${files.m4a.bytes} / ${files.webm.bytes} bytes`,
+          `encoded  ${sound.id} ${variant.file}: ${l.masterMomentaryMax} -> ${l.momentaryMax.m4a} / ${l.momentaryMax.webm} LUFS (gain ${l.appliedGainDb.m4a} / ${l.appliedGainDb.webm} dB), peak ${l.truePeak.m4a} / ${l.truePeak.webm} dBTP, ${files.m4a.bytes} / ${files.webm.bytes} bytes`,
         );
       }
       manifest.sounds[sound.id] = { declared: sound, variants };
@@ -429,7 +460,7 @@ export function buildAudio({
 
     // Everything checked out: only now does the repository change, as one
     // folder swapped for another, so a build cut short leaves the old one.
-    const next = path.join(path.dirname(paths.outDir), '.generated-next');
+    const next = path.join(paths.staging, 'next');
     fs.rmSync(next, { recursive: true, force: true });
     const nextFiles = path.join(
       next,
@@ -454,7 +485,7 @@ export function buildAudio({
       path.join(next, path.basename(paths.manifest)),
       serializeManifest(manifest),
     );
-    swapIn(next, paths.outDir);
+    swapIn(next, paths.outDir, paths.staging);
     if (rehash) {
       fs.writeFileSync(paths.sounds, `${JSON.stringify(doc, null, 2)}\n`);
     }

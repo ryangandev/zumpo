@@ -5,6 +5,7 @@ export const testSounds = {
   'test-blip': {
     id: 'test-blip',
     group: 'test',
+    loudness: 'ui',
     gainDb: 0,
     pitchSpread: 0.3,
     minGapMs: 60,
