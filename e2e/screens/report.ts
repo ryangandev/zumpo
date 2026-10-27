@@ -45,11 +45,6 @@ const CONTENT: Record<string, Note> = {
       'Figma crops the game page to its top, around the Sound menu; the capture is the whole page.',
   },
   SO06: { size: [390, 2691], reason: SOUND_HOME_CROP },
-  HU08: {
-    size: [1440, 1138],
-    reason:
-      'Every player still holds cards; Figma’s Ryan holds nothing, a shorter row.',
-  },
   DW16: {
     size: [390, 1735],
     reason:
