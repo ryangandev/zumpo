@@ -34,8 +34,9 @@ function loadFamily(file: string) {
 }
 
 export interface SpecimenProps {
-  /** The family's file in design/figma/components, without .json; leave out
-   * for a specimen Figma has no counterpart for, which is then not measured. */
+  /** The family's file in design/figma/components, without .json. A
+   * specimen without one gives `uncompared` instead: the design spec fails on
+   * a specimen with neither. */
   family?: string;
   /** The Figma variant name, such as "Style=Primary, State=Default". */
   variant?: string;
@@ -49,9 +50,9 @@ export interface SpecimenProps {
    * difference the size is shown as a known deviation, outside it as a
    * mismatch, so the reason cannot hide a regression or outlive its cause. */
   deviation?: Deviation;
-  /** Why Figma has no size for this specimen though the family has one, such
-   * as a boolean property its variants leave off: it is not compared, and
-   * the reason is in its caption. */
+  /** Why Figma has no size for this specimen, such as a boolean property
+   * every variant leaves at its default, or no component at all: it is not
+   * compared, and the reason is in its caption. A blank reason is none. */
   uncompared?: string;
   children: ReactNode;
 }
@@ -80,6 +81,7 @@ export function Specimen({
   uncompared,
   children,
 }: SpecimenProps) {
+  const reason = uncompared?.trim() || undefined;
   const slot = useRef<HTMLDivElement>(null);
   const phone = useMediaQuery(PHONE);
   const [check, setCheck] = useState<{
@@ -108,7 +110,7 @@ export function Specimen({
       if (!live) return;
       setMeasured(true);
       if (!data || !element) return;
-      if (uncompared) return;
+      if (reason) return;
       const figma = variant
         ? data.variants?.find((v) => v.name === variant)?.node
         : data.node;
@@ -119,7 +121,7 @@ export function Specimen({
     return () => {
       live = false;
     };
-  }, [family, variant, phone, uncompared]);
+  }, [family, variant, phone, reason]);
 
   const compared = check != null && !check.phone;
   const off = (dw: number, dh: number) =>
@@ -135,11 +137,12 @@ export function Specimen({
   return (
     <figure
       className={styles.specimen}
+      data-specimen
       data-family={family}
       data-variant={variant}
       data-measured={measured || undefined}
       data-compared={compared || undefined}
-      data-uncompared={uncompared}
+      data-uncompared={reason}
       data-mismatch={mismatch || undefined}
       data-deviation={(differs && !mismatch && deviation) || undefined}
     >
@@ -160,8 +163,8 @@ export function Specimen({
               : `${round(check.code.w)} × ${round(check.code.h)}${check.phone ? '' : ' ✓'}`}
           </span>
         )}
-        {uncompared && (
-          <span className={styles.deviation}>Not compared: {uncompared}</span>
+        {reason && (
+          <span className={styles.deviation}>Not compared: {reason}</span>
         )}
         {compared && deviation && (differs || mismatch) && (
           <span className={styles.deviation}>

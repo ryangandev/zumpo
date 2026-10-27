@@ -230,7 +230,7 @@ function raceRows(found: boolean): WordBoardRow[] {
     ...RACE_GUESSES,
     found
       ? { word: 'south', marks: [C, C, C, C, C] }
-      : { word: 'tooth', marks: [P, C, A, C, C] },
+      : { word: 'tooth', marks: [A, C, A, C, C] },
   ];
 }
 
@@ -494,7 +494,11 @@ export default function Gallery() {
             Puzzles
           </FilterChip>
         </Specimen>
-        <Specimen label="Filter chip field: Bots, one choice" width={320}>
+        <Specimen
+          label="Filter chip field: Bots, one choice"
+          width={320}
+          uncompared="Figma has no component for it: LD01 draws Input's label and helper around Filter chips."
+        >
           <FilterChipField
             label="Bots"
             value={bots}
@@ -543,7 +547,12 @@ export default function Gallery() {
             steps={m.games.of['draw-and-guess'].howToPlay.steps}
           />
         </Specimen>
-        <Specimen label="Dialog: steps only" width={360}>
+        <Specimen
+          family="how-to-play"
+          label="Dialog: steps only"
+          width={360}
+          uncompared="Show heading and Show goal off, which no variant of Figma's How to play draws."
+        >
           <HowToPlay
             steps={[
               ...m.games.of['draw-and-guess'].howToPlay.steps,
@@ -1821,7 +1830,11 @@ export default function Gallery() {
           </div>
         ))}
         <div className={styles.cellRow}>
-          <Specimen label="Disabled">
+          <Specimen
+            family="letter-key"
+            label="Disabled"
+            uncompared="Figma's Letter key has no Disabled state."
+          >
             <LetterKey letter="q" onPress={noop} disabled />
           </Specimen>
         </div>
@@ -2526,7 +2539,11 @@ export default function Gallery() {
             sound={sound}
           />
         </Specimen>
-        <Specimen label="Choice list: Board, in the page" width={496}>
+        <Specimen
+          label="Choice list: Board, in the page"
+          width={496}
+          uncompared="Figma has no component for it: its rows are Select options, laid out in the page."
+        >
           <ChoiceList
             label="Board"
             value={choice}
@@ -2602,9 +2619,14 @@ export default function Gallery() {
       <Family
         name="Card and dialog"
         file="card"
-        note="The focused card of name, create-room and password pages, the dialog over a room, and the panels of an empty or loading lobby. Figma's variants hold an empty Content slot, so the specimens are not measured; the screens that use them are."
+        note="The focused card of name, create-room and password pages, the dialog over a room, and the panels of an empty or loading lobby. Figma's variants hold an empty Content slot, so the specimens are not compared; the screens that use them are."
       >
-        <Specimen label="Kind=Focused" width={560}>
+        <Specimen
+          family="card"
+          label="Kind=Focused"
+          width={560}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card
             title="A little room for you."
             description="Set up your game and invite some good company."
@@ -2623,14 +2645,24 @@ export default function Gallery() {
             />
           </Card>
         </Specimen>
-        <Specimen label="Kind=Panel" width={920}>
+        <Specimen
+          family="card"
+          label="Kind=Panel"
+          width={920}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card
             kind="panel"
             title="A little quiet in here."
             description="Be the first to make a room. Bring a friend and get playing."
           />
         </Specimen>
-        <Specimen label="Kind=Panel: stats beside a game" width={344}>
+        <Specimen
+          family="card"
+          label="Kind=Panel: stats beside a game"
+          width={344}
+          uncompared="Figma's variant holds an empty Content slot; the screens that fill it are compared."
+        >
           <Card kind="panel" title="Best on this device">
             <StatList
               className={styles.stretch}
@@ -2642,7 +2674,11 @@ export default function Gallery() {
             />
           </Card>
         </Specimen>
-        <Specimen label="Kind=Dialog: opens over the page">
+        <Specimen
+          family="card"
+          label="Kind=Dialog: opens over the page"
+          uncompared="The button that opens the Dialog, which renders over the page and is not measured."
+        >
           <Button
             variant="secondary"
             icon="leave"
