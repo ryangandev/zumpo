@@ -30,6 +30,12 @@ export type SoundEvent<Id extends string, Stepped extends Id = never> = {
     key: string;
     /** Another player's doing: plays about 6 dB softer. */
     other?: boolean;
+    /**
+     * Milliseconds after the change it plays, for a run that one snapshot
+     * brings at once and that is heard one after another: a guess's pegs
+     * dropping in. Events of one sound at different delays are each heard.
+     */
+    delayMs?: number;
   } & (S extends Stepped
     ? /** Which step, from 1 (see `PlayOptions.variant`). */
       { variant: number }
@@ -51,9 +57,30 @@ export type DeriveSounds<
  */
 export type IsNewGame<State> = (prev: State, next: State) => boolean;
 
-export interface ReplayGuardOptions<State> {
+/**
+ * Which of one change's events play, given all of them, new and merged:
+ * where one sound must stand alone (`RoomLayout`'s "your turn" over a game's
+ * own). Those left out were heard all the same, and never play later.
+ */
+export type SelectSounds<Id extends string, Stepped extends Id = never> = (
+  events: SoundEvent<Id, Stepped>[],
+) => SoundEvent<Id, Stepped>[];
+
+export interface ReplayGuardOptions<
+  State,
+  Id extends string = string,
+  Stepped extends Id = never,
+> {
   /** Whether a new game began, whose keys may be heard again. */
   isNewGame: IsNewGame<State>;
+  /** Which of a change's events play; all of them without. */
+  select?: SelectSounds<Id, Stepped>;
+  /**
+   * The keys a state stands for on its own, such as whose go it is
+   * (`turn:2.5`): a baseline counts them as heard, so a state that leaves
+   * and comes back to them after arriving is silent too.
+   */
+  standing?: (state: State) => readonly string[];
   /** How many keys are remembered; the oldest go first. */
   memory?: number;
 }
@@ -82,29 +109,48 @@ export function createReplayGuard<
   Stepped extends Id = never,
 >(
   derive: DeriveSounds<State, Id, Stepped>,
-  { isNewGame, memory = MEMORY }: ReplayGuardOptions<State>,
+  {
+    isNewGame,
+    select,
+    standing,
+    memory = MEMORY,
+  }: ReplayGuardOptions<State, Id, Stepped>,
 ): ReplayGuard<State, Id, Stepped> {
   let prev: { state: State } | null = null;
   let heard: string[] = [];
+  const remember = (key: string) => {
+    if (heard.includes(key)) return false;
+    heard.push(key);
+    if (heard.length > memory) heard.shift();
+    return true;
+  };
+  // A baseline: nothing plays, and what it already stands for is heard.
+  const arrive = (state: State) => {
+    for (const key of standing?.(state) ?? []) remember(key);
+    return [];
+  };
   return {
     observe(next, resync = false) {
       const base = prev;
       prev = { state: next };
-      if (base === null) return [];
+      if (base === null) return arrive(next);
       if (Object.is(base.state, next)) return [];
       if (isNewGame(base.state, next)) heard = [];
       // What happened while away is in the new baseline; the keys heard
       // before it are kept, so a state that flips back is still silent.
-      if (resync) return [];
+      if (resync) return arrive(next);
       const out: SoundEvent<Id, Stepped>[] = [];
       for (const event of derive(base.state, next)) {
-        if (heard.includes(event.key)) continue;
-        heard.push(event.key);
-        if (heard.length > memory) heard.shift();
+        if (!remember(event.key)) continue;
         // One diff can hold several events of one sound (the server
         // coalesces a run, two players score at once): it is heard once, as
         // the viewer's own if any is, at the highest step any of them reached.
-        const same = out.findIndex((e) => e.sound === event.sound);
+        // A run heard one after another (`delayMs`) keeps each of its beats.
+        const same = out.findIndex(
+          (e) =>
+            e.sound === event.sound &&
+            (e.delayMs ?? 0) === (event.delayMs ?? 0),
+        );
         if (same === -1) {
           out.push(event);
           continue;
@@ -114,7 +160,7 @@ export function createReplayGuard<
         const variant = higher(kept.variant, event.variant);
         out[same] = variant === pick.variant ? pick : { ...pick, variant };
       }
-      return out;
+      return select ? select(out) : out;
     },
   };
 }
@@ -136,18 +182,31 @@ export function useStateSounds<
     play,
     epoch = null,
     isNewGame,
+    select,
+    standing,
   }: {
     // The steps come from `play`, the bank's own; `derive` must give them.
     derive: DeriveSounds<State, Id, NoInfer<Stepped>>;
     play: PlaySound<Id, Stepped>;
     epoch?: unknown;
     isNewGame: IsNewGame<State>;
+    select?: SelectSounds<Id, NoInfer<Stepped>>;
+    standing?: (state: State) => readonly string[];
   },
 ): void {
-  const latest = useRef({ derive, isNewGame });
+  const latest = useRef({ derive, isNewGame, select, standing });
   useEffect(() => {
-    latest.current = { derive, isNewGame };
+    latest.current = { derive, isNewGame, select, standing };
   });
+  // A run's later beats, let go with the page that asked for them.
+  const pending = useRef(new Set<ReturnType<typeof setTimeout>>());
+  useEffect(() => {
+    const timers = pending.current;
+    return () => {
+      for (const timer of timers) clearTimeout(timer);
+      timers.clear();
+    };
+  }, []);
   const track = useRef<{
     guard: ReplayGuard<State, Id, Stepped>;
     epoch: unknown;
@@ -161,6 +220,8 @@ export function useStateSounds<
         (prev, next) => latest.current.derive(prev, next),
         {
           isNewGame: (prev, next) => latest.current.isNewGame(prev, next),
+          select: (events) => latest.current.select?.(events) ?? events,
+          standing: (arrived) => latest.current.standing?.(arrived) ?? [],
         },
       ),
       epoch,
@@ -181,8 +242,17 @@ export function useStateSounds<
     seen.resync = false;
     // Each event already carries the step its sound needs.
     const playAny = play as (id: Id, options?: PlayOptions) => void;
-    for (const { sound, other, variant } of events) {
-      playAny(sound, variant === undefined ? { other } : { other, variant });
+    for (const { sound, other, variant, delayMs } of events) {
+      const options = variant === undefined ? { other } : { other, variant };
+      if (!delayMs) {
+        playAny(sound, options);
+        continue;
+      }
+      const timer = setTimeout(() => {
+        pending.current.delete(timer);
+        playAny(sound, options);
+      }, delayMs);
+      pending.current.add(timer);
     }
   }, [state, epoch, play]);
 }

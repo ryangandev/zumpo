@@ -25,6 +25,7 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
+import { finishEnd, useSoloSounds } from '../../solo/sounds';
 import {
   MiniTrio,
   TablePanel,
@@ -32,6 +33,7 @@ import {
   TriosTable,
   type PlaceView,
 } from '../table';
+import { deriveTriosSolo, TRIOS_SOLO_BANK } from '../sounds';
 import { whyNotATrio } from '../words';
 import {
   afterFlash,
@@ -144,6 +146,10 @@ function RunView({
   const clock = useSoloTime();
   const [run, setRun] = useState(() => newRun(seed, clock.now()));
   const [finish, setFinish] = useState<Finish | null>(null);
+  useSoloSounds(run, finish && finishEnd(finish), {
+    bank: TRIOS_SOLO_BANK,
+    derive: deriveTriosSolo,
+  });
   const now = useClock(run.trioStartedAt !== null && !clock.paused, clock.now);
 
   // Three cards just judged stay up for a moment, then the run goes on.

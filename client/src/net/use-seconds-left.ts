@@ -29,7 +29,8 @@ export function useSecondsLeft(
   return seconds;
 }
 
-function secondsLeft(endsInMs: number, receivedAt: number): number {
+/** The whole seconds left on a clock a snapshot sent, as of now. */
+export function secondsLeft(endsInMs: number, receivedAt: number): number {
   const elapsed = performance.now() - receivedAt;
   return Math.max(0, Math.ceil((endsInMs - elapsed) / 1000));
 }

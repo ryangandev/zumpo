@@ -18,6 +18,7 @@ import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { SnapBoard, type CardView } from './board';
+import { SNAP_SOUNDS } from './sounds';
 
 /**
  * The turn bar width under which its hints take a line of their own: the widest
@@ -53,6 +54,7 @@ export function SnapRoom() {
       stage={inGame ? <Play room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.snap.chat }}
+      sounds={SNAP_SOUNDS}
       nextBeside
     />
   );

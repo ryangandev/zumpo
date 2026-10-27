@@ -9,7 +9,10 @@ import {
   useTypingKeys,
   type Typing,
 } from '../shell/board-typing';
+import { CODE_LENGTH, checkGuess } from '../../../shared/code-breaker';
+import { useSounds } from '../audio';
 import { cycleNote, DIGIT, type Draft, type Notes } from './draft';
+import { CODE_BREAKER_PAD_BANK } from './sounds';
 import styles from './play.module.css';
 
 /** What a checked guess said, for a screen reader: "4 1 7 0: 2 in place, 2 elsewhere". */
@@ -69,9 +72,35 @@ export function PlayArea({
   const phone = useMediaQuery(PHONE);
   const [noting, setNoting] = useState(false);
   const { play, over } = useNoteOverBoard(problem ? rows.length : null);
-  const onDigit = (digit: string) =>
-    noting ? onNotes(cycleNote(notes, digit)) : typing.onKey(digit);
-  useTypingKeys({ ...typing, onKey: onDigit }, pad && !disabled, DIGIT);
+  const sound = useSounds(CODE_BREAKER_PAD_BANK);
+  const onDigit = (digit: string) => {
+    if (noting) {
+      sound('code-breaker-note');
+      onNotes(cycleNote(notes, digit));
+      return;
+    }
+    // A digit already in the row is not typed: its tile nudges instead.
+    if (draft.typed.length < CODE_LENGTH) {
+      sound(draft.typed.includes(digit) ? 'ui-nope' : 'ui-key');
+    }
+    typing.onKey(digit);
+  };
+  const onDelete = () => {
+    if (draft.typed !== '') sound('ui-delete');
+    typing.onDelete();
+  };
+  // A row the rules turn back is heard here; one that goes is heard as its
+  // pegs, from the state it makes.
+  const onEnter = () => {
+    const guesses = rows.map((row) => row.guess);
+    if (checkGuess(draft.typed, guesses)) sound('ui-nope');
+    typing.onEnter();
+  };
+  useTypingKeys(
+    { ...typing, onKey: onDigit, onDelete, onEnter },
+    pad && !disabled,
+    DIGIT,
+  );
   const last = rows.at(-1);
   const line =
     prompt !== undefined && noting && pad ? m.codeBreaker.notesPrompt : prompt;
@@ -141,10 +170,13 @@ export function PlayArea({
           notes={notes}
           ruledOut={ruledOut}
           noting={noting}
-          onNoting={() => setNoting(!noting)}
+          onNoting={() => {
+            sound('ui-tap');
+            setNoting(!noting);
+          }}
           onDigit={onDigit}
-          onDelete={typing.onDelete}
-          onEnter={typing.onEnter}
+          onDelete={onDelete}
+          onEnter={onEnter}
           layout={phone || beside ? 'phone' : 'desktop'}
           disabled={disabled}
           className={styles.pad}

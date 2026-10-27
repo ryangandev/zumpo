@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
+import { useSounds } from '../audio';
 import { useMessages } from '../i18n';
 import { TriosCard, type TriosCardState } from '../ui';
 import { cx } from '../ui/cx';
 import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
+import { TRIOS_TABLE_BANK } from './sounds';
 import styles from './table.module.css';
 
 /** What one place on the table shows, beyond its card. */
@@ -43,6 +45,17 @@ export function TriosTable({
 }: TriosTableProps) {
   const m = useMessages();
   const phone = useMediaQuery(PHONE);
+  const sound = useSounds(TRIOS_TABLE_BANK);
+  // A card picked lifts, and one put back sets down; what the picks then
+  // came to is heard from the state, on your own or in a room.
+  const pick = onPick
+    ? (place: number) => {
+        sound(
+          places[place]?.state === 'selected' ? 'trios-unpick' : 'trios-pick',
+        );
+        onPick(place);
+      }
+    : undefined;
   return (
     <PlayBoard inPlay={inPlay}>
       <div className={styles.table} role="group" aria-label={m.trios.table}>
@@ -52,7 +65,7 @@ export function TriosTable({
             card={card}
             size={phone ? 'compact' : 'regular'}
             {...places[place]}
-            onPick={onPick ? () => onPick(place) : undefined}
+            onPick={pick ? () => pick(place) : undefined}
           />
         ))}
       </div>
