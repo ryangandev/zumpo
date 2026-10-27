@@ -36,9 +36,33 @@ export function inlineLimit(file: string): boolean | undefined {
   return /\.(m4a|webm)$/.test(file) ? false : undefined;
 }
 
+/** A test fixture's file (`test-*`, the `test` group): `assets/test-blip-1-a1B2.m4a`. */
+export const isTestSound = (fileName: string) =>
+  /(^|\/)test-[^/]*\.(m4a|webm)$/.test(fileName);
+
+/**
+ * The `test` group's sounds are fixtures for the development sound lab and
+ * the pipeline's checks; a build that would ship one fails, so a stray import
+ * of the test bank cannot reach players.
+ */
+export function noTestSounds(): Plugin {
+  return {
+    name: 'zumpo-no-test-sounds',
+    apply: 'build',
+    generateBundle(_, bundle) {
+      const shipped = Object.keys(bundle).filter(isTestSound);
+      if (shipped.length) {
+        this.error(
+          `The build would ship test sounds (${shipped.join(', ')}); only the development sound lab may import the test bank.`,
+        );
+      }
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), figmaExport()],
+  plugins: [react(), figmaExport(), noTestSounds()],
   server: {
     port: 3001,
   },

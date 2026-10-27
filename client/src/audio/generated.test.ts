@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { inlineLimit } from '../../vite.config';
+import { inlineLimit, isTestSound } from '../../vite.config';
 import { SOUND_BANKS, SOUND_IDS } from './generated';
 import { testSounds } from './generated/test';
 
@@ -27,5 +27,12 @@ describe('the generated sounds', () => {
       false,
     );
     expect(inlineLimit('/src/ui/glyph.svg')).toBeUndefined();
+  });
+
+  it('are known by their name, so a build that would ship a test sound fails', () => {
+    expect(isTestSound('assets/test-blip-1-a1B2c3.m4a')).toBe(true);
+    expect(isTestSound('assets/test-blip-2-a1B2c3.webm')).toBe(true);
+    expect(isTestSound('assets/snap-took-1-a1B2c3.m4a')).toBe(false);
+    expect(isTestSound('assets/latest-a1B2c3.js')).toBe(false);
   });
 });
