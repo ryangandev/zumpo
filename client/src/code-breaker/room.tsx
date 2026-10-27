@@ -12,6 +12,7 @@ import { EndedEarlyPanel, ResultsPanel, WaitingPanel } from '../room/panels';
 import { raceStanding, rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { useDeadlineTicks } from '../room/sounds';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import {
   deleteDigit,
@@ -22,6 +23,7 @@ import {
 } from './draft';
 import { BoardPanel, PegLegend } from './panel';
 import { describeRow, PlayArea } from './play';
+import { actingDeadline, CODE_BREAKER_SOUNDS } from './sounds';
 import styles from './room.module.css';
 
 /**
@@ -90,6 +92,7 @@ export function CodeBreakerRoom() {
         )
       }
       players={players.map((seat) => playerLine(state, seat, m))}
+      sounds={CODE_BREAKER_SOUNDS}
       chat={{
         placeholder: m.codeBreaker.chatPlaceholder,
         lockedReason:
@@ -155,6 +158,12 @@ function Round({
   const m = useMessages();
   const { state, receivedAt, reconnecting, socket, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
   const phone = useMediaQuery(PHONE);
   const [sending, setSending] = useState(false);
   const mine = state.boards.find((board) => board.playerId === playerId);

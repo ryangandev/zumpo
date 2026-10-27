@@ -27,14 +27,17 @@ import { ChallengeCard, challengeLink } from '../../solo/challenge';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloAnswer, SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
+import { useSoloSounds, type SoloEnd } from '../../solo/sounds';
 import { CopyButton, Distribution, formatWait } from '../../solo/daily';
 import { BoardPanel, PegLegend } from '../panel';
+import { CODE_BREAKER_SOLO_BANK, deriveCodeBreakerSolo } from '../sounds';
 import { PlayArea } from '../play';
 import type { Notes } from '../draft';
 import {
   deleteKey,
   guessesToCrack,
   isOver,
+  isWon,
   newGame,
   rowsOf,
   settledDigits,
@@ -111,12 +114,24 @@ function promptFor(guesses: number, m: Messages): string {
   return guesses === 0 ? m.codeBreaker.freshPrompt : m.codeBreaker.nextPrompt;
 }
 
-/** The typing a board takes, as one game changes into the next. */
+/** How a code on your own ended: cracked, or missed; it keeps no best. */
+const endOf = (game: SoloGame): SoloEnd | null =>
+  isOver(game) ? (isWon(game) ? 'complete' : 'loss') : null;
+
+/**
+ * The typing a board takes, as one game changes into the next, and what the
+ * game sounds like: a daily code restored from this device, finished or
+ * not, is only a baseline.
+ */
 function useSoloGame(
   start: () => SoloGame,
   onGuess?: (game: SoloGame) => void,
 ) {
   const [game, setGame] = useState(start);
+  useSoloSounds(game, endOf(game), {
+    bank: CODE_BREAKER_SOLO_BANK,
+    derive: deriveCodeBreakerSolo,
+  });
   const typing = {
     onKey: (digit: string) => setGame(typeKey(game, digit)),
     onDelete: () => setGame(deleteKey(game)),
