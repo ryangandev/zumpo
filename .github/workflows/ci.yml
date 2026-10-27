@@ -44,6 +44,12 @@ jobs:
       - name: Design tokens
         run: npm run design:tokens -- --check
 
+      # The sounds are built from masters outside the repository, where
+      # ffmpeg is; this checks, without either, that the generated files
+      # match audio/sounds.json and that every sound has an allowed licence.
+      - name: Sounds
+        run: npm run audio:check
+
       # The server suite binds ephemeral ports and drives real socket.io
       # clients, so it needs no services, but it is timing-sensitive, and a
       # loaded runner is exactly where that shows up.

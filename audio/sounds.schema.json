@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zumpo.ryangan.me/schemas/sounds.json",
+  "title": "Zumpo sounds",
+  "description": "Every sound Zumpo plays. npm run audio:build makes client/src/audio/generated/ from it and the masters; npm run audio:check holds the two together. See docs/architecture.md#sound.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sounds"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "sounds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sound" }
+    }
+  },
+  "$defs": {
+    "sound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "group", "loudness", "gainDb", "variants", "origin"],
+      "properties": {
+        "id": {
+          "description": "Kebab-case, unique, and the folder of its masters: masters/<id>/<n>.wav.",
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "maxLength": 48
+        },
+        "group": {
+          "description": "Which bank it ships in: ui (the shell), room (every room), a game's id, or test (fixtures, never in the production build).",
+          "enum": [
+            "ui",
+            "room",
+            "test",
+            "draw-and-guess",
+            "minesweeper",
+            "make-24",
+            "pairs",
+            "trios",
+            "snap",
+            "liars-dice",
+            "hush",
+            "daily-word",
+            "code-breaker",
+            "doodle-chain",
+            "gomoku"
+          ]
+        },
+        "description": {
+          "description": "For people: what it is and when it plays.",
+          "type": "string",
+          "maxLength": 200
+        },
+        "loudness": {
+          "description": "The loudness the build normalises it to: ui (soft ticks and taps), event (game actions), stinger (wins, game over).",
+          "enum": ["ui", "event", "stinger"]
+        },
+        "gainDb": {
+          "description": "The relative mix in dB, applied when it plays, on top of the normalised loudness.",
+          "type": "number",
+          "minimum": -24,
+          "maximum": 6
+        },
+        "variants": {
+          "description": "One or more recordings; each play picks one, never the same twice in a row.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/variant" }
+        },
+        "origin": { "$ref": "#/$defs/origin" },
+        "pitchSpread": {
+          "description": "Each play is detuned at random by up to this many semitones either way.",
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 2
+        },
+        "minGapMs": {
+          "description": "A repeat sooner than this is dropped (default 40).",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "maxVoices": {
+          "description": "Copies at once; one more stops the oldest (default 4).",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "hiddenTab": {
+          "description": "Plays while the page is hidden. Only \"your turn\" should.",
+          "type": "boolean"
+        }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "sha256"],
+      "properties": {
+        "file": {
+          "description": "Relative to the masters root (ZUMPO_AUDIO_DIR): masters/<id>/<n>.wav.",
+          "type": "string",
+          "pattern": "^masters/[a-z0-9]+(-[a-z0-9]+)*/[1-9][0-9]*\\.wav$"
+        },
+        "sha256": {
+          "description": "Of the master file; npm run audio:build -- --rehash writes it.",
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source", "license"],
+      "properties": {
+        "kind": {
+          "description": "cc0: a CC0 download; synth: made by code; foley: recorded by us.",
+          "enum": ["cc0", "synth", "foley"]
+        },
+        "source": {
+          "description": "Where it came from: a pack or author, a script, a recording session.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "url": {
+          "description": "The page it was downloaded from; required for cc0.",
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "license": {
+          "description": "CC0-1.0 for a cc0 download, own for synth and foley.",
+          "enum": ["CC0-1.0", "own"]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "cc0" } } },
+          "then": {
+            "required": ["url"],
+            "properties": {
+              "url": { "type": "string" },
+              "license": { "const": "CC0-1.0" }
+            }
+          },
+          "else": { "properties": { "license": { "const": "own" } } }
+        }
+      ]
+    }
+  }
+}

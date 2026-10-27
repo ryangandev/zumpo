@@ -9,8 +9,8 @@ const PORT = Number(process.env.E2E_PORT ?? 3310);
 
 export default defineConfig({
   testDir: '.',
-  // The Figma comparison has its own config: screens.config.ts.
-  testIgnore: 'screens/**',
+  // The Figma comparison and the sound check have configs of their own.
+  testIgnore: ['screens/**', 'sound/**'],
   // Every test makes its own rooms, so tests share the server safely.
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
@@ -21,7 +21,9 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
   },
-  outputDir: '../test-results',
+  // A folder of its own beside sound/ and screens/: Playwright empties its
+  // output folder when a run starts, which would wipe another run's traces.
+  outputDir: '../test-results/e2e',
   webServer: {
     command: 'node server/build/server/server.js',
     cwd: '..',

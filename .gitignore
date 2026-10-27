@@ -26,6 +26,9 @@ playwright-report/
 # The JSON and SVG beside them are committed. See docs/design.md.
 design/figma/previews/
 
+# Where npm run audio:build stages the generated sounds; left only when it is stopped.
+/.audio-build/
+
 # Captures from npm run design:compare, beside the Figma previews they match.
 design/compare/
 

@@ -1,0 +1,30 @@
+{
+  "$schema": "./sounds.schema.json",
+  "sounds": [
+    {
+      "id": "test-blip",
+      "group": "test",
+      "description": "A fixture that proves the pipeline and the engine end to end; never in the production build.",
+      "loudness": "ui",
+      "gainDb": 0,
+      "variants": [
+        {
+          "file": "masters/test-blip/1.wav",
+          "sha256": "5790770d72e1f86849129983eadd41c183ccbd0b37dcee627699356c9be5416c"
+        },
+        {
+          "file": "masters/test-blip/2.wav",
+          "sha256": "223d131851e9267748c17bacf86bb731a4a6dea2c0f4e25ca11d6b0efb08a47c"
+        }
+      ],
+      "origin": {
+        "kind": "synth",
+        "source": "ffmpeg aevalsrc: a decaying sine at 880 Hz and at 1046.5 Hz",
+        "license": "own"
+      },
+      "pitchSpread": 0.3,
+      "minGapMs": 60,
+      "maxVoices": 2
+    }
+  ]
+}

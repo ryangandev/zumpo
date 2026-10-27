@@ -10,6 +10,7 @@ import {
 } from 'react-router';
 import type { GameType } from '../../shared/wire-types';
 import { isGameType } from './games/catalog';
+import { SoundProvider } from './audio';
 import { LocaleProvider } from './i18n';
 import { SessionProvider } from './net/session';
 import CreateRoomPage from './pages/create-room';
@@ -21,6 +22,11 @@ import CrashedPage from './pages/crashed';
 // The design system gallery, for development only: the build drops it.
 const DesignGallery = import.meta.env.DEV
   ? lazy(() => import('./ui/gallery/gallery'))
+  : null;
+
+// Every declared sound through the real engine, for development only too.
+const SoundLab = import.meta.env.DEV
+  ? lazy(() => import('./audio/dev/sound-lab'))
   : null;
 
 function Root() {
@@ -108,6 +114,18 @@ export const routes: RouteObject[] = [
                 },
               ]
             : []),
+          ...(SoundLab
+            ? [
+                {
+                  path: '/dev/sound',
+                  element: (
+                    <Suspense>
+                      <SoundLab />
+                    </Suspense>
+                  ),
+                },
+              ]
+            : []),
           { path: '*', element: <NotFoundPage /> },
         ],
       },
@@ -120,9 +138,11 @@ const router = createBrowserRouter(routes);
 export function App() {
   return (
     <LocaleProvider>
-      <SessionProvider>
-        <RouterProvider router={router} />
-      </SessionProvider>
+      <SoundProvider>
+        <SessionProvider>
+          <RouterProvider router={router} />
+        </SessionProvider>
+      </SoundProvider>
     </LocaleProvider>
   );
 }
