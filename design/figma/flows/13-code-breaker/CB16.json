@@ -51,7 +51,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           }
         ]

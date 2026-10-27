@@ -116,7 +116,8 @@
             "path": "Standing / RY / Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]
@@ -1563,7 +1564,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "LE",
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1592,7 +1594,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "MA",
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1621,7 +1624,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "RG",
-                  "Tone": "Blue"
+                  "Tone": "Blue",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1649,7 +1653,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "SA",
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Regular"
                 }
               }
             ]

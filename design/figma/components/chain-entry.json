@@ -65,7 +65,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             },
             "componentId": "4:34",
             "props": {
@@ -276,7 +277,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             },
             "componentId": "26:10568"
           },
@@ -476,7 +478,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             },
             "componentId": "26:10570",
             "props": {
@@ -692,7 +695,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             },
             "componentId": "26:10572",
             "props": {
@@ -857,7 +861,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Regular"
             },
             "componentId": "4:34",
             "props": {
@@ -1068,7 +1073,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Regular"
             },
             "componentId": "26:10568"
           },
@@ -1268,7 +1274,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Regular"
             },
             "componentId": "26:10570",
             "props": {
@@ -1484,7 +1491,8 @@
             "h": 40,
             "component": "Zumpo/Avatar",
             "variant": {
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Regular"
             },
             "componentId": "26:10572",
             "props": {

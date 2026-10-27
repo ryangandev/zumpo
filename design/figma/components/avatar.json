@@ -4,7 +4,7 @@
   "id": "26:10576",
   "type": "COMPONENT_SET",
   "key": "9a5b8b6dde384444adc70f0f5e4c77b28220f511",
-  "description": "A player’s initials. Each player keeps one Tone everywhere they appear (header, player list, chat, room rows): the colour is part of who they are.",
+  "description": "A player’s initials. Each player keeps one Tone everywhere they appear (header, player list, chat, room rows): the colour is part of who they are. Size=Small (32 px) is the phone header’s, the Phone room bar’s and a standing’s.",
   "properties": {
     "Initials": {
       "type": "text",
@@ -20,20 +20,29 @@
         "Sand",
         "Coral"
       ]
+    },
+    "Size": {
+      "type": "variant",
+      "default": "Regular",
+      "options": [
+        "Regular",
+        "Small"
+      ]
     }
   },
-  "defaultVariant": "Tone=Peach",
+  "defaultVariant": "Tone=Peach, Size=Regular",
   "variants": [
     {
-      "name": "Tone=Peach",
+      "name": "Tone=Peach, Size=Regular",
       "id": "4:34",
       "props": {
-        "Tone": "Peach"
+        "Tone": "Peach",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "4:34",
-        "name": "Tone=Peach",
+        "name": "Tone=Peach, Size=Regular",
         "w": 40,
         "h": 40,
         "fills": [
@@ -67,15 +76,16 @@
       }
     },
     {
-      "name": "Tone=Blue",
+      "name": "Tone=Blue, Size=Regular",
       "id": "26:10568",
       "props": {
-        "Tone": "Blue"
+        "Tone": "Blue",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "26:10568",
-        "name": "Tone=Blue",
+        "name": "Tone=Blue, Size=Regular",
         "w": 40,
         "h": 40,
         "fills": [
@@ -109,15 +119,16 @@
       }
     },
     {
-      "name": "Tone=Lime",
+      "name": "Tone=Lime, Size=Regular",
       "id": "26:10570",
       "props": {
-        "Tone": "Lime"
+        "Tone": "Lime",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "26:10570",
-        "name": "Tone=Lime",
+        "name": "Tone=Lime, Size=Regular",
         "w": 40,
         "h": 40,
         "fills": [
@@ -151,15 +162,16 @@
       }
     },
     {
-      "name": "Tone=Sand",
+      "name": "Tone=Sand, Size=Regular",
       "id": "26:10572",
       "props": {
-        "Tone": "Sand"
+        "Tone": "Sand",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "26:10572",
-        "name": "Tone=Sand",
+        "name": "Tone=Sand, Size=Regular",
         "w": 40,
         "h": 40,
         "fills": [
@@ -193,15 +205,16 @@
       }
     },
     {
-      "name": "Tone=Coral",
+      "name": "Tone=Coral, Size=Regular",
       "id": "26:10574",
       "props": {
-        "Tone": "Coral"
+        "Tone": "Coral",
+        "Size": "Regular"
       },
       "node": {
         "type": "COMPONENT",
         "id": "26:10574",
-        "name": "Tone=Coral",
+        "name": "Tone=Coral, Size=Regular",
         "w": 40,
         "h": 40,
         "fills": [
@@ -218,6 +231,221 @@
           {
             "type": "TEXT",
             "id": "26:10575",
+            "w": 20,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Initials"
+            },
+            "text": "RG",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Peach, Size=Small",
+      "id": "257:71096",
+      "props": {
+        "Tone": "Peach",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "257:71096",
+        "name": "Tone=Peach, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/peach"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "257:71097",
+            "w": 20,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Initials"
+            },
+            "text": "RG",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Blue, Size=Small",
+      "id": "257:71098",
+      "props": {
+        "Tone": "Blue",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "257:71098",
+        "name": "Tone=Blue, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/blue"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "257:71099",
+            "w": 20,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Initials"
+            },
+            "text": "RG",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Lime, Size=Small",
+      "id": "257:71100",
+      "props": {
+        "Tone": "Lime",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "257:71100",
+        "name": "Tone=Lime, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/lime"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "257:71101",
+            "w": 20,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Initials"
+            },
+            "text": "RG",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Sand, Size=Small",
+      "id": "257:71102",
+      "props": {
+        "Tone": "Sand",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "257:71102",
+        "name": "Tone=Sand, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/sand"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "257:71103",
+            "w": 20,
+            "h": 20,
+            "wSize": "hug",
+            "hSize": "hug",
+            "propRefs": {
+              "characters": "Initials"
+            },
+            "text": "RG",
+            "textStyle": "Zumpo/Label",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tone=Coral, Size=Small",
+      "id": "257:71104",
+      "props": {
+        "Tone": "Coral",
+        "Size": "Small"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "257:71104",
+        "name": "Tone=Coral, Size=Small",
+        "w": 32,
+        "h": 32,
+        "fills": [
+          "$Zumpo · UI:color/coral"
+        ],
+        "radius": "$Zumpo · UI:radius/999",
+        "layout": {
+          "mode": "row",
+          "justify": "center",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "257:71105",
             "w": 20,
             "h": 20,
             "wSize": "hug",

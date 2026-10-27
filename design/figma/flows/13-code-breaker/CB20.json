@@ -54,7 +54,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]
@@ -129,7 +130,8 @@
             "path": "Standing / RY / Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]

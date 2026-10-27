@@ -51,7 +51,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           }
         ]
@@ -167,19 +168,13 @@
                     "h": 32,
                     "component": "Zumpo/Avatar",
                     "variant": {
-                      "Tone": "Blue"
+                      "Tone": "Blue",
+                      "Size": "Small"
                     },
-                    "componentId": "26:10568",
+                    "componentId": "257:71098",
                     "props": {
                       "Initials": "RY"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 32,
-                        "width": 32
-                      }
-                    ]
+                    }
                   },
                   {
                     "type": "INSTANCE",
@@ -189,19 +184,13 @@
                     "h": 32,
                     "component": "Zumpo/Avatar",
                     "variant": {
-                      "Tone": "Lime"
+                      "Tone": "Lime",
+                      "Size": "Small"
                     },
-                    "componentId": "26:10570",
+                    "componentId": "257:71100",
                     "props": {
                       "Initials": "LE"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 32,
-                        "width": 32
-                      }
-                    ]
+                    }
                   },
                   {
                     "type": "INSTANCE",
@@ -211,19 +200,13 @@
                     "h": 32,
                     "component": "Zumpo/Avatar",
                     "variant": {
-                      "Tone": "Sand"
+                      "Tone": "Sand",
+                      "Size": "Small"
                     },
-                    "componentId": "26:10572",
+                    "componentId": "257:71102",
                     "props": {
                       "Initials": "SA"
-                    },
-                    "overrides": [
-                      {
-                        "path": ".",
-                        "height": 32,
-                        "width": 32
-                      }
-                    ]
+                    }
                   }
                 ]
               },

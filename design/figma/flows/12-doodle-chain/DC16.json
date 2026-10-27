@@ -54,7 +54,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             },
             "height": 32,
             "width": 32

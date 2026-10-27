@@ -47,7 +47,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "LE",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Small"
             }
           }
         ]
@@ -104,7 +105,8 @@
             "path": "Standing / SA / Avatar",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Small"
             }
           },
           {
@@ -120,7 +122,8 @@
             "path": "Standing / LE / Avatar",
             "componentProperties": {
               "Initials": "LE",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Small"
             }
           },
           {
@@ -136,7 +139,8 @@
             "path": "Standing / RY / Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             }
           }
         ]
@@ -146,7 +150,7 @@
         "id": "96:115192",
         "name": "Zumpo/Turn bar",
         "w": 350,
-        "h": 108,
+        "h": 96,
         "wSize": "fill",
         "hSize": "hug",
         "component": "Zumpo/Turn bar",
@@ -157,13 +161,14 @@
         "componentId": "27:22192",
         "props": {
           "Main": "Safe. +24",
+          "Category": false,
           "Meta": "Your cell had a 15% risk",
           "Label": "Round 4 results"
         },
         "overrides": [
           {
             "path": ".",
-            "height": 108,
+            "height": 96,
             "width": 350
           },
           {
@@ -1492,10 +1497,10 @@
         "id": "96:115293",
         "name": "Round 4 results",
         "x": 20,
-        "y": 502,
+        "y": 495,
         "absolute": true,
         "w": 350,
-        "h": 330,
+        "h": 337,
         "fills": [
           "$Zumpo · UI:color/paper"
         ],
@@ -1582,7 +1587,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "LE",
-                  "Tone": "Lime"
+                  "Tone": "Lime",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1611,7 +1617,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "MA",
-                  "Tone": "Peach"
+                  "Tone": "Peach",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1639,7 +1646,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "SA",
-                  "Tone": "Sand"
+                  "Tone": "Sand",
+                  "Size": "Regular"
                 }
               }
             ]
@@ -1668,7 +1676,8 @@
                 "path": "Avatar",
                 "componentProperties": {
                   "Initials": "RG",
-                  "Tone": "Blue"
+                  "Tone": "Blue",
+                  "Size": "Regular"
                 }
               }
             ]

@@ -44,7 +44,8 @@
             "path": "Avatar",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           }
         ]
@@ -75,7 +76,8 @@
             "path": "Avatar",
             "componentProperties": {
               "Initials": "SA",
-              "Tone": "Lime"
+              "Tone": "Lime",
+              "Size": "Small"
             }
           }
         ]
@@ -106,7 +108,8 @@
             "path": "Avatar",
             "componentProperties": {
               "Initials": "LE",
-              "Tone": "Blue"
+              "Tone": "Blue",
+              "Size": "Small"
             }
           }
         ]
@@ -137,7 +140,8 @@
             "path": "Avatar",
             "componentProperties": {
               "Initials": "RY",
-              "Tone": "Sand"
+              "Tone": "Sand",
+              "Size": "Small"
             },
             "opacity": 0.5
           }

@@ -51,7 +51,8 @@
             "path": "You",
             "componentProperties": {
               "Initials": "MA",
-              "Tone": "Peach"
+              "Tone": "Peach",
+              "Size": "Small"
             }
           }
         ]
@@ -171,7 +172,8 @@
                         "path": "Player / Avatar",
                         "componentProperties": {
                           "Initials": "PI",
-                          "Tone": "Blue"
+                          "Tone": "Blue",
+                          "Size": "Regular"
                         }
                       }
                     ]
@@ -199,7 +201,8 @@
                         "path": "Player / Avatar",
                         "componentProperties": {
                           "Initials": "JU",
-                          "Tone": "Lime"
+                          "Tone": "Lime",
+                          "Size": "Regular"
                         }
                       }
                     ]
@@ -227,7 +230,8 @@
                         "path": "Player / Avatar",
                         "componentProperties": {
                           "Initials": "OT",
-                          "Tone": "Sand"
+                          "Tone": "Sand",
+                          "Size": "Regular"
                         }
                       }
                     ]
@@ -403,7 +407,8 @@
                     "path": "Player / Avatar",
                     "componentProperties": {
                       "Initials": "MA",
-                      "Tone": "Peach"
+                      "Tone": "Peach",
+                      "Size": "Regular"
                     }
                   }
                 ]
