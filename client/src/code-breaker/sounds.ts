@@ -114,6 +114,12 @@ const rowsOf = (
 const sameMark = (a: CodeBreakerMark, b: CodeBreakerMark | undefined) =>
   a.right === b?.right && a.moved === b.moved;
 
+/** Who has cracked the open code. */
+const crackedBy = (state: CodeBreakerRoomState) =>
+  state.boards
+    .filter((board) => board.status === 'cracked')
+    .map((board) => board.playerId);
+
 /** Whether `viewer` is still at the open code, against its clock. */
 const stillGuessing = (state: CodeBreakerRoomState, viewer: string) =>
   state.boards.find((board) => board.playerId === viewer)?.status ===
@@ -196,13 +202,9 @@ export function deriveCodeBreakerSounds(
       }
       return events;
     }
-    const cracked = (state: CodeBreakerRoomState) =>
-      state.boards
-        .filter((board) => board.status === 'cracked')
-        .map((board) => board.playerId);
-    const crackedBefore = sameRound ? cracked(prev) : [];
+    const crackedBefore = sameRound ? crackedBy(prev) : [];
     let step = crackedBefore.length;
-    for (const id of cracked(next)) {
+    for (const id of crackedBy(next)) {
       if (crackedBefore.includes(id)) continue;
       // One step higher for each player who cracks it this round.
       step += 1;

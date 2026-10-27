@@ -3,7 +3,6 @@ import { StrictMode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { createReplayGuard, SoundProvider, type DeriveSounds } from '../audio';
 import { AudioEngine } from '../audio/engine';
-import type { SoundSpec } from '../audio/types';
 import { uiSounds } from '../audio/generated/ui';
 import {
   deriveSoloSounds,
@@ -102,7 +101,7 @@ describe('useSoloSounds', () => {
         </SoundProvider>
       </StrictMode>
     );
-    const played = () => play.mock.calls.map(([spec]: [SoundSpec]) => spec.id);
+    const played = () => play.mock.calls.map(([spec]) => spec.id);
     const app = render(page(view(2)));
     expect(played()).toEqual([]);
     app.rerender(page(view(3)));

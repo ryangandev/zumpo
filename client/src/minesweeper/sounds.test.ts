@@ -100,7 +100,7 @@ describe('a Minesweeper room, heard', () => {
 
   it('reveals a round once, with one pop however many hit a mine', () => {
     const open = roundOf(3, { lockedIn: [MAYA] });
-    const reveal = roundOf(3, {
+    const shown = roundOf(3, {
       phase: 'reveal',
       lastRound: [
         pick(ME),
@@ -108,28 +108,28 @@ describe('a Minesweeper room, heard', () => {
         pick(LEO, { hitMine: true }),
       ],
     });
-    expect(heard(open, reveal)).toEqual([
+    expect(heard(open, shown)).toEqual([
       { sound: 'room-reveal', key: 'reveal:3' },
       { sound: 'minesweeper-mine', key: 'mine:3', other: true },
     ]);
     // Your own mine is yours, at full level.
-    expect(heard(open, reveal, MAYA)[1]).toEqual({
+    expect(heard(open, shown, MAYA)[1]).toEqual({
       sound: 'minesweeper-mine',
       key: 'mine:3',
       other: false,
     });
-    expect(heard(reveal, { ...reveal })).toEqual([]);
+    expect(heard(shown, { ...shown })).toEqual([]);
   });
 
   it('says your time is up when the clock picked for you', () => {
-    const reveal = roundOf(1, {
+    const shown = roundOf(1, {
       phase: 'reveal',
       lastRound: [pick(ME, { autoPlayed: true }), pick(MAYA)],
     });
-    expect(heard(roundOf(1), reveal).map((e) => e.sound)).toEqual([
+    expect(heard(roundOf(1), shown).map((e) => e.sound)).toEqual([
       'room-time-up',
     ]);
-    expect(heard(roundOf(1), reveal, WATCHER).map((e) => e.sound)).toEqual([
+    expect(heard(roundOf(1), shown, WATCHER).map((e) => e.sound)).toEqual([
       'room-reveal',
     ]);
   });
@@ -138,12 +138,12 @@ describe('a Minesweeper room, heard', () => {
     const room = guard();
     const open = roundOf(4);
     const locked = roundOf(4, { lockedIn: [MAYA] });
-    const reveal = roundOf(4, { phase: 'reveal', lastRound: [pick(MAYA)] });
+    const shown = roundOf(4, { phase: 'reveal', lastRound: [pick(MAYA)] });
     expect(room(open)).toEqual([]);
     expect(room(locked)).toEqual(['room-pip']);
-    expect(room(reveal)).toEqual(['room-reveal']);
+    expect(room(shown)).toEqual(['room-reveal']);
     expect(room(locked)).toEqual([]);
-    expect(room(reveal)).toEqual([]);
+    expect(room(shown)).toEqual([]);
   });
 
   it('takes a reconnection as a baseline, and a game unseen as new', () => {
@@ -187,15 +187,16 @@ describe('a Minesweeper room, heard', () => {
   });
 });
 
-describe('Minesweeper on your own, heard', () => {
-  const solo = () =>
-    createReplayGuard(deriveSoloSounds(deriveMinesweeperSolo), {
-      isNewGame: () => false,
-      select: endAlone,
-    });
-  // A first click in a corner of a board laid around it: an opening.
-  const first = (game: SoloGame) => reveal(game, 0, 1000, () => 0.5);
+const solo = () =>
+  createReplayGuard(deriveSoloSounds(deriveMinesweeperSolo), {
+    isNewGame: () => false,
+    select: endAlone,
+  });
 
+/** A first click in a corner, the mines laid around it: an opening. */
+const first = (game: SoloGame) => reveal(game, 0, 1000, () => 0.5);
+
+describe('Minesweeper on your own, heard', () => {
   it('opens a cell, or many at once, each once', () => {
     const game = newGame('Small');
     const opened = first(game);

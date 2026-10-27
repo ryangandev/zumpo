@@ -7,7 +7,6 @@ import type {
 } from '../../../shared/wire-types';
 import { createReplayGuard } from '../audio';
 import { AudioEngine } from '../audio/engine';
-import type { SoundSpec } from '../audio/types';
 import { stepsToSolve } from '../tests/make-24';
 import { renderApp } from '../tests/render-app';
 import { roomSoundRules, type RoomSoundView } from '../room/sounds';
@@ -41,6 +40,7 @@ const solve = (playerId: string, points = 120) => ({
   playerId,
   username: playerId,
   points,
+  secondsLeft: 42,
 });
 
 const result = (playerId: string, solved = true): Make24HandResult => ({
@@ -169,13 +169,13 @@ describe('a Make 24 room, heard', () => {
   });
 });
 
-describe('a Make 24 run, heard', () => {
-  const solo = () =>
-    createReplayGuard(deriveSoloSounds(deriveMake24Solo), {
-      isNewGame: () => false,
-      select: endAlone,
-    });
+const solo = () =>
+  createReplayGuard(deriveSoloSounds(deriveMake24Solo), {
+    isNewGame: () => false,
+    select: endAlone,
+  });
 
+describe('a Make 24 run, heard', () => {
   it('hears each hand finished once, and the tenth as the run’s end alone', () => {
     let run: SoloRun = newRun('k3f9x2', 0);
     const game = solo();
@@ -196,18 +196,20 @@ describe('a Make 24 run, heard', () => {
 
 const SIGNS = { '+': 'plus', '-': 'minus', '*': 'times', '/': 'divided by' };
 
+/** The cards on the table, in order. */
+const cards = () => screen.getAllByRole('button', { name: /^-?\d/ });
+
 describe('a Make 24 run, heard in the app', () => {
   it('plays each pick, a step, an undo and a solved hand, once', async () => {
     const engine = new AudioEngine({});
     const play = vi
       .spyOn(engine, 'play')
       .mockImplementation(() => Promise.resolve(true));
-    const played = () => play.mock.calls.map(([spec]: [SoundSpec]) => spec.id);
+    const played = () => play.mock.calls.map(([spec]) => spec.id);
     const user = userEvent.setup();
     await renderApp('/games/make-24/solo?seed=k3f9x2', { engine });
     expect(played()).toEqual([]);
 
-    const cards = () => screen.getAllByRole('button', { name: /^-?\d/ });
     const steps = stepsToSolve(newRun('k3f9x2', 0).deals[0]!);
     const take = async (step: (typeof steps)[number]) => {
       const before = cards();

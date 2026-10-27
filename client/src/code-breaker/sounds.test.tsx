@@ -277,6 +277,20 @@ describe('a Code Breaker room, heard', () => {
 const NOW = new Date(2026, 9, 21, 9, 0, 0);
 const TODAY = dailyCode(puzzleNumber(NOW));
 
+/** The solo page, with every sound it plays recorded by id. */
+async function openSolo() {
+  const engine = new AudioEngine({});
+  const play = vi
+    .spyOn(engine, 'play')
+    .mockImplementation(() => Promise.resolve(true));
+  const played = () =>
+    play.mock.calls.map(([spec, options]: [SoundSpec, PlayOptions?]) =>
+      options?.other ? `${spec.id} other` : spec.id,
+    );
+  const view = await renderApp('/games/code-breaker/solo', { engine });
+  return { ...view, played, play };
+}
+
 describe('Code Breaker on your own, heard in the app', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -287,22 +301,9 @@ describe('Code Breaker on your own, heard in the app', () => {
     vi.useRealTimers();
   });
 
-  async function open() {
-    const engine = new AudioEngine({});
-    const play = vi
-      .spyOn(engine, 'play')
-      .mockImplementation(() => Promise.resolve(true));
-    const played = () =>
-      play.mock.calls.map(([spec, options]: [SoundSpec, PlayOptions?]) =>
-        options?.other ? `${spec.id} other` : spec.id,
-      );
-    const view = await renderApp('/games/code-breaker/solo', { engine });
-    return { ...view, played, play };
-  }
-
   it('types, drops pegs, cracks the code once, and plays nothing on a refresh', async () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
-    const first = await open();
+    const first = await openSolo();
     const miss = ALL_CODES.find((code) =>
       [...code].every((digit) => !TODAY.includes(digit)),
     )!;
@@ -333,7 +334,7 @@ describe('Code Breaker on your own, heard in the app', () => {
 
     // The day's code, finished, comes back on a refresh: silent.
     first.unmount();
-    const again = await open();
+    const again = await openSolo();
     await act(() => vi.advanceTimersByTimeAsync(1000));
     expect(again.played()).toEqual([]);
   });

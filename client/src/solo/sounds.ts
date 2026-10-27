@@ -60,12 +60,18 @@ const GAME_KEY = 'game:';
  * What the guard hears between two views: the game's own events, and the
  * end the first time there is one.
  */
-export function deriveSoloSounds<Game>(
-  derive: DeriveSounds<Game, string> | undefined,
+export function deriveSoloSounds<
+  Game,
+  Id extends string,
+  Stepped extends Id = never,
+>(
+  derive: DeriveSounds<Game, Id, Stepped> | undefined,
 ): DeriveSounds<SoloSoundView<Game>, string> {
+  // Each event keeps the step its sound needs; the guard only reads keys.
+  const own = derive as DeriveSounds<Game, string> | undefined;
   return (prev, next) => {
     const events: SoundEvent<string>[] = (
-      derive?.(prev.game, next.game) ?? []
+      own?.(prev.game, next.game) ?? []
     ).map((event) => ({ ...event, key: `${GAME_KEY}${event.key}` }));
     if (prev.end === null && next.end !== null) {
       events.push({ sound: STINGER[next.end], key: END_KEY });
@@ -123,10 +129,7 @@ export function useSoloSounds<Game, Bank extends typeof SOLO_BANK>(
   const play = useSounds(bank);
   const view = useMemo(() => ({ game, end }), [game, end]);
   // Every id the game's derive gives is in its bank, with its step.
-  const rules = useMemo(
-    () => deriveSoloSounds(derive as DeriveSounds<Game, string> | undefined),
-    [derive],
-  );
+  const rules = useMemo(() => deriveSoloSounds(derive), [derive]);
   useStateSounds(view, {
     derive: rules,
     play: play as unknown as PlaySound<string>,
