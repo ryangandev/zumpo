@@ -62,7 +62,7 @@ const CONTENT: Record<string, string> = {
   DW07: 'The chat holds the game so far, from the start and the first word on; Figma’s example has two lines.',
   DW08: 'The chat holds the game so far, from the start and the first word on; Figma’s example has a few lines.',
   DW09: 'The chat holds the game so far, from the start and the first word on; Figma’s example has the second word only.',
-  DW16: 'The test’s game ends in a tie, whose heading takes a third line on a phone; Figma’s Maya wins in two.',
+  DW16: 'The test’s scores run to four digits where Figma’s have three, so a status beside one, such as “2nd place · 3 words found”, wraps to a second line, as final standings do; or the game ends in a tie, whose heading takes a third line.',
   CB09: 'The chat holds the game so far, from the start and the first code on; Figma’s example has three lines.',
   CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
   CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
