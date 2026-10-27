@@ -339,31 +339,35 @@ function Turn({ room }: { room: Room }) {
       {/* The sheet, and the round that just ended over its foot, where it
           is seen without a scroll and moves nothing; the drawer choosing a
           word sees the choices instead. On a phone the sheet is as large
-          as the screen leaves it. */}
+          as the screen leaves it, right under the toolbar or the turn bar
+          as MO08 and MO09 draw it, with the results on its own foot, and
+          the choices are centred in the room as MO07 draws them. */}
       <div className={cx(styles.board, playColumn)}>
-        <PlaySheet>
+        <PlaySheet align={choices && phone ? 'center' : 'start'}>
           {choices && phone ? (
             choices
           ) : (
-            <DrawingCanvas
-              stream={canvas}
-              brush={brush}
-              onStart={start}
-              onMove={move}
-              onEnd={end}
-              overlay={
-                choices ??
-                (state.phase === 'choosing' ? (
-                  <p className={styles.waiting}>
-                    <Icon glyph="brush" size={32} />
-                    {m.drawAndGuess.drawingAppears(drawerName)}
-                  </p>
-                ) : null)
-              }
-            />
+            <div className={styles.sheetWrap}>
+              <DrawingCanvas
+                stream={canvas}
+                brush={brush}
+                onStart={start}
+                onMove={move}
+                onEnd={end}
+                overlay={
+                  choices ??
+                  (state.phase === 'choosing' ? (
+                    <p className={styles.waiting}>
+                      <Icon glyph="brush" size={32} />
+                      {m.drawAndGuess.drawingAppears(drawerName)}
+                    </p>
+                  ) : null)
+                }
+              />
+              {state.lastRound && !choices && <RoundResults room={room} />}
+            </div>
           )}
         </PlaySheet>
-        {state.lastRound && !choices && <RoundResults room={room} />}
       </div>
     </>
   );

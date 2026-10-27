@@ -214,16 +214,27 @@ function paint(
 export function PlaySheet({
   children,
   shown = false,
+  align = 'center',
 }: {
   children: ReactNode;
   shown?: boolean;
+  /**
+   * Where on a phone the sheet stands in the height it is given, when that
+   * is more than its 4:3 needs: centred, or at the top, right under what is
+   * above it.
+   */
+  align?: 'center' | 'start';
 }) {
   const box = useRef<HTMLDivElement>(null);
   useHeightLeft(box, true, true);
   return (
     <div
       ref={box}
-      className={cx(styles.playSheet, shown && styles.shown)}
+      className={cx(
+        styles.playSheet,
+        shown && styles.shown,
+        align === 'start' && styles.start,
+      )}
       data-play-board=""
     >
       {children}

@@ -45,7 +45,7 @@
 /* The round that just ended, on paper of its own over the top of the
    sheet, under the turn bar where it is always in sight, scrolling within
    the sheet when it is longer. */
-.board > .roundResults {
+.sheetWrap > .roundResults {
   position: absolute;
   z-index: 1;
   top: var(--zumpo-space-16);
@@ -57,9 +57,15 @@
 }
 
 /* On a phone, where the whole sheet is in sight, the results cover its
-   width at its foot. */
+   width at its foot: the wrapper is the sheet's own box there, so they stay
+   on the sheet however tall the screen leaves it room. Wider, it takes no
+   box of its own and they lie over the board's column, as before. */
 @media (max-width: 640px) {
-  .board > .roundResults {
+  .sheetWrap {
+    position: relative;
+  }
+
+  .sheetWrap > .roundResults {
     top: auto;
     right: 0;
     bottom: 0;

@@ -253,6 +253,10 @@ Code differs from Figma on purpose in a few places:
   So do the room tabs, the filter chips, the footer's languages and the viewer's avatar.
 - Hover and focus never change a control's size; Figma's hover variants are wider only because strokes count in its auto layout.
 - The chat hugs its messages and scrolls past 358 px of them, so a full chat ends level with the canvas; Figma's empty chats (D01, M01) keep the 354 px of the component's sample messages, which code does not reserve.
+- On a phone Draw & Guess's sheet keeps the bitmap's 798 × 598 proportions, so Figma's 348 px tall Canvas (MO08, MO09), which is only a box that fills the height left, is 263 px tall at 390 px wide.
+  The sheet stands 12 px under the toolbar or turn bar, as Figma draws it, and the height it does not need is under it, above the chat lines; centred, it left up to about 115 px over it.
+  The round's results lie on the sheet's own foot, so they stay with it however tall the screen is.
+  The word choices stay centred in the room as MO07's zone draws them, and so does Doodle Chain's sheet as DC17's Canvas zone does ([the sheet spec](../e2e/draw-and-guess-sheet.spec.ts) checks the gap, the results' place and the choices at 360, 390 and 430 px, and the gap beside the side column).
 - The newest chat lines under a phone's Draw & Guess board (MO08 to MO10) stand in a strip 99 px tall, not Figma's 91 px: the extra 8 px are headroom where a line pushed up fades out, which Figma cannot draw, so a long line is never cut mid-glyph.
   The viewer's own line flashes the sand fill as it lands, which a still screen does not show.
 - Every solo screen's side column (Figma's Run sidebar and Game sidebar) keeps 16 px between its cards, not Figma's 24, so Trios and Snap solo are 900 px tall at 1440 x 900 and need no scrollbar.
@@ -289,7 +293,7 @@ Code differs from Figma on purpose in a few places:
   A phone's Gomoku table keeps its empty actions row for a spectator in play, as the results fill it, so their board is the players' size throughout.
   In the side column beside a desktop room the Watching Scoreboard is folded to its heading line, with the spectators' names and the count after the title and a chevron that opens it, so the chat under it keeps its height; in one column, under 1024 px, and in a phone's Players tab it stays open.
 - Draw & Guess's round results are not in Figma either: a paper panel like Minesweeper's round results, with a Player row for each player, their points this round as the score and their total as the status.
-  It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's foot on a phone, on the Menu lift shadow.
+  It lies over the top of the sheet on a desktop, under the turn bar where it is in sight without scrolling, and over the sheet's own foot on a phone, on the Menu lift shadow.
   The drawer does not see it while choosing the next word: the word choices take the sheet, and the panel over them would hide them; the guessers keep it until a word is chosen.
 - A Gomoku seat's thick edge on its turn is drawn inside its hairline, so the seat keeps its size from turn to turn.
 - Beside the board a Gomoku seat's name is never cut: where the column is too narrow for a default name, its You tag and the stone on one line (291 px at 1440 by 900, 206 px at 1280 by 800), the name wraps between its words and the tag goes under it, and the seat is taller; Figma draws every desktop seat on one line, and the board never moves for it.
