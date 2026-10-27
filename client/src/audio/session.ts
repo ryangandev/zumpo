@@ -1,9 +1,10 @@
 import type { AudioEngine } from './engine';
 
 /**
- * The events that grant user activation (HTML's "activation triggering input
- * event"): `pointerdown` only for a mouse, so a phone's tap is `pointerup` or
- * `touchend`; `keydown` except Escape.
+ * The events that may grant user activation (HTML's "activation triggering
+ * input event"), which `isActivation` narrows: `pointerdown` only for a
+ * mouse and `pointerup` only for anything else, so a phone's tap counts at
+ * `pointerup` or `touchend`; `keydown` except Escape.
  */
 const GESTURES = [
   'pointerdown',
@@ -12,6 +13,19 @@ const GESTURES = [
   'touchend',
   'keydown',
 ] as const;
+
+function isActivation(event: Event): boolean {
+  switch (event.type) {
+    case 'pointerdown':
+      return (event as PointerEvent).pointerType === 'mouse';
+    case 'pointerup':
+      return (event as PointerEvent).pointerType !== 'mouse';
+    case 'keydown':
+      return (event as KeyboardEvent).key !== 'Escape';
+    default:
+      return true;
+  }
+}
 
 /**
  * Only the player's own input counts, as only that lets a browser start
@@ -37,11 +51,7 @@ export function connectAudioSession(
   let armed = false;
 
   const onGesture = (event: Event) => {
-    if (!isUserInput(event)) return;
-    if (event.type === 'keydown' && (event as KeyboardEvent).key === 'Escape') {
-      return;
-    }
-    engine.unlock();
+    if (isUserInput(event) && isActivation(event)) engine.unlock();
   };
   const arm = () => {
     if (armed) return;

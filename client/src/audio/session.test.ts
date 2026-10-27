@@ -18,8 +18,11 @@ afterEach(() => {
 
 describe('connectAudioSession', () => {
   it.each([
-    ['a mouse press', () => new PointerEvent('pointerdown')],
-    ['a tap', () => new PointerEvent('pointerup')],
+    [
+      'a mouse press',
+      () => new PointerEvent('pointerdown', { pointerType: 'mouse' }),
+    ],
+    ['a tap', () => new PointerEvent('pointerup', { pointerType: 'touch' })],
     ['an older touch', () => new Event('touchend')],
     ['a key', () => new KeyboardEvent('keydown', { key: 'a' })],
   ])('unlocks at %s anywhere on the page', async (_, gesture) => {
@@ -36,12 +39,28 @@ describe('connectAudioSession', () => {
     vi.stubEnv('MODE', 'production');
     const engine = audio.engine();
     const disconnect = connectAudioSession(engine);
-    window.dispatchEvent(new PointerEvent('pointerdown'));
+    window.dispatchEvent(
+      new PointerEvent('pointerdown', { pointerType: 'mouse' }),
+    );
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
     expect(engine.state).toBe('locked');
     expect(audio.made).toBe(0);
     disconnect();
     vi.unstubAllEnvs();
+  });
+
+  it('takes a finger at its lift and a mouse at its press, as browsers do', () => {
+    const engine = audio.engine();
+    const disconnect = connectAudioSession(engine);
+    // A touch's press may begin a scroll; a mouse's release follows its press.
+    window.dispatchEvent(
+      new PointerEvent('pointerdown', { pointerType: 'touch' }),
+    );
+    window.dispatchEvent(
+      new PointerEvent('pointerup', { pointerType: 'mouse' }),
+    );
+    expect(audio.made).toBe(0);
+    disconnect();
   });
 
   it('does not take Escape as a gesture, as browsers do not', () => {
