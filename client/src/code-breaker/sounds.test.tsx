@@ -309,12 +309,8 @@ describe('Code Breaker on your own, heard in the app', () => {
     )!;
     await user.keyboard(`${miss[0]}${miss[0]}`);
     await user.keyboard('{Backspace}{Enter}');
-    expect(first.played()).toEqual([
-      'ui-key',
-      'ui-nope',
-      'ui-delete',
-      'ui-nope',
-    ]);
+    // The digit typed twice only nudges its tile; the short row is refused.
+    expect(first.played()).toEqual(['ui-key', 'ui-delete', 'ui-nope']);
     first.play.mockClear();
 
     await user.keyboard(`${miss}{Enter}`);

@@ -79,9 +79,10 @@ export function PlayArea({
       onNotes(cycleNote(notes, digit));
       return;
     }
-    // A digit already in the row is not typed: its tile nudges instead.
-    if (draft.typed.length < CODE_LENGTH) {
-      sound(draft.typed.includes(digit) ? 'ui-nope' : 'ui-key');
+    // A digit already in the row is not typed: its tile nudges instead, in
+    // silence, since a common slip should not knock like a refused row.
+    if (draft.typed.length < CODE_LENGTH && !draft.typed.includes(digit)) {
+      sound('ui-key');
     }
     typing.onKey(digit);
   };
