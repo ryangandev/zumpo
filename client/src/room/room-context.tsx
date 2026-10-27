@@ -14,6 +14,11 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
   state: State;
   /** When the snapshot arrived; its clocks count from here. */
   receivedAt: number;
+  /**
+   * The connection the snapshot came on: a sound hook's epoch, so the first
+   * snapshot after a reconnection is only a baseline.
+   */
+  epoch: number;
   /** The connection is down; the server holds the seat meanwhile. */
   reconnecting: boolean;
   reconnectGraceMs: number;
@@ -40,6 +45,8 @@ export interface Room<State extends AnyRoomState = AnyRoomState> {
    */
   becameHost: boolean;
   chat: readonly ChatMessage[];
+  /** Counts the histories the chat was given: the epoch for its sounds. */
+  chatEpoch: number;
   canvas: CanvasStream;
   /** Finished drawings sent apart from the snapshots, by id. */
   drawings: DrawingStore;

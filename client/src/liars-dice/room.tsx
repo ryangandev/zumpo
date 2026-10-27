@@ -47,6 +47,8 @@ export function LiarsDiceRoom() {
   return (
     <RoomLayout
       yourTurn={inGame && bidding(room)}
+      // Each bid is a go, numbered within its round.
+      turn={`${state.round}.${state.bids.length}`}
       // No standings over the board: everybody’s cups are on the table.
       standings={false}
       phase={

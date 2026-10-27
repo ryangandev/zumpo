@@ -34,6 +34,7 @@ import { NextGamePanel, RESULT_TITLE } from './panels';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
 import { roomNameOf, type RaceStanding, type Seat } from './players';
+import { useRoomSounds } from './sounds';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -100,6 +101,13 @@ export interface RoomLayoutProps {
    */
   yourTurn?: boolean;
   /**
+   * Names the go in play, the same for everybody (`2.5`: Draw & Guess's
+   * round and turn), so "your turn" sounds once when it becomes this
+   * player's. A game that cannot name its goes gives none, and its turns
+   * are silent.
+   */
+  turn?: string;
+  /**
    * The game keeps the board a game ended on in its place, under the result
    * in the turn bar's (`ResultBar`): off a phone, what comes next for a game
    * played to its end (`NextGamePanel`) is at the top of the side column,
@@ -145,6 +153,7 @@ export function RoomLayout({
   playersAside,
   standings = showScores,
   yourTurn = false,
+  turn,
   nextBeside = false,
 }: RoomLayoutProps) {
   const room = useRoomContext();
@@ -157,6 +166,13 @@ export function RoomLayout({
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
   useTurnTitle(yourTurn);
+  useRoomSounds({
+    state,
+    viewer: room.playerId,
+    turn: yourTurn && turn !== undefined ? turn : null,
+    lost: reconnecting,
+    epoch: room.epoch,
+  });
   const { viewer, viewerMenu, sound } = useViewer({
     seatName: room.me.username,
   });

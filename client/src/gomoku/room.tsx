@@ -128,6 +128,8 @@ export function GomokuRoom() {
       // No standings over the board: the seats under the board say who is who.
       standings={false}
       yourTurn={myTurn}
+      // Each turn is a move, a stone or a turn lost to the clock.
+      turn={String(state.moves.length)}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }

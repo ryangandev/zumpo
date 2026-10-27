@@ -27,6 +27,17 @@ import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
+import { useSounds, useStateSounds } from '../audio';
+import { useDeadlineTicks } from '../room/sounds';
+import {
+  actingDeadline,
+  deriveCloseGuessSounds,
+  deriveDrawAndGuessSounds,
+  DRAW_AND_GUESS_SOUNDS,
+  isNewDrawAndGuessGame,
+  sameChat,
+  turnOf,
+} from './sounds';
 import styles from './room.module.css';
 
 /**
@@ -52,12 +63,29 @@ export function DrawAndGuessRoom() {
   const isDrawer = inGame && state.currentDrawer === room.playerId;
   const scored = state.scoredThisTurn.includes(room.playerId);
 
+  // Here, not in a phase's component: the room's sounds need the room's
+  // lifetime, or the change into a phase is lost.
+  const play = useSounds(DRAW_AND_GUESS_SOUNDS);
+  useStateSounds(state, {
+    derive: deriveDrawAndGuessSounds(room.playerId),
+    play,
+    epoch: room.epoch,
+    isNewGame: isNewDrawAndGuessGame,
+  });
+  useStateSounds(room.chat, {
+    derive: deriveCloseGuessSounds(room.playerId),
+    play,
+    epoch: room.chatEpoch,
+    isNewGame: sameChat,
+  });
+
   const between = !inGame;
   const ended = between && state.lastGame;
   return (
     <RoomLayout
       // The drawer has a word to choose, then a clock to draw against.
       yourTurn={isDrawer && state.phase !== 'reveal'}
+      turn={turnOf(state)}
       phase={
         inGame
           ? {
@@ -238,6 +266,12 @@ function Turn({ room }: { room: Room }) {
   const { state, receivedAt, reconnecting, playerId, socket, canvas } = room;
   const phone = useMediaQuery(PHONE);
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks(
+    seconds,
+    reconnecting ? null : actingDeadline(state, playerId),
+  );
+  const play = useSounds(DRAW_AND_GUESS_SOUNDS);
   const isDrawer = state.currentDrawer === playerId;
   const drawerName =
     state.playerList[state.currentDrawer]?.username ?? m.drawAndGuess.drawer;
@@ -264,8 +298,9 @@ function Turn({ room }: { room: Room }) {
     (point: Coordinate, { color, size: width }: Brush) => {
       canvas.start(point, color, width);
       socket.emit('dg:draw:start', roomId, point, color, width);
+      play('draw-and-guess-pencil');
     },
-    [canvas, socket, roomId],
+    [canvas, socket, roomId, play],
   );
   const move = useCallback(
     (point: Coordinate) => {
@@ -329,10 +364,12 @@ function Turn({ room }: { room: Room }) {
           onUndo={() => {
             canvas.undo();
             socket.emit('dg:draw:undo', roomId);
+            play('ui-undo');
           }}
           onClear={() => {
             canvas.clear();
             socket.emit('dg:draw:clear', roomId);
+            play('draw-and-guess-clear');
           }}
         />
       )}
