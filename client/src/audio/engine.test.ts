@@ -1,11 +1,13 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   AudioEngine,
   dbToGain,
   DEFAULT_MAX_VOICES,
+  HIDDEN_TAB_LATE_MS,
   LATE_MS,
   MAX_VOICES,
   OTHER_DB,
+  RELEASE_MS,
   volumeToGain,
 } from './engine';
 import { DEFAULT_SOUND_SETTINGS, type SoundSettings } from './settings';
@@ -13,9 +15,20 @@ import { calls, settle, spec, useMockAudio } from './tests/mock-audio';
 
 const audio = useMockAudio();
 
+afterEach(() => {
+  vi.useRealTimers();
+});
+
 const at = (volume: number, muted = false): SoundSettings => ({
   effects: { volume, muted },
 });
+
+/** Every file from now on takes `ms` to arrive. */
+const late = (ms: number) => {
+  audio.onFetch = () => {
+    audio.clock += ms;
+  };
+};
 
 /** An engine past its first gesture, its context running. */
 async function unlocked(settings?: SoundSettings) {
@@ -26,12 +39,33 @@ async function unlocked(settings?: SoundSettings) {
 }
 
 describe('unlocking', () => {
-  it('makes no context, fetches nothing and plays nothing before a gesture', async () => {
+  it('makes no context and plays nothing before a gesture, but fetches what is retained', async () => {
     const engine = audio.engine();
     engine.retain([spec()]);
     expect(engine.state).toBe('locked');
     expect(await engine.play(spec())).toBe(false);
     expect(audio.made).toBe(0);
+    // Fetched ahead, so the first gesture only has to decode.
+    expect(audio.fetched).toEqual(['tap-1.m4a']);
+    engine.unlock();
+    await settle();
+    expect(await engine.play(spec())).toBe(true);
+    expect(audio.fetched).toEqual(['tap-1.m4a']);
+  });
+
+  it('fetches Opus first where a media element cannot play AAC', async () => {
+    const engine = audio.engine(undefined, {
+      canPlayType: (type) => (type.startsWith('audio/webm') ? 'probably' : ''),
+    });
+    engine.retain([spec()]);
+    expect(audio.fetched).toEqual(['tap-1.webm']);
+  });
+
+  it('fetches nothing without Web Audio', () => {
+    // jsdom has no AudioContext of its own.
+    const engine = audio.engine(undefined, { createContext: undefined });
+    expect(engine.state).toBe('unsupported');
+    engine.retain([spec()]);
     expect(audio.fetched).toEqual([]);
   });
 
@@ -275,10 +309,38 @@ describe('limits', () => {
   it('drops a sound that could not start in time, rather than play it late', async () => {
     const engine = await unlocked();
     audio.onFetch = () => {
-      audio.clock += LATE_MS + 1;
+      audio.clock += LATE_MS.ui + 1;
     };
     expect(await engine.play(spec())).toBe(false);
     expect(audio.sources()).toHaveLength(0);
+  });
+
+  it('waits longer for a louder class, and longest for "your turn"', async () => {
+    const engine = await unlocked();
+    late(LATE_MS.ui + 1);
+    expect(await engine.play(spec({ id: 'move', loudness: 'event' }))).toBe(
+      true,
+    );
+    late(LATE_MS.event + 1);
+    expect(await engine.play(spec({ id: 'win', loudness: 'stinger' }))).toBe(
+      true,
+    );
+    late(LATE_MS.event + 1);
+    expect(await engine.play(spec({ id: 'turn', hiddenTab: true }))).toBe(true);
+    late(HIDDEN_TAB_LATE_MS + 1);
+    expect(await engine.play(spec({ id: 'turn-2', hiddenTab: true }))).toBe(
+      false,
+    );
+  });
+
+  it('holds no gap after a play that never started', async () => {
+    const engine = await unlocked();
+    const tick = spec({ minGapMs: 1000 });
+    audio.undecodable = new Set(['tap-1.m4a', 'tap-1.webm']);
+    expect(await engine.play(tick)).toBe(false);
+    audio.undecodable.clear();
+    expect(await engine.play(tick)).toBe(true);
+    expect(await engine.play(tick)).toBe(false);
   });
 });
 
@@ -341,21 +403,44 @@ describe('decoding', () => {
     expect(audio.sources()).toHaveLength(3);
   });
 
-  it('decodes what is retained at the first gesture, and forgets it when released', async () => {
+  it('decodes what is retained at the first gesture, and forgets it a while after release', async () => {
     const engine = audio.engine();
     const release = engine.retain([spec()]);
     const again = engine.retain([spec()]);
-    expect(audio.fetched).toEqual([]);
-    engine.unlock();
     await settle();
     expect(audio.fetched).toEqual(['tap-1.m4a']);
+    engine.unlock();
+    await settle();
+    expect(audio.decoded).toEqual(['tap-1.m4a']);
+
+    vi.useFakeTimers();
     release();
     release();
-    await engine.play(spec());
-    expect(audio.fetched).toEqual(['tap-1.m4a']);
     again();
+    // The last page let it go, and the next took it straight back.
+    const next = engine.retain([spec()]);
+    next();
+    vi.advanceTimersByTime(RELEASE_MS - 1);
+    expect(await engine.play(spec())).toBe(true);
+    expect(audio.fetched).toEqual(['tap-1.m4a']);
+
+    vi.advanceTimersByTime(1);
     audio.clock = 1000;
-    await engine.play(spec());
+    expect(await engine.play(spec())).toBe(true);
+    expect(audio.fetched).toEqual(['tap-1.m4a', 'tap-1.m4a']);
+  });
+
+  it('keeps a sound no page retained only as long as a released one', async () => {
+    const engine = await unlocked();
+    vi.useFakeTimers();
+    expect(await engine.play(spec())).toBe(true);
+    vi.advanceTimersByTime(RELEASE_MS - 1);
+    audio.clock = 1000;
+    expect(await engine.play(spec())).toBe(true);
+    expect(audio.fetched).toEqual(['tap-1.m4a']);
+    vi.advanceTimersByTime(1);
+    audio.clock = 2000;
+    expect(await engine.play(spec())).toBe(true);
     expect(audio.fetched).toEqual(['tap-1.m4a', 'tap-1.m4a']);
   });
 });

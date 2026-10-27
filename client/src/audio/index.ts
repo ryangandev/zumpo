@@ -9,12 +9,14 @@ export type { BusSettings, SoundSettings } from './settings';
 export { createReplayGuard, useStateSounds } from './replay-guard';
 export type {
   DeriveSounds,
+  IsNewGame,
   ReplayGuard,
   ReplayGuardOptions,
   SoundEvent,
 } from './replay-guard';
 export type {
   Bus,
+  Loudness,
   PlayOptions,
   PlaySound,
   SoundBank,

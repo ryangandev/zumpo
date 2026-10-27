@@ -1,5 +1,11 @@
 import { DEFAULT_SOUND_SETTINGS, type SoundSettings } from './settings';
-import type { Bus, PlayOptions, SoundSpec, SoundVariant } from './types';
+import type {
+  Bus,
+  Loudness,
+  PlayOptions,
+  SoundSpec,
+  SoundVariant,
+} from './types';
 
 /*
  * Zumpo's sound engine: the raw Web Audio API, no library, no React.
@@ -9,8 +15,10 @@ import type { Bus, PlayOptions, SoundSpec, SoundVariant } from './types';
  * The context is made at the player's first gesture, never before, so
  * nothing plays and nothing warns before then; until it runs, every play is
  * dropped rather than queued, because a sound that arrives late accompanies
- * the wrong moment. Sounds are decoded into buffers, never streamed through a
- * media element, whose volume iOS does not let a page set.
+ * the wrong moment. The files a page retains are fetched as soon as it does,
+ * gesture or not, so the first gesture only has to decode them. Sounds are
+ * decoded into buffers, never streamed through a media element, whose volume
+ * iOS does not let a page set.
  */
 
 /** Before the first gesture there is no context: the engine is locked. */
@@ -29,12 +37,25 @@ export interface EngineOptions {
   random?: () => number;
   /** Where the audio session lives; the page's `navigator` by default. */
   navigator?: Navigator;
+  /** A media element's `canPlayType`, which picks the format to fetch first. */
+  canPlayType?: (type: string) => string;
 }
 
 /** Other players' events are this much softer than the viewer's own. */
 export const OTHER_DB = -6;
-/** A sound that cannot start this soon after it was asked for is dropped. */
-export const LATE_MS = 200;
+/**
+ * A sound that cannot start this soon after it was asked for is dropped: a
+ * tap's click must be on the tap, a game's end may come a moment after it.
+ */
+export const LATE_MS: Readonly<Record<Loudness, number>> = {
+  ui: 200,
+  event: 500,
+  stinger: 1000,
+};
+/** "Your turn" is worth hearing late rather than not at all. */
+export const HIDDEN_TAB_LATE_MS = 1000;
+/** A bank no page holds is forgotten this long after, unless one takes it again. */
+export const RELEASE_MS = 5000;
 /** Without its own `minGapMs`, a sound repeated sooner than this is dropped. */
 export const DEFAULT_MIN_GAP_MS = 40;
 /** Without its own `maxVoices`, this many copies of a sound play at once. */
@@ -56,6 +77,21 @@ export function volumeToGain(volume: number): number {
 
 export function dbToGain(db: number): number {
   return 10 ** (db / 20);
+}
+
+/** How long after it was asked for `spec` may still start. */
+export function lateMs(spec: SoundSpec): number {
+  return spec.hiddenTab
+    ? Math.max(HIDDEN_TAB_LATE_MS, LATE_MS[spec.loudness])
+    : LATE_MS[spec.loudness];
+}
+
+function canPlayType(type: string): string {
+  try {
+    return document.createElement('audio').canPlayType(type);
+  } catch {
+    return '';
+  }
 }
 
 /** Resolves when `promise` settles or after `ms`, whichever is first. */
@@ -87,6 +123,7 @@ export class AudioEngine {
   private readonly now: () => number;
   private readonly random: () => number;
   private readonly navigator: Navigator | undefined;
+  private readonly canPlayType: (type: string) => string;
 
   private ctx: AudioContext | null = null;
   private buses: Record<Bus, GainNode> | null = null;
@@ -97,13 +134,20 @@ export class AudioEngine {
   private resuming: Promise<void> | null = null;
   private settings: SoundSettings;
   private hidden = false;
-  /** The format that decoded, once one has; until then, AAC is tried first. */
+  /** The format that decoded, once one has; until then, `canPlayType`'s pick. */
   private format: Format | null = null;
+  private guessed: Format | null = null;
+  /** Fetched files not yet decoded, by address; decoding takes them. */
+  private readonly bytes = new Map<string, Promise<ArrayBuffer>>();
   /** Decoded or decoding buffers, by the variant's AAC address. */
   private readonly buffers = new Map<string, Promise<AudioBuffer>>();
   private readonly retained = new Map<
     string,
-    { spec: SoundSpec; count: number }
+    {
+      spec: SoundSpec;
+      count: number;
+      release: ReturnType<typeof setTimeout> | null;
+    }
   >();
   private readonly lastPlayed = new Map<string, number>();
   private readonly lastVariant = new Map<string, number>();
@@ -126,6 +170,7 @@ export class AudioEngine {
     this.navigator =
       options.navigator ??
       (typeof navigator === 'undefined' ? undefined : navigator);
+    this.canPlayType = options.canPlayType ?? canPlayType;
     this.settings = settings;
     this.lastState = this.state;
   }
@@ -181,16 +226,25 @@ export class AudioEngine {
   }
 
   /**
-   * Keeps these sounds decoded, from the first gesture on, until the
-   * returned function is called as many times as they were retained.
+   * Keeps these sounds ready: fetched at once, decoded from the first gesture
+   * on. Calling the returned function as many times as they were retained
+   * lets them go, after `RELEASE_MS`, so a bank the next page takes again (a
+   * route change, React's development double mount) is neither fetched nor
+   * decoded twice.
    */
   retain(specs: readonly SoundSpec[]): () => void {
     for (const spec of specs) {
-      const entry = this.retained.get(spec.id) ?? { spec, count: 0 };
+      const entry = this.retained.get(spec.id) ?? {
+        spec,
+        count: 0,
+        release: null,
+      };
       entry.count += 1;
+      if (entry.release !== null) clearTimeout(entry.release);
+      entry.release = null;
       this.retained.set(spec.id, entry);
     }
-    this.preload(specs);
+    this.prepare(specs);
     let released = false;
     return () => {
       if (released) return;
@@ -199,9 +253,8 @@ export class AudioEngine {
         const entry = this.retained.get(spec.id);
         if (!entry) continue;
         entry.count -= 1;
-        if (entry.count > 0) continue;
-        this.retained.delete(spec.id);
-        for (const variant of spec.variants) this.buffers.delete(variant.m4a);
+        if (entry.count > 0 || entry.release !== null) continue;
+        entry.release = setTimeout(() => this.forget(spec.id), RELEASE_MS);
       }
     };
   }
@@ -225,8 +278,19 @@ export class AudioEngine {
     ) {
       return dropped;
     }
+    // A sound no page retained is kept only as long as a released one.
+    if (!this.retained.has(spec.id)) this.retain([spec])();
     this.lastPlayed.set(spec.id, at);
-    return this.start(ctx, spec, this.pickVariant(spec), options, at);
+    return this.start(ctx, spec, this.pickVariant(spec), options, at).then(
+      (started) => {
+        // A play that never started holds no gap against the next one.
+        if (!started && this.lastPlayed.get(spec.id) === at) {
+          if (last === undefined) this.lastPlayed.delete(spec.id);
+          else this.lastPlayed.set(spec.id, last);
+        }
+        return started;
+      },
+    );
   }
 
   /** Lets the context go; the next gesture makes a new one. */
@@ -235,6 +299,12 @@ export class AudioEngine {
     if (!ctx) return;
     this.ctx = null;
     this.buses = null;
+    for (const [id, entry] of this.retained) {
+      if (entry.release === null) continue;
+      clearTimeout(entry.release);
+      this.retained.delete(id);
+    }
+    this.bytes.clear();
     this.buffers.clear();
     this.voices = [];
     this.resuming = null;
@@ -279,7 +349,7 @@ export class AudioEngine {
     this.buses = { effects };
     ctx.addEventListener('statechange', () => this.notify());
     this.notify();
-    this.preload([...this.retained.values()].map(({ spec }) => spec));
+    this.prepare([...this.retained.values()].map(({ spec }) => spec));
   }
 
   private resume(ctx: AudioContext): Promise<void> {
@@ -307,14 +377,56 @@ export class AudioEngine {
     return muted ? 0 : volumeToGain(volume);
   }
 
-  private preload(specs: readonly SoundSpec[]): void {
+  /** Decodes `specs` once there is a context, and fetches them until then. */
+  private prepare(specs: readonly SoundSpec[]): void {
+    if (!this.supported) return;
     const ctx = this.ctx;
-    if (!ctx) return;
     for (const spec of specs) {
       for (const variant of spec.variants) {
-        this.load(ctx, variant).catch(() => {});
+        if (ctx) this.load(ctx, variant).catch(() => {});
+        else this.fetchOnce(variant[this.preferred()]).catch(() => {});
       }
     }
+  }
+
+  private forget(id: string): void {
+    const entry = this.retained.get(id);
+    if (!entry || entry.count > 0) return;
+    this.retained.delete(id);
+    for (const variant of entry.spec.variants) {
+      this.buffers.delete(variant.m4a);
+      this.bytes.delete(variant.m4a);
+      this.bytes.delete(variant.webm);
+    }
+  }
+
+  /**
+   * The format to fetch before anything has decoded: AAC wherever a media
+   * element says it may play it, which is every browser but some Linux
+   * builds; decoding still has the last word.
+   */
+  private preferred(): Format {
+    if (this.format) return this.format;
+    this.guessed ??=
+      this.canPlayType('audio/mp4; codecs="mp4a.40.2"') === '' &&
+      this.canPlayType('audio/webm; codecs="opus"') !== ''
+        ? 'webm'
+        : 'm4a';
+    return this.guessed;
+  }
+
+  private fetchOnce(url: string): Promise<ArrayBuffer> {
+    let pending = this.bytes.get(url);
+    if (!pending) {
+      const fetching = this.fetchBytes(url);
+      pending = fetching;
+      this.bytes.set(url, fetching);
+      // A failure is forgotten, so a later play fetches again.
+      fetching.catch(() => {
+        if (this.bytes.get(url) === fetching) this.bytes.delete(url);
+      });
+    }
+    return pending;
   }
 
   private load(ctx: AudioContext, variant: SoundVariant): Promise<AudioBuffer> {
@@ -333,20 +445,23 @@ export class AudioEngine {
   }
 
   /**
-   * Decodes the format that worked before, or AAC first, and the other one
-   * when that fails: what a browser can decode is found by decoding, since
-   * `canPlayType` does not say what `decodeAudioData` takes.
+   * Decodes the format that worked before, or the preferred one, and the
+   * other one when that fails: what a browser can decode is found by
+   * decoding, since `canPlayType` does not say what `decodeAudioData` takes.
    */
   private async decode(
     ctx: AudioContext,
     variant: SoundVariant,
   ): Promise<AudioBuffer> {
     const order: Format[] =
-      this.format === 'webm' ? ['webm', 'm4a'] : ['m4a', 'webm'];
+      this.preferred() === 'webm' ? ['webm', 'm4a'] : ['m4a', 'webm'];
     let failure: unknown = new Error('No format decoded');
     for (const format of order) {
+      const url = variant[format];
       // A failed fetch is not the format's fault, so it is not retried as one.
-      const bytes = await this.fetchBytes(variant[format]);
+      const bytes = await this.fetchOnce(url);
+      // Decoding detaches the bytes, so they are kept only until it runs.
+      this.bytes.delete(url);
       try {
         const buffer = await ctx.decodeAudioData(bytes);
         this.format ??= format;
@@ -387,13 +502,13 @@ export class AudioEngine {
         const resuming =
           this.resuming ?? (this.everRan ? this.resume(ctx) : null);
         if (!resuming) return false;
-        await within(resuming, LATE_MS - (this.now() - at));
+        await within(resuming, lateMs(spec) - (this.now() - at));
       }
       buffer = await this.load(ctx, variant);
     } catch {
       return false;
     }
-    if (this.now() - at > LATE_MS) return false;
+    if (this.now() - at > lateMs(spec)) return false;
     const effects = this.buses?.effects;
     if (this.ctx !== ctx || !effects || ctx.state !== 'running') return false;
     if (this.hidden && !spec.hiddenTab) return false;

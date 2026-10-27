@@ -31,6 +31,8 @@ export interface MockAudio {
   readonly made: number;
   /** The address of each file fetched, in order. */
   readonly fetched: string[];
+  /** The address of each file decoded, in order. */
+  readonly decoded: string[];
   /** Milliseconds the engine reads as now. */
   clock: number;
   /** What `random()` returns next, in order; 0 once they run out. */
@@ -58,6 +60,7 @@ export function useMockAudio(): MockAudio {
     context: null as MockContext | null,
     made: 0,
     fetched: [] as string[],
+    decoded: [] as string[],
     clock: 0,
     rolls: [] as number[],
     undecodable: new Set<string>(),
@@ -82,6 +85,7 @@ export function useMockAudio(): MockAudio {
             }
             context.decodeAudioData = ((bytes: ArrayBuffer) => {
               const url = audio.bytes.get(bytes) ?? '';
+              audio.decoded.push(url);
               if (audio.undecodable.has(url)) {
                 return Promise.reject(new DOMException('bad', 'EncodingError'));
               }
@@ -142,6 +146,7 @@ export function useMockAudio(): MockAudio {
     audio.context = null;
     audio.made = 0;
     audio.fetched = [];
+    audio.decoded = [];
     audio.clock = 0;
     audio.rolls = [];
     audio.undecodable = new Set();
@@ -163,6 +168,7 @@ export function spec(over: Partial<SoundSpec> = {}): SoundSpec {
   return {
     id,
     group: 'test',
+    loudness: 'ui',
     gainDb: 0,
     variants: [{ m4a: `${id}-1.m4a`, webm: `${id}-1.webm`, duration: 0.1 }],
     ...over,

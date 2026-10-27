@@ -100,26 +100,45 @@ async function open(page: Page) {
 
 /** A real click somewhere quiet, which unlocks audio and decodes the bank. */
 async function unlock(page: Page) {
-  const decoded = page.waitForResponse((response) =>
-    /test-blip-\d\.(m4a|webm)/.test(response.url()),
-  );
   await page.getByRole('heading', { name: 'Sound lab' }).click();
   await expect(page.getByTestId('engine-state')).toHaveText('running');
-  return decoded;
+}
+
+/** Every sound file the page fetches, from before it loads. */
+function soundFiles(page: Page) {
+  const files: { url: string; ok: boolean }[] = [];
+  page.on('response', (response) => {
+    if (/\.(m4a|webm)$/.test(response.url())) {
+      files.push({ url: response.url(), ok: response.ok() });
+    }
+  });
+  return files;
+}
+
+/** Every sound file takes `ms` longer, as on a slow phone connection. */
+async function slowSounds(page: Page, ms: number) {
+  await page.route(/\.(m4a|webm)$/, async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+    await route.continue();
+  });
 }
 
 test('plays nothing before a gesture, and the sound after one', async ({
   page,
 }) => {
   await page.addInitScript(installProbe);
+  const files = soundFiles(page);
   const errors = await open(page);
   await expect(page.getByTestId('engine-state')).toHaveText('locked');
+  // The bank is fetched at once, as files, never data: URLs the CSP would
+  // refuse; no context exists to decode them yet.
+  await expect.poll(() => files.length).toBe(2);
+  for (const file of files) {
+    expect(file.ok).toBe(true);
+    expect(file.url).toMatch(/^http:\/\/localhost:\d+\/.*test-blip-\d\.m4a$/);
+  }
 
-  // Input a script makes is no gesture: no context, nothing fetched.
-  const fetched: string[] = [];
-  page.on('request', (request) => {
-    if (/\.(m4a|webm)$/.test(request.url())) fetched.push(request.url());
-  });
+  // Input a script makes is no gesture: no context, nothing played.
   await playButton(page).evaluate((button: HTMLElement) => {
     for (const type of ['pointerdown', 'pointerup', 'mousedown']) {
       button.dispatchEvent(new PointerEvent(type, { bubbles: true }));
@@ -132,14 +151,12 @@ test('plays nothing before a gesture, and the sound after one', async ({
   });
   await page.waitForTimeout(300);
   expect(await probe(page)).toEqual({ contexts: 0, starts: 0 });
-  expect(fetched).toEqual([]);
   await expect(page.getByTestId('engine-state')).toHaveText('locked');
 
-  const response = await unlock(page);
-  expect(response.ok()).toBe(true);
-  // A file, never a data: URL, which the CSP would refuse.
-  expect(response.url()).toMatch(/^http:\/\/localhost:\d+\//);
+  // The first gesture decodes what was fetched, and fetches nothing again.
+  await unlock(page);
   await page.waitForTimeout(300);
+  expect(files).toHaveLength(2);
 
   await playButton(page).click();
   await expect.poll(async () => (await probe(page)).starts).toBe(1);
@@ -184,6 +201,34 @@ test('applies the volume, the mute, and the softer other player', async ({
   await page.reload();
   await expect(page.getByLabel('Effects volume')).toHaveValue('50');
   await expect(page.getByLabel('Mute effects')).toBeChecked();
+  expect(errors).toEqual([]);
+});
+
+test('plays at the first gesture on a slow network, from files fetched before it', async ({
+  page,
+}) => {
+  await page.addInitScript(installProbe);
+  await slowSounds(page, 250);
+  const files = soundFiles(page);
+  const errors = await open(page);
+  await expect.poll(() => files.length).toBe(2);
+  expect((await probe(page)).contexts).toBe(0);
+
+  // The very first gesture is the play itself.
+  await playButton(page).click();
+  await expect.poll(async () => (await probe(page)).starts).toBe(1);
+  expect(errors).toEqual([]);
+});
+
+test('plays at a first gesture that comes while its file is still on the way', async ({
+  page,
+}) => {
+  await page.addInitScript(installProbe);
+  // Under a tap's 200 ms, so the click waits for the file rather than drop it.
+  await slowSounds(page, 120);
+  const errors = await open(page);
+  await playButton(page).click();
+  await expect.poll(async () => (await probe(page)).starts).toBe(1);
   expect(errors).toEqual([]);
 });
 

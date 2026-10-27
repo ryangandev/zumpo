@@ -77,12 +77,16 @@ describe('SoundProvider', () => {
     expect(audio.urlOf(source!)).toBe('tap-1.m4a');
   });
 
-  it("decodes the page's bank at the first gesture", async () => {
+  it("fetches the page's bank once at once, and decodes it at the first gesture", async () => {
+    // StrictMode mounts twice; the second mount takes the bank straight back.
     renderPage();
-    expect(audio.fetched).toEqual([]);
-    await userEvent.click(document.body);
     await act(settle);
     expect(audio.fetched.toSorted()).toEqual(['chime-1.m4a', 'tap-1.m4a']);
+    expect(audio.decoded).toEqual([]);
+    await userEvent.click(document.body);
+    await act(settle);
+    expect(audio.decoded.toSorted()).toEqual(['chime-1.m4a', 'tap-1.m4a']);
+    expect(audio.fetched).toHaveLength(2);
   });
 
   it('remembers a new volume and mute, clamped, and applies them', async () => {

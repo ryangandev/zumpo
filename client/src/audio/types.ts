@@ -21,10 +21,18 @@ export interface SoundVariant {
   readonly duration: number;
 }
 
+/**
+ * How loud the build made a sound, and so what it is: `ui` taps and toggles,
+ * `event` a move or a score, `stinger` a game's start or end.
+ */
+export type Loudness = 'ui' | 'event' | 'stinger';
+
 /** A declared sound, as `audio/sounds.json` describes it after the build. */
 export interface SoundSpec {
   readonly id: string;
   readonly group: string;
+  /** Its loudness class, which also sets how late it may still start. */
+  readonly loudness: Loudness;
   /** The relative mix in dB, on top of the loudness the build normalised to. */
   readonly gainDb: number;
   /** One is picked at random each time, never the same one twice in a row. */
