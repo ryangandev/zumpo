@@ -32,7 +32,7 @@ They are not copied here, so there is one place to change them.
 | 12 / Doodle Chain / complete flow    | `162:65089` | DC01-DC14 desktop, DC15-DC20 phone                                                    |
 | 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
 | 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
-| 15 / Phone in play                   | `163:63239` | PH01-PH06, the one phone layout every game plays in                                   |
+| 15 / Phone in play                   | `163:63239` | PH01-PH09, the one phone layout every game plays in                                   |
 | 16 / Sound                           | `253:48727` | SO01-SO07, the sound menu on desktop and phone, and in Chinese                        |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
@@ -175,7 +175,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 268 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 269 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 
