@@ -38,11 +38,12 @@ describe('getting ready for the next game', () => {
     } = await snapTable(['Ryan', 'Maya', 'Leo']);
     const room = () => harness.server.rooms.get(roomId)!;
 
+    // Listen before asking: Ryan's state can land before Maya's answer.
+    const seen = waitForState(ryan, (state) => state.ready.length === 1);
     expect(await request(maya, 'room:ready', roomId, true)).toEqual({
       ok: true,
     });
-    const seen = await waitForState(ryan, (state) => state.ready.length === 1);
-    expect(seen.ready).toEqual([maya.playerId]);
+    expect((await seen).ready).toEqual([maya.playerId]);
     expect(room().isGameStarted).toBe(false);
 
     // Taking it back, and saying it again.
@@ -50,13 +51,13 @@ describe('getting ready for the next game', () => {
     expect(room().ready.size).toBe(0);
     await request(maya, 'room:ready', roomId, true);
 
+    const started = waitForState(ryan, (state) => state.isGameStarted);
     expect(await request(leo, 'room:ready', roomId, true)).toEqual({
       ok: true,
     });
     expect(room().isGameStarted).toBe(true);
     // Whoever said Ready has had their say: the next game starts afresh.
-    const started = await waitForState(ryan, (state) => state.isGameStarted);
-    expect(started.ready).toEqual([]);
+    expect((await started).ready).toEqual([]);
     expect((await request(leo, 'room:ready', roomId, true)).error?.type).toBe(
       'gameAlreadyStarted',
     );
