@@ -73,7 +73,9 @@ export function RoomBar({
       )}
       <div className={styles.identity}>
         <h1 className={styles.game}>
-          <span ref={gameName}>{game}</span>
+          <span ref={gameName} className={styles.name}>
+            {game}
+          </span>
         </h1>
         {phone ? (
           <p className={styles.context}>
@@ -145,6 +147,12 @@ const SMALLEST_NAME = 0.6;
  * leave it, as the turn bar's main line is, rather than cut: at 390 px every
  * game's name fits as Figma draws it (SO07), and a narrower phone shrinks
  * the longest a little. It is measured again as the bar or the name changes.
+ *
+ * A scaled inline box sits on the heading's baseline with its own, smaller
+ * line, which reaches a little out of the heading's and would make the bar
+ * taller than 48 px. So the scaled name takes the heading's whole line, its
+ * line height scaled up as its size is scaled down, and lies at its top
+ * (`.name`): the bar keeps its height, the name centred in its line.
  */
 function useFittedName(phone: boolean) {
   const name = useRef<HTMLSpanElement>(null);
@@ -152,16 +160,23 @@ function useFittedName(phone: boolean) {
     const element = name.current;
     const heading = element?.parentElement;
     if (!element || !heading) return;
-    const fit = () => {
+    const unscale = () => {
       element.style.removeProperty('zoom');
+      element.style.removeProperty('line-height');
+    };
+    const fit = () => {
+      unscale();
       if (!phone) return;
       const given = heading.getBoundingClientRect().width;
       const needed = element.getBoundingClientRect().width;
       if (given > 0 && needed > given) {
-        const zoom = fittingZoom(element, given, needed);
+        let zoom = fittingZoom(element, given, needed);
         if (zoom < SMALLEST_NAME) {
-          element.style.setProperty('zoom', String(SMALLEST_NAME));
+          zoom = SMALLEST_NAME;
+          element.style.setProperty('zoom', String(zoom));
         }
+        const line = parseFloat(getComputedStyle(heading).lineHeight);
+        element.style.setProperty('line-height', `${line / zoom}px`);
       }
     };
     fit();
@@ -180,7 +195,7 @@ function useFittedName(phone: boolean) {
       observer.disconnect();
       words.disconnect();
       document.fonts?.removeEventListener('loadingdone', fit);
-      element.style.removeProperty('zoom');
+      unscale();
     };
   }, [phone]);
   return name;

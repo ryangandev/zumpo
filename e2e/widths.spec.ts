@@ -334,3 +334,49 @@ test('gomoku fits every width', async ({ player }) => {
   await expect(maya.getByText('Game 1').first()).toBeVisible();
   await fitsEveryWidth(maya, 'a board in a room');
 });
+
+/**
+ * A phone's room bar is one row 48 px tall, whatever the game: the longest
+ * names are scaled down to the width its icon buttons leave them, and a name
+ * scaled is laid in the heading's line so it never makes the bar taller
+ * (useFittedName). The widths are the narrowest phones and those where a
+ * scaled name once grew the bar by a fraction of a pixel.
+ */
+test('a phone room bar is 48 px tall with every long name whole', async ({
+  player,
+}) => {
+  const maya = await player('Maya');
+  for (const game of [
+    'draw-and-guess',
+    'doodle-chain',
+    'code-breaker',
+    'minesweeper',
+  ] as const) {
+    await createRoom(maya, game);
+    const bar = maya.getByRole('banner');
+    await expect(bar.getByRole('heading', { level: 1 })).toBeVisible();
+    for (const width of [320, 360, 368, 375, 376]) {
+      await maya.setViewportSize({ width, height: 800 });
+      await expect
+        .poll(
+          () =>
+            bar.evaluate((header) => {
+              const heading = header.querySelector('h1')!;
+              const box = heading.getBoundingClientRect();
+              const name = heading.firstElementChild!.getBoundingClientRect();
+              return {
+                height: header.getBoundingClientRect().height,
+                cut:
+                  heading.scrollWidth > heading.clientWidth ||
+                  name.right > box.right + 0.5 ||
+                  name.top < box.top - 1 ||
+                  name.bottom > box.bottom + 1,
+              };
+            }),
+          { message: `${game} at ${width} px` },
+        )
+        .toEqual({ height: 48, cut: false });
+    }
+    await maya.setViewportSize({ width: 1440, height: 900 });
+  }
+});

@@ -43,6 +43,13 @@
   white-space: nowrap;
 }
 
+/* The name scaled to fit a phone's bar takes the heading's whole line and
+   lies at its top, so its smaller line never makes the bar taller
+   (useFittedName in room-bar.tsx). */
+.name {
+  vertical-align: top;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
