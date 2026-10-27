@@ -34,7 +34,9 @@ const derive: DeriveSounds<Table, Sound> = (prev, next) => {
   return events;
 };
 
-const isNewGame = (prev: Table, next: Table) => !prev.started && next.started;
+/** Each game has its number, as a game's summary or counter tells one apart. */
+const isNewGame = (prev: Table, next: Table) => next.game > prev.game;
+const never = () => false;
 
 const table = (card: number | null, by = ME, game = 1): Table => ({
   game,
@@ -85,12 +87,12 @@ function mount(state: Table | null, epoch: number | null = 1) {
 
 describe('createReplayGuard', () => {
   it('plays nothing for the first state, as on arrival or after a refresh', () => {
-    const guard = createReplayGuard(derive);
+    const guard = createReplayGuard(derive, { isNewGame });
     expect(guard.observe(table(5))).toEqual([]);
   });
 
   it("plays what changed after it, the viewer's own and another player's", () => {
-    const guard = createReplayGuard(derive);
+    const guard = createReplayGuard(derive, { isNewGame });
     guard.observe(table(3));
     expect(guard.observe(table(4))).toEqual([
       { sound: 'took', key: 'take:4', other: false },
@@ -101,7 +103,7 @@ describe('createReplayGuard', () => {
   });
 
   it('only takes the first state after a reconnect as a new baseline', () => {
-    const guard = createReplayGuard(derive);
+    const guard = createReplayGuard(derive, { isNewGame });
     guard.observe(table(3));
     expect(guard.observe(table(9, 'bob'), true)).toEqual([]);
     expect(guard.observe(table(10))).toEqual([
@@ -110,7 +112,7 @@ describe('createReplayGuard', () => {
   });
 
   it('never plays one event twice, when a state repeats or flips back', () => {
-    const guard = createReplayGuard(derive);
+    const guard = createReplayGuard(derive, { isNewGame });
     const four = table(4);
     guard.observe(table(3));
     expect(guard.observe(four)).toHaveLength(1);
@@ -119,8 +121,8 @@ describe('createReplayGuard', () => {
     expect(guard.observe(table(4))).toEqual([]);
   });
 
-  it('forgets the keys at a new baseline, where a new game may have begun', () => {
-    // Away as game 1 ended; back in game 2, which had already started.
+  it('forgets the keys when a new game began while away', () => {
+    // Away mid-game 1; back mid-game 2.
     const guard = createReplayGuard(derive, { isNewGame });
     guard.observe(table(3));
     guard.observe(table(4));
@@ -144,7 +146,7 @@ describe('createReplayGuard', () => {
   });
 
   it('without a new game, keys stay heard', () => {
-    const guard = createReplayGuard(derive);
+    const guard = createReplayGuard(derive, { isNewGame: never });
     guard.observe(table(4));
     guard.observe(table(5));
     guard.observe({ ...table(null), started: false });
@@ -152,14 +154,26 @@ describe('createReplayGuard', () => {
     expect(guard.observe(table(5, ME, 2))).toEqual([]);
   });
 
+  it('keeps the keys across a reconnect, so a state that flips back is silent', () => {
+    const guard = createReplayGuard(derive, { isNewGame });
+    guard.observe(table(3));
+    guard.observe(table(4));
+    // Back online to a snapshot from before take 4, then take 4 again.
+    guard.observe(table(3), true);
+    expect(guard.observe(table(4))).toEqual([]);
+    expect(guard.observe(table(5))).toEqual([
+      { sound: 'took', key: 'take:5', other: false },
+    ]);
+  });
+
   it("plays one sound once per change, as the viewer's own if any is", () => {
-    const guard = createReplayGuard(both);
+    const guard = createReplayGuard(both, { isNewGame: never });
     guard.observe(0);
     expect(guard.observe(1)).toEqual([{ sound: 'took', key: 'b' }]);
   });
 
   it('remembers only so many keys', () => {
-    const guard = createReplayGuard(keyed, { memory: 2 });
+    const guard = createReplayGuard(keyed, { isNewGame: never, memory: 2 });
     guard.observe(0);
     expect(guard.observe(1)).toHaveLength(1);
     expect(guard.observe(2)).toHaveLength(1);

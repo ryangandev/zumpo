@@ -7,8 +7,13 @@ import type { PlaySound } from './types';
  * guard makes that safe. The first state a page sees, and the first after a
  * reconnect, only become the baseline, so arriving, refreshing or coming back
  * plays nothing that already happened; and each event has a key, so a state
- * that repeats or flips back never plays one event twice. Keys are forgotten
- * at a new game and at a new baseline.
+ * that repeats or flips back never plays one event twice, across a reconnect
+ * too. Keys are forgotten only when a new game begins, which every game must
+ * say how to tell (`isNewGame`), since its keys (`take:4`) come round again.
+ *
+ * The guard lives as long as the component that holds it: use it in the
+ * room's page, never in a component a phase mounts, or every phase change
+ * starts it over and the change into that phase is lost.
  */
 
 /** Something a state change should be heard as. */
@@ -29,12 +34,17 @@ export type DeriveSounds<State, Id extends string> = (
   next: State,
 ) => readonly SoundEvent<Id>[];
 
+/**
+ * True when `next` is in a later game than `prev`. The two need not be
+ * consecutive: across a reconnect `prev` may be mid-game 1 and `next`
+ * mid-game 2, so compare what a game leaves behind (the last game's summary,
+ * a game number) rather than a phase change between them.
+ */
+export type IsNewGame<State> = (prev: State, next: State) => boolean;
+
 export interface ReplayGuardOptions<State> {
-  /**
-   * True when `next` begins a new game, whose keys (`take:4` again) may be
-   * heard even though the last game's were.
-   */
-  isNewGame?: (prev: State, next: State) => boolean;
+  /** Whether a new game began, whose keys may be heard again. */
+  isNewGame: IsNewGame<State>;
   /** How many keys are remembered; the oldest go first. */
   memory?: number;
 }
@@ -51,7 +61,7 @@ const MEMORY = 128;
 
 export function createReplayGuard<State, Id extends string>(
   derive: DeriveSounds<State, Id>,
-  { isNewGame, memory = MEMORY }: ReplayGuardOptions<State> = {},
+  { isNewGame, memory = MEMORY }: ReplayGuardOptions<State>,
 ): ReplayGuard<State, Id> {
   let prev: { state: State } | null = null;
   let heard: string[] = [];
@@ -59,14 +69,12 @@ export function createReplayGuard<State, Id extends string>(
     observe(next, resync = false) {
       const base = prev;
       prev = { state: next };
-      if (base === null || resync) {
-        // Whatever happened while away is in the new baseline, and a new
-        // game may have begun there, whose keys must not count as heard.
-        heard = [];
-        return [];
-      }
+      if (base === null) return [];
       if (Object.is(base.state, next)) return [];
-      if (isNewGame?.(base.state, next)) heard = [];
+      if (isNewGame(base.state, next)) heard = [];
+      // What happened while away is in the new baseline; the keys heard
+      // before it are kept, so a state that flips back is still silent.
+      if (resync) return [];
       const out: SoundEvent<Id>[] = [];
       for (const event of derive(base.state, next)) {
         if (heard.includes(event.key)) continue;
@@ -100,7 +108,7 @@ export function useStateSounds<State, Id extends string>(
     derive: DeriveSounds<State, Id>;
     play: PlaySound<Id>;
     epoch?: unknown;
-    isNewGame?: (prev: State, next: State) => boolean;
+    isNewGame: IsNewGame<State>;
   },
 ): void {
   const latest = useRef({ derive, isNewGame });
@@ -119,8 +127,7 @@ export function useStateSounds<State, Id extends string>(
       guard: createReplayGuard<State, Id>(
         (prev, next) => latest.current.derive(prev, next),
         {
-          isNewGame: (prev, next) =>
-            latest.current.isNewGame?.(prev, next) ?? false,
+          isNewGame: (prev, next) => latest.current.isNewGame(prev, next),
         },
       ),
       epoch,
