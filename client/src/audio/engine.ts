@@ -262,7 +262,8 @@ export class AudioEngine {
   /**
    * Plays one variant of `spec` on the effects bus. Resolves with whether it
    * started; it is dropped while locked, muted, hidden (unless `hiddenTab`),
-   * inside its minimum gap, or when it could not start in time.
+   * inside its minimum gap (of the same step, for a step asked for), or when
+   * it could not start in time.
    */
   play(spec: SoundSpec, options: PlayOptions = {}): Promise<boolean> {
     const ctx = this.ctx;
@@ -270,8 +271,14 @@ export class AudioEngine {
     if (this.busGain('effects') === 0) return dropped;
     if (this.hidden && !spec.hiddenTab) return dropped;
     if (spec.variants.length === 0) return dropped;
+    if (spec.steps && options.variant === undefined && import.meta.env.DEV) {
+      console.warn(`Sound "${spec.id}" is stepped: say which step to play.`);
+    }
     const at = this.now();
-    const last = this.lastPlayed.get(spec.id);
+    // A step is a repeat only of itself: the next step is news, however soon.
+    const gapKey =
+      options.variant === undefined ? spec.id : `${spec.id}#${options.variant}`;
+    const last = this.lastPlayed.get(gapKey);
     if (
       last !== undefined &&
       at - last < (spec.minGapMs ?? DEFAULT_MIN_GAP_MS)
@@ -280,7 +287,7 @@ export class AudioEngine {
     }
     // A sound no page retained is kept only as long as a released one.
     if (!this.retained.has(spec.id)) this.retain([spec])();
-    this.lastPlayed.set(spec.id, at);
+    this.lastPlayed.set(gapKey, at);
     return this.start(
       ctx,
       spec,
@@ -289,9 +296,9 @@ export class AudioEngine {
       at,
     ).then((started) => {
       // A play that never started holds no gap against the next one.
-      if (!started && this.lastPlayed.get(spec.id) === at) {
-        if (last === undefined) this.lastPlayed.delete(spec.id);
-        else this.lastPlayed.set(spec.id, last);
+      if (!started && this.lastPlayed.get(gapKey) === at) {
+        if (last === undefined) this.lastPlayed.delete(gapKey);
+        else this.lastPlayed.set(gapKey, last);
       }
       return started;
     });

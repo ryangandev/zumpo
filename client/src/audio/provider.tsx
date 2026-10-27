@@ -18,7 +18,14 @@ import {
   type BusSettings,
   type SoundSettings,
 } from './settings';
-import type { Bus, PlaySound, SoundBank, SoundSpec } from './types';
+import type {
+  Bus,
+  PlayOptions,
+  PlaySound,
+  SoundBank,
+  SoundSpec,
+  SteppedId,
+} from './types';
 
 interface SoundState {
   engine: AudioEngine;
@@ -107,16 +114,16 @@ function useSoundState(): SoundState {
  * gesture, while muted, without Web Audio, and while the page is hidden
  * (except a `hiddenTab` sound); it never throws.
  */
-export function useSounds<Id extends string>(
-  bank: SoundBank<Id>,
-): PlaySound<Id> {
+export function useSounds<Bank extends SoundBank>(
+  bank: Bank,
+): PlaySound<keyof Bank & string, SteppedId<Bank>> {
   const { engine } = useSoundState();
   useEffect(
     () => engine.retain(Object.values<SoundSpec>(bank)),
     [engine, bank],
   );
-  return useCallback<PlaySound<Id>>(
-    (id, options) => {
+  return useCallback(
+    (id: string, options?: PlayOptions) => {
       const spec: SoundSpec | undefined = bank[id];
       if (spec) void engine.play(spec, options);
     },

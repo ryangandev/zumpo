@@ -35,11 +35,19 @@ export interface SoundSpec {
   readonly loudness: Loudness;
   /** The relative mix in dB, on top of the loudness the build normalised to. */
   readonly gainDb: number;
-  /** One is picked at random each time, never the same one twice in a row. */
+  /**
+   * One is picked at random each time, never the same one twice in a row;
+   * for a stepped sound the page names the step.
+   */
   readonly variants: readonly SoundVariant[];
+  /**
+   * The variants are steps in order (a clock's last seconds, a streak rising
+   * up the scale), not takes: each play names one with `variant`.
+   */
+  readonly steps?: boolean;
   /** Each play is detuned by up to this many semitones either way. */
   readonly pitchSpread?: number;
-  /** A repeat sooner than this is dropped. */
+  /** A repeat sooner than this is dropped; another step is no repeat. */
   readonly minGapMs?: number;
   /** Copies at once; one more stops the oldest. */
   readonly maxVoices?: number;
@@ -56,16 +64,24 @@ export interface PlayOptions {
   /** Another player's doing: plays about 6 dB softer than the viewer's own. */
   other?: boolean;
   /**
-   * Which variant, counting from 1 as the masters do (`masters/<id>/<n>.wav`),
-   * for a sound whose variants are steps rather than takes: a countdown's
-   * seconds, a streak rising up the scale. Past the last it plays the last.
-   * Without it a variant is picked at random.
+   * Which step of a stepped sound, counting from 1 as the masters do
+   * (`masters/<id>/<n>.wav`); past the last it plays the last. A sound of
+   * takes ignores it and picks one at random.
    */
   variant?: number;
 }
 
-/** Plays one of a bank's sounds, if sound is on and unlocked; never throws. */
-export type PlaySound<Id extends string> = (
-  id: Id,
-  options?: PlayOptions,
-) => void;
+/** The ids of a bank's stepped sounds, which every play must give a step. */
+export type SteppedId<Bank> = {
+  [Id in keyof Bank]: Bank[Id] extends { readonly steps: true } ? Id : never;
+}[keyof Bank] &
+  string;
+
+/**
+ * Plays one of a bank's sounds, if sound is on and unlocked; never throws.
+ * A stepped sound (`Stepped`) must say which step.
+ */
+export interface PlaySound<Id extends string, Stepped extends Id = never> {
+  (id: Exclude<Id, Stepped>, options?: PlayOptions): void;
+  (id: Stepped, options: PlayOptions & { variant: number }): void;
+}

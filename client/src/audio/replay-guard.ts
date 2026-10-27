@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { PlaySound } from './types';
+import type { PlayOptions, PlaySound } from './types';
 
 /*
  * Game sounds come from the difference between two snapshots, never from the
@@ -16,25 +16,32 @@ import type { PlaySound } from './types';
  * starts it over and the change into that phase is lost.
  */
 
-/** Something a state change should be heard as. */
-export interface SoundEvent<Id extends string> {
-  sound: Id;
-  /**
-   * What happened, unique within one game: `take:12`, `move:31`,
-   * `turn:bob:4`. An event whose key was heard before is dropped.
-   */
-  key: string;
-  /** Another player's doing: plays about 6 dB softer. */
-  other?: boolean;
-  /** Which step of a stepped sound, from 1 (see `PlayOptions.variant`). */
-  variant?: number;
-}
+/**
+ * Something a state change should be heard as. A stepped sound (`Stepped`,
+ * see `SteppedId`) must say which step.
+ */
+export type SoundEvent<Id extends string, Stepped extends Id = never> = {
+  [S in Id]: {
+    sound: S;
+    /**
+     * What happened, unique within one game: `take:12`, `move:31`,
+     * `turn:bob:4`. An event whose key was heard before is dropped.
+     */
+    key: string;
+    /** Another player's doing: plays about 6 dB softer. */
+    other?: boolean;
+  } & (S extends Stepped
+    ? /** Which step, from 1 (see `PlayOptions.variant`). */
+      { variant: number }
+    : { variant?: number });
+}[Id];
 
 /** A game's pure rule from one state to the next to what is heard. */
-export type DeriveSounds<State, Id extends string> = (
-  prev: State,
-  next: State,
-) => readonly SoundEvent<Id>[];
+export type DeriveSounds<
+  State,
+  Id extends string,
+  Stepped extends Id = never,
+> = (prev: State, next: State) => readonly SoundEvent<Id, Stepped>[];
 
 /**
  * True when `next` is in a later game than `prev`. The two need not be
@@ -51,20 +58,32 @@ export interface ReplayGuardOptions<State> {
   memory?: number;
 }
 
-export interface ReplayGuard<State, Id extends string> {
+export interface ReplayGuard<
+  State,
+  Id extends string,
+  Stepped extends Id = never,
+> {
   /**
    * The next state, and what to play for it. `resync` marks the first state
    * after a (re)connection, which only becomes the baseline.
    */
-  observe(next: State, resync?: boolean): SoundEvent<Id>[];
+  observe(next: State, resync?: boolean): SoundEvent<Id, Stepped>[];
 }
 
 const MEMORY = 128;
 
-export function createReplayGuard<State, Id extends string>(
-  derive: DeriveSounds<State, Id>,
+/** The higher of two steps, either of which may be missing. */
+const higher = (a: number | undefined, b: number | undefined) =>
+  a === undefined ? b : b === undefined ? a : Math.max(a, b);
+
+export function createReplayGuard<
+  State,
+  Id extends string,
+  Stepped extends Id = never,
+>(
+  derive: DeriveSounds<State, Id, Stepped>,
   { isNewGame, memory = MEMORY }: ReplayGuardOptions<State>,
-): ReplayGuard<State, Id> {
+): ReplayGuard<State, Id, Stepped> {
   let prev: { state: State } | null = null;
   let heard: string[] = [];
   return {
@@ -77,16 +96,23 @@ export function createReplayGuard<State, Id extends string>(
       // What happened while away is in the new baseline; the keys heard
       // before it are kept, so a state that flips back is still silent.
       if (resync) return [];
-      const out: SoundEvent<Id>[] = [];
+      const out: SoundEvent<Id, Stepped>[] = [];
       for (const event of derive(base.state, next)) {
         if (heard.includes(event.key)) continue;
         heard.push(event.key);
         if (heard.length > memory) heard.shift();
         // One diff can hold several events of one sound (the server
-        // coalesces a run): it is heard once, as the viewer's own if any is.
+        // coalesces a run, two players score at once): it is heard once, as
+        // the viewer's own if any is, at the highest step any of them reached.
         const same = out.findIndex((e) => e.sound === event.sound);
-        if (same === -1) out.push(event);
-        else if (out[same]!.other && !event.other) out[same] = event;
+        if (same === -1) {
+          out.push(event);
+          continue;
+        }
+        const kept = out[same]!;
+        const pick = kept.other && !event.other ? event : kept;
+        const variant = higher(kept.variant, event.variant);
+        out[same] = variant === pick.variant ? pick : { ...pick, variant };
       }
       return out;
     },
@@ -99,7 +125,11 @@ export function createReplayGuard<State, Id extends string>(
  * the session's `connection`: the first state after it changes is only a
  * baseline. A null `state` (nothing yet) is skipped.
  */
-export function useStateSounds<State, Id extends string>(
+export function useStateSounds<
+  State,
+  Id extends string,
+  Stepped extends Id = never,
+>(
   state: State | null,
   {
     derive,
@@ -107,8 +137,9 @@ export function useStateSounds<State, Id extends string>(
     epoch = null,
     isNewGame,
   }: {
-    derive: DeriveSounds<State, Id>;
-    play: PlaySound<Id>;
+    // The steps come from `play`, the bank's own; `derive` must give them.
+    derive: DeriveSounds<State, Id, NoInfer<Stepped>>;
+    play: PlaySound<Id, Stepped>;
     epoch?: unknown;
     isNewGame: IsNewGame<State>;
   },
@@ -118,7 +149,7 @@ export function useStateSounds<State, Id extends string>(
     latest.current = { derive, isNewGame };
   });
   const track = useRef<{
-    guard: ReplayGuard<State, Id>;
+    guard: ReplayGuard<State, Id, Stepped>;
     epoch: unknown;
     resync: boolean;
     last: { state: State } | null;
@@ -126,7 +157,7 @@ export function useStateSounds<State, Id extends string>(
 
   useEffect(() => {
     const seen = (track.current ??= {
-      guard: createReplayGuard<State, Id>(
+      guard: createReplayGuard<State, Id, Stepped>(
         (prev, next) => latest.current.derive(prev, next),
         {
           isNewGame: (prev, next) => latest.current.isNewGame(prev, next),
@@ -148,8 +179,10 @@ export function useStateSounds<State, Id extends string>(
     seen.last = { state };
     const events = seen.guard.observe(state, seen.resync);
     seen.resync = false;
+    // Each event already carries the step its sound needs.
+    const playAny = play as (id: Id, options?: PlayOptions) => void;
     for (const { sound, other, variant } of events) {
-      play(sound, variant === undefined ? { other } : { other, variant });
+      playAny(sound, variant === undefined ? { other } : { other, variant });
     }
   }, [state, epoch, play]);
 }

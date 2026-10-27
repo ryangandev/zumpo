@@ -7,6 +7,7 @@ import {
   type DeriveSounds,
   type SoundEvent,
 } from './replay-guard';
+import type { PlayOptions, PlaySound } from './types';
 
 /** A slice of a Snap-like room: whose take it was, and which game. */
 interface Table {
@@ -61,7 +62,7 @@ function Room({
 }: {
   state: Table | null;
   epoch: number | null;
-  play: (sound: Sound, options?: { other?: boolean }) => void;
+  play: PlaySound<Sound>;
 }) {
   useStateSounds(state, { derive, play, epoch, isNewGame });
   return null;
@@ -220,33 +221,72 @@ describe('useStateSounds', () => {
   });
 });
 
-/** Seconds left on a deadline: each of the last three is its own step. */
-const countdown: DeriveSounds<number, 'tick'> = (prev, next) =>
-  next < prev && next <= 3
-    ? [{ sound: 'tick', key: `tick:${next}`, variant: 4 - next }]
-    : [];
+/**
+ * A streak sound rising one step per point this round. Its key names the
+ * round, since a point's number comes round again every round. (A clock's
+ * last seconds are not derived from states: the page plays them from its own
+ * timer, as the seconds pass.)
+ */
+interface Scores {
+  round: number;
+  points: { by: string; streak: number }[];
+}
 
-type PlayTick = (
-  sound: 'tick',
-  options?: { other?: boolean; variant?: number },
-) => void;
+const scoring: DeriveSounds<Scores, 'scored', 'scored'> = (prev, next) => {
+  const from = prev.round === next.round ? prev.points.length : 0;
+  return next.points.slice(from).map((point, index) => ({
+    sound: 'scored',
+    key: `score:${next.round}:${from + index}`,
+    other: point.by !== ME,
+    variant: point.streak,
+  }));
+};
 
-function Clock({ left, play }: { left: number; play: PlayTick }) {
-  useStateSounds(left, { derive: countdown, play, epoch: 1, isNewGame: never });
+const scores = (round: number, ...points: [string, number][]): Scores => ({
+  round,
+  points: points.map(([by, streak]) => ({ by, streak })),
+});
+
+function Board({
+  state,
+  play,
+}: {
+  state: Scores;
+  play: PlaySound<'scored', 'scored'>;
+}) {
+  useStateSounds(state, {
+    derive: scoring,
+    play,
+    epoch: 1,
+    isNewGame: never,
+  });
   return null;
 }
 
-describe('useStateSounds with steps', () => {
-  it('plays the step each event names', () => {
-    const play = vi.fn<PlayTick>();
-    const view = render(<Clock left={5} play={play} />);
-    for (const left of [4, 3, 2, 1]) {
-      view.rerender(<Clock left={left} play={play} />);
-    }
-    expect(play.mock.calls).toEqual([
-      ['tick', { other: undefined, variant: 1 }],
-      ['tick', { other: undefined, variant: 2 }],
-      ['tick', { other: undefined, variant: 3 }],
+describe('steps', () => {
+  it('hears two steps of one sound in one change once, at the higher step', () => {
+    const guard = createReplayGuard(scoring, { isNewGame: never });
+    guard.observe(scores(1));
+    // Two players score in one snapshot: step 2 must not be lost to step 1.
+    expect(guard.observe(scores(1, ['me', 1], ['bob', 2]))).toEqual([
+      { sound: 'scored', key: 'score:1:0', other: false, variant: 2 },
     ]);
+    // Another player's only if every one of them was.
+    expect(
+      guard.observe(scores(1, ['me', 1], ['bob', 2], ['bob', 3], ['ann', 4])),
+    ).toEqual([{ sound: 'scored', key: 'score:1:2', other: true, variant: 4 }]);
+    // The next round's first point is news, though its number is not.
+    expect(guard.observe(scores(2, ['me', 1]))).toEqual([
+      { sound: 'scored', key: 'score:2:0', other: false, variant: 1 },
+    ]);
+  });
+
+  it('plays that step through the hook', () => {
+    const play = vi.fn<(sound: 'scored', options?: PlayOptions) => void>();
+    const view = render(<Board state={scores(1)} play={play} />);
+    view.rerender(
+      <Board state={scores(1, ['ann', 1], ['bob', 2])} play={play} />,
+    );
+    expect(play.mock.calls).toEqual([['scored', { other: true, variant: 2 }]]);
   });
 });

@@ -288,6 +288,38 @@ describe('limits', () => {
     expect(await engine.play(spec({ id: 'other' }))).toBe(true);
   });
 
+  it('holds a step only against itself: the next step plays in the same tick', async () => {
+    const engine = await unlocked();
+    const streak = spec({
+      minGapMs: 100,
+      steps: true,
+      variants: [
+        { m4a: 'a.m4a', webm: 'a.webm', duration: 0.1 },
+        { m4a: 'b.m4a', webm: 'b.webm', duration: 0.1 },
+      ],
+    });
+    expect(await engine.play(streak, { variant: 1 })).toBe(true);
+    expect(await engine.play(streak, { variant: 2 })).toBe(true);
+    expect(await engine.play(streak, { variant: 2 })).toBe(false);
+    expect(audio.sources().map((s) => audio.urlOf(s))).toEqual([
+      'a.m4a',
+      'b.m4a',
+    ]);
+  });
+
+  it('warns in development when a stepped sound plays without its step', async () => {
+    const engine = await unlocked();
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    await engine.play(spec({ id: 'streak', steps: true }));
+    expect(warn).toHaveBeenCalledWith(
+      'Sound "streak" is stepped: say which step to play.',
+    );
+    warn.mockClear();
+    await engine.play(spec({ id: 'streak', steps: true }), { variant: 1 });
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
+  });
+
   it('drops a repeat inside 40 ms without a gap of its own', async () => {
     const engine = await unlocked();
     expect(await engine.play(spec())).toBe(true);

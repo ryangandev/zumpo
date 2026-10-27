@@ -22,5 +22,6 @@ export type {
   SoundBank,
   SoundSpec,
   SoundVariant,
+  SteppedId,
 } from './types';
 export type { SoundGroup, SoundId } from './generated';
