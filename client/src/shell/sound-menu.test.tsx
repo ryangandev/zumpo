@@ -61,6 +61,22 @@ describe('the speaker', () => {
     ).toBeInTheDocument();
   });
 
+  it('stays, with the focus on it, when the engine fails at the first gesture', async () => {
+    const user = userEvent.setup();
+    const engine = audio.engine(undefined, {
+      createContext: () => {
+        throw new DOMException('No audio device', 'NotSupportedError');
+      },
+    });
+    await renderApp('/', { engine });
+    await user.click(speaker('Sound on'));
+    expect(engine.state).toBe('unsupported');
+    expect(speaker('Sound on')).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: 'Sound' })).toBeInTheDocument();
+    await user.keyboard('{Escape}');
+    expect(speaker('Sound on')).toHaveFocus();
+  });
+
   it('is not shown where the browser has no Web Audio', async () => {
     await renderApp('/', { engine: new AudioEngine() });
     expect(screen.queryByRole('button', { name: /^Sound/ })).toBeNull();

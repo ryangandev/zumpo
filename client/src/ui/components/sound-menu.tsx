@@ -1,5 +1,5 @@
 import { Popover } from '@base-ui/react/popover';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { useMessages } from '../../i18n';
 import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { cx } from '../cx';
@@ -28,17 +28,21 @@ export function SoundMenu({ triggerClassName, ...setting }: SoundMenuProps) {
   const m = useMessages().sound;
   const phone = useMediaQuery(PHONE);
   const [open, setOpen] = useState(false);
+  // Nothing is heard at 0 either, so the speaker says sound is off.
+  const silent = setting.muted || setting.volume === 0;
+  // Tabbing past the volume closes the menu: Base UI closes a popover that
+  // focus leaves for anything but its trigger (platform.spec).
   return (
     <Popover.Root open={open} onOpenChange={(next) => setOpen(next)}>
       <Popover.Trigger
         render={
           <Button
             variant="secondary"
-            icon={setting.muted ? 'sound-off' : 'sound'}
+            icon={silent ? 'sound-off' : 'sound'}
             iconOnly
             className={triggerClassName}
           >
-            {setting.muted ? m.trigger.off : m.trigger.on}
+            {silent ? m.trigger.off : m.trigger.on}
           </Button>
         }
       />
@@ -80,11 +84,14 @@ function SoundRows({
   onMutedChange,
 }: SoundMenuProps) {
   const m = useMessages().sound;
+  const label = useId();
   const percent = Math.round(volume * 100);
   return (
-    <div className={styles.row}>
+    <div className={styles.row} role="group" aria-labelledby={label}>
       <div className={styles.head}>
-        <span className={styles.label}>{m.effects.label}</span>
+        <span id={label} className={styles.label}>
+          {m.effects.label}
+        </span>
         <span className={styles.level} aria-hidden="true">
           {muted ? m.off : m.level(percent)}
         </span>

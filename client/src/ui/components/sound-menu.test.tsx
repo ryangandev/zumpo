@@ -86,13 +86,42 @@ describe('SoundMenu', () => {
     expect(onVolumeChange).toHaveBeenLastCalledWith(1);
   });
 
+  it('says sound is off at 0 too, the toggle still unpressed', async () => {
+    const user = userEvent.setup();
+    renderSpeaker(<Speaker volume={0.05} />);
+    await user.click(screen.getByRole('button', { name: 'Sound on' }));
+    slider().focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(screen.getByText('0%')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Mute sound effects' }),
+    ).toHaveAttribute('aria-pressed', 'false');
+    expect(
+      screen.getByRole('button', { name: 'Sound off' }),
+    ).toBeInTheDocument();
+  });
+
+  it('groups the row under its visible label', async () => {
+    const user = userEvent.setup();
+    renderSpeaker();
+    await user.click(screen.getByRole('button', { name: 'Sound on' }));
+    const row = within(screen.getByRole('dialog')).getByRole('group', {
+      name: 'Sound effects',
+    });
+    expect(
+      within(row).getByRole('button', { name: 'Mute sound effects' }),
+    ).toBeInTheDocument();
+  });
+
   it('says it all in Chinese', async () => {
     localStorage.setItem('zumpo:locale', 'zh');
     const user = userEvent.setup();
     renderSpeaker(<Speaker muted />);
     await user.click(screen.getByRole('button', { name: '声音已关' }));
     const menu = screen.getByRole('dialog', { name: '声音' });
-    expect(within(menu).getByText('音效')).toBeInTheDocument();
+    expect(
+      within(menu).getByRole('group', { name: '音效' }),
+    ).toBeInTheDocument();
     expect(within(menu).getByText('关')).toBeInTheDocument();
     expect(
       within(menu).getByRole('button', { name: '音效静音' }),

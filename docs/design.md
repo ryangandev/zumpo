@@ -149,13 +149,15 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
 
 ### Sound
 
-The speaker button, a Secondary icon `Zumpo/Button` with Glyph=sound, or sound-off while muted, sits just before the viewer's avatar in the header, the room bar and a phone's navigation row, so it is on every page.
+The speaker button, a Secondary icon `Zumpo/Button` with Glyph=sound, or sound-off and the name "Sound off" while muted or at 0, sits just before the viewer's avatar in the header, the room bar and a phone's navigation row, so it is on every page.
 It opens `Zumpo/Sound menu` (SO01-SO07): one row per kind of sound, its name and level over a mute toggle and a `Zumpo/Slider`.
 Version 1 has sound effects only, on at 70% by default; a Music row goes under them later.
 Muted, the level says Off and the slider is dimmed but still works, and moving it turns sound back on.
 The menu sits under the speaker, aligned to its end, as the name menu sits under the avatar; on a phone it fills the width.
+Each row is a group named by its visible label, and tabbing past the slider, the menu's last control, closes the menu and moves on to the avatar.
 In the Phone room bar its three icon buttons are 38 × 48, so the game's name keeps 172 px at 390 px, which every game's name fits (SO07); on a narrower phone code scales the name down to fit, as it does the turn bar's main line, down to 60%, which Draw & Guess needs at 320 px, and only below that ends it in an ellipsis.
 Where the browser has no Web Audio the speaker is not shown at all, as no screen shows an action the player cannot take: there is nothing it could turn on.
+A speaker already shown stays, though, if the engine fails at the first gesture, which may be a press on the speaker itself: taking it away would drop the player's focus.
 
 ### Names
 
