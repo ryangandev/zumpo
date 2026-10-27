@@ -9,8 +9,8 @@ const PORT = Number(process.env.E2E_PORT ?? 3310);
 
 export default defineConfig({
   testDir: '.',
-  // The Figma comparison has its own config: screens.config.ts.
-  testIgnore: 'screens/**',
+  // The Figma comparison and the sound check have configs of their own.
+  testIgnore: ['screens/**', 'sound/**'],
   // Every test makes its own rooms, so tests share the server safely.
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
