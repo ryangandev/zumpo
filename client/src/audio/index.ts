@@ -12,6 +12,7 @@ export type {
   IsNewGame,
   ReplayGuard,
   ReplayGuardOptions,
+  SelectSounds,
   SoundEvent,
 } from './replay-guard';
 export type {

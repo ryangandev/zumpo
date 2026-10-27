@@ -13,6 +13,7 @@ import {
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { LIARS_DICE_SOUNDS } from './sounds';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useBidChoice } from './bid-choice';
 import { fromViewer, Table, type TableSeat } from './table';
@@ -47,6 +48,7 @@ export function LiarsDiceRoom() {
   return (
     <RoomLayout
       yourTurn={inGame && bidding(room)}
+      sounds={LIARS_DICE_SOUNDS}
       // No standings over the board: everybody’s cups are on the table.
       standings={false}
       phase={

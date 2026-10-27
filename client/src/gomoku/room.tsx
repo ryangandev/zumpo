@@ -27,6 +27,7 @@ import {
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { GOMOKU_SOUNDS } from './sounds';
 import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
@@ -128,6 +129,7 @@ export function GomokuRoom() {
       // No standings over the board: the seats under the board say who is who.
       standings={false}
       yourTurn={myTurn}
+      sounds={GOMOKU_SOUNDS}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }
