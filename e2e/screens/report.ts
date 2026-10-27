@@ -13,69 +13,70 @@ const NOT_CAPTURED: Record<string, string> = {
 };
 
 /**
+ * A note on a screen whose size differs from Figma's: why, and the size the
+ * capture has for that reason, to a pixel. A capture of another size is a
+ * difference the note does not explain, and a capture that matches Figma
+ * leaves the note stale; the report flags both.
+ */
+interface Note {
+  size: [number, number];
+  reason: string;
+}
+
+const HOME_CROP =
+  'Figma crops the home page to its top, around the Name menu; the capture is the whole page.';
+const SOUND_HOME_CROP =
+  'Figma crops the home page to its top, around the Sound menu; the capture is the whole page.';
+
+/**
  * Screens whose size differs only because the game's state holds other
  * content than Figma's example, and how. A size difference anywhere else is
  * a layout difference to fix or to note in docs/design.md.
  */
-const CONTENT: Record<string, string> = {
-  P03: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
-  P13: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
-  MO02: 'Figma crops the home page to its top, around the Name menu; the capture is the whole page.',
-  SO01: 'Figma crops the home page to its top, around the Sound menu; the capture is the whole page.',
-  SO04: 'Figma crops the home page to its top, around the Sound menu; the capture is the whole page.',
-  SO05: 'Figma crops the game page to its top, around the Sound menu; the capture is the whole page.',
-  SO06: 'Figma crops the home page to its top, around the Sound menu; the capture is the whole page.',
-  D13: 'The chat holds the whole game, more than Figma’s example of it.',
-  D14: 'The chat holds the whole game, more than Figma’s example of it.',
-  D16: 'The chat holds the whole game, more than Figma’s example of it.',
-  M04: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  MO16: 'The chat holds the round so far, which depends on who drew first; Figma’s example has six lines of talk.',
-  MO14: 'Figma shows round 19, whose shorter line fits beside "Pick a cell"; round 1’s wraps.',
-  MO19: 'Figma shows round 4, a mine hit and an auto-pick at 0% risk; the test’s round 2 shares one cell among four, whose longer detail wraps under the Auto-picked tag.',
-  T07: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  T08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  PR05: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  PR06: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  PR08: 'Pairs’ description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
-  TS05: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  TS06: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  TS07: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  TS08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  TS10: 'Trios’ description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
-  SN05: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN06: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN07: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN08: 'The chat starts with the room’s join messages, which Figma leaves out.',
-  SN13: 'Every room shows its spectators a banner and a Watching panel, which no Figma screen has yet; the chat starts with the join messages.',
-  LD07: 'Liar’s Dice’s description takes a second line; Figma keeps the frame at the Make 24 form’s height and moves the card up.',
-  LD08: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and two lines of talk.',
-  LD09: 'The chat holds the game so far, from the join messages on; Figma’s example has a call and three lines of talk.',
-  LD10: 'The chat holds the game so far, from the join messages on; Figma’s example has two calls and two lines of talk.',
-  LD11: 'The chat holds the game so far, from the join messages on; Figma’s example has a call, Ryan going out and two lines of talk.',
-  HU01: 'The chat starts with the room’s join messages and holds the game so far, which Figma leaves out.',
-  HU02: 'The chat starts with the room’s join messages and holds the game so far, which Figma leaves out.',
-  HU03: 'The chat starts with the room’s join messages and holds the game so far, which Figma leaves out.',
-  HU04: 'The chat holds the game so far, from the join messages on; Figma’s example has one level’s worth.',
-  HU05: 'The chat holds the game so far, from the join messages on; Figma’s example has one level’s worth.',
-  HU06: 'The chat holds the game so far, from the join messages on; Figma’s example has one level’s worth.',
-  HU08: 'Every player still holds cards; Figma’s Ryan holds nothing, a shorter row.',
-  DW07: 'The chat holds the game so far, from the start and the first word on; Figma’s example has two lines.',
-  DW08: 'The chat holds the game so far, from the start and the first word on; Figma’s example has a few lines.',
-  DW09: 'The chat holds the game so far, from the start and the first word on; Figma’s example has the second word only.',
-  DW16: 'The test’s scores run to four digits where Figma’s have three, so a status beside one, such as “2nd place · 3 words found”, wraps to a second line, as final standings do; or the game ends in a tie, whose heading takes a third line.',
-  CB09: 'The chat holds the game so far, from the start and the first code on; Figma’s example has three lines.',
-  CB10: 'The chat holds the game so far, from the start and the first code on; Figma’s example has four lines.',
-  CB11: 'The chat holds the game so far, from the start and the first code on; Figma’s example has five lines.',
-  PH08: 'Figma crops the page to the phone’s screen, the capture runs on to On this device; Chromium’s touch emulation keeps a fine pointer, so it shows the mouse’s hint where a phone shows Place stone.',
+const CONTENT: Record<string, Note> = {
+  P03: { size: [1440, 1542], reason: HOME_CROP },
+  P13: { size: [1440, 1542], reason: HOME_CROP },
+  MO02: { size: [390, 2916], reason: HOME_CROP },
+  SO01: { size: [1440, 1542], reason: SOUND_HOME_CROP },
+  SO04: { size: [390, 2916], reason: SOUND_HOME_CROP },
+  SO05: {
+    size: [390, 1627],
+    reason:
+      'Figma crops the game page to its top, around the Sound menu; the capture is the whole page.',
+  },
+  SO06: { size: [390, 2691], reason: SOUND_HOME_CROP },
+  HU08: {
+    size: [1440, 1138],
+    reason:
+      'Every player still holds cards; Figma’s Ryan holds nothing, a shorter row.',
+  },
+  DW16: {
+    size: [390, 1735],
+    reason:
+      'The test’s scores run to four digits, as three words always score, where Figma’s have three, so Sam’s “2nd place · 3 words found” beside one wraps to a second line, as a final standings row does.',
+  },
+  PH08: {
+    size: [844, 657],
+    reason:
+      'Figma crops the page to the phone’s screen, the capture runs on to On this device; Chromium’s touch emulation keeps a fine pointer, so it shows the mouse’s hint where a phone shows Place stone.',
+  },
 };
 
 /**
  * Screens whose size differs because code departs from Figma on purpose, as
  * docs/design.md's "On purpose" says, and which of its entries.
  */
-const ON_PURPOSE: Record<string, string> = {
-  GM08: 'Before a Gomoku room’s first game the stage opens with the room’s shared Waiting panel above the empty board, not a Game 1 turn bar with Start game (docs/design.md, On purpose).',
+const ON_PURPOSE: Record<string, Note> = {
+  GM08: {
+    size: [1440, 1259],
+    reason:
+      'Before a Gomoku room’s first game the stage opens with the room’s shared Waiting panel above the empty board, not a Game 1 turn bar with Start game (docs/design.md, On purpose).',
+  },
 };
+
+/** Whether two sizes are the same, to a pixel. */
+const near = (a: [number, number], b: [number, number]) =>
+  Math.abs(a[0] - b[0]) <= 1 && Math.abs(a[1] - b[1]) <= 1;
 
 interface Screen {
   code: string;
@@ -121,6 +122,46 @@ const escape = (text: string) =>
   text.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
 /**
+ * What the report says of a screen: its kind, which is its colour and what
+ * the first line counts it as, and why.
+ */
+function classify(
+  screen: string,
+  code: [number, number] | undefined,
+  figma: [number, number],
+): [string, string] {
+  const unseen = NOT_CAPTURED[screen];
+  if (!code) {
+    return unseen
+      ? ['uncaptured', unseen]
+      : ['missing', 'Not captured, and no reason is given.'];
+  }
+  const sizes = `Code is ${code[0]} × ${code[1]}, Figma ${figma[0]} × ${figma[1]}.`;
+  if (unseen)
+    return [
+      'stale',
+      `${sizes} Captured, though its note says it cannot be: ${unseen}`,
+    ];
+  const note = CONTENT[screen] ?? ON_PURPOSE[screen];
+  if (near(code, figma)) {
+    return note
+      ? [
+          'stale',
+          `Both ${code[0]} × ${code[1]}, so its note no longer applies: ${note.reason}`,
+        ]
+      : ['same', `Both ${code[0]} × ${code[1]}.`];
+  }
+  if (!note) return ['differs', sizes];
+  if (!near(code, note.size)) {
+    return [
+      'moved',
+      `${sizes} Its note is for ${note.size[0]} × ${note.size[1]}, so it does not explain this: ${note.reason}`,
+    ];
+  }
+  return [CONTENT[screen] ? 'content' : 'purpose', `${sizes} ${note.reason}`];
+}
+
+/**
  * design/compare/index.html: each screen's Figma preview beside its capture,
  * with the two sizes, flagged when they differ.
  */
@@ -131,28 +172,7 @@ export function writeReport() {
     const figma =
       preview && existsSync(preview) ? pngSize(preview) : screen.size;
     const code = existsSync(capture) ? pngSize(capture) : undefined;
-    const differs =
-      code !== undefined &&
-      (code[0] !== figma[0] || Math.abs(code[1] - figma[1]) > 1);
-    const content = differs ? CONTENT[screen.code] : undefined;
-    const onPurpose = differs && !content ? ON_PURPOSE[screen.code] : undefined;
-    const reason = content ?? onPurpose;
-    const status = !code
-      ? (NOT_CAPTURED[screen.code] ?? 'Not captured, and no reason is given.')
-      : differs
-        ? `Code is ${code[0]} × ${code[1]}, Figma ${figma[0]} × ${figma[1]}.${reason ? ` ${reason}` : ''}`
-        : `Both ${code[0]} × ${code[1]}.`;
-    const kind = !code
-      ? NOT_CAPTURED[screen.code]
-        ? 'uncaptured'
-        : 'missing'
-      : !differs
-        ? 'same'
-        : content
-          ? 'content'
-          : onPurpose
-            ? 'purpose'
-            : 'differs';
+    const [kind, status] = classify(screen.code, code, figma);
     return `
 <section class="${kind}" id="${screen.code}">
   <h2><a href="#${screen.code}">${screen.code}</a> ${escape(screen.title)}</h2>
@@ -178,7 +198,7 @@ export function writeReport() {
   h2 a { color: inherit; }
   section { margin: 32px 0; }
   section p { margin: 2px 0 8px; color: #6b665c; }
-  .differs p, .missing p { color: #b3261e; }
+  .differs p, .moved p, .stale p, .missing p { color: #b3261e; }
   .content p, .purpose p, .uncaptured p { color: #8a6d1f; }
   .pair { display: flex; gap: 16px; align-items: flex-start; overflow-x: auto; }
   figure { margin: 0; flex: none; width: min(var(--width), calc(50vw - 40px)); }
@@ -186,7 +206,7 @@ export function writeReport() {
   figcaption { color: #6b665c; font-size: 12px; margin-top: 4px; }
 </style>
 <h1>Zumpo screens against Figma</h1>
-<p>${count('same')} match Figma's size, ${count('content')} differ in content, ${count('purpose')} differ on purpose, ${count('uncaptured')} are no state of the app. Unexplained: ${count('differs')} differ in layout, ${count('missing')} not captured. Generated by <code>npm run design:compare</code>.</p>
+<p>${count('same')} match Figma's size, ${count('content')} differ in content, ${count('purpose')} differ on purpose, ${count('uncaptured')} are no state of the app. Unexplained: ${count('differs')} differ in layout, ${count('moved')} differ from their note’s size, ${count('stale')} have a stale note, ${count('missing')} not captured. Generated by <code>npm run design:compare</code>.</p>
 ${rows.join('\n')}
 `,
   );

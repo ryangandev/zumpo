@@ -721,6 +721,14 @@ test('a Draw & Guess game', async ({ player }) => {
   await maya!.page.getByRole('button', { name: 'Done' }).click();
   await startGame(maya!.page);
 
+  // Leo's chat tab while the first word is chosen, when it holds the same
+  // lines whoever draws first; any later, it holds the turns before.
+  await nextDrawer(seats);
+  await leo!.page.getByRole('tab', { name: 'Chat' }).click();
+  await shot(leo!.page, 'MO16');
+  await leo!.page.getByRole('tab', { name: 'Game' }).click();
+  await leo!.page.getByRole('tab', { name: 'Game' }).blur();
+
   // One round: everybody draws once, Leo on his phone.
   const desktopTurns = ['plain', 'dropped', 'timed out'] as const;
   for (let turn = 0; turn < 4; turn++) {
@@ -750,8 +758,6 @@ test('a Draw & Guess game', async ({ player }) => {
       await shot(leo!.page, 'MO09');
       await leo!.page.getByRole('tab', { name: /Players/ }).click();
       await shot(leo!.page, 'MO15');
-      await leo!.page.getByRole('tab', { name: 'Chat' }).click();
-      await shot(leo!.page, 'MO16');
       await leo!.page.getByRole('tab', { name: 'Game' }).click();
 
       await watcher.page.getByRole('button', { name: 'Leave room' }).click();
@@ -2196,11 +2202,14 @@ test('a Daily Word game', async ({ player }) => {
     ),
   ).toBe(true);
 
-  // Word 3, as Figma's boards have it, and the game is over.
+  // Word 3, as Figma's boards have it, and the game is over. Maya and Sam
+  // take eleven guesses each, so time decides it: Maya finds each word
+  // first, and wins as in Figma, never in a tie, whose heading is a line
+  // longer.
   await wordOn(3);
   await findIt(ryan, third!, ['stale', 'alike']);
-  await findIt(sam, third!, ['crane', 'plate', 'blame']);
   await findIt(maya, third!, ['share', 'blade', 'place', 'flake']);
+  await findIt(sam, third!, ['crane', 'plate', 'blame']);
   await findIt(
     leo,
     third!,

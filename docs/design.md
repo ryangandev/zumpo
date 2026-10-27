@@ -256,9 +256,11 @@ Figma gives each sample player an avatar tone by hand; code picks one from a has
 `npm run design:compare` builds the app, serves it on port 3320 (`SCREENS_PORT`), and plays [the screens spec](../e2e/screens/screens.spec.ts) with the players and example data of the Figma story, capturing each screen in the state Figma draws, at Figma's width and frame height.
 It takes about 18 minutes, because it runs the real phase lengths so every countdown reads as in Figma.
 It writes `design/compare/index.html`, which is ignored by git: every screen's Figma preview beside its capture, flagged when the two sizes differ.
-A size that differs because the game holds other content than Figma's example, such as a longer chat, is listed with the reason in [report.ts](../e2e/screens/report.ts) and marked apart; any other difference is layout, to fix or to note below.
+A size that differs because the game holds other content than Figma's example, such as a home page Figma crops, is listed with the reason in [report.ts](../e2e/screens/report.ts) and marked apart; any other difference is layout, to fix or to note below.
 A difference noted below is listed there too, with the note it comes from, and so is a screen no state of the app shows, with why.
-The report's first line counts what is still unexplained: a layout difference or a screen not captured that report.ts gives no reason for.
+Each note pins the size its capture has, to a pixel, so a layout change cannot hide behind it: a capture of another size is flagged as a difference the note does not explain, and one that matches Figma flags the note as stale, to delete.
+So a capture is the same state every run: Daily Word, Code Breaker and Hush deal from a seed (`DAILY_WORD_SEED`, `CODE_BREAKER_SEED`, `HUSH_SEED`), and the chat and the scores in a capture do not depend on who goes first or how fast.
+The report's first line counts what is still unexplained: a layout difference, a note whose size no longer matches or that is stale, or a screen not captured that report.ts gives no reason for.
 It needs the previews from the last `npm run design:import`.
 
 ### On purpose
