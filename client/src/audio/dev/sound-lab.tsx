@@ -46,7 +46,13 @@ export default function SoundLab() {
 
   useEffect(() => {
     let live = true;
-    const groups = Object.keys(SOUND_BANKS) as SoundGroup[];
+    // `?bank=hush,ui` keeps only those banks, as a page keeps only its own.
+    const only = new URLSearchParams(window.location.search)
+      .get('bank')
+      ?.split(',');
+    const groups = (Object.keys(SOUND_BANKS) as SoundGroup[]).filter(
+      (group) => !only || only.includes(group),
+    );
     void Promise.all(
       groups.map(async (group) => [group, await SOUND_BANKS[group]()] as const),
     ).then((loaded) => {
@@ -65,7 +71,8 @@ export default function SoundLab() {
       <p className={styles.lede}>
         Every sound in audio/sounds.json, through the engine and the settings
         the app uses. Nothing plays until the first click or key anywhere on the
-        page.
+        page. Add ?bank=hush,ui to keep only those banks, as a game&rsquo;s page
+        does.
       </p>
       <dl className={styles.status}>
         <dt>Engine</dt>

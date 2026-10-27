@@ -93,7 +93,9 @@ async function open(page: Page) {
       errors.push(message.text());
     }
   });
-  await page.goto('/dev/sound');
+  // Only the test bank, as a page keeps only its own: every bank would queue
+  // a hundred other files ahead of test-blip's.
+  await page.goto('/dev/sound?bank=test');
   await expect(playButton(page)).toBeVisible();
   return errors;
 }
