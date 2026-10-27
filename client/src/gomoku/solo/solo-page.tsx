@@ -22,6 +22,8 @@ import { PHONE, TOUCH, useMediaQuery } from '../../shell/use-media-query';
 import { ChangeSettings } from '../../solo/change-settings';
 import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
+import { useSoloSounds } from '../../solo/sounds';
+import { deriveGomokuSolo, GOMOKU_SOLO_BANK } from '../sounds';
 import { GomokuTable, type SeatView } from '../table';
 import { LEVELS, THINKING_MS } from './computer';
 import {
@@ -169,6 +171,20 @@ function SoloBoard({
   const [preview, setPreview] = useState<{ point: number; at: number } | null>(
     null,
   );
+  // Five is a win for the player and a loss when it is the computer's; a full
+  // board is a finished game. Set with the stone that ends it, so that stone
+  // is heard as the end.
+  const sound = useSoloSounds(
+    game,
+    !game.over
+      ? null
+      : youWon(game)
+        ? 'win'
+        : computerWon(game)
+          ? 'loss'
+          : 'complete',
+    { bank: GOMOKU_SOLO_BANK, derive: deriveGomokuSolo },
+  );
   const yours = isYourTurn(game);
   const previewing =
     yours && preview?.at === game.moves.length ? preview.point : null;
@@ -223,6 +239,7 @@ function SoloBoard({
       variant="secondary"
       icon="undo"
       onClick={() => {
+        sound('ui-undo');
         setPreview(null);
         setGame(takeBack(game));
       }}
@@ -264,7 +281,10 @@ function SoloBoard({
             disabled: !yours,
             onPlace: place,
             onPreview: tapTwice
-              ? (point) => setPreview({ point, at: game.moves.length })
+              ? (point) => {
+                  sound('gomoku-faint');
+                  setPreview({ point, at: game.moves.length });
+                }
               : undefined,
             label: m.gomoku.board,
           }}

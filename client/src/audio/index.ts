@@ -6,12 +6,17 @@ export type { SoundControls } from './provider';
 export type { EngineState } from './engine';
 export { DEFAULT_SOUND_SETTINGS } from './settings';
 export type { BusSettings, SoundSettings } from './settings';
-export { createReplayGuard, useStateSounds } from './replay-guard';
+export {
+  BESIDE_AFTER_MS,
+  createReplayGuard,
+  useStateSounds,
+} from './replay-guard';
 export type {
   DeriveSounds,
   IsNewGame,
   ReplayGuard,
   ReplayGuardOptions,
+  SelectSounds,
   SoundEvent,
 } from './replay-guard';
 export type {

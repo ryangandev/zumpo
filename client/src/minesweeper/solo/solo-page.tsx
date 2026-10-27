@@ -28,7 +28,9 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
+import { finishEnd, useSoloSounds } from '../../solo/sounds';
 import { MineGrid } from '../board';
+import { deriveMinesweeperSolo, MINESWEEPER_SOLO_BANK } from '../sounds';
 import {
   cellAt,
   chord,
@@ -154,6 +156,11 @@ function SoloGameView({
   const over = game.status === 'won' || game.status === 'lost';
   // A Medium board's 44 px cells would run past a laptop's window.
   const panel = useFitHeight<HTMLDivElement>();
+  const sound = useSoloSounds(
+    game,
+    finish ? finishEnd(finish) : game.status === 'lost' ? 'loss' : null,
+    { bank: MINESWEEPER_SOLO_BANK, derive: deriveMinesweeperSolo },
+  );
 
   const play = (next: SoloGame) => {
     if (next === game) return;
@@ -168,7 +175,12 @@ function SoloGameView({
     const shown = cellAt(game, index);
     const state = cellState(shown);
     if (over) return { state };
-    const flag = () => play(toggleFlag(game, index));
+    const flag = () => {
+      const next = toggleFlag(game, index);
+      if (next === game) return;
+      sound(next.flags[index] ? 'minesweeper-flag' : 'minesweeper-unflag');
+      play(next);
+    };
     if (shown === 'hidden' || shown === 'flag') {
       return {
         state,
@@ -222,7 +234,10 @@ function SoloGameView({
                 <Button
                   variant={flagMode ? 'secondary' : 'primary'}
                   aria-pressed={!flagMode}
-                  onClick={() => setFlagMode(false)}
+                  onClick={() => {
+                    if (flagMode) sound('ui-tap');
+                    setFlagMode(false);
+                  }}
                 >
                   {m.minesweeper.solo.reveal}
                 </Button>
@@ -230,7 +245,10 @@ function SoloGameView({
                   variant={flagMode ? 'primary' : 'secondary'}
                   icon="flag"
                   aria-pressed={flagMode}
-                  onClick={() => setFlagMode(true)}
+                  onClick={() => {
+                    if (!flagMode) sound('ui-tap');
+                    setFlagMode(true);
+                  }}
                 >
                   {m.minesweeper.solo.flag}
                 </Button>

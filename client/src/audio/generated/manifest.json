@@ -172,7 +172,7 @@
           "license": "own"
         },
         "minGapMs": 60,
-        "maxVoices": 3
+        "maxVoices": 4
       },
       "variants": [
         {
@@ -276,7 +276,7 @@
           "license": "own"
         },
         "minGapMs": 60,
-        "maxVoices": 3
+        "maxVoices": 4
       },
       "variants": [
         {
@@ -380,7 +380,7 @@
           "license": "own"
         },
         "minGapMs": 60,
-        "maxVoices": 3
+        "maxVoices": 4
       },
       "variants": [
         {

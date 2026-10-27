@@ -27,6 +27,9 @@ import {
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { useSounds } from '../audio';
+import { useDeadlineTicks } from '../room/sounds';
+import { actingDeadline, GOMOKU_BANK, GOMOKU_SOUNDS } from './sounds';
 import { PHONE, TOUCH, useMediaQuery } from '../shell/use-media-query';
 import { GomokuTable, type SeatView } from './table';
 
@@ -72,6 +75,13 @@ export function GomokuRoom() {
   const summary = last && sameSeats(state) ? last : null;
   const mine = colorOf(state, playerId);
   const myTurn = playing && state.turnPlayerId === playerId && !reconnecting;
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
+  const sound = useSounds(GOMOKU_BANK);
   // A phone's results say what the next game waits on in the turn bar.
   const note = useResultsNote(room.starting);
 
@@ -111,7 +121,10 @@ export function GomokuRoom() {
     disabled: !myTurn || sending !== null,
     onPlace: mine && playing ? place : undefined,
     onPreview: tapTwice
-      ? (point: number) => setPreview({ point, at: state.moves.length })
+      ? (point: number) => {
+          sound('gomoku-faint');
+          setPreview({ point, at: state.moves.length });
+        }
       : undefined,
     label: m.gomoku.board,
   };
@@ -128,6 +141,7 @@ export function GomokuRoom() {
       // No standings over the board: the seats under the board say who is who.
       standings={false}
       yourTurn={myTurn}
+      sounds={GOMOKU_SOUNDS}
       phase={
         playing
           ? { tone: 'blue', label: m.gomoku.game(state.gameNumber) }

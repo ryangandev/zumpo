@@ -34,7 +34,7 @@ export const codeBreakerSounds = {
     loudness: 'ui',
     gainDb: 0,
     minGapMs: 60,
-    maxVoices: 3,
+    maxVoices: 4,
     variants: [
       {
         m4a: new URL('./files/code-breaker-peg-moved-1.m4a', import.meta.url).href,
@@ -54,7 +54,7 @@ export const codeBreakerSounds = {
     loudness: 'ui',
     gainDb: 0,
     minGapMs: 60,
-    maxVoices: 3,
+    maxVoices: 4,
     variants: [
       {
         m4a: new URL('./files/code-breaker-peg-not-in-1.m4a', import.meta.url).href,
@@ -74,7 +74,7 @@ export const codeBreakerSounds = {
     loudness: 'ui',
     gainDb: 0,
     minGapMs: 60,
-    maxVoices: 3,
+    maxVoices: 4,
     variants: [
       {
         m4a: new URL('./files/code-breaker-peg-right-1.m4a', import.meta.url).href,

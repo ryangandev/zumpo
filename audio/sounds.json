@@ -1534,7 +1534,7 @@
         "license": "own"
       },
       "minGapMs": 60,
-      "maxVoices": 3
+      "maxVoices": 4
     },
     {
       "id": "code-breaker-peg-moved",
@@ -1558,7 +1558,7 @@
         "license": "own"
       },
       "minGapMs": 60,
-      "maxVoices": 3
+      "maxVoices": 4
     },
     {
       "id": "code-breaker-peg-not-in",
@@ -1582,7 +1582,7 @@
         "license": "own"
       },
       "minGapMs": 60,
-      "maxVoices": 3
+      "maxVoices": 4
     },
     {
       "id": "code-breaker-note",

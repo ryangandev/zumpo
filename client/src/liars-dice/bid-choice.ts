@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSounds } from '../audio';
 import { useMessages, type Messages } from '../i18n';
 import {
   BID_FACES,
@@ -8,6 +9,7 @@ import {
   type Bid,
 } from '../../../shared/liars-dice';
 import type { BidPickerProps, DieFace } from '../ui';
+import { LIARS_DICE_PICKER_BANK } from './sounds';
 
 /**
  * Where the picker opens: on the face you hold most of, your wild ones
@@ -47,6 +49,7 @@ export function useBidChoice(
   onBid: (bid: Bid) => void,
 ): Omit<BidPickerProps, 'onCall' | 'className'> | null {
   const m = useMessages();
+  const tap = useSounds(LIARS_DICE_PICKER_BANK);
   const key = `${previous ? `${previous.count}×${previous.face}` : 'open'}/${mine.join()}`;
   const opening = openingBid(previous, diceOnTable, mine);
   const [choice, setChoice] = useState({ key, bid: opening });
@@ -62,7 +65,10 @@ export function useBidChoice(
       chosen,
       previous,
       diceOnTable,
-      (next) => setChoice({ key, bid: next }),
+      (next) => {
+        tap('ui-tap');
+        setChoice({ key, bid: next });
+      },
       m,
     ),
     onBid: () => onBid(chosen),

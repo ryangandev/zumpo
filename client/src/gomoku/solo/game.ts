@@ -20,6 +20,12 @@ export interface SoloPicks {
 /** A game on your own against the computer, from the first stone to the last. */
 export interface SoloGame extends SoloPicks {
   moves: GomokuMove[];
+  /**
+   * Stones ever put down in this game, taken back or not: it only grows, so
+   * it names each stone for the sounds, which a take-back would repeat by
+   * the moves.
+   */
+  placed: number;
   /** Who made five; null while playing and for a draw. */
   winner: GomokuColor | null;
   /** Each line of five that won, its points in order along it. */
@@ -30,6 +36,7 @@ export interface SoloGame extends SoloPicks {
 export const newGame = (picks: SoloPicks): SoloGame => ({
   ...picks,
   moves: [],
+  placed: 0,
   winner: null,
   winLines: null,
   over: false,
@@ -53,11 +60,19 @@ export function play(game: SoloGame, point: number): SoloGame {
   const color = toMove(game);
   board[point] = color;
   const moves = [...game.moves, { color, point }];
+  const placed = game.placed + 1;
   const fives = fivesThrough(board, point, color);
   if (fives.length > 0) {
-    return { ...game, moves, winner: color, winLines: fives, over: true };
+    return {
+      ...game,
+      moves,
+      placed,
+      winner: color,
+      winLines: fives,
+      over: true,
+    };
   }
-  return { ...game, moves, over: isFull(board) };
+  return { ...game, moves, placed, over: isFull(board) };
 }
 
 /** On your turn, once you have a stone down: there is a move to take back. */

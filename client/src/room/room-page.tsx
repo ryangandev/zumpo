@@ -52,6 +52,7 @@ import { Confetti } from './confetti';
 import { InviteDialog, LeaveDialog, leaveCost } from './dialogs';
 import { roomNameOf } from './players';
 import { RoomContext, type Room } from './room-context';
+import { useConnectionLostSound } from './sounds';
 
 // Daily Word brings its word lists, so it loads only when played.
 const DailyWordRoom = lazy(() => import('../daily-word/room'));
@@ -76,6 +77,7 @@ export default function RoomPage({
   );
   const connection = useRoom(roomId, invite);
   const { stage } = connection;
+  useConnectionLostSound(stage);
   // The room's own name once seated, the game's until then.
   usePageTitle(
     ...(stage.kind === 'seated' ? [roomNameOf(stage.snapshot.state, m)] : []),
@@ -317,7 +319,7 @@ function SeatedRoom({
   const { socket, playerId, reconnectGraceMs } = useSession();
   const navigate = useNavigate();
   const location = useLocation();
-  const { state, receivedAt } = snapshot;
+  const { state, receivedAt, connection: epoch } = snapshot;
   const [inviting, setInviting] = useState(false);
 
   // Seated, the invite key has done its work: the address goes back to the
@@ -412,13 +414,16 @@ function SeatedRoom({
     },
     [m],
   );
+  const [readied, setReadied] = useState(0);
   const setReady = useCallback(
-    (ready: boolean) =>
+    (ready: boolean) => {
+      if (ready) setReadied((count) => count + 1);
       void ask('room:ready', () =>
         socket
           .timeout(REQUEST_TIMEOUT_MS)
           .emitWithAck('room:ready', state.roomId, ready),
-      ),
+      );
+    },
     [ask, socket, state.roomId],
   );
   const changeSettings = useCallback(
@@ -467,6 +472,7 @@ function SeatedRoom({
         ? {
             state,
             receivedAt,
+            epoch,
             reconnecting,
             reconnectGraceMs,
             playerId,
@@ -478,6 +484,7 @@ function SeatedRoom({
             becameHost:
               state.owner.playerId === playerId && startedBy !== playerId,
             chat: connection.chat,
+            chatEpoch: connection.chatEpoch,
             canvas: connection.canvas,
             drawings: connection.drawings,
             socket,
@@ -491,6 +498,7 @@ function SeatedRoom({
             startGame,
             starting,
             setReady,
+            readied,
             changeSettings,
             watch: () => void move('room:watch'),
             sit: () => void move('room:sit'),
@@ -501,6 +509,7 @@ function SeatedRoom({
     [
       state,
       receivedAt,
+      epoch,
       reconnecting,
       reconnectGraceMs,
       playerId,
@@ -508,6 +517,7 @@ function SeatedRoom({
       seat,
       startedBy,
       connection.chat,
+      connection.chatEpoch,
       connection.canvas,
       connection.drawings,
       socket,
@@ -516,6 +526,7 @@ function SeatedRoom({
       startGame,
       starting,
       setReady,
+      readied,
       changeSettings,
       move,
       moving,

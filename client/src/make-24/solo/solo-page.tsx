@@ -30,6 +30,8 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
+import { finishEnd, useSoloSounds } from '../../solo/sounds';
+import { deriveMake24Solo, MAKE_24_SOLO_BANK } from '../sounds';
 import { cardsAfter, FinalCard, HandTable, TablePanel } from '../table';
 import {
   deal,
@@ -120,6 +122,10 @@ function RunView({
   const [finish, setFinish] = useState<Finish | null>(null);
   const now = useClock(run.handStartedAt !== null && !clock.paused, clock.now);
   const between = isBetweenHands(run);
+  useSoloSounds(run, finish && finishEnd(finish), {
+    bank: MAKE_24_SOLO_BANK,
+    derive: deriveMake24Solo,
+  });
 
   // A solved hand stays up for a moment. A skipped one stays until Next hand,
   // to read the way it could have gone; the clock is stopped either way.
