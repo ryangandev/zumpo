@@ -15,6 +15,7 @@
 }
 
 .problem {
+  max-width: 720px;
   font: var(--zumpo-text-body-strong);
 }
 
