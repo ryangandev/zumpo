@@ -391,6 +391,7 @@ A change in one tab is followed by the others.
   Every game must give `isNewGame`, since its keys (`take:4`) come round again in the next game, and it must work on states that are not consecutive: across a reconnect `prev` may be mid-game 1 and `next` mid-game 2, so it compares what a game leaves behind (the last game's summary, a game number), not a phase change.
   One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is and another player's only if all are, at the highest step any of them reached, while different sounds in one change all play.
   The server merges a run of events into one snapshot, so two players scoring at once arrive together, and the streak still climbs to the second step.
+  An event may give `delayMs`, for a run that one change brings at once and that is heard one beat after another, a guess's pegs dropping in; events of one sound at different delays are each heard, and a beat still waiting when the page goes is dropped.
   `select(events)` keeps some of a change's events and drops the rest after their keys are heard, so a dropped event never plays later; `standing(state)` names the keys a state stands for on its own, which a baseline counts as heard.
   A key that comes round each round, a streak's point number, names the round too (`score:3:1`).
   The guard lives as long as the component that holds it, so `useStateSounds` belongs in the room's page, never in a component one phase mounts, or every phase change starts it over and the change into that phase is lost.
@@ -437,6 +438,27 @@ Known gaps:
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
+- A Pairs room is heard as a room alone, with no "your turn": a pair keeps the go, and a miss leaves the board as it was, so no snapshot tells one of a player's goes from their last, nor one flip of a card from the next; the state needs a count of goes before Pairs can name them.
+
+### Sounds on your own
+
+A game on your own is heard by the same rules as a room, through [`solo/sounds.ts`](../client/src/solo/sounds.ts), so a refresh, or a daily puzzle restored from this device, plays nothing, however the game stood.
+
+- **`useSoloSounds(game, end, { bank, derive })`** sits in the component that holds one game, and returns `play` for the player's own handlers.
+  `bank` spreads `SOLO_BANK` (the three solo stingers) and the game's own, as `<GAME>_SOLO_BANK` in `<game>/sounds.ts`.
+- **What the player does** plays in their own handlers: a key, a delete, a flag, a card or a sign picked, a note, a row turned back.
+  A table or a pad shared with the game's room plays it there, so both modes sound alike (Make 24's table, Code Breaker's pad).
+- **What the game does in reply** comes from `derive(prev, next)`, a pure function over the game's own state, as `derive<Game>Solo`: cells opened, a pair found, a guess's pegs, a hand solved or skipped, a miss turning back on its timer.
+  Its keys name what happened uniquely within the game (`open:31`, `turn:4`), from something that only grows, such as the turns or the guesses so far.
+  A pure input that may come and go, such as a flag on one cell, has no key that stays unique, so it plays in its handler instead.
+- **The end** is `end`: `'complete'`, `'best'` or `'loss'`, or null while the game is on.
+  A game with a best passes `finishEnd(finish)`, from what `recordBest` said: a new best only when it beat one this device kept, as the result's words say, so a first finish is a finish.
+  It plays once, standing alone on its change, so the move that ends a game is heard as its end (the last pair, the mine, the code cracked).
+- **The first state is only a baseline**, as a room's first snapshot is: arriving on a fresh board, or on a finished daily code, plays nothing, and its end counts as heard.
+- **One game, one mount:** Play again, a new board or another code mounts a new game view (`key`), and the guard with it, so a game's keys need not name it and are never forgotten (`isNewGame` is always false).
+  A page that kept one component across games would have to say when a new one began.
+
+A game on your own has no deadline to act in (a run's clock counts up), so nothing ticks, and the daily puzzles are as quiet as the rest.
 
 ### The asset pipeline
 
