@@ -80,6 +80,12 @@ jobs:
       - name: Browser checks
         run: npm run e2e
 
+      # The design gallery against the committed Figma export, on the dev
+      # server: a size that drifts from Figma fails here.
+      - name: Design gallery against Figma
+        if: ${{ !cancelled() }}
+        run: npm run e2e:design
+
       - name: Keep the traces of failed checks
         if: failure()
         uses: actions/upload-artifact@v7

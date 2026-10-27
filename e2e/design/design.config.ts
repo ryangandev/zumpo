@@ -2,8 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * `npm run e2e:design`: the design gallery at /design, which only the dev
- * server has, measured against the committed Figma export. Not run in CI, to
- * save its minutes; run it after a Figma export or a change to a component.
+ * server has, measured against the committed Figma export. CI runs it in the
+ * e2e job; run it after a Figma export or a change to a component.
  */
 const PORT = Number(process.env.DESIGN_PORT ?? 3790);
 

@@ -197,7 +197,8 @@ Every specimen is captioned with its Figma variant, uses that variant's sample c
 It compares only in a window wider than 640 px: narrower, the mine cell, the header, the name menu and the cup take their phone sizes, which Figma draws only inside its 390 px screens, so the page says nothing is compared.
 A hidden browser pane reports a width of 0, so give it a desktop size before reading `[data-mismatch]`.
 A specimen that animates as it mounts, such as a Pairs card flipping open, is measured once its animations finish.
-`npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, so run it after an export or a change to a component; it stays out of CI to save its minutes.
+A difference listed below under [On purpose](#on-purpose) is captioned with its reason and the difference it expects (`deviation`, with `dw` and `dh` in px), and is still a mismatch outside that difference.
+`npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, and when the number of specimens compared with Figma (`data-compared`) is not the one it expects, as when an export renames a variant a specimen names; CI runs it in the e2e job.
 Each family's Figma preview sits under it at the same scale.
 
 `Zumpo/Card` is every focused surface: the one card of a create-room, password or error page (Kind=Focused), a dialog over a room (Dialog), and a panel in a page's column, such as a game page's empty or loading room list (Panel).
@@ -304,7 +305,7 @@ Code differs from Figma on purpose in a few places:
   Its note leaves out the colour, which the stone shows and a screen reader is told, and how a game ended, which the turn bar says and the winner's lime seat shows, so a default name and its You tag fit at 360 px and neither player's seats, nor the board above them, change size when a game ends.
   The same compact Gomoku seat, and its short note, is used beside the board on a short wide screen.
 - A phone's Gomoku table is spaced close, 12 px under the board and 8 px over the seats, so a solo board in play is the full 320 px on a 360 by 640 phone; a room's, under its tabs, is 275 px.
-- Doodle Chain's row under an entry keeps one height through Done and Keep editing: both of its states share one place, and it is as tall as the taller.
+- Under a Doodle Chain drawing, the row with Done and the row with Keep editing share one place and the taller one's height, so the sheet never moves; DC07 and DC17 draw only the row with Done, and no screen draws a drawing done.
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
