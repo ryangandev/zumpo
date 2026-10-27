@@ -505,16 +505,19 @@ describe('useGoCount', () => {
         <Goes state={state} epoch={epoch} counts={counts} />
       </StrictMode>
     );
-    const view = render(page(atTurn(1)));
-    view.rerender(page(atTurn(1)));
+    const goes = render(page(atTurn(1)));
+    const now = (state: DrawAndGuessRoomState, epoch = 1) => {
+      goes.rerender(page(state, epoch));
+      return counts.at(-1);
+    };
+    expect(counts.at(-1)).toBe(0);
+    expect(now(atTurn(1))).toBe(0);
     const two = atTurn(2);
-    view.rerender(page(two));
-    view.rerender(page(two));
+    expect(now(two)).toBe(1);
+    expect(now(two)).toBe(1);
     // A move within the go.
-    view.rerender(page({ ...two }));
-    view.rerender(page(two, 2));
-    expect(new Set(counts)).toEqual(new Set([0, 1, 2]));
-    expect(counts.at(-1)).toBe(2);
+    expect(now({ ...two })).toBe(1);
+    expect(now(two, 2)).toBe(2);
   });
 });
 
