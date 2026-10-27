@@ -69,6 +69,12 @@ const variantsOf = (id) => [
   { file: `masters/${id}/1.wav`, sha256: 'a'.repeat(64) },
 ];
 
+/** The first built sound with two variants or more, whatever the bank holds. */
+const withTwoVariants = (manifest) =>
+  Object.entries(manifest.sounds).find(
+    ([, built]) => built.variants.length > 1,
+  );
+
 const validateOrigin = (origin) =>
   validateSounds({ sounds: [sound({ origin })] }, schema);
 
@@ -273,12 +279,14 @@ describe('checkGenerated', () => {
     // entry all gone, consistently.
     const { repo, paths } = copyOfRepo();
     const manifest = JSON.parse(fs.readFileSync(paths.manifest, 'utf8'));
-    const [id, built] = Object.entries(manifest.sounds)[0];
-    const [, dropped] = built.variants;
+    const [id, built] = withTwoVariants(manifest);
+    const dropped = built.variants.slice(1);
     built.variants = built.variants.slice(0, 1);
     fs.writeFileSync(paths.manifest, serializeManifest(manifest));
-    for (const format of ['m4a', 'webm']) {
-      fs.rmSync(path.join(paths.filesDir, dropped.files[format].file));
+    for (const variant of dropped) {
+      for (const format of ['m4a', 'webm']) {
+        fs.rmSync(path.join(paths.filesDir, variant.files[format].file));
+      }
     }
     for (const [name, content] of renderModules(manifest)) {
       fs.writeFileSync(path.join(paths.outDir, name), content);
@@ -292,7 +300,7 @@ describe('checkGenerated', () => {
     // Each consistent with the manifest's hashes, as a careful hand edit is.
     const { repo, paths } = copyOfRepo();
     const manifest = readJson(paths.manifest);
-    const [id, built] = Object.entries(manifest.sounds)[0];
+    const [id, built] = withTwoVariants(manifest);
     const [one, two] = built.variants;
     const renamed = `${id}-9.m4a`;
     fs.renameSync(
@@ -325,7 +333,10 @@ describe('checkGenerated', () => {
   it('fails when a generated module is stale or stray', () => {
     const { repo, paths } = copyOfRepo();
     fs.appendFileSync(path.join(paths.outDir, 'index.ts'), '// edited\n');
-    fs.writeFileSync(path.join(paths.outDir, 'snap.ts'), 'export {};\n');
+    fs.writeFileSync(
+      path.join(paths.outDir, 'no-such-game.ts'),
+      'export {};\n',
+    );
     const problems = checkGenerated(repo);
     assert.ok(
       problems.some((p) =>
@@ -334,7 +345,9 @@ describe('checkGenerated', () => {
     );
     assert.ok(
       problems.some((p) =>
-        p.includes('generated/snap.ts is not a module the build writes'),
+        p.includes(
+          'generated/no-such-game.ts is not a module the build writes',
+        ),
       ),
     );
   });
@@ -364,20 +377,19 @@ describe('mastersRoot', () => {
   });
 });
 
-describe('startOffset', () => {
-  /** A soft bump near a tenth of the peak, then the real hit 20 ms later. */
-  function softOnset(first) {
-    const data = new Float32Array(4800);
-    for (let i = 0; i < data.length; i += 1) {
-      const t = i / 48000;
-      const bump = first * Math.exp(-(((t - 0.004) / 0.002) ** 2));
-      const hit = 0.5 * Math.exp(-Math.max(0, t - 0.024) * 40);
-      data[i] =
-        Math.sin(2 * Math.PI * 700 * t) * (bump + (t >= 0.024 ? hit : 0));
-    }
-    return data;
+/** A soft bump near a tenth of the peak, then the real hit 20 ms later. */
+function softOnset(first) {
+  const data = new Float32Array(4800);
+  for (let i = 0; i < data.length; i += 1) {
+    const t = i / 48000;
+    const bump = first * Math.exp(-(((t - 0.004) / 0.002) ** 2));
+    const hit = 0.5 * Math.exp(-Math.max(0, t - 0.024) * 40);
+    data[i] = Math.sin(2 * Math.PI * 700 * t) * (bump + (t >= 0.024 ? hit : 0));
   }
+  return data;
+}
 
+describe('startOffset', () => {
   it('lines up a soft onset that a threshold would place on another bump', () => {
     // The bump crosses a tenth of the peak in the master but not in the copy:
     // a threshold says 960 samples apart, though nothing moved.
