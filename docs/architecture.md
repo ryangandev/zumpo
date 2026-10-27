@@ -384,7 +384,7 @@ A change in one tab is followed by the others.
 - **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
 - **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
   The speaker before the viewer's avatar takes it through [`shell/sound-menu.ts`](../client/src/shell/sound-menu.ts), which `useViewer` hands to the header and the room bar, and which leaves the speaker out while `available` is false, unless it has already been shown and the engine failed after.
-- **`useStateSounds(state, { derive, play, epoch, isNewGame, select?, standing? })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
+- **`useStateSounds(state, { derive, play, epoch, isNewGame, select?, standing?, cuts? })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
   `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`), and a `variant` for a step.
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
   A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent; the keys are kept across a reconnect, and forgotten only when `isNewGame(prev, next)` says a new game began.
@@ -392,6 +392,7 @@ A change in one tab is followed by the others.
   One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is and another player's only if all are, at the highest step any of them reached, while different sounds in one change all play.
   The server merges a run of events into one snapshot, so two players scoring at once arrive together, and the streak still climbs to the second step.
   An event may give `delayMs`, for a run that one change brings at once and that is heard one beat after another, a guess's pegs dropping in; events of one sound at different delays are each heard, and a beat still waiting when the page goes is dropped.
+  A sound `cuts(sound)` says yes to, a stinger or "your turn", drops every beat still waiting as it plays, so no peg lands over it.
   `select(events)` keeps some of a change's events and drops the rest after their keys are heard, so a dropped event never plays later; `standing(state)` names the keys a state stands for on its own, which a baseline counts as heard.
   A key that comes round each round, a streak's point number, names the round too (`score:3:1`).
   The guard lives as long as the component that holds it, so `useStateSounds` belongs in the room's page, never in a component one phase mounts, or every phase change starts it over and the change into that phase is lost.
@@ -408,6 +409,9 @@ A room and its game are heard through one replay guard, in `RoomLayout`, which e
 - **The game** (`<game>/sounds.ts`): a `<GAME>_SOUNDS = gameSounds({ bank, derive, isNewGame, turnOf })`, a module constant handed to `RoomLayout` as `sounds`.
   `bank` spreads `ROOM_SOUNDS` and the game's own; `derive(viewer)` is a pure `(prev, next) => events` over the game's states, which never gives "your turn" or a start or end stinger, the room's alone.
   `turnOf(state)` names the go in play, the same for everybody (`2.5`, Liar's Dice's `3.14.2` with the dice still in, since a round rolled again keeps its number).
+  A game whose snapshots cannot name a go gives `newGo(prev, next)` instead: whether a snapshot begins another go.
+  The page counts the goes (`useGoCount`), once per snapshot by identity and once more for each new connection, names each go by its count, and hands `derive` the go in play as a third argument (`Go`: its `count`, and the snapshot it `began` on), for keys a go cannot repeat.
+  Pairs is that game: a miss leaves the board as it was and the same player may go again, so its goes are counted as the go passes, a miss turns back or a go runs out, while a pair keeps the go.
   `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start and end itself, so a snapshot from earlier in a game is never taken for a new one.
   Every key names its round or turn (`scored:1.3:p2`), the guard keeps the game's apart (`game:`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
 
@@ -438,7 +442,7 @@ Known gaps:
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
-- A Pairs room is heard as a room alone, with no "your turn": a pair keeps the go, and a miss leaves the board as it was, so no snapshot tells one of a player's goes from their last, nor one flip of a card from the next; the state needs a count of goes before Pairs can name them.
+- A Pairs player alone at the table who runs out of time twice in a row without turning a card leaves every snapshot as it was, so the second go neither chimes nor says time up.
 
 ### Sounds on your own
 
@@ -457,6 +461,17 @@ A game on your own is heard by the same rules as a room, through [`solo/sounds.t
 - **The first state is only a baseline**, as a room's first snapshot is: arriving on a fresh board, or on a finished daily code, plays nothing, and its end counts as heard.
 - **One game, one mount:** Play again, a new board or another code mounts a new game view (`key`), and the guard with it, so a game's keys need not name it and are never forgotten (`isNewGame` is always false).
   A page that kept one component across games would have to say when a new one began.
+
+Four ways a game on your own replays or goes quiet without an error:
+
+- Restore a saved game in the `useState` initialiser, never in an effect.
+  A state restored after the first render is a change from the fresh one, so the last row and the end stinger play again on every load.
+- Set `end` in the same handler as the move that ends the game, never in an effect.
+  An end set a render later is a change of its own, after the move's, so the move plays and the stinger lands over it rather than alone.
+- A page that swaps games in one component must key that component per game (`key={seed}`).
+  The guard always takes two states for the same game, so a new game's keys are already heard and its moves stay silent.
+- Never build a key from a count that can go down, such as Make 24's steps on the table or the digits of a typed row.
+  An undo brings the count back, the key is already heard, and the move is silent the second time; count something that only grows, such as the hands played or the guesses made.
 
 A game on your own has no deadline to act in (a run's clock counts up), so nothing ticks, and the daily puzzles are as quiet as the rest.
 
