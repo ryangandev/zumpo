@@ -1,12 +1,18 @@
 import { useEffect, useRef, type ReactNode, type RefObject } from 'react';
 import { useLocation } from 'react-router';
-import { Header, type Viewer, type ViewerMenu } from '../ui';
+import {
+  Header,
+  type SoundMenuProps,
+  type Viewer,
+  type ViewerMenu,
+} from '../ui';
 import { useMessages } from '../i18n';
 import { useSession } from '../net/session';
 import { initialsOf, toneOf } from '../players/avatar';
 import { LanguageSwitch } from './language-switch';
 import { useViewerMenu } from './name-menu';
 import { focusQuietly, LANDING } from './quiet-focus';
+import { useSoundMenu } from './sound-menu';
 import styles from './page.module.css';
 
 // Games is the home page, and stays current on every game's own pages.
@@ -25,7 +31,7 @@ export function Page({
 }) {
   const m = useMessages();
   const { pathname, key } = useLocation();
-  const { viewer, viewerMenu } = useViewer();
+  const { viewer, viewerMenu, sound } = useViewer();
   const box = useRef<HTMLDivElement>(null);
   // The page the browser loaded is the browser's to focus; the router keys
   // it 'default'.
@@ -43,7 +49,12 @@ export function Page({
   return (
     <div ref={box} className={styles.page}>
       {header ?? (
-        <Header links={links} viewer={viewer} viewerMenu={viewerMenu} />
+        <Header
+          links={links}
+          viewer={viewer}
+          viewerMenu={viewerMenu}
+          sound={sound}
+        />
       )}
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
@@ -120,18 +131,21 @@ function useLandingFocus(page: RefObject<HTMLElement | null>, goneTo: boolean) {
 }
 
 /**
- * The viewer's avatar and the name menu it opens. `seatName` is the name a
+ * The viewer's avatar and the name menu it opens, and the speaker before it
+ * (undefined without Web Audio). `seatName` is the name a
  * room gave them, numbered when somebody else there has theirs, so the avatar
  * matches their row.
  */
 export function useViewer({ seatName }: { seatName?: string } = {}): {
   viewer: Viewer;
   viewerMenu: ViewerMenu;
+  sound: SoundMenuProps | undefined;
 } {
   const m = useMessages();
   const session = useSession();
   const name = seatName ?? session.name;
   const viewerMenu = useViewerMenu();
+  const sound = useSoundMenu();
   return {
     viewer: {
       initials: initialsOf(name),
@@ -139,5 +153,6 @@ export function useViewer({ seatName }: { seatName?: string } = {}): {
       label: m.shell.name.viewer(name),
     },
     viewerMenu,
+    sound,
   };
 }

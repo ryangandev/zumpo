@@ -77,3 +77,39 @@ describe('RoomBar on a phone', () => {
     );
   });
 });
+
+describe('RoomBar with sound', () => {
+  const sound = {
+    volume: 0.7,
+    muted: false,
+    onVolumeChange: () => {},
+    onMutedChange: () => {},
+  };
+
+  it('puts the speaker after the room’s own buttons, before the avatar', () => {
+    render(
+      <RoomBar
+        layout="phone"
+        game="Liar’s Dice"
+        phase={{ tone: 'blue', label: 'Round 1' }}
+        onHowToPlay={() => {}}
+        onLeave={() => {}}
+        viewer={{ initials: 'SA', tone: 'blue', label: 'You are Sam' }}
+        sound={sound}
+      />,
+    );
+    const names = screen
+      .getAllByRole('button')
+      .map((button) => button.getAttribute('aria-label') ?? button.textContent);
+    expect(names).toEqual(['How to play', 'Leave room', 'Sound on']);
+    const speaker = screen.getByRole('button', { name: 'Sound on' });
+    expect(
+      speaker.compareDocumentPosition(screen.getByLabelText('You are Sam')),
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
+  it('shows no speaker where there is no sound to set', () => {
+    render(phone());
+    expect(screen.queryByRole('button', { name: /^Sound/ })).toBeNull();
+  });
+});

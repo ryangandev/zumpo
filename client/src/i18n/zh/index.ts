@@ -19,6 +19,7 @@ import { room } from './room';
 import { shell } from './shell';
 import { solo } from './solo';
 import { snap } from './snap';
+import { sound } from './sound';
 import { trios } from './trios';
 import { ui } from './ui';
 
@@ -34,6 +35,7 @@ export const zh: Messages = {
   notices,
   solo,
   ui,
+  sound,
   drawAndGuess,
   minesweeper,
   make24,

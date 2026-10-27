@@ -203,6 +203,12 @@ export {
   type SnapSpotMark,
 } from './components/snap-card';
 export { SnapSymbol, type SnapSymbolProps } from './components/snap-symbol';
+export { Slider, type SliderProps } from './components/slider';
+export {
+  SoundMenu,
+  SoundMenuCard,
+  type SoundMenuProps,
+} from './components/sound-menu';
 export {
   Stone,
   type StoneColor,

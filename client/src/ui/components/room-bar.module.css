@@ -56,6 +56,12 @@
   gap: var(--zumpo-space-8);
 }
 
+/* Option B: the three icon buttons 38 x 48, so the game's name keeps 172 px
+   at 390 px. */
+.phone .action {
+  padding-inline: var(--zumpo-space-8);
+}
+
 .phone .identity {
   flex-direction: column;
   flex-wrap: nowrap;

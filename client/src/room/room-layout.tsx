@@ -157,7 +157,7 @@ export function RoomLayout({
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
   useTurnTitle(yourTurn);
-  const { viewer, viewerMenu } = useViewer({
+  const { viewer, viewerMenu, sound } = useViewer({
     seatName: room.me.username,
   });
   const newHost = useBriefly(state.owner.playerId === room.playerId);
@@ -312,6 +312,7 @@ export function RoomLayout({
           onLeave={reconnecting ? undefined : room.leave}
           viewer={viewer}
           viewerMenu={viewerMenu}
+          sound={sound}
         />
       }
     >

@@ -1,0 +1,84 @@
+/* Zumpo/Slider: a 6 px track in the line colour, its level in ink, and a
+   24 px coral thumb with a 2 px ink edge. */
+.slider {
+  width: 200px;
+  touch-action: none;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-line);
+}
+
+.level {
+  border-radius: var(--zumpo-radius-999);
+  background: var(--zumpo-ink);
+}
+
+/* The thumb draws nothing itself: its halo (::before) lies under its disc
+   (::after), which a background on the thumb would cover. */
+.thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--zumpo-radius-999);
+  outline: none;
+}
+
+.thumb::before,
+.thumb::after {
+  position: absolute;
+  border-radius: var(--zumpo-radius-999);
+  content: '';
+}
+
+.thumb::after {
+  inset: 0;
+  box-sizing: border-box;
+  border: 2px solid var(--zumpo-ink);
+  background: var(--zumpo-coral);
+}
+
+/* State=Hover and State=Dragging: a 40 px halo, sand under the pointer and
+   peach while dragged. It never changes the slider's size. */
+.thumb::before {
+  inset: calc(-1 * var(--zumpo-space-8));
+  background: transparent;
+  transition: background-color 120ms ease-out;
+}
+
+@media (hover: hover) {
+  .control:hover .thumb::before {
+    background: var(--zumpo-sand);
+  }
+}
+
+.thumb[data-dragging]::before {
+  background: var(--zumpo-peach);
+}
+
+/* State=Focus: the 2 px ink ring 2 px outside the thumb, from a key only. */
+.thumb:has(:focus-visible) {
+  outline: var(--focus-ring) solid var(--zumpo-ink);
+  outline-offset: var(--focus-ring);
+}
+
+/* State=Muted: dimmed as a disabled control is, and still working. */
+.muted {
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb::before {
+    transition: none;
+  }
+}
