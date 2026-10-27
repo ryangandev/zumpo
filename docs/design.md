@@ -199,6 +199,7 @@ A hidden browser pane reports a width of 0, so give it a desktop size before rea
 A specimen that animates as it mounts, such as a Pairs card flipping open, is measured once its animations finish.
 A difference listed below under [On purpose](#on-purpose) is captioned with its reason and the difference it expects (`deviation`, with `dw` and `dh` in px), and is still a mismatch outside that difference.
 `npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, and when the number of specimens compared with Figma (`data-compared`) is not the one it expects, as when an export renames a variant a specimen names; CI runs it in the e2e job.
+It launches Chromium with font hinting off, because headless Chromium on Linux otherwise rounds each glyph to a whole pixel and moves a line of text up to 2 px from Figma; unhinted, Linux measures text exactly as macOS does.
 Each family's Figma preview sits under it at the same scale.
 
 `Zumpo/Card` is every focused surface: the one card of a create-room, password or error page (Kind=Focused), a dialog over a room (Dialog), and a panel in a page's column, such as a game page's empty or loading room list (Panel).
