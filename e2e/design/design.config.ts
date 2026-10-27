@@ -17,12 +17,6 @@ export default defineConfig({
     baseURL: `http://localhost:${PORT}`,
     // The gallery compares only wider than a phone, at Figma's page width.
     viewport: { width: 1440, height: 900 },
-    // At 1x, Chromium on Linux hints each glyph to a whole-pixel advance
-    // (ui/gfx/font_render_params_linux.cc turns subpixel positioning on only
-    // above 1x), so a line of text there drifts up to 2 px from macOS and
-    // Figma, which both keep fractional advances. At 2x every platform lays
-    // text out as Figma does; layout sizes are in CSS pixels either way.
-    deviceScaleFactor: 2,
     // Motion on, as a reviewer sees it: a specimen that animates in must
     // still measure its settled size.
     reducedMotion: 'no-preference',
