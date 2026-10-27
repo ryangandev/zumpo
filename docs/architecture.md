@@ -396,6 +396,26 @@ A change in one tab is followed by the others.
 
 The words around sound (the settings' labels) come from the i18n catalog like any other; the engine has none.
 
+### Sounds in a room
+
+A room is heard in two layers, each a pure derive from one snapshot to the next with its own tests, played through `useStateSounds` in a component that lives as long as the room.
+
+- **The room layer** ([`room/sounds.ts`](../client/src/room/sounds.ts)), in `RoomLayout`, which every game renders: somebody arriving or leaving, Ready (a stamp for yours, a pip for somebody else's), the start, your go, the end (a win for the winners, a kind cadence for everybody else) and a lost connection.
+  A dropped connection is not a departure, so another player losing theirs is silent, and moving between the table and the spectator seats is neither a join nor a leave.
+  Your go is the `yourTurn` a game already gives `RoomLayout`, named by its `turn` (`2.5`), so it sounds once; it opens the game in place of the start for the player whose go it is, since it is the one sound a hidden tab plays.
+- **The game** (`<game>/sounds.ts`, Draw & Guess's first): a `derive<Game>Sounds(viewer)` and an `isNew<Game>Game` that adds what the game can tell to the room's `newGameBegan`, used in the game's room component, beside a bank that spreads `ROOM_SOUNDS` and the game's own.
+  Every key names its round or turn (`scored:1.3:p2`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
+  Several sounds that happen at once are heard as the one that matters to the viewer: the last guess and the end of a turn are one snapshot, which the guesser hears as their own and everybody else as the end.
+
+What the viewer did plays at full level, anybody else's with `other`, and a spectator, who has no go, hears the others and the game's start and end.
+A notice is never played itself: the sound comes from the snapshot change the notice reports, a `success` or `alert` event has one of its own, a dropped connection aside, a quieter one (`divider`, `system`, `score`) at most a soft one, as a join is, and typed chat is silent.
+The epoch is the connection the snapshot came on (`Room.epoch`), which changes with the first snapshot after a reconnection rather than with the session, so what happened while away arrives in that snapshot and is only a baseline.
+A Draw & Guess close guess is a chat line rather than state, so it is derived from the chat, keyed by the line's id, with `Room.chatEpoch` making each history a baseline.
+
+The last seconds of a deadline are not in a snapshot: `useDeadlineTicks(seconds, deadline)` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
+A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and null while reconnecting; the first seconds seen for a deadline only set where it stands, and a second never ticks twice.
+What the player does with their own hands, the drawer's pencil, undo and clear, plays where they do it.
+
 ### The asset pipeline
 
 Masters never enter the repository.

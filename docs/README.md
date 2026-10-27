@@ -17,6 +17,7 @@ Where to find the answer, without searching the repository.
 | Routes, guards and the socket on the client            | [architecture.md#client](architecture.md#client)                                                                                |
 | Languages, the message catalog, notices on the wire    | [architecture.md#languages](architecture.md#languages)                                                                          |
 | Sound effects: engine, settings, replay guard          | [architecture.md#sound](architecture.md#sound)                                                                                  |
+| What a room and each game sound like, and where        | [architecture.md#sounds-in-a-room](architecture.md#sounds-in-a-room)                                                            |
 | Adding a sound, the masters, audio:build               | [architecture.md#the-asset-pipeline](architecture.md#the-asset-pipeline)                                                        |
 | Environment variables, production build                | [architecture.md#configuration](architecture.md#configuration)                                                                  |
 | Adding a new game                                      | [architecture.md#adding-a-game](architecture.md#adding-a-game)                                                                  |
