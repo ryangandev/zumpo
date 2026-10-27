@@ -196,6 +196,8 @@ To review the design system, run `npm run dev -w client` (it needs no server) an
 Every specimen is captioned with its Figma variant, uses that variant's sample copy, and shows its size beside Figma's, in red when they differ by more than half a pixel.
 It compares only in a window wider than 640 px: narrower, the mine cell, the header, the name menu and the cup take their phone sizes, which Figma draws only inside its 390 px screens, so the page says nothing is compared.
 A hidden browser pane reports a width of 0, so give it a desktop size before reading `[data-mismatch]`.
+A specimen that animates as it mounts, such as a Pairs card flipping open, is measured once its animations finish.
+`npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, so run it after an export or a change to a component; it stays out of CI to save its minutes.
 Each family's Figma preview sits under it at the same scale.
 
 `Zumpo/Card` is every focused surface: the one card of a create-room, password or error page (Kind=Focused), a dialog over a room (Dialog), and a panel in a page's column, such as a game page's empty or loading room list (Panel).

@@ -22,6 +22,7 @@ Find anything else through [docs/README.md](docs/README.md), and read only the s
 | `npm run audio:build`            | Build the sounds from the masters (Mac mini only)               |
 | `npm run audio:check`            | Check the built sounds match `audio/sounds.json`                |
 | `npm run e2e:sound`              | Play the sound engine in Chromium and WebKit                    |
+| `npm run e2e:design`             | Check that `/design` shows no size mismatch against Figma       |
 
 Run one package's script with `-w`, for example `npm test -w server`.
 

@@ -24,7 +24,11 @@ test('the design gallery matches Figma', async ({ page }) => {
     .evaluateAll((figures) =>
       figures.map(
         (figure) =>
-          `${figure.getAttribute('data-family')}: ${figure.querySelector('figcaption')?.textContent ?? ''}`,
+          `${figure.getAttribute('data-family')}: ${[
+            ...figure.querySelectorAll('figcaption > span'),
+          ]
+            .map((span) => span.textContent)
+            .join(', ')}`,
       ),
     );
   expect(mismatches).toEqual([]);
