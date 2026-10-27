@@ -51,6 +51,16 @@ const both: DeriveSounds<number, 'took'> = () => [
   { sound: 'took', key: 'c', other: true },
 ];
 
+/** A start plays alone, as a room's "your turn" does over a game's sounds. */
+const startAlone = (events: SoundEvent<Sound>[]) =>
+  events.some((e) => e.sound === 'start')
+    ? events.filter((e) => e.sound === 'start')
+    : events;
+
+/** The take a table shows, which it stands for on its own. */
+const standing = (state: Table) =>
+  state.lastTake ? [`take:${state.lastTake.card}`] : [];
+
 const keyed: DeriveSounds<number, 'tick'> = (_, next) => [
   { sound: 'tick', key: `tick:${next}` },
 ];
@@ -173,6 +183,29 @@ describe('createReplayGuard', () => {
     expect(guard.observe(1)).toEqual([{ sound: 'took', key: 'b' }]);
   });
 
+  it('plays what `select` keeps, and has heard what it drops', () => {
+    const guard = createReplayGuard(derive, { isNewGame, select: startAlone });
+    guard.observe({ game: 1, started: false, lastTake: null });
+    expect(guard.observe(table(4))).toEqual([
+      { sound: 'start', key: 'start:1' },
+    ]);
+    // The take dropped beside the start never plays later.
+    guard.observe(table(null));
+    expect(guard.observe(table(4))).toEqual([]);
+  });
+
+  it('counts what a baseline stands for as heard', () => {
+    const guard = createReplayGuard(derive, { isNewGame, standing });
+    guard.observe(table(4));
+    guard.observe(table(null));
+    expect(guard.observe(table(4))).toEqual([]);
+    // After a reconnection too.
+    guard.observe(table(6), true);
+    guard.observe(table(null));
+    expect(guard.observe(table(6))).toEqual([]);
+    expect(guard.observe(table(7))).toHaveLength(1);
+  });
+
   it('remembers only so many keys', () => {
     const guard = createReplayGuard(keyed, { isNewGame: never, memory: 2 });
     guard.observe(0);
@@ -288,5 +321,75 @@ describe('steps', () => {
       <Board state={scores(1, ['ann', 1], ['bob', 2])} play={play} />,
     );
     expect(play.mock.calls).toEqual([['scored', { other: true, variant: 2 }]]);
+  });
+});
+
+/** A guess's pegs: one snapshot, heard one after another. */
+const pegs: DeriveSounds<number, 'peg'> = (prev, next) =>
+  next > prev
+    ? [0, 1, 2].map((beat) => ({
+        sound: 'peg' as const,
+        key: `row:${next}:${beat}`,
+        delayMs: beat * 90,
+      }))
+    : [];
+
+function Pegs({ rows, play }: { rows: number; play: PlaySound<'peg'> }) {
+  useStateSounds(rows, { derive: pegs, play, epoch: 1, isNewGame: never });
+  return null;
+}
+
+describe('a run heard one after another', () => {
+  it('keeps each beat of one sound, rather than hearing it once', () => {
+    const guard = createReplayGuard(pegs, { isNewGame: never });
+    guard.observe(0);
+    expect(guard.observe(1).map((e) => e.delayMs)).toEqual([0, 90, 180]);
+  });
+
+  it('plays each beat after its delay, and none once the page is gone', () => {
+    vi.useFakeTimers();
+    try {
+      const play = vi.fn<(sound: 'peg', options?: PlayOptions) => void>();
+      const view = render(<Pegs rows={0} play={play} />);
+      view.rerender(<Pegs rows={1} play={play} />);
+      expect(play).toHaveBeenCalledTimes(1);
+      vi.advanceTimersByTime(90);
+      expect(play).toHaveBeenCalledTimes(2);
+      view.rerender(<Pegs rows={2} play={play} />);
+      expect(play).toHaveBeenCalledTimes(3);
+      view.unmount();
+      vi.advanceTimersByTime(1000);
+      expect(play).toHaveBeenCalledTimes(3);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('cuts short the beats still waiting when a sound that cuts plays', () => {
+    vi.useFakeTimers();
+    try {
+      // -1 is the end: a stinger that must not have pegs over it.
+      const ending: DeriveSounds<number, 'peg' | 'end'> = (prev, next) =>
+        next === -1 ? [{ sound: 'end', key: 'end' }] : pegs(prev, next);
+      const play =
+        vi.fn<(sound: 'peg' | 'end', options?: PlayOptions) => void>();
+      function Ending({ rows }: { rows: number }) {
+        useStateSounds<number, 'peg' | 'end'>(rows, {
+          derive: ending,
+          play,
+          epoch: 1,
+          isNewGame: never,
+          cuts: (sound) => sound === 'end',
+        });
+        return null;
+      }
+      const view = render(<Ending rows={0} />);
+      view.rerender(<Ending rows={1} />);
+      view.rerender(<Ending rows={-1} />);
+      vi.advanceTimersByTime(1000);
+      expect(play.mock.calls.map(([sound]) => sound)).toEqual(['peg', 'end']);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

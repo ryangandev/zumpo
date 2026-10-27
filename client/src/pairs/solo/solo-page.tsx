@@ -26,8 +26,10 @@ import { SoloLayout } from '../../solo/solo-layout';
 import { SoloResult } from '../../solo/solo-result';
 import { useClock } from '../../solo/use-clock';
 import { useSoloTime } from '../../solo/solo-time';
+import { finishEnd, useSoloSounds } from '../../solo/sounds';
 import { BoardPanel, PairsGrid } from '../board';
 import { BOARDS } from '../boards';
+import { derivePairsSolo, PAIRS_SOLO_BANK } from '../sounds';
 import { readPairsBest, recordPairsBest, type PairsBest } from './best';
 import {
   cardsOf,
@@ -178,6 +180,10 @@ function SoloGameView({
   const clock = useSoloTime();
   const [game, setGame] = useState(() => newGame(board, seed));
   const [finish, setFinish] = useState<Finish | null>(null);
+  useSoloSounds(game, finish && finishEnd(finish), {
+    bank: PAIRS_SOLO_BANK,
+    derive: derivePairsSolo,
+  });
   const now = useClock(
     game.startedAt !== null && !isOver(game) && !clock.paused,
     clock.now,

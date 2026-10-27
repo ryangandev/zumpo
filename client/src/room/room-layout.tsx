@@ -34,6 +34,7 @@ import { NextGamePanel, RESULT_TITLE } from './panels';
 import { RecentChat, RoomChat, useUnreadChat } from './room-chat';
 import { useRoomContext } from './room-context';
 import { roomNameOf, type RaceStanding, type Seat } from './players';
+import { NO_GAME_SOUNDS, useRoomSounds, type GameSounds } from './sounds';
 import styles from './room-layout.module.css';
 
 export interface PlayerLine {
@@ -100,6 +101,15 @@ export interface RoomLayoutProps {
    */
   yourTurn?: boolean;
   /**
+   * What the room hears this game by (`gameSounds` in `room/sounds.ts`): its
+   * own derive, what tells its games apart, and what names its goes, so
+   * "your turn" sounds once each time a go becomes this player's; a turn's
+   * name never comes round again within one game. Heard with the room's
+   * through one replay guard. Without, the room's sounds alone, and turns
+   * are silent.
+   */
+  sounds?: GameSounds;
+  /**
    * The game keeps the board a game ended on in its place, under the result
    * in the turn bar's (`ResultBar`): off a phone, what comes next for a game
    * played to its end (`NextGamePanel`) is at the top of the side column,
@@ -145,6 +155,7 @@ export function RoomLayout({
   playersAside,
   standings = showScores,
   yourTurn = false,
+  sounds = NO_GAME_SOUNDS,
   nextBeside = false,
 }: RoomLayoutProps) {
   const room = useRoomContext();
@@ -157,6 +168,14 @@ export function RoomLayout({
   const [view, setView] = useState<View>('board');
   const [rules, setRules] = useState(false);
   useTurnTitle(yourTurn);
+  useRoomSounds({
+    state,
+    viewer: room.playerId,
+    yourTurn,
+    epoch: room.epoch,
+    readied: room.readied,
+    game: sounds,
+  });
   const { viewer, viewerMenu, sound } = useViewer({
     seatName: room.me.username,
   });

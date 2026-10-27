@@ -16,6 +16,12 @@ import { REQUEST_TIMEOUT_MS } from './socket';
 export interface Snapshot {
   state: AnyRoomState;
   receivedAt: number;
+  /**
+   * The connection it came on. It changes with the first snapshot after a
+   * reconnection, which is what a sound hook's epoch needs: everything that
+   * happened while away arrives in that snapshot, and is only a baseline.
+   */
+  connection: number;
 }
 
 /**
@@ -54,6 +60,12 @@ const NOT_FOUND: readonly ErrorType[] = ['roomNotExist', 'invalidRequest'];
 export interface RoomConnection {
   stage: RoomStage;
   chat: readonly ChatMessage[];
+  /**
+   * How many histories the chat has been given: one on arrival, one more on
+   * each reconnection. A sound hook keyed on it hears a history as a
+   * baseline, never as news.
+   */
+  chatEpoch: number;
   canvas: CanvasStream;
   drawings: DrawingStore;
   submitPassword: (password: string) => void;
@@ -74,6 +86,7 @@ export function useRoom(roomId: string, invite = ''): RoomConnection {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [problem, setProblem] = useState<RoomStage | null>(null);
   const [chat, setChat] = useState<readonly ChatMessage[]>([]);
+  const [chatEpoch, setChatEpoch] = useState(0);
   const [canvas] = useState(() => new CanvasStream());
   const [drawings] = useState(() => new DrawingStore());
   /** Whether this page has held a seat, which turns "not a member" into "expired". */
@@ -164,10 +177,12 @@ export function useRoom(roomId: string, invite = ''): RoomConnection {
       if (state.roomId !== roomId) return;
       seated.current = true;
       setProblem(null);
-      setSnapshot({ state, receivedAt: performance.now() });
+      setSnapshot({ state, receivedAt: performance.now(), connection });
     };
     const onHistory = (id: string, messages: ChatMessage[]) => {
-      if (id === roomId) setChat(messages.slice(-CHAT_LIMIT));
+      if (id !== roomId) return;
+      setChat(messages.slice(-CHAT_LIMIT));
+      setChatEpoch((count) => count + 1);
     };
     const onMessage = (id: string, message: ChatMessage) => {
       if (id !== roomId) return;
@@ -293,6 +308,7 @@ export function useRoom(roomId: string, invite = ''): RoomConnection {
   return {
     stage: stageOf(status, snapshot, problem),
     chat,
+    chatEpoch,
     canvas,
     drawings,
     submitPassword,

@@ -19,6 +19,8 @@ import { useFitHeight, type FitHeight } from '../shell/fit-height';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useMessages, type Messages } from '../i18n';
+import { useSounds } from '../audio';
+import { MAKE_24_HAND_BANK } from './sounds';
 import styles from './table.module.css';
 
 /** The cards after `steps`, or the deal itself if a step does not fit it. */
@@ -209,6 +211,7 @@ export function HandTable({
     selection.at === steps.length ? selection : { first: null, op: null };
   const select = (next: { first: number | null; op: Operator | null }) =>
     setSelection({ at: steps.length, ...next });
+  const sound = useSounds(MAKE_24_HAND_BANK);
 
   const finished = cards.length === 1;
   const playing = done === undefined && !paused;
@@ -216,14 +219,33 @@ export function HandTable({
   const blocked = (index: number) =>
     op === '/' && index !== first && itemAt(cards, index).value.n === 0;
   const pick = (index: number) => {
-    if (first === null) return select({ first: index, op: null });
-    if (index === first) return select({ first: null, op: null });
-    if (op === null) return select({ first: index, op: null });
+    if (first === null || index === first || op === null) {
+      sound('make-24-card');
+      if (first === null) return select({ first: index, op: null });
+      if (index === first) return select({ first: null, op: null });
+      return select({ first: index, op: null });
+    }
     select({ first: null, op: null });
-    onStep({ left: first, op, right: index });
+    const step = { left: first, op, right: index };
+    // A last card of 24 is heard from the state it makes: the run's, or the
+    // server's, which says whether it counts.
+    const left = cardsAfter(deal, [...steps, step]);
+    if (left.length > 1) sound('make-24-combine');
+    else if (!isTarget(itemAt(left, 0).value)) sound('ui-nope');
+    onStep(step);
   };
-  const pickSign = (sign: Operator) =>
+  const pickSign = (sign: Operator) => {
+    sound('make-24-sign');
     select({ first, op: op === sign ? null : sign });
+  };
+  const undo = () => {
+    sound('ui-undo');
+    onUndo();
+  };
+  const startOver = () => {
+    sound('ui-undo');
+    onStartOver();
+  };
 
   useTypingKeys(
     {
@@ -237,10 +259,10 @@ export function HandTable({
         if (index < cards.length && !finished && !blocked(index)) pick(index);
       },
       onDelete: () => {
-        if (steps.length > 0) onUndo();
+        if (steps.length > 0) undo();
       },
       onEscape: () => {
-        if (steps.length > 0) onStartOver();
+        if (steps.length > 0) startOver();
       },
     },
     playing,
@@ -275,14 +297,14 @@ export function HandTable({
       <Button
         variant={finished ? 'primary' : 'secondary'}
         icon="undo"
-        onClick={onUndo}
+        onClick={undo}
         disabled={paused || steps.length === 0}
       >
         {m.make24.table.undo}
       </Button>
       <Button
         variant="secondary"
-        onClick={onStartOver}
+        onClick={startOver}
         disabled={paused || steps.length === 0}
       >
         {m.make24.table.startOver}
