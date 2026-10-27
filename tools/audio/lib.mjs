@@ -126,33 +126,33 @@ export function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+/** `/sounds/2/origin/url` -> `sounds[2] (snap-took).origin.url` */
 function describePath(doc, instancePath) {
-  const parts = instancePath.split('/').slice(1);
-  let label = 'sounds.json';
+  let label = '';
   let node = doc;
-  for (const part of parts) {
+  for (const part of instancePath.split('/').slice(1)) {
     node = node?.[part];
     if (/^\d+$/.test(part)) {
       label += `[${part}]`;
       if (typeof node?.id === 'string') label += ` (${node.id})`;
-    } else label += `.${part}`;
+    } else label += label ? `.${part}` : part;
   }
-  return label;
+  return label || 'the file';
 }
 
 function describeError(doc, error) {
   const where = describePath(doc, error.instancePath);
   switch (error.keyword) {
     case 'additionalProperties':
-      return `${where}: unknown field "${error.params.additionalProperty}"`;
+      return `${where} has an unknown field "${error.params.additionalProperty}"`;
     case 'required':
-      return `${where}: missing "${error.params.missingProperty}"`;
+      return `${where} is missing "${error.params.missingProperty}"`;
     case 'enum':
-      return `${where}: must be one of ${error.params.allowedValues.map((v) => JSON.stringify(v)).join(', ')}`;
+      return `${where} must be one of ${error.params.allowedValues.map((v) => JSON.stringify(v)).join(', ')}`;
     case 'const':
-      return `${where}: must be ${JSON.stringify(error.params.allowedValue)}`;
+      return `${where} must be ${JSON.stringify(error.params.allowedValue)}`;
     default:
-      return `${where}: ${error.message}`;
+      return `${where} ${error.message}`;
   }
 }
 
@@ -166,29 +166,30 @@ export function validateSounds(doc, schema) {
   if (!validate(doc)) {
     return validate.errors
       .filter((error) => error.keyword !== 'if')
-      .map((error) => describeError(doc, error));
+      .map((error) => `audio/sounds.json: ${describeError(doc, error)}`);
   }
   const problems = [];
   const ids = new Set();
   for (const sound of doc.sounds) {
-    if (ids.has(sound.id)) problems.push(`sounds.json: "${sound.id}" twice`);
+    const where = `audio/sounds.json: ${sound.id}`;
+    if (ids.has(sound.id)) problems.push(`${where} is declared twice`);
     ids.add(sound.id);
     const files = new Set();
     for (const variant of sound.variants) {
       if (!variant.file.startsWith(`masters/${sound.id}/`)) {
         problems.push(
-          `sounds.json (${sound.id}): ${variant.file} is not under masters/${sound.id}/`,
+          `${where}: ${variant.file} is not under masters/${sound.id}/`,
         );
       }
       if (files.has(variant.file)) {
-        problems.push(`sounds.json (${sound.id}): ${variant.file} twice`);
+        problems.push(`${where}: ${variant.file} is listed twice`);
       }
       files.add(variant.file);
     }
     // The schema says so too; kept here so the rule is plain in the check.
     if (!['CC0-1.0', 'own'].includes(sound.origin.license)) {
       problems.push(
-        `sounds.json (${sound.id}): license ${sound.origin.license} is not allowed`,
+        `${where}: the license ${sound.origin.license} is not allowed`,
       );
     }
   }

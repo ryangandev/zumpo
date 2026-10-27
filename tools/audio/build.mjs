@@ -20,6 +20,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import {
   BITRATES,
   CLASSES,
@@ -32,6 +33,7 @@ import {
   PRE_ENCODE_CEILING,
   readJson,
   renderModules,
+  REPO,
   repoPaths,
   serializeManifest,
   TRUE_PEAK_CEILING,
@@ -47,15 +49,8 @@ const MAX_ONSET_DRIFT = 4;
 /** Leading silence past this means the master was not trimmed. */
 const MAX_LEAD_SECONDS = 0.02;
 
-class BuildError extends Error {}
-
-const args = new Set(process.argv.slice(2));
-for (const arg of args) {
-  if (!['--rehash', '--force'].includes(arg)) {
-    console.error(`Unknown option ${arg}; see tools/audio/build.mjs.`);
-    process.exit(2);
-  }
-}
+/** A build that stopped for a reason a person can fix. */
+export class BuildError extends Error {}
 
 function run(command, commandArgs) {
   const result = spawnSync(command, commandArgs, {
@@ -326,7 +321,7 @@ function buildVariant({ sound, variant, root, work, encoder }) {
 
 /** A variant built before from the same master and class, still intact. */
 function reusable(previous, variant, sound, filesDir) {
-  if (!previous || args.has('--force')) return false;
+  if (!previous) return false;
   if (previous.sourceSha256 !== variant.sha256) return false;
   const key = encodeKey({
     sourceSha256: variant.sha256,
@@ -340,12 +335,22 @@ function reusable(previous, variant, sound, filesDir) {
   });
 }
 
-function main() {
-  const paths = repoPaths();
-  const root = mastersRoot();
+/**
+ * Builds the generated folder of `repo` from the masters under `root`.
+ * Throws a BuildError, having written nothing, when a sound cannot be built;
+ * only `rehash`, asked for, writes sounds.json first. Returns what it did.
+ */
+export function buildAudio({
+  repo = REPO,
+  root = mastersRoot(),
+  force = false,
+  rehash = false,
+} = {}) {
+  const paths = repoPaths(repo);
   const doc = readJson(paths.sounds);
+  const report = [];
 
-  if (args.has('--rehash')) {
+  if (rehash) {
     for (const sound of doc.sounds ?? []) {
       for (const variant of sound.variants ?? []) {
         const master = path.join(root, variant.file);
@@ -356,7 +361,7 @@ function main() {
       }
     }
     fs.writeFileSync(paths.sounds, `${JSON.stringify(doc, null, 2)}\n`);
-    console.log(`Wrote each master's sha256 into audio/sounds.json.`);
+    report.push(`Wrote each master's sha256 into audio/sounds.json.`);
   }
 
   const problems = validateSounds(doc, readJson(paths.schema));
@@ -377,7 +382,6 @@ function main() {
   let encoder = null;
   const manifest = { notice: NOTICE, pipeline: PIPELINE, sounds: {} };
   const warnings = [];
-  const report = [];
   try {
     for (const sound of doc.sounds.toSorted((a, b) =>
       a.id.localeCompare(b.id),
@@ -387,7 +391,7 @@ function main() {
         const before = previous.sounds?.[sound.id]?.variants?.find(
           (v) => v.source === variant.file,
         );
-        if (reusable(before, variant, sound, paths.filesDir)) {
+        if (!force && reusable(before, variant, sound, paths.filesDir)) {
           variants.push(before);
           report.push(`kept     ${sound.id} ${variant.file}`);
           continue;
@@ -432,18 +436,36 @@ function main() {
   } finally {
     fs.rmSync(work, { recursive: true, force: true });
   }
-
-  for (const line of report) console.log(line);
-  for (const warning of warnings) console.warn(`warning: ${warning}`);
-  console.log(
-    `audio:build: ${Object.keys(manifest.sounds).length} sounds in client/src/audio/generated/.`,
-  );
+  return { manifest, report, warnings };
 }
 
-try {
-  main();
-} catch (error) {
-  if (!(error instanceof BuildError)) throw error;
-  console.error(`audio:build: ${error.message}`);
-  process.exit(1);
+function cli() {
+  const args = process.argv.slice(2);
+  const unknown = args.filter((arg) => !['--rehash', '--force'].includes(arg));
+  if (unknown.length) {
+    console.error(`Unknown option ${unknown[0]}; see tools/audio/build.mjs.`);
+    process.exit(2);
+  }
+  try {
+    const { manifest, report, warnings } = buildAudio({
+      force: args.includes('--force'),
+      rehash: args.includes('--rehash'),
+    });
+    for (const line of report) console.log(line);
+    for (const warning of warnings) console.warn(`warning: ${warning}`);
+    console.log(
+      `audio:build: ${Object.keys(manifest.sounds).length} sounds in client/src/audio/generated/.`,
+    );
+  } catch (error) {
+    if (!(error instanceof BuildError)) throw error;
+    console.error(`audio:build: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  cli();
 }
