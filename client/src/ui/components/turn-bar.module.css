@@ -301,7 +301,9 @@
   grid-area: meta;
 }
 
-.phone .tag {
+/* Beside what to do on the first line; a stacked bar's tag, on the meta's
+   line, keeps only the 2 px over it, as Figma's Phone variant draws. */
+.phone:not(.narrow) .tag {
   margin-bottom: var(--zumpo-space-2);
 }
 
