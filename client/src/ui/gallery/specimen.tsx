@@ -49,6 +49,10 @@ export interface SpecimenProps {
    * difference the size is shown as a known deviation, outside it as a
    * mismatch, so the reason cannot hide a regression or outlive its cause. */
   deviation?: Deviation;
+  /** Why Figma has no size for this specimen though the family has one, such
+   * as a boolean property its variants leave off: it is not compared, and
+   * the reason is in its caption. */
+  uncompared?: string;
   children: ReactNode;
 }
 
@@ -73,6 +77,7 @@ export function Specimen({
   width,
   heightOnly,
   deviation,
+  uncompared,
   children,
 }: SpecimenProps) {
   const slot = useRef<HTMLDivElement>(null);
@@ -103,6 +108,7 @@ export function Specimen({
       if (!live) return;
       setMeasured(true);
       if (!data || !element) return;
+      if (uncompared) return;
       const figma = variant
         ? data.variants?.find((v) => v.name === variant)?.node
         : data.node;
@@ -113,7 +119,7 @@ export function Specimen({
     return () => {
       live = false;
     };
-  }, [family, variant, phone]);
+  }, [family, variant, phone, uncompared]);
 
   const compared = check != null && !check.phone;
   const off = (dw: number, dh: number) =>
@@ -133,6 +139,7 @@ export function Specimen({
       data-variant={variant}
       data-measured={measured || undefined}
       data-compared={compared || undefined}
+      data-uncompared={uncompared}
       data-mismatch={mismatch || undefined}
       data-deviation={(differs && !mismatch && deviation) || undefined}
     >
@@ -152,6 +159,9 @@ export function Specimen({
               ? `Figma ${check.figma.w} × ${check.figma.h} · code ${round(check.code.w)} × ${round(check.code.h)}`
               : `${round(check.code.w)} × ${round(check.code.h)}${check.phone ? '' : ' ✓'}`}
           </span>
+        )}
+        {uncompared && (
+          <span className={styles.deviation}>Not compared: {uncompared}</span>
         )}
         {compared && deviation && (differs || mismatch) && (
           <span className={styles.deviation}>

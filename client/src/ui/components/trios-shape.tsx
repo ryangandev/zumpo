@@ -9,6 +9,11 @@ export interface TriosShapeProps {
   colour: Colour;
   /** Its box in pixels: 40 on a Regular card, 24 on a Compact, 16 on a Mini. */
   size?: number;
+  /**
+   * Figma's Stripes: Coarse wherever the box is 16 px or under, unless given,
+   * as the gallery gives it to draw Coarse at Figma's 40 px.
+   */
+  stripes?: 'fine' | 'coarse';
   className?: string;
 }
 
@@ -50,10 +55,11 @@ export function TriosShape({
   fill,
   colour,
   size = 40,
+  stripes = size <= COARSE_SIZE ? 'coarse' : 'fine',
   className,
 }: TriosShapeProps) {
   const clip = useId();
-  const stripes = size <= COARSE_SIZE ? COARSE_STRIPES : STRIPES;
+  const lines = stripes === 'coarse' ? COARSE_STRIPES : STRIPES;
   return (
     <svg
       className={cx(styles.shape, styles[colour], className)}
@@ -68,8 +74,8 @@ export function TriosShape({
             <Outline shape={shape} />
           </clipPath>
           <g clipPath={`url(#${clip})`}>
-            {stripes.x.map((x) => (
-              <rect key={x} x={x} y={0} width={stripes.width} height={40} />
+            {lines.x.map((x) => (
+              <rect key={x} x={x} y={0} width={lines.width} height={40} />
             ))}
           </g>
         </>

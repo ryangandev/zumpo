@@ -198,7 +198,9 @@ It compares only in a window wider than 640 px: narrower, the mine cell, the hea
 A hidden browser pane reports a width of 0, so give it a desktop size before reading `[data-mismatch]`.
 A specimen that animates as it mounts, such as a Pairs card flipping open, is measured once its animations finish.
 A difference listed below under [On purpose](#on-purpose) is captioned with its reason and the difference it expects (`deviation`, with `dw` and `dh` in px), and is still a mismatch outside that difference.
-`npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, and when the number of specimens compared with Figma (`data-compared`) is not the one it expects, as when an export renames a variant a specimen names; CI runs it in the e2e job.
+A specimen whose size Figma does not draw, such as one with a boolean property every variant leaves at its default (an Input without its helper, Lives without its label) or text wrapped where Figma's holds one line, is not compared and says why in its caption (`uncompared`).
+A specimen whose content differs from its variant's only in width, such as a Button with an icon, compares its height alone (`heightOnly`).
+`npm run e2e:design` opens the gallery at 1440 × 900 with motion on, on the Vite dev server at port 3790 (`DESIGN_PORT`), and fails on any mismatch, on a specimen of a Figma family that is neither compared nor says why not, and when the number of specimens compared with Figma (`data-compared`) is not the one it expects, as when an export renames a variant a specimen names; CI runs it in the e2e job.
 It launches Chromium with font hinting off, because headless Chromium on Linux otherwise rounds each glyph to a whole pixel and moves a line of text up to 2 px from Figma; unhinted, Linux measures text exactly as macOS does.
 Each family's Figma preview sits under it at the same scale.
 

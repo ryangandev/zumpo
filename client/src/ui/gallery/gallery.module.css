@@ -146,3 +146,13 @@
 .stretch {
   align-self: stretch;
 }
+
+/* A list for one row, as wide as the slot, whose width a row's container
+   queries follow. */
+.list {
+  container-type: inline-size;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
