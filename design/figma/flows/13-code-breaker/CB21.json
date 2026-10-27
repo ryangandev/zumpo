@@ -14,7 +14,7 @@
     "x": 6060,
     "y": 4350,
     "w": 390,
-    "h": 2109,
+    "h": 2181,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -85,7 +85,7 @@
         "id": "162:110186",
         "name": "Final scores",
         "w": 350,
-        "h": 594,
+        "h": 666,
         "wSize": "fill",
         "hSize": "hug",
         "fills": [
@@ -152,7 +152,7 @@
             "id": "162:110190",
             "name": "Ranking",
             "w": 300,
-            "h": 232,
+            "h": 304,
             "wSize": "fill",
             "hSize": "hug",
             "layout": {
@@ -166,7 +166,7 @@
                 "id": "162:110191",
                 "name": "Place 1",
                 "w": 300,
-                "h": 52,
+                "h": 70,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -196,8 +196,9 @@
                     "id": "162:110193",
                     "name": "Rank / Maya",
                     "w": 260,
-                    "h": 52,
+                    "h": 70,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
                       "State": "Highlight"
@@ -212,7 +213,8 @@
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 52,
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 70,
                         "width": 260
                       },
                       {
@@ -222,6 +224,16 @@
                           "Tone": "Peach",
                           "Size": "Regular"
                         }
+                      },
+                      {
+                        "path": "Details / Status line",
+                        "layoutAlign": "STRETCH",
+                        "primaryAxisSizingMode": "FIXED"
+                      },
+                      {
+                        "path": "Details / Status line / Status",
+                        "layoutGrow": 1,
+                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -232,7 +244,7 @@
                 "id": "162:110194",
                 "name": "Place 2",
                 "w": 300,
-                "h": 52,
+                "h": 70,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -262,8 +274,9 @@
                     "id": "162:110196",
                     "name": "Rank / Sam",
                     "w": 260,
-                    "h": 52,
+                    "h": 70,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
                       "State": "Default"
@@ -278,7 +291,8 @@
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 52,
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 70,
                         "width": 260
                       },
                       {
@@ -288,6 +302,16 @@
                           "Tone": "Sand",
                           "Size": "Regular"
                         }
+                      },
+                      {
+                        "path": "Details / Status line",
+                        "layoutAlign": "STRETCH",
+                        "primaryAxisSizingMode": "FIXED"
+                      },
+                      {
+                        "path": "Details / Status line / Status",
+                        "layoutGrow": 1,
+                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -298,7 +322,7 @@
                 "id": "162:110197",
                 "name": "Place 3",
                 "w": 300,
-                "h": 52,
+                "h": 70,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -328,8 +352,9 @@
                     "id": "162:110199",
                     "name": "Rank / Ryan",
                     "w": 260,
-                    "h": 52,
+                    "h": 70,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
                       "State": "Default"
@@ -344,7 +369,8 @@
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 52,
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 70,
                         "width": 260
                       },
                       {
@@ -354,6 +380,16 @@
                           "Tone": "Blue",
                           "Size": "Regular"
                         }
+                      },
+                      {
+                        "path": "Details / Status line",
+                        "layoutAlign": "STRETCH",
+                        "primaryAxisSizingMode": "FIXED"
+                      },
+                      {
+                        "path": "Details / Status line / Status",
+                        "layoutGrow": 1,
+                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }
@@ -364,7 +400,7 @@
                 "id": "162:110200",
                 "name": "Place 4",
                 "w": 300,
-                "h": 52,
+                "h": 70,
                 "wSize": "fill",
                 "hSize": "hug",
                 "layout": {
@@ -394,8 +430,9 @@
                     "id": "162:110202",
                     "name": "Rank / Leo",
                     "w": 260,
-                    "h": 52,
+                    "h": 70,
                     "wSize": "fill",
+                    "hSize": "hug",
                     "component": "Zumpo/Player row",
                     "variant": {
                       "State": "Default"
@@ -411,7 +448,8 @@
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 52,
+                        "counterAxisSizingMode": "AUTO",
+                        "height": 70,
                         "width": 260
                       },
                       {
@@ -421,6 +459,16 @@
                           "Tone": "Lime",
                           "Size": "Regular"
                         }
+                      },
+                      {
+                        "path": "Details / Status line",
+                        "layoutAlign": "STRETCH",
+                        "primaryAxisSizingMode": "FIXED"
+                      },
+                      {
+                        "path": "Details / Status line / Status",
+                        "layoutGrow": 1,
+                        "textAutoResize": "HEIGHT"
                       }
                     ]
                   }

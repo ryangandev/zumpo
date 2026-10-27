@@ -5,7 +5,7 @@
   "id": "163:65953",
   "section": "08 / Liar's Dice / complete flow",
   "reviewNotes": [
-    "LD16 · Any way out of a game under way asks first: Leave, the wordmark and the browser’s back button, and Leave goes to the game’s page. A finished game leaves at once, as Pairs, Snap and the puzzles do; a Trios run asks once a trio is found."
+    "LD16 · Once the first bid is made, until the game ends, any way out asks first: Leave, the wordmark and the browser’s back button, and Leave goes to the game’s page. While it asks the bots wait and the table is put away, so staying costs nothing; here Maya lost a die in round 1 and opens round 2. The first roll alone is nothing to lose, so before it is bid on Leave just goes, and a finished game leaves at once, as Pairs, Snap and the puzzles do; a Trios run asks once a trio is found."
   ],
   "frame": {
     "type": "FRAME",
@@ -64,7 +64,7 @@
             "componentProperties": {
               "Icon": "24:5010",
               "Show icon": false,
-              "Label": "Round 1",
+              "Label": "Round 2",
               "Tone": "Blue",
               "Size": "Regular"
             }
@@ -122,6 +122,7 @@
             "w": 944,
             "h": 452,
             "hSize": "hug",
+            "opacity": 0,
             "layout": {
               "mode": "column",
               "gap": "$Zumpo · UI:space/16",
@@ -144,7 +145,7 @@
                 "componentId": "26:16856",
                 "props": {
                   "Countdown": false,
-                  "Meta": "12 dice on the table",
+                  "Meta": "11 dice on the table",
                   "Main": "Open the bidding",
                   "Category": false,
                   "Label": "Your turn"
@@ -368,6 +369,10 @@
                               "Tone": "Peach",
                               "Size": "Regular"
                             }
+                          },
+                          {
+                            "path": "Dice / Die 3",
+                            "visible": true
                           }
                         ]
                       },
@@ -424,7 +429,7 @@
             "id": "163:65966",
             "name": "Game sidebar",
             "w": 344,
-            "h": 445,
+            "h": 404,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -437,7 +442,7 @@
                 "id": "163:65967",
                 "name": "This game",
                 "w": 344,
-                "h": 235,
+                "h": 194,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Card",
@@ -452,7 +457,7 @@
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 235,
+                    "height": 194,
                     "width": 344
                   }
                 ],
@@ -463,7 +468,7 @@
                       "id": "I163:65967;35:13441;163:65973",
                       "name": "Stats",
                       "w": 278,
-                      "h": 123,
+                      "h": 82,
                       "wSize": "fill",
                       "hSize": "hug",
                       "layout": {
@@ -471,55 +476,6 @@
                         "strokesIncluded": true
                       },
                       "children": [
-                        {
-                          "type": "FRAME",
-                          "id": "I163:65967;35:13441;163:65974",
-                          "name": "Stat / Round",
-                          "w": 278,
-                          "h": 41,
-                          "wSize": "fill",
-                          "hSize": "hug",
-                          "layout": {
-                            "mode": "row",
-                            "pad": [
-                              "$Zumpo · UI:space/8",
-                              0
-                            ],
-                            "justify": "space_between",
-                            "align": "center",
-                            "strokesIncluded": true
-                          },
-                          "children": [
-                            {
-                              "type": "TEXT",
-                              "id": "I163:65967;35:13441;163:65975",
-                              "name": "Label",
-                              "w": 47,
-                              "h": 25,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "Round",
-                              "textStyle": "Zumpo/Body",
-                              "fills": [
-                                "$Zumpo · UI:color/muted"
-                              ]
-                            },
-                            {
-                              "type": "TEXT",
-                              "id": "I163:65967;35:13441;163:65976",
-                              "name": "Value",
-                              "w": 7,
-                              "h": 24,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "1",
-                              "textStyle": "Zumpo/Number",
-                              "fills": [
-                                "$Zumpo · UI:color/ink"
-                              ]
-                            }
-                          ]
-                        },
                         {
                           "type": "FRAME",
                           "id": "I163:65967;35:13441;163:65977",
@@ -557,11 +513,11 @@
                               "type": "TEXT",
                               "id": "I163:65967;35:13441;163:65979",
                               "name": "Value",
-                              "w": 17,
+                              "w": 13,
                               "h": 24,
                               "wSize": "hug",
                               "hSize": "hug",
-                              "text": "12",
+                              "text": "11",
                               "textStyle": "Zumpo/Number",
                               "fills": [
                                 "$Zumpo · UI:color/ink"
@@ -610,7 +566,7 @@
                               "h": 24,
                               "wSize": "hug",
                               "hSize": "hug",
-                              "text": "3",
+                              "text": "2",
                               "textStyle": "Zumpo/Number",
                               "fills": [
                                 "$Zumpo · UI:color/ink"

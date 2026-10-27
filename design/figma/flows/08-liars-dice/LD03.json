@@ -483,7 +483,7 @@
             "id": "69:77464",
             "name": "Game sidebar",
             "w": 344,
-            "h": 445,
+            "h": 404,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -496,7 +496,7 @@
                 "id": "69:77465",
                 "name": "This game",
                 "w": 344,
-                "h": 235,
+                "h": 194,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Card",
@@ -511,7 +511,7 @@
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 235,
+                    "height": 194,
                     "width": 344
                   }
                 ],
@@ -522,7 +522,7 @@
                       "id": "I69:77465;35:13441;69:77471",
                       "name": "Stats",
                       "w": 278,
-                      "h": 123,
+                      "h": 82,
                       "wSize": "fill",
                       "hSize": "hug",
                       "layout": {
@@ -530,55 +530,6 @@
                         "strokesIncluded": true
                       },
                       "children": [
-                        {
-                          "type": "FRAME",
-                          "id": "I69:77465;35:13441;69:77472",
-                          "name": "Stat / Round",
-                          "w": 278,
-                          "h": 41,
-                          "wSize": "fill",
-                          "hSize": "hug",
-                          "layout": {
-                            "mode": "row",
-                            "pad": [
-                              "$Zumpo · UI:space/8",
-                              0
-                            ],
-                            "justify": "space_between",
-                            "align": "center",
-                            "strokesIncluded": true
-                          },
-                          "children": [
-                            {
-                              "type": "TEXT",
-                              "id": "I69:77465;35:13441;69:77473",
-                              "name": "Label",
-                              "w": 47,
-                              "h": 25,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "Round",
-                              "textStyle": "Zumpo/Body",
-                              "fills": [
-                                "$Zumpo · UI:color/muted"
-                              ]
-                            },
-                            {
-                              "type": "TEXT",
-                              "id": "I69:77465;35:13441;69:77474",
-                              "name": "Value",
-                              "w": 7,
-                              "h": 24,
-                              "wSize": "hug",
-                              "hSize": "hug",
-                              "text": "1",
-                              "textStyle": "Zumpo/Number",
-                              "fills": [
-                                "$Zumpo · UI:color/ink"
-                              ]
-                            }
-                          ]
-                        },
                         {
                           "type": "FRAME",
                           "id": "I69:77465;35:13441;69:77475",
