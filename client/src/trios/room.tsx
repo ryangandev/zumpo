@@ -18,6 +18,7 @@ import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
+import { TRIOS_SOUNDS } from './sounds';
 import { LastTrio, TablePanel, TriosTable, type PlaceView } from './table';
 import { whyNotATrio } from './words';
 
@@ -57,6 +58,7 @@ export function TriosRoom() {
       stage={inGame ? <Play room={room} /> : <BetweenGames room={room} />}
       players={players.map((seat) => playerLine(state, seat, m))}
       chat={{ placeholder: m.trios.chat }}
+      sounds={TRIOS_SOUNDS}
       nextBeside
     />
   );
