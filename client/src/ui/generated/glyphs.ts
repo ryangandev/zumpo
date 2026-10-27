@@ -128,6 +128,16 @@ export const glyphs = {
     { d: 'M15 1H1', x: 4, y: 11 },
     { d: 'M1 1L7 7L1 13', x: 12, y: 5 },
   ],
+  'sound': [
+    { d: 'M9 1L4 5H1V11H4L9 15V1Z', x: 2, y: 4 },
+    { d: 'M1 1C2.757 2.757 2.757 5.607 1 7.364', x: 13.84, y: 7.5 },
+    { d: 'M1 1C4.32 4.32 4.32 9.7 1 13.02', x: 16.755, y: 4.5 },
+  ],
+  'sound-off': [
+    { d: 'M9 1L4 5H1V11H4L9 15V1Z', x: 2, y: 4 },
+    { d: 'M0.707 0.707L6.707 6.707', x: 14, y: 8 },
+    { d: 'M6.707 0.707L0.707 6.707', x: 14, y: 8 },
+  ],
 } as const satisfies Record<string, readonly GlyphPath[]>;
 
 export type GlyphName = keyof typeof glyphs;

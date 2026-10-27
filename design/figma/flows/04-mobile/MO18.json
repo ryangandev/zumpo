@@ -11,7 +11,7 @@
     "x": 530,
     "y": 8047,
     "w": 390,
-    "h": 429,
+    "h": 433,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -34,7 +34,7 @@
         "id": "79:104882",
         "name": "Mobile navigation",
         "w": 350,
-        "h": 44,
+        "h": 48,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -55,24 +55,71 @@
             "componentId": "4:36"
           },
           {
-            "type": "INSTANCE",
-            "id": "79:104884",
-            "name": "Player / YO",
-            "w": 32,
-            "h": 32,
-            "component": "Zumpo/Avatar",
-            "variant": {
-              "Tone": "Sand"
+            "type": "FRAME",
+            "id": "253:47311",
+            "name": "Actions",
+            "w": 86,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
             },
-            "componentId": "26:10572",
-            "props": {
-              "Initials": "SA"
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "height": 32,
-                "width": 32
+                "type": "INSTANCE",
+                "id": "253:47312",
+                "name": "Action / Sound",
+                "w": 46,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=sound",
+                  "Show icon": true,
+                  "Label": "Sound"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "79:104884",
+                "name": "Player / YO",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Avatar",
+                "variant": {
+                  "Tone": "Sand"
+                },
+                "componentId": "26:10572",
+                "props": {
+                  "Initials": "SA"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 32,
+                    "width": 32
+                  }
+                ]
               }
             ]
           }

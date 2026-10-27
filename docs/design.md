@@ -33,6 +33,7 @@ They are not copied here, so there is one place to change them.
 | 13 / Code Breaker / complete flow    | `162:65717` | CB01-CB14 desktop, CB15-CB21 phone                                                    |
 | 14 / Gomoku / complete flow          | `162:67746` | GM01-GM21, game page, solo, room and phone                                            |
 | 15 / Phone in play                   | `163:63239` | PH01-PH06, the one phone layout every game plays in                                   |
+| 16 / Sound                           | `253:48727` | SO01-SO06, the sound menu on desktop and phone, and in Chinese                        |
 | Shared pieces                        | `9:198`     | Component families, all named `Zumpo/…`                                               |
 | Archive                              | `9:197`     | Club Circuit and Pocket Studio, with their components                                 |
 
@@ -146,6 +147,15 @@ Every room screen uses it (P07, P11, P12, P15, P16, D01-D15, M01-M16, MO07-MO16)
   Gomoku draws no seats then either (GM08), since with no colours yet they would only list the same two players again.
 - On a phone, where the scoreboard is on its own tab, the waiting card says who else is at the table, their small avatars over "Maya and Leo are here." (MO20), so "Everyone's here?" is answered where it is asked.
 
+### Sound
+
+The speaker button, a Secondary icon `Zumpo/Button` with Glyph=sound, or sound-off while muted, sits just before the viewer's avatar in the header, the room bar and a phone's navigation row, so it is on every page.
+It opens `Zumpo/Sound menu` (SO01-SO06): one row per kind of sound, its name and level over a mute toggle and a `Zumpo/Slider`.
+Version 1 has sound effects only, on at 70% by default; a Music row goes under them later.
+Muted, the level says Off and the slider is dimmed but still works, and moving it turns sound back on.
+The menu sits under the speaker, aligned to its end, as the name menu sits under the avatar; on a phone it fills the width.
+Where the speaker goes in the Phone room bar is still open, so that variant has none yet.
+
 ### Names
 
 Ryan approved dropping the name step on 2026-10-05: it stood between every visitor and every game, and asked again in every new tab.
@@ -162,7 +172,7 @@ Nobody is asked for a name any more.
 
 ## Figma export
 
-The Figma MCP and REST API allowances on the Starter plan are too low to read 261 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
+The Figma MCP and REST API allowances on the Starter plan are too low to read 267 screens, so a local, read-only plugin in [tools/figma-export/](../tools/figma-export/README.md) snapshots the file instead.
 It writes tokens, each Shared pieces family in full detail, one compact JSON per screen, every vector drawing as SVG, an audit of hardcoded values, and PNG previews.
 `FORMAT.md` inside each export documents the format.
 

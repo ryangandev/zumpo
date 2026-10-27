@@ -1109,6 +1109,57 @@
     ]
   },
   {
+    "file": "svg/sound-602861.svg",
+    "name": "sound",
+    "w": 1.32,
+    "h": 6.36,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=sound > sound"
+    ]
+  },
+  {
+    "file": "svg/sound-7ca7a7.svg",
+    "name": "sound",
+    "w": 8,
+    "h": 14,
+    "uses": 2,
+    "samples": [
+      "Zumpo/Icon > Glyph=sound > sound",
+      "Zumpo/Icon > Glyph=sound-off > sound-off"
+    ]
+  },
+  {
+    "file": "svg/sound-e96d17.svg",
+    "name": "sound",
+    "w": 2.49,
+    "h": 12.02,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=sound > sound"
+    ]
+  },
+  {
+    "file": "svg/sound-off-652e52.svg",
+    "name": "sound-off",
+    "w": 6,
+    "h": 6,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=sound-off > sound-off"
+    ]
+  },
+  {
+    "file": "svg/sound-off-65e768.svg",
+    "name": "sound-off",
+    "w": 6,
+    "h": 6,
+    "uses": 1,
+    "samples": [
+      "Zumpo/Icon > Glyph=sound-off > sound-off"
+    ]
+  },
+  {
     "file": "svg/speed-1-4b8881.svg",
     "name": "speed 1",
     "w": 50,

@@ -11,7 +11,7 @@
     "x": 40,
     "y": 150,
     "w": 390,
-    "h": 2912,
+    "h": 2916,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -34,7 +34,7 @@
         "id": "40:22266",
         "name": "Mobile navigation",
         "w": 350,
-        "h": 44,
+        "h": 48,
         "wSize": "fill",
         "hSize": "hug",
         "layout": {
@@ -56,27 +56,74 @@
             "componentId": "4:36"
           },
           {
-            "type": "INSTANCE",
-            "id": "40:22268",
-            "name": "Player / YO",
-            "w": 32,
-            "h": 32,
-            "component": "Zumpo/Avatar",
-            "variant": {
-              "Tone": "Peach"
+            "type": "FRAME",
+            "id": "253:47193",
+            "name": "Actions",
+            "w": 86,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
             },
-            "componentId": "4:34",
-            "props": {
-              "Initials": "MA"
-            },
-            "overrides": [
+            "children": [
               {
-                "path": ".",
-                "fills": [
-                  "$Zumpo · UI:color/blue"
-                ],
-                "height": 32,
-                "width": 32
+                "type": "INSTANCE",
+                "id": "253:47194",
+                "name": "Action / Sound",
+                "w": 46,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=sound",
+                  "Show icon": true,
+                  "Label": "Sound"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "40:22268",
+                "name": "Player / YO",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Avatar",
+                "variant": {
+                  "Tone": "Peach"
+                },
+                "componentId": "4:34",
+                "props": {
+                  "Initials": "MA"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "fills": [
+                      "$Zumpo · UI:color/blue"
+                    ],
+                    "height": 32,
+                    "width": 32
+                  }
+                ]
               }
             ]
           }

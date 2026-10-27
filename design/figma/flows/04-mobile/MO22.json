@@ -36,7 +36,7 @@
         "id": "244:67083",
         "name": "Mobile navigation",
         "w": 350,
-        "h": 44,
+        "h": 48,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -57,19 +57,66 @@
             "componentId": "4:36"
           },
           {
-            "type": "INSTANCE",
-            "id": "244:67085",
-            "name": "Zumpo/Avatar",
-            "w": 40,
-            "h": 40,
-            "component": "Zumpo/Avatar",
-            "variant": {
-              "Tone": "Peach"
+            "type": "FRAME",
+            "id": "253:47381",
+            "name": "Actions",
+            "w": 94,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
             },
-            "componentId": "4:34",
-            "props": {
-              "Initials": "MA"
-            }
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "253:47382",
+                "name": "Action / Sound",
+                "w": 46,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=sound",
+                  "Show icon": true,
+                  "Label": "Sound"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "244:67085",
+                "name": "Zumpo/Avatar",
+                "w": 40,
+                "h": 40,
+                "component": "Zumpo/Avatar",
+                "variant": {
+                  "Tone": "Peach"
+                },
+                "componentId": "4:34",
+                "props": {
+                  "Initials": "MA"
+                }
+              }
+            ]
           }
         ]
       },

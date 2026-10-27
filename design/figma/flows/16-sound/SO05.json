@@ -1,0 +1,436 @@
+{
+  "format": 1,
+  "code": "SO05",
+  "title": "Phone · game page · sound off",
+  "id": "253:50495",
+  "section": "16 / Sound",
+  "reviewNotes": [
+    "SO05 · 390px / muted on a game page: the speaker shows sound-off wherever it is."
+  ],
+  "frame": {
+    "type": "FRAME",
+    "id": "253:50495",
+    "name": "SO05 / Phone · game page · sound off",
+    "x": 530,
+    "y": 1100,
+    "w": 390,
+    "h": 560,
+    "fills": [
+      "$Zumpo · UI:color/cream"
+    ],
+    "clip": true,
+    "layout": {
+      "mode": "column",
+      "gap": "$Zumpo · UI:space/24",
+      "pad": [
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/20",
+        "$Zumpo · UI:space/32",
+        "$Zumpo · UI:space/20"
+      ],
+      "strokesIncluded": true
+    },
+    "children": [
+      {
+        "type": "FRAME",
+        "id": "253:50496",
+        "name": "Mobile navigation",
+        "w": 350,
+        "h": 48,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "INSTANCE",
+            "id": "253:50497",
+            "name": "Zumpo/Wordmark",
+            "w": 140,
+            "h": 44,
+            "wSize": "hug",
+            "component": "Zumpo/Wordmark",
+            "componentId": "4:36"
+          },
+          {
+            "type": "FRAME",
+            "id": "253:50498",
+            "name": "Actions",
+            "w": 86,
+            "h": 48,
+            "wSize": "hug",
+            "hSize": "hug",
+            "layout": {
+              "mode": "row",
+              "gap": "$Zumpo · UI:space/8",
+              "align": "center",
+              "strokesIncluded": true
+            },
+            "children": [
+              {
+                "type": "INSTANCE",
+                "id": "253:50499",
+                "name": "Action / Sound",
+                "w": 46,
+                "h": 48,
+                "wSize": "hug",
+                "component": "Zumpo/Button",
+                "variant": {
+                  "Style": "Secondary",
+                  "State": "Default"
+                },
+                "componentId": "4:18",
+                "props": {
+                  "Icon": "Zumpo/Icon / Glyph=sound-off",
+                  "Show icon": true,
+                  "Label": "Sound"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 48,
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
+                  }
+                ]
+              },
+              {
+                "type": "INSTANCE",
+                "id": "253:50500",
+                "name": "Player / YO",
+                "w": 32,
+                "h": 32,
+                "component": "Zumpo/Avatar",
+                "variant": {
+                  "Tone": "Sand"
+                },
+                "componentId": "26:10572",
+                "props": {
+                  "Initials": "SA"
+                },
+                "overrides": [
+                  {
+                    "path": ".",
+                    "height": 32,
+                    "width": 32
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "253:50501",
+        "name": "Game intro",
+        "w": 350,
+        "h": 410,
+        "wSize": "fill",
+        "hSize": "hug",
+        "component": "Zumpo/Game intro",
+        "variant": {
+          "Game": "Draw & Guess",
+          "Layout": "Phone"
+        },
+        "componentId": "120:118973"
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50502",
+        "name": "Rooms",
+        "w": 350,
+        "h": 508,
+        "wSize": "fill",
+        "hSize": "hug",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/12",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "253:50503",
+            "name": "Rooms heading",
+            "w": 245,
+            "h": 30,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "Draw & Guess rooms",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50504",
+            "name": "Zumpo/Room row",
+            "w": 350,
+            "h": 100,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Room row",
+            "variant": {
+              "Status": "Open",
+              "Layout": "Phone"
+            },
+            "componentId": "28:23778",
+            "props": {
+              "Players": "3 / 8",
+              "Details": "2 rounds"
+            }
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50505",
+            "name": "Zumpo/Room row",
+            "w": 350,
+            "h": 100,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Room row",
+            "variant": {
+              "Status": "Private",
+              "Layout": "Phone"
+            },
+            "componentId": "28:23797",
+            "props": {
+              "Players": "2 / 6",
+              "Details": "Hosted by Leo · 3 rounds",
+              "Room name": "Friday doodles"
+            },
+            "overrides": [
+              {
+                "path": "Host",
+                "componentProperties": {
+                  "Initials": "LE",
+                  "Tone": "Lime"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50506",
+            "name": "Zumpo/Room row",
+            "w": 350,
+            "h": 100,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Room row",
+            "variant": {
+              "Status": "Full",
+              "Layout": "Phone"
+            },
+            "componentId": "28:23819",
+            "props": {
+              "Players": "4 / 4",
+              "Details": "Hosted by Ryan · 1 round",
+              "Room name": "The full house"
+            },
+            "overrides": [
+              {
+                "path": "Host",
+                "componentProperties": {
+                  "Initials": "RG",
+                  "Tone": "Blue"
+                }
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50507",
+            "name": "Zumpo/Room row",
+            "w": 350,
+            "h": 100,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/Room row",
+            "variant": {
+              "Status": "Playing",
+              "Layout": "Phone"
+            },
+            "componentId": "28:23837",
+            "props": {
+              "Players": "5 / 8",
+              "Details": "Hosted by Sam · 4 rounds",
+              "Room name": "Sketch club"
+            },
+            "overrides": [
+              {
+                "path": "Host",
+                "componentProperties": {
+                  "Initials": "SA",
+                  "Tone": "Sand"
+                }
+              }
+            ]
+          },
+          {
+            "type": "TEXT",
+            "id": "253:50508",
+            "w": 126,
+            "h": 18,
+            "wSize": "hug",
+            "hSize": "hug",
+            "text": "4 rooms · Updates live",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50509",
+        "name": "How to play",
+        "w": 350,
+        "h": 495,
+        "wSize": "fill",
+        "hSize": "hug",
+        "fills": [
+          "$Zumpo · UI:color/lime"
+        ],
+        "strokes": [
+          "$Zumpo · UI:color/line"
+        ],
+        "strokeAlign": "inside",
+        "radius": "$Zumpo · UI:radius/24",
+        "layout": {
+          "mode": "column",
+          "gap": "$Zumpo · UI:space/16",
+          "pad": "$Zumpo · UI:space/24",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "253:50510",
+            "w": 304,
+            "h": 30,
+            "hSize": "hug",
+            "text": "How to play",
+            "textStyle": "Zumpo/Heading",
+            "fills": [
+              "$Zumpo · UI:color/ink"
+            ],
+            "autoResize": "height"
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50511",
+            "name": "How to play / Play together",
+            "w": 300,
+            "h": 335,
+            "wSize": "fill",
+            "hSize": "hug",
+            "component": "Zumpo/How to play",
+            "componentId": "163:65908",
+            "props": {
+              "Show step 4": true,
+              "Heading": "Play together"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 335,
+                "width": 300
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:50512",
+            "name": "Action / Full rules",
+            "w": 132,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=chevron-down",
+              "Show icon": true,
+              "Label": "Full rules"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "width": 132
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "FRAME",
+        "id": "253:50513",
+        "name": "Footer",
+        "w": 350,
+        "h": 18,
+        "hSize": "hug",
+        "layout": {
+          "mode": "row",
+          "gap": "$Zumpo · UI:space/12",
+          "justify": "space_between",
+          "align": "center",
+          "strokesIncluded": true
+        },
+        "children": [
+          {
+            "type": "TEXT",
+            "id": "253:50514",
+            "w": 350,
+            "h": 18,
+            "hSize": "hug",
+            "text": "A little play. Good company.",
+            "textStyle": "Zumpo/Small",
+            "fills": [
+              "$Zumpo · UI:color/muted"
+            ],
+            "autoResize": "height"
+          }
+        ]
+      },
+      {
+        "type": "INSTANCE",
+        "id": "253:50674",
+        "name": "Zumpo/Sound menu",
+        "x": 16,
+        "y": 80,
+        "absolute": true,
+        "w": 358,
+        "h": 146,
+        "hSize": "hug",
+        "component": "Zumpo/Sound menu",
+        "variant": {
+          "State": "Off"
+        },
+        "componentId": "253:47061",
+        "overrides": [
+          {
+            "path": ".",
+            "height": 146,
+            "layoutPositioning": "ABSOLUTE",
+            "width": 358
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "exportedAt": "2026-10-26T16:40:28.269Z",
+  "exportedAt": "2026-10-27T03:47:19.975Z",
   "file": {
     "key": "pd5Hgp7zbT2cMqQNan35uY",
     "name": "Zumpo · Paper Pop flows",
@@ -13,15 +13,15 @@
     "previews": true
   },
   "counts": {
-    "flows": 261,
-    "componentFamilies": 77,
+    "flows": 267,
+    "componentFamilies": 79,
     "outsideComponents": 0,
-    "svgs": 127,
-    "seconds": 27,
-    "nodes": 15006,
-    "instances": 7917,
-    "grids": 90,
-    "gridCells": 2884
+    "svgs": 132,
+    "seconds": 38,
+    "nodes": 15390,
+    "instances": 8112,
+    "grids": 91,
+    "gridCells": 2965
   },
   "tokens": {
     "collections": [
@@ -309,7 +309,7 @@
       "id": "24:5086",
       "file": "components/icon.json",
       "preview": "previews/components/icon.png",
-      "variants": 26
+      "variants": 28
     },
     {
       "name": "Zumpo/Input",
@@ -494,6 +494,13 @@
       "variants": 2
     },
     {
+      "name": "Zumpo/Slider",
+      "id": "253:47040",
+      "file": "components/slider.json",
+      "preview": "previews/components/slider.png",
+      "variants": 5
+    },
+    {
       "name": "Zumpo/Snap card",
       "id": "162:39153",
       "file": "components/snap-card.json",
@@ -513,6 +520,13 @@
       "file": "components/snap-symbol.json",
       "preview": "previews/components/snap-symbol.png",
       "variants": 31
+    },
+    {
+      "name": "Zumpo/Sound menu",
+      "id": "253:47081",
+      "file": "components/sound-menu.json",
+      "preview": "previews/components/sound-menu.png",
+      "variants": 2
     },
     {
       "name": "Zumpo/Standing",
@@ -1592,7 +1606,7 @@
           "id": "9:10062",
           "size": [
             390,
-            2912
+            2916
           ],
           "file": "flows/04-mobile/MO01.json",
           "preview": "previews/04-mobile/MO01.png",
@@ -1616,7 +1630,7 @@
           "id": "9:10156",
           "size": [
             390,
-            1623
+            1627
           ],
           "file": "flows/04-mobile/MO04.json",
           "preview": "previews/04-mobile/MO04.png",
@@ -1628,7 +1642,7 @@
           "id": "9:10193",
           "size": [
             390,
-            649
+            653
           ],
           "file": "flows/04-mobile/MO05.json",
           "preview": "previews/04-mobile/MO05.png",
@@ -1640,7 +1654,7 @@
           "id": "9:10237",
           "size": [
             390,
-            536
+            540
           ],
           "file": "flows/04-mobile/MO06.json",
           "preview": "previews/04-mobile/MO06.png",
@@ -1772,7 +1786,7 @@
           "id": "79:104808",
           "size": [
             390,
-            494
+            498
           ],
           "file": "flows/04-mobile/MO17.json",
           "preview": "previews/04-mobile/MO17.png",
@@ -1784,7 +1798,7 @@
           "id": "79:104881",
           "size": [
             390,
-            429
+            433
           ],
           "file": "flows/04-mobile/MO18.json",
           "preview": "previews/04-mobile/MO18.png",
@@ -3254,7 +3268,7 @@
           "id": "162:101381",
           "size": [
             390,
-            1623
+            1627
           ],
           "file": "flows/12-doodle-chain/DC15.json",
           "preview": "previews/12-doodle-chain/DC15.png",
@@ -3514,7 +3528,7 @@
           "id": "162:107310",
           "size": [
             390,
-            2099
+            2103
           ],
           "file": "flows/13-code-breaker/CB15.json",
           "preview": "previews/13-code-breaker/CB15.png",
@@ -3836,7 +3850,7 @@
           "id": "162:102701",
           "size": [
             390,
-            1974
+            1978
           ],
           "file": "flows/14-gomoku/GM20.json",
           "preview": "previews/14-gomoku/GM20.png",
@@ -3956,6 +3970,86 @@
           ],
           "file": "flows/15-phone-in-play/PH08.json",
           "preview": "previews/15-phone-in-play/PH08.png",
+          "isFlow": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "name": "16 / Sound",
+      "id": "253:48727",
+      "dir": "16-sound",
+      "flows": [
+        {
+          "code": "SO01",
+          "title": "Home · sound menu",
+          "id": "253:48728",
+          "size": [
+            1440,
+            640
+          ],
+          "file": "flows/16-sound/SO01.json",
+          "preview": "previews/16-sound/SO01.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO02",
+          "title": "Room · sound off",
+          "id": "253:49341",
+          "size": [
+            1440,
+            766
+          ],
+          "file": "flows/16-sound/SO02.json",
+          "preview": "previews/16-sound/SO02.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO03",
+          "title": "On your own · volume by keyboard",
+          "id": "253:49818",
+          "size": [
+            1440,
+            1028
+          ],
+          "file": "flows/16-sound/SO03.json",
+          "preview": "previews/16-sound/SO03.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO04",
+          "title": "Phone · home · sound menu",
+          "id": "253:50058",
+          "size": [
+            390,
+            560
+          ],
+          "file": "flows/16-sound/SO04.json",
+          "preview": "previews/16-sound/SO04.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO05",
+          "title": "Phone · game page · sound off",
+          "id": "253:50495",
+          "size": [
+            390,
+            560
+          ],
+          "file": "flows/16-sound/SO05.json",
+          "preview": "previews/16-sound/SO05.png",
+          "isFlow": true
+        },
+        {
+          "code": "SO06",
+          "title": "Phone · home · sound menu in Chinese",
+          "id": "253:50691",
+          "size": [
+            390,
+            279
+          ],
+          "file": "flows/16-sound/SO06.json",
+          "preview": "previews/16-sound/SO06.png",
           "isFlow": true
         }
       ],

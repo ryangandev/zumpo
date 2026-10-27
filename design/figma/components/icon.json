@@ -35,7 +35,9 @@
         "flag",
         "dice",
         "forward",
-        "chevron-up"
+        "chevron-up",
+        "sound",
+        "sound-off"
       ]
     }
   },
@@ -1339,6 +1341,122 @@
               "scale"
             ],
             "svg": "svg/forward-faeff0.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Glyph=sound",
+      "id": "253:46998",
+      "props": {
+        "Glyph": "sound"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:46998",
+        "name": "Glyph=sound",
+        "w": 24,
+        "h": 24,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "253:47002",
+            "name": "sound",
+            "x": 3,
+            "y": 5,
+            "w": 8,
+            "h": 14,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-7ca7a7.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "253:47003",
+            "name": "sound",
+            "x": 15.18,
+            "y": 8.82,
+            "w": 1.32,
+            "h": 6.36,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-602861.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "253:47004",
+            "name": "sound",
+            "x": 18.01,
+            "y": 5.99,
+            "w": 2.49,
+            "h": 12.02,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-e96d17.svg"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Glyph=sound-off",
+      "id": "253:47005",
+      "props": {
+        "Glyph": "sound-off"
+      },
+      "node": {
+        "type": "COMPONENT",
+        "id": "253:47005",
+        "name": "Glyph=sound-off",
+        "w": 24,
+        "h": 24,
+        "children": [
+          {
+            "type": "VECTOR",
+            "id": "253:47009",
+            "name": "sound-off",
+            "x": 3,
+            "y": 5,
+            "w": 8,
+            "h": 14,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-7ca7a7.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "253:47010",
+            "name": "sound-off",
+            "x": 15,
+            "y": 9,
+            "w": 6,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-off-652e52.svg"
+          },
+          {
+            "type": "VECTOR",
+            "id": "253:47011",
+            "name": "sound-off",
+            "x": 15,
+            "y": 9,
+            "w": 6,
+            "h": 6,
+            "constraints": [
+              "scale",
+              "scale"
+            ],
+            "svg": "svg/sound-off-65e768.svg"
           }
         ]
       }

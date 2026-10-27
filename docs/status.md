@@ -6,7 +6,7 @@ Resolved items are deleted, not archived; history is in git.
 ## Now
 
 The project is rebranded and redesigned as **Zumpo**; the code, packages, folder and repository carry the name.
-The redesign is an editable Figma file of 261 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
+The redesign is an editable Figma file of 267 screens and its shared component families (see [design.md](design.md)), with a snapshot in `design/figma/`.
 Ryan approved it in review round two on 2026-10-03, after one fix (icons centred on their line of text).
 
 The implementation was built on `rework` and merged into `main` on 2026-10-05 ([#26](https://github.com/ryangandev/zumpo/pull/26)).

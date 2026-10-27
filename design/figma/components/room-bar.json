@@ -69,7 +69,7 @@
             "type": "FRAME",
             "id": "39:19282",
             "name": "Room identity",
-            "w": 750,
+            "w": 688,
             "h": 30,
             "wSize": "fill",
             "hSize": "hug",
@@ -224,6 +224,36 @@
                     "transition": "dissolve"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "type": "INSTANCE",
+            "id": "253:47091",
+            "name": "Action / Sound",
+            "w": 46,
+            "h": 48,
+            "wSize": "hug",
+            "component": "Zumpo/Button",
+            "variant": {
+              "Style": "Secondary",
+              "State": "Default"
+            },
+            "componentId": "4:18",
+            "props": {
+              "Icon": "Zumpo/Icon / Glyph=sound",
+              "Show icon": true,
+              "Label": "Sound"
+            },
+            "overrides": [
+              {
+                "path": ".",
+                "height": 48,
+                "width": 46
+              },
+              {
+                "path": "Let’s play",
+                "visible": false
               }
             ]
           },
