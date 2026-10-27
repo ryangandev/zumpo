@@ -384,13 +384,14 @@ A change in one tab is followed by the others.
 - **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
 - **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
   The speaker before the viewer's avatar takes it through [`shell/sound-menu.ts`](../client/src/shell/sound-menu.ts), which `useViewer` hands to the header and the room bar, and which leaves the speaker out while `available` is false, unless it has already been shown and the engine failed after.
-- **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
+- **`useStateSounds(state, { derive, play, epoch, isNewGame, select?, standing? })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
   `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`), and a `variant` for a step.
   The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
   A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent; the keys are kept across a reconnect, and forgotten only when `isNewGame(prev, next)` says a new game began.
   Every game must give `isNewGame`, since its keys (`take:4`) come round again in the next game, and it must work on states that are not consecutive: across a reconnect `prev` may be mid-game 1 and `next` mid-game 2, so it compares what a game leaves behind (the last game's summary, a game number), not a phase change.
   One change plays each sound at most once: events of the same sound in one change are heard once, as the viewer's own if any of them is and another player's only if all are, at the highest step any of them reached, while different sounds in one change all play.
   The server merges a run of events into one snapshot, so two players scoring at once arrive together, and the streak still climbs to the second step.
+  `select(events)` keeps some of a change's events and drops the rest after their keys are heard, so a dropped event never plays later; `standing(state)` names the keys a state stands for on its own, which a baseline counts as heard.
   A key that comes round each round, a streak's point number, names the round too (`score:3:1`).
   The guard lives as long as the component that holds it, so `useStateSounds` belongs in the room's page, never in a component one phase mounts, or every phase change starts it over and the change into that phase is lost.
 
@@ -398,22 +399,30 @@ The words around sound (the settings' labels) come from the i18n catalog like an
 
 ### Sounds in a room
 
-A room is heard in two layers, each a pure derive from one snapshot to the next with its own tests, played through `useStateSounds` in a component that lives as long as the room.
+A room and its game are heard through one replay guard, in `RoomLayout`, which every game renders for as long as the room is open, so one snapshot is heard once, by one rule.
 
-- **The room layer** ([`room/sounds.ts`](../client/src/room/sounds.ts)), in `RoomLayout`, which every game renders: somebody arriving or leaving, Ready (a stamp for yours, a pip for somebody else's), the start, your go, the end (a win for the winners, a kind cadence for everybody else) and a lost connection.
-  A dropped connection is not a departure, so another player losing theirs is silent, and moving between the table and the spectator seats is neither a join nor a leave.
-  Your go is the `yourTurn` a game already gives `RoomLayout`, named by its `turn` (`2.5`), so it sounds once; it opens the game in place of the start for the player whose go it is, since it is the one sound a hidden tab plays.
-- **The game** (`<game>/sounds.ts`, Draw & Guess's first): a `derive<Game>Sounds(viewer)` and an `isNew<Game>Game` that adds what the game can tell to the room's `newGameBegan`, used in the game's room component, beside a bank that spreads `ROOM_SOUNDS` and the game's own.
-  Every key names its round or turn (`scored:1.3:p2`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
-  Several sounds that happen at once are heard as the one that matters to the viewer: the last guess and the end of a turn are one snapshot, which the guesser hears as their own and everybody else as the end.
+- **The room** ([`room/sounds.ts`](../client/src/room/sounds.ts)): somebody arriving or leaving, Ready (a stamp for yours, a pip for somebody else's), the start, your go, and the end (a win for the winners, a kind cadence for everybody else).
+  A dropped connection is not a departure, so another player losing theirs is silent, and `room-leave` plays when they give up the seat or their seat's grace runs out; moving between the table and the spectator seats is neither a join nor a leave.
+  Your go is the `yourTurn` a game gives `RoomLayout`, named by the game's `turnOf`, so it sounds once each time a go becomes yours; it opens the game in place of the start for the player whose go it is, since it is the one sound a hidden tab plays.
+- **The game** (`<game>/sounds.ts`): a `<GAME>_SOUNDS = gameSounds({ bank, derive, isNewGame, turnOf })`, a module constant handed to `RoomLayout` as `sounds`.
+  `bank` spreads `ROOM_SOUNDS` and the game's own; `derive(viewer)` is a pure `(prev, next) => events` over the game's states, which never gives "your turn" or a start or end stinger, the room's alone.
+  `turnOf(state)` names the go in play, the same for everybody, and a name never comes round again within one game (`2.5`, Liar's Dice's `3.4.2` with its cups, since a round rolled again keeps its number), or "your turn" is silent the second time.
+  `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start itself (`newGameBegan`), so a snapshot from earlier in a game is never taken for a new one.
+  Every key names its round or turn (`scored:1.3:p2`), the guard keeps the game's apart (`game:`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
 
+On one snapshot, "your turn" and the start and end stingers stand alone: the game's events in that change are dropped, the viewer's own included, and never play later, while the room's joins, leaves and Ready play beside them.
+So an opponent's move that hands you the go is heard as your go, and a take that ends a game as its end.
+Several sounds of a game at once are heard as the one that matters to the viewer: the last guess and the end of a turn are one snapshot, which the guesser hears as their own and everybody else as the end.
 What the viewer did plays at full level, anybody else's with `other`, and a spectator, who has no go, hears the others and the game's start and end.
+Keys hold within a game, so somebody who leaves and comes back, or says Ready again, is heard the first time only; the viewer's own Ready counts their presses (`Room.readied`), so each one stamps.
 A notice is never played itself: the sound comes from the snapshot change the notice reports, a `success` or `alert` event has one of its own, a dropped connection aside, a quieter one (`divider`, `system`, `score`) at most a soft one, as a join is, and typed chat is silent.
-The epoch is the connection the snapshot came on (`Room.epoch`), which changes with the first snapshot after a reconnection rather than with the session, so what happened while away arrives in that snapshot and is only a baseline.
-A Draw & Guess close guess is a chat line rather than state, so it is derived from the chat, keyed by the line's id, with `Room.chatEpoch` making each history a baseline.
+The epoch is the connection the snapshot came on (`Room.epoch`), which changes with the first snapshot after a reconnection rather than with the session, so what happened while away arrives in that snapshot and is only a baseline, and the go a page arrives on counts as heard.
+A Draw & Guess close guess is a chat line rather than state, so the game's room hears it from the chat, keyed by the line's id, with `Room.chatEpoch` making each history a baseline.
 
-The last seconds of a deadline are not in a snapshot: `useDeadlineTicks(seconds, deadline)` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
-A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and null while reconnecting; the first seconds seen for a deadline only set where it stands, and a second never ticks twice.
+Two sounds come from no snapshot.
+The connection dropping, each time it drops, and the room closing under a seated player play from the room page (`useConnectionLostSound`), as live edges a refresh never repeats.
+The last seconds of a deadline tick from the clock: `useDeadlineTicks({ seconds, deadline, paused })` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
+A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and passes `paused` while reconnecting; the first seconds seen for a deadline, and after a pause, only set where it stands, and a second never ticks twice.
 What the player does with their own hands, the drawer's pencil, undo and clear, plays where they do it.
 
 ### The asset pipeline
