@@ -19,6 +19,9 @@ Find anything else through [docs/README.md](docs/README.md), and read only the s
 | `npm run design:export`          | Export the Figma file through the bridge and import it          |
 | `npm run design:tokens`          | Regenerate `client/src/ui/generated/` from the export           |
 | `npm run figma:run -- script.js` | Run a Plugin API script in Figma through the bridge             |
+| `npm run audio:build`            | Build the sounds from the masters (Mac mini only)               |
+| `npm run audio:check`            | Check the built sounds match `audio/sounds.json`                |
+| `npm run e2e:sound`              | Play the sound engine in Chromium and WebKit                    |
 
 Run one package's script with `-w`, for example `npm test -w server`.
 
@@ -31,6 +34,7 @@ Run one package's script with `-w`, for example `npm test -w server`.
 - Every word a player reads comes from the catalog in `client/src/i18n/`, typed on English so `zh/` cannot fall behind, and the server words nothing: a chat line nobody said is a `RoomNotice` the client words ([why](docs/architecture.md#languages)).
 - `docs/games/` is the behaviour contract for each game; UI work must not change a rule or timing by accident ([design](docs/design.md#what-the-screens-are-and-are-not)).
 - Figma is the design source of truth and `design/figma/` and `client/src/ui/generated/` are generated from it; never hand-edit either ([why](docs/design.md#figma-export)).
+- `client/src/audio/generated/` is written by `npm run audio:build` from masters outside the repo (`ZUMPO_AUDIO_DIR`); never hand-edit it, never commit a master, and never use Git LFS ([why](docs/architecture.md#the-asset-pipeline)).
 - Zumpo UI takes every colour, size, font and shadow from the generated `--zumpo-*` tokens; a value missing there is added in Figma, not typed into CSS ([design system](docs/design.md#in-code)).
 - Server tests bind real localhost ports; a sandbox that forbids listening makes them time out, which is not a test failure ([testing](docs/architecture.md#testing)).
 - Verify UI and flow changes in a real browser with two players, not just with the suites ([why](docs/architecture.md#testing)).

@@ -16,6 +16,8 @@ Where to find the answer, without searching the repository.
 | Event names and payload types                          | [architecture.md#the-wire-contract](architecture.md#the-wire-contract)                                                          |
 | Routes, guards and the socket on the client            | [architecture.md#client](architecture.md#client)                                                                                |
 | Languages, the message catalog, notices on the wire    | [architecture.md#languages](architecture.md#languages)                                                                          |
+| Sound effects: engine, settings, replay guard          | [architecture.md#sound](architecture.md#sound)                                                                                  |
+| Adding a sound, the masters, audio:build               | [architecture.md#the-asset-pipeline](architecture.md#the-asset-pipeline)                                                        |
 | Environment variables, production build                | [architecture.md#configuration](architecture.md#configuration)                                                                  |
 | Adding a new game                                      | [architecture.md#adding-a-game](architecture.md#adding-a-game)                                                                  |
 | How to test, and what the suites cannot see            | [architecture.md#testing](architecture.md#testing)                                                                              |
@@ -52,6 +54,7 @@ Each fact has one home; everywhere else links to it.
 | `games/*.md`      | Each game's rules, scoring, settings and code map: the behaviour contract         |
 | `design.md`       | Brand, the Figma file, the export pipeline, editing rules                         |
 | `design/figma/`   | Generated design snapshot; never edited by hand                                   |
+| `audio/`          | Every sound effect declared; its built files are generated, never edited by hand  |
 
 ## Keeping it true
 

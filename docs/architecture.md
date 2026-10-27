@@ -13,6 +13,8 @@ client/  React SPA (Vite) ──── socket.io ────► server/  Expres
                                                └── all state in memory, one registry
 shared/  wire-types.d.ts, and rule code both sides run
 tools/   figma-export, figma-bridge, design-tokens: Figma into the repo (see design.md)
+         audio: the sound pipeline, masters outside the repo into client/src/audio/generated/
+audio/   sounds.json: every sound effect, declared once
 ```
 
 | Path                                         | What it is                                                           |
@@ -35,6 +37,9 @@ tools/   figma-export, figma-bridge, design-tokens: Figma into the repo (see des
 | `client/src/<game>/`                         | Each game's room view, and its solo page under `solo/` if it has one |
 | `client/src/ui/`                             | The Zumpo design system: components, base styles, generated tokens   |
 | `client/src/ui/gallery/`                     | The development-only `/design` page that reviews it against Figma    |
+| `client/src/audio/`                          | The sound engine, its settings and hooks ([sound](#sound))           |
+| `client/src/audio/generated/`                | The built sound files and banks; written by `audio:build`            |
+| `audio/sounds.json`, `tools/audio/`          | Every sound's declaration, and the build and check that use it       |
 
 There is no database and no business HTTP API.
 Everything except serving static files and a health check (`/healthz`, which reports the rooms and connections it holds) happens over Socket.io, and server state is one flat registry of rooms of every game, owned by [`server/libs/rooms/registry.ts`](../server/libs/rooms/registry.ts).
@@ -330,6 +335,84 @@ The Figma comparison is English because the Figma file is.
 3. Add random name lists in `players/random-name.ts`, each pair within the server's 18 characters.
 4. Add it to `MESSAGES` in `i18n/index.tsx`; the footer switch lists `LOCALES`.
 
+## Sound
+
+Sound effects are a client concern from end to end: the server sends no sound events and the wire contract has none.
+A page plays a sound because the snapshot it just received differs from the one before, so sound follows the server's authority instead of adding a second source of truth.
+There is no music in v1, but settings and the engine are keyed by bus, so a Music bus is one more key rather than a migration.
+Decided by Ryan on 2026-10-26: no paid service, no Git LFS, no audio library, AAC and Opus without MP3, effects on by default at 70%.
+
+### The engine
+
+[`audio/engine.ts`](../client/src/audio/engine.ts) is a small engine on the raw Web Audio API, with no library: Howler and Tone bring formats, sprites and scheduling the games do not use, and hide the one thing that matters on phones, when the context is allowed to run.
+
+- **One graph:** each voice is a buffer source into its own gain, into the effects bus, into the master, into a limiter (a `DynamicsCompressorNode` at -1 dB, ratio 20) and out.
+  The bus's gain is the volume cubed, so the slider sounds even across its range, and mute ramps the bus to 0 rather than cutting it, so nothing clicks.
+- **Locked until a gesture:** no `AudioContext` exists before the first `pointerdown`, `pointerup`, `mousedown`, `touchend` or key other than Escape anywhere on the page ([`session.ts`](../client/src/audio/session.ts)), which is what Safari and Chrome count as activation.
+  The context is made and resumed inside that gesture, and the listeners come back whenever it stops running (a phone call, Siri, a locked screen), so the next touch resumes it.
+  A browser without Web Audio, or one that refuses a context, leaves the engine `unsupported`, and every `play` is a quiet no-op.
+- **Ambient on Safari:** before the context exists the engine sets `navigator.audioSession.type = 'ambient'` where it is supported, so effects mix with the player's music, follow the silent switch, and never take over the phone's audio as a media session would.
+- **Formats by decoding:** every sound ships as AAC (`.m4a`) and Opus (`.webm`).
+  The engine decodes AAC first and Opus if that fails, and keeps whichever worked; `canPlayType` does not say what `decodeAudioData` takes, and no browser the games run on lacks both.
+- **Decoded ahead:** a page's sounds are fetched and decoded right after the first gesture, and a sound that cannot start within 200 ms of being asked for (`LATE_MS`) is dropped rather than played late, out of step with what caused it.
+- **Rules per sound:** variants are picked at random but never the same one twice in a row, `pitchSpread` detunes each play by up to that many semitones either way, `minGapMs` drops a repeat that comes too soon, and `maxVoices` stops the oldest copy past the cap with a short fade; 16 voices is the engine's own cap.
+- **Hidden tabs:** nothing plays while the page is hidden except a sound marked `hiddenTab` ("your turn"), and the context resumes on return only if it ran before.
+- **Other players:** `play(id, { other: true })` plays 6 dB softer (`OTHER_DB`), so what another player did reads as background to what the viewer did.
+
+Settings are `{ effects: { volume, muted } }`, kept per browser in `localStorage` under `zumpo:sound` through [`net/storage.ts`](../client/src/net/storage.ts), as `{"v":1,...}` so a later shape can tell an old one apart.
+A missing or broken bus takes its default, so adding a bus never resets the others, and a change in one tab is followed by the others.
+
+### Playing a sound
+
+[`audio/index.ts`](../client/src/audio/index.ts) is the only import a page needs:
+
+- **`SoundProvider`** sits under `LocaleProvider` in [`app.tsx`](../client/src/app.tsx); it owns the engine, connects it to the page's gestures and visibility, and closes it on unmount.
+- **`useSounds(bank)`** keeps a bank decoded while the component is mounted and returns `play(id, options?)`, typed on that bank's ids.
+- **`useSoundControls()`** gives what the settings UI needs: `available`, the engine's `state`, `settings`, `setVolume(bus, volume)` and `setMuted(bus, muted)`.
+- **`useStateSounds(state, { derive, play, epoch, isNewGame })`** turns snapshots into sounds through a replay guard ([`replay-guard.ts`](../client/src/audio/replay-guard.ts)).
+  `derive(prev, next)` returns the events between two snapshots, each with a key naming the thing that happened (`take:12`, `turn:3:bob`).
+  The first snapshot of a page, and the first after `epoch` changes (pass the session's `connection`), only sets the baseline, so arriving, refreshing or reconnecting into a room plays nothing.
+  A key that already played never plays again, so a snapshot repeated or flipped back by a reconnect is silent, until `isNewGame(prev, next)` says a new game began and keys start over.
+  One change plays one sound, the viewer's own if one of its events is theirs.
+
+The words around sound (the settings' labels) come from the i18n catalog like any other; the engine has none.
+
+### The asset pipeline
+
+Masters never enter the repository.
+They live in a folder outside it, `~/Documents/assets/zumpo-audio` on the Mac mini or wherever `ZUMPO_AUDIO_DIR` says:
+
+| Folder                       | What it holds                                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------------------------------- |
+| `sources/<origin>/`          | What a master was made from: downloads, recordings, synth patches                                   |
+| `candidates/`                | Takes being auditioned; never built                                                                 |
+| `masters/<sound-id>/<n>.wav` | The variants that ship: 48 kHz WAV, 24-bit PCM or float, mono unless it needs two channels, trimmed |
+
+[`audio/sounds.json`](../audio/sounds.json) declares every sound, checked strictly against [`sounds.schema.json`](../audio/sounds.schema.json): its id, its group (`ui`, `room`, a game's id, or `test`), the loudness class it is normalised to, a gain in dB on top, each variant's master and that master's SHA-256, where it came from (`cc0` with its URL and `CC0-1.0`, or `synth` or `foley` as `own`), and the optional `pitchSpread`, `minGapMs`, `maxVoices` and `hiddenTab`.
+
+`npm run audio:build`, on the machine with the masters and an ffmpeg with `aac_at` and `libopus` (the Mac mini's), builds [`client/src/audio/generated/`](../client/src/audio/generated/):
+
+- It refuses a master whose hash is not the declared one, that is not 48 kHz, that starts with more than 20 ms of silence, or that is longer than its class allows.
+  `--rehash` takes the masters as they are and writes their hashes into `sounds.json`.
+- It normalises each variant's loudest 400 ms to its class (`ui` -22 LUFS, `event` -16, `stinger` -15), adds the sound's gain, and holds the gain back where the true peak would pass -1.5 dBTP, with a warning.
+- It encodes AAC with Apple's encoder and Opus with libopus, decodes both back, and refuses a file that peaks above -1 dBTP, decodes to a different length or onset, or is bigger than its class allows.
+  Encoding is deterministic, so an unchanged master builds byte for byte the same files, and a variant whose master and processing have not changed is kept rather than re-encoded (`--force` re-encodes all).
+- It writes the files, `manifest.json` (every measurement, encoder and hash) and one TypeScript bank per group, so a page imports only its own sounds and their files land in its own chunk.
+  Nothing in the repository changes unless every sound built.
+
+`npm run audio:check` runs in `npm run verify` and in CI, which have neither ffmpeg nor the masters: it validates `sounds.json`, checks that the manifest matches every declaration, that every file's hash matches the manifest, that no file is missing or left over, and that the banks are what the manifest would write.
+A failure names what drifted and says to run `audio:build` where the masters are.
+
+The files are served as files: Vite's `assetsInlineLimit` never inlines `.m4a` or `.webm`, since the CSP's `connect-src 'self'` would refuse the `data:` URL `fetch` asks for.
+The `test` group holds fixtures for the pipeline and the engine (`test-blip`); only the development sound lab imports it, so the build drops it with its files.
+
+### The sound lab
+
+`/dev/sound`, in development only like `/design`, plays every declared sound through the real engine and settings, with a volume slider, a mute and an "as another player's" button for each.
+It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that nothing plays before a real gesture, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
+It is not in CI, to save Actions minutes; run it when the engine changes, after `npx playwright install webkit` once.
+What it cannot hear is real phones: the silent switch, a call interrupting, and Bluetooth latency need an iPhone and an Android in hand.
+
 ## Configuration
 
 Environment variables for the server are listed in [`server/README.md`](../server/README.md) and for the client in [`client/README.md`](../client/README.md).
@@ -385,6 +468,7 @@ A state that lasts a reveal or a flash is too short to catch under the load of t
 A select menu is picked through `choose`, which waits for the menu to finish sliding in and checks that the field took the pick: a click Playwright retries scrolls the page, the menu follows, and the release can land on the backdrop and pick nothing.
 A board's labels are read through `labelsIn`, in one evaluation, because `evaluateAll` finds and reads in two steps and a card can turn in between.
 It checks behaviour, not looks, except for [`widths.spec.ts`](../e2e/widths.spec.ts), which plays each game and checks at seven window widths that nothing reaches out of what holds it.
+`npm run e2e:sound` plays the sound engine in Chromium and WebKit, on a config of its own ([sound lab](#the-sound-lab)).
 `npm run design:compare` covers looks: it drives the app into the state of each Figma screen and puts the capture beside Figma's preview ([design](design.md#comparing-with-figma)).
 
 ## Tooling
