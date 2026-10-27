@@ -27,6 +27,7 @@ import {
   roomSoundRules,
   useConnectionLostSound,
   useDeadlineTicks,
+  useGoCount,
   winnersOf,
   type GameSounds,
   type RoomSoundView,
@@ -478,6 +479,42 @@ describe('one guard for a room and its game', () => {
     sounds.observe(view(atTurn(5), { connection: 2 }), true);
     expect(sounds.observe(view(atTurn(4), { connection: 2 }))).toEqual([]);
     expect(sounds.observe(view(atTurn(5), { connection: 2 }))).toEqual([]);
+  });
+});
+
+function Goes({
+  state,
+  epoch,
+  counts,
+}: {
+  state: DrawAndGuessRoomState;
+  epoch: number;
+  counts: number[];
+}) {
+  // A new go each new turn number.
+  const go = useGoCount(state, (prev, next) => prev.turn !== next.turn, epoch);
+  counts.push(go.count);
+  return null;
+}
+
+describe('useGoCount', () => {
+  it('counts each new go and each new connection once, however often it renders', () => {
+    const counts: number[] = [];
+    const page = (state: DrawAndGuessRoomState, epoch = 1) => (
+      <StrictMode>
+        <Goes state={state} epoch={epoch} counts={counts} />
+      </StrictMode>
+    );
+    const view = render(page(atTurn(1)));
+    view.rerender(page(atTurn(1)));
+    const two = atTurn(2);
+    view.rerender(page(two));
+    view.rerender(page(two));
+    // A move within the go.
+    view.rerender(page({ ...two }));
+    view.rerender(page(two, 2));
+    expect(new Set(counts)).toEqual(new Set([0, 1, 2]));
+    expect(counts.at(-1)).toBe(2);
   });
 });
 

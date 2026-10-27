@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyRoomState, GameSummary } from '../../../shared/wire-types';
 import {
   useSounds,
@@ -47,7 +47,38 @@ export interface RoomSoundView {
   connection: number;
   /** How many times this page has pressed Ready. */
   readied: number;
+  /** The go in play, as this page counts it (`GameSounds.newGo`). */
+  go?: Go;
 }
+
+/**
+ * The go in play, counted on this page for a game whose snapshots cannot
+ * name their goes (`GameSounds.newGo`): Pairs, where a miss leaves the board
+ * as it was and the same player may go again.
+ */
+export interface Go<State extends AnyRoomState = AnyRoomState> {
+  /**
+   * Goes so far on this page: one more for each new go, and for each new
+   * connection, which may have missed some. Never the same for two goes.
+   */
+  count: number;
+  /** The snapshot the go began on, or the page counted from. */
+  began: State;
+}
+
+/**
+ * A game's rule from one snapshot to the next, as `gameSounds` takes it:
+ * a `DeriveSounds`, which may also read the go in play.
+ */
+export type GameDerive<
+  State extends AnyRoomState,
+  Id extends string,
+  Stepped extends Id = never,
+> = (
+  prev: State,
+  next: State,
+  go: Go<State>,
+) => readonly SoundEvent<Id, Stepped>[];
 
 /** Everybody in the room, at the table or watching. */
 const membersOf = (state: AnyRoomState) =>
@@ -128,10 +159,17 @@ export function newGameBegan(prev: AnyRoomState, next: AnyRoomState): boolean {
 export interface GameSounds {
   readonly bank: SoundBank;
   readonly derive:
-    ((viewer: string) => DeriveSounds<AnyRoomState, string>) | undefined;
+    ((viewer: string) => GameDerive<AnyRoomState, string>) | undefined;
   readonly isNewGame: IsNewGame<AnyRoomState> | undefined;
   readonly turnOf: ((state: AnyRoomState) => string) | undefined;
+  readonly newGo?: NewGo<AnyRoomState>;
 }
+
+/** Whether `next`, the snapshot after `prev`, begins another go. */
+export type NewGo<State extends AnyRoomState> = (
+  prev: State,
+  next: State,
+) => boolean;
 
 /**
  * A game's sounds for `RoomLayout`, typed on the game's own state and bank:
@@ -149,6 +187,11 @@ export interface GameSounds {
  *   a go, or "your turn" plays again mid-go; and it names a go, not a move,
  *   where a go holds several. A game that cannot name its goes gives none,
  *   and its turns are silent.
+ * - `newGo`: in place of `turnOf`, for a game whose snapshots cannot name a
+ *   go: whether a snapshot, after the one before it, begins another. The
+ *   page counts the goes (`useGoCount`) and names each by its count, and
+ *   `derive` reads the count as its third argument (`Go`), for keys a go
+ *   cannot repeat. Never true within a go, for a move.
  */
 export function gameSounds<
   State extends AnyRoomState,
@@ -157,9 +200,10 @@ export function gameSounds<
   bank?: Bank;
   derive?: (
     viewer: string,
-  ) => DeriveSounds<State, keyof Bank & string, SteppedId<Bank>>;
+  ) => GameDerive<State, keyof Bank & string, SteppedId<Bank>>;
   isNewGame?: IsNewGame<State>;
   turnOf?: (state: State) => string;
+  newGo?: NewGo<State>;
 }): GameSounds {
   // The room hands each part only its own game's states.
   return {
@@ -167,6 +211,7 @@ export function gameSounds<
     derive: sounds.derive,
     isNewGame: sounds.isNewGame,
     turnOf: sounds.turnOf,
+    newGo: sounds.newGo,
   } as unknown as GameSounds;
 }
 
@@ -184,6 +229,9 @@ const LEADS: ReadonlySet<string> = new Set<RoomSoundId>([
   'stinger-win',
   'stinger-nice-game',
 ]);
+
+/** A lead cuts short a run of the game's still waiting to play. */
+const isLead = (sound: string) => LEADS.has(sound);
 
 /** Marks a game's keys, apart from the room's in the one guard. */
 const GAME_KEY = 'game:';
@@ -301,15 +349,21 @@ const standing = (view: RoomSoundView) =>
  * The one replay guard's rules for a room and its game, as `RoomLayout`
  * hears them: the room's derive and the game's over the same two views, the
  * game's keys apart (`game:`), "your turn" and the start and end stingers
- * standing alone on their snapshot (`LEADS`), and a go the page arrives on
- * already heard.
+ * standing alone on their snapshot (`LEADS`) and cutting short a run still
+ * waiting to play, and a go the page arrives on already heard.
  */
 export function roomSoundRules(viewer: string, game: GameSounds) {
   const room = deriveRoomSounds(viewer);
   const own = game.derive?.(viewer);
   const derive: DeriveSounds<RoomSoundView, string> = (prev, next) => [
     ...room(prev, next),
-    ...(own?.(prev.state, next.state) ?? [])
+    ...(
+      own?.(
+        prev.state,
+        next.state,
+        next.go ?? { count: 0, began: next.state },
+      ) ?? []
+    )
       .filter((event) => {
         if (!LEADS.has(event.sound)) return true;
         if (import.meta.env.DEV) {
@@ -321,7 +375,13 @@ export function roomSoundRules(viewer: string, game: GameSounds) {
       })
       .map((event) => ({ ...event, key: `${GAME_KEY}${event.key}` })),
   ];
-  return { derive, isNewGame: isNewGameIn(game), select: leadsAlone, standing };
+  return {
+    derive,
+    isNewGame: isNewGameIn(game),
+    select: leadsAlone,
+    standing,
+    cuts: isLead,
+  };
 }
 
 /**
@@ -348,13 +408,48 @@ export function useRoomSounds({
 }): void {
   // Every id a game's derive gives is in its bank.
   const play = useSounds(game.bank) as PlaySound<string>;
-  const turn = yourTurn && game.turnOf ? game.turnOf(state) : null;
+  const go = useGoCount(state, game.newGo, epoch);
+  const turn = !yourTurn
+    ? null
+    : game.newGo
+      ? String(go.count)
+      : (game.turnOf?.(state) ?? null);
   const view = useMemo<RoomSoundView>(
-    () => ({ state, turn, connection: epoch, readied }),
-    [state, turn, epoch, readied],
+    () => ({ state, turn, connection: epoch, readied, go }),
+    [state, turn, epoch, readied, go],
   );
   const rules = useMemo(() => roomSoundRules(viewer, game), [viewer, game]);
   useStateSounds(view, { ...rules, play, epoch });
+}
+
+/**
+ * Counts the goes of a game whose snapshots cannot name them (`newGo`), for
+ * as long as the component that holds it: one more each time `newGo` says a
+ * snapshot begins another go, and each time `epoch` (the connection)
+ * changes, since a go may have passed unseen. A snapshot is counted once,
+ * by identity, against the last one a render committed, so a render
+ * repeated (StrictMode) or thrown away never counts twice. Without `newGo`
+ * only the connections count.
+ */
+export function useGoCount<State extends AnyRoomState>(
+  state: State,
+  newGo: NewGo<State> | undefined,
+  epoch: unknown,
+): Go<State> {
+  const [seen, setSeen] = useState(() => ({
+    state,
+    epoch,
+    go: { count: 0, began: state },
+  }));
+  if (Object.is(seen.state, state) && Object.is(seen.epoch, epoch)) {
+    return seen.go;
+  }
+  // Kept from the render before, as React lets a render adjust its state.
+  const another =
+    !Object.is(seen.epoch, epoch) || (newGo?.(seen.state, state) ?? false);
+  const go = another ? { count: seen.go.count + 1, began: state } : seen.go;
+  setSeen({ state, epoch, go });
+  return go;
 }
 
 /**
