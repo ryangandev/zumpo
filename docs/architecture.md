@@ -427,7 +427,8 @@ The `test` group holds fixtures for the pipeline and the engine (`test-blip`), a
 ### The sound lab
 
 `/dev/sound`, in development only like `/design`, plays every declared sound through the real engine and settings, with a volume slider, a mute and an "as another player's" button for each.
-It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that a page's files are fetched before any gesture and nothing plays before a real one, that the first gesture plays its sound on a slow network, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
+`?bank=hush,ui` keeps only those banks, as a game's page keeps only its own.
+It is where a new sound is auditioned in place, and what `npm run e2e:sound` drives on the test bank alone: Chromium and WebKit, against the Vite dev server on port 3601 (`SOUND_PORT`), checking that a page's files are fetched before any gesture and nothing plays before a real one, that the first gesture plays its sound on a slow network, that the gain reaching the speakers follows volume, mute and the other-player cut, that settings survive a reload, and that a browser without Web Audio throws nothing.
 It is not in CI, to save Actions minutes; run it when the engine changes, after `npx playwright install webkit` once.
 What it cannot hear is real phones: the silent switch, a call interrupting, and Bluetooth latency need an iPhone and an Android in hand.
 
