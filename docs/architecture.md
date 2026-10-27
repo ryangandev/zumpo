@@ -408,10 +408,11 @@ A room and its game are heard through one replay guard, in `RoomLayout`, which e
   Your go is the `yourTurn` a game gives `RoomLayout`, named by the game's `turnOf`, so it sounds once each time a go becomes yours; it opens the game in place of the start for the player whose go it is, since it is the one sound a hidden tab plays.
 - **The game** (`<game>/sounds.ts`): a `<GAME>_SOUNDS = gameSounds({ bank, derive, isNewGame, turnOf })`, a module constant handed to `RoomLayout` as `sounds`.
   `bank` spreads `ROOM_SOUNDS` and the game's own; `derive(viewer)` is a pure `(prev, next) => events` over the game's states, which never gives "your turn" or a start or end stinger, the room's alone.
-  `turnOf(state)` names the go in play, the same for everybody (`2.5`, Liar's Dice's `3.14.2` with the dice still in, since a round rolled again keeps its number).
+  `turnOf(state)` names the go in play, the same for everybody (`2.5`, Liar's Dice's `3.14.2` with the dice still in, since a round rolled again keeps its number, Gomoku's move count).
   A game whose snapshots cannot name a go gives `newGo(prev, next)` instead: whether a snapshot begins another go.
   The page counts the goes (`useGoCount`), once per snapshot by identity and once more for each new connection, names each go by its count, and hands `derive` the go in play as a third argument (`Go`: its `count`, and the snapshot it `began` on), for keys a go cannot repeat.
   Pairs is that game: a miss leaves the board as it was, so a player's next go can read exactly as their last; its goes are counted as the go passes, a miss turns back or a go runs out, while a pair keeps the go.
+  Where everybody works at once, as in Doodle Chain, the go is the step (`calledToStep`): each step after the first calls a player who has a task in it, and the first is the game's start for every player, so it is heard alike.
   `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start and end itself, so a snapshot from earlier in a game is never taken for a new one.
   Every key names its round or turn (`scored:1.3:p2`), the guard keeps the game's apart (`game:`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
 
@@ -441,6 +442,10 @@ Known gaps:
 
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
+- Gomoku's end stinger stands alone, so `gomoku-five` (the five stones lighting) is never heard; it needs the room layer to let a game's own beat play beside the end.
+- Liar's Dice cannot tell a call the clock made from one a player made, so a time up is not heard there.
+- Doodle Chain's `isNewGame` tells two games apart by the steps, the players, what the reveal shows and what the viewer was given; two games that match on all of these across one reconnection are taken for the same one.
+  A heart given, taken back and given again to one entry at the same count is heard the first time only.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
 - A Pairs go that ran out and came straight back to the same player, to run out again without a card, would leave every snapshot as it was, so that second go would neither chime nor say time up.
   Today's server never hands a go straight back: it passes to the next seat even when its player is away, to run out.
@@ -450,13 +455,15 @@ Known gaps:
 A game on your own is heard by the same rules as a room, through [`solo/sounds.ts`](../client/src/solo/sounds.ts), so a refresh, or a daily puzzle restored from this device, plays nothing, however the game stood.
 
 - **`useSoloSounds(game, end, { bank, derive })`** sits in the component that holds one game, and returns `play` for the player's own handlers.
-  `bank` spreads `SOLO_BANK` (the three solo stingers) and the game's own, as `<GAME>_SOLO_BANK` in `<game>/sounds.ts`.
+  `bank` spreads `SOLO_BANK` (the solo stingers: complete, best, win and loss) and the game's own, as `<GAME>_SOLO_BANK` in `<game>/sounds.ts`.
 - **What the player does** plays in their own handlers: a key, a delete, a flag, a card or a sign picked, a note, a row turned back.
   A table or a pad shared with the game's room plays it there, so both modes sound alike (Make 24's table, Code Breaker's pad).
 - **What the game does in reply** comes from `derive(prev, next)`, a pure function over the game's own state, as `derive<Game>Solo`: cells opened, a pair found, a guess's pegs, a hand solved or skipped, a miss turning back on its timer.
   Its keys name what happened uniquely within the game (`open:31`, `turn:4`), from something that only grows, such as the turns or the guesses so far.
   A pure input that may come and go, such as a flag on one cell, has no key that stays unique, so it plays in its handler instead.
-- **The end** is `end`: `'complete'`, `'best'` or `'loss'`, or null while the game is on.
+  A game that can take a move back counts the moves ever made (Gomoku's `placed`), since the moves on the board shrink and would give a key twice.
+  Set `end` in the same render as the move that ends the game, or the move is heard before the end and the end after it.
+- **The end** is `end`: `'complete'`, `'best'`, `'win'` (a game against bots or the computer, with the shell's win stinger) or `'loss'`, or null while the game is on.
   A game with a best passes `finishEnd(finish)`, from what `recordBest` said: a new best only when it beat one this device kept, as the result's words say, so a first finish is a finish.
   It plays once, standing alone on its change, so the move that ends a game is heard as its end (the last pair, the mine, the code cracked).
 - **The first state is only a baseline**, as a room's first snapshot is: arriving on a fresh board, or on a finished daily code, plays nothing, and its end counts as heard.
