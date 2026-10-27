@@ -500,6 +500,7 @@ A select menu is picked through `choose`, which waits for the menu to finish sli
 A board's labels are read through `labelsIn`, in one evaluation, because `evaluateAll` finds and reads in two steps and a card can turn in between.
 It checks behaviour, not looks, except for [`widths.spec.ts`](../e2e/widths.spec.ts), which plays each game and checks at seven window widths that nothing reaches out of what holds it.
 `npm run e2e:sound` plays the sound engine in Chromium and WebKit, on a config of its own ([sound lab](#the-sound-lab)).
+`npm run e2e:design` checks that the [design gallery](design.md#in-code) shows no mismatch against the committed Figma export.
 `npm run design:compare` covers looks: it drives the app into the state of each Figma screen and puts the capture beside Figma's preview ([design](design.md#comparing-with-figma)).
 
 ## Tooling

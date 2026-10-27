@@ -22,6 +22,7 @@
     "verify": "npm run lint && npm run typecheck && npm run format:check && npm run design:tokens -- --check && npm run audio:check && npm test && npm run build",
     "e2e": "npm run build && playwright test -c e2e",
     "e2e:sound": "playwright test -c e2e/sound/sound.config.ts",
+    "e2e:design": "playwright test -c e2e/design/design.config.ts",
     "design:compare": "npm run build && playwright test -c e2e/screens.config.ts",
     "design:import": "node tools/figma-export/import.mjs",
     "design:export": "node tools/figma-export/via-bridge.mjs",

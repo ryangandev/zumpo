@@ -91,7 +91,7 @@ import { PHONE, useMediaQuery } from '../../shell/use-media-query';
 import { glyphs } from '../generated/glyphs';
 import { pairsSymbols } from '../generated/pairs-symbols';
 import { snapSymbols } from '../generated/snap-symbols';
-import { Specimen } from './specimen';
+import { Specimen, type Deviation } from './specimen';
 import styles from './gallery.module.css';
 
 const noop = () => {};
@@ -166,13 +166,46 @@ const TRIOS_SPECIMENS = [
   [62, 3],
 ] as const;
 
+/**
+ * A race board with digits: ten guesses at 4071, as many rows as
+ * Zumpo/Code board draws.
+ */
+const RACE_ROWS = [
+  '1234',
+  '5678',
+  '2190',
+  '3041',
+  '0413',
+  '7401',
+  '4710',
+  '4017',
+  '4061',
+  '4071',
+].map((guess) => {
+  const right = [...guess].filter((digit, at) => digit === '4071'[at]).length;
+  const shared = [...guess].filter((digit) => '4071'.includes(digit)).length;
+  return { guess, mark: { right, moved: shared - right } };
+});
+
 const cap = (word: string) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
 
-const BID_TEXT =
-  'Figma rounds each of the three text runs up to a whole pixel, 2 px in all; the stroke and spacing match.';
+const BID_TEXT: Deviation = {
+  reason:
+    'Figma rounds each of the three text runs up to a whole pixel, 2 px in all; the stroke and spacing match.',
+  dw: -2,
+};
 
-const CLOCK_CELLS =
-  'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.';
+const CLOCK_CELLS: Deviation = {
+  reason:
+    'Wider on purpose: DM Sans has no tabular figures, so each digit sits in a fixed cell and the clock never changes width as it ticks.',
+  dw: 7,
+};
+
+const FOCUS_RING: Deviation = {
+  reason:
+    'Figma draws the field focused, its 2 px ring counted in layout; focus never changes a control’s size in code.',
+  dh: -2,
+};
 
 function Family({
   name,
@@ -470,7 +503,7 @@ export default function Gallery() {
           variant="Tone=Info"
           deviation={CLOCK_CELLS}
         >
-          <Countdown seconds={28} label="to a hint" deadline={false} />
+          <Countdown seconds={15} label="to pick" deadline={false} />
         </Specimen>
       </Family>
 
@@ -798,6 +831,7 @@ export default function Gallery() {
           family="turn-bar"
           variant="Kind=Hint, Layout=Phone"
           width={350}
+          heightOnly
         >
           <TurnBar
             category="Animals"
@@ -1494,6 +1528,7 @@ export default function Gallery() {
               family="chain-composer"
               variant={`State=${done ? 'Done' : 'Editing'}, Layout=${cap(layout)}`}
               width={layout === 'desktop' ? 600 : 310}
+              deviation={done ? undefined : FOCUS_RING}
             >
               <ChainComposer
                 label="Your first line"
@@ -1809,7 +1844,7 @@ export default function Gallery() {
         {(
           [
             ['desktop', 'Desktop', 727],
-            ['phone', 'Phone', 350],
+            ['phone', 'Phone', 358],
           ] as const
         ).map(([layout, layoutName, width]) => (
           <Specimen
@@ -1851,13 +1886,14 @@ export default function Gallery() {
                 family="code-race-board"
                 variant={`State=${stateName}, Board=${boardName}, Layout=${cap(layout)}`}
                 label={`${stateName} · ${boardName} · ${cap(layout)}`}
+                width={layout === 'row' ? 350 : undefined}
               >
                 <CodeRaceBoard
                   name="Maya"
                   status="Cracked · +633"
                   state={state}
                   layout={layout}
-                  rows={[]}
+                  rows={boardName === 'Digits' ? RACE_ROWS : []}
                   describe={boardName === 'Digits' ? () => '' : undefined}
                 />
               </Specimen>
@@ -1955,7 +1991,7 @@ export default function Gallery() {
                 locked={stateName === 'Locked'}
                 onToggle={noop}
               >
-                Notes
+                Animals
               </ToggleChip>
             </Specimen>
           ))}

@@ -43,7 +43,7 @@
         "x": 24,
         "y": 24,
         "w": 600,
-        "h": 231,
+        "h": 183,
         "hSize": "hug",
         "layout": {
           "mode": "column",
@@ -82,9 +82,10 @@
             "id": "162:67606",
             "name": "Actions",
             "w": 600,
-            "h": 100,
+            "h": 52,
             "wSize": "fill",
             "hSize": "hug",
+            "minHeight": 52,
             "clip": true,
             "layout": {
               "mode": "row",
@@ -127,9 +128,8 @@
                 "id": "162:67617",
                 "name": "Spacer",
                 "w": 346,
-                "h": 100,
+                "h": 0.01,
                 "wSize": "fill",
-                "hSize": "hug",
                 "clip": true,
                 "layout": {
                   "mode": "row",
@@ -300,7 +300,7 @@
         "x": 1288,
         "y": 24,
         "w": 310,
-        "h": 179,
+        "h": 203,
         "hSize": "hug",
         "layout": {
           "mode": "column",
@@ -339,9 +339,10 @@
             "id": "162:67655",
             "name": "Actions",
             "w": 310,
-            "h": 48,
+            "h": 72,
             "wSize": "fill",
             "hSize": "hug",
+            "minHeight": 72,
             "clip": true,
             "layout": {
               "mode": "row",
@@ -426,7 +427,7 @@
         "x": 1630,
         "y": 24,
         "w": 310,
-        "h": 241,
+        "h": 201,
         "hSize": "hug",
         "layout": {
           "mode": "column",
@@ -465,13 +466,14 @@
             "id": "162:67682",
             "name": "Actions",
             "w": 310,
-            "h": 112,
+            "h": 72,
             "wSize": "fill",
             "hSize": "hug",
             "clip": true,
             "layout": {
-              "mode": "column",
+              "mode": "row",
               "gap": "$Zumpo · UI:space/12",
+              "align": "center",
               "strokesIncluded": true
             },
             "children": [
@@ -479,8 +481,8 @@
                 "type": "INSTANCE",
                 "id": "162:67683",
                 "name": "Done notice",
-                "w": 310,
-                "h": 52,
+                "w": 252,
+                "h": 72,
                 "wSize": "fill",
                 "hSize": "hug",
                 "component": "Zumpo/Notice",
@@ -494,8 +496,9 @@
                 "overrides": [
                   {
                     "path": ".",
-                    "height": 52,
-                    "width": 310
+                    "counterAxisSizingMode": "AUTO",
+                    "height": 72,
+                    "width": 252
                   }
                 ]
               },
@@ -503,9 +506,9 @@
                 "type": "INSTANCE",
                 "id": "162:67688",
                 "name": "Keep editing",
-                "w": 310,
+                "w": 46,
                 "h": 48,
-                "wSize": "fill",
+                "wSize": "hug",
                 "component": "Zumpo/Button",
                 "variant": {
                   "Style": "Secondary",
@@ -521,8 +524,12 @@
                   {
                     "path": ".",
                     "height": 48,
-                    "primaryAxisSizingMode": "FIXED",
-                    "width": 310
+                    "primaryAxisSizingMode": "AUTO",
+                    "width": 46
+                  },
+                  {
+                    "path": "Let’s play",
+                    "visible": false
                   }
                 ]
               }

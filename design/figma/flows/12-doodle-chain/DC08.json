@@ -14,7 +14,7 @@
     "x": 4660,
     "y": 1626,
     "w": 1440,
-    "h": 1071,
+    "h": 1023,
     "hSize": "hug",
     "fills": [
       "$Zumpo · UI:color/cream"
@@ -99,7 +99,7 @@
         "id": "162:85632",
         "name": "Board & room",
         "w": 1312,
-        "h": 901,
+        "h": 853,
         "hSize": "hug",
         "layout": {
           "mode": "row",
@@ -112,7 +112,7 @@
             "id": "162:85633",
             "name": "Board stage",
             "w": 944,
-            "h": 901,
+            "h": 853,
             "hSize": "hug",
             "layout": {
               "mode": "column",
@@ -173,7 +173,7 @@
                 "id": "162:85710",
                 "name": "Step panel",
                 "w": 944,
-                "h": 755,
+                "h": 707,
                 "wSize": "fill",
                 "hSize": "hug",
                 "fills": [
@@ -234,7 +234,7 @@
                     "id": "162:85729",
                     "name": "Chain composer",
                     "w": 894,
-                    "h": 231,
+                    "h": 183,
                     "wSize": "fill",
                     "hSize": "hug",
                     "component": "Zumpo/Chain composer",
@@ -249,7 +249,7 @@
                     "overrides": [
                       {
                         "path": ".",
-                        "height": 231,
+                        "height": 183,
                         "width": 894
                       },
                       {

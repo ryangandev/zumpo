@@ -326,8 +326,8 @@
         "type": "COMPONENT",
         "id": "166:74443",
         "name": "Tone=Info",
-        "w": 153,
-        "h": 46,
+        "w": 151,
+        "h": 44,
         "wSize": "hug",
         "hSize": "hug",
         "strokes": [
@@ -344,8 +344,7 @@
             "$Zumpo · UI:space/10",
             "$Zumpo · UI:space/14"
           ],
-          "align": "center",
-          "strokesIncluded": true
+          "align": "center"
         },
         "children": [
           {
