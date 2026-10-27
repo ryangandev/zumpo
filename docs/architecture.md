@@ -411,7 +411,7 @@ A room and its game are heard through one replay guard, in `RoomLayout`, which e
   `turnOf(state)` names the go in play, the same for everybody (`2.5`, Liar's Dice's `3.14.2` with the dice still in, since a round rolled again keeps its number).
   A game whose snapshots cannot name a go gives `newGo(prev, next)` instead: whether a snapshot begins another go.
   The page counts the goes (`useGoCount`), once per snapshot by identity and once more for each new connection, names each go by its count, and hands `derive` the go in play as a third argument (`Go`: its `count`, and the snapshot it `began` on), for keys a go cannot repeat.
-  Pairs is that game: a miss leaves the board as it was and the same player may go again, so its goes are counted as the go passes, a miss turns back or a go runs out, while a pair keeps the go.
+  Pairs is that game: a miss leaves the board as it was, so a player's next go can read exactly as their last; its goes are counted as the go passes, a miss turns back or a go runs out, while a pair keeps the go.
   `isNewGame(prev, next)` tells two games apart where both are under way on either side of a reconnection; on one connection the room sees every start and end itself, so a snapshot from earlier in a game is never taken for a new one.
   Every key names its round or turn (`scored:1.3:p2`), the guard keeps the game's apart (`game:`), and a derive hears only what moves a turn on, so a snapshot from earlier in the turn adds nothing.
 
@@ -442,7 +442,8 @@ Known gaps:
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
-- A Pairs player alone at the table who runs out of time twice in a row without turning a card leaves every snapshot as it was, so the second go neither chimes nor says time up.
+- A Pairs go that ran out and came straight back to the same player, to run out again without a card, would leave every snapshot as it was, so that second go would neither chime nor say time up.
+  Today's server never hands a go straight back: it passes to the next seat even when its player is away, to run out.
 
 ### Sounds on your own
 

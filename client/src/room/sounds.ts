@@ -54,7 +54,7 @@ export interface RoomSoundView {
 /**
  * The go in play, counted on this page for a game whose snapshots cannot
  * name their goes (`GameSounds.newGo`): Pairs, where a miss leaves the board
- * as it was and the same player may go again.
+ * as it was, so a player's next go can read exactly as their last.
  */
 export interface Go<State extends AnyRoomState = AnyRoomState> {
   /**

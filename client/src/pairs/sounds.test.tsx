@@ -135,9 +135,9 @@ const at = (
 describe('a Pairs room’s goes', () => {
   it('begins another go as it passes, a miss turns back, or a go runs out', () => {
     expect(newPairsGo(at(ME), at(MAYA))).toBe(true);
-    // A miss turning back, though the same player goes again.
+    // A miss turning back, were the go to come straight back.
     expect(newPairsGo(at(ME, [4, 6]), at(ME))).toBe(true);
-    // Out of time, even into the same player's go.
+    // Out of time, were the go to come straight back too.
     expect(newPairsGo(at(ME, [4]), at(ME, [], 0, { timedOut: ME }))).toBe(true);
     expect(
       newPairsGo(
@@ -159,7 +159,7 @@ describe('a Pairs room’s goes', () => {
     );
   });
 
-  it('cannot see a player alone running out twice without a card', () => {
+  it('cannot see a go run out twice by one player without a card', () => {
     const late = at(ME, [], 0, { timedOut: ME });
     expect(newPairsGo(late, { ...late })).toBe(false);
   });
@@ -281,7 +281,7 @@ function openRoom(state: PairsRoomState, epoch = 1) {
 }
 
 describe('a Pairs room page', () => {
-  it('chimes each go of yours, a miss with the same player going again too', () => {
+  it('chimes each go of yours, even one that came straight back after a miss', () => {
     const room = openRoom(pairsState());
     expect(room.to(at(ME))).toEqual(['room-your-turn']);
     expect(room.to(at(ME, [0]))).toEqual(['pairs-flip']);
@@ -291,7 +291,7 @@ describe('a Pairs room page', () => {
     expect(room.to(at(ME, [], 2))).toEqual(['pairs-match 2']);
     expect(room.to(at(ME, [4], 2))).toEqual(['pairs-flip']);
     expect(room.to(at(ME, [4, 6], 2))).toEqual(['pairs-miss']);
-    // Maya is away, so the go comes straight back: a new go all the same.
+    // Were the go to come straight back, it is a new go all the same.
     expect(room.to(at(ME, [], 2))).toEqual(['room-your-turn']);
     expect(room.to(at(ME, [4], 2))).toEqual(['pairs-flip']);
     expect(room.to(at(ME, [], 3))).toEqual(['pairs-match 1']);
@@ -329,7 +329,7 @@ describe('a Pairs room page', () => {
     expect(again.to(at(ME, [], 2), 2)).toEqual(['pairs-match 1']);
   });
 
-  it('leaves silent the second time up of a player alone at the table', () => {
+  it('leaves silent a go run out twice in a row by one player', () => {
     const room = openRoom(at(ME, [4]));
     const late = at(ME, [], 0, { timedOut: ME });
     expect(room.to(late)).toEqual(['room-your-turn']);

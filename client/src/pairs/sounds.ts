@@ -94,10 +94,12 @@ const upIn = (cards: readonly PairsCardView[]) =>
 
 /**
  * Whether `next` begins another go: the go passes to somebody else; a miss
- * turns back, even when the same player goes again (the only other player
- * is away); or a go runs out, even into the same player's next. A pair keeps
- * the go. Not seen: a player alone at the table running out twice in a row
- * without a card, which leaves every snapshot as it was.
+ * turns back; or a go runs out. A pair keeps the go. The server hands a go
+ * on to the next seat even when its player is away, to run out, so the go
+ * always changes hands today; the miss and the time up count all the same,
+ * should a go ever come straight back to the player it left. One such go
+ * would still go unseen: a go run out, and the next one run out again by the
+ * same player without a card, leave every snapshot as it was.
  */
 export const newPairsGo: NewGo<PairsRoomState> = (prev, next) =>
   prev.turnPlayerId !== next.turnPlayerId ||
