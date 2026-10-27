@@ -14,7 +14,13 @@ import { RoomLayout, type PlayerLine } from '../room/room-layout';
 import { PlayBoard, playColumn } from '../shell/play-board';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { cx } from '../ui/cx';
+import { useSounds } from '../audio';
 import { Chain } from './chain';
+import {
+  calledToStep,
+  DOODLE_CHAIN_HANDS_BANK,
+  DOODLE_CHAIN_SOUNDS,
+} from './sounds';
 import { NEW_DESK, Step, type Desk } from './task';
 import styles from './room.module.css';
 
@@ -44,6 +50,10 @@ export function DoodleChainRoom() {
     <RoomLayout
       // No standings over the board: scores only come with the reveal.
       standings={false}
+      // Each step after the first is a go of its own for a player with a
+      // task in it; the first is the game's start.
+      yourTurn={calledToStep(state) && !room.spectating && !room.reconnecting}
+      sounds={DOODLE_CHAIN_SOUNDS}
       phase={
         revealing
           ? { tone: 'lime', label: m.doodleChain.reveal }
@@ -192,6 +202,7 @@ function Reveal({ room }: { room: Room }) {
   const { state, playerId, socket, spectating, isHost, canStart, starterName } =
     room;
   const reveal = state.reveal;
+  const sound = useSounds(DOODLE_CHAIN_HANDS_BANK);
   const panel = useRef<HTMLElement>(null);
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   // Each entry the reveal shows comes into view with what is under it, Next
@@ -227,13 +238,17 @@ function Reveal({ room }: { room: Room }) {
     return {
       count: entry.hearts,
       state: given ? 'on' : 'off',
-      onPress: () =>
+      onPress: () => {
+        // The viewer's own heart is heard where it is given; the snapshot
+        // that brings it back is somebody else's alone (deriveDoodleChainSounds).
+        if (!given) sound('doodle-chain-heart');
         socket.emit(
           'dc:heart',
           state.roomId,
           entry.chain,
           given ? null : entry.step,
-        ),
+        );
+      },
     } as const;
   };
 

@@ -31,6 +31,7 @@ import {
   type BrushSize,
   type TurnBarProps,
 } from '../ui';
+import { useSounds } from '../audio';
 import { useMessages, type Messages } from '../i18n';
 import { useSecondsLeft } from '../net/use-seconds-left';
 import { DrawingCanvas, PlaySheet, type Brush } from '../drawing/canvas';
@@ -38,9 +39,11 @@ import { playColumn } from '../shell/play-board';
 import { cx } from '../ui/cx';
 import { Picture } from '../drawing/picture';
 import { listNames } from '../room/players';
+import { useDeadlineTicks } from '../room/sounds';
 import { TOUCH, useMediaQuery } from '../shell/use-media-query';
 import type { Room as RoomOf } from '../room/room-context';
 import { EntryDrawing, textOf } from './chain';
+import { actingDeadline, DOODLE_CHAIN_HANDS_BANK } from './sounds';
 import styles from './task.module.css';
 
 /**
@@ -114,6 +117,12 @@ function waitingFor(room: Room): string[] {
 export function Step({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const { state, receivedAt, reconnecting, canvas } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, room.playerId),
+    paused: reconnecting,
+  });
   // What the viewer wrote this step, to show while the chains move on.
   const written =
     desk.words?.step === state.step ? desk.words.draft : (state.draft ?? null);
@@ -374,6 +383,7 @@ function Writing({
   const text = wordsOf(draft, m);
   const done = state.table[playerId]?.done ?? false;
   const { send, flush } = useTextSender(room);
+  const sound = useSounds(DOODLE_CHAIN_HANDS_BANK);
   const prompt = task.kind === 'prompt';
   // A step's field takes the keyboard as the step starts, except under a
   // finger, whose keyboard would cover the drawing being described.
@@ -388,6 +398,7 @@ function Writing({
     const current = 'suggestion' in draft ? draft.suggestion : -1;
     let pick = Math.floor(Math.random() * (SUGGESTION_COUNT - 1));
     if (pick >= current && current >= 0) pick += 1;
+    sound('ui-tap');
     setDraft({ suggestion: pick });
     send({ suggestion: pick });
   };
@@ -417,10 +428,14 @@ function Writing({
         done={done}
         doneMessage={doneMessage(room, m)}
         onDone={() => {
+          sound('room-stamp');
           flush();
           socket.emit('dc:done', roomId, true);
         }}
-        onKeepEditing={() => socket.emit('dc:done', roomId, false)}
+        onKeepEditing={() => {
+          sound('ui-undo');
+          socket.emit('dc:done', roomId, false);
+        }}
         onSuggest={prompt ? suggest : undefined}
         autoFocus={!touch}
       />
@@ -445,6 +460,7 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
   const { colour, size } = desk;
   const done = state.table[playerId]?.done ?? false;
   const canDraw = !done && !reconnecting;
+  const sound = useSounds(DOODLE_CHAIN_HANDS_BANK);
   // An empty drawing is never Done. Done stays pressable, and pressing it on
   // a blank canvas says why nothing happened, until there is a stroke.
   const blank = useBlankCanvas(canvas);
@@ -467,8 +483,9 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
     (point: Coordinate, { color, size: width }: Brush) => {
       canvas.start(point, color, width);
       socket.emit('dc:draw:start', roomId, point, color, width);
+      sound('draw-and-guess-pencil');
     },
-    [canvas, socket, roomId],
+    [canvas, socket, roomId, sound],
   );
   const move = useCallback(
     (point: Coordinate) => {
@@ -498,10 +515,12 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
           onUndo={() => {
             canvas.undo();
             socket.emit('dc:draw:undo', roomId);
+            sound('ui-undo');
           }}
           onClear={() => {
             canvas.clear();
             socket.emit('dc:draw:clear', roomId);
+            sound('draw-and-guess-clear');
           }}
         />
       </div>
@@ -535,7 +554,10 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
             variant="secondary"
             icon="edit"
             disabled={!done}
-            onClick={() => socket.emit('dc:done', roomId, false)}
+            onClick={() => {
+              sound('ui-undo');
+              socket.emit('dc:done', roomId, false);
+            }}
           >
             {m.ui.chain.keepEditing}
           </Button>
@@ -557,11 +579,11 @@ function Drawing({ room, desk, onDesk }: { room: Room } & DeskProps) {
               ref={doneButton}
               icon="check"
               disabled={done}
-              onClick={() =>
-                blank
-                  ? setTriedBlank(true)
-                  : socket.emit('dc:done', roomId, true)
-              }
+              onClick={() => {
+                if (blank) return setTriedBlank(true);
+                sound('room-stamp');
+                socket.emit('dc:done', roomId, true);
+              }}
             >
               {m.ui.chain.done}
             </Button>
