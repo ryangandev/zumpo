@@ -417,6 +417,8 @@ Four ways a game's sounds go quiet without an error, to keep in mind when adding
 - It must also stay the same for the whole of a go, through every snapshot until the go passes, or "your turn" plays again mid-go: Liar's Dice counts the dice still in, not its cups, since a player already out who leaves takes a cup and no dice.
 - It names a go, not a move: where a go holds several moves (a Pairs match keeps the go), a name per move plays "your turn" after each one and, standing alone, drops the move's own sound.
 - A game's event with a lead sound (`room-your-turn`, `stinger-*`) is dropped, with a console warning in development, and a game that sounds its own end must be in `OWN_ENDING` in `room/sounds.ts`, or the room's end stinger plays over it (Doodle Chain's album).
+- A key must be unique for each thing that can happen twice in a game, and a snapshot sometimes carries no count for it: a lockout can come round on the same three cards or the same middle card.
+  Name it by a clock that only grows while it is open, as Trios' `searchingMs` and Snap's `cardMs` do (`miss:3:9000`), and fire the event on the change into the lockout, never while it lasts.
 
 On one snapshot, "your turn" and the start and end stingers stand alone: the game's events in that change are dropped, the viewer's own included, and never play later, while the room's joins, leaves and Ready play beside them.
 So an opponent's move that hands you the go is heard as your go, and a take that ends a game as its end.
@@ -431,6 +433,8 @@ Two sounds come from no snapshot.
 The connection dropping and staying down for 1.5 seconds (`LOST_AFTER_MS`), each time, and the room closing under a seated player, at once, play from the room page (`useConnectionLostSound`), as live edges a refresh never repeats; a phone back from another app, or a laptop waking, reconnects within that and is silent.
 The last seconds of a deadline tick from the clock: `useDeadlineTicks({ seconds, deadline, paused })` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
 A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and passes `paused` while reconnecting; the first seconds seen for a deadline, and after a pause, only set where it stands, and a second never ticks twice.
+Hush has no deadline and no tick: a level is played without a clock or a beat, so none can be synced to.
+Its one count is the 3, 2, 1 before a level opens (`useCountdownSounds`), played from the seconds the room's clock shows, with the rule of the ticks the other way round: a countdown that opens while the page watches counts from 3, arriving or coming back during one only sets where it stands, and a pause is a new countdown.
 What the player does with their own hands, the drawer's pencil, undo and clear, plays where they do it.
 
 Known gaps:
@@ -438,6 +442,7 @@ Known gaps:
 - A go that becomes yours during a drop of a second or two, with the tab hidden, arrives in the first snapshot after it, which is only a baseline, so it never chimes.
 - Across a reconnection a Draw & Guess game is told from the last one heard by its turn, its category and everybody's points, which only grow within a game; a next game on the same turn and category where nobody's points went down is taken for the same one, and its turn's keys stay silent once. Nothing else the client sees tells two games apart.
 - A game that gives no `isNewGame` keeps its keys across a reconnection that spans a whole game, until the next start or end.
+- Across a reconnection a Hush game is told from the last one heard by its levels and its pile, which only grows within a level; a next game on the same level before anybody has played a card is taken for the same one, and that level's Ready stays silent once.
 - A Pairs room is heard as a room alone, with no "your turn": a pair keeps the go, and a miss leaves the board as it was, so no snapshot tells one of a player's goes from their last, nor one flip of a card from the next; the state needs a count of goes before Pairs can name them.
 
 ### Sounds on your own
