@@ -155,7 +155,7 @@ function useFittedName(phone: boolean) {
     const fit = () => {
       element.style.removeProperty('zoom');
       if (!phone) return;
-      const given = heading.clientWidth;
+      const given = heading.getBoundingClientRect().width;
       const needed = element.getBoundingClientRect().width;
       if (given > 0 && needed > given) {
         const zoom = fittingZoom(element, given, needed);

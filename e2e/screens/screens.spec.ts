@@ -256,9 +256,10 @@ test('platform pages', async ({ player }) => {
   const maya = await player('Maya', desktop);
   await maya.goto('/');
   await shot(maya, 'P01');
-  await openSound(maya);
+  const mayaSound = await openSound(maya);
   await shot(maya, 'SO01');
   await maya.keyboard.press('Escape');
+  await expect(mayaSound).toBeHidden();
   await maya.getByRole('button', { name: 'Maya: your name' }).click();
   await expect(maya.getByRole('dialog', { name: 'Your name' })).toBeVisible();
   await shot(maya, 'P13');
@@ -274,9 +275,10 @@ test('platform pages', async ({ player }) => {
   const samOnPhone = await player('Sam', phone);
   await samOnPhone.goto('/');
   await shot(samOnPhone, 'MO01');
-  await openSound(samOnPhone);
+  const samSound = await openSound(samOnPhone);
   await shot(samOnPhone, 'SO04');
   await samOnPhone.keyboard.press('Escape');
+  await expect(samSound).toBeHidden();
   await samOnPhone.getByRole('button', { name: 'Sam: your name' }).click();
   await expect(
     samOnPhone.getByRole('dialog', { name: 'Your name' }),

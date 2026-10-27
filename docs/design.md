@@ -154,9 +154,8 @@ It opens `Zumpo/Sound menu` (SO01-SO07): one row per kind of sound, its name and
 Version 1 has sound effects only, on at 70% by default; a Music row goes under them later.
 Muted, the level says Off and the slider is dimmed but still works, and moving it turns sound back on.
 The menu sits under the speaker, aligned to its end, as the name menu sits under the avatar; on a phone it fills the width.
-In the Phone room bar its three icon buttons are 38 × 48, so the game's name keeps 172 px at 390 px, which every game's name fits (SO07); on a narrower phone code scales the name down to fit, as it does the turn bar's main line, and only below that ends it in an ellipsis.
+In the Phone room bar its three icon buttons are 38 × 48, so the game's name keeps 172 px at 390 px, which every game's name fits (SO07); on a narrower phone code scales the name down to fit, as it does the turn bar's main line, down to 60%, which Draw & Guess needs at 320 px, and only below that ends it in an ellipsis.
 Where the browser has no Web Audio the speaker is not shown at all, as no screen shows an action the player cannot take: there is nothing it could turn on.
-In code the name scales down to 60% at most, which Draw & Guess needs at 320 px, the narrowest phone; past that it ends in an ellipsis.
 
 ### Names
 
