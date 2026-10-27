@@ -286,6 +286,7 @@ Code differs from Figma on purpose in a few places:
   On a phone the last pile under a game's results is drawn at half size, and the cards each player still held go under their name, every row at the one scale the fullest needs; Figma has no phone results screen for Hush.
 - A phone's skipped Make 24 hand keeps the play screen's tighter page and turn bar, so the turn bar stays where the hand had it.
 - The page keeps room for a scrollbar on windows wider than a phone (`scrollbar-gutter: stable`), so a page that grows past the window does not shift sideways; the gutter is cream, and dimmed with the dialog's backdrop while a dialog is open.
+  Where a scrollbar takes room, as on Windows or a Mac with a mouse, that leaves a 1440 px window's stage 15 to 17 px narrower than Figma's 944 px, so a row Figma fills exactly is laid out to fit the narrower one.
 - Figma rounds auto-width text boxes up to whole pixels, so a hugging component can be up to a pixel narrower in code.
 - The drawer's word-choice clock is Running, as the Countdown's own rule says of a phase you act in; D04 and MO07 keep the Status turn bar's default Waiting tone.
 - The header marks the page you are on; Figma draws Games as current on every screen.
@@ -322,9 +323,11 @@ Code differs from Figma on purpose in a few places:
 - The others' boards in a Daily Word room stand 12 px apart, not DW07's 16 px: three at 16 px are 2 px wider than the panel holds beside the Desktop keyboard, which Figma lets overflow.
 - Before a Hush game's first level the line beside Ready says the rule, two lines on a desktop, where HU01 and HU11 draw later levels' one line about the chat.
 - The line under a Code Breaker board on your own is as tall as a note, as Daily Word's is in DW01 to DW03, so the digit pad does not move when a guess is turned back; CB02 to CB04 draw it as tall as its one line of text, 27 px shorter.
-- A Code Breaker round's results boards stand 8 px apart, not CB12's 16 px: four at 16 px are 16 px wider than the panel holds, which Figma lets overflow.
-- A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does; in CB21's phone ranking "2nd place · 3 codes cracked" runs under the score in Figma.
-  In a game's final standings it wraps to a second line instead, since there the detail is what the row is for.
+- A Daily Word word's results boards stand 12 px apart, not DW09's and DW10's 16 px: four at 16 px fill Figma's panel exactly, so beside a scrollbar's gutter the fourth wrapped under the others at 1440 px.
+- A Code Breaker code's results boards stand 4 px apart, not CB12's and CB13's 16 px: four at 16 px are 16 px wider than Figma's panel holds, which Figma lets overflow, and beside a scrollbar's gutter only 4 px apart do four fit at 1440 px.
+  On a phone, one under another, they are 12 px apart, as CB20 and CB21 draw them.
+- A Player row's status ends in an ellipsis when it is longer than the row has room for, as its name does.
+  In a game's final standings it wraps to a second line instead, since there the detail is what the row is for, as CB21's phone ranking draws it.
 - Before a Gomoku room's first game, the stage opens with the room's shared Waiting panel above the empty board, not GM08's Game 1 turn bar with Start game: the panel is where every room keeps the invite link, Take a seat or Watch instead, and the picked name, and the empty board stays under it as GM08 draws it.
 - A drawing sheet on a desktop keeps its 798 × 598 proportions in the height the window leaves below its top, less what follows it and the page's foot, never narrower than 40% of its column, and stands centred in it, so the whole sheet and the chat's input are in sight at 1280 × 720 and 1440 × 900; D01 to D06 draw it the column's full width, taller than such a window.
   A drawing only shown, as the one Doodle Chain's describe step works from, has no such floor, so that step fits at 1280 × 720 too.

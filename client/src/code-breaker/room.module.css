@@ -77,9 +77,12 @@
 }
 
 /* Four Small boards 16 px apart are 16 px wider than the panel holds, which
-   Figma lets CB12 overflow; 8 apart, four fit. */
+   Figma lets CB12 overflow, and beside a scrollbar's gutter the panel is
+   15 to 17 px narrower again: 4 apart, four fit at 1440 px. Each board is as
+   tall as its guesses, as Figma's hug them. */
 .results .boards {
-  gap: var(--zumpo-space-8);
+  align-items: flex-start;
+  gap: var(--zumpo-space-4);
 }
 
 /* On a phone the others are on the Players tab, on a paper panel. */
@@ -95,8 +98,11 @@
     gap: var(--zumpo-space-12);
   }
 
-  /* The results' Small boards one under another, each a Row board (CB20). */
+  /* The results' Small boards one under another, each a Row board, 12 px
+     apart (CB20, CB21). */
   .results .boards {
     flex-direction: column;
+    align-items: stretch;
+    gap: var(--zumpo-space-12);
   }
 }
