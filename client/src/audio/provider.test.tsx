@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StrictMode } from 'react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, expectTypeOf, it } from 'vitest';
 import { AudioEngine } from './engine';
 import { SoundProvider, useSoundControls, useSounds } from './provider';
 import { calls, settle, spec, useMockAudio } from './tests/mock-audio';
@@ -12,6 +12,11 @@ const audio = useMockAudio();
 const bank = {
   tap: spec({ id: 'tap' }),
   chime: spec({ id: 'chime' }),
+} satisfies SoundBank;
+
+const stepped = {
+  tick: { ...spec({ id: 'tick' }), steps: true as const },
+  tap: spec({ id: 'tap' }),
 } satisfies SoundBank;
 
 function Page() {
@@ -140,5 +145,18 @@ describe('SoundProvider', () => {
 
   it('needs a provider above the hooks', () => {
     expect(() => render(<Page />)).toThrow(/SoundProvider/);
+  });
+});
+
+describe('useSounds', () => {
+  it('types a stepped sound to be played with its step, and no other', () => {
+    type Play = ReturnType<typeof useSounds<typeof stepped>>;
+    expectTypeOf<Play>().toBeCallableWith('tick', { variant: 2 });
+    expectTypeOf<Play>().toBeCallableWith('tap');
+    expectTypeOf<Play>().toBeCallableWith('tap', { other: true });
+    // @ts-expect-error A stepped sound says which step.
+    expectTypeOf<Play>().toBeCallableWith('tick');
+    // @ts-expect-error Nor is any other option its step.
+    expectTypeOf<Play>().toBeCallableWith('tick', { other: true });
   });
 });
