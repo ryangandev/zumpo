@@ -9,6 +9,7 @@ import {
   type SteppedId,
 } from '../audio';
 import { hushSounds } from '../audio/generated/hush';
+import { secondsLeft } from '../net/use-seconds-left';
 import { gameSounds, ROOM_SOUNDS } from '../room/sounds';
 
 /*
@@ -19,6 +20,9 @@ import { gameSounds, ROOM_SOUNDS } from '../room/sounds';
  * read while a level is played, so nothing ticks and nothing keeps a beat:
  * the one count there is, 3, 2, 1, is the shared moment before a level opens
  * (`useCountdownSounds`), where the room's own clock shows the same digits.
+ * That count is also the one before a level resumes, in the middle of it,
+ * after a pause for a player away or a seat lost: a countdown like the first,
+ * and it sounds like it. It stops before play, with no "go".
  * Nobody's pause, drop or card thrown away with a seat is heard.
  */
 
@@ -55,9 +59,10 @@ export const isNewHushGame: IsNewGame<HushRoomState> = (prev, next) =>
 /**
  * What a Hush snapshot adds for `viewer`: each card laid on the pile, a
  * mistake, a cleared level and a clean one's life back, and the level's
- * Ready. Every key names its level, since cards and Ready come round again
- * in the next. The card a mistake was made with and the level it clears are
- * heard as a card first, and what they did a beat after.
+ * Ready (but not the last, which the count that follows stands in for).
+ * Every key names its level, since cards and Ready come round again in the
+ * next. The card a mistake was made with and the level it clears are heard
+ * as a card first, and what they did a beat after.
  */
 export function deriveHushSounds(
   viewer: string,
@@ -68,7 +73,17 @@ export function deriveHushSounds(
     const level = next.level;
     const sameLevel = prev.isGameStarted && prev.level === level;
 
+    // The Ready that completes the table is followed at once by the count,
+    // in a snapshot of its own sent back to back: the 3 is its sound, and a
+    // stamp or pip would only sound over it. With somebody away the level
+    // waits instead, and the Ready is heard.
+    const countFollows = Object.keys(next.table).every(
+      (id) =>
+        next.table[id]?.ready && next.playerList[id]?.isConnected !== false,
+    );
+
     for (const [id, seat] of Object.entries(next.table)) {
+      if (countFollows) break;
       if (!seat.ready || (sameLevel && prev.table[id]?.ready)) continue;
       events.push(
         id === viewer
@@ -123,8 +138,11 @@ export const HUSH_SOUNDS = gameSounds({
   isNewGame: isNewHushGame,
 });
 
-/** The counts before a level opens: 3, 2, 1, the last one higher. */
+/** The counts before play opens: 3, 2, 1, the last one higher. */
 const COUNTS = 3;
+
+/** How often the count looks at the clock; the digits move on whole seconds. */
+const LOOK_EVERY_MS = 250;
 
 /** What the count hook last saw of a countdown. */
 interface Run {
@@ -137,26 +155,33 @@ interface Run {
 }
 
 /**
- * The 3, 2, 1 before a level opens, from the seconds the room's clock shows
- * beside it, so each count lands with its digit. This is the one count in
- * the game, and it is before the level, never in it. A countdown that opens
- * while the page watches counts from 3; arriving or coming back during one
- * only sets where it stands, so a refresh, or a connection back from a
- * drop, never counts again what was counted, and the counts that follow
- * play. A count already played never plays twice in one countdown, though
- * a snapshot moves the clock back, and a countdown after a pause, which
- * counts afresh, plays all three.
+ * The 3, 2, 1 before play opens, in step with the digits the room's clock
+ * shows beside it. It is the one count in the game, and it is before play,
+ * never in it: before a level's first card, and before the cards that
+ * resume it after a pause for somebody away or a seat lost. It stops before
+ * play, with no "go".
+ *
+ * The seconds are read off the countdown's own snapshot (`endsInMs` as of
+ * `receivedAt`), never from a clock state shared with the phase before, which
+ * still holds that phase's last reading for a render after the phase changes.
+ * A countdown that opens while the page watches counts from 3; arriving or
+ * coming back during one only sets where it stands, so a refresh, or a
+ * connection back from a drop, never counts again what was counted, and the
+ * counts that follow play. A count already played never plays twice in one
+ * countdown, though a snapshot moves the clock back, and a countdown after a
+ * pause, which counts afresh, plays all three.
  *
  * `counting` is whether the room is in its countdown; `paused` holds the
- * clock (the connection is down). The seconds can read stale for a render
- * as a new countdown opens, so only 3, 2 and 1 count.
+ * clock (the connection is down). Only 3, 2 and 1 count.
  */
 export function useCountdownSounds({
-  seconds,
+  endsInMs,
+  receivedAt,
   counting,
   paused,
 }: {
-  seconds: number;
+  endsInMs: number;
+  receivedAt: number;
   counting: boolean;
   paused: boolean;
 }): void {
@@ -174,14 +199,20 @@ export function useCountdownSounds({
     run.current ??= { live: quiet.current, last: null, heard: new Set() };
     quiet.current = false;
     const count = run.current;
-    if (seconds < 1 || seconds > COUNTS) return;
-    const before = count.last;
-    count.last = seconds;
-    // The first count seen, if the page was not watching it open, only
-    // sets where it stands.
-    if (before === null ? !count.live : seconds >= before) return;
-    if (count.heard.has(seconds)) return;
-    count.heard.add(seconds);
-    play('hush-count', { variant: COUNTS + 1 - seconds });
-  }, [counting, paused, seconds, play]);
+    const look = () => {
+      const seconds = secondsLeft(endsInMs, receivedAt);
+      if (seconds < 1 || seconds > COUNTS) return;
+      const before = count.last;
+      count.last = seconds;
+      // The first count seen, if the page was not watching it open, only
+      // sets where it stands.
+      if (before === null ? !count.live : seconds >= before) return;
+      if (count.heard.has(seconds)) return;
+      count.heard.add(seconds);
+      play('hush-count', { variant: COUNTS + 1 - seconds });
+    };
+    look();
+    const timer = setInterval(look, LOOK_EVERY_MS);
+    return () => clearInterval(timer);
+  }, [counting, paused, endsInMs, receivedAt, play]);
 }

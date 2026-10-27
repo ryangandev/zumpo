@@ -61,12 +61,13 @@ const TILE_SOUND = {
   absent: 'daily-word-tile-not-in',
 } as const satisfies Record<DailyWordMark, TileSound>;
 
-/** How far apart a guess's tiles turn. */
+/** How far apart a guess's tile sounds are; the tiles themselves do not animate. */
 export const TILE_GAP_MS = 100;
 
 /**
- * A guess's five tiles, left to right, one after another. `row` names the
- * guess within the game.
+ * A guess's five tile sounds, left to right, one after another (the tiles
+ * show their marks at once, with no flip to follow). `row` names the guess
+ * within the game.
  */
 export function tileSounds(
   marks: readonly DailyWordMark[],

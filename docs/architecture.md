@@ -434,7 +434,9 @@ The connection dropping and staying down for 1.5 seconds (`LOST_AFTER_MS`), each
 The last seconds of a deadline tick from the clock: `useDeadlineTicks({ seconds, deadline, paused })` ticks `room-tick`, step 1 at 5 seconds left to step 5 at 1 (`URGENT_SECONDS`), from the seconds the clock beside it shows, so each tick lands with its digit.
 A game names the deadline only for the player who must act in it (`actingDeadline`), never on an Info clock or for a spectator, and passes `paused` while reconnecting; the first seconds seen for a deadline, and after a pause, only set where it stands, and a second never ticks twice.
 Hush has no deadline and no tick: a level is played without a clock or a beat, so none can be synced to.
-Its one count is the 3, 2, 1 before a level opens (`useCountdownSounds`), played from the seconds the room's clock shows, with the rule of the ticks the other way round: a countdown that opens while the page watches counts from 3, arriving or coming back during one only sets where it stands, and a pause is a new countdown.
+Its one count is the 3, 2, 1 before play opens (`useCountdownSounds`): a level's first, and the one that resumes it mid-level after a pause for somebody away or a seat lost; it stops before play, with no "go".
+It is read off the countdown snapshot's own `phaseEndsInMs` and `receivedAt`, the digits the room's clock shows, never from a clock state the previous phase left behind, with the rule of the ticks the other way round: a countdown that opens while the page watches counts from 3, arriving or coming back during one only sets where it stands, and a pause is a new countdown.
+The Ready that completes the table is silent, since the count follows it in the next snapshot, sent back to back, and the 3 is its sound; with a player away it is heard, since the level waits.
 What the player does with their own hands, the drawer's pencil, undo and clear, plays where they do it.
 
 Known gaps:

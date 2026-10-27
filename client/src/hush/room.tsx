@@ -325,10 +325,11 @@ function Level({ room }: { room: Room }) {
   const m = useMessages();
   const { state, receivedAt, reconnecting } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
-  // The count before a level opens, with the digits the clock shows; none
-  // while it is played, which has no clock and no beat.
+  // The count before play opens or resumes, with the digits the clock shows;
+  // none while it is played, which has no clock and no beat.
   useCountdownSounds({
-    seconds,
+    endsInMs: state.phaseEndsInMs,
+    receivedAt,
     counting: state.phase === 'countdown',
     paused: reconnecting,
   });

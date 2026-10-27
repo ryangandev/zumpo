@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { StrictMode } from 'react';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type {
   HushGameSummary,
   HushRoomState,
@@ -100,11 +100,33 @@ describe('a Hush room, heard', () => {
     expect(
       heard(waiting, levelOf(2, { phase: 'ready', table: hands([MAYA, LEO]) })),
     ).toEqual([{ sound: 'room-pip', key: `ready:2:${LEO}`, other: true }]);
-    // The last Ready and the countdown it starts arrive together.
-    expect(sounds(waiting, levelOf(2, { phase: 'countdown' }))).toEqual([
-      'room-stamp',
-      'room-pip',
-    ]);
+    // The Ready that completes the table and the countdown it starts arrive
+    // in two snapshots back to back, and neither is heard over the 3.
+    const complete = levelOf(2, {
+      phase: 'ready',
+      table: hands([ME, MAYA, LEO]),
+    });
+    expect(
+      sounds(
+        levelOf(2, { phase: 'ready', table: hands([MAYA, LEO]) }),
+        complete,
+      ),
+    ).toEqual([]);
+    expect(sounds(complete, levelOf(2, { phase: 'countdown' }))).toEqual([]);
+    // With a player away the level waits instead, and that Ready is heard.
+    expect(
+      sounds(
+        levelOf(2, { phase: 'ready', table: hands([ME, MAYA]) }),
+        levelOf(2, {
+          phase: 'ready',
+          table: hands([ME, MAYA, LEO]),
+          playerList: {
+            ...people.playerList,
+            [LEO]: { ...seat('Leo'), isConnected: false },
+          },
+        }),
+      ),
+    ).toEqual(['room-pip']);
     // A level opening with nobody ready adds nothing, nor does a spectator
     // hear a Ready of their own.
     expect(
@@ -306,7 +328,8 @@ describe('a Hush room, heard', () => {
 });
 
 interface CountProps {
-  seconds: number;
+  endsInMs: number;
+  receivedAt: number;
   counting: boolean;
   paused: boolean;
 }
@@ -316,7 +339,8 @@ function Count(props: CountProps) {
   return null;
 }
 
-function mount(seconds: number, counting: boolean) {
+/** A countdown page on a fake clock: each snapshot is stamped as it arrives. */
+function mount(endsInMs: number, counting: boolean) {
   const engine = new AudioEngine({});
   const play = vi
     .spyOn(engine, 'play')
@@ -328,10 +352,26 @@ function mount(seconds: number, counting: boolean) {
       </SoundProvider>
     </StrictMode>
   );
-  const page = render(tree({ seconds, counting, paused: false }));
+  const page = render(
+    tree({
+      endsInMs,
+      receivedAt: performance.now(),
+      counting,
+      paused: false,
+    }),
+  );
   return {
-    to: (s: number, c = true, paused = false) =>
-      page.rerender(tree({ seconds: s, counting: c, paused })),
+    /** A snapshot arrives. */
+    snapshot: (ms: number, c = true, paused = false) =>
+      page.rerender(
+        tree({
+          endsInMs: ms,
+          receivedAt: performance.now(),
+          counting: c,
+          paused,
+        }),
+      ),
+    pass: (ms: number) => act(() => void vi.advanceTimersByTime(ms)),
     steps: () =>
       play.mock.calls.map(([spec, options]: [SoundSpec, PlayOptions?]) => {
         expect(spec.id).toBe('hush-count');
@@ -341,50 +381,70 @@ function mount(seconds: number, counting: boolean) {
 }
 
 describe('useCountdownSounds', () => {
-  it('counts 3, 2, 1 as a countdown opens, past a clock still reading the last phase', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('counts 3, 2, 1 as a countdown opens, whatever the phase before read', () => {
+    // A paused level's clock (a seat running out) reads 1 as the countdown
+    // that resumes it opens.
     const count = mount(0, false);
-    // The phase changes before the clock does.
-    count.to(0);
-    for (const s of [3, 3, 2, 2, 1, 0]) count.to(s);
+    for (const left of [20_000, 5000, 2000, 1000]) {
+      count.snapshot(left, false);
+      count.pass(1000);
+    }
+    count.snapshot(1000, false);
+    count.snapshot(3000);
+    count.pass(3000);
     expect(count.steps()).toEqual([1, 2, 3]);
   });
 
   it('only sets where it stands on arriving, then counts on', () => {
-    const count = mount(3, true);
-    count.to(2);
-    count.to(1);
+    const count = mount(3000, true);
+    count.pass(1000);
+    count.pass(1000);
     expect(count.steps()).toEqual([2, 3]);
-    const late = mount(1, true);
-    late.to(0);
+    const late = mount(800, true);
+    late.pass(1000);
     expect(late.steps()).toEqual([]);
   });
 
   it('never counts a second twice, though a snapshot puts the clock back', () => {
     const count = mount(0, false);
-    for (const s of [3, 2, 3, 2, 1]) count.to(s);
+    count.snapshot(3000);
+    count.pass(1000);
+    count.snapshot(3000);
+    count.pass(2000);
     expect(count.steps()).toEqual([1, 2, 3]);
   });
 
   it('holds still while paused, and comes back to a baseline', () => {
     const count = mount(0, false);
-    count.to(3);
-    count.to(2);
+    count.snapshot(3000);
+    count.pass(1000);
     // The connection drops: the clock holds, and nothing counts.
-    count.to(2, true, true);
-    count.to(2, true, true);
+    count.snapshot(3000, true, true);
+    count.pass(5000);
     // Back at 2: where the clock stands, then on.
-    count.to(2);
-    count.to(1);
+    count.snapshot(2000);
+    count.pass(1000);
     expect(count.steps()).toEqual([1, 2, 3]);
   });
 
   it('counts a countdown after a pause afresh, and stays quiet while a level is played', () => {
     const count = mount(0, false);
-    for (const s of [3, 2, 1]) count.to(s);
+    count.snapshot(3000);
+    count.pass(3000);
     // Play, then a pause for somebody away, then the countdown that resumes.
-    for (const s of [0, 0, 0]) count.to(s, false);
-    for (const s of [3, 2, 1]) count.to(s);
-    count.to(0, false);
+    count.snapshot(0, false);
+    count.pass(2000);
+    count.snapshot(3000);
+    count.pass(3000);
+    count.snapshot(0, false);
+    count.pass(2000);
     expect(count.steps()).toEqual([1, 2, 3, 1, 2, 3]);
   });
 });
