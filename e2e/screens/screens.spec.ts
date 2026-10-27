@@ -809,7 +809,7 @@ test('a Draw & Guess game', async ({ player }) => {
       });
     } else {
       await expect(
-        drawer.page.getByText('Time ran out, so this one was picked for you'),
+        drawer.page.getByText('Time’s up, picked for you'),
       ).toBeVisible({ timeout: 30_000 });
       await draw(drawer.page);
       await shot(drawer.page, 'D12');
