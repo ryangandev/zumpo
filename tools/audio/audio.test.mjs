@@ -14,8 +14,10 @@ import {
   fileSha256,
   mastersRoot,
   readJson,
+  renderModules,
   REPO,
   repoPaths,
+  serializeManifest,
   validateSounds,
 } from './lib.mjs';
 
@@ -234,6 +236,26 @@ describe('checkGenerated', () => {
         p.includes('generated/files/stray.m4a is not in the manifest'),
       ),
     );
+  });
+
+  it('fails when the manifest lost a variant that sounds.json declares', () => {
+    // As a hand edit would leave it: the variant, its files and its module
+    // entry all gone, consistently.
+    const { repo, paths } = copyOfRepo();
+    const manifest = JSON.parse(fs.readFileSync(paths.manifest, 'utf8'));
+    const [id, built] = Object.entries(manifest.sounds)[0];
+    const [, dropped] = built.variants;
+    built.variants = built.variants.slice(0, 1);
+    fs.writeFileSync(paths.manifest, serializeManifest(manifest));
+    for (const format of ['m4a', 'webm']) {
+      fs.rmSync(path.join(paths.filesDir, dropped.files[format].file));
+    }
+    for (const [name, content] of renderModules(manifest)) {
+      fs.writeFileSync(path.join(paths.outDir, name), content);
+    }
+    assert.deepEqual(checkGenerated(repo), [
+      `"${id}" was built from other masters than sounds.json declares. Run \`npm run audio:build\` where the masters are (ZUMPO_AUDIO_DIR), and commit what it writes.`,
+    ]);
   });
 
   it('fails when a generated module is stale or stray', () => {

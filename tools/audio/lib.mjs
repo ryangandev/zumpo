@@ -297,6 +297,10 @@ export function serializeManifest(manifest) {
   return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
+/** Each variant's master and its hash, in order, from either side. */
+const masters = (variants, file, sha) =>
+  variants.map((variant) => `${variant[file]} ${variant[sha]}`);
+
 const FIX =
   'Run `npm run audio:build` where the masters are (ZUMPO_AUDIO_DIR), and commit what it writes.';
 
@@ -347,6 +351,17 @@ export function checkGenerated(repo = REPO) {
         `"${id}" changed in sounds.json since it was built (${fields.join(', ')}). ${FIX}`,
       );
       continue;
+    }
+    // The built variants are the declared ones, master for master.
+    if (
+      !sameValue(
+        masters(built.variants ?? [], 'source', 'sourceSha256'),
+        masters(sound.variants, 'file', 'sha256'),
+      )
+    ) {
+      problems.push(
+        `"${id}" was built from other masters than sounds.json declares. ${FIX}`,
+      );
     }
     for (const variant of built.variants) {
       const key = encodeKey({
