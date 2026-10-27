@@ -13,7 +13,8 @@ import {
 import { rankedPlayers, type Seat } from '../room/players';
 import { useRoomContext, type Room as RoomOf } from '../room/room-context';
 import { RoomLayout, type PlayerLine } from '../room/room-layout';
-import { LIARS_DICE_SOUNDS } from './sounds';
+import { useDeadlineTicks } from '../room/sounds';
+import { actingDeadline, LIARS_DICE_SOUNDS } from './sounds';
 import { PHONE, useMediaQuery } from '../shell/use-media-query';
 import { useBidChoice } from './bid-choice';
 import { fromViewer, Table, type TableSeat } from './table';
@@ -192,6 +193,12 @@ function Turn({ room }: { room: Room }) {
   const m = useMessages();
   const { state, receivedAt, reconnecting, playerId } = room;
   const seconds = useSecondsLeft(state.phaseEndsInMs, receivedAt, reconnecting);
+  // Ticks with the clock's own seconds, so each lands with its digit.
+  useDeadlineTicks({
+    seconds,
+    deadline: actingDeadline(state, playerId),
+    paused: reconnecting,
+  });
   const mine = bidding(room);
   const out =
     !room.spectating && (state.playerList[playerId]?.points ?? 0) === 0;

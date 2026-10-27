@@ -19,7 +19,9 @@ import { ChangeSettings } from '../../solo/change-settings';
 import { SoloLayout } from '../../solo/solo-layout';
 import { useSoloTime } from '../../solo/solo-time';
 import { SoloResult } from '../../solo/solo-result';
+import { useSoloSounds } from '../../solo/sounds';
 import { useBidChoice } from '../bid-choice';
+import { deriveLiarsDiceSolo, LIARS_DICE_SOLO_BANK } from '../sounds';
 import { Table, type TableSeat } from '../table';
 import { bidLine, naming, revealBar, type Naming } from '../words';
 import {
@@ -170,6 +172,12 @@ function SoloTable({
   const [game, setGame] = useState(() => newGame(picks, soloRandom));
   const [record, setRecord] = useState<LiarsDiceRecord | null>(null);
   const over = game.phase === 'over';
+  // Out is a loss; the last one at the table, a win. Set with the move that
+  // ends the game, so that move is heard as its end.
+  useSoloSounds(game, over ? (youWon(game) ? 'win' : 'loss') : null, {
+    bank: LIARS_DICE_SOLO_BANK,
+    derive: deriveLiarsDiceSolo,
+  });
   // The bots wait while How to play is open.
   const clock = useSoloTime();
 
