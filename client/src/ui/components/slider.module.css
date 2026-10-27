@@ -72,9 +72,21 @@
   outline-offset: var(--focus-ring);
 }
 
-/* State=Muted: dimmed as a disabled control is, and still working. */
-.muted {
-  opacity: 0.45;
+/* State=Muted: the track, its level and the thumb at 45% over the menu's
+   paper, as Figma dims the whole slider, and still working. Mixed rather than
+   faded, so the dimmed level does not show through the thumb, and the focus
+   ring, which is not dimmed, keeps its full contrast. */
+.muted .track {
+  background: color-mix(in srgb, var(--zumpo-line) 45%, var(--zumpo-paper));
+}
+
+.muted .level {
+  background: color-mix(in srgb, var(--zumpo-ink) 45%, var(--zumpo-paper));
+}
+
+.muted .thumb::after {
+  border-color: color-mix(in srgb, var(--zumpo-ink) 45%, var(--zumpo-paper));
+  background: color-mix(in srgb, var(--zumpo-coral) 45%, var(--zumpo-paper));
 }
 
 @media (prefers-reduced-motion: reduce) {
