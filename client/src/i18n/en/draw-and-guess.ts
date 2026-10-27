@@ -111,7 +111,7 @@ export const drawAndGuess = {
   nextUp: 'Next up',
   choosingWord: (name: string) => `${name} is choosing a word`,
   readyToGuess: 'Get ready to guess',
-  autoPicked: 'Time ran out, so this one was picked for you',
+  autoPicked: 'Time’s up, picked for you',
   drawThis: 'Draw this',
   privateWord: 'Only you can see the word',
   left: 'left',

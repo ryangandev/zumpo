@@ -7,8 +7,8 @@ import { createRoom, expect, joinRoom, test } from './fixtures';
  * 16 px under the toolbar beside the side column (D06). Code keeps the
  * sheet's 798 by 598 proportions, which leave height spare on a tall phone,
  * and that spare height goes under the sheet, not over it. The round's
- * results stay on the sheet's foot, and the word choices stay centred in the
- * room (MO07).
+ * results stay on the sheet's foot, and the word choices stand where the
+ * sheet does, 12 px under the turn bar (MO07, PH10).
  */
 const PHONES = [
   // The smallest phone: the sheet is as tall as the room allows, so this is
@@ -40,6 +40,18 @@ const aboveOf = (page: Page): Locator =>
     .locator('..')
     .or(page.getByRole('region', { name: 'Turn' }))
     .last();
+
+/** px between the turn bar and the first word choice under it. */
+async function choicesGap(page: Page): Promise<number> {
+  const turn = (await page
+    .getByRole('region', { name: 'Turn' })
+    .boundingBox())!;
+  const first = (await page
+    .getByRole('button', { name: /\d+ letters?$/ })
+    .first()
+    .boundingBox())!;
+  return first.y - (turn.y + turn.height);
+}
 
 /** px between what is above the sheet and the sheet. */
 async function gapAbove(page: Page): Promise<number> {
@@ -157,7 +169,7 @@ for (const size of PHONES) {
     }
   });
 
-  test(`the round's results stay on the sheet's foot, and the choices centred, on a ${at} phone`, async ({
+  test(`the round's results stay on the sheet's foot, and the choices under the turn bar, on a ${at} phone`, async ({
     player,
   }) => {
     test.setTimeout(90_000);
@@ -194,17 +206,12 @@ for (const size of PHONES) {
     expect(Math.abs((await gapAbove(shown)) - PHONE_GAP)).toBeLessThan(1.5);
 
     if (!size.spare) return;
-    // MO07: the choices are centred in the room the board is given.
-    const choices = offeredTo.getByRole('button', {
-      name: /\d+ letters?$/,
-    });
-    await expect(choices).toHaveCount(3);
-    const room = (await offeredTo.locator('[data-play-board]').boundingBox())!;
-    const top = (await choices.first().boundingBox())!;
-    const foot = (await choices.last().boundingBox())!;
-    const middle = (top.y + foot.y + foot.height) / 2;
-    expect(Math.abs(middle - (room.y + room.height / 2))).toBeLessThanOrEqual(
-      1,
+    // MO07: the choices stand 12 px under the turn bar, as the sheet does.
+    await expect(
+      offeredTo.getByRole('button', { name: /\d+ letters?$/ }),
+    ).toHaveCount(3);
+    expect(Math.abs((await choicesGap(offeredTo)) - PHONE_GAP)).toBeLessThan(
+      1.5,
     );
   });
 }
@@ -441,6 +448,10 @@ for (const size of SAFARI_PHONES) {
       expect(box.height, 'a Compact choice').toBeLessThan(110);
       expect(box.height, 'still a finger wide').toBeGreaterThanOrEqual(44);
     }
+    expect(
+      Math.abs((await choicesGap(first.drawer)) - PHONE_GAP),
+      'the choices 12 px under the turn bar',
+    ).toBeLessThan(1.5);
     await oneScreen('choosing', first);
 
     const word = await chooseWord(first.drawer, first.guesser);
@@ -475,6 +486,26 @@ for (const size of SAFARI_PHONES) {
     await oneScreen('the results', first);
   });
 }
+
+test('a word picked when time ran out keeps a 390 by 664 phone on one screen', async ({
+  player,
+}) => {
+  test.setTimeout(90_000);
+  const seats = await inRoom(player, { width: 390, height: 664 }, true, 1);
+  const { drawer, guesser } = await whoDraws(seats);
+  const turn = drawer.getByRole('region', { name: 'Turn' });
+  const choosing = (await turn.boundingBox())!.height;
+  // The drawer lets the choosing clock run out: the turn bar's label says
+  // so on its one line, and the bar keeps its height.
+  await expect(turn.getByText('Time’s up, picked for you')).toBeVisible({
+    timeout: 30_000,
+  });
+  await expect(sheetOf(guesser)).toBeVisible();
+  expect(Math.abs((await turn.boundingBox())!.height - choosing)).toBeLessThan(
+    0.5,
+  );
+  await oneScreen('a word picked for the drawer', { drawer, guesser });
+});
 
 for (const size of PHONES.filter(({ spare }) => spare)) {
   const at = `${size.width} by ${size.height}`;

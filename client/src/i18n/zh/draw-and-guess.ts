@@ -100,7 +100,7 @@ export const drawAndGuess: typeof en = {
   nextUp: '接下来',
   choosingWord: (name) => `${name} 正在选词`,
   readyToGuess: '准备猜词',
-  autoPicked: '时间到了，已为你选好这个词',
+  autoPicked: '时间到，已为你选好',
   drawThis: '画这个词',
   privateWord: '只有你能看到这个词',
   left: '剩余时间',

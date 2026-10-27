@@ -351,8 +351,9 @@ function Turn({ room }: { room: Room }) {
           word sees the choices instead. On a phone the sheet is as large
           as the screen leaves it, right under the toolbar or the turn bar
           as MO08 and MO09 draw it, with the results on its own foot, and
-          the choices are centred in the room as MO07 draws them, or, where
-          the room is shorter than they are, run on down the page. */}
+          the choices stand there too, 12 px under the turn bar, as MO07
+          and PH10 draw them, or, where the room is shorter than they are,
+          run on down the page. */}
       <div className={cx(styles.board, playColumn)}>
         {choices && phone ? (
           <div
